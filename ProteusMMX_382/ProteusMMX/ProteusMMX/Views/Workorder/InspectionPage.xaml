@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ProteusMMX.Controls"
+             x:Class="ProteusMMX.Views.Workorder.InspectionPage"
+              Title="{Binding PageTitle}" 
+             Icon="Inspection.png"
+             BackgroundColor="{StaticResource BackgroundColor}" >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="Dot.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid Padding="20" x:Name="grid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+                <!--<RowDefinition Height="100" />-->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+
+
+            <Grid  >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="DisabledText" TextColor="Red"  IsVisible="False"/>
+               
+
+                <StackLayout x:Name="InspectionTimerLayout" Grid.Row="0" Grid.Column="0" >
+                    <Label x:Name="EmployeeNameLabel" TextColor="Black">
+                        <Label.FontAttributes>
+                            <OnPlatform x:TypeArguments="FontAttributes">
+                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                            </OnPlatform>
+                        </Label.FontAttributes>
+
+                        <Label.FontSize>
+                            <OnIdiom x:TypeArguments="x:Double"
+                              Phone="12"
+                              Tablet="18" />
+                        </Label.FontSize>
+
+                    </Label>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label  x:Name="TotalInspectionTime" Text="Total Inspection Time: "  TextColor="Black" >
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                                
+                            </Label.FontAttributes>
+                            <Label.FontSize>
+                                <OnIdiom x:TypeArguments="x:Double"
+                              Phone="12"
+                              Tablet="18" />
+                            </Label.FontSize>
+                        </Label>
+                        <Label x:Name="InspectionTimeLabel" TextColor="Black"  />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Label x:Name="InspectionTimer"  Text="Inspection Timer: "  TextColor="Black">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                            <Label.FontSize>
+                                <OnIdiom x:TypeArguments="x:Double"
+                              Phone="12"
+                              Tablet="18" />
+                            </Label.FontSize>
+                        </Label>
+                        <Label x:Name="TimerText" TextColor="Black" />
+                    </StackLayout>
+
+                    <StackLayout Orientation="Horizontal">
+                        <Button x:Name="btnStartTimer" HeightRequest="35" Grid.Column="1" Grid.Row="0"  Text="StartTimer" BackgroundColor="Green" TextColor="White" HorizontalOptions="Start"  Clicked="Timer_Clicked">
+                            <Button.FontSize>
+                                <OnIdiom x:TypeArguments="x:Double"
+                              Phone="12"
+                              Tablet="18" />
+                            </Button.FontSize>
+                        </Button>
+                        <Entry x:Name="enthour" Grid.Column="1" Placeholder="hh" Grid.Row="0" Text=""  TextColor="Black" HorizontalOptions="Start"  ></Entry>
+                        <Entry x:Name="entmin" Grid.Column="1" Placeholder="mm" Grid.Row="0" Text="" TextColor="Black" TextChanged="HoursTextChanged" HorizontalOptions="Start"  ></Entry>
+                        <Button x:Name="btnCreateWorkorder" HeightRequest="35" Grid.Column="1" Grid.Row="0"  Text="CreateWorkOrder"  BackgroundColor="#87CEFA" TextColor="White" HorizontalOptions="End" Clicked="CreateWorkorder_Clicked" IsEnabled="{Binding CreateWorkorderIsEnable}" IsVisible="False">
+                            <Button.FontSize>
+                            <OnIdiom x:TypeArguments="x:Double"
+                              Phone="12"
+                              Tablet="18" />
+                            </Button.FontSize>
+                        </Button>
+                    </StackLayout>
+
+                    <Grid x:Name="Tablet" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackLayout Orientation="Vertical">
+                            <Label  x:Name="InspectionStartDateLabelTablet"  Font="18" Text="Inspection Start Date: " TextColor="Black">
+                                <Label.FontAttributes>
+                                    <OnPlatform x:TypeArguments="FontAttributes">
+                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                        <OnPlatform.Android>Bold</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Label.FontAttributes>
+                            </Label>
+                        </StackLayout>
+                        <!--<controls:CustomDatePicker SelectedDate="{Binding WorkStartedDate1}" />-->
+                        <Button x:Name="PickerInspectionStartDateTablet" Grid.Row="1"  Grid.Column="0" Text="+" BorderColor="Black" BackgroundColor="#87CEFA"  Clicked="PickerInspectionStartDate_Clicked" TextColor="White"/>
+                        <Image Grid.Row="1"  Grid.Column="1">
+                            <Image.Source>
+                                <OnPlatform x:TypeArguments="FileImageSource">
+                                    <OnPlatform.iOS>
+                                        <FileImageSource File="Remove.png"/>
+                                    </OnPlatform.iOS>
+                                    <OnPlatform.Android>
+                                        <FileImageSource File="Remove.png"/>
+                                    </OnPlatform.Android>
+                                    <OnPlatform.WinPhone>
+                                        <FileImageSource File="Assets/Remove.png"/>
+                                    </OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </Image.Source>
+
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer 
+                    Tapped="ClearStartDate_Clicked"
+                    NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label Grid.Column="2" Grid.Row="1"/>
+                        <!--<DatePicker x:Name="PickerInspectionStartDate"  HorizontalOptions="Start" />-->
+
+
+                        <StackLayout Orientation="Vertical" Grid.Row="2" >
+                            <Label x:Name="InspectionCompletionDateLabelTablet"  Font="18" Text="Inspection Completion Date: " TextColor="Black">
+                                <Label.FontAttributes>
+                                    <OnPlatform x:TypeArguments="FontAttributes">
+                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                        <OnPlatform.Android>Bold</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Label.FontAttributes>
+                            </Label>
+                        </StackLayout>
+
+                        <Button x:Name="PickerInspectionCompletionDateTablet" Grid.Row="3" Grid.Column="0" Text="+" BorderColor="Black" BackgroundColor="#87CEFA"  Clicked="PickerInspectionCompletionDate_Clicked" TextColor="White"/>
+                        <Image  Grid.Column="1" Grid.Row="3" >
+                            <Image.Source>
+                                <OnPlatform x:TypeArguments="FileImageSource">
+                                    <OnPlatform.iOS>
+                                        <FileImageSource File="Remove.png"/>
+                                    </OnPlatform.iOS>
+                                    <OnPlatform.Android>
+                                        <FileImageSource File="Remove.png"/>
+                                    </OnPlatform.Android>
+                                    <OnPlatform.WinPhone>
+                                        <FileImageSource File="Assets/Remove.png"/>
+                                    </OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </Image.Source>
+
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer 
+                    Tapped="ClearCompletionDate_Clicked"
+                    NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Label Grid.Column="2" Grid.Row="3"/>
+                        <!--<DatePicker x:Name="PickerInspectionCompletionDate"  HorizontalOptions="Start"/>-->
+
+                       
+
+                    </Grid>
+
+
+                    <StackLayout x:Name="Phone" Orientation="Horizontal">
+                        
+                   
+                    <StackLayout Orientation="Vertical">
+
+                            <Label  x:Name="InspectionStartDateLabelPhone"  Font="12" Text="Inspection Start Date: " TextColor="Black">
+                                <Label.FontAttributes>
+                                    <OnPlatform x:TypeArguments="FontAttributes">
+                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                        <OnPlatform.Android>Bold</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Label.FontAttributes>
+                            </Label>
+
+                        <StackLayout Orientation="Horizontal">
+                            <Button x:Name="PickerInspectionStartDatePhone" HeightRequest="40" Grid.Row="1"  Grid.Column="0" Text="+" BorderColor="Black" BackgroundColor="#87CEFA"  Clicked="PickerInspectionStartDate_Clicked" TextColor="White"/>
+                            <Image Grid.Row="1"  Grid.Column="1">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="FileImageSource">
+                                        <OnPlatform.iOS>
+                                            <FileImageSource File="Remove.png"/>
+                                        </OnPlatform.iOS>
+                                        <OnPlatform.Android>
+                                            <FileImageSource File="Remove.png"/>
+                                        </OnPlatform.Android>
+                                        <OnPlatform.WinPhone>
+                                            <FileImageSource File="Assets/Remove.png"/>
+                                        </OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Image.Source>
+
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                    Tapped="ClearStartDate_Clicked"
+                    NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                        </StackLayout>
+                    </StackLayout>
+
+
+                    <StackLayout Orientation="Vertical">
+
+
+                            <Label x:Name="InspectionCompletionDateLabelPhone" Font="12" Text="Inspection Completion Date: " TextColor="Black">
+                                <Label.FontAttributes>
+                                    <OnPlatform x:TypeArguments="FontAttributes">
+                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                        <OnPlatform.Android>Bold</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Label.FontAttributes>
+                            </Label>
+                        <StackLayout Orientation="Horizontal">
+                            <Button x:Name="PickerInspectionCompletionDatePhone" HeightRequest="40" Grid.Row="3" Grid.Column="0" Text="+" BorderColor="Black" BackgroundColor="#87CEFA"  Clicked="PickerInspectionCompletionDate_Clicked" TextColor="White"/>
+                            <Image  Grid.Column="1" Grid.Row="3" >
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="FileImageSource">
+                                        <OnPlatform.iOS>
+                                            <FileImageSource File="Remove.png"/>
+                                        </OnPlatform.iOS>
+                                        <OnPlatform.Android>
+                                            <FileImageSource File="Remove.png"/>
+                                        </OnPlatform.Android>
+                                        <OnPlatform.WinPhone>
+                                            <FileImageSource File="Assets/Remove.png"/>
+                                        </OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Image.Source>
+
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                    Tapped="ClearCompletionDate_Clicked"
+                    NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </StackLayout>
+                    </StackLayout>
+
+                  
+                        
+                    </StackLayout>
+                    
+                    
+                    <StackLayout Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="4"  >
+                        <BoxView HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand" BackgroundColor="Black" HeightRequest = "2"/>
+                    </StackLayout>
+                </StackLayout>
+            </Grid>
+
+
+            <ScrollView Grid.Row="2"  >
+                <StackLayout Padding="5" x:Name="MainLayout"   >
+
+                </StackLayout>
+            </ScrollView>
+
+            <!--<Button Text="Add Inspections" Grid.Row="1" BackgroundColor="#87CEFA" TextColor="White" Clicked="AddInspectionClicked" Margin="20,0,20,10" IsVisible ="true"></Button>-->
+
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

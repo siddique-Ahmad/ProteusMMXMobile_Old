@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             x:Class="ProteusMMX.Views.Workorder.TaskAndLabourPage"
+             Title="{Binding PageTitle}" 
+              Icon="tasksandlabors.png"
+             BackgroundColor="{StaticResource BackgroundColor}" >
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="Dot.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+
+
+    <ContentPage.Content>
+        <Grid  Padding="10,10,10,10">
+            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3.5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+
+                    <Entry IsVisible="{Binding TaskLabourSearchBoxIsEnable , Mode=TwoWay}" Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                    <Button IsVisible="{Binding TaskLabourSearchButtonIsEnable , Mode=TwoWay}" Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
+                    <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}"/>
+
+                </Grid>
+
+                <ScrollView Grid.Row="1">
+                    
+                    <!--This is gonna be content grid-->
+                    <StackLayout >
+
+                        
+                    </StackLayout>
+                </ScrollView>
+
+            </Grid>
+
+            <ActivityIndicator IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+
+        </Grid>
+
+
+    </ContentPage.Content>
+</ContentPage>

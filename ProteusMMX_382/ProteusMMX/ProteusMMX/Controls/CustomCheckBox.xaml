@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProteusMMX.Controls.CustomCheckBox">
+    <ContentView.Content>
+        <StackLayout Orientation="Horizontal">
+            <Image x:Name="CheckedImage" Source="Checked.png" IsVisible ="False" HeightRequest ="26" >
+                <Image.Source>
+                    <OnPlatform x:TypeArguments="ImageSource">
+                        <OnPlatform.iOS>
+                            <FileImageSource File="Checked.png"/>
+                        </OnPlatform.iOS>
+                        <OnPlatform.Android>
+                            <FileImageSource File="Checked.png"/>
+                        </OnPlatform.Android>
+                        <OnPlatform.WinPhone>
+                            <FileImageSource File="Assets/Checked.png"/>
+                        </OnPlatform.WinPhone>
+                    </OnPlatform>
+                </Image.Source>
+
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer 
+                    Tapped="CheckedImageTapped"
+                    NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image x:Name="UncheckedImage" Source="Unchecked.png" HeightRequest ="26"  >
+
+                <Image.Source>
+                    <OnPlatform x:TypeArguments="ImageSource">
+                        <OnPlatform.iOS>
+                            <FileImageSource File="Unchecked.png"/>
+                        </OnPlatform.iOS>
+                        <OnPlatform.Android>
+                            <FileImageSource File="Unchecked.png"/>
+                        </OnPlatform.Android>
+                        <OnPlatform.WinPhone>
+                            <FileImageSource File="Assets/Unchecked.png"/>
+                        </OnPlatform.WinPhone>
+                    </OnPlatform>
+                </Image.Source>
+
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                  Tapped="UncheckedImageTapped"
+                  NumberOfTapsRequired="1"   />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Text="Remember Me" FontSize="15" TextColor ="Black" ></Label>
+        </StackLayout>
+
+    </ContentView.Content>
+</ContentView>

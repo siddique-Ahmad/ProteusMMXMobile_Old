@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
+             x:Class="ProteusMMX.Views.Workorder.CreateWorkorderFromInspectionPageContent"
+              Title="{Binding PageTitle}" 
+             BackgroundColor="{StaticResource BackgroundColor}" >
+                
+          
+    <StackLayout VerticalOptions="Center"  BackgroundColor="White" HorizontalOptions="FillAndExpand">
+
+        <Grid Padding="20">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+
+            <Label x:Name="DescriptionLabel"  Grid.Row="0" Grid.Column="0" Font="18" Margin="20,0,20,0" Text="Description"  />
+            <!--<Editor x:Name="Description" Grid.Row="0" Grid.Column="1" HeightRequest="100" />-->
+            <dependencyinterface:CustomEditor x:Name="Description" Grid.Row="0" Grid.Column="1" HeightRequest="100"></dependencyinterface:CustomEditor>
+            <Label x:Name="AdditionalDetailsLabel" Grid.Row="1" Grid.Column="0" Font="18" Margin="20,0,20,0" Text="Additional Details/Note"  />
+            <!--<Editor x:Name="AdditionalDetails" Grid.Row="1" Grid.Column="1"  HeightRequest="250"  />-->
+            <dependencyinterface:CustomEditor x:Name="AdditionalDetails" Grid.Row="1" Grid.Column="1"  HeightRequest="250"></dependencyinterface:CustomEditor>
+
+            <Button x:Name="CreateWo" Text="Create Work Order"  Grid.Row="2" Grid.Column="1" BackgroundColor="#87CEFA" TextColor="White" IsVisible ="true" View.HorizontalOptions="End" HeightRequest="40" Clicked="CreateWorkorder_Clicked"></Button>
+
+
+        </Grid>
+
+    </StackLayout>
+
+
+</ContentPage>

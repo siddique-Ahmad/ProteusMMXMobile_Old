@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProteusMMX.Views.Service_Request.Templates.ViewCells.ServiceRequestViewCell"
+          BindingContextChanged="OnBindingContextChanged">
+    <ViewCell.View>
+        <Grid RowSpacing="5">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="RequestNumber" />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding RequestNumber}" Grid.Column="2" />
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="Description"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding Description}" Grid.Column="2" />
+
+
+            </Grid>
+
+            <Grid Grid.Row="2" x:Name="PriorityColon" IsVisible="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="PriorityName" />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding PriorityName}" Grid.Column="2"  />
+
+
+            </Grid>
+
+
+
+            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
+
+
+        </Grid>
+
+
+    </ViewCell.View>
+    <!--<ViewCell.ContextActions>
+        <MenuItem x:Name="ServiceRequestAcceptMenuItem" Clicked="ServiceRequestMenuItems"  CommandParameter="{Binding .}"  Text="Accept" />
+        <MenuItem x:Name="ServiceRequestDeclineMenuItem" Clicked="ServiceRequestMenuItems"  CommandParameter="{Binding .}"  Text="Decline" />
+    </ViewCell.ContextActions>-->
+</ViewCell>

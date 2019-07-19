@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProteusMMX.Views.Workorder.Templates.ViewCells.SignatureHistoryViewCell" >
+    <ViewCell.View>
+        <!--<Grid HorizontalOptions="Fill" >
+
+          
+            <Grid>
+                
+                <Label Text="{Binding Signature}" />
+
+            </Grid>
+
+            <Grid >
+               
+
+                
+                <Label Text="{Binding SignatureTimestamp}"  />
+
+
+            </Grid>
+
+            <Grid  >
+                
+               
+                <Label Text="{Binding SignatureIntent}"  />
+
+
+            </Grid>
+
+
+           
+
+        </Grid>-->
+        <!--<StackLayout Grid.Row="1" Orientation="Horizontal" >
+            <Label Text="{Binding Signature}" Grid.Column="0" />
+            <Label Text="{Binding SignatureTimestamp}" Grid.Column="1" />
+            <Label Text="{Binding SignatureIntent}" Grid.Column="2" />
+        </StackLayout>-->
+
+        <!--<Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Text="{Binding Signature}" Grid.Column="0" />
+            <Label Text="{Binding SignatureTimestamp}" Grid.Column="1" />
+            <Label Text="{Binding SignatureIntent}" Grid.Column="2" />
+        </Grid>-->
+
+        <Grid ColumnSpacing="8" HorizontalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20.00*" />
+                <ColumnDefinition Width="20.00*" />
+                <ColumnDefinition Width="60.00*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="{Binding Signature}" Grid.Column="0" HorizontalOptions="FillAndExpand" />
+            <Label Text="{Binding SignatureTimestamp}" Grid.Column="1" HorizontalOptions="FillAndExpand" />
+            <Label Text="{Binding SignatureIntent}" Grid.Column="2" HorizontalOptions="FillAndExpand" />
+        </Grid>
+    </ViewCell.View>
+
+  
+</ViewCell>

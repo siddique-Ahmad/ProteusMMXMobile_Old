@@ -1,0 +1,6 @@
+MainPackage=E:\MMX\ProteusMMX_4July\ProteusMMX_4_june\ProteusMMX\ProteusMMX\ProteusMMX.UWP\bin\x64\Release\ProteusMMX.UWP_1.0.1.0_x64.appx
+SymbolPackage=E:\MMX\ProteusMMX_4July\ProteusMMX_4_june\ProteusMMX\ProteusMMX\ProteusMMX.UWP\AppPackages\ProteusMMX.UWP_1.0.1.0_Test\ProteusMMX.UWP_1.0.1.0_x64.appxsym
+ResourcePack=E:\MMX\ProteusMMX_4July\ProteusMMX_4_june\ProteusMMX\ProteusMMX\ProteusMMX.UWP\bin\x64\Release\ProteusMMX.UWP_1.0.1.0_scale-100.appx
+ResourcePack=E:\MMX\ProteusMMX_4July\ProteusMMX_4_june\ProteusMMX\ProteusMMX\ProteusMMX.UWP\bin\x64\Release\ProteusMMX.UWP_1.0.1.0_scale-125.appx
+ResourcePack=E:\MMX\ProteusMMX_4July\ProteusMMX_4_june\ProteusMMX\ProteusMMX\ProteusMMX.UWP\bin\x64\Release\ProteusMMX.UWP_1.0.1.0_scale-150.appx
+ResourcePack=E:\MMX\ProteusMMX_4July\ProteusMMX_4_june\ProteusMMX\ProteusMMX\ProteusMMX.UWP\bin\x64\Release\ProteusMMX.UWP_1.0.1.0_scale-400.appx

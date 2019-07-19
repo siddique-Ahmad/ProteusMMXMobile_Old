@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProteusMMX.Views.ClosedWorkorder.Templates.ViewCells.ClosedWorkorderViewCell">
+    <ViewCell.View>
+        <Grid RowSpacing="5">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="WorkOrderNumberTitle" />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding WorkOrderNumber}" Grid.Column="2" MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="TargetNameTitle"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding TargetName}" Grid.Column="2" MinimumWidthRequest="15" LineBreakMode="TailTruncation"  />
+
+
+            </Grid>
+
+            <Grid x:Name="DescriptionVisible" IsVisible="False" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="DescriptionTitle"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding Description}" Grid.Column="2" MinimumWidthRequest="15" LineBreakMode="TailTruncation"  />
+
+
+            </Grid>
+
+            <Grid x:Name="WorkorderTypeColon" IsVisible="False"  Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="WorkOrderTypeTitle"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding WorkOrderType}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
+                <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
+                    <Label Text="(" />
+                    <Label Text="{Binding PriorityName}" />
+                    <Label Text=")" />
+                </StackLayout>
+
+            </Grid>
+
+
+            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
+
+
+
+        </Grid>
+    </ViewCell.View>
+</ViewCell>

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:ProteusMMX.Converters;assembly=ProteusMMX"
+             x:Class="ProteusMMX.App">
+    <Application.Resources>
+
+       
+        <ResourceDictionary>
+            <!-- COLORS -->
+            <Color x:Key="BackgroundColor">#FFFFFF</Color>
+            <Color x:Key="BlackColor">#000000</Color>
+            <Color x:Key="WhiteColor">#FFFFFF</Color>
+            <Color x:Key="RedColor">#FF0000</Color>
+            <Color x:Key="NavigationBarColor">#0078cc</Color>
+
+            <Color x:Key="ColorButton">#87CEFA</Color>
+            <Color x:Key="ColorLabel">#253748</Color>
+            <Color x:Key="ColorText">#253748</Color>
+
+            <Color x:Key="BlackTextColor">#253748</Color>
+
+            <Color x:Key="DarkGrayColor">#ADADAD</Color>
+            <Color x:Key="GrayColor">#F6F1E9</Color>
+
+
+
+            <!-- Styles -->
+            <Style x:Key="LoginButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorButton}" />
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource DarkGrayColor}" />
+            </Style>
+
+            <Style x:Key="SaveButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorButton}" />
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource DarkGrayColor}" />
+                <Setter Property="HeightRequest" Value="40" />
+            </Style>
+
+            <Style x:Key="TargetButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorButton}" />
+                <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource DarkGrayColor}" />
+                <Setter Property="HeightRequest" Value="35" />
+            </Style>
+
+            <Style x:Key="BoldLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource ColorLabel}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
+            <Style x:Key="NormalLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource ColorLabel}" />
+            </Style>
+            <OnPlatform x:Key="entryLabelSize" x:TypeArguments="x:Double">
+                <On Platform="iOS">
+                    <OnIdiom x:TypeArguments="x:Double" Phone="12" Tablet="18" />
+                </On>
+                <On Platform="Android,Windows">
+                    <OnIdiom x:TypeArguments="x:Double" Phone="12" Tablet="18" />
+                </On>
+            </OnPlatform>
+            <!-- CONVERTERS -->
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:DateTimeConverterXaml x:Key="DateTimeConverterXaml" />
+            
+        </ResourceDictionary>
+
+
+     
+
+    </Application.Resources>
+</Application>

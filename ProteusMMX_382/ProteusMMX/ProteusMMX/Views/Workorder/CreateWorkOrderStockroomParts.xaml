@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             xmlns:b="clr-namespace:ProteusMMX.Behaviors"
+             x:Class="ProteusMMX.Views.Workorder.CreateWorkOrderStockroomParts"
+             Title="{Binding PageTitle}" 
+             BackgroundColor="{StaticResource BackgroundColor}" >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="Dot.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid  Padding="10,10,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2">
+                <Label Text="{Binding StockRoomNametitle}" TextColor="Black">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Button Text="{Binding StockroomNameText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding StockroomNameCommand}"  />
+            </StackLayout>
+
+
+            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2">
+                <Label Text="{Binding PartNumberTitle}" TextColor="Black">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+
+                <Grid Grid.Row="1" >
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3.5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Text="{Binding PartNumberText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding PartNumberCommand}"  />
+                    <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
+
+                </Grid>
+
+
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0">
+                <Label Text="{Binding ShelfBintitle}" TextColor="Black">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Button Text="{Binding ShelfBinText}" Style="{StaticResource TargetButtonStyle}" BackgroundColor="LightGray" TextColor="Black" IsEnabled="False" />
+            </StackLayout>
+
+            <StackLayout  Orientation="Vertical" Grid.Row="2" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label x:Name="QRequired"   Text="{Binding QuantityRequiredtitle}" HorizontalOptions="FillAndExpand" TextColor="Black" VerticalOptions="Center">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Entry x:Name="QuantityRequired" Text="{Binding QuantityRequiredText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Keyboard="Numeric" TextChanged="QuantityRequired_TextChanged" ></Entry>
+
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label x:Name="QAllocated"  Text="{Binding QuantityAllocatedtitle}" TextColor="Black">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Entry Keyboard="Numeric" x:Name="QuantityAllocated" Text="{Binding QuantityAllocatedText}" TextChanged="QuantityAllocated_TextChanged"></Entry>
+
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1">
+                <Label x:Name="UCost"   Text="{Binding UnitCosttitle}" TextColor="Black">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Entry x:Name="UnitCost" Text="{Binding UnitCostText}" TextChanged="UnitCost_TextChanged">
+
+                </Entry>
+
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="2">
+                <Button Text="{Binding SaveTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding SaveStockroomPartsCommand}"  />
+            </StackLayout>
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

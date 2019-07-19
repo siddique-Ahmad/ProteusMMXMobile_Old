@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProteusMMX.Views.Barcode.SearchWorkorderByAssetNumberFromBarcode"
+             xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
+             xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
+             xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             Title="{Binding PageTitle}" 
+             BackgroundColor="{StaticResource BackgroundColor}" >
+
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <!--<DataTemplate x:Key="DayAfterTomorrowTemplate">
+                <viewCells:DayAfterTomorrowViewCell ParentBindingContext="{Binding BindingContext , Source= {x:Reference WorkorderListingPage}}"/>
+            </DataTemplate>
+            <DataTemplate x:Key="PastViewTemplate" >
+                <viewCells:PastViewCell  ParentBindingContext="{Binding BindingContext , Source= {x:Reference WorkorderListingPage}}"/>
+            </DataTemplate>
+            <DataTemplate x:Key="TomorrowViewTemplate" >
+                <viewCells:TomorrowViewCell ParentBindingContext="{Binding BindingContext , Source= {x:Reference WorkorderListingPage}}"/>
+            </DataTemplate>-->
+
+            <!--<templates:WorkorderListingTemplateSelector x:Key="DateTemplateSelector"
+                                                        DayAfterTomorrowTemplate="{StaticResource  DayAfterTomorrowTemplate}"
+                                                        PastCurrentDayTemplate="{StaticResource  PastViewTemplate}"
+                                                        TomorrowDayTemplate="{StaticResource  TomorrowViewTemplate}">
+            </templates:WorkorderListingTemplateSelector>-->
+
+            <templates:WorkorderListingTemplateSelector x:Key="DateTemplateSelector">
+            </templates:WorkorderListingTemplateSelector>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text=":"  Icon="Assets/filter.png" Command="{Binding SortByCommand}"/>
+        <ToolbarItem Text="1"  Icon="Assets/Dot.png" Command="{Binding ToolbarCommand}"/>
+
+        
+    </ContentPage.ToolbarItems>-->
+
+
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="filter.png"  Command="{Binding SortByCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="filter.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/filter.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/filter.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="Dot.png"   Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="Dot.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+
+
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
+
+            <Grid Grid.Row="1"  Padding="10,10,10,10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
+
+                <Grid Grid.Row="1" Grid.ColumnSpan="2" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="4.4*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="{Binding WorkorderTypeLabelTitle}"/>
+                        <Picker Grid.Column="1" ItemsSource="{Binding PickerTitles}" SelectedItem="{Binding SelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding SelectedIndexPicker , Mode=TwoWay}"/>
+
+                        <!--<Grid Grid.Column="2" ColumnSpacing="0">-->
+                        <!--
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>-->
+
+                        <Label Text="{Binding TotalRecordTitle}"  Grid.Column="2" />
+                        <Label Text=":" Grid.Column="3"/>
+                        <Label Text="{Binding TotalRecordCount}" Grid.Column="4" />
+                        <!--</Grid>-->
+
+                    </Grid>
+                </Grid>
+
+                <ListView Grid.Row="2" Grid.ColumnSpan="2"
+                          ItemTemplate="{StaticResource DateTemplateSelector}"
+                          HasUnevenRows="True"
+                          SeparatorVisibility="Default"
+                          CachingStrategy="RecycleElement"
+                          ItemsSource="{Binding WorkordersCollection}"
+                          ItemAppearing="ListView_ItemAppearing"
+                          behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding WorkorderSelectedCommand}">
+
+                </ListView>
+            </Grid>
+
+            <ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+
+        </Grid>
+
+
+    </ContentPage.Content>
+</ContentPage>

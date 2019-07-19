@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:signature="clr-namespace:SignaturePad.Forms;assembly=SignaturePad.Forms"
+             x:Class="ProteusMMX.Views.Common.SignaturePage">
+    <StackLayout VerticalOptions="Center"  BackgroundColor="White" HorizontalOptions="FillAndExpand" >
+
+        <signature:SignaturePadView HorizontalOptions="FillAndExpand" 
+                                   VerticalOptions="FillAndExpand"
+                                   HeightRequest="200"
+                                   x:Name="signatureView"/>
+        <Button Text="OK" Clicked="OK_Clicked" />
+
+
+    </StackLayout>
+</pages:PopupPage>

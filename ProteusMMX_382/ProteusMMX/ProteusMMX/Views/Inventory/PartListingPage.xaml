@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProteusMMX.Views.Inventory.PartListingPage"
+              xmlns:templates="clr-namespace:ProteusMMX.Views.Inventory.Templates;assembly=ProteusMMX"
+             xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             xmlns:viewCells="clr-namespace:ProteusMMX.Views.Inventory.Templates.ViewCells;assembly=ProteusMMX"
+             xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             Title="{Binding PageTitle}" 
+             BackgroundColor="{StaticResource BackgroundColor}" >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+
+
+            <templates:PartListingPageTemplateSelector x:Key="DateTemplateSelector">
+            </templates:PartListingPageTemplateSelector>
+
+
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="Dot.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
+
+            <Grid Grid.Row="1"  Padding="10,10,10,10">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3.5*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
+                <Label Grid.Column="2" IsVisible="{Binding TotalRecordForTab}"  Text= "{Binding TotalRecordTitle}" />
+                <Label Text=":" IsVisible="{Binding TotalRecordForTab}"  Grid.Column="3"/>
+                <Label Text="{Binding TotalRecordCount}" IsVisible="{Binding TotalRecordForTab}"   Grid.Column="4" />
+
+                <StackLayout IsVisible="{Binding TotalRecordForPhone}" Grid.Row="1" Orientation="Horizontal" >
+                    <Label Text="{Binding TotalRecordTitle}"/>
+                    <Label Text=":" Grid.Column="3"/>
+                    <Label Text="{Binding TotalRecordCount}"/>
+                </StackLayout>
+
+                <ListView Grid.Row="2" Grid.ColumnSpan="5"
+                          ItemTemplate="{StaticResource DateTemplateSelector}"
+                          HasUnevenRows="True"
+                          SeparatorVisibility="Default"
+                          CachingStrategy="RecycleElement"
+                          ItemsSource="{Binding StockroomPartsCollection}"
+                            ItemAppearing="ListView_ItemAppearing"
+                          behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding StockroomPartSelectedCommand}">
+
+                </ListView>
+            </Grid>
+
+            <ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+
+        </Grid>
+
+
+    </ContentPage.Content>
+</ContentPage>

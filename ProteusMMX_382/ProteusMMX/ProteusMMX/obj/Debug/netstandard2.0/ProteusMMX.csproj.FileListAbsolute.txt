@@ -1,0 +1,12 @@
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\bin\Debug\netstandard2.0\ProteusMMX.deps.json
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\bin\Debug\netstandard2.0\ProteusMMX.dll
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\bin\Debug\netstandard2.0\ProteusMMX.pdb
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\bin\Debug\netstandard2.0\Windows.Foundation.FoundationContract.winmd
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\bin\Debug\netstandard2.0\Windows.Foundation.UniversalApiContract.winmd
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\obj\Debug\netstandard2.0\ProteusMMX.csproj.CoreCompileInputs.cache
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\obj\Debug\netstandard2.0\ProteusMMX.AssemblyInfoInputs.cache
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\obj\Debug\netstandard2.0\ProteusMMX.AssemblyInfo.cs
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\obj\Debug\netstandard2.0\ProteusMMX.csproj.CopyComplete
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\obj\Debug\netstandard2.0\ProteusMMX.dll
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\obj\Debug\netstandard2.0\ProteusMMX.pdb
+E:\MMX_382\MMX_Mobile_382\ProteusMMX_382\ProteusMMX\ProteusMMX\obj\Debug\netstandard2.0\ProteusMMX.csprojAssemblyReference.cache

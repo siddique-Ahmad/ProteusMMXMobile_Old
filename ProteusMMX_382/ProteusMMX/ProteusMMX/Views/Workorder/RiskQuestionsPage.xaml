@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProteusMMX.Views.Workorder.RiskQuestionsPage"
+              Title="{Binding PageTitle}" 
+             BackgroundColor="{StaticResource BackgroundColor}" >
+
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="Dot.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid Padding="20" x:Name="grid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+                <!--<RowDefinition Height="100" />-->
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+
+            <ScrollView Grid.Row="2"  >
+                <StackLayout Padding="20" x:Name="MainLayout"   >
+                   
+                </StackLayout>
+            </ScrollView>
+
+            <!--<Button Text="Add Inspections" Grid.Row="1" BackgroundColor="#87CEFA" TextColor="White" Clicked="AddInspectionClicked" Margin="20,0,20,10" IsVisible ="true"></Button>-->
+
+
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

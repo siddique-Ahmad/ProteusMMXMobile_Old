@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             x:Class="ProteusMMX.Views.PurchaseOrder.ReceivePuchaseOrderStockroomPart"
+               Title="{Binding PageTitle}" 
+             BackgroundColor="{StaticResource BackgroundColor}" >
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="Dot.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content >
+
+        <Grid Margin="10,0,0,0" Padding="10,10,10,10" RowSpacing="5">
+            
+            
+            <StackLayout  Grid.Row="0"  Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label x:Name="QReceived" TextColor="Black" Text="{Binding QuantityReceivedTitle}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Entry x:Name="QuantityReceived" Text="{Binding QuantityReceivedText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextChanged="QuantityReceived_TextChanged"></Entry>
+
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0">
+                <Label Text="{Binding BalanceDue}" TextColor="Black">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Label Text="{Binding BalanceDueText}"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0">
+                <Label Text="{Binding ShelfBintitle}" TextColor="Black">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Label Text="{Binding ShelfBinText}"/>
+            </StackLayout>
+
+
+            <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0">
+                <Label Text="{Binding ReceiverNameTitle}" TextColor="Black">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Button Text="{Binding ReceiverName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ReceiverCommand}"/>
+            </StackLayout>
+
+           
+
+
+            <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="0">
+                <Label Text="{Binding ReceivedDateTitle}" TextColor="Black">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <controls:CustomDatePicker SelectedDate="{Binding ReceivedDate}" />
+            </StackLayout>
+
+            <StackLayout  Grid.Row="5"  Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label x:Name="INumber" TextColor="Black" Text="{Binding InvoiceNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Entry x:Name="InvoiceNumber" Text="{Binding InvoiceNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></Entry>
+
+            </StackLayout>
+
+            <StackLayout  Grid.Row="6"  Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label x:Name="PackNumber" TextColor="Black"  Text="{Binding PackagingSlipNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                    <Label.FontAttributes>
+                        <OnPlatform x:TypeArguments="FontAttributes">
+                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                        </OnPlatform>
+                    </Label.FontAttributes>
+                </Label>
+                <Entry x:Name="PackagingSlipNumber" Text="{Binding PackagingSlipNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></Entry>
+
+            </StackLayout>
+
+            <StackLayout Orientation="Vertical" Grid.Row="7">
+                <Button Text="{Binding ReceiveTitle}" TextColor="Black"  BackgroundColor="{Binding ColorBackground}" IsEnabled="{Binding ReceivedButtonIsEnabled}" IsVisible="{Binding ReceivedButtonIsVisible}" Command="{Binding ReceivePurchaseOrderPartCommand}"  />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProteusMMX.Controls.RequiredDateCustomDatePicker"
+             x:Name="Control">
+    
+  <ContentView.Content>
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Label TextColor="Black" FontAttributes="Bold"  BindingContext="{x:Reference Name=Control}" Text="{Binding SelectedDate , Mode=TwoWay, StringFormat='{0:MMMM d, yyyy}'}" WidthRequest="150" VerticalTextAlignment="Center"/>
+            <Image Grid.Column="1">
+                <Image.Source>
+                    <OnPlatform x:TypeArguments="FileImageSource">
+                        <OnPlatform.iOS>
+                            <FileImageSource File="Calander.png"/>
+                        </OnPlatform.iOS>
+                        <OnPlatform.Android>
+                            <FileImageSource File="Calander.png"/>
+                        </OnPlatform.Android>
+                        <OnPlatform.WinPhone>
+                            <FileImageSource File="Assets/Calander.png"/>
+                        </OnPlatform.WinPhone>
+                    </OnPlatform>
+                </Image.Source>
+
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer 
+                    Tapped="SelectDate_Clicked"
+                    NumberOfTapsRequired="1" />
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Label Grid.Row="1" TextColor="Black" BindingContext="{x:Reference Name=Control}" FontSize="12" Text="{Binding WarningText}" />
+
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

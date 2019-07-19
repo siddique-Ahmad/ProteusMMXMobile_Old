@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProteusMMX.Views.ClosedWorkorder.ClosedWorkorderToolsPage"
+             xmlns:templates="clr-namespace:ProteusMMX.Views.ClosedWorkorder.Templates;assembly=ProteusMMX"
+             xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             xmlns:viewCells="clr-namespace:ProteusMMX.Views.ClosedWorkorder.Templates.ViewCells;assembly=ProteusMMX"
+             xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             Title="{Binding PageTitle}" 
+              Icon="tools.png"
+             BackgroundColor="{StaticResource BackgroundColor}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="Dot.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <templates:ClosedWorkorderToolsPageTemplateSelector x:Key="DateTemplateSelector">
+            </templates:ClosedWorkorderToolsPageTemplateSelector>
+
+
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <ContentPage.Content>
+        <Grid Padding="10,20,10,10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <ListView Grid.Row="1" Grid.ColumnSpan="2"
+                         ItemTemplate="{StaticResource DateTemplateSelector}"
+                          HasUnevenRows="True"
+                          SeparatorVisibility="Default"
+                          CachingStrategy="RecycleElement"
+                          ItemsSource="{Binding ToolsCollection}">
+
+            </ListView>
+
+
+            <!--<ActivityIndicator Grid.Row="2" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
+
+        </Grid>
+
+
+    </ContentPage.Content>
+</ContentPage>

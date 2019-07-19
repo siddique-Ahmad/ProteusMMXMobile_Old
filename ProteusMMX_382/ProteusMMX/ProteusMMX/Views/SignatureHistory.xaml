@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+               xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
+             
+             xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
+             
+             x:Class="ProteusMMX.Views.SignatureHistory">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+
+
+            <templates:SignatureHistoryTemplateSelector x:Key="DateTemplateSelector">
+            </templates:SignatureHistoryTemplateSelector>
+
+
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout  Spacing="0">
+                <Grid >
+                   
+                    <ListView Grid.Row="0" 
+                          ItemTemplate="{StaticResource DateTemplateSelector}"
+                          ItemsSource="{Binding SignatureHistoryCollection}">
+                         
+
+
+                    </ListView>
+                </Grid>
+
+              
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
