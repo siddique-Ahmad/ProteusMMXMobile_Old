@@ -28,7 +28,7 @@ namespace ProteusMMX
 
         public static string APPVersion
         {
-            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.8.7d");
+            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.8.9");
         }
         public static string UserName
         {

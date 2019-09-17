@@ -102,6 +102,18 @@ namespace ProteusMMX.Controls
                 }
                 if (dateResult.Ok == false)
                 {
+                    if (Application.Current.Properties.ContainsKey("ModuleName"))
+                    {
+                        var Modulename = Application.Current.Properties["ModuleName"].ToString();
+                        if (Modulename == "PO")
+                        {
+                            if (SelectedDate == null)
+                            {
+                                SelectedDate = dateConfig.SelectedDate;
+                            }
+                        }
+
+                    }
                     return;
                 }
                 //if (dateResult != null && dateResult.SelectedDate != null && dateResult.SelectedDate.Year == 0001)
@@ -119,6 +131,7 @@ namespace ProteusMMX.Controls
                     {
                         SelectedDate = dateResult.SelectedDate;
                     }
+                   
                     if (MinimumDate != null)
                     {
 
@@ -141,6 +154,18 @@ namespace ProteusMMX.Controls
                         else
                         {
                             SelectedDate = dateConfig.MaximumDate;
+                        }
+
+                    }
+                    if (Application.Current.Properties.ContainsKey("ModuleName"))
+                    {
+                        var Modulename = Application.Current.Properties["ModuleName"].ToString();
+                        if (Modulename == "PO")
+                        {
+                            if (SelectedDate == null)
+                            {
+                                SelectedDate = dateConfig.SelectedDate;
+                            }
                         }
 
                     }

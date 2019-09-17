@@ -861,7 +861,7 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
             {
                 OperationInProgress = true;
 
-
+                Application.Current.Properties["ModuleName"] = "PO";
 
                 if (navigationData != null)
                 {

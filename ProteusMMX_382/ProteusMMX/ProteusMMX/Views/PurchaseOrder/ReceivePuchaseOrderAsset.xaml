@@ -53,7 +53,7 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <controls:CustomDatePicker SelectedDate="{Binding ReceivedDate}" />
+                <controls:RequiredDateCustomDatePicker SelectedDate="{Binding ReceivedDate}"></controls:RequiredDateCustomDatePicker>
             </StackLayout>
 
             <StackLayout  Grid.Row="2"  Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
