@@ -77,7 +77,7 @@
                     <Button Grid.Row="7" Text="{Binding LoginButtonLabel}" Style="{StaticResource LoginButtonStyle}"  Command="{Binding LoginCommand}" Grid.ColumnSpan="2" />
 
                     <Label IsVisible="{Binding CopyrightLabelVisibility}" Grid.Row="8" Text="{Binding CopyrightLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-                    <Label Margin="20,0,0,0" IsVisible="{Binding SupportLabelVisibility}" Grid.Row="9" Text="{Binding SupportLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}"  TextColor="{StaticResource RedColor}" Grid.ColumnSpan="2" />
+                    <Label Margin="40,0,0,0" IsVisible="{Binding SupportLabelVisibility}" Grid.Row="9" Text="{Binding SupportLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}"  TextColor="{StaticResource RedColor}" Grid.ColumnSpan="2" />
 
                     <!--<controls:CustomDatePicker Grid.Row="10" SelectedDate="{Binding PresentDate}" MinimumDate="{Binding PastDate}" MaximumDate="{Binding FutureDate}" />-->
 
