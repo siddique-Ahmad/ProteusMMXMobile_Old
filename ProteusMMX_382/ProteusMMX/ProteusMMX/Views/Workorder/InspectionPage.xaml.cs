@@ -43,6 +43,9 @@ namespace ProteusMMX.Views.Workorder
         private readonly IRequestService _requestService;
         Button btnCreateWorkorder;
         double totalTime;
+        Button btnAddInspection;
+        Button btnAddEmployee;
+        Button btnAddContractor;
         //Task<ServiceOutput> flInput;
         public int? WorkorderID { get; set; }
         public string BaseURL { get; set; }
@@ -239,9 +242,49 @@ namespace ProteusMMX.Views.Workorder
 
         protected async Task OnAppearingOld()
         {
-            Button btnAddInspection = new Button();
-            Button btnAddEmployee = new Button();
-            Button btnAddContractor = new Button();
+            btnAddInspection = new Button
+            {
+                Text = "AddInspection",
+                BackgroundColor = Color.FromHex("#87CEFA"),
+                //  CommandParameter = item,
+                BorderColor = Color.Black,
+                TextColor = Color.White
+            };
+
+            btnAddEmployee = new Button
+            {
+                Text = "AddEmployee",
+                BackgroundColor = Color.FromHex("#87CEFA"),
+                //  CommandParameter = item,
+                BorderColor = Color.Black,
+                TextColor = Color.White
+            };
+
+            btnAddContractor = new Button
+            {
+                Text = "AddContractor",
+                BackgroundColor = Color.FromHex("#87CEFA"),
+                //  CommandParameter = item,
+                BorderColor = Color.Black,
+                TextColor = Color.White
+            };
+            btnAddInspection.Clicked += (sender, e) =>
+            {
+                var page = new AddInspectionData(WorkorderID);
+                Navigation.PushAsync(page);
+
+            };
+
+            btnAddEmployee.Clicked += (sender, e) =>
+            {
+                ViewModel._navigationService.NavigateToAsync<EmployeeListSelectionPageViewModel>();
+
+            };
+            btnAddContractor.Clicked += (sender, e) =>
+            {
+                ViewModel._navigationService.NavigateToAsync<ContractorListSelectionPageViewModel>();
+
+            };
             btnCreateWorkorder = new Button();
            
 
@@ -418,32 +461,32 @@ namespace ProteusMMX.Views.Workorder
                         BackgroundColor = Color.FromHex("#87CEFA"),
                     };
 
-                    btnAddInspection = new Button
-                    {
-                        Text = "AddInspection",
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                        //  CommandParameter = item,
-                        BorderColor = Color.Black,
-                        TextColor = Color.White
-                    };
+                    //btnAddInspection = new Button
+                    //{
+                    //    Text = "AddInspection",
+                    //    BackgroundColor = Color.FromHex("#87CEFA"),
+                    //    //  CommandParameter = item,
+                    //    BorderColor = Color.Black,
+                    //    TextColor = Color.White
+                    //};
 
-                    btnAddEmployee = new Button
-                    {
-                        Text = "AddEmployee",
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                        //  CommandParameter = item,
-                        BorderColor = Color.Black,
-                        TextColor = Color.White
-                    };
+                    //btnAddEmployee = new Button
+                    //{
+                    //    Text = "AddEmployee",
+                    //    BackgroundColor = Color.FromHex("#87CEFA"),
+                    //    //  CommandParameter = item,
+                    //    BorderColor = Color.Black,
+                    //    TextColor = Color.White
+                    //};
 
-                    btnAddContractor = new Button
-                    {
-                        Text = "AddContractor",
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                        //  CommandParameter = item,
-                        BorderColor = Color.Black,
-                        TextColor = Color.White
-                    };
+                    //btnAddContractor = new Button
+                    //{
+                    //    Text = "AddContractor",
+                    //    BackgroundColor = Color.FromHex("#87CEFA"),
+                    //    //  CommandParameter = item,
+                    //    BorderColor = Color.Black,
+                    //    TextColor = Color.White
+                    //};
 
                     if (this.btnCreateWorkorder.IsVisible)
                     {
@@ -467,7 +510,7 @@ namespace ProteusMMX.Views.Workorder
                     try
                     {
 
-                        string k1 = "WorkOrderContractor:" + item.ContractorLaborCraftID;
+                        string k1 = "WorkorderContracator:" + item.ContractorLaborCraftID;
                         savedContractorlocal = JsonConvert.DeserializeObject<WorkorderContractor>(WorkorderInspectionStorge.Storage.Get(k1));
 
 
@@ -1011,32 +1054,32 @@ namespace ProteusMMX.Views.Workorder
                         BackgroundColor = Color.FromHex("#87CEFA"),
                     };
 
-                    btnAddInspection = new Button
-                    {
-                        Text = "Add Inspection",
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                        //  CommandParameter = item,
-                        BorderColor = Color.Black,
-                        TextColor = Color.White
-                    };
+                    //btnAddInspection = new Button
+                    //{
+                    //    Text = "Add Inspection",
+                    //    BackgroundColor = Color.FromHex("#87CEFA"),
+                    //    //  CommandParameter = item,
+                    //    BorderColor = Color.Black,
+                    //    TextColor = Color.White
+                    //};
 
-                    btnAddEmployee = new Button
-                    {
-                        Text = "Add Employee",
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                        //  CommandParameter = item,
-                        BorderColor = Color.Black,
-                        TextColor = Color.White
-                    };
+                    //btnAddEmployee = new Button
+                    //{
+                    //    Text = "Add Employee",
+                    //    BackgroundColor = Color.FromHex("#87CEFA"),
+                    //    //  CommandParameter = item,
+                    //    BorderColor = Color.Black,
+                    //    TextColor = Color.White
+                    //};
 
-                    btnAddContractor = new Button
-                    {
-                        Text = "Add Contractor",
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                        //  CommandParameter = item,
-                        BorderColor = Color.Black,
-                        TextColor = Color.White
-                    };
+                    //btnAddContractor = new Button
+                    //{
+                    //    Text = "Add Contractor",
+                    //    BackgroundColor = Color.FromHex("#87CEFA"),
+                    //    //  CommandParameter = item,
+                    //    BorderColor = Color.Black,
+                    //    TextColor = Color.White
+                    //};
 
                     if (this.btnCreateWorkorder.IsVisible)
                     {
@@ -1050,19 +1093,7 @@ namespace ProteusMMX.Views.Workorder
                         };
                     }
 
-                    btnAddInspection.Clicked += (sender, e) =>
-                    {
-                        var page = new AddInspectionData(WorkorderID);
-                        Navigation.PushAsync(page);
-
-                    };
                    
-                    btnAddEmployee.Clicked += (sender, e) =>
-                    {
-                        ViewModel._navigationService.NavigateToAsync<EmployeeListSelectionPageViewModel>();
-
-                    };
-
                     btnCreateWorkorder.Clicked += (sender, e) =>
                     {
                         var page = new CreateWorkorderFromInspectionPageContent(WorkorderID, AnswerText);
@@ -1210,11 +1241,7 @@ namespace ProteusMMX.Views.Workorder
 
                     };
 
-                    btnAddContractor.Clicked += (sender, e) =>
-                    {
-                        ViewModel._navigationService.NavigateToAsync<ContractorListSelectionPageViewModel>();
-
-                    };
+                 
 
                     
 
@@ -1657,6 +1684,7 @@ namespace ProteusMMX.Views.Workorder
             CC = await ViewModel._inspectionService.GetWorkorderInspection(this.WorkorderID.ToString());
             if (CC.listInspection == null || CC.listInspection.Count == 0)
             {
+               
                 //this.InspectionTimerLayout.IsVisible = false;
                 //DisabledText.Text = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
                 //DisabledText.IsVisible = true;
@@ -2344,7 +2372,8 @@ namespace ProteusMMX.Views.Workorder
                     var btnsave = new Button() { Text = WebControlTitle.GetTargetNameByTitleName("Save"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnsave.Clicked += Btnsave_Clicked;
 
-
+                    var btnDelete = new Button() { StyleId = item.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    btnDelete.Clicked += BtnDelete_Clicked;
 
                     #region Add Signature image
                     if (item.SignatureRequired.GetValueOrDefault())
@@ -2366,6 +2395,7 @@ namespace ProteusMMX.Views.Workorder
                     #endregion
 
                     layout2.Children.Add(btnsave);
+                    layout2.Children.Add(btnDelete);
 
                     #region Estimated Hour Region
                     if (Device.Idiom == TargetIdiom.Phone)
@@ -2927,7 +2957,8 @@ namespace ProteusMMX.Views.Workorder
                     var btnSaveSection = new Button() { Text = WebControlTitle.GetTargetNameByTitleName("SaveInspection"), CommandParameter = commonSections, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnSaveSection.Clicked += BtnSaveSection_Clicked;
 
-
+                    var btnDelete = new Button() { StyleId = item.SectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    btnDelete.Clicked += BtnSectionDelete_Clicked;
 
 
 
@@ -2950,6 +2981,7 @@ namespace ProteusMMX.Views.Workorder
                     #endregion
 
                     layout1.Children.Add(btnSaveSection);
+                    layout1.Children.Add(btnDelete);
 
                     #region Estimated Hour Region
                     if (Device.Idiom == TargetIdiom.Phone)
@@ -4481,7 +4513,85 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
+        private async void BtnDelete_Clicked(object sender, EventArgs e)
+        {
+            var ssdv = (sender as Button).Parent as StackLayout;
 
+
+
+
+            var kfm = ssdv.Children.Last() as Button;
+
+            //  var kfm1 = ParentLayout.Children[0] as StackLayout;
+
+            if (kfm == null)
+            {
+                return;
+            }
+
+            string MiscallanesousID = kfm.StyleId;
+
+            //Delete SingleInspection From Workorder///
+            Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/deleteWorkorderinspectionData");
+
+            var payload = new Dictionary<string, string>
+            {
+              {"InspectionID", MiscallanesousID},
+              {"WorkorderID", WorkorderID.ToString()},
+
+            };
+
+            string strPayload = JsonConvert.SerializeObject(payload);
+            HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            var t = Task.Run(() => SendURI(posturi, c));
+
+            //UserDialogs.Instance.HideLoading();
+            MainLayout.Children.Clear();
+            // ParentLayout.Children.Clear();
+            OnAppearingOld();
+
+
+        }
+        private async void BtnSectionDelete_Clicked(object sender, EventArgs e)
+        {
+
+            var ssdv = (sender as Button).Parent as StackLayout;
+
+
+
+
+            var kfm = ssdv.Children.Last() as Button;
+
+            //  var kfm1 = ParentLayout.Children[0] as StackLayout;
+
+            if (kfm == null)
+            {
+                return;
+            }
+
+            string FinalSectionID = kfm.StyleId;
+
+            //Delete GroupInspection From Workorder///
+            Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/deleteWorkordersectionData");
+
+            var payload = new Dictionary<string, string>
+            {
+              {"SectionID", FinalSectionID},
+              {"WorkorderID", WorkorderID.ToString()},
+               
+            };
+
+            string strPayload = JsonConvert.SerializeObject(payload);
+            HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            var t = Task.Run(() => SendURI(posturi, c));
+
+            //UserDialogs.Instance.HideLoading();
+            MainLayout.Children.Clear();
+           // ParentLayout.Children.Clear();
+            OnAppearingOld();
+
+        }
+        
 
         private async Task<InspectionToAnswer> RetriveSignatureFromView(SignaturePadView signView, InspectionToAnswer inspectionAnswer)
         {
@@ -4772,7 +4882,7 @@ namespace ProteusMMX.Views.Workorder
 
                 //UserDialogs.Instance.HideLoading();
                 //MainLayout.Children.Clear();
-                ParentLayout.Children.Clear();
+                 ParentLayout.Children.Clear();
                  OnAppearingOld();
 
             }
