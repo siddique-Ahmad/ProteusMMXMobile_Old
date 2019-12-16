@@ -57,7 +57,16 @@ namespace ProteusMMX.Services.Workorder.Inspection
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }
-
+        public Task<ServiceOutput> GetFailedWorkorderInspection(string WorkorderID,string failedinpsection)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.GetFailedWorkorderInspection);
+            builder.AppendToPath(WorkorderID);
+            builder.AppendToPath(failedinpsection);
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.GetAsync(uri);
+        }
+        
 
         public Task<ServiceOutput> AnswerInspection(object inspectionAnswer)
         {

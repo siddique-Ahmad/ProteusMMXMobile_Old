@@ -8,6 +8,7 @@ using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
+using ProteusMMX.Services.Navigation;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Services.Workorder.Attachments;
 using ProteusMMX.Services.Workorder.Inspection;
@@ -33,7 +34,10 @@ namespace ProteusMMX.ViewModel.Workorder
         public readonly IAuthenticationService _authenticationService;
         public readonly IInspectionService _inspectionService;
         public readonly IWorkorderService _workorderService;
+        public readonly INavigationService _navigationService;
         protected readonly IFormLoadInputService _formLoadInputService;
+       
+
 
         string CreateWorkorderRights;
         #endregion
@@ -400,12 +404,15 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        public InspectionPageViewModel(IAuthenticationService authenticationService, IInspectionService inspectionService, IWorkorderService workorderService,IFormLoadInputService formLoadInputService)
+        public InspectionPageViewModel(IAuthenticationService authenticationService, IInspectionService inspectionService, IWorkorderService workorderService,IFormLoadInputService formLoadInputService, INavigationService navigationService)
         {
             _authenticationService = authenticationService;
             _inspectionService = inspectionService;
             _workorderService = workorderService;
             _formLoadInputService = formLoadInputService;
+            _navigationService = navigationService;
+          
+        
 
         }
 

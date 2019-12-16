@@ -3654,9 +3654,16 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 if (navigationData != null)
                 {
 
-                    var navigationParams = navigationData as TargetNavigationData;
-                    this.ServiceRequestID = navigationParams.ServiceRequestID;
-                    this.RequestNumber= navigationParams.RequestNumber;
+                    //var navigationParams = navigationData as TargetNavigationData;
+                    //this.ServiceRequestID = navigationParams.ServiceRequestID;
+                    //this.RequestNumber= navigationParams.RequestNumber;
+
+                    var navigationParams = navigationData as PageParameters;
+                    this.Page = navigationParams.Page;
+
+                    var servicerequest = navigationParams.Parameter as ServiceRequests;
+                    this.ServiceRequestID = servicerequest.ServiceRequestID;
+                    this.RequestNumber = servicerequest.RequestNumber;
                 }
 
 
@@ -3786,7 +3793,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 
                 await SetControlsPropertiesForPage();
                 await CreateControlsForPage();
-              
+                //await this.OnViewAppearingAsync(null);
 
 
 
@@ -3820,8 +3827,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             try
             {
 
-
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("ServiceRequest")+" - "+ RequestNumber;
+                PageTitle = WebControlTitle.GetTargetNameByTitleName("Details");
+                //PageTitle = WebControlTitle.GetTargetNameByTitleName("ServiceRequest")+" - "+ RequestNumber;
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");

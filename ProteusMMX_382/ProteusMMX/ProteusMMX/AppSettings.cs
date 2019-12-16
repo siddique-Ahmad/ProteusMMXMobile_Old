@@ -28,7 +28,7 @@ namespace ProteusMMX
 
         public static string APPVersion
         {
-            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.8.9");
+            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.10");
         }
         public static string UserName
         {
@@ -335,6 +335,23 @@ namespace ProteusMMX
                 if (value != _getWorkorderInspection)
                 {
                     _getWorkorderInspection = value;
+                }
+            }
+
+        }
+        private static string _getfailedWorkorderInspection = "Inspection/service/GetFailedInspection";
+        public static string GetFailedWorkorderInspection
+        {
+            get
+            {
+                return _getfailedWorkorderInspection;
+            }
+
+            set
+            {
+                if (value != _getfailedWorkorderInspection)
+                {
+                    _getfailedWorkorderInspection = value;
                 }
             }
 
@@ -1230,6 +1247,24 @@ namespace ProteusMMX
             }
 
         }
+
+        private static string _getServiceRequestAttachments = "Inspection/service/ServiceRequestAttachments";
+        public static string GetServiceRequestAttachments
+        {
+            get
+            {
+                return _getServiceRequestAttachments;
+            }
+
+            set
+            {
+                if (value != _getServiceRequestAttachments)
+                {
+                    _getServiceRequestAttachments = value;
+                }
+            }
+
+        }
         private static string _closedWorkorderAttachmentByClosedWorkorderID = "Inspection/service/ClosedWorkOrdersAttachmentsByClosedWorkOrderID";
         public static string ClosedWorkorderAttachmentByClosedWorkorderID
         {
@@ -1265,7 +1300,24 @@ namespace ProteusMMX
             }
 
         }
+        private static string _deleteServiceRequestAttachments = "Inspection/service/RemoveServiceRequestAttachment";
+        public static string DeleteServiceRequestAttachments
+        {
+            get
+            {
+                return _deleteServiceRequestAttachments;
+            }
 
+            set
+            {
+                if (value != _deleteServiceRequestAttachments)
+                {
+                    _deleteServiceRequestAttachments = value;
+                }
+            }
+
+        }
+        
         private static string _createWorkOrderAttachments = "Inspection/service/CreateWorkOrderAttachment";
         public static string CreateWorkOrderAttachments
         {
@@ -1283,6 +1335,24 @@ namespace ProteusMMX
             }
 
         }
+        private static string _createServiceRequestAttachments = "Inspection/service/CreateServiceRequestAttachment";
+        public static string CreateServiceRequestAttachments
+        {
+            get
+            {
+                return _createServiceRequestAttachments;
+            }
+
+            set
+            {
+                if (value != _createServiceRequestAttachments)
+                {
+                    _createServiceRequestAttachments = value;
+                }
+            }
+
+        }
+        
 
         #endregion
         #endregion

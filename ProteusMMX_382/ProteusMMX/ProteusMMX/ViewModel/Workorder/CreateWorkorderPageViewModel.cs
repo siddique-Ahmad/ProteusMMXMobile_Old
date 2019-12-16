@@ -12,6 +12,7 @@ using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
+using ProteusMMX.Services.SelectionListPageServices;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Utils;
 using ProteusMMX.ViewModel.Miscellaneous;
@@ -40,6 +41,8 @@ namespace ProteusMMX.ViewModel.Workorder
         protected readonly IFormLoadInputService _formLoadInputService;
 
         protected readonly IWorkorderService _workorderService;
+
+        protected readonly IFacilityService _facilityService;
         #endregion
 
         #region Properties
@@ -3887,6 +3890,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     var navigationParams = navigationData as TargetNavigationData;
                     //Set Facility
+                   
+
+
                     if (navigationParams.FacilityID != null)
                     {
                         this.FacilityID = navigationParams.FacilityID;
@@ -3911,6 +3917,21 @@ namespace ProteusMMX.ViewModel.Workorder
                         this.AssetSystemName = navigationParams.AssetSystemName;
                     }
                 }
+                var facilityResponse = await _facilityService.GetFacilities(UserID, "1", "10", "null");
+                if (facilityResponse != null && facilityResponse.targetWrapper != null && facilityResponse.targetWrapper.facilities != null)
+                {
+                    int facilities = facilityResponse.targetWrapper.facilities.Count();
+                    if (facilities == 1)
+                    {
+                        foreach (var item in facilityResponse.targetWrapper.facilities)
+                        {
+                            this.FacilityID = item.FacilityID;
+                            this.FacilityName = item.FacilityName;
+                        }
+
+                    }
+
+                }
                 var employeeAssignTo = await _workorderService.GetEmployeeAssignTo(UserID);
                 if (employeeAssignTo != null && employeeAssignTo.employeesAssignedTo != null && employeeAssignTo.employeesAssignedTo.Count > 0)
                 {
@@ -3929,11 +3950,12 @@ namespace ProteusMMX.ViewModel.Workorder
                 OperationInProgress = false;
             }
         }
-        public CreateWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService)
+        public CreateWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService, IFacilityService facilityService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _workorderService = workorderService;
+            _facilityService = facilityService;
         }
 
         public async Task SetTitlesPropertiesForPage()

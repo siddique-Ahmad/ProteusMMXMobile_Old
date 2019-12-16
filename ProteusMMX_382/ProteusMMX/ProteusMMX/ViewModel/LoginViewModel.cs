@@ -1154,7 +1154,7 @@ namespace ProteusMMX.ViewModel
 
             ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "Details");
             ServiceOutput FormControlsAndRightsForButton = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "ServiceRequest");
-           
+
             if (FormControlsAndRightsForButton != null && FormControlsAndRightsForButton.lstModules != null && FormControlsAndRightsForButton.lstModules.Count > 0)
             {
                 var ServiceRequestModule = FormControlsAndRightsForButton.lstModules[0];
@@ -1166,14 +1166,14 @@ namespace ProteusMMX.ViewModel
                         if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
                         {
 
-                           
+
 
                             Application.Current.Properties["AcceptKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Accept").Expression;
                             Application.Current.Properties["DEclineKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Decline").Expression;
                             Application.Current.Properties["CreateServiceRequestKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
                             Application.Current.Properties["EditServiceRequestKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
 
-                         
+
 
 
 
@@ -1183,7 +1183,35 @@ namespace ProteusMMX.ViewModel
 
                     }
                 }
+                var ServiceRequestModuleAttachment = FormControlsAndRightsForButton.lstModules[2];
+                if (ServiceRequestModuleAttachment.ModuleName == "Attachments") //ModuleName can't be  changed in service 
+                {
+                    if (ServiceRequestModuleAttachment.lstSubModules != null && ServiceRequestModuleAttachment.lstSubModules.Count > 0)
+                    {
+                        var ServiceRequestSubModule = ServiceRequestModuleAttachment.lstSubModules[0];
+                        if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                        {
+                            Application.Current.Properties["CreateSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                            Application.Current.Properties["RemoveSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+                            Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Rights").Expression;
+                        }
+                    }
+                }
             }
+
+
+
+
+
+
+
+
+
+                        
+
+
+
+                   
             if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
             {
                 var ServiceRequestModule = FormControlsAndRightsForDetails.lstModules[0];

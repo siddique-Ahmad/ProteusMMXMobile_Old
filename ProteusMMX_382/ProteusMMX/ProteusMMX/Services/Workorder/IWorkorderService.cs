@@ -8,7 +8,7 @@ namespace ProteusMMX.Services.Workorder
 {
     public interface IWorkorderService
     {
-        Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber , string RowCount , string WorkorderNumber , string WorkorderType , string ActivationDateSortingType);
+        Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber , string RowCount , string WorkorderNumber , string WorkorderType , string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch);
 
         Task<ServiceOutput> GetWorkordersFromAsset(string AssetNumber, string UserID, int PageNumber, int RowCount);
 

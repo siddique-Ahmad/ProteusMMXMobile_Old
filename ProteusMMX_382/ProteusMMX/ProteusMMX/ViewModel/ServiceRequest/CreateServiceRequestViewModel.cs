@@ -16,6 +16,7 @@ using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.Services.Asset;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
+using ProteusMMX.Services.SelectionListPageServices;
 using ProteusMMX.Services.ServiceRequest;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Utils;
@@ -51,6 +52,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         protected readonly IServiceRequestModuleService _serviceRequestService;
 
         protected readonly IWorkorderService _workorderService;
+
+        protected readonly IFacilityService _facilityService;
         #endregion
 
         #region Properties
@@ -3546,10 +3549,24 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
                 await SetTitlesPropertiesForPage();
-              //  FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.ServiceRequestModuleName);
-              
+                //  FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.ServiceRequestModuleName);
 
-               
+                var facilityResponse = await _facilityService.GetFacilities(UserID, "1", "10", "null");
+                if (facilityResponse != null && facilityResponse.targetWrapper != null && facilityResponse.targetWrapper.facilities != null)
+                {
+                    int facilities = facilityResponse.targetWrapper.facilities.Count();
+                    if (facilities == 1)
+                    {
+                        foreach (var item in facilityResponse.targetWrapper.facilities)
+                        {
+                            this.FacilityID = item.FacilityID;
+                            this.FacilityName = item.FacilityName;
+                        }
+
+                    }
+
+                }
+
                 if (Application.Current.Properties.ContainsKey("ServiceRequestAdditionalDetailsKey"))
                 {
                     var AdditionalRights = Application.Current.Properties["ServiceRequestAdditionalDetailsKey"].ToString();
@@ -3643,12 +3660,13 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
-        public CreateServiceRequestViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IServiceRequestModuleService serviceRequestService,IWorkorderService workorderService)
+        public CreateServiceRequestViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IServiceRequestModuleService serviceRequestService,IWorkorderService workorderService, IFacilityService facilityService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _serviceRequestService = serviceRequestService;
             _workorderService = workorderService;
+            _facilityService = facilityService;
         }
 
         public async Task SetTitlesPropertiesForPage()

@@ -98,6 +98,8 @@
                                 <Label Text="{Binding JobNumberText}"/>
                             </StackLayout>
 
+                          
+
                             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">
                                 <Label Text="{Binding DescriptionTitle}" TextColor="Black">
                                     <Label.FontAttributes>
@@ -408,8 +410,22 @@
                                 </Label>
                                 <controls:NumericEntry Text="{Binding MiscellaneousMaterialCostText}" IsEnabled="{Binding MiscellaneousMaterialCostIsEnable}" TextChanged="NumericEntry_TextChanged_3"/>
                             </StackLayout>
-                            
-                           
+
+                            <StackLayout Orientation="Vertical" Grid.Row="14">
+                                <Label Text="TotalTime" TextColor="Black">
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes">
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Label.FontAttributes>
+                                </Label>
+                                <Label Text="{Binding TotalTimeText}"/>
+                            </StackLayout>
+
+
+
+
 
                         </Grid>
 

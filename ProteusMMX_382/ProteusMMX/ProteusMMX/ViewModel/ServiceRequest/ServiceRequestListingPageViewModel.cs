@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+
 using ProteusMMX.Helpers;
 using ProteusMMX.Model;
 using ProteusMMX.Model.AssetModel;
@@ -31,7 +32,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
     public class ServiceRequestListingPageViewModel : ViewModelBase, IHandleViewAppearing, IHandleViewDisappearing
     {
 
-
+       
         #region Fields
 
         protected readonly IAuthenticationService _authenticationService;
@@ -551,6 +552,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             try
             {
 
+
                
 
                 if (navigationData != null)
@@ -627,6 +629,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _serviceRequestService = _serviceReqService;
+
         }
 
         public async Task SetTitlesPropertiesForPage()
@@ -647,7 +650,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
                 SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
                 TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName("TotalRecords");
-            SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+                SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
 
 
 
@@ -834,6 +837,40 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 OperationInProgress = true;
 
 
+             //   CrossBleAdapter.Current.SetAdapterState(true);
+                //var state = ble.State;
+                //ble.StateChanged += (s, e) =>
+                //{
+
+                //};
+                //var adapter = CrossBluetoothLE.Current.Adapter;
+                //adapter.ena
+                //var systemDevices = adapter.GetSystemConnectedOrPairedDevices();
+                //foreach (var device in systemDevices)
+                //{
+
+                //    await adapter.ConnectToDeviceAsync(device);
+                //    var services = await device.GetServicesAsync();
+                //    // var characteristics = await services.GetCharacteristicsAsync();
+                //    foreach (var item in services)
+                //    {
+                //        var characteristics = item.GetCharacteristicsAsync();
+                //        foreach (var item1 in characteristics.Result)
+                //        {
+                //            var data = item1.Value;
+                //        }
+                //    }
+                //    //var data = await characteristic.ReadAsync();
+                //    //data[0] = 0x13;
+                //    //await characteristic.WriteAsync(data);
+
+                //    //characteristic.ValueUpdated += (s, e) =>
+                //    //{
+                //    //    Debug.WriteLine("New value: {0}", e.Characteristic.Value);
+                //    //};
+                //    //characteristic.StartUpdates();
+                //}
+
                 #region Barcode Section and Search Section
 
                 if (SearchButtonTitle == ScanTitle)
@@ -941,7 +978,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     TargetNavigationData tnobj = new TargetNavigationData();
                     tnobj.ServiceRequestID = item.ServiceRequestID;
                     tnobj.RequestNumber = item.RequestNumber;
-                    await NavigationService.NavigateToAsync<EditServiceRequestViewModel>(tnobj);
+                    await NavigationService.NavigateToAsync<ServiceRequestTabbedPageViewModel>(item);
                     //OperationInProgress = false;
                     UserDialogs.Instance.HideLoading();
                 }
