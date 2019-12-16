@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Newtonsoft.Json;
 using ProteusMMX.Constants;
 using ProteusMMX.Controls;
 using ProteusMMX.Converters;
@@ -24,7 +25,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -6681,6 +6686,9 @@ namespace ProteusMMX.ViewModel.Asset
             {
 
                 var asset = AssetWrapper.assetWrapper.asset;
+                
+                //string base64 = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Pages/Common/AsyncHandler.ashx?Module=Assets" + "&Mode=Get" + "&&Id="+asset.AssetID)).ToString();
+                //var attachment = ServiceCallWebClient(base64,"Get",null,null);
                 AdditionalDetailsText = asset.AdditionalDetails;
                 Description = asset.Description;
                 if (!string.IsNullOrEmpty(asset.AssetName))
@@ -8166,6 +8174,115 @@ namespace ProteusMMX.ViewModel.Asset
                 // OperationInProgress = false;
 
             }
+        }
+        public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
+        {
+            ServiceOutput responseContent = new ServiceOutput();
+            try
+            {
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    string segurl = string.Empty;
+                    if (urlSegment != null)
+                    {
+                        foreach (KeyValuePair<string, string> entry in urlSegment)
+                        {
+                            segurl = segurl + "/" + entry.Value;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(segurl))
+                    {
+                        url = url + segurl;
+                    }
+
+
+
+                    if (!string.IsNullOrEmpty(mtype))
+                    {
+                        if (mtype.ToLower().Equals("get"))
+                        {
+
+
+                            HttpClient client = new HttpClient();
+                            client.BaseAddress = new Uri(url);
+
+                            // Add an Accept header for JSON format.
+                            client.DefaultRequestHeaders.Accept.Add(
+                                new MediaTypeWithQualityHeaderValue("application/json"));
+
+                            HttpResponseMessage response = client.GetAsync(url).Result;
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                var content = await response.Content.ReadAsStringAsync();
+                               
+
+                               var mybytearray = Convert.FromBase64String(content);
+
+                                //responseContent = JsonConvert.DeserializeObject<ServiceOutput>(content.ToString());
+
+                            }
+
+
+                        }
+                        else if (mtype.ToLower().Equals("post"))
+                        {
+                            try
+                            {
+                                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                                httpWebRequest.ContentType = "application/json";
+                                httpWebRequest.Method = mtype;
+                                var stream = await httpWebRequest.GetRequestStreamAsync();
+                                string Json = JsonConvert.SerializeObject(jsonString);
+                                using (var writer = new StreamWriter(stream))
+                                {
+                                    writer.Write(Json);
+                                    writer.Flush();
+                                    writer.Dispose();
+                                }
+
+                                using (HttpWebResponse response = await httpWebRequest.GetResponseAsync() as HttpWebResponse)
+                                {
+                                    if (response.StatusCode == HttpStatusCode.OK)
+                                    {
+                                        //  Console.Out.WriteLine("Error fetching data. Server returned status code: {0}", response.StatusCode);
+                                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                                        {
+                                            var content = reader.ReadToEnd();
+
+                                            responseContent = JsonConvert.DeserializeObject<ServiceOutput>(content.ToString());
+                                        }
+                                    }
+
+
+                                }
+
+                            }
+                            catch (WebException ex)
+                            {
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return responseContent;
         }
         #endregion
     }

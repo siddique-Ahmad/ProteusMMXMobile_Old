@@ -30,7 +30,7 @@ namespace ProteusMMX.Services.Workorder
         }
 
    
-        public Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType)
+        public Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetWorkorders);
@@ -54,6 +54,21 @@ namespace ProteusMMX.Services.Workorder
                 builder.AppendToPath("null");
             else
                 builder.AppendToPath(ActivationDateSortingType);
+
+            if (LocationSearch == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(LocationSearch);
+
+            if (ShiftSearch == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(ShiftSearch);
+
+            if (PrioritySearch == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(PrioritySearch);
 
 
             var uri = builder.Uri.AbsoluteUri;

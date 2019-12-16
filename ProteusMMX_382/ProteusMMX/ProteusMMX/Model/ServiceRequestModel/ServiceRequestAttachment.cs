@@ -16,5 +16,8 @@ namespace ProteusMMX.Model.ServiceRequestModel
         public string Expression { get; set; }
         public string AttachmentBase64String { get; set; }
         public string AttachmentNameWithExtension { get; set; }
+
+        public string attachmentFile { get; set; }
+        public string attachmentFileExtension { get; set; }
     }
 }

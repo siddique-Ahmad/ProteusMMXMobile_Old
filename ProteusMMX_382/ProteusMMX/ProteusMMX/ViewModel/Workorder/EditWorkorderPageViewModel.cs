@@ -955,6 +955,28 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+
+        // Total Time
+        string _totalTimeText;
+        public string TotalTimeText
+        {
+            get
+            {
+                return _totalTimeText;
+            }
+
+            set
+            {
+                if (value != _totalTimeText)
+                {
+                    _totalTimeText = value;
+                    OnPropertyChanged(nameof(TotalTimeText));
+                }
+            }
+        }
+
+
+
         string _jobNumberTitle;
         public string JobNumberTitle
         {
@@ -969,6 +991,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _jobNumberTitle = value;
                     OnPropertyChanged(nameof(JobNumberTitle));
+                }
+            }
+        }
+
+        string _totalTimeTitle;
+        public string TotalTimeTitle
+        {
+            get
+            {
+                return _totalTimeTitle;
+            }
+
+            set
+            {
+                if (value != _totalTimeTitle)
+                {
+                    _totalTimeTitle = value;
+                    OnPropertyChanged(nameof(TotalTimeTitle));
                 }
             }
         }
@@ -3253,6 +3293,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _jobNumber = value;
                     OnPropertyChanged(nameof(JobNumber));
+                }
+            }
+        }
+
+        string _totalTimeWorkorder;
+        public string TotalTimeWorkorder
+        {
+            get
+            {
+                return _totalTimeWorkorder;
+            }
+
+            set
+            {
+                if (value != _totalTimeWorkorder)
+                {
+                    _totalTimeWorkorder = value;
+                    OnPropertyChanged(nameof(TotalTimeWorkorder));
                 }
             }
         }
@@ -7798,6 +7856,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
 
+               
                 case "ApprovalLevel":
                     {
                         if (control is Picker)
@@ -10749,6 +10808,15 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 this.WorkorderNumberText = workorder.WorkOrderNumber;
                 this.JobNumberText = workorder.JobNumber;
+                if(workorder.TotalTime!=null)
+                {
+                    this.TotalTimeText = workorder.TotalTime;
+                }
+                else
+                {
+                    this.TotalTimeText = null;
+                }
+              
                 this.DescriptionText = workorder.Description;
                 if(!string.IsNullOrWhiteSpace(workorder.AdditionalDetails))
                 {

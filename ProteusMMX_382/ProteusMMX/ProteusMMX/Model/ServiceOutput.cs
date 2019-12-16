@@ -68,13 +68,16 @@ namespace ProteusMMX.Model
 
         public string Signvalue { get; set; }
 
-
+        public List<WorkOrderEmployee> workOrderEmployee { get; set; }
+        public List<WorkorderContractor> workorderContractor { get; set; }
         public List<WorkOrderFormLoad> CFLI { get; set; }
 
         public List<Model.WorkOrderModel.WebControlTitleLabel> listWebControlTitles { get; set; }
 
         public List<Roles> lstRoles { get; set; }
         public List<ExistingInspections> listInspection { get; set; }
+
+        public List<WorkOrderInspectionData> WorkOrderInspectionDataWrapper { get; set; }
 
         public string servicestatus { get; set; }
 

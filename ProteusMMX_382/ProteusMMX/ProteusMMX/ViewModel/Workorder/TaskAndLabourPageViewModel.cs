@@ -722,7 +722,25 @@ namespace ProteusMMX.ViewModel.Workorder
                             TextColor = Color.White
                         };
 
+                        Button startButtonforRate2 = new Button
+                        {
+                            Text = WebControlTitle.GetTargetNameByTitleName("Start"),
+                            BackgroundColor = Color.FromHex("#87CEFA"),
+                            CommandParameter = item,
+                            BorderColor = Color.Black,
+                            TextColor = Color.White
+                        };
+
                         Button stopButton = new Button
+                        {
+                            Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
+                            BackgroundColor = Color.FromHex("#87CEFA"),
+                            CommandParameter = item,
+                            BorderColor = Color.Black,
+                            TextColor = Color.White
+                        };
+
+                        Button stopButtonforRate2 = new Button
                         {
                             Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
                             BackgroundColor = Color.FromHex("#87CEFA"),
@@ -750,9 +768,22 @@ namespace ProteusMMX.ViewModel.Workorder
                             TextColor = Color.White
                         };
 
+                        Button completeButtonforRate2 = new Button
+                        {
 
-                       Entry hoursEntry = new Entry { TextColor = Color.Black, Placeholder = "hh" };
+                            Text = WebControlTitle.GetTargetNameByTitleName("Complete"),
+                            BackgroundColor = Color.FromHex("#87CEFA"),
+                            CommandParameter = item,
+                            BorderColor = Color.Black,
+                            TextColor = Color.White
+                        };
+
+
+                        Entry hoursEntry = new Entry { TextColor = Color.Black, Placeholder = "hh" };
                        Entry  minuteEntry = new Entry { TextColor = Color.Black, Placeholder = "mm", };
+
+                        Entry hoursEntryforRate2 = new Entry { TextColor = Color.Black, Placeholder = "hh" };
+                        Entry minuteEntryforRate2 = new Entry { TextColor = Color.Black, Placeholder = "mm", };
 
                         Label startDateLabel = new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate") };
                         RequiredDateCustomDatePicker startDatePicker = new RequiredDateCustomDatePicker() { HorizontalOptions = LayoutOptions.Start, SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone), MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date };
@@ -789,13 +820,14 @@ namespace ProteusMMX.ViewModel.Workorder
                             var FinalHrs1 = FinalHours.Split('.');
                             hoursEntry.Text = FinalHrs1[0];
                             minuteEntry.Text = FinalHrs1[1];
-                            // CompHours.Text = item.CompletionDate.ToString();
 
-                            //CompHours.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), ServerTimeZone).ToString(); 
-
+                            string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
+                            var FinalHrs2 = FinalHours2.Split('.');
+                            hoursEntryforRate2.Text = FinalHrs2[0];
+                            minuteEntryforRate2.Text = FinalHrs2[1];
                             completeDateButton.Text = item.CompletionDate != null ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString() : "";
 
-                            //DateTime.Parse(CompHours.Text);
+
                         }
                         catch (Exception ex)
                         {
@@ -804,9 +836,10 @@ namespace ProteusMMX.ViewModel.Workorder
                         hoursEntry.TextChanged += OnTextChanged1;
                         minuteEntry.TextChanged += HoursTextChanged;
 
-                        //hoursEntry.TextChanged += OnTextChanged1;
-                        //minuteEntry.TextChanged += HoursTextChanged;
+                        hoursEntryforRate2.TextChanged += OnTextChanged1;
+                        minuteEntryforRate2.TextChanged += HoursTextChanged;
 
+                       
                         var startStopButtonGrid = new Grid();
                         startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
                         startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
@@ -824,7 +857,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         startStopButtonGrid.Children.Add(completeButton, 2, 0);
                         if (Device.Idiom == TargetIdiom.Phone)
                         {
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 0, 1);
+                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate1"), VerticalOptions = LayoutOptions.Center }, 0, 1);
                             startStopButtonGrid.Children.Add(hoursEntry, 1, 1);
                             startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 0, 2);
                             startStopButtonGrid.Children.Add(minuteEntry, 1, 2);
@@ -833,12 +866,45 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                         else
                         {
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
+                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate1"), VerticalOptions = LayoutOptions.Center }, 3, 0);
                             startStopButtonGrid.Children.Add(hoursEntry, 4, 0);
                             startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
                             startStopButtonGrid.Children.Add(minuteEntry, 6, 0);
                         }
-                       
+
+                        /// Hours at Rate 2 Layout///////////////////////
+
+                        var startStopButtonGridHours2 = new Grid();
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+
+
+                        startStopButtonGridHours2.Children.Add(startButtonforRate2, 0, 0);
+                        startStopButtonGridHours2.Children.Add(stopButtonforRate2, 1, 0);
+                        startStopButtonGridHours2.Children.Add(completeButtonforRate2, 2, 0);
+                        if (Device.Idiom == TargetIdiom.Phone)
+                        {
+                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate2"), VerticalOptions = LayoutOptions.Center }, 0, 1);
+                            startStopButtonGridHours2.Children.Add(hoursEntryforRate2, 1, 1);
+                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 0, 2);
+                            startStopButtonGridHours2.Children.Add(minuteEntryforRate2, 1, 2);
+
+
+                        }
+                        else
+                        {
+                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate2"), VerticalOptions = LayoutOptions.Center }, 3, 0);
+                            startStopButtonGridHours2.Children.Add(hoursEntryforRate2, 4, 0);
+                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
+                            startStopButtonGridHours2.Children.Add(minuteEntryforRate2, 6, 0);
+                        }
 
 
 
@@ -909,10 +975,22 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         #region GlobalTimer Logic
                         WorkOrderLabor savedWorkOrderLabor = null;
+                        WorkOrderLabor savedWorkOrderLabor2 = null;
+                        WorkOrderLabor savedWorkOrderLabor1 = null;
                         try
                         {
+                            //string rate1 = Convert.ToDecimal(string.Format("{0:F2}",item.HoursAtRate1)).ToString();
+                            //var Finalrate1 = rate1.Split('.');
+                            //string finalrate1 = Finalrate1[0];
+
+                         
+
                             string k1 = "WorkOrderLabor:" + item.WorkOrderLaborID;
+                            string k2 = "WorkOrderLaborHours2:" + item.HoursAtRate2;
+                            
+                            // string k2 = "WorkOrderLabor:" + item.WorkOrderLaborID + finalrate2;
                             savedWorkOrderLabor = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k1));
+                            savedWorkOrderLabor2 = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k2));
 
                         }
                         catch (Exception)
@@ -929,15 +1007,62 @@ namespace ProteusMMX.ViewModel.Workorder
                                 startButton.CommandParameter = savedWorkOrderLabor;
                                 stopButton.CommandParameter = savedWorkOrderLabor;
 
+                                string k3 = "WorkOrderLaborHours1:" + item.HoursAtRate1;
+                                savedWorkOrderLabor1 = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k3));
+                                //startButtonforRate2.CommandParameter = savedWorkOrderLabor;
+                                //stopButtonforRate2.CommandParameter = savedWorkOrderLabor;
+
 
                                 startButton.BackgroundColor = Color.Green;
-                                string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", savedWorkOrderLabor.HoursAtRate1)).ToString();
+                                //startButtonforRate2.BackgroundColor = Color.Green;
+
+                                string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", savedWorkOrderLabor1.HoursAtRate1)).ToString();
                                 var FinalHrs1 = FinalHours.Split('.');
                                 hoursEntry.Text = FinalHrs1[0];
                                 minuteEntry.Text = FinalHrs1[1];
-                                //  CompHours.Text = item.CompletionDate.ToString();
-                               
-                                    completeDateButton.Text = item.CompletionDate != null ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString() : "";
+
+                                //string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", savedWorkOrderLabor.HoursAtRate2)).ToString();
+                                //var FinalHrs2 = FinalHours2.Split('.');
+                                //hoursEntryforRate2.Text = FinalHrs2[0];
+                                //minuteEntryforRate2.Text = FinalHrs2[1];
+
+                                completeDateButton.Text = item.CompletionDate != null ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString() : "";
+
+
+
+
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+
+                        }
+
+                        if (savedWorkOrderLabor2 != null)
+                        {
+                            try
+                            {
+                                //set in buttons commands
+
+
+                                startButtonforRate2.CommandParameter = savedWorkOrderLabor2;
+                                stopButtonforRate2.CommandParameter = savedWorkOrderLabor2;
+
+
+
+                                startButtonforRate2.BackgroundColor = Color.Green;
+
+
+                                string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", savedWorkOrderLabor2.HoursAtRate2)).ToString();
+                                var FinalHrs2 = FinalHours2.Split('.');
+                                hoursEntryforRate2.Text = FinalHrs2[0];
+                                minuteEntryforRate2.Text = FinalHrs2[1];
+
+                                completeDateButton.Text = item.CompletionDate != null ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString() : "";
+
+
 
 
 
@@ -1049,6 +1174,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             var parent = buttonStart.Parent;
                             Grid parentGrid = parent as Grid;
+                          //  parentGrid.StyleId = item.HoursAtRate1.ToString();
                             Button btnStopLocal = parentGrid.Children[1] as Button;//Find the stopbutton from parent
                             btnStopLocal.CommandParameter = workOrderLabor; //reassign to commandParameter to stopbutton
 
@@ -1059,12 +1185,51 @@ namespace ProteusMMX.ViewModel.Workorder
                             workOrderLabor.Description = "";
                             WorkOrderLaborStorge.Storage.Set(key, JsonConvert.SerializeObject(workOrderLabor));
 
+                            string keyhours1 = "WorkOrderLaborHours1:" + workOrderLabor.HoursAtRate1;
+                            workOrderLabor.Description = "";
+                            WorkOrderLaborStorge.Storage.Set(keyhours1, JsonConvert.SerializeObject(workOrderLabor));
+
                             //StartTime = DateTime.Now;
 
                             startButton.BackgroundColor = Color.Green;
 
                             stopButton.IsEnabled = true;
                             stopButton.BackgroundColor = Color.FromHex("#87CEFA");
+
+
+
+                        };
+
+                        startButtonforRate2.Clicked += (sender, e) =>
+                        {
+                            //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
+                            var buttonStartforRate2 = sender as Button;
+                            WorkOrderLabor workOrderLabor = buttonStartforRate2.CommandParameter as WorkOrderLabor;
+
+                            workOrderLabor.StartTimeOfTimer = DateTime.Now;
+                            startButtonforRate2.CommandParameter = workOrderLabor; //reassign to commandParameter.
+
+
+                            var parent = buttonStartforRate2.Parent;
+                            Grid parentGrid = parent as Grid;
+                           // parentGrid.StyleId = item.HoursAtRate2.ToString();
+                            Button btnStopLocal = parentGrid.Children[1] as Button;//Find the stopbutton from parent
+                            btnStopLocal.CommandParameter = workOrderLabor; //reassign to commandParameter to stopbutton
+
+
+
+                            //Save in Local
+                            string key = "WorkOrderLaborHours2:" + workOrderLabor.HoursAtRate2;
+                            workOrderLabor.Description = "";
+                            WorkOrderLaborStorge.Storage.Set(key, JsonConvert.SerializeObject(workOrderLabor));
+
+                           
+                            //StartTime = DateTime.Now;
+
+                            startButtonforRate2.BackgroundColor = Color.Green;
+
+                            stopButtonforRate2.IsEnabled = true;
+                            stopButtonforRate2.BackgroundColor = Color.FromHex("#87CEFA");
 
 
 
@@ -1117,6 +1282,63 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             stopButton.BackgroundColor = Color.Red;
                             startButton.BackgroundColor = Color.Red;
+
+                            var parent = stopButton.Parent;
+                            Grid parentGrid = parent as Grid;
+                            parentGrid.StyleId = item.HoursAtRate1.ToString();
+                        };
+
+                        stopButtonforRate2.Clicked += (sender, e) =>
+                        {
+                            var StopTime = DateTime.Now;
+
+                            var x1 = sender as Button;
+                            WorkOrderLabor workOrderLabor = x1.CommandParameter as WorkOrderLabor;
+
+                            if (workOrderLabor.StartTimeOfTimer == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                            {
+                                return;
+                            }
+
+                            TimeSpan elapsed = StopTime.Subtract(workOrderLabor.StartTimeOfTimer);
+
+                            int mn = elapsed.Minutes;
+                            int mn1 = Convert.ToInt32(minuteEntryforRate2.Text);
+                            if (mn + mn1 > 59)
+                            {
+
+
+                                TimeSpan span = TimeSpan.FromMinutes(mn + mn1);
+                                string elapsedTime1 = String.Format("{0:00}:{1:00}",
+                                                              span.Hours, span.Minutes);
+                                int hrs = span.Hours;
+                                int hrs1 = Convert.ToInt32(hoursEntryforRate2.Text);
+                                hoursEntryforRate2.Text = (hrs + hrs1).ToString();
+
+                                int hrs2 = span.Minutes;
+                                minuteEntryforRate2.Text = hrs2.ToString();
+                            }
+                            else
+                            {
+
+                                int hrs = elapsed.Hours;
+                                int hrs1 = Convert.ToInt32(hoursEntryforRate2.Text);
+                                hoursEntryforRate2.Text = (hrs + hrs1).ToString();
+
+                                int hrs2 = elapsed.Minutes;
+                                int hrs21 = Convert.ToInt32(minuteEntryforRate2.Text);
+                                minuteEntryforRate2.Text = (hrs2 + hrs21).ToString();
+                            }
+
+
+                            completeDateButton.Text = DateTime.Now.ToString();
+
+                            stopButtonforRate2.BackgroundColor = Color.Red;
+                            startButtonforRate2.BackgroundColor = Color.Red;
+                            var parent = stopButtonforRate2.Parent;
+                            Grid parentGrid = parent as Grid;
+                            parentGrid.StyleId = item.HoursAtRate2.ToString();
+
                         };
 
                         completeButton.Clicked += (sender, e) =>
@@ -1131,6 +1353,24 @@ namespace ProteusMMX.ViewModel.Workorder
                             startButton.BackgroundColor = Color.FromHex("#D3D3D3");
 
                             completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+                            var parent = completeButton.Parent;
+                            Grid parentGrid = parent as Grid;
+                            parentGrid.StyleId = item.HoursAtRate1.ToString();
+                        };
+
+                        completeButtonforRate2.Clicked += (sender, e) =>
+                        {
+                            stopButtonforRate2.IsEnabled = false;
+                            stopButtonforRate2.BackgroundColor = Color.FromHex("#D3D3D3");
+
+                            completeButtonforRate2.IsEnabled = false;
+                            completeButtonforRate2.BackgroundColor = Color.FromHex("#D3D3D3");
+
+                            startButtonforRate2.IsEnabled = false;
+                            startButtonforRate2.BackgroundColor = Color.FromHex("#D3D3D3");
+
+                            completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+                           
                         };
 
                         saveButton.Clicked += async (sender, e) =>
@@ -1196,7 +1436,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             HorizontalOptions = LayoutOptions.CenterAndExpand,
                             Children =
                                 {
-                                  taskNumberGrid,descriptionLayout,lbld, datesStacklayout , startStopButtonGrid,employeeNameGrid
+                                  taskNumberGrid,descriptionLayout,lbld, datesStacklayout , startStopButtonGrid,startStopButtonGridHours2,employeeNameGrid
                                 }
                         };
                         var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest =2, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
@@ -1306,7 +1546,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task SaveTaskAndLabour(object sender, EventArgs e)
         {
-
+           
             try
             {
                 ///TODO: Get Workorder data 
@@ -1318,6 +1558,10 @@ namespace ProteusMMX.ViewModel.Workorder
                     string completeDate = "";
                     string hours = "";
                     string minutes = "";
+
+                   
+                    string hoursforRate1 = "";
+                    string minutesforRate1 = "";
 
 
                     DateTime? dateComp = null;
@@ -1338,6 +1582,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         var completeDateLayout = datesLayout.Children[1] as StackLayout;
                         var completeDateImageStacklayout = completeDateLayout.Children[1] as StackLayout;
                         var completeDateButton = completeDateImageStacklayout.Children[0] as Button;
+                        
                         completeDate = completeDateButton.Text;
 
 
@@ -1349,6 +1594,14 @@ namespace ProteusMMX.ViewModel.Workorder
                         Entry minutesEntry = startAndStopButtonGrid.Children[6] as Entry; // Minutes
                         hours = hoursEntry.Text;
                         minutes = minutesEntry.Text;
+
+
+                        //5,7
+                        var startAndStopButtonGridforRate1 = parentLayout.Children[5] as Grid;
+                        Entry hoursEntryforRate1 = startAndStopButtonGridforRate1.Children[4] as Entry; // Hours
+                        Entry minutesEntryforRate1 = startAndStopButtonGridforRate1.Children[6] as Entry; // Minutes
+                        hoursforRate1 = hoursEntryforRate1.Text;
+                        minutesforRate1 = minutesEntryforRate1.Text;
 
 
 
@@ -1422,6 +1675,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         var workorderLabour = (WorkOrderLabor)((Button)sender).CommandParameter;
                         var taskID = workorderLabour.TaskID;
                         var workOrderLaborID = workorderLabour.WorkOrderLaborID;
+                        var workOrderLaborHours2 = workorderLabour.HoursAtRate2;
 
                         if (String.IsNullOrEmpty(hours))
                         {
@@ -1431,6 +1685,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             minutes = "0";
                         }
+
+                        if (String.IsNullOrEmpty(hoursforRate1))
+                        {
+                            hoursforRate1 = "0";
+                        }
+                        if (String.IsNullOrEmpty(minutesforRate1))
+                        {
+                            minutesforRate1 = "0";
+                        }
                         if (minutes.Length == 1)
                         {
                             int FormattedHours = Convert.ToInt32(minutes);
@@ -1438,7 +1701,16 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         }
 
-                        decimal dec = decimal.Parse(hours + "." + minutes);
+                        if (minutesforRate1.Length == 1)
+                        {
+                            int FormattedHours = Convert.ToInt32(minutesforRate1);
+                            minutesforRate1 = string.Format("{0:00}", FormattedHours);
+
+                        }
+
+                        decimal decHour1 = decimal.Parse(hours + "." + minutes);
+
+                        decimal decHour2 = decimal.Parse(hoursforRate1 + "." + minutesforRate1);
 
                         var workOrderWrapper = new workOrderWrapper
                         {
@@ -1450,10 +1722,10 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
                                 ModifiedUserName=AppSettings.User.UserName,
                                 CompletionDate = FinaldateComp,
-                                HoursAtRate1 = dec,
+                                HoursAtRate1 = decHour1,
+                                HoursAtRate2=decHour2,
                                 TaskID = taskID,
                                 StartDate = startDate.Date.Add(DateTime.Now.TimeOfDay),
-                                // EmployeeLaborCraftID=item.EmployeeLaborCraftID,
                                 WorkOrderLaborID = workOrderLaborID
                             },
 
@@ -1478,20 +1750,53 @@ namespace ProteusMMX.ViewModel.Workorder
                                 Button btnStopLocal = parentGrid.Children[1] as Button;//Find the stopbutton from parent
                                 Button btnCompleteLocal = parentGrid.Children[2] as Button;//Find the stopbutton from parent
 
+                                var parentGrid2 = parentLayout.Children[5] as Grid;
+                                Button btnStartLocal2 = parentGrid2.Children[0] as Button;//Find the stopbutton from parent
+                                Button btnStopLocal2 = parentGrid2.Children[1] as Button;//Find the stopbutton from parent
+                                Button btnCompleteLocal2 = parentGrid2.Children[2] as Button;//Find the stopbutton from parent
+
                                 var upadatedLabor = buttonSave.CommandParameter as WorkOrderLabor;  //reassign to commandParameter to stopbutton
-                                upadatedLabor.HoursAtRate1 = dec;
-                                btnStartLocal.CommandParameter = upadatedLabor;
-                                btnStopLocal.CommandParameter = upadatedLabor;
+                                upadatedLabor.HoursAtRate1 = decHour1;
+                                upadatedLabor.HoursAtRate2 = decHour2;
+
+                                btnStartLocal.CommandParameter = upadatedLabor.HoursAtRate1;
+                                btnStopLocal.CommandParameter = upadatedLabor.HoursAtRate1;
+
+                                btnStartLocal2.CommandParameter = upadatedLabor.HoursAtRate2;
+                                btnStopLocal2.CommandParameter = upadatedLabor.HoursAtRate2;
 
 
-                                btnStartLocal.IsEnabled = true;
-                                btnStartLocal.BackgroundColor = Color.FromHex("#87CEFA");
+                                if(parentGrid.StyleId ==null)
+                                {
+                                    btnStartLocal.IsEnabled = true;
+                                    btnStartLocal.BackgroundColor = Color.FromHex("#87CEFA");
 
-                                btnCompleteLocal.IsEnabled = true;
-                                btnCompleteLocal.BackgroundColor = Color.FromHex("#87CEFA");
+                                    btnCompleteLocal.IsEnabled = true;
+                                    btnCompleteLocal.BackgroundColor = Color.FromHex("#87CEFA");
+                                    
+                                }
+                                else
+                                {
+                                    string key = "WorkOrderLabor:" + workorderLabour.WorkOrderLaborID;
+                                    string keyhours1 = "WorkOrderLabor:" + workorderLabour.HoursAtRate1;
+                                    WorkOrderLaborStorge.Storage.Delete(key);
+                                    WorkOrderLaborStorge.Storage.Delete(keyhours1);
+                                }
+                                if (parentGrid2.StyleId == null)
+                                {
+                                    btnStartLocal2.IsEnabled = true;
+                                    btnStartLocal2.BackgroundColor = Color.FromHex("#87CEFA");
 
-                                string key = "WorkOrderLabor:" + workorderLabour.WorkOrderLaborID;
-                                WorkOrderLaborStorge.Storage.Delete(key);
+                                    btnCompleteLocal2.IsEnabled = true;
+                                    btnCompleteLocal2.BackgroundColor = Color.FromHex("#87CEFA");
+                                }
+                                else
+                                {
+                                    string key2 = "WorkOrderLaborHours2:" + workorderLabour.HoursAtRate2;
+                                    WorkOrderLaborStorge.Storage.Delete(key2);
+                                }
+
+
                             }
                             catch (Exception)
                             {

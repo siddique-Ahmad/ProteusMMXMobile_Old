@@ -111,6 +111,8 @@ namespace ProteusMMX.Views.Workorder
                                 AssetSystemID = abc.workOrderWrapper.workOrder.AssetSystemID,
                                 AssignedToEmployeeID = abc.workOrderWrapper.workOrder.AssignedToEmployeeID,
                                 IsSignatureValidated = false,
+                                ModifiedUserName= AppSettings.UserName+  "|"  +"InspectionWorkorderFromMobile",
+
 
                             },
 
@@ -197,6 +199,7 @@ namespace ProteusMMX.Views.Workorder
                             AssetSystemID = abc.workOrderWrapper.workOrder.AssetSystemID,
                             AssignedToEmployeeID = abc.workOrderWrapper.workOrder.AssignedToEmployeeID,
                             IsSignatureValidated = false,
+                            ModifiedUserName = AppSettings.UserName +  "|"  + "InspectionWorkorderFromMobile",
 
                         },
 

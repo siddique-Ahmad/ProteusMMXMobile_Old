@@ -1,4 +1,6 @@
 ﻿using Acr.UserDialogs;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using ProteusMMX.Constants;
 using ProteusMMX.Helpers;
 using ProteusMMX.Model;
@@ -532,7 +534,30 @@ namespace ProteusMMX.ViewModel
             try
             {
 
+                //try
+                //{
+                //    var ble = CrossBluetoothLE.Current;
+                //    var adapter = CrossBluetoothLE.Current.Adapter;
+                //    var state = ble.State;
+                //    var systemDevices = adapter.GetSystemConnectedOrPairedDevices();
+                //    foreach (var device in systemDevices)
+                //    {
+                //        // adapter.ConnectToDeviceAsync(device);
 
+                //        ble.StateChanged += (s, e) =>
+                //        {
+                //            var status = CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+                //            CrossPermissions.Current.RequestPermissionsAsync(Permission.Location);
+                              
+                //            adapter.DisconnectDeviceAsync(device);
+                //        };
+                //    }
+                //}
+                //catch (Exception ex)
+                //{
+
+                //    throw;
+                //}
                 OperationInProgress = true;
                 await SetTitlesPropertiesForPage();
                 await SetDashboardVisibility();

@@ -15,6 +15,7 @@ namespace ProteusMMX.Services.Request
     {
         public async Task<ServiceOutput> GetAsync(string url)
         {
+            
             var httpClient = new HttpClient();
 
             try
@@ -29,7 +30,7 @@ namespace ProteusMMX.Services.Request
                 //};
 
                 JsonSerializerSettings _serializerSettings = new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat };
-
+                
                 #endregion
 
                 HttpResponseMessage response = await httpClient.GetAsync(url);

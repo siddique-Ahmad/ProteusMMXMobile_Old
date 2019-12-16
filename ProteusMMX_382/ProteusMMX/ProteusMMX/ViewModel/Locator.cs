@@ -118,6 +118,8 @@ namespace ProteusMMX.ViewModel
             _containerBuilder.RegisterType<InventoryTransactionPageViewModel>();
             _containerBuilder.RegisterType<CreateNewAssetPageViewModel>();
             _containerBuilder.RegisterType<EditAssetPageViewModel>();
+            _containerBuilder.RegisterType<ServiceRequestAttachmentPageViewModel>();
+            _containerBuilder.RegisterType<ServiceRequestTabbedPageViewModel>();
             _containerBuilder.RegisterType<CreateServiceRequestViewModel>();
             _containerBuilder.RegisterType<EditServiceRequestViewModel>();
             _containerBuilder.RegisterType<PuchaseOrderTabbedPageViewModel>();

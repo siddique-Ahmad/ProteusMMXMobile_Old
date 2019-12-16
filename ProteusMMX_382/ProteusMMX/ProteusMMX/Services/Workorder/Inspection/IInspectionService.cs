@@ -10,6 +10,8 @@ namespace ProteusMMX.Services.Workorder.Inspection
     {
         Task<ServiceOutput> GetWorkorderInspectionTime(string UserID, string WorkorderID);
         Task<ServiceOutput> GetWorkorderInspection(string WorkorderID);
+
+        Task<ServiceOutput> GetFailedWorkorderInspection(string WorkorderID,string FailedInspection);
         Task<ServiceOutput> AnswerInspection(object workorder);
 
         Task<ServiceOutput> GetClosedWorkOrdersInspection(string CLOSEDWORKORDERID,string UserID);

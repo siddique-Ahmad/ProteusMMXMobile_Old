@@ -22,5 +22,8 @@ namespace ProteusMMX.Model.ServiceRequestModel
         public int UserId { get; set; }
 
         public List<SignatureAuditDetail> SignatureAuditDetails { get; set; }
+
+        public ServiceRequestAttachment attachment { get; set; }
+        public List<ServiceRequestAttachment> attachments { get; set; }
     }
 }

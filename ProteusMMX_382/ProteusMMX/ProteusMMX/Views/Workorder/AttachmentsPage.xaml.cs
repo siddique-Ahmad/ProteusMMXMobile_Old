@@ -41,6 +41,7 @@ namespace ProteusMMX.Views.Workorder
         public AttachmentsPage()
         {
             InitializeComponent();
+            
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
 

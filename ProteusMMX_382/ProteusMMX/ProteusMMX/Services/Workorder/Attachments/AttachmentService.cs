@@ -28,6 +28,18 @@ namespace ProteusMMX.Services.Workorder.Attachments
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }
+        public Task<ServiceOutput> GetServiceRequestAttachments(string UserID, string ServiceRequestID)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.GetServiceRequestAttachments);
+            builder.AppendToPath(ServiceRequestID);
+            builder.AppendToPath(UserID);
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.GetAsync(uri);
+        }
+
+        
         public Task<ServiceOutput> ClosedWorkorderAttachmentByClosedWorkorderID(string CLOSEDWORKORDERID)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
@@ -48,6 +60,16 @@ namespace ProteusMMX.Services.Workorder.Attachments
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.PostAsync(uri, workorder);
         }
+        public Task<ServiceOutput> DeleteServiceRequestAttachment(object serviceRequest)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.DeleteServiceRequestAttachments);
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.PostAsync(uri, serviceRequest);
+        }
+
+        
 
         public Task<ServiceOutput> CreateWorkorderAttachment(string UserID, object workorder)
         {
@@ -58,6 +80,17 @@ namespace ProteusMMX.Services.Workorder.Attachments
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.PostAsync(uri, workorder);
         }
+        public Task<ServiceOutput> CreateServiceRequestAttachment(string UserID, object ServiceRequest)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.CreateServiceRequestAttachments);
+            builder.AppendToPath(UserID);
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.PostAsync(uri, ServiceRequest);
+        }
+
+        
         public Task<ServiceOutput> GetAssetAttachmentsByAssetNumber(string AssetNumber)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.WorkorderListingPage"
              x:Name="WorkorderListingPage"
+               xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:local="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
              xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
              xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
@@ -151,7 +152,25 @@
                         <Label Text="{Binding TotalRecordTitle}"  Grid.Column="2" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
                         <Label Text=":" Grid.Column="3" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
                         <Label Text="{Binding TotalRecordCount}" Grid.Column="4" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
-                        <StackLayout IsVisible="{Binding TotalRecordForPhone}" Grid.Row="1" Orientation="Horizontal" >
+
+
+
+                        <Label Text="{Binding SortByLocationLabelTitle}" Grid.Row="1"/>
+                        <Picker Grid.Column="1" ItemsSource="{Binding SortByLocationpickerTitles}" SelectedItem="{Binding LocationSelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding LocationSelectedIndexPicker , Mode=TwoWay}" Grid.Row="1"/>
+
+                        <Label Text="{Binding SortByShiftLabelTitle}" Grid.Row="2"/>
+                        <Picker Grid.Column="1" ItemsSource="{Binding SortByShiftpickerTitles}" SelectedItem="{Binding ShiftSelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding ShiftSelectedIndexPicker , Mode=TwoWay}" Grid.Row="2"/>
+
+
+                        <Label Text="{Binding SortByPriorityLabelTitle}" Grid.Row="3"/>
+                        <Picker Grid.Column="1" ItemsSource="{Binding SortByPriorityPickerTitles}" SelectedItem="{Binding PrioritySelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding PrioritySelectedIndexPicker , Mode=TwoWay}" Grid.Row="3"/>
+
+                        
+                        <Label Text="Sort By Due date" Grid.Row="4"/>
+                        <DatePicker Margin="0,0,30,0" Grid.Column="1"  Grid.Row="4"/>
+
+
+                        <StackLayout IsVisible="{Binding TotalRecordForPhone}" Grid.Row="5" Orientation="Horizontal" >
                             <Label Text="{Binding TotalRecordTitle}"/>
                             <Label Text=":" Grid.Column="3"/>
                             <Label Text="{Binding TotalRecordCount}"/>

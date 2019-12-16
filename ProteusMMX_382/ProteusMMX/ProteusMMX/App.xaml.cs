@@ -1,6 +1,7 @@
 ﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using ProteusMMX.DependencyInterface;
 using ProteusMMX.Services.Navigation;
 using ProteusMMX.ViewModel;
 using System;
@@ -16,6 +17,7 @@ namespace ProteusMMX
 {
     public partial class App : Application
     {
+       
         public static int ScreenWidth { get; set; }
         public static int ScreenHeight { get; set; }
 
@@ -24,12 +26,21 @@ namespace ProteusMMX
 
 
         }
-
+       
         public App()
         {
             InitializeComponent();
-            Locator.Instance.Build();
-            InitNavigation();
+            try
+            {
+                Locator.Instance.Build();
+                InitNavigation();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
           
 
         }
@@ -54,12 +65,12 @@ namespace ProteusMMX
 
         protected override void OnSleep()
         {
-            // Handle when your app sleeps
+            
         }
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+           
         }
     }
 }

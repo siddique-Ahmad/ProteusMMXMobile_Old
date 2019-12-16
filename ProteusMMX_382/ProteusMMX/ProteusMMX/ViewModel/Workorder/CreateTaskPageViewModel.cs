@@ -11,6 +11,7 @@ using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
+using ProteusMMX.Services.SelectionListPageServices.Workorder.TaskAndLabour;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Services.Workorder.TaskAndLabour;
 using ProteusMMX.Utils;
@@ -41,6 +42,8 @@ namespace ProteusMMX.ViewModel.Workorder
         protected readonly IWorkorderService _workorderService;
 
         protected readonly ITaskAndLabourService _taskAndLabourService;
+
+        protected readonly ITaskService _taskService;
         #endregion
 
         #region Properties
@@ -675,7 +678,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         // Task started Date
-        DateTime? _taskStartedDate;
+        DateTime? _taskStartedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
         public DateTime? TaskStartedDate
         {
             get
@@ -1086,8 +1089,22 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                     }
                 }
+                ServiceOutput taskResponse = null;
 
+                taskResponse = await _taskService.GetEmployee(UserID,"0","0", AppSettings.User.EmployeeName);
 
+                if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
+                {
+                    var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
+                    if (assingedToEmployees != null)
+                    {
+                        this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
+                        this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName)+"("+ assingedToEmployees.First().LaborCraftCode+")";
+                    }
+
+                }
+
+              
 
             }
             catch (Exception ex)
@@ -1102,12 +1119,13 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        public CreateTaskPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService , ITaskAndLabourService taskAndLabourService )
+        public CreateTaskPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService , ITaskAndLabourService taskAndLabourService, ITaskService taskService )
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _workorderService = workorderService;
             _taskAndLabourService = taskAndLabourService;
+            _taskService = taskService;
         }
 
         public async Task SetTitlesPropertiesForPage()
@@ -1487,8 +1505,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 var employee = obj as EmployeeLookUp;
                 this.EmployeeID = employee.EmployeeLaborCraftID;
-                this.EmployeeName = ShortString.shorten(employee.EmployeeName);
-
+               // this.EmployeeName = ShortString.shorten(employee.EmployeeName);
+                this.EmployeeName = ShortString.shorten(employee.EmployeeName) + "(" + employee.LaborCraftCode + ")";
 
                 ResetContractor();
 
@@ -1505,7 +1523,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 var contractor = obj as ContractorLookUp;
                 this.ContractorID = contractor.ContractorLaborCraftID;
-                this.ContractorName = ShortString.shorten(contractor.ContractorName);
+                //this.ContractorName = ShortString.shorten(contractor.ContractorName);
+                this.ContractorName = ShortString.shorten(contractor.ContractorName) + "(" + contractor.LaborCraftCode + ")";
 
                 ResetEmployee();
 
