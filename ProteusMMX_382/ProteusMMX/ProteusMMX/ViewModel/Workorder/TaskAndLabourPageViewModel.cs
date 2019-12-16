@@ -986,7 +986,7 @@ namespace ProteusMMX.ViewModel.Workorder
                          
 
                             string k1 = "WorkOrderLabor:" + item.WorkOrderLaborID;
-                            string k2 = "WorkOrderLaborHours2:" + item.HoursAtRate2;
+                            string k2 = "WorkOrderLaborHours2:" + item.WorkOrderLaborID;
                             
                             // string k2 = "WorkOrderLabor:" + item.WorkOrderLaborID + finalrate2;
                             savedWorkOrderLabor = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k1));
@@ -1219,7 +1219,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                             //Save in Local
-                            string key = "WorkOrderLaborHours2:" + workOrderLabor.HoursAtRate2;
+                            string key = "WorkOrderLaborHours2:" + workOrderLabor.WorkOrderLaborID;
                             workOrderLabor.Description = "";
                             WorkOrderLaborStorge.Storage.Set(key, JsonConvert.SerializeObject(workOrderLabor));
 
@@ -1792,7 +1792,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 }
                                 else
                                 {
-                                    string key2 = "WorkOrderLaborHours2:" + workorderLabour.HoursAtRate2;
+                                    string key2 = "WorkOrderLaborHours2:" + workorderLabour.WorkOrderLaborID;
                                     WorkOrderLaborStorge.Storage.Delete(key2);
                                 }
 
