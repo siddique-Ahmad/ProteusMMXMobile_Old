@@ -36,7 +36,7 @@ namespace ProteusMMX.ViewModel.Workorder
         public readonly IWorkorderService _workorderService;
         public readonly INavigationService _navigationService;
         protected readonly IFormLoadInputService _formLoadInputService;
-       
+        public readonly ITaskAndLabourService _taskAndLabourService;
 
 
         string CreateWorkorderRights;
@@ -337,7 +337,40 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        bool _disabledTextIsEnable = false;
+        public bool DisabledTextIsEnable
+        {
+            get
+            {
+                return _disabledTextIsEnable;
+            }
 
+            set
+            {
+                if (value != _disabledTextIsEnable)
+                {
+                    _disabledTextIsEnable = value;
+                    OnPropertyChanged(nameof(DisabledTextIsEnable));
+                }
+            }
+        }
+        string _disabledText = "";
+        public string DisabledText
+        {
+            get
+            {
+                return _disabledText;
+            }
+
+            set
+            {
+                if (value != _disabledText)
+                {
+                    _disabledText = value;
+                    OnPropertyChanged("DisabledText");
+                }
+            }
+        }
 
 
 
@@ -366,7 +399,13 @@ namespace ProteusMMX.ViewModel.Workorder
                     this.WorkorderID = workorder.WorkOrderID;
 
                 }
-
+                ServiceOutput taskandlabourList = await _taskAndLabourService.WorkOrderLaborsByWorkOrderID(UserID, WorkorderID.ToString());
+                if (taskandlabourList != null && taskandlabourList.workOrderWrapper != null && taskandlabourList.workOrderWrapper.workOrderLabors != null && taskandlabourList.workOrderWrapper.workOrderLabors.Count > 0)
+                {
+                    DisabledText = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                    DisabledTextIsEnable = true;
+                    return;
+                }
                 await SetTitlesPropertiesForPage();
                 if (Application.Current.Properties.ContainsKey("CreateworkorderRights"))
                 {
@@ -404,15 +443,15 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        public InspectionPageViewModel(IAuthenticationService authenticationService, IInspectionService inspectionService, IWorkorderService workorderService,IFormLoadInputService formLoadInputService, INavigationService navigationService)
+        public InspectionPageViewModel(IAuthenticationService authenticationService, IInspectionService inspectionService, IWorkorderService workorderService,IFormLoadInputService formLoadInputService, INavigationService navigationService, ITaskAndLabourService taskAndLabourService)
         {
             _authenticationService = authenticationService;
             _inspectionService = inspectionService;
             _workorderService = workorderService;
             _formLoadInputService = formLoadInputService;
             _navigationService = navigationService;
-          
-        
+            _taskAndLabourService = taskAndLabourService;
+
 
         }
 

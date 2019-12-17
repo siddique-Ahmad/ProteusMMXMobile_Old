@@ -307,7 +307,8 @@
             <ScrollView Grid.Row="2"  >
 
                 <StackLayout Orientation="Vertical">
-                    <StackLayout Padding="5" x:Name="ParentLayout">
+                <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}"/>
+                <StackLayout Padding="5" x:Name="ParentLayout">
 
                     </StackLayout>
                     

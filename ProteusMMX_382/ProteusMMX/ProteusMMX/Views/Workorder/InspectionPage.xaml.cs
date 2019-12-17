@@ -166,7 +166,23 @@ namespace ProteusMMX.Views.Workorder
         public DateTime? InspectionCompletionDate { get; set; }
         public DateTime? InspectionStartDate { get; set; }
 
+        string _userID = AppSettings.User.UserID.ToString();
+        public string UserID
+        {
+            get
+            {
+                return _userID;
+            }
 
+            set
+            {
+                if (value != _userID)
+                {
+                    _userID = value;
+                    OnPropertyChanged("UserID");
+                }
+            }
+        }
 
         public InspectionPage()
         {
@@ -292,6 +308,11 @@ namespace ProteusMMX.Views.Workorder
             {
 
                 this.WorkorderID = ViewModel.WorkorderID;
+                ServiceOutput taskandlabourList = await ViewModel._taskAndLabourService.WorkOrderLaborsByWorkOrderID(UserID, WorkorderID.ToString());
+                if (taskandlabourList != null && taskandlabourList.workOrderWrapper != null && taskandlabourList.workOrderWrapper.workOrderLabors != null && taskandlabourList.workOrderWrapper.workOrderLabors.Count > 0)
+                {
+                    return;
+                }
                 AnswerText.Clear();
 
 

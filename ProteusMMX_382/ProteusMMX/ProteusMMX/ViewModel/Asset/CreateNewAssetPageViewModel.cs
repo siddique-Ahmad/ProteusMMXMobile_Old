@@ -30,6 +30,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using ProteusMMX.Services.SelectionListPageServices;
 
 namespace ProteusMMX.ViewModel.Asset
 {
@@ -44,6 +45,7 @@ namespace ProteusMMX.ViewModel.Asset
         protected readonly IAssetModuleService _assetService;
 
         protected readonly IWorkorderService _workorderService;
+        protected readonly IFacilityService _facilityService;
         #endregion
 
         #region Properties
@@ -3359,7 +3361,21 @@ namespace ProteusMMX.ViewModel.Asset
                     this.AssetNumberText = navigationParams.SearchText;
                 }
 
+                var facilityResponse = await _facilityService.GetFacilities(UserID, "1", "10", "null");
+                if (facilityResponse != null && facilityResponse.targetWrapper != null && facilityResponse.targetWrapper.facilities != null)
+                {
+                    int facilities = facilityResponse.targetWrapper.facilities.Count();
+                    if (facilities == 1)
+                    {
+                        foreach (var item in facilityResponse.targetWrapper.facilities)
+                        {
+                            this.FacilityID = item.FacilityID;
+                            this.FacilityName = item.FacilityName;
+                        }
 
+                    }
+
+                }
 
                 await SetTitlesPropertiesForPage();
                 //FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.AssetModuleName);
@@ -3455,12 +3471,13 @@ namespace ProteusMMX.ViewModel.Asset
             }
         }
 
-        public CreateNewAssetPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IAssetModuleService assetService, IWorkorderService workorderService)
+        public CreateNewAssetPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IAssetModuleService assetService, IWorkorderService workorderService, IFacilityService facilityService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _assetService = assetService;
             _workorderService = workorderService;
+            _facilityService = facilityService;
         }
 
         public async Task SetTitlesPropertiesForPage()
