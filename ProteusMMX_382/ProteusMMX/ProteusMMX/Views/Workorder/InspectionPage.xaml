@@ -304,7 +304,7 @@
             </Grid>-->
 
             
-            <ScrollView Grid.Row="2"  >
+            <ScrollView  >
 
                 <StackLayout Orientation="Vertical">
                 <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}"/>

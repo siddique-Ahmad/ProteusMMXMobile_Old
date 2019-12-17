@@ -372,7 +372,23 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        bool _viewTextIsEnable = true;
+        public bool ViewTextIsEnable
+        {
+            get
+            {
+                return _viewTextIsEnable;
+            }
 
+            set
+            {
+                if (value != _viewTextIsEnable)
+                {
+                    _viewTextIsEnable = value;
+                    OnPropertyChanged(nameof(ViewTextIsEnable));
+                }
+            }
+        }
 
         #endregion
 
@@ -404,6 +420,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     DisabledText = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
                     DisabledTextIsEnable = true;
+                    //ViewTextIsEnable = false;
                     return;
                 }
                 await SetTitlesPropertiesForPage();

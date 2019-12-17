@@ -151,6 +151,23 @@ namespace ProteusMMX.Views.Workorder
                 }
             }
         }
+        bool _viewTextIsEnable = false;
+        public bool ViewTextIsEnable
+        {
+            get
+            {
+                return _viewTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _viewTextIsEnable)
+                {
+                    _viewTextIsEnable = value;
+                    OnPropertyChanged(nameof(ViewTextIsEnable));
+                }
+            }
+        }
         FormListButton CreateWorkorderRights;
 
         //TimeZone = AppSettings.UserTimeZone,
@@ -226,6 +243,16 @@ namespace ProteusMMX.Views.Workorder
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            this.WorkorderID = ViewModel.WorkorderID;
+            ServiceOutput taskandlabourList = await ViewModel._taskAndLabourService.WorkOrderLaborsByWorkOrderID(UserID, WorkorderID.ToString());
+            if (taskandlabourList != null && taskandlabourList.workOrderWrapper != null && taskandlabourList.workOrderWrapper.workOrderLabors != null && taskandlabourList.workOrderWrapper.workOrderLabors.Count > 0)
+            {
+                ViewModel.DisabledText = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                ViewModel.DisabledTextIsEnable = true;
+                ParentLayout.IsVisible = false;
+                MainLayout.IsVisible = false;
+                return;
+            }
             if (!IsPickerDataSubscribed)
             {
 
@@ -258,6 +285,19 @@ namespace ProteusMMX.Views.Workorder
 
         protected async Task OnAppearingOld()
         {
+
+            this.WorkorderID = ViewModel.WorkorderID;
+            ServiceOutput taskandlabourList = await ViewModel._taskAndLabourService.WorkOrderLaborsByWorkOrderID(UserID, WorkorderID.ToString());
+            if (taskandlabourList != null && taskandlabourList.workOrderWrapper != null && taskandlabourList.workOrderWrapper.workOrderLabors != null && taskandlabourList.workOrderWrapper.workOrderLabors.Count > 0)
+            {
+                ViewModel.DisabledText = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                ViewModel.DisabledTextIsEnable = true;
+               // ViewModel.ViewTextIsEnable = false;
+                ParentLayout.IsVisible = false;
+                MainLayout.IsVisible = false;
+                return;
+            }
+
             btnAddInspection = new Button
             {
                 Text = "AddInspection",
@@ -307,12 +347,7 @@ namespace ProteusMMX.Views.Workorder
             try
             {
 
-                this.WorkorderID = ViewModel.WorkorderID;
-                ServiceOutput taskandlabourList = await ViewModel._taskAndLabourService.WorkOrderLaborsByWorkOrderID(UserID, WorkorderID.ToString());
-                if (taskandlabourList != null && taskandlabourList.workOrderWrapper != null && taskandlabourList.workOrderWrapper.workOrderLabors != null && taskandlabourList.workOrderWrapper.workOrderLabors.Count > 0)
-                {
-                    return;
-                }
+                
                 AnswerText.Clear();
 
 
@@ -470,6 +505,18 @@ namespace ProteusMMX.Views.Workorder
                         TextColor = Color.White
                     };
 
+                    //DatePicker startDate = new DatePicker
+                    //{
+                    //    Date = Convert.ToDateTime(item.StartDate),
+                    //    BackgroundColor = Color.FromHex("#87CEFA"),
+                    //};
+
+                    //DatePicker CompletionDate = new DatePicker
+                    //{
+                    //    Date = Convert.ToDateTime(item.CompletionDate),
+                    //    BackgroundColor = Color.FromHex("#87CEFA"),
+                    //};
+
                     DatePicker startDate = new DatePicker
                     {
                         Date = Convert.ToDateTime(item.StartDate),
@@ -481,7 +528,6 @@ namespace ProteusMMX.Views.Workorder
                         Date = Convert.ToDateTime(item.CompletionDate),
                         BackgroundColor = Color.FromHex("#87CEFA"),
                     };
-
                     //btnAddInspection = new Button
                     //{
                     //    Text = "AddInspection",
