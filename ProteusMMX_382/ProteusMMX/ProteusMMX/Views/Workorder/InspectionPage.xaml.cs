@@ -3094,7 +3094,7 @@ namespace ProteusMMX.Views.Workorder
         private async void AddSignatureButton_Clicked(object sender, EventArgs e)
         {
             var parentView = ((sender as Button).Parent as StackLayout);
-            var image = parentView.Children[parentView.Children.Count - 3] as CustomImage;
+            var image = parentView.Children[parentView.Children.Count - 4] as CustomImage;
             var signaturePad = new SignaturePage(image);
             signaturePad.OnSignatureDrawn += SignaturePad_OnSignatureDrawn;
             await Navigation.PushPopupAsync(signaturePad);
@@ -3391,7 +3391,8 @@ namespace ProteusMMX.Views.Workorder
 
                 try
                 {
-                    var signatureImage = stacklayout.Children[stacklayout.Children.Count - 3] as CustomImage;
+                    // var signatureImage = stacklayout.Children[stacklayout.Children.Count - 3] as CustomImage;
+                    var signatureImage = stacklayout.Children[6] as CustomImage;
                     if (signatureImage == null)
                     {
                         viewCount = 1;
@@ -3406,26 +3407,35 @@ namespace ProteusMMX.Views.Workorder
 
                 for (int i = 1; i < stacklayout.Children.Count - viewCount; i++) // run it only for grid
                 {
-                    var stacklayout1 = stacklayout.Children[i] as Grid;
-
-                    var context = (stacklayout1.Children[1] as Label).BindingContext as ExistingInspections;
-
-                    var value = ExtractValueFormSection(stacklayout1);
-
-
-                    if (string.IsNullOrWhiteSpace(value) && context.ResponseTypeName != "None")
+                    try
                     {
-                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("Pleasemakesureallfieldsarefilled"), TimeSpan.FromSeconds(3));
+                        var stacklayout1 = stacklayout.Children[i] as Grid;
+
+                        var context = (stacklayout1.Children[1] as Label).BindingContext as ExistingInspections;
+
+                        var value = ExtractValueFormSection(stacklayout1);
+
+
+                        if (string.IsNullOrWhiteSpace(value) && context.ResponseTypeName != "None")
+                        {
+                            UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("Pleasemakesureallfieldsarefilled"), TimeSpan.FromSeconds(3));
+                        }
+
+                        listAnswer.Add(new InspectionAnswer()
+                        {
+                            InspectionID = context.InspectionID
+                                          ,
+                            AnswerDescription = string.IsNullOrWhiteSpace(value) ? "" : value
+                                          ,
+                            WorkOrderID = WorkorderID
+                        });
                     }
-
-                    listAnswer.Add(new InspectionAnswer()
+                    catch (Exception ex)
                     {
-                        InspectionID = context.InspectionID
-                                      ,
-                        AnswerDescription = string.IsNullOrWhiteSpace(value) ? "" : value
-                                      ,
-                        WorkOrderID = WorkorderID
-                    });
+
+                        
+                    }
+                    
                 }
 
 
@@ -3444,8 +3454,9 @@ namespace ProteusMMX.Views.Workorder
                 try
                 {
                     var count = ((sender as Button).Parent as StackLayout).Children.Count;
-                    //signView = ((sender as Button).Parent as StackLayout).Children[count - 2] as SignaturePadView;
-                    signatureImageView = ((sender as Button).Parent as StackLayout).Children[stacklayout.Children.Count - 3] as CustomImage;
+                   
+                    //signatureImageView = ((sender as Button).Parent as StackLayout).Children[stacklayout.Children.Count - 3] as CustomImage;
+                    signatureImageView = ((sender as Button).Parent as StackLayout).Children[6] as CustomImage;
                 }
                 catch (Exception) { }
 
