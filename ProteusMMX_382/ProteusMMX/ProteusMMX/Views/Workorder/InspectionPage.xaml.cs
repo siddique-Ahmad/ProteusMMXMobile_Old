@@ -516,18 +516,54 @@ namespace ProteusMMX.Views.Workorder
                     //    Date = Convert.ToDateTime(item.CompletionDate),
                     //    BackgroundColor = Color.FromHex("#87CEFA"),
                     //};
-
-                    DatePicker startDate = new DatePicker
+                    CustomDatePicker startDate;
+                    if (item.StartDate!=null)
                     {
-                        Date = Convert.ToDateTime(item.StartDate),
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                    };
+                        startDate = new CustomDatePicker
+                        {
+                            SelectedDate = Convert.ToDateTime(item.StartDate),
+                            // BackgroundColor = Color.FromHex("#87CEFA"),
+                            HeightRequest = 2,
+                            HorizontalOptions = LayoutOptions.Start
 
-                    DatePicker CompletionDate = new DatePicker
+                        };
+                    }
+                    else
                     {
-                        Date = Convert.ToDateTime(item.CompletionDate),
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                    };
+                        startDate = new CustomDatePicker
+                        {
+                            // BackgroundColor = Color.FromHex("#87CEFA"),
+                            HeightRequest = 2,
+                            HorizontalOptions = LayoutOptions.Start
+
+                        };
+                    }
+                    CustomDatePicker CompletionDate;
+                    if (item.CompletionDate != null)
+                    {
+                         CompletionDate = new CustomDatePicker
+                        {
+                            SelectedDate = Convert.ToDateTime(item.CompletionDate),
+                            // BackgroundColor = Color.FromHex("#87CEFA"),
+                            HeightRequest = 2,
+                            HorizontalOptions = LayoutOptions.Start
+
+                        };
+                    }
+                    else
+                    {
+                        CompletionDate = new CustomDatePicker
+                        {
+                            //SelectedDate = Convert.ToDateTime(item.CompletionDate),
+                            // BackgroundColor = Color.FromHex("#87CEFA"),
+                            HeightRequest = 2,
+                            HorizontalOptions = LayoutOptions.Start
+
+                        };
+                    }
+
+
+                   
                     //btnAddInspection = new Button
                     //{
                     //    Text = "AddInspection",
@@ -697,8 +733,8 @@ namespace ProteusMMX.Views.Workorder
                             minuteEntry.Text = (hrs2 + hrs21).ToString();
                         }
 
-                        startDate.Date =Convert.ToDateTime(DateTime.Now.ToString());
-                        CompletionDate.Date = Convert.ToDateTime(DateTime.Now.ToString());
+                        startDate.SelectedDate = Convert.ToDateTime(DateTime.Now.ToString());
+                        CompletionDate.SelectedDate = Convert.ToDateTime(DateTime.Now.ToString());
                         stopButton.BackgroundColor = BackgroundColor = Color.FromHex("#D3D3D3");
                         stopButton.IsEnabled = false;
                         startButton.BackgroundColor = BackgroundColor = Color.FromHex("#D3D3D3");
@@ -781,11 +817,10 @@ namespace ProteusMMX.Views.Workorder
                     startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
                     startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
                     startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                    startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
                     startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                    startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
                     startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                    startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                    startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-
 
 
                     startStopButtonGrid.Children.Add(startButton, 1, 0);
@@ -1109,17 +1144,54 @@ namespace ProteusMMX.Views.Workorder
                         BorderColor = Color.Black,
                         TextColor = Color.White
                     };
-                    DatePicker startDate = new DatePicker
+                    CustomDatePicker startDate;
+                    if (item.StartDate!=null)
                     {
-                        Date = Convert.ToDateTime(item.StartDate),
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                    };
+                        startDate = new CustomDatePicker
+                        {
+                            SelectedDate = Convert.ToDateTime(item.StartDate),
+                            //  BackgroundColor = Color.FromHex("#87CEFA"),
+                            HeightRequest = 2,
+                            HorizontalOptions = LayoutOptions.Start
 
-                    DatePicker CompletionDate = new DatePicker
+                        };
+                    }
+                    else
                     {
-                        Date = Convert.ToDateTime(item.CompletionDate),
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                    };
+                         startDate = new CustomDatePicker
+                        {
+                           // SelectedDate = Convert.ToDateTime(item.StartDate),
+                            //  BackgroundColor = Color.FromHex("#87CEFA"),
+                            HeightRequest = 2,
+                            HorizontalOptions = LayoutOptions.Start
+
+                        };
+                    }
+                    CustomDatePicker CompletionDate;
+                    if (item.CompletionDate!=null)
+                    {
+                        CompletionDate = new CustomDatePicker
+                        {
+                            SelectedDate = Convert.ToDateTime(item.CompletionDate),
+                            //  BackgroundColor = Color.FromHex("#87CEFA"),
+                            HeightRequest = 2,
+                            HorizontalOptions = LayoutOptions.Start
+
+                        };
+                    }
+                    else
+                    {
+                        CompletionDate = new CustomDatePicker
+                        {
+                          //  SelectedDate = Convert.ToDateTime(item.CompletionDate),
+                            //  BackgroundColor = Color.FromHex("#87CEFA"),
+                            HeightRequest = 2,
+                            HorizontalOptions = LayoutOptions.Start
+
+                        };
+
+                    }
+                  
 
                     //btnAddInspection = new Button
                     //{
@@ -1297,8 +1369,8 @@ namespace ProteusMMX.Views.Workorder
                             minuteEntry.Text = (hrs2 + hrs21).ToString();
                         }
 
-                        startDate.Date = Convert.ToDateTime(DateTime.Now.ToString());
-                        CompletionDate.Date = Convert.ToDateTime(DateTime.Now.ToString());
+                        startDate.SelectedDate = Convert.ToDateTime(DateTime.Now.ToString());
+                        CompletionDate.SelectedDate = Convert.ToDateTime(DateTime.Now.ToString());
                         stopButton.BackgroundColor = BackgroundColor = Color.FromHex("#D3D3D3");
                         stopButton.IsEnabled = false;
                         startButton.BackgroundColor = BackgroundColor = Color.FromHex("#D3D3D3");
@@ -1389,9 +1461,9 @@ namespace ProteusMMX.Views.Workorder
                     startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
                     startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
                     startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                    startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
                     startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                    startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                    startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                    startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
                     startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
 
 
@@ -3581,8 +3653,8 @@ namespace ProteusMMX.Views.Workorder
 
                     var HoursEntryValue = gridlayout.Children[3] as Entry;
                     var MinuteEntryValue = gridlayout.Children[5] as Entry;
-                    var StartdateValue = gridlayout.Children[7] as DatePicker;
-                    var CompletionDateValue = gridlayout.Children[9] as DatePicker;
+                    var StartdateValue = gridlayout.Children[7] as CustomDatePicker;
+                    var CompletionDateValue = gridlayout.Children[9] as CustomDatePicker;
                     var employeecontrcatorids = gridlayout.Children[10] as Label;
                     var employeecontrcatoridssubstring = employeecontrcatorids.Text.Split(':');
                     string EmpCntID = Int32.Parse(employeecontrcatoridssubstring[0]).ToString();
@@ -3603,8 +3675,12 @@ namespace ProteusMMX.Views.Workorder
                     var minutes = Int32.Parse(MinuteEntryValue.Text);
                     var result = new TimeSpan(hours, minutes, 0);
                     totalTime = result.TotalSeconds;
-                    this.InspectionStartDate = Convert.ToDateTime(StartdateValue.Date.ToString());
-                    this.InspectionCompletionDate = Convert.ToDateTime(CompletionDateValue.Date.ToString());
+                    this.InspectionStartDate = StartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(StartdateValue.SelectedDate.ToString()) : (DateTime?)null;
+                    //  this.InspectionStartDate = Convert.ToDateTime(StartdateValue.SelectedDate.ToString());
+                    this.InspectionCompletionDate = CompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(CompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+
+                    //this.InspectionStartDate = Convert.ToDateTime(StartdateValue.Date.ToString());
+                    //this.InspectionCompletionDate = Convert.ToDateTime(CompletionDateValue.Date.ToString());
 
                     listtoAnswer.Add(new InspectionTOAnswers()
                     {
@@ -3639,8 +3715,8 @@ namespace ProteusMMX.Views.Workorder
                     {
                         var SecondHoursEntryValue = Secondgridlayout.Children[3] as Entry;
                         var SecondMinuteEntryValue = Secondgridlayout.Children[5] as Entry;
-                        var SecondStartdateValue = Secondgridlayout.Children[7] as DatePicker;
-                        var SecondCompletionDateValue = Secondgridlayout.Children[9] as DatePicker;
+                        var SecondStartdateValue = Secondgridlayout.Children[7] as CustomDatePicker;
+                        var SecondCompletionDateValue = Secondgridlayout.Children[9] as CustomDatePicker;
                         var employeecontrcatorids2 = Secondgridlayout.Children[10] as Label;
                         var employeecontrcatoridssubstring2 = employeecontrcatorids2.Text.Split(':');
                         string EmpCntID2 = Int32.Parse(employeecontrcatoridssubstring2[0]).ToString();
@@ -3660,8 +3736,11 @@ namespace ProteusMMX.Views.Workorder
                         var Secondminutes = Int32.Parse(SecondMinuteEntryValue.Text);
                         var Secondresult = new TimeSpan(Secondhours, Secondminutes, 0);
                         totalTime = Secondresult.TotalSeconds;
-                        this.InspectionStartDate = Convert.ToDateTime(SecondStartdateValue.Date.ToString());
-                        this.InspectionCompletionDate = Convert.ToDateTime(SecondCompletionDateValue.Date.ToString());
+                        this.InspectionStartDate = SecondStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
+                        this.InspectionCompletionDate = SecondCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+
+                        //this.InspectionStartDate = Convert.ToDateTime(SecondStartdateValue.Date.ToString());
+                        //this.InspectionCompletionDate = Convert.ToDateTime(SecondCompletionDateValue.Date.ToString());
 
                         listtoAnswer.Add(new InspectionTOAnswers()
                         {
@@ -3696,8 +3775,8 @@ namespace ProteusMMX.Views.Workorder
                     {
                         var ThirdHoursEntryValue = Thirdgridlayout.Children[3] as Entry;
                         var ThirdMinuteEntryValue = Thirdgridlayout.Children[5] as Entry;
-                        var ThirdStartdateValue = Thirdgridlayout.Children[7] as DatePicker;
-                        var ThirdCompletionDateValue = Thirdgridlayout.Children[9] as DatePicker;
+                        var ThirdStartdateValue = Thirdgridlayout.Children[7] as CustomDatePicker;
+                        var ThirdCompletionDateValue = Thirdgridlayout.Children[9] as CustomDatePicker;
 
                         var employeecontrcatorids3 = Thirdgridlayout.Children[10] as Label;
                         var employeecontrcatoridssubstring3 = employeecontrcatorids3.Text.Split(':');
@@ -3718,8 +3797,11 @@ namespace ProteusMMX.Views.Workorder
                         var Thirdminutes = Int32.Parse(ThirdMinuteEntryValue.Text);
                         var Thirdresult = new TimeSpan(Thirdhours, Thirdminutes, 0);
                         totalTime = Thirdresult.TotalSeconds;
-                        this.InspectionStartDate = Convert.ToDateTime(ThirdStartdateValue.Date.ToString());
-                        this.InspectionCompletionDate = Convert.ToDateTime(ThirdCompletionDateValue.Date.ToString());
+
+                        //this.InspectionStartDate = Convert.ToDateTime(ThirdStartdateValue.Date.ToString());
+                        //this.InspectionCompletionDate = Convert.ToDateTime(ThirdCompletionDateValue.Date.ToString());
+                        this.InspectionStartDate = ThirdStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
+                        this.InspectionCompletionDate = ThirdCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
 
                         listtoAnswer.Add(new InspectionTOAnswers()
                         {
@@ -3756,8 +3838,8 @@ namespace ProteusMMX.Views.Workorder
 
                         var FourthHoursEntryValue = Fourthgridlayout.Children[3] as Entry;
                         var FourthMinuteEntryValue = Fourthgridlayout.Children[5] as Entry;
-                        var FourthStartdateValue = Fourthgridlayout.Children[7] as DatePicker;
-                        var FourthCompletionDateValue = Fourthgridlayout.Children[9] as DatePicker;
+                        var FourthStartdateValue = Fourthgridlayout.Children[7] as CustomDatePicker;
+                        var FourthCompletionDateValue = Fourthgridlayout.Children[9] as CustomDatePicker;
 
                         var employeecontrcatorids4 = Fourthgridlayout.Children[10] as Label;
                         var employeecontrcatoridssubstring4 = employeecontrcatorids4.Text.Split(':');
@@ -3779,8 +3861,10 @@ namespace ProteusMMX.Views.Workorder
                         var Fourthminutes = Int32.Parse(FourthMinuteEntryValue.Text);
                         var Fourthresult = new TimeSpan(Fourthhours, Fourthminutes, 0);
                         totalTime = Fourthresult.TotalSeconds;
-                        this.InspectionStartDate = Convert.ToDateTime(FourthStartdateValue.Date.ToString());
-                        this.InspectionCompletionDate = Convert.ToDateTime(FourthCompletionDateValue.Date.ToString());
+                        //this.InspectionStartDate = Convert.ToDateTime(FourthStartdateValue.Date.ToString());
+                        //this.InspectionCompletionDate = Convert.ToDateTime(FourthCompletionDateValue.Date.ToString());
+                        this.InspectionStartDate = FourthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
+                        this.InspectionCompletionDate = FourthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
 
                         listtoAnswer.Add(new InspectionTOAnswers()
                         {
@@ -3815,8 +3899,8 @@ namespace ProteusMMX.Views.Workorder
                     {
                         var FifthHoursEntryValue = Fifthgridlayout.Children[3] as Entry;
                         var FifthMinuteEntryValue = Fifthgridlayout.Children[5] as Entry;
-                        var FifthStartdateValue = Fifthgridlayout.Children[7] as DatePicker;
-                        var FifthCompletionDateValue = Fifthgridlayout.Children[9] as DatePicker;
+                        var FifthStartdateValue = Fifthgridlayout.Children[7] as CustomDatePicker;
+                        var FifthCompletionDateValue = Fifthgridlayout.Children[9] as CustomDatePicker;
 
                         var employeecontrcatorids5 = Fifthgridlayout.Children[10] as Label;
                         var employeecontrcatoridssubstring5 = employeecontrcatorids5.Text.Split(':');
@@ -3837,8 +3921,12 @@ namespace ProteusMMX.Views.Workorder
                         var Fifthminutes = Int32.Parse(FifthMinuteEntryValue.Text);
                         var Fifthresult = new TimeSpan(Fifthhours, Fifthminutes, 0);
                         totalTime = Fifthresult.TotalSeconds;
-                        this.InspectionStartDate = Convert.ToDateTime(FifthStartdateValue.Date.ToString());
-                        this.InspectionCompletionDate = Convert.ToDateTime(FifthCompletionDateValue.Date.ToString());
+                        this.InspectionStartDate = FifthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
+                        this.InspectionCompletionDate = FifthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+
+
+                        //this.InspectionStartDate = Convert.ToDateTime(FifthStartdateValue.Date.ToString());
+                        //this.InspectionCompletionDate = Convert.ToDateTime(FifthCompletionDateValue.Date.ToString());
 
                         listtoAnswer.Add(new InspectionTOAnswers()
                         {
@@ -4216,8 +4304,8 @@ namespace ProteusMMX.Views.Workorder
 
                 var HoursEntryValue = gridlayout.Children[3] as Entry;
                 var MinuteEntryValue = gridlayout.Children[5] as Entry;
-                var StartdateValue = gridlayout.Children[7] as DatePicker;
-                var CompletionDateValue = gridlayout.Children[9] as DatePicker;
+                var StartdateValue = gridlayout.Children[7] as CustomDatePicker;
+                var CompletionDateValue = gridlayout.Children[9] as CustomDatePicker;
                 var employeecontrcatorids = gridlayout.Children[10] as Label;
                 var employeecontrcatoridssubstring = employeecontrcatorids.Text.Split(':');
                 string EmpCntID = Int32.Parse(employeecontrcatoridssubstring[0]).ToString();
@@ -4238,8 +4326,11 @@ namespace ProteusMMX.Views.Workorder
                 var minutes = Int32.Parse(MinuteEntryValue.Text);
                 var result = new TimeSpan(hours, minutes, 0);
                 totalTime = result.TotalSeconds;
-                this.InspectionStartDate = Convert.ToDateTime(StartdateValue.Date.ToString());
-                this.InspectionCompletionDate = Convert.ToDateTime(CompletionDateValue.Date.ToString());
+
+                this.InspectionStartDate = StartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(StartdateValue.SelectedDate.ToString()) : (DateTime?)null;
+                //  this.InspectionStartDate = Convert.ToDateTime(StartdateValue.SelectedDate.ToString());
+                this.InspectionCompletionDate = CompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(CompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+               // this.InspectionCompletionDate = Convert.ToDateTime(CompletionDateValue.SelectedDate.ToString());
 
                 listtoAnswer.Add(new InspectionTOAnswers()
                 {
@@ -4274,8 +4365,8 @@ namespace ProteusMMX.Views.Workorder
                 {
                     var SecondHoursEntryValue = Secondgridlayout.Children[3] as Entry;
                     var SecondMinuteEntryValue = Secondgridlayout.Children[5] as Entry;
-                    var SecondStartdateValue = Secondgridlayout.Children[7] as DatePicker;
-                    var SecondCompletionDateValue = Secondgridlayout.Children[9] as DatePicker;
+                    var SecondStartdateValue = Secondgridlayout.Children[7] as CustomDatePicker;
+                    var SecondCompletionDateValue = Secondgridlayout.Children[9] as CustomDatePicker;
                     var employeecontrcatorids2 = Secondgridlayout.Children[10] as Label;
                     var employeecontrcatoridssubstring2 = employeecontrcatorids2.Text.Split(':');
                     string EmpCntID2 = Int32.Parse(employeecontrcatoridssubstring2[0]).ToString();
@@ -4295,8 +4386,11 @@ namespace ProteusMMX.Views.Workorder
                     var Secondminutes = Int32.Parse(SecondMinuteEntryValue.Text);
                     var Secondresult = new TimeSpan(Secondhours, Secondminutes, 0);
                     totalTime = Secondresult.TotalSeconds;
-                    this.InspectionStartDate = Convert.ToDateTime(SecondStartdateValue.Date.ToString());
-                    this.InspectionCompletionDate = Convert.ToDateTime(SecondCompletionDateValue.Date.ToString());
+                    this.InspectionStartDate = SecondStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
+                    this.InspectionCompletionDate = SecondCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+
+                   // this.InspectionStartDate = Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString());
+                   // this.InspectionCompletionDate = Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString());
 
                     listtoAnswer.Add(new InspectionTOAnswers()
                     {
@@ -4331,8 +4425,8 @@ namespace ProteusMMX.Views.Workorder
                 {
                     var ThirdHoursEntryValue = Thirdgridlayout.Children[3] as Entry;
                     var ThirdMinuteEntryValue = Thirdgridlayout.Children[5] as Entry;
-                    var ThirdStartdateValue = Thirdgridlayout.Children[7] as DatePicker;
-                    var ThirdCompletionDateValue = Thirdgridlayout.Children[9] as DatePicker;
+                    var ThirdStartdateValue = Thirdgridlayout.Children[7] as CustomDatePicker;
+                    var ThirdCompletionDateValue = Thirdgridlayout.Children[9] as CustomDatePicker;
 
                     var employeecontrcatorids3 = Thirdgridlayout.Children[10] as Label;
                     var employeecontrcatoridssubstring3 = employeecontrcatorids3.Text.Split(':');
@@ -4353,8 +4447,11 @@ namespace ProteusMMX.Views.Workorder
                     var Thirdminutes = Int32.Parse(ThirdMinuteEntryValue.Text);
                     var Thirdresult = new TimeSpan(Thirdhours, Thirdminutes, 0);
                     totalTime = Thirdresult.TotalSeconds;
-                    this.InspectionStartDate = Convert.ToDateTime(ThirdStartdateValue.Date.ToString());
-                    this.InspectionCompletionDate = Convert.ToDateTime(ThirdCompletionDateValue.Date.ToString());
+                    this.InspectionStartDate = ThirdStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
+                    this.InspectionCompletionDate = ThirdCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+
+                   // this.InspectionStartDate = Convert.ToDateTime(ThirdStartdateValue.Date.ToString());
+                   // this.InspectionCompletionDate = Convert.ToDateTime(ThirdCompletionDateValue.Date.ToString());
 
                     listtoAnswer.Add(new InspectionTOAnswers()
                     {
@@ -4391,8 +4488,8 @@ namespace ProteusMMX.Views.Workorder
 
                     var FourthHoursEntryValue = Fourthgridlayout.Children[3] as Entry;
                     var FourthMinuteEntryValue = Fourthgridlayout.Children[5] as Entry;
-                    var FourthStartdateValue = Fourthgridlayout.Children[7] as DatePicker;
-                    var FourthCompletionDateValue = Fourthgridlayout.Children[9] as DatePicker;
+                    var FourthStartdateValue = Fourthgridlayout.Children[7] as CustomDatePicker;
+                    var FourthCompletionDateValue = Fourthgridlayout.Children[9] as CustomDatePicker;
 
                     var employeecontrcatorids4 = Fourthgridlayout.Children[10] as Label;
                     var employeecontrcatoridssubstring4 = employeecontrcatorids4.Text.Split(':');
@@ -4414,8 +4511,10 @@ namespace ProteusMMX.Views.Workorder
                     var Fourthminutes = Int32.Parse(FourthMinuteEntryValue.Text);
                     var Fourthresult = new TimeSpan(Fourthhours, Fourthminutes, 0);
                     totalTime = Fourthresult.TotalSeconds;
-                    this.InspectionStartDate = Convert.ToDateTime(FourthStartdateValue.Date.ToString());
-                    this.InspectionCompletionDate = Convert.ToDateTime(FourthCompletionDateValue.Date.ToString());
+                    this.InspectionStartDate = FourthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
+                    this.InspectionCompletionDate = FourthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+                    //this.InspectionStartDate = Convert.ToDateTime(FourthStartdateValue.Date.ToString());
+                    //this.InspectionCompletionDate = Convert.ToDateTime(FourthCompletionDateValue.Date.ToString());
 
                     listtoAnswer.Add(new InspectionTOAnswers()
                     {
@@ -4450,8 +4549,8 @@ namespace ProteusMMX.Views.Workorder
                 {
                     var FifthHoursEntryValue = Fifthgridlayout.Children[3] as Entry;
                     var FifthMinuteEntryValue = Fifthgridlayout.Children[5] as Entry;
-                    var FifthStartdateValue = Fifthgridlayout.Children[7] as DatePicker;
-                    var FifthCompletionDateValue = Fifthgridlayout.Children[9] as DatePicker;
+                    var FifthStartdateValue = Fifthgridlayout.Children[7] as CustomDatePicker;
+                    var FifthCompletionDateValue = Fifthgridlayout.Children[9] as CustomDatePicker;
 
                     var employeecontrcatorids5 = Fifthgridlayout.Children[10] as Label;
                     var employeecontrcatoridssubstring5 = employeecontrcatorids5.Text.Split(':');
@@ -4472,8 +4571,11 @@ namespace ProteusMMX.Views.Workorder
                     var Fifthminutes = Int32.Parse(FifthMinuteEntryValue.Text);
                     var Fifthresult = new TimeSpan(Fifthhours, Fifthminutes, 0);
                     totalTime = Fifthresult.TotalSeconds;
-                    this.InspectionStartDate = Convert.ToDateTime(FifthStartdateValue.Date.ToString());
-                    this.InspectionCompletionDate = Convert.ToDateTime(FifthCompletionDateValue.Date.ToString());
+                    this.InspectionStartDate = FifthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
+                    this.InspectionCompletionDate = FifthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+
+                    //this.InspectionStartDate = Convert.ToDateTime(FifthStartdateValue.Date.ToString());
+                    //this.InspectionCompletionDate = Convert.ToDateTime(FifthCompletionDateValue.Date.ToString());
 
                     listtoAnswer.Add(new InspectionTOAnswers()
                     {
