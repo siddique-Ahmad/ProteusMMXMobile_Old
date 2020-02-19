@@ -145,7 +145,40 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
                 }
             }
         }
+        int? _workorderID;
+        public int? WorkorderID
+        {
+            get
+            {
+                return _workorderID;
+            }
 
+            set
+            {
+                if (value != _workorderID)
+                {
+                    _workorderID = value;
+                    OnPropertyChanged(nameof(WorkorderID));
+                }
+            }
+        }
+        string _type;
+        public string Type
+        {
+            get
+            {
+                return _type;
+            }
+
+            set
+            {
+                if (value != _type)
+                {
+                    _type = value;
+                    OnPropertyChanged("Type");
+                }
+            }
+        }
         string _totalRecordTitle;
         public string TotalRecordTitle
         {
@@ -452,9 +485,16 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
             try
             {
 
-              
 
-            //    OperationInProgress = true;
+
+                if (navigationData != null)
+                {
+
+                    var navigationParams = navigationData as TargetNavigationData;
+                    this.WorkorderID = navigationParams.WORKORDERID;
+                    this.Type = navigationParams.Type;
+                    
+                }
                 await SetTitlesPropertiesForPage();
                 await GetPickerItems();
 
@@ -530,7 +570,7 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
                // OperationInProgress = true;
                 ServiceOutput taskResponse = null;
 
-                taskResponse = await _taskService.GetTask(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText);
+                taskResponse = await _taskService.GetTask(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText,this.Type,this.WorkorderID.GetValueOrDefault());
 
                 if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Tasks != null && taskResponse.workOrderWrapper.workOrderLabor.Tasks.Count > 0 )
                 {

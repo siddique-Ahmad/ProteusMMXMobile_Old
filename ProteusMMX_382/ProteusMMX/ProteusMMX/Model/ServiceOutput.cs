@@ -99,6 +99,11 @@ namespace ProteusMMX.Model
         public int PageNumber { get; set; }
         public int RowspPage { get; set; }
         public List<ComboDD> UserComboDD { get; set; }
+
+        public List<WorkorderDD> Location { get; set; }
+        public List<WorkorderDD> Priority { get; set; }
+        public List<WorkorderDD> Shifts { get; set; }
+
         public List<Module> lstModules { get; set; }
         public bool AssetExist { get; set; }
         public int? RecordCount { get; set; }

@@ -63,6 +63,8 @@ namespace ProteusMMX.Droid.DependencyService
 
             }
 
+            
+
         }
 
         private void WriteFileBytes(string externalPath, byte[] bytes)
@@ -104,7 +106,7 @@ namespace ProteusMMX.Droid.DependencyService
 
                 Java.IO.File file = new Java.IO.File(path);
                 file.SetReadable(true);
-                Android.Net.Uri uri = Android.Support.V4.Content.FileProvider.GetUriForFile(Xamarin.Forms.Forms.Context, "com.proteusMMX.MM.FileProvider", file);
+                Android.Net.Uri uri = Android.Support.V4.Content.FileProvider.GetUriForFile(Xamarin.Forms.Forms.Context, "com.proteusMMX.MM.fileprovider", file);
                 Intent intent = new Intent(Intent.ActionView);
                 intent.SetDataAndType(uri, application);
                 intent.AddFlags(ActivityFlags.GrantReadUriPermission);
@@ -119,6 +121,7 @@ namespace ProteusMMX.Droid.DependencyService
                 {
                     // Toast.MakeText(Xamarin.Forms.Forms.Context, "No Application Available to View this file.", ToastLength.Short).Show();
                 }
+                // Show(file, application);
                 await Task.FromResult(true);
 
 

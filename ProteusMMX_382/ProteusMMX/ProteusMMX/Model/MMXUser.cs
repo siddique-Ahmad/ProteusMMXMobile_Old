@@ -41,6 +41,8 @@ namespace ProteusMMX.Model
         public string CompanyName { get; set; }
 
         public string RequireSignaturesForValidation { get; set; }
+
+        public bool EnableHoursAtRate { get; set; }
     }
 
 }

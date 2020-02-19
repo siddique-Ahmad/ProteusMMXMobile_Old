@@ -146,6 +146,7 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
                 }
             }
         }
+        bool SearchFlag = false;
 
         string _totalRecordTitle;
         public string TotalRecordTitle
@@ -164,7 +165,23 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
                 }
             }
         }
+        int? _workorderID;
+        public int? WorkorderID
+        {
+            get
+            {
+                return _workorderID;
+            }
 
+            set
+            {
+                if (value != _workorderID)
+                {
+                    _workorderID = value;
+                    OnPropertyChanged(nameof(WorkorderID));
+                }
+            }
+        }
 
         int _totalRecordCount;
         public int TotalRecordCount
@@ -199,6 +216,24 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
                 {
                     _searchPlaceholder = value;
                     OnPropertyChanged("SearchPlaceholder");
+                }
+            }
+        }
+
+        string _type;
+        public string Type
+        {
+            get
+            {
+                return _type;
+            }
+
+            set
+            {
+                if (value != _type)
+                {
+                    _type = value;
+                    OnPropertyChanged("Type");
                 }
             }
         }
@@ -388,7 +423,9 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
                 else
                 {
                     //reset pageno. and start search again.
-                    await RefillPickerItemsCollection();
+                    // await RefillPickerItemsCollection();
+                    await RemoveAllFromPickerItemCollection();
+                    await GetPickerItemsfromSearch();
 
                 }
 
@@ -421,7 +458,9 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
 
 
                 //reset pageno. and start search again.
-                await RefillPickerItemsCollection();
+                //await RefillPickerItemsCollection();
+                await RemoveAllFromPickerItemCollection();
+                await GetPickerItems();
 
 
             });
@@ -431,7 +470,14 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
         {
             if (item != null)
             {
-                MessagingCenter.Send(item, MessengerKeys.EmployeeRequested_AddTask);
+                if (this.Type == "Inspection")
+                {
+                    MessagingCenter.Send(item, MessengerKeys.EmployeeRequested_AddInspection);
+                }
+                else
+                {
+                    MessagingCenter.Send(item, MessengerKeys.EmployeeRequested_AddTask);
+                }
                 await NavigationService.NavigateBackAsync();
 
             }
@@ -453,9 +499,17 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
             try
             {
 
-               
 
-            //    OperationInProgress = true;
+
+                if (navigationData != null)
+                {
+
+                    var navigationParams = navigationData as TargetNavigationData;
+                    this.WorkorderID = navigationParams.WORKORDERID;
+                    this.Type = navigationParams.Type;
+
+
+                }
                 await SetTitlesPropertiesForPage();
                 await GetPickerItems();
 
@@ -507,9 +561,20 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
 
         private async Task RefillPickerItemsCollection()
         {
-            PageNumber = 1;
-            await RemoveAllFromPickerItemCollection();
-            await GetPickerItems();
+            //if (!string.IsNullOrWhiteSpace(SearchText) && SearchText.Length > 0)
+            //{
+            //    PageNumber = 0;
+            //    RowCount = 0;
+            //    await RemoveAllFromPickerItemCollection();
+            //    await GetPickerItems();
+            //    return;
+
+            //}
+           
+                PageNumber = 1;
+                await RemoveAllFromPickerItemCollection();
+                await GetPickerItems();
+            
         }
 
         private async Task RemoveAllFromPickerItemCollection()
@@ -529,7 +594,35 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
              //   OperationInProgress = true;
                 ServiceOutput taskResponse = null;
 
-                taskResponse = await _taskService.GetEmployee(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText);
+                taskResponse = await _taskService.GetEmployee(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText,this.Type,WorkorderID.GetValueOrDefault());
+               
+                if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
+                {
+                    var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
+                    await AddItemsToPickerItemCollection(assingedToEmployees);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                OperationInProgress = false;
+            }
+
+            finally
+            {
+                OperationInProgress = false;
+            }
+        }
+        async Task GetPickerItemsfromSearch()
+        {
+            try
+            {
+                //   OperationInProgress = true;
+                ServiceOutput taskResponse = null;
+
+                taskResponse = await _taskService.GetEmployee(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, this.Type, WorkorderID.GetValueOrDefault());
 
                 if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
                 {
@@ -550,11 +643,22 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
                 OperationInProgress = false;
             }
         }
+        
 
         public async Task GetPickerItemsAuto()
         {
-            PageNumber++;
-            await GetPickerItems();
+            if (!string.IsNullOrWhiteSpace(SearchText) && SearchText.Length > 0)
+            {
+                //await  RemoveAllFromPickerItemCollection();
+                //await GetPickerItemsfromSearch();
+
+            }
+            else
+            {
+                PageNumber++;
+                await GetPickerItems();
+            }
+          
         }
 
         private async Task AddItemsToPickerItemCollection(List<EmployeeLookUp> assignedToEmployees)

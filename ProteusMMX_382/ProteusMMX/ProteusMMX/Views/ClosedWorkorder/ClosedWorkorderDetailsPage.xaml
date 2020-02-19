@@ -249,11 +249,14 @@
                                 <Entry Text="{Binding MiscellaneousMaterialCostText}" IsEnabled="False"></Entry>
                             </StackLayout>
 
+                          
+
                             <StackLayout IsVisible="{Binding ClosedDateLayout}" Orientation="Vertical" Grid.Row="13" Grid.Column="1">
                                 <Label Text="{Binding ClosedDateTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding ClosedDateText}" IsEnabled="False"></Entry>
                             </StackLayout>
 
+                           
 
                             <StackLayout IsVisible="{Binding DigitalSignaturesLayout}" Orientation="Vertical" Grid.Row="14" Grid.Column="0">
                                 <Label Text="{Binding DigitalSignaturesTitle}" TextColor="Black" FontAttributes="Bold"/>
@@ -427,17 +430,28 @@
                                 <Entry Text="{Binding UserField24}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout   Orientation="Vertical" Grid.Row="31" Grid.Column="1">
+                            <StackLayout   Orientation="Vertical" Grid.Row="30" Grid.Column="1">
                                 <Label Text="{Binding  ApprovalLevelTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding ApprovalLevel}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout   Orientation="Vertical" Grid.Row="32" Grid.Column="0">
+                            <StackLayout   Orientation="Vertical" Grid.Row="31" Grid.Column="0">
                                 <Label Text="{Binding  ApprovalNumberTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding ApprovalNumber}" IsEnabled="False"></Entry>
                             </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="31" Grid.Column="1">
+                                <Label Text="{Binding TotalTimeTilte}" TextColor="Black" FontAttributes="Bold">
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes">
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Label.FontAttributes>
+                                </Label>
+                                <Entry IsEnabled="False" Text="{Binding TotalTimeText}"/>
+                            </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="33" IsVisible="{Binding  AdditionalDetailsIsVisible }" Grid.ColumnSpan="2">
+                            <StackLayout Orientation="Vertical" Grid.Row="32" IsVisible="{Binding  AdditionalDetailsIsVisible }" Grid.ColumnSpan="2">
                                 <Label Text="{Binding AdditionalDetailsTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150" />-->
                                 <dependencyinterface:CustomEditor Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
@@ -450,7 +464,7 @@
                                 </Label>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="34" IsVisible="{Binding  InternalNoteIsVisible }" Grid.ColumnSpan="2">
+                            <StackLayout Orientation="Vertical" Grid.Row="33" IsVisible="{Binding  InternalNoteIsVisible }" Grid.ColumnSpan="2">
                                 <Label Text="{Binding InternalNoteTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
                                 <dependencyinterface:CustomEditor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
@@ -463,8 +477,8 @@
                                 </Label>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="35" IsVisible="{Binding  SignaturesIsVisible }" Grid.ColumnSpan="2">
-                                <Label Text="Signatures" TextColor="Black" FontAttributes="Bold"/>
+                            <StackLayout x:Name="SignatureLayout" Orientation="Vertical" IsVisible="{Binding  SignaturesIsVisible }" Grid.ColumnSpan="2">
+                                <Label Text="{Binding Signatures}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
                                 <dependencyinterface:CustomEditor Text="{Binding SignatureText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
                                 <Label Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >

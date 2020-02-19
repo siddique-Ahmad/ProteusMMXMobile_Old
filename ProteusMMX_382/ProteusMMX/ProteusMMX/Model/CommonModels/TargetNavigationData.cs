@@ -32,6 +32,8 @@ namespace ProteusMMX.Model.CommonModels
         public int BalanceDue { get; set; }
         public int WorkOrderId { get; set; }
 
+        public int? WORKORDERID { get; set; }
+
         public int WorkOrderNonStockroomPartID { get; set; }
 
         public int PurchaseOrderAssetID { get; set; }
@@ -42,6 +44,8 @@ namespace ProteusMMX.Model.CommonModels
 
         public int? ServiceRequestID { get; set; }
         public string RequestNumber { get; set; }
+
+        public string Type { get; set; }
         public int WorkOrderStockroomPartID { get; set; }
 
         public int? StockroomID { get; set; }

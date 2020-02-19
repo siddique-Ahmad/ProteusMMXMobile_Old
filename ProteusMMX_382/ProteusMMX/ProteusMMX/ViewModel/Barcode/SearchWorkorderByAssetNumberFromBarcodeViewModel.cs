@@ -23,7 +23,7 @@ using ZXing.Net.Mobile.Forms;
 
 namespace ProteusMMX.ViewModel.Barcode
 {
-    public class SearchWorkorderByAssetNumberFromBarcodeViewModel : ViewModelBase
+    public class SearchWorkorderByAssetNumberFromBarcodeViewModel : ViewModelBase, IHandleViewAppearing, IHandleViewDisappearing
     {
 
         #region Fields
@@ -881,6 +881,8 @@ namespace ProteusMMX.ViewModel.Barcode
                 }
 
                 OperationInProgress = true;
+
+                Application.Current.Properties["gridrowindex"] = 1;
                 await SetTitlesPropertiesForPage();
                 if (Application.Current.Properties.ContainsKey("CloseWorkorderRightsKey"))
                 {
@@ -1351,7 +1353,7 @@ namespace ProteusMMX.ViewModel.Barcode
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText,"null","null","null");
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText,"null","null","null","null");
                 // var workordersResponse = await _workorderService.GetWorkorders(UserID,"0","0", SearchText, WorkorderTypeFilterText, SelectedSortingText);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.WorkOrderCount > 0)
@@ -1393,7 +1395,7 @@ namespace ProteusMMX.ViewModel.Barcode
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, "null", "null","null", "null", "null");
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, "null", "null","null", "null", "null","null");
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
@@ -1575,7 +1577,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
 
                 ///TODO: Get Inspection 
-                var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString());
+                var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(),AppSettings.User.UserID.ToString());
 
 
                 ///TODO: Get Inspection Time 
@@ -1783,30 +1785,18 @@ namespace ProteusMMX.ViewModel.Barcode
                 // OperationInProgress = false;
             }
         }
-        //public async Task OnViewAppearingAsync(VisualElement view)
-        //{
-        //    if (string.IsNullOrWhiteSpace(this.SearchText))
-        //    {
-        //        await RefillWorkorderCollection();
-        //    }
-        //    //else if (IsLocationCallFrombarcodePage)
-        //    //{
-        //    //    await GetWorkordersFromLocation();
-        //    //}
-        //    //else
-        //    //{
+        public async Task OnViewAppearingAsync(VisualElement view)
+        {
 
-        //    //    await GetWorkordersFromAsset();
+            //PageNumber = 1;
+            //await RemoveAllWorkorderFromCollection();
+            //await GetWorkordersFromSearchBar();
+        }
 
-        //    //}
-
-
-        //}
-
-        //public async Task OnViewDisappearingAsync(VisualElement view)
-        //{
-
-        //}
+        public async Task OnViewDisappearingAsync(VisualElement view)
+        {
+           // this.SearchText = null;
+        }
 
 
         #endregion

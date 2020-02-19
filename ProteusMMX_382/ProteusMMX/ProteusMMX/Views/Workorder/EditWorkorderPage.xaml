@@ -362,6 +362,17 @@
                                 <Button Text="{Binding MaintenanceCodeName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding MaintenanceCodeCommand}"  IsEnabled="{Binding MaintenanceCodeIsEnable}" />
                             </StackLayout>
 
+                            <StackLayout Orientation="Vertical" Grid.Row="11" Grid.Column="1">
+                                <Label Text="{Binding TotalTimeTilte}" TextColor="Black">
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes">
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Label.FontAttributes>
+                                </Label>
+                                <Entry IsEnabled="False" Text="{Binding TotalTimeText}"/>
+                            </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="12" Grid.Column="0" IsVisible="{Binding EstimstedDowntimeIsVisible}">
                                 <Label Text="{Binding EstimstedDowntimeTitle}" TextColor="Black">
@@ -411,17 +422,7 @@
                                 <controls:NumericEntry Text="{Binding MiscellaneousMaterialCostText}" IsEnabled="{Binding MiscellaneousMaterialCostIsEnable}" TextChanged="NumericEntry_TextChanged_3"/>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="14">
-                                <Label Text="TotalTime" TextColor="Black">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <Label Text="{Binding TotalTimeText}"/>
-                            </StackLayout>
+                            
 
 
 

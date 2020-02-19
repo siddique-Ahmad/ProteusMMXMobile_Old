@@ -46,7 +46,10 @@ namespace ProteusMMX.Constants
         public const string OnCheckoutRequested = "OnCheckoutRequested";
 
 
-        //public const string CheckoutRequested = "CheckoutRequested";
+        // Workorder >>> Inspection
+        
+        public const string EmployeeRequested_AddInspection = "EmployeeRequested_AddInspection";
+        public const string ContractorRequested_AddInspection = "ContractorRequested_AddInspection";
 
 
     }

@@ -408,7 +408,23 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
+        string _totalTimeTilte;
+        public string TotalTimeTilte
+        {
+            get
+            {
+                return _totalTimeTilte;
+            }
 
+            set
+            {
+                if (value != _totalTimeTilte)
+                {
+                    _totalTimeTilte = value;
+                    OnPropertyChanged(nameof(TotalTimeTilte));
+                }
+            }
+        }
         string _sectionNameText;
         public string SectionNameText
         {
@@ -2620,6 +2636,23 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
+        string _signatures;
+        public string Signatures
+        {
+            get
+            {
+                return _signatures;
+            }
+
+            set
+            {
+                if (value != _signatures)
+                {
+                    _signatures = value;
+                    OnPropertyChanged(nameof(Signatures));
+                }
+            }
+        }
 
         //EstimatedDowntime
         //string _estimatedDowntime;
@@ -4092,6 +4125,24 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
         #endregion
 
+        // Total Time
+        string _totalTimeText;
+        public string TotalTimeText
+        {
+            get
+            {
+                return _totalTimeText;
+            }
+
+            set
+            {
+                if (value != _totalTimeText)
+                {
+                    _totalTimeText = value;
+                    OnPropertyChanged(nameof(TotalTimeText));
+                }
+            }
+        }
         bool _requestedDateIsVisible = true;
         public bool RequestedDateIsVisible
         {
@@ -4253,7 +4304,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 //SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName(titles, "SelectOptionsTitles"); 
 
                 SectionNameTitle = WebControlTitle.GetTargetNameByTitleName("RiskQuestion");
-
+                TotalTimeTilte = WebControlTitle.GetTargetNameByTitleName("TotalTime");
                 DescriptionTitle = WebControlTitle.GetTargetNameByTitleName("Description");
                 AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
                 InternalNoteTitle = WebControlTitle.GetTargetNameByTitleName("InternalNote");
@@ -4326,6 +4377,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 ApprovalNumberTitle = WebControlTitle.GetTargetNameByTitleName("ApprovalNumber");
                 MoreText = WebControlTitle.GetTargetNameByTitleName("More");
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+                Signatures = WebControlTitle.GetTargetNameByTitleName("Signatures");
 
 
 
@@ -4497,6 +4549,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             this.WorkorderNumberText = workorder.WorkOrderNumber;
             this.JobNumberText = workorder.JobNumber;
             this.DescriptionText = workorder.Description;
+            this.TotalTimeText = workorder.TotalTime;
             this.AdditionalDetailsText = workorder.AdditionalDetails;
             this.RequiredDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.RequiredDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
             this.InternalNoteText = workorder.InternalNote;

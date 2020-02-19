@@ -763,27 +763,18 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
 
-                        //startStopButtonGridHours2.Children.Add(startButtonforRate2, 0, 0);
-                        //startStopButtonGridHours2.Children.Add(stopButtonforRate2, 1, 0);
-                        //startStopButtonGridHours2.Children.Add(completeButtonforRate2, 2, 0);
-                        if (Device.Idiom == TargetIdiom.Phone)
+                        startStopButtonGridHours2.Children.Add(startButton, 0, 0);
+                        startStopButtonGridHours2.Children.Add(stopButton, 1, 0);
+                        startStopButtonGridHours2.Children.Add(completeButton, 2, 0);
+                        startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
+                        startStopButtonGridHours2.Children.Add(hoursEntryforRate2, 4, 0);
+                        startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
+                        startStopButtonGridHours2.Children.Add(minuteEntryforRate2, 6, 0);
+
+                        if (AppSettings.User.EnableHoursAtRate == false)
                         {
-                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate2"), VerticalOptions = LayoutOptions.Center }, 0, 1);
-                            startStopButtonGridHours2.Children.Add(hoursEntryforRate2, 1, 1);
-                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 0, 2);
-                            startStopButtonGridHours2.Children.Add(minuteEntryforRate2, 1, 2);
-
-
+                            startStopButtonGridHours2.IsVisible = false;
                         }
-                        else
-                        {
-                            startStopButtonGridHours2.Children.Add(new Label { Text = "Hours At Rate2", VerticalOptions = LayoutOptions.Center }, 0, 0);
-                            startStopButtonGridHours2.Children.Add(hoursEntryforRate2, 1, 0);
-                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 2, 0);
-                            startStopButtonGridHours2.Children.Add(minuteEntryforRate2, 3, 0);
-                        }
-
-
 
 
                         var descriptionGrid = new Grid();

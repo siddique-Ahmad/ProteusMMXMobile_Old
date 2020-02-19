@@ -8,9 +8,9 @@ namespace ProteusMMX.Services.SelectionListPageServices.Workorder.TaskAndLabour
 {
     public interface ITaskService
     {
-        Task<ServiceOutput> GetTask(string UserID, string PageNumber, string RowCount, string SearchTaskNumber);
-        Task<ServiceOutput> GetEmployee(string UserID, string PageNumber, string RowCount, string SearchEmployeeName);
-        Task<ServiceOutput> GetContractor(string UserID, string PageNumber, string RowCount, string SearchContractorName);
+        Task<ServiceOutput> GetTask(string UserID, string PageNumber, string RowCount, string SearchTaskNumber, string Type, int workorderid);
+        Task<ServiceOutput> GetEmployee(string UserID, string PageNumber, string RowCount, string SearchEmployeeName,string Type,int workorderid);
+        Task<ServiceOutput> GetContractor(string UserID, string PageNumber, string RowCount, string SearchContractorName, string Type, int workorderid);
 
     }
 }

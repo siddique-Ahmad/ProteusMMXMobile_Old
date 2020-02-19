@@ -98,7 +98,7 @@ namespace ProteusMMX.Views.Workorder
         {
             base.OnAppearing();
 
-            ServiceOutput InspectionList = await ViewModel._inspectionService.GetWorkorderInspection(ViewModel.WorkorderID.ToString());
+            ServiceOutput InspectionList = await ViewModel._inspectionService.GetWorkorderInspection(ViewModel.WorkorderID.ToString(),AppSettings.User.UserID.ToString());
             if (InspectionList.listInspection != null && InspectionList.listInspection.Count > 0)
             {
                // ViewModel.DisabledText=

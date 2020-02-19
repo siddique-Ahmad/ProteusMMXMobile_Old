@@ -75,5 +75,15 @@ namespace ProteusMMX.Views.Workorder
                 await viewAware.OnViewDisappearingAsync(this);
             }
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Picker_Focused(object sender, FocusEventArgs e)
+        {
+
+        }
     }
 }

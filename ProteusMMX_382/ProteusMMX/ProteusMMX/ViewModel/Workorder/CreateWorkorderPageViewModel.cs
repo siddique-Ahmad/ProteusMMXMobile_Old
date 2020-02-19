@@ -4612,6 +4612,11 @@ namespace ProteusMMX.ViewModel.Workorder
             #region Remove None visibility controls
             if (WorkorderControlsNew != null && WorkorderControlsNew.Count > 0)
             {
+                ///Remove operator name and Work Permit Request///
+                WorkorderControlsNew.RemoveAll((i => i.ControlName == "OperatorID"));
+                WorkorderControlsNew.RemoveAll((i => i.ControlName == "WorkPermitRequestTime"));
+
+
                 WorkorderControlsNew.RemoveAll(i => i.Expression == "N");
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "ClosedDate"));
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "CurrentRuntime"));
@@ -9422,7 +9427,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     else
                     {
                         UserDialogs.Instance.HideLoading();
-                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("ApprovalLevelMustBeBetween1To6"), 2000);
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("ApprovalNumberMustBeBetween1To6"), 2000);
                         return;
                     }
                 }

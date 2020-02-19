@@ -21,7 +21,7 @@ using ZXing.Net.Mobile.Forms;
 
 namespace ProteusMMX.ViewModel.Barcode
 {
-    public class SearchAssetFromBarcodeViewModel : ViewModelBase
+    public class SearchAssetFromBarcodeViewModel : ViewModelBase, IHandleViewAppearing, IHandleViewDisappearing
     {
 
         #region Fields
@@ -983,9 +983,9 @@ namespace ProteusMMX.ViewModel.Barcode
         {
 
 
-            PageNumber = 1;
-            await RemoveAllAssetsFromCollection();
-            await GetAssetsFromSearchBar();
+            //PageNumber = 1;
+            //await RemoveAllAssetsFromCollection();
+            //await GetAssetsFromSearchBar();
 
 
             //else
@@ -997,10 +997,10 @@ namespace ProteusMMX.ViewModel.Barcode
 
         }
 
-        //public async Task OnViewDisappearingAsync(VisualElement view)
-        //{
-
-        //}
+        public async Task OnViewDisappearingAsync(VisualElement view)
+        {
+            //this.SearchText = null;
+        }
         #endregion
     }
 }
