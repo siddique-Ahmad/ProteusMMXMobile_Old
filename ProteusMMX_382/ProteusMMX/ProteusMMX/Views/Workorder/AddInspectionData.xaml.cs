@@ -139,7 +139,7 @@ namespace ProteusMMX.Views.Workorder
         private void BindLayout(List<WorkOrderInspectionData> listInspection)
         {
             // List<ExistingInspections> listInspection
-            List<WorkOrderInspectionData> distinctList = listInspection.OrderByDescending(x => x.SectionName="Miscellaneous Questions").ToList();
+           // List<WorkOrderInspectionData> distinctList = listInspection.OrderByDescending(x => x.SectionName="Miscellaneous Questions").ToList();
             foreach (var item in listInspection)
             {
                 if (item.SectionName == "Miscellaneous Questions")
@@ -676,7 +676,7 @@ namespace ProteusMMX.Views.Workorder
                             var estimatedHourStackLayout = new StackLayout() { Orientation = StackOrientation.Horizontal };
                             var estimatedHourTitleLabel = new Label() { FontSize = 12, TextColor = Color.Black, Text = WebControlTitle.GetTargetNameByTitleName("EstimatedHours") };
                             var estimatedHourLabel = new Label() { FontSize = 12, TextColor = Color.Black };
-                            estimatedHourLabel.Text = item.EstimatedHours.ToString();
+                            estimatedHourLabel.Text = Miscellaneous.EstimatedHours.ToString();
                             estimatedHourStackLayout.Children.Add(estimatedHourTitleLabel);
                             estimatedHourStackLayout.Children.Add(estimatedHourLabel);
                             mainLayoutGroupSingle.Children.Add(estimatedHourStackLayout);
@@ -686,7 +686,7 @@ namespace ProteusMMX.Views.Workorder
                             var estimatedHourStackLayout = new StackLayout() { Orientation = StackOrientation.Horizontal };
                             var estimatedHourTitleLabel = new Label() { TextColor = Color.Black, Text = WebControlTitle.GetTargetNameByTitleName("EstimatedHours") };
                             var estimatedHourLabel = new Label() { TextColor = Color.Black };
-                            estimatedHourLabel.Text = item.EstimatedHours.ToString();
+                            estimatedHourLabel.Text = Miscellaneous.EstimatedHours.ToString();
                             estimatedHourStackLayout.Children.Add(estimatedHourTitleLabel);
                             estimatedHourStackLayout.Children.Add(estimatedHourLabel);
                             mainLayoutGroupSingle.Children.Add(estimatedHourStackLayout);

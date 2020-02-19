@@ -1179,7 +1179,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
-
+            this.SearchText = "";
         }
         #endregion
     }

@@ -938,7 +938,7 @@ namespace ProteusMMX.ViewModel.Inventory
 
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
-
+            this.SearchText = null;
         }
         #endregion
     }

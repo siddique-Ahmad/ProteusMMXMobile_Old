@@ -1091,7 +1091,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 ServiceOutput taskResponse = null;
 
-                taskResponse = await _taskService.GetEmployee(UserID,"0","0", AppSettings.User.EmployeeName);
+                taskResponse = await _taskService.GetEmployee(UserID,"0","0", AppSettings.User.EmployeeName, "TaskAndLabor",this.WorkorderID);
 
                 if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
                 {
@@ -1216,7 +1216,10 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 //OperationInProgress = true;
                 IsPickerDataRequested = true;
-                await NavigationService.NavigateToAsync<TaskListSelectionPageViewModel>(); //Pass the control here
+                TargetNavigationData tnobj = new TargetNavigationData();
+                tnobj.WORKORDERID = this.WorkorderID;
+                tnobj.Type = "TaskAndLabor";
+                await NavigationService.NavigateToAsync<TaskListSelectionPageViewModel>(tnobj); //Pass the control here
             }
             catch (Exception ex)
             {
@@ -1243,7 +1246,10 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 // OperationInProgress = true;
                 IsPickerDataRequested = true;
-                await NavigationService.NavigateToAsync<EmployeeListSelectionPageViewModel>(); //Pass the control here
+                TargetNavigationData tnobj = new TargetNavigationData();
+                tnobj.WORKORDERID = this.WorkorderID;
+                tnobj.Type = "TaskAndLabor";
+                await NavigationService.NavigateToAsync<EmployeeListSelectionPageViewModel>(tnobj); //Pass the control here
             }
             catch (Exception ex)
             {
@@ -1269,7 +1275,10 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 //OperationInProgress = true;
                 IsPickerDataRequested = true;
-                await NavigationService.NavigateToAsync<ContractorListSelectionPageViewModel>(); //Pass the control here
+                TargetNavigationData tnobj = new TargetNavigationData();
+                tnobj.WORKORDERID = this.WorkorderID;
+                tnobj.Type = "TaskAndLabor";
+                await NavigationService.NavigateToAsync<ContractorListSelectionPageViewModel>(tnobj); //Pass the control here
             }
             catch (Exception ex)
             {
@@ -1312,7 +1321,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Pleasefillthestartdate"), 2000);
                     return;
                 }
-                if (EmployeeID != null && ContractorID != null)
+                if (EmployeeID == null && ContractorID == null)
                 {
                     UserDialogs.Instance.HideLoading();
 

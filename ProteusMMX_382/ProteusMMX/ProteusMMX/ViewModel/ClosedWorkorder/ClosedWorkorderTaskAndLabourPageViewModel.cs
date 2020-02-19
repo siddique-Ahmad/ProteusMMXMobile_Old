@@ -623,7 +623,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     foreach (var item in workorderLabour.clWorkOrderWrapper.clworkOrderLabors)
                     {
 
-                       
+                      
                    
 
                         Label taskNumberLabel = new Label { TextColor = Color.Black };
@@ -676,6 +676,9 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         Entry hoursEntry = new Entry { TextColor = Color.Black, Placeholder = "hh" };
                         Entry minuteEntry = new Entry { TextColor = Color.Black, Placeholder = "mm", };
 
+                        Entry hoursEntryforRate2 = new Entry { TextColor = Color.Black, Placeholder = "hh" };
+                        Entry minuteEntryforRate2 = new Entry { TextColor = Color.Black, Placeholder = "mm", };
+
                         Label startDateLabel = new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate") };
                         DatePicker startDatePicker = new DatePicker() { HorizontalOptions = LayoutOptions.Start, Date = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone), MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date };
                         StackLayout startDateStacklayout = new StackLayout() { Orientation = StackOrientation.Vertical, Children = { startDateLabel, startDatePicker } };
@@ -702,6 +705,11 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                             var FinalHrs1 = FinalHours.Split('.');
                             hoursEntry.Text = FinalHrs1[0];
                             minuteEntry.Text = FinalHrs1[1];
+
+                            string FinalHoursrate2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
+                            var FinalHrs2 = FinalHoursrate2.Split('.');
+                            hoursEntryforRate2.Text = FinalHrs2[0];
+                            minuteEntryforRate2.Text = FinalHrs2[1];
                             // CompHours.Text = item.CompletionDate.ToString();
 
                             //CompHours.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), ServerTimeZone).ToString(); 
@@ -741,8 +749,32 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         startStopButtonGrid.Children.Add(minuteEntry, 6, 0);
 
 
+                        /// Hours at Rate 2 Layout///////////////////////
+
+                        var startStopButtonGridHours2 = new Grid();
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGridHours2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
 
 
+                        startStopButtonGridHours2.Children.Add(startButton, 0, 0);
+                        startStopButtonGridHours2.Children.Add(stopButton, 1, 0);
+                        startStopButtonGridHours2.Children.Add(completeButton, 2, 0);
+                        startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
+                        startStopButtonGridHours2.Children.Add(hoursEntryforRate2, 4, 0);
+                        startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
+                        startStopButtonGridHours2.Children.Add(minuteEntryforRate2, 6, 0);
+
+                        if (AppSettings.User.EnableHoursAtRate == false)
+                        {
+                            startStopButtonGridHours2.IsVisible = false;
+                        }
 
 
                         var descriptionGrid = new Grid();
@@ -990,7 +1022,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                             HorizontalOptions = LayoutOptions.CenterAndExpand,
                             Children =
                                 {
-                                  taskNumberGrid,descriptionLayout,lbld, datesStacklayout , startStopButtonGrid,employeeNameGrid
+                                  taskNumberGrid,descriptionLayout,lbld, datesStacklayout , startStopButtonGrid,startStopButtonGridHours2,employeeNameGrid
                                 }
                         };
                         var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest = 2, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };

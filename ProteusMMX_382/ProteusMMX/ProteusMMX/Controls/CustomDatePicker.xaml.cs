@@ -100,8 +100,10 @@ namespace ProteusMMX.Controls
                 dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
 
 
-
                 var dateResult = await UserDialogs.Instance.DatePromptAsync(dateConfig);
+
+               
+
                 if (dateResult.SelectedDate != null && dateResult.SelectedDate.Year == 0001)
                 {
                     SelectedDate = null;
@@ -111,11 +113,7 @@ namespace ProteusMMX.Controls
                 {
                     return;
                 }
-                //if (dateResult != null && dateResult.SelectedDate != null && dateResult.SelectedDate.Year == 0001)
-                //{
-                //    return;
-                //}
-
+             
                 if (dateResult.Ok == true)
                 {
                     if(dateResult.SelectedDate != null && dateResult.SelectedDate.Year != 0001)

@@ -304,6 +304,24 @@ namespace ProteusMMX
 
         }
 
+        private static string _getWorkorderDDRecord = "Inspection/service/GetWorkorderDDRecord";
+        public static string GetWorkorderDDRecord
+        {
+            get
+            {
+                return _getWorkorderDDRecord;
+            }
+
+            set
+            {
+                if (value != _getWorkorderDDRecord)
+                {
+                    _getWorkorderDDRecord = value;
+                }
+            }
+
+        }
+        
         private static string _getWorkorderLabour = "Inspection/service/WorkOrderLabors";
         public static string GetWorkorderLabour
         {

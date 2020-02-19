@@ -500,7 +500,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 await SetTitlesPropertiesForPage();
                
-                    ServiceOutput InspectionList = await _inspectionService.GetWorkorderInspection(this.WorkorderID.ToString());
+                    ServiceOutput InspectionList = await _inspectionService.GetWorkorderInspection(this.WorkorderID.ToString(),AppSettings.User.UserID.ToString());
                     if(InspectionList.listInspection!=null && InspectionList.listInspection.Count>0)
                     {
                         DisabledText = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
@@ -857,7 +857,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         startStopButtonGrid.Children.Add(completeButton, 2, 0);
                         if (Device.Idiom == TargetIdiom.Phone)
                         {
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate1"), VerticalOptions = LayoutOptions.Center }, 0, 1);
+                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 0, 1);
                             startStopButtonGrid.Children.Add(hoursEntry, 1, 1);
                             startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 0, 2);
                             startStopButtonGrid.Children.Add(minuteEntry, 1, 2);
@@ -866,7 +866,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                         else
                         {
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate1"), VerticalOptions = LayoutOptions.Center }, 3, 0);
+                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
                             startStopButtonGrid.Children.Add(hoursEntry, 4, 0);
                             startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
                             startStopButtonGrid.Children.Add(minuteEntry, 6, 0);
@@ -891,7 +891,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         startStopButtonGridHours2.Children.Add(completeButtonforRate2, 2, 0);
                         if (Device.Idiom == TargetIdiom.Phone)
                         {
-                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate2"), VerticalOptions = LayoutOptions.Center }, 0, 1);
+                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 0, 1);
                             startStopButtonGridHours2.Children.Add(hoursEntryforRate2, 1, 1);
                             startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 0, 2);
                             startStopButtonGridHours2.Children.Add(minuteEntryforRate2, 1, 2);
@@ -900,14 +900,17 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                         else
                         {
-                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate2"), VerticalOptions = LayoutOptions.Center }, 3, 0);
+                            startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
                             startStopButtonGridHours2.Children.Add(hoursEntryforRate2, 4, 0);
                             startStopButtonGridHours2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
                             startStopButtonGridHours2.Children.Add(minuteEntryforRate2, 6, 0);
                         }
 
 
-
+                        if(AppSettings.User.EnableHoursAtRate==false)
+                        {
+                            startStopButtonGridHours2.IsVisible = false;
+                        }
 
 
 
@@ -979,18 +982,28 @@ namespace ProteusMMX.ViewModel.Workorder
                         WorkOrderLabor savedWorkOrderLabor1 = null;
                         try
                         {
-                            //string rate1 = Convert.ToDecimal(string.Format("{0:F2}",item.HoursAtRate1)).ToString();
-                            //var Finalrate1 = rate1.Split('.');
-                            //string finalrate1 = Finalrate1[0];
-
-                         
-
+                           
                             string k1 = "WorkOrderLabor:" + item.WorkOrderLaborID;
-                            string k2 = "WorkOrderLaborHours2:" + item.WorkOrderLaborID;
-                            
-                            // string k2 = "WorkOrderLabor:" + item.WorkOrderLaborID + finalrate2;
                             savedWorkOrderLabor = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k1));
+
+
+
+
+
+                        }
+                        catch (Exception)
+                        {
+
+                        }
+
+                        try
+                        {
+
+                            string k2 = "WorkOrderLaborHours2:" + item.WorkOrderLaborID;
                             savedWorkOrderLabor2 = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k2));
+
+
+
 
                         }
                         catch (Exception)
@@ -1050,12 +1063,11 @@ namespace ProteusMMX.ViewModel.Workorder
                                 startButtonforRate2.CommandParameter = savedWorkOrderLabor2;
                                 stopButtonforRate2.CommandParameter = savedWorkOrderLabor2;
 
-
-
+                              
                                 startButtonforRate2.BackgroundColor = Color.Green;
 
 
-                                string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", savedWorkOrderLabor2.HoursAtRate2)).ToString();
+                                string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
                                 var FinalHrs2 = FinalHours2.Split('.');
                                 hoursEntryforRate2.Text = FinalHrs2[0];
                                 minuteEntryforRate2.Text = FinalHrs2[1];
@@ -1250,6 +1262,14 @@ namespace ProteusMMX.ViewModel.Workorder
                             TimeSpan elapsed = StopTime.Subtract(workOrderLabor.StartTimeOfTimer);
 
                             int mn = elapsed.Minutes;
+                            if (String.IsNullOrWhiteSpace(minuteEntry.Text))
+                            {
+                                minuteEntry.Text = "0";
+                            }
+                            if (String.IsNullOrWhiteSpace(hoursEntry.Text))
+                            {
+                                hoursEntry.Text = "0";
+                            }
                             int mn1 = Convert.ToInt32(minuteEntry.Text);
                             if (mn + mn1 > 59)
                             {
@@ -1278,7 +1298,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             }
 
 
-                            completeDateButton.Text = DateTime.Now.ToString();
+                            completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
 
                             stopButton.BackgroundColor = Color.Red;
                             startButton.BackgroundColor = Color.Red;
@@ -1303,6 +1323,14 @@ namespace ProteusMMX.ViewModel.Workorder
                             TimeSpan elapsed = StopTime.Subtract(workOrderLabor.StartTimeOfTimer);
 
                             int mn = elapsed.Minutes;
+                            if (String.IsNullOrWhiteSpace(minuteEntryforRate2.Text))
+                            {
+                                minuteEntryforRate2.Text = "0";
+                            }
+                            if (String.IsNullOrWhiteSpace(hoursEntryforRate2.Text))
+                            {
+                                hoursEntryforRate2.Text = "0";
+                            }
                             int mn1 = Convert.ToInt32(minuteEntryforRate2.Text);
                             if (mn + mn1 > 59)
                             {
@@ -1331,7 +1359,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             }
 
 
-                            completeDateButton.Text = DateTime.Now.ToString();
+                            completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
 
                             stopButtonforRate2.BackgroundColor = Color.Red;
                             startButtonforRate2.BackgroundColor = Color.Red;
@@ -1370,7 +1398,10 @@ namespace ProteusMMX.ViewModel.Workorder
                             startButtonforRate2.BackgroundColor = Color.FromHex("#D3D3D3");
 
                             completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
-                           
+                            var parent = completeButtonforRate2.Parent;
+                            Grid parentGrid = parent as Grid;
+                            parentGrid.StyleId = item.HoursAtRate2.ToString();
+
                         };
 
                         saveButton.Clicked += async (sender, e) =>
@@ -1768,11 +1799,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
                                 if(parentGrid.StyleId ==null)
                                 {
-                                    btnStartLocal.IsEnabled = true;
-                                    btnStartLocal.BackgroundColor = Color.FromHex("#87CEFA");
+                                    //btnStartLocal.IsEnabled = true;
+                                    //btnStartLocal.BackgroundColor = Color.FromHex("#87CEFA");
 
-                                    btnCompleteLocal.IsEnabled = true;
-                                    btnCompleteLocal.BackgroundColor = Color.FromHex("#87CEFA");
+                                    //btnCompleteLocal.IsEnabled = true;
+                                    //btnCompleteLocal.BackgroundColor = Color.FromHex("#87CEFA");
                                     
                                 }
                                 else
@@ -1784,11 +1815,11 @@ namespace ProteusMMX.ViewModel.Workorder
                                 }
                                 if (parentGrid2.StyleId == null)
                                 {
-                                    btnStartLocal2.IsEnabled = true;
-                                    btnStartLocal2.BackgroundColor = Color.FromHex("#87CEFA");
+                                    //btnStartLocal2.IsEnabled = true;
+                                    //btnStartLocal2.BackgroundColor = Color.FromHex("#87CEFA");
 
-                                    btnCompleteLocal2.IsEnabled = true;
-                                    btnCompleteLocal2.BackgroundColor = Color.FromHex("#87CEFA");
+                                    //btnCompleteLocal2.IsEnabled = true;
+                                    //btnCompleteLocal2.BackgroundColor = Color.FromHex("#87CEFA");
                                 }
                                 else
                                 {
@@ -1999,10 +2030,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 try
                 {
                     OperationInProgress = true;
-                    if (string.IsNullOrWhiteSpace(SearchText))
-                    {
+                    //if (string.IsNullOrWhiteSpace(SearchText))
+                    //{
                         await GenerateTaskAndLabourLayout();
-                    }
+                   // }
                 }
                 catch (Exception ex)
                 {

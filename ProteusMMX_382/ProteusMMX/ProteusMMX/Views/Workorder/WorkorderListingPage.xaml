@@ -156,7 +156,7 @@
 
 
                         <Label Text="{Binding SortByLocationLabelTitle}" Grid.Row="1"/>
-                        <Picker Grid.Column="1" ItemsSource="{Binding SortByLocationpickerTitles}" SelectedItem="{Binding LocationSelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding LocationSelectedIndexPicker , Mode=TwoWay}" Grid.Row="1"/>
+                        <Picker  Grid.Column="1" ItemsSource="{Binding SortByLocationpickerTitles}" SelectedItem="{Binding LocationSelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding LocationSelectedIndexPicker , Mode=TwoWay}" Grid.Row="1"/>
 
                         <Label Text="{Binding SortByShiftLabelTitle}" Grid.Row="2"/>
                         <Picker Grid.Column="1" ItemsSource="{Binding SortByShiftpickerTitles}" SelectedItem="{Binding ShiftSelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding ShiftSelectedIndexPicker , Mode=TwoWay}" Grid.Row="2"/>
@@ -165,10 +165,26 @@
                         <Label Text="{Binding SortByPriorityLabelTitle}" Grid.Row="3"/>
                         <Picker Grid.Column="1" ItemsSource="{Binding SortByPriorityPickerTitles}" SelectedItem="{Binding PrioritySelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding PrioritySelectedIndexPicker , Mode=TwoWay}" Grid.Row="3"/>
 
-                        
-                        <Label Text="Sort By Due date" Grid.Row="4"/>
-                        <DatePicker Margin="0,0,30,0" Grid.Column="1"  Grid.Row="4"/>
 
+                        <Label  Text="{Binding SortByDuedateTitle}" Grid.Row="4"/>
+                        <!--<DatePicker Date ="{Binding DueDate}"  Margin="0,0,30,0" Grid.Column="1"  Grid.Row="4"/>-->
+                        <Button FontSize="Small" Text="{Binding SortByDateText}" Command="{Binding ShowDateCommand}" Grid.Row="4" Grid.Column="1" HeightRequest="35"  BackgroundColor="LightSkyBlue" HorizontalOptions="Fill">
+                            
+                        </Button>
+                        <Image Grid.Column="2" Grid.Row="4" Source="Assets/Remove.png">
+                            <Image.Source>
+                                <OnPlatform  x:TypeArguments="ImageSource">
+                                    <OnPlatform.iOS>Remove.png</OnPlatform.iOS>
+                                    <OnPlatform.Android>Assets/Remove.png</OnPlatform.Android>
+                                    <OnPlatform.WinPhone>Assets/Remove.png</OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </Image.Source>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                        Command="{Binding DateCommand}"
+                                         NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
 
                         <StackLayout IsVisible="{Binding TotalRecordForPhone}" Grid.Row="5" Orientation="Horizontal" >
                             <Label Text="{Binding TotalRecordTitle}"/>

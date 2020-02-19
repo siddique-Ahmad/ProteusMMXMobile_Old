@@ -16,7 +16,21 @@ namespace ProteusMMX.Views.ClosedWorkorder
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
 
-
+            if (AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation)
+            {
+                if (AppSettings.User.RequireSignaturesForValidation == "True")
+                {
+                    this.SignatureLayout.SetValue(Grid.RowProperty, 34);
+                }
+                else
+                {
+                   
+                }
+            }
+            else
+            {
+                this.SignatureLayout.SetValue(Grid.RowProperty, 34);
+            }
 
 
         }

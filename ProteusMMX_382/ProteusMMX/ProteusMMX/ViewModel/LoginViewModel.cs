@@ -1084,6 +1084,16 @@ namespace ProteusMMX.ViewModel
                         Application.Current.Properties["InspectionTabKey"] = WorkOrderInspectionModule.Expression;
 
                     }
+                    if (WorkOrderInspectionModule.lstSubModules != null && WorkOrderInspectionModule.lstSubModules.Count > 0)
+                    {
+                        var WorkOrderInspectionSubModule = WorkOrderInspectionModule.lstSubModules[0];
+                        if (WorkOrderInspectionSubModule.listControls != null && WorkOrderInspectionSubModule.listControls.Count > 0)
+                        {
+
+                            Application.Current.Properties["AssociateEmployeeContr"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateEmployeeContr").Expression;
+                            Application.Current.Properties["AssociateInspection"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateInspection").Expression;
+                        }
+                    }
                 }
                 if (FormControlsAndRightsForTools != null && FormControlsAndRightsForTools.lstModules != null && FormControlsAndRightsForTools.lstModules.Count > 0)
                 {
@@ -1193,7 +1203,7 @@ namespace ProteusMMX.ViewModel
                         {
                             Application.Current.Properties["CreateSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
                             Application.Current.Properties["RemoveSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
-                            Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Rights").Expression;
+                            Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestModuleAttachment.Expression;
                         }
                     }
                 }

@@ -28,9 +28,19 @@ namespace ProteusMMX.Services.Workorder
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }
+        public Task<ServiceOutput> GetWorkorderDDRecord(string UserID)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.GetWorkorderDDRecord);
+            builder.AppendToPath(UserID);
 
-   
-        public Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch)
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.GetAsync(uri);
+        }
+        
+
+        public Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetWorkorders);
@@ -70,6 +80,11 @@ namespace ProteusMMX.Services.Workorder
             else
                 builder.AppendToPath(PrioritySearch);
 
+            if (SortByDueDate == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(SortByDueDate);
+
 
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
@@ -86,11 +101,12 @@ namespace ProteusMMX.Services.Workorder
             return _requestService.GetAsync(uri);
         }
 
-        public Task<ServiceOutput> GetWorkorderInspection(string WorkorderID)
+        public Task<ServiceOutput> GetWorkorderInspection(string WorkorderID,string userid)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetWorkorderInspection);
             builder.AppendToPath(WorkorderID);
+            builder.AppendToPath(userid);
 
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);

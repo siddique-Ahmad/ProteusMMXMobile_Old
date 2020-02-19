@@ -985,7 +985,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
-
+            this.SearchText = "";
         }
 
         #endregion

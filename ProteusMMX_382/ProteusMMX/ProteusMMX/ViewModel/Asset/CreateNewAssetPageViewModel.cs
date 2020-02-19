@@ -30,6 +30,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using ProteusMMX.Services.SelectionListPageServices;
 
 namespace ProteusMMX.ViewModel.Asset
 {
@@ -44,6 +45,7 @@ namespace ProteusMMX.ViewModel.Asset
         protected readonly IAssetModuleService _assetService;
 
         protected readonly IWorkorderService _workorderService;
+        protected readonly IFacilityService _facilityService;
         #endregion
 
         #region Properties
@@ -2554,8 +2556,8 @@ namespace ProteusMMX.ViewModel.Asset
         }
 
 
-        DateTime _installationDate;
-        public DateTime InstallationDate
+        string _installationDate;
+        public string InstallationDate
         {
             get
             {
@@ -2767,8 +2769,8 @@ namespace ProteusMMX.ViewModel.Asset
         }
 
 
-       DateTime _warrantyDate;
-        public DateTime WarrantyDate
+       string _warrantyDate;
+        public string WarrantyDate
         {
             get
             {
@@ -3359,7 +3361,21 @@ namespace ProteusMMX.ViewModel.Asset
                     this.AssetNumberText = navigationParams.SearchText;
                 }
 
+                var facilityResponse = await _facilityService.GetFacilities(UserID, "1", "10", "null");
+                if (facilityResponse != null && facilityResponse.targetWrapper != null && facilityResponse.targetWrapper.facilities != null)
+                {
+                    int facilities = facilityResponse.targetWrapper.facilities.Count();
+                    if (facilities == 1)
+                    {
+                        foreach (var item in facilityResponse.targetWrapper.facilities)
+                        {
+                            this.FacilityID = item.FacilityID;
+                            this.FacilityName = item.FacilityName;
+                        }
 
+                    }
+
+                }
 
                 await SetTitlesPropertiesForPage();
                 //FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.AssetModuleName);
@@ -3455,12 +3471,13 @@ namespace ProteusMMX.ViewModel.Asset
             }
         }
 
-        public CreateNewAssetPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IAssetModuleService assetService, IWorkorderService workorderService)
+        public CreateNewAssetPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IAssetModuleService assetService, IWorkorderService workorderService, IFacilityService facilityService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _assetService = assetService;
             _workorderService = workorderService;
+            _facilityService = facilityService;
         }
 
         public async Task SetTitlesPropertiesForPage()
@@ -4462,7 +4479,14 @@ namespace ProteusMMX.ViewModel.Asset
 
                         else if (control is CustomDatePicker)
                         {
-                            InstallationDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                            if (this.InstallationDate == null || this.InstallationDate == ("1/1/0001 12:00:00 AM"))
+                            {
+
+                            }
+                            else
+                            {
+                                InstallationDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+                            }
                             control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.InstallationDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
@@ -4963,7 +4987,14 @@ namespace ProteusMMX.ViewModel.Asset
 
                         else if (control is CustomDatePicker)
                         {
-                            WarrantyDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                            if (this.WarrantyDate==null || this.WarrantyDate == ("1/1/0001 12:00:00 AM"))
+                            {
+
+                            }
+                            else
+                            {
+                                WarrantyDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+                            }
                             control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.WarrantyDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
@@ -6936,13 +6967,19 @@ namespace ProteusMMX.ViewModel.Asset
                 }
 
                 #endregion
+                //if (WarrantyDate < InstallationDate)
+                //{
+                //    UserDialogs.Instance.HideLoading();
+                //    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WarrantyDatecannotbelessthanInstallationDate"), 2000);
+                //    return;
 
+                //}
                 /// Create Asset wrapper
 
 
                 var asset = new asset();
                 #region Asset properties initialzation
-
+               
                 asset.ModifiedUserName = AppSettings.User.UserName;
                 asset.Description = String.IsNullOrEmpty(Description) ? null : Description.Trim();
                 asset.AssetName = String.IsNullOrEmpty(AssetNameText) ? null : AssetNameText.Trim();
@@ -6961,53 +6998,61 @@ namespace ProteusMMX.ViewModel.Asset
                 asset.AssetTag = String.IsNullOrEmpty(AssetTagText) ? null : AssetTagText.Trim();
                 asset.Capacity = String.IsNullOrEmpty(CapacityText) ? null : CapacityText.Trim();
                 asset.DetailedLocation = String.IsNullOrEmpty(DetailedLocation) ? null : DetailedLocation.Trim();
-                try
+                //   try
+                //   {
+                //       string s = InstallationDate.ToString();
+
+                //       var formats = new string[]
+                //       {
+                //"dd/MM/yyyy",
+                //"d/M/yyyy",
+                //"dd/mm/yy",
+                //"d/m/yy",
+
+                //"dd-MM-yyyy",
+                //"d-M-yyyy",
+                //"dd-MM-yy",
+                //"d-M-yy",
+
+                //"dd.MM.yyyy",
+                //"d.M.yyyy",
+                //"dd.MM.yy",
+                //"d.M.yy",
+
+                //"dd MM yyyy",
+                //"d M yyyy",
+                //"dd MM yy",
+                //"d M yy",
+                //       };
+                //       DateTime dt;
+                //       DateTime.TryParseExact(s, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt);
+                //       if (InstallationDate == null || InstallationDate.ToString() == dt.ToString())
+                //       {
+                //           asset.InstallationDate = null;
+                //       }
+
+                //       else
+                //       {
+                //           asset.InstallationDate = InstallationDate.Date.Add(DateTime.Now.TimeOfDay);
+
+                //           //RequiredDate1.Date.Add(DateTime.Now.TimeOfDay);
+                //       }
+                //   }
+                //   catch (Exception)
+                //   {
+
+                //       asset.InstallationDate = null;
+                //   }
+              
+                if (InstallationDate == null)
                 {
-                    string s = InstallationDate.ToString();
-
-                    var formats = new string[]
-                    {
-             "dd/MM/yyyy",
-             "d/M/yyyy",
-             "dd/mm/yy",
-             "d/m/yy",
-
-             "dd-MM-yyyy",
-             "d-M-yyyy",
-             "dd-MM-yy",
-             "d-M-yy",
-
-             "dd.MM.yyyy",
-             "d.M.yyyy",
-             "dd.MM.yy",
-             "d.M.yy",
-
-             "dd MM yyyy",
-             "d M yyyy",
-             "dd MM yy",
-             "d M yy",
-                    };
-                    DateTime dt;
-                    DateTime.TryParseExact(s, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt);
-                    if (InstallationDate == null || InstallationDate.ToString() == dt.ToString())
-                    {
-                        asset.InstallationDate = null;
-                    }
-
-                    else
-                    {
-                        asset.InstallationDate = InstallationDate.Date.Add(DateTime.Now.TimeOfDay);
-
-                        //RequiredDate1.Date.Add(DateTime.Now.TimeOfDay);
-                    }
-                }
-                catch (Exception)
-                {
-
                     asset.InstallationDate = null;
                 }
-               
-             
+                else
+                {
+                    asset.InstallationDate = Convert.ToDateTime(InstallationDate);
+
+                }
                 asset.Manufacturer = String.IsNullOrEmpty(Manufacturer) ? null : Manufacturer.Trim();
                 asset.Model = String.IsNullOrEmpty(Model) ? null : Model.Trim();
                 asset.OriginalCost =Convert.ToDecimal(OriginalCost);
@@ -7015,53 +7060,71 @@ namespace ProteusMMX.ViewModel.Asset
                 asset.SerialNumber = String.IsNullOrEmpty(SerialNumber) ? null : SerialNumber.Trim();
                 asset.Weight = String.IsNullOrEmpty(Weight) ? null : Weight.Trim();
 
-                try
+                //   try
+                //   {
+                //       string s1 = WarrantyDate.ToString();
+
+                //       var formats1 = new string[]
+                //       {
+                //"dd/MM/yyyy",
+                //"d/M/yyyy",
+                //"dd/mm/yy",
+                //"d/m/yy",
+
+                //"dd-MM-yyyy",
+                //"d-M-yyyy",
+                //"dd-MM-yy",
+                //"d-M-yy",
+
+                //"dd.MM.yyyy",
+                //"d.M.yyyy",
+                //"dd.MM.yy",
+                //"d.M.yy",
+
+                //"dd MM yyyy",
+                //"d M yyyy",
+                //"dd MM yy",
+                //"d M yy",
+                //       };
+                //       DateTime dt1;
+                //       DateTime.TryParseExact(s1, formats1, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt1);
+
+                //       if (WarrantyDate == null || WarrantyDate.ToString() == dt1.ToString())
+                //       {
+                //           asset.WarrantyDate = null;
+                //       }
+                //       else
+                //       {
+                //           asset.WarrantyDate = WarrantyDate.Date.Add(DateTime.Now.TimeOfDay);
+                //       }
+
+
+                //   }
+                //   catch (Exception)
+                //   {
+
+                //       asset.WarrantyDate = null;
+                //   }
+
+                if (WarrantyDate == null)
                 {
-                    string s1 = WarrantyDate.ToString();
-
-                    var formats1 = new string[]
-                    {
-             "dd/MM/yyyy",
-             "d/M/yyyy",
-             "dd/mm/yy",
-             "d/m/yy",
-
-             "dd-MM-yyyy",
-             "d-M-yyyy",
-             "dd-MM-yy",
-             "d-M-yy",
-
-             "dd.MM.yyyy",
-             "d.M.yyyy",
-             "dd.MM.yy",
-             "d.M.yy",
-
-             "dd MM yyyy",
-             "d M yyyy",
-             "dd MM yy",
-             "d M yy",
-                    };
-                    DateTime dt1;
-                    DateTime.TryParseExact(s1, formats1, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt1);
-
-                    if (WarrantyDate == null || WarrantyDate.ToString() == dt1.ToString())
-                    {
-                        asset.WarrantyDate = null;
-                    }
-                    else
-                    {
-                        asset.WarrantyDate = WarrantyDate.Date.Add(DateTime.Now.TimeOfDay);
-                    }
-
-
-                }
-                catch (Exception)
-                {
-
                     asset.WarrantyDate = null;
                 }
-                
+                else
+                {
+                    asset.WarrantyDate = Convert.ToDateTime(WarrantyDate);
 
+                }
+                if (asset.WarrantyDate != null && asset.InstallationDate != null)
+                {
+                    if (asset.WarrantyDate.GetValueOrDefault().Date < asset.InstallationDate.GetValueOrDefault().Date)
+                    {
+                        UserDialogs.Instance.HideLoading();
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WarrantyDatecannotbelessthanInstallationDate"), 2000);
+                        return;
+
+                    }
+                }
                 if (string.IsNullOrWhiteSpace(CurrentRuntimeText))
                 {
                     CurrentRuntimeText = "0";
@@ -7296,8 +7359,11 @@ namespace ProteusMMX.ViewModel.Asset
 
                         case "InstallationDate":
                             {
-
-                                validationResult = ValidateValidations(formLoadItem, InstallationDate.ToString());
+                                //if(InstallationDate==null)
+                                //{
+                                //    return validationResult;
+                                //}
+                                validationResult = ValidateValidations(formLoadItem, InstallationDate);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -7394,7 +7460,11 @@ namespace ProteusMMX.ViewModel.Asset
 
                         case "WarrantyDate":
                             {
-                                validationResult = ValidateValidations(formLoadItem, WarrantyDate.ToString());
+                                //if(this.WarrantyDate==null)
+                                //{
+                                //    return validationResult;
+                                //}
+                                validationResult = ValidateValidations(formLoadItem, WarrantyDate);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;

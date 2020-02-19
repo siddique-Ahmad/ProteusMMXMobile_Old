@@ -4584,7 +4584,16 @@ namespace ProteusMMX.ViewModel.Asset
                         else if (control is DatePicker)
                         {
                             // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                            InstallationDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+
+                            if (DateTime.Parse(this.InstallationDate) == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                            {
+
+                            }
+                            else
+                            {
+                                InstallationDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+                            }
+                           
                             control.SetBinding(DatePicker.DateProperty, nameof(this.InstallationDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
@@ -5084,7 +5093,17 @@ namespace ProteusMMX.ViewModel.Asset
                         else if (control is DatePicker)
                         {
                             // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                            WarrantyDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+
+
+                            if (DateTime.Parse(this.WarrantyDate) == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                            {
+
+                            }
+                            else
+                            {
+                                WarrantyDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+                            }
+                           
                             control.SetBinding(DatePicker.DateProperty, nameof(this.WarrantyDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
@@ -6759,8 +6778,8 @@ namespace ProteusMMX.ViewModel.Asset
                 DetailedLocation = asset.DetailedLocation;
                 if(asset.InstallationDate.HasValue)
                 {
-                   // InstallationDate = asset.InstallationDate.ToString();
-                    InstallationDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.InstallationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                    InstallationDate = asset.InstallationDate.ToString();
+                    //InstallationDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.InstallationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
                 }
                 else
                 {
@@ -6776,8 +6795,8 @@ namespace ProteusMMX.ViewModel.Asset
                 Weight = asset.Weight;
                 if (asset.WarrantyDate.HasValue)
                 {
-                  //  WarrantyDate = asset.WarrantyDate.ToString();
-                    WarrantyDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.WarrantyDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                    WarrantyDate = asset.WarrantyDate.ToString();
+                   // WarrantyDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.WarrantyDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
                 }
                 else
                 {
@@ -7236,6 +7255,7 @@ namespace ProteusMMX.ViewModel.Asset
                 }
 
                 #endregion
+
                
                 /// Create Asset wrapper
 
@@ -7283,7 +7303,16 @@ namespace ProteusMMX.ViewModel.Asset
                 {
                     asset.WarrantyDate = Convert.ToDateTime(WarrantyDate);
                 }
+                if (asset.WarrantyDate != null && asset.InstallationDate != null)
+                {
+                    if (asset.WarrantyDate.GetValueOrDefault().Date < asset.InstallationDate.GetValueOrDefault().Date)
+                    {
+                        UserDialogs.Instance.HideLoading();
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WarrantyDatecannotbelessthanInstallationDate"), 2000);
+                        return;
 
+                    }
+                }
 
                 if (string.IsNullOrWhiteSpace(CurrentRuntimeText))
                 {

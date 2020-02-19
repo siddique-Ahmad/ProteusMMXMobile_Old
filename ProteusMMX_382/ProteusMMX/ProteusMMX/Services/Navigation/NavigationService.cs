@@ -459,6 +459,42 @@ namespace ProteusMMX.Services.Navigation
 
             }
 
+            if (page is ProteusMMX.Views.ServiceRequest.ServiceRequestTabbedPage)
+            {
+                /// Add children page in it.
+                var tabbedPage = page as TabbedPage;
+                Model.ServiceRequestModel.ServiceRequests ServiceRequestNumber = parameter as Model.ServiceRequestModel.ServiceRequests;
+                tabbedPage.Title = WebControlTitle.GetTargetNameByTitleName("Details") + " - " + ServiceRequestNumber.RequestNumber;
+
+                #region ServiceRequestDetailPage
+                Page SRDetail = CreateAndBindPage(typeof(EditServiceRequestViewModel), parameter);
+                var PageParameter = new PageParameters { Page = SRDetail, Parameter = parameter };
+                (SRDetail.BindingContext as ViewModelBase).InitializeAsync(PageParameter);
+                #endregion
+
+                #region ServiceRequestAttachmentPage
+
+                Page SRAttachment = CreateAndBindPage(typeof(ServiceRequestAttachmentPageViewModel), parameter);
+                var PageParameter1 = new PageParameters { Page = SRAttachment, Parameter = parameter };
+                (SRAttachment.BindingContext as ViewModelBase).InitializeAsync(PageParameter1);
+
+                #endregion
+
+                tabbedPage.Children.Add(SRDetail);
+                if (Application.Current.Properties.ContainsKey("SRAttachmentTabKey"))
+                {
+                    var SRAttachmentTab = Application.Current.Properties["SRAttachmentTabKey"].ToString();
+
+                    if (SRAttachmentTab == "E" || SRAttachmentTab == "V")
+                    {
+                        tabbedPage.Children.Add(SRAttachment);
+                    }
+                }
+              
+
+
+            }
+
             if (page is ProteusMMX.Views.PurchaseOrder.PuchaseOrderTabbedPage)
             {
                 /// Add children page in it.
@@ -708,6 +744,9 @@ namespace ProteusMMX.Services.Navigation
             _mappings.Add(typeof(ClosedWorkorderInspectionViewModel), typeof(ClosedWorkorderInspection));
 
 
+            _mappings.Add(typeof(ServiceRequestTabbedPageViewModel), typeof(ServiceRequestTabbedPage));
+           // _/mappings.Add(typeof(EditServiceRequestViewModel), typeof(EditServiceRequest));
+            _mappings.Add(typeof(ServiceRequestAttachmentPageViewModel), typeof(ServiceRequestAttachmentPage));
 
             _mappings.Add(typeof(SearchAssetByAssetNumberViewModel), typeof(SearchAssetByAssetNumber));
 

@@ -16,7 +16,7 @@ namespace ProteusMMX.Services.SelectionListPageServices.Workorder.TaskAndLabour
             _requestService = requestService;
         }
 
-        public Task<ServiceOutput> GetContractor(string UserID, string PageNumber, string RowCount, string SearchContractorName)
+        public Task<ServiceOutput> GetContractor(string UserID, string PageNumber, string RowCount, string SearchContractorName, string Type, int workorderid)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetWorkOrderLaborLookUp);
@@ -30,14 +30,15 @@ namespace ProteusMMX.Services.SelectionListPageServices.Workorder.TaskAndLabour
             builder.AppendToPath("null");
             builder.AppendToPath("null");
             builder.AppendToPath(SearchContractorName);
-
+            builder.AppendToPath(Type);
+            builder.AppendToPath(workorderid.ToString());
 
 
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }
 
-        public Task<ServiceOutput> GetEmployee(string UserID, string PageNumber, string RowCount, string SearchEmployeeName)
+        public Task<ServiceOutput> GetEmployee(string UserID, string PageNumber, string RowCount, string SearchEmployeeName,string Type, int workorderid)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetWorkOrderLaborLookUp);
@@ -51,14 +52,14 @@ namespace ProteusMMX.Services.SelectionListPageServices.Workorder.TaskAndLabour
             builder.AppendToPath("null");
             builder.AppendToPath(SearchEmployeeName);
             builder.AppendToPath("null");
-
-
+            builder.AppendToPath(Type);
+            builder.AppendToPath(workorderid.ToString());
 
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }
 
-        public Task<ServiceOutput> GetTask(string UserID, string PageNumber, string RowCount, string SearchTaskNumber)
+        public Task<ServiceOutput> GetTask(string UserID, string PageNumber, string RowCount, string SearchTaskNumber, string Type, int workorderid)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetWorkOrderLaborLookUp);
@@ -72,7 +73,8 @@ namespace ProteusMMX.Services.SelectionListPageServices.Workorder.TaskAndLabour
             builder.AppendToPath(SearchTaskNumber);
             builder.AppendToPath("null");
             builder.AppendToPath("null");
-
+            builder.AppendToPath(Type);
+            builder.AppendToPath(workorderid.ToString());
 
 
             var uri = builder.Uri.AbsoluteUri;

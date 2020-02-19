@@ -182,8 +182,40 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
                 }
             }
         }
+        string _type;
+        public string Type
+        {
+            get
+            {
+                return _type;
+            }
 
+            set
+            {
+                if (value != _type)
+                {
+                    _type = value;
+                    OnPropertyChanged("Type");
+                }
+            }
+        }
+        int? _workorderID;
+        public int? WorkorderID
+        {
+            get
+            {
+                return _workorderID;
+            }
 
+            set
+            {
+                if (value != _workorderID)
+                {
+                    _workorderID = value;
+                    OnPropertyChanged(nameof(WorkorderID));
+                }
+            }
+        }
         string _searchPlaceholder;
         public string SearchPlaceholder
         {
@@ -387,7 +419,8 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
                 else
                 {
                     //reset pageno. and start search again.
-                    await RefillPickerItemsCollection();
+                    await RemoveAllFromPickerItemCollection();
+                    await GetPickerItems();
 
                 }
 
@@ -420,7 +453,8 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
 
 
                 //reset pageno. and start search again.
-                await RefillPickerItemsCollection();
+                await RemoveAllFromPickerItemCollection();
+                await GetPickerItems();
 
 
             });
@@ -430,7 +464,14 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
         {
             if (item != null)
             {
-                MessagingCenter.Send(item, MessengerKeys.ContractorRequested_AddTask);
+                if (this.Type == "Inspection")
+                {
+                    MessagingCenter.Send(item, MessengerKeys.ContractorRequested_AddInspection);
+                }
+                else
+                {
+                    MessagingCenter.Send(item, MessengerKeys.ContractorRequested_AddTask);
+                }
                 await NavigationService.NavigateBackAsync();
 
             }
@@ -452,9 +493,17 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
             try
             {
 
-               
 
-             //   OperationInProgress = true;
+
+                if (navigationData != null)
+                {
+
+                    var navigationParams = navigationData as TargetNavigationData;
+                    this.WorkorderID = navigationParams.WORKORDERID;
+                    this.Type = navigationParams.Type;
+
+
+                }
                 await SetTitlesPropertiesForPage();
                 await GetPickerItems();
 
@@ -530,7 +579,35 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
              //   OperationInProgress = true;
                 ServiceOutput taskResponse = null;
 
-                taskResponse = await _taskService.GetContractor(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText);
+                taskResponse = await _taskService.GetContractor(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText,this.Type,WorkorderID.GetValueOrDefault());
+
+                if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Contractors != null && taskResponse.workOrderWrapper.workOrderLabor.Contractors.Count > 0)
+                {
+                    var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Contractors;
+                    await AddItemsToPickerItemCollection(assingedToEmployees);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                OperationInProgress = false;
+            }
+
+            finally
+            {
+                OperationInProgress = false;
+            }
+        }
+        async Task GetPickerItemsfromSearch()
+        {
+            try
+            {
+                //   OperationInProgress = true;
+                ServiceOutput taskResponse = null;
+
+                taskResponse = await _taskService.GetContractor(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, this.Type, WorkorderID.GetValueOrDefault());
 
                 if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Contractors != null && taskResponse.workOrderWrapper.workOrderLabor.Contractors.Count > 0)
                 {
@@ -554,8 +631,17 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
 
         public async Task GetPickerItemsAuto()
         {
-            PageNumber++;
-            await GetPickerItems();
+            if (!string.IsNullOrWhiteSpace(SearchText) && SearchText.Length > 0)
+            {
+                //await  RemoveAllFromPickerItemCollection();
+                //await GetPickerItemsfromSearch();
+
+            }
+            else
+            {
+                PageNumber++;
+                await GetPickerItems();
+            }
         }
 
         private async Task AddItemsToPickerItemCollection(List<ContractorLookUp> assignedToEmployees)
