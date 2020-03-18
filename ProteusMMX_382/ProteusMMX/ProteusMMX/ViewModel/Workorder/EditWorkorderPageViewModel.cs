@@ -12,6 +12,7 @@ using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
+using ProteusMMX.Services.Navigation;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Utils;
 using ProteusMMX.ViewModel.Miscellaneous;
@@ -37,6 +38,8 @@ namespace ProteusMMX.ViewModel.Workorder
         ServiceOutput workorderWrapper;
 
         protected readonly IAuthenticationService _authenticationService;
+
+        public readonly INavigationService _navigationService;
 
         protected readonly IFormLoadInputService _formLoadInputService;
 
@@ -68,6 +71,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _EditWorkIsEnable = value;
                     OnPropertyChanged(nameof(EditWorkIsEnable));
+                }
+            }
+        }
+
+        bool _isCostDistributed = false;
+        public bool IsCostDistributed
+        {
+            get
+            {
+                return _isCostDistributed;
+            }
+
+            set
+            {
+                if (value != _isCostDistributed)
+                {
+                    _isCostDistributed = value;
+                    OnPropertyChanged("IsCostDistributed");
                 }
             }
         }
@@ -567,6 +588,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 _workorderControlsNew = value;
             }
         }
+        bool _ShowAssociatedAssets = false;
+        public bool ShowAssociatedAssets
+        {
+            get
+            {
+                return _ShowAssociatedAssets;
+            }
+
+            set
+            {
+                if (value != _ShowAssociatedAssets)
+                {
+                    _ShowAssociatedAssets = value;
+                    OnPropertyChanged(nameof(ShowAssociatedAssets));
+                }
+            }
+        }
+
 
 
 
@@ -1038,7 +1077,45 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+        
 
+        string _distributeCostforAssetsystem;
+        public string DistributeCostforAssetsystem
+        {
+            get
+            {
+                return _distributeCostforAssetsystem;
+            }
+
+            set
+            {
+                if (value != _distributeCostforAssetsystem)
+                {
+                    _distributeCostforAssetsystem = value;
+                    OnPropertyChanged(nameof(DistributeCostforAssetsystem));
+                }
+            }
+        }
+
+        string _associatedAssets;
+        public string AssociatedAssets
+        {
+            get
+            {
+                return _associatedAssets;
+            }
+
+            set
+            {
+                if (value != _associatedAssets)
+                {
+                    _associatedAssets = value;
+                    OnPropertyChanged(nameof(AssociatedAssets));
+                }
+            }
+        }
+
+        
         string _descriptionTitle;
         public string DescriptionTitle
         {
@@ -1697,6 +1774,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _assetSystemID = value;
                     OnPropertyChanged(nameof(AssetSystemID));
+                }
+            }
+        }
+
+        string _assetSystemNumber;
+        public string AssetSystemNumber
+        {
+            get
+            {
+                return _assetSystemNumber;
+            }
+
+            set
+            {
+                if (value != _assetSystemNumber)
+                {
+                    _assetSystemNumber = value;
+                    OnPropertyChanged(nameof(AssetSystemNumber));
                 }
             }
         }
@@ -2566,7 +2661,43 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-        
+
+        bool _isCostLayoutIsVisible = true;
+        public bool IsCostLayoutIsVisible
+        {
+            get
+            {
+                return _isCostLayoutIsVisible;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsVisible)
+                {
+                    _isCostLayoutIsVisible = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisible));
+                }
+            }
+        }
+
+        bool _isCostLayoutIsEnable = true;
+        public bool IsCostLayoutIsEnable
+        {
+            get
+            {
+                return _isCostLayoutIsEnable;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsEnable)
+                {
+                    _isCostLayoutIsEnable = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsEnable));
+                }
+            }
+        }
+
 
         // EstimstedDowntime
 
@@ -4356,11 +4487,12 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        public EditWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService)
+        public EditWorkorderPageViewModel(IAuthenticationService authenticationService, INavigationService navigationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _workorderService = workorderService;
+            _navigationService = navigationService;
         }
  
         public async Task SetTitlesPropertiesForPage()
@@ -4401,6 +4533,13 @@ namespace ProteusMMX.ViewModel.Workorder
                     AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
                     MoreText = WebControlTitle.GetTargetNameByTitleName("More");
                     Signatures = WebControlTitle.GetTargetNameByTitleName("Signatures");
+
+                    AssociatedAssets = (WebControlTitle.GetTargetNameByTitleName("AssociatedAssets"));
+                    DistributeCostforAssetsystem = WebControlTitle.GetTargetNameByTitleName("DistributeCostforAssetsystem");
+                    if(DistributeCostforAssetsystem==null)
+                    {
+                        IsCostLayoutIsVisible = false;
+                    }
                 }
             }
             catch (Exception ex)
@@ -4613,6 +4752,24 @@ namespace ProteusMMX.ViewModel.Workorder
                             }
                     
                         }
+
+            if (Application.Current.Properties.ContainsKey("DistributeCost"))
+            {
+                var WorkorderDIstributeCost = Application.Current.Properties["DistributeCost"].ToString();
+                if (WorkorderDIstributeCost != null && WorkorderDIstributeCost == "E")
+                {
+
+                    this.IsCostLayoutIsVisible = true;
+                }
+                else if (WorkorderDIstributeCost != null && WorkorderDIstributeCost == "V")
+                {
+                    this.IsCostLayoutIsEnable = false;
+                }
+                else
+                {
+                    this.IsCostLayoutIsVisible = false;
+                }
+            }
             //Because showing sometimes on page, That's why initializing in Initialize component
             //if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
             //{
@@ -10960,6 +11117,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 var workorder = workorderWrapper.workOrderWrapper.workOrder;
                
                 //var workorderWrapper = workorderWrapper;
+                if(workorder.DistributeCost==true)
+                {
+                    IsCostDistributed = true;
+                }
 
                 this.WorkorderNumberText = workorder.WorkOrderNumber;
                 this.JobNumberText = workorder.JobNumber;
@@ -11067,11 +11228,21 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (!string.IsNullOrEmpty(workorder.AssetSystemName))
                 {
                     AssetSystemName = ShortString.shorten(workorder.AssetSystemName);
-
+                    ShowAssociatedAssets = true;
                 }
                 else
                 {
                     AssetSystemName = workorder.AssetSystemName;
+
+                }
+                if (!string.IsNullOrEmpty(workorder.AssetSystemNumber))
+                {
+                    AssetSystemNumber = ShortString.shorten(workorder.AssetSystemNumber);
+                    
+                }
+                else
+                {
+                    AssetSystemNumber = workorder.AssetSystemNumber;
 
                 }
                 AssetSystemID = workorder.AssetSystemID;
@@ -12535,6 +12706,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 //workOrder.ApprovalLevel=
+                workOrder.DistributeCost = IsCostDistributed;
                 workOrder.ActualDowntime = ActualDowntimeText;
                 workOrder.EstimatedDowntime = EstimstedDowntimeText;
                 workOrder.MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText);
@@ -12671,6 +12843,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     ApprovalLevel = this.ApprovalLevel,
                                     ApprovalNumber = this.ApprovalNumber,
                                     IsSignatureValidated = false,
+                                    DistributeCost=IsCostDistributed,
 
                                     #region Dynamic Field need to add in model so it can save on server.
 
@@ -12792,6 +12965,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     ApprovalLevel = this.ApprovalLevel,
                                     ApprovalNumber = this.ApprovalNumber,
                                     IsSignatureValidated = false,
+                                    DistributeCost = IsCostDistributed,
                                     #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -12912,6 +13086,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 ApprovalLevel = this.ApprovalLevel,
                                 ApprovalNumber = this.ApprovalNumber,
                                 IsSignatureValidated = false,
+                                DistributeCost = IsCostDistributed,
 
                                 #region Dynamic Field need to add in model so it can save on server.
 
@@ -13033,6 +13208,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 ApprovalLevel = this.ApprovalLevel,
                                 ApprovalNumber = this.ApprovalNumber,
                                 IsSignatureValidated = false,
+                                DistributeCost = IsCostDistributed,
                                 #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -14312,6 +14488,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             CultureName = AppSettings.UserCultureName,
                             UserId = Convert.ToInt32(UserID),
                             ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                            DistributeCost=IsCostDistributed,
                             workOrder = new workOrders
                             {
                                 IsSignatureValidated = false,
@@ -14351,6 +14528,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         CultureName = AppSettings.UserCultureName,
                         UserId = Convert.ToInt32(UserID),
                         ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                        DistributeCost = IsCostDistributed,
                         workOrder = new workOrders
                         {
                             IsSignatureValidated = false,

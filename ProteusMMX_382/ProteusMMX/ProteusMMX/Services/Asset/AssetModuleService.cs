@@ -137,6 +137,33 @@ namespace ProteusMMX.Services.Asset
             return _requestService.PostAsync(uri, Asset);//GetAsync(uri);
         }
 
+        public Task<ServiceOutput> AssetsByAssetSystemID(string AssetSystemID, string PageNumber, string RowsPage, string AssetSystemNumber,string Search)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.AssetsByAssetSystem);
+            builder.AppendToPath(AssetSystemID);
+            builder.AppendToPath(PageNumber);
+            builder.AppendToPath(RowsPage);
+            if (String.IsNullOrWhiteSpace(AssetSystemNumber))
+            {
+                builder.AppendToPath("null");
+            }
+            else
+            {
+                builder.AppendToPath(AssetSystemNumber);
+            }
+            if (String.IsNullOrWhiteSpace(Search))
+            {
+                builder.AppendToPath("null");
+            }
+            else
+            {
+                builder.AppendToPath(Search);
+            }
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.GetAsync(uri);
+        }
 
     }
 }

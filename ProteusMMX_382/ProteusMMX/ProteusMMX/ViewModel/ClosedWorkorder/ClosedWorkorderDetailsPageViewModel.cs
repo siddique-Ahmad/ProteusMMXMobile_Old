@@ -21,6 +21,7 @@ using ZXing.Net.Mobile.Forms;
 using ProteusMMX.Model;
 using System.Linq;
 using Acr.UserDialogs;
+using ProteusMMX.Services.Navigation;
 
 namespace ProteusMMX.ViewModel.ClosedWorkorder
 {
@@ -30,6 +31,8 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
         ServiceOutput response;
         protected readonly IAuthenticationService _authenticationService;
+
+        public readonly INavigationService _navigationService;
 
         protected readonly IFormLoadInputService _formLoadInputService;
 
@@ -990,6 +993,41 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
+        bool _isCostDistributed = false;
+        public bool IsCostDistributed
+        {
+            get
+            {
+                return _isCostDistributed;
+            }
+
+            set
+            {
+                if (value != _isCostDistributed)
+                {
+                    _isCostDistributed = value;
+                    OnPropertyChanged("IsCostDistributed");
+                }
+            }
+        }
+        bool _ShowAssociatedAssets = false;
+        public bool ShowAssociatedAssets
+        {
+            get
+            {
+                return _ShowAssociatedAssets;
+            }
+
+            set
+            {
+                if (value != _ShowAssociatedAssets)
+                {
+                    _ShowAssociatedAssets = value;
+                    OnPropertyChanged(nameof(ShowAssociatedAssets));
+                }
+            }
+        }
+
 
         // Facility
         int? _facilityID;
@@ -1247,6 +1285,24 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 {
                     _assetSystemName = value;
                     OnPropertyChanged(nameof(AssetSystemName));
+                }
+            }
+        }
+
+        string _assetSystemNumber;
+        public string AssetSystemNumber
+        {
+            get
+            {
+                return _assetSystemNumber;
+            }
+
+            set
+            {
+                if (value != _assetSystemNumber)
+                {
+                    _assetSystemNumber = value;
+                    OnPropertyChanged(nameof(AssetSystemNumber));
                 }
             }
         }
@@ -2653,7 +2709,59 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
+        string _distributeCostforAssetsystem;
+        public string DistributeCostforAssetsystem
+        {
+            get
+            {
+                return _distributeCostforAssetsystem;
+            }
 
+            set
+            {
+                if (value != _distributeCostforAssetsystem)
+                {
+                    _distributeCostforAssetsystem = value;
+                    OnPropertyChanged(nameof(DistributeCostforAssetsystem));
+                }
+            }
+        }
+
+        string _associatedAssets;
+        public string AssociatedAssets
+        {
+            get
+            {
+                return _associatedAssets;
+            }
+
+            set
+            {
+                if (value != _associatedAssets)
+                {
+                    _associatedAssets = value;
+                    OnPropertyChanged(nameof(AssociatedAssets));
+                }
+            }
+        }
+
+        bool _isCostLayoutIsVisible = true;
+        public bool IsCostLayoutIsVisible
+        {
+            get
+            {
+                return _isCostLayoutIsVisible;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsVisible)
+                {
+                    _isCostLayoutIsVisible = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisible));
+                }
+            }
+        }
         //EstimatedDowntime
         //string _estimatedDowntime;
         //public string EstimatedDowntime
@@ -4285,11 +4393,13 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
-        public ClosedWorkorderDetailsPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, ICloseWorkorderService closeWorkorderService)
+        public ClosedWorkorderDetailsPageViewModel(IAuthenticationService authenticationService, INavigationService navigationService, IFormLoadInputService formLoadInputService, ICloseWorkorderService closeWorkorderService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _closeWorkorderService = closeWorkorderService;
+            _navigationService = navigationService;
+
         }
 
         public async Task SetTitlesPropertiesForPage()
@@ -4378,6 +4488,12 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 MoreText = WebControlTitle.GetTargetNameByTitleName("More");
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 Signatures = WebControlTitle.GetTargetNameByTitleName("Signatures");
+                AssociatedAssets = WebControlTitle.GetTargetNameByTitleName("AssociatedAssets");
+                DistributeCostforAssetsystem = WebControlTitle.GetTargetNameByTitleName("DistributeCostforAssetsystem");
+                if (DistributeCostforAssetsystem == null)
+                {
+                    IsCostLayoutIsVisible = false;
+                }
 
 
 
@@ -4545,7 +4661,10 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
 
             var workorder = closeWorkorder;
-
+            if(workorder.DistributeCost==true)
+            {
+                IsCostDistributed = true;
+            }
             this.WorkorderNumberText = workorder.WorkOrderNumber;
             this.JobNumberText = workorder.JobNumber;
             this.DescriptionText = workorder.Description;
@@ -4630,11 +4749,23 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             if (!string.IsNullOrEmpty(workorder.AssetSystemName))
             {
                 AssetSystemName = ShortString.shorten(workorder.AssetSystemName);
+                ShowAssociatedAssets = true;
+               
             }
             else
             {
                 AssetSystemName = workorder.AssetSystemName;
             }
+
+            if (!string.IsNullOrEmpty(workorder.AssetSystemNumber))
+            {
+                AssetSystemNumber = ShortString.shorten(workorder.AssetSystemNumber);
+            }
+            else
+            {
+                AssetSystemNumber = workorder.AssetSystemNumber;
+            }
+
             if (!string.IsNullOrEmpty(workorder.CostCenterName))
             {
                 CostCenterName = ShortString.shorten(workorder.CostCenterName);

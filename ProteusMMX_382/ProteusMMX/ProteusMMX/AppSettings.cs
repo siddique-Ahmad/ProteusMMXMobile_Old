@@ -28,7 +28,7 @@ namespace ProteusMMX
 
         public static string APPVersion
         {
-            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.10");
+            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.10.2");
         }
         public static string UserName
         {
@@ -1392,6 +1392,24 @@ namespace ProteusMMX
                 if (value != _getAssets)
                 {
                     _getAssets = value;
+                }
+            }
+
+        }
+
+        private static string _assetsbyassestsystem = "Inspection/service/AssetsByAssetSystemID";
+        public static string AssetsByAssetSystem
+        {
+            get
+            {
+                return _assetsbyassestsystem;
+            }
+
+            set
+            {
+                if (value != _assetsbyassestsystem)
+                {
+                    _assetsbyassestsystem = value;
                 }
             }
 

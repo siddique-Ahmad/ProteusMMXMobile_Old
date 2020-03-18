@@ -1,4 +1,5 @@
-﻿using ProteusMMX.ViewModel;
+﻿using ProteusMMX.Model.CommonModels;
+using ProteusMMX.ViewModel;
 using ProteusMMX.ViewModel.ClosedWorkorder;
 using ProteusMMX.ViewModel.Miscellaneous;
 
@@ -60,6 +61,16 @@ namespace ProteusMMX.Views.ClosedWorkorder
             {
                 await viewAware.OnViewDisappearingAsync(this);
             }
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, System.EventArgs e)
+        {
+            TargetNavigationData tnobj = new TargetNavigationData();
+            tnobj.AssetSystemID = ViewModel.AssetSystemID;
+            tnobj.AssetSystemName = ViewModel.AssetSystemName;
+            tnobj.AssetSystemNumber = ViewModel.AssetSystemNumber;
+            ViewModel._navigationService.NavigateToAsync<ShowAssetSystemViewModel>(tnobj);
+
         }
     }
 }

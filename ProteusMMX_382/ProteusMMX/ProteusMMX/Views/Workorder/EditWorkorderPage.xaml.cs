@@ -1,4 +1,5 @@
-﻿using ProteusMMX.ViewModel;
+﻿using ProteusMMX.Model.CommonModels;
+using ProteusMMX.ViewModel;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
 using System;
@@ -126,6 +127,17 @@ namespace ProteusMMX.Views.Workorder
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
             }
+        }
+
+        EditWorkorderPageViewModel ViewModel => this.BindingContext as EditWorkorderPageViewModel;
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            TargetNavigationData tnobj = new TargetNavigationData();
+            tnobj.AssetSystemID = ViewModel.AssetSystemID;
+            tnobj.AssetSystemName = ViewModel.AssetSystemName;
+            tnobj.AssetSystemNumber = ViewModel.AssetSystemNumber;
+            ViewModel._navigationService.NavigateToAsync<ShowAssetSystemViewModel>(tnobj);
         }
     }
 }

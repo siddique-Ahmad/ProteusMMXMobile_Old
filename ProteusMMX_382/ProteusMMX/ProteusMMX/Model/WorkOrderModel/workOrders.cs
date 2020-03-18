@@ -120,6 +120,8 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string MaintenanceCodeName { get; set; }
         public string AssetName { get; set; }
         public string AssetSystemName { get; set; }
+
+        public string AssetSystemNumber { get; set; }
         public string LocationName { get; set; }
 
         public string CostCenterName { get; set; }
@@ -165,7 +167,9 @@ namespace ProteusMMX.Model.WorkOrderModel
 
         public bool IsSignatureValidated { get; set; }
 
-       
+        public bool? DistributeCost { get; set; }
+
+
 
         #region New Properties 31.5.2018
 
