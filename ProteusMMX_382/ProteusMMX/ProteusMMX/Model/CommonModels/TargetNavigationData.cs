@@ -67,6 +67,9 @@ namespace ProteusMMX.Model.CommonModels
         public string Description { get; set; }
         public string AssetSystemName { get; set; }
 
+        public string AssetSystemNumber { get; set; }
+
+
         public bool IsLocationCallFrombarcodePage { get; set; }
 
         public bool IsAssetCallFrombarcodePage { get; set; }

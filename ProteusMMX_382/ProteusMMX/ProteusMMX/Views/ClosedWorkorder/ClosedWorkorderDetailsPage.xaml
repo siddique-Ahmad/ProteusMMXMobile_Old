@@ -175,7 +175,7 @@
                                 <Entry Text="{Binding AssetName}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout  IsVisible="{Binding AssetSystemLayoutIsVisible}" Orientation="Vertical" Grid.Row="6" Grid.Column="1">
+                            <!--<StackLayout  IsVisible="{Binding AssetSystemLayoutIsVisible}" Orientation="Vertical" Grid.Row="6" Grid.Column="1">
                                 <Label Text="{Binding AssetSystemTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding AssetSystemName}" IsEnabled="False"></Entry>
                             </StackLayout>
@@ -184,91 +184,134 @@
                             <StackLayout  IsVisible="{Binding AssignToEmployeeLayout}" Orientation="Vertical" Grid.Row="7" Grid.Column="0">
                                 <Label Text="{Binding AssignToEmployeeTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding AssignToEmployeeName}" IsEnabled="False"></Entry>
+                            </StackLayout>-->
+
+                            <StackLayout  IsVisible="{Binding AssetSystemLayoutIsVisible}" Orientation="Vertical" Grid.Row="6" Grid.Column="1">
+
+                                <StackLayout Orientation="Horizontal">
+
+
+                                    <Label Text="{Binding AssetSystemTitle}" TextColor="Black" FontAttributes="Bold"/>
+
+                                    <!--<Label Text="{Binding AssociatedAssets}" IsVisible="{Binding ShowAssociatedAssets}" TextColor="Red" BackgroundColor="Transparent">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                        Tapped="TapGestureRecognizer_Tapped"/>
+                                        </Label.GestureRecognizers>
+                                    </Label>-->
+
+                                    <Label FontAttributes="Italic"   Text="{Binding AssociatedAssets}" IsVisible="{Binding ShowAssociatedAssets}" TextColor="Blue"  BackgroundColor="Transparent">
+
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                        Tapped="TapGestureRecognizer_Tapped"/>
+                                        </Label.GestureRecognizers>
+
+
+                                    </Label>
+
+                                </StackLayout>
+
+                                <Entry Text="{Binding AssetSystemName}" IsEnabled="False"></Entry>
+
                             </StackLayout>
 
 
-                            <StackLayout  IsVisible="{Binding WorkorderRequesterLayout}" Orientation="Vertical" Grid.Row="7" Grid.Column="1">
+                            <StackLayout  IsVisible="{Binding AssignToEmployeeLayout}" Orientation="Vertical" Grid.Row="7" Grid.Column="0">
+                                <Label Text="{Binding AssignToEmployeeTitle}" TextColor="Black" FontAttributes="Bold"/>
+                                <Entry Text="{Binding AssignToEmployeeName}" IsEnabled="False"></Entry>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Grid.Row="7" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"  IsVisible="{Binding IsCostLayoutIsVisible}">
+                                <dependencyinterface:LoginSwitch x:Name="CostSwitch" IsEnabled="True"  IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"  Grid.Column="1" VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="7"></dependencyinterface:LoginSwitch>
+                                <Label  x:Name="LabelSwitch1"  Grid.Column="1" Grid.Row="7" IsEnabled="{Binding UpdateLastPhysicalDateEnabled}" FontAttributes="Bold" Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" >
+
+                                </Label>
+                            </StackLayout>
+
+
+                            <StackLayout  IsVisible="{Binding WorkorderRequesterLayout}" Orientation="Vertical" Grid.Row="8" Grid.Column="0">
                                 <Label Text="{Binding WorkorderRequesterTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding WorkorderRequesterName}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout  IsVisible="{Binding CostCenterLayoutIsVisible}" Orientation="Vertical" Grid.Row="8" Grid.Column="0">
+                            <StackLayout  IsVisible="{Binding CostCenterLayoutIsVisible}" Orientation="Vertical" Grid.Row="8" Grid.Column="1">
                                 <Label Text="{Binding CostCenterTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding CostCenterName}" IsEnabled="False"></Entry>
                             </StackLayout>
 
 
-                            <StackLayout IsVisible="{Binding PriorityLayout}" Orientation="Vertical" Grid.Row="8" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding PriorityLayout}" Orientation="Vertical" Grid.Row="9" Grid.Column="0">
                                 <Label Text="{Binding PriorityTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding PriorityName}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding ShiftLayoutIsVisible}" Orientation="Vertical" Grid.Row="9" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding ShiftLayoutIsVisible}" Orientation="Vertical" Grid.Row="9" Grid.Column="1">
                                 <Label Text="{Binding ShiftTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding ShiftName}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding WorkorderStatusLayout}" Orientation="Vertical" Grid.Row="9" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding WorkorderStatusLayout}" Orientation="Vertical" Grid.Row="10" Grid.Column="0">
                                 <Label Text="{Binding WorkorderStatusTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding WorkorderStatusName}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding WorkorderTypeLayout}" Orientation="Vertical" Grid.Row="10" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding WorkorderTypeLayout}" Orientation="Vertical" Grid.Row="10" Grid.Column="1">
                                 <Label Text="{Binding WorkorderTypeTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding WorkorderTypeName}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout  Orientation="Vertical" Grid.Row="10" Grid.Column="1" IsVisible="{Binding CauseIsVisible}" >
+                            <StackLayout  Orientation="Vertical" Grid.Row="11" Grid.Column="0" IsVisible="{Binding CauseIsVisible}" >
                                 <Label Text="{Binding CauseTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding CauseName}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding MaintenanceCodeLayout}" Orientation="Vertical" Grid.Row="11" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding MaintenanceCodeLayout}" Orientation="Vertical" Grid.Row="11" Grid.Column="1">
                                 <Label Text="{Binding MaintenanceCodeTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding MaintenanceCodeName}" IsEnabled="False"></Entry>
                             </StackLayout>
 
 
-                            <StackLayout IsVisible="{Binding EstimstedDowntimeLayout}" Orientation="Vertical" Grid.Row="11" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding EstimstedDowntimeLayout}" Orientation="Vertical" Grid.Row="12" Grid.Column="0">
                                 <Label Text="{Binding EstimstedDowntimeTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding EstimstedDowntimeText}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding ActualDowntimeLayout}"  Orientation="Vertical" Grid.Row="12" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding ActualDowntimeLayout}"  Orientation="Vertical" Grid.Row="12" Grid.Column="1">
                                 <Label Text="{Binding ActualDowntimeTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding ActualDowntimeText}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding MiscellaneousLabourCostLayoutIsVisible}" Orientation="Vertical" Grid.Row="12" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding MiscellaneousLabourCostLayoutIsVisible}" Orientation="Vertical" Grid.Row="13" Grid.Column="0">
                                 <Label Text="{Binding MiscellaneousLabourCostTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding MiscellaneousLabourCostText}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding MiscellaneousMaterialCostLayout}" Orientation="Vertical" Grid.Row="13" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding MiscellaneousMaterialCostLayout}" Orientation="Vertical" Grid.Row="13" Grid.Column="1">
                                 <Label Text="{Binding MiscellaneousMaterialCostTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding MiscellaneousMaterialCostText}" IsEnabled="False"></Entry>
                             </StackLayout>
 
                           
 
-                            <StackLayout IsVisible="{Binding ClosedDateLayout}" Orientation="Vertical" Grid.Row="13" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding ClosedDateLayout}" Orientation="Vertical" Grid.Row="14" Grid.Column="0">
                                 <Label Text="{Binding ClosedDateTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding ClosedDateText}" IsEnabled="False"></Entry>
                             </StackLayout>
 
                            
 
-                            <StackLayout IsVisible="{Binding DigitalSignaturesLayout}" Orientation="Vertical" Grid.Row="14" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding DigitalSignaturesLayout}" Orientation="Vertical" Grid.Row="14" Grid.Column="1">
                                 <Label Text="{Binding DigitalSignaturesTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding DigitalSignatures}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding projectLayout}" Orientation="Vertical" Grid.Row="14" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding projectLayout}" Orientation="Vertical" Grid.Row="15" Grid.Column="0">
                                 <Label Text="{Binding ProjectTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding Project}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding RequesterFullNameLayout}" Orientation="Vertical" Grid.Row="15" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding RequesterFullNameLayout}" Orientation="Vertical" Grid.Row="15" Grid.Column="1">
                                 <Label Text="{Binding RequesterFullNameTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding RequesterFullName}" IsEnabled="False"></Entry>
                             </StackLayout>
@@ -276,16 +319,16 @@
 
 
 
-                            <StackLayout  IsVisible="{Binding RequesterPhoneLayout}" Orientation="Vertical" Grid.Row="15" Grid.Column="1">
+                            <StackLayout  IsVisible="{Binding RequesterPhoneLayout}" Orientation="Vertical" Grid.Row="16" Grid.Column="0">
                                 <Label Text="{Binding RequesterPhoneTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding RequesterPhone}" IsEnabled="False"></Entry>
                             </StackLayout>
-                            <StackLayout IsVisible="{Binding RequesterEmailLayout}" Orientation="Vertical" Grid.Row="16" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding RequesterEmailLayout}" Orientation="Vertical" Grid.Row="16" Grid.Column="1">
                                 <Label Text="{Binding RequesterEmailTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding RequesterEmail}" IsEnabled="False"></Entry>
                             </StackLayout>
 
-                            <StackLayout  Orientation="Vertical" Grid.Row="16" Grid.Column="1" IsVisible="{Binding RequestedNumberIsVisible}">
+                            <StackLayout  Orientation="Vertical" Grid.Row="17" Grid.Column="0" IsVisible="{Binding RequestedNumberIsVisible}">
                                 <Label Text="{Binding RequestNumberTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding RequestNumber}" IsEnabled="False"></Entry>
                             </StackLayout>

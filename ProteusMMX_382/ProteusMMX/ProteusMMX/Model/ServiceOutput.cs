@@ -27,6 +27,8 @@ namespace ProteusMMX.Model
 
         public AssetWrapper assetWrapper { get; set; }
 
+        public AssetForAssWrapper assetforassWrapper { get; set; }
+
         public MMXBOWrapper targetWrapper { get; set; }
 
         public ClosedWorkOrderWrapper clWorkOrderWrapper { get; set; }

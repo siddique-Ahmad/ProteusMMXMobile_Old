@@ -2492,6 +2492,76 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        bool _isCostDistributed = false;
+        public bool IsCostDistributed
+        {
+            get
+            {
+                return _isCostDistributed;
+            }
+
+            set
+            {
+                if (value != _isCostDistributed)
+                {
+                    _isCostDistributed = value;
+                    OnPropertyChanged("IsCostDistributed");
+                }
+            }
+        }
+        bool _isCostLayoutIsVisible = true;
+        public bool IsCostLayoutIsVisible
+        {
+            get
+            {
+                return _isCostLayoutIsVisible;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsVisible)
+                {
+                    _isCostLayoutIsVisible = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisible));
+                }
+            }
+        }
+
+        bool _isCostLayoutIsEnable = true;
+        public bool IsCostLayoutIsEnable
+        {
+            get
+            {
+                return _isCostLayoutIsEnable;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsEnable)
+                {
+                    _isCostLayoutIsEnable = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsEnable));
+                }
+            }
+        }
+
+        string _distributeCostforAssetsystem;
+        public string DistributeCostforAssetsystem
+        {
+            get
+            {
+                return _distributeCostforAssetsystem;
+            }
+
+            set
+            {
+                if (value != _distributeCostforAssetsystem)
+                {
+                    _distributeCostforAssetsystem = value;
+                    OnPropertyChanged(nameof(DistributeCostforAssetsystem));
+                }
+            }
+        }
         // ActualDowntime
 
         string _actualDowntimeText;
@@ -3982,6 +4052,11 @@ namespace ProteusMMX.ViewModel.Workorder
                 AssetSystemTitle = WebControlTitle.GetTargetNameByTitleName("AssetSystem");
                 InternalNotesTitle = WebControlTitle.GetTargetNameByTitleName("InternalNote");
                 AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
+                DistributeCostforAssetsystem = WebControlTitle.GetTargetNameByTitleName("DistributeCostforAssetsystem");
+                if (DistributeCostforAssetsystem == null)
+                {
+                    IsCostLayoutIsVisible = false;
+                }
             }
             catch (Exception ex)
             {
@@ -4123,6 +4198,23 @@ namespace ProteusMMX.ViewModel.Workorder
                     this.CauseIsVisible = false;
                 }
 
+            }
+            if (Application.Current.Properties.ContainsKey("DistributeCost"))
+            {
+                var WorkorderDIstributeCost = Application.Current.Properties["DistributeCost"].ToString();
+                if (WorkorderDIstributeCost != null && WorkorderDIstributeCost == "E")
+                {
+
+                    this.IsCostLayoutIsVisible = true;
+                }
+                else if (WorkorderDIstributeCost != null && WorkorderDIstributeCost == "V")
+                {
+                    this.IsCostLayoutIsEnable = false;
+                }
+                else
+                {
+                    this.IsCostLayoutIsVisible = false;
+                }
             }
 
             #endregion
@@ -9463,7 +9555,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.WorkOrderStatusID = WorkorderStatusID;
                 workOrder.WorkTypeID = WorkorderTypeID;
                 workOrder.MaintenanceCodeID = MaintenanceCodeID;
-                
+                workOrder.DistributeCost = IsCostDistributed;
                 //MiscellaneousLaborCostID = workorderWrapper.workOrderWrapper.workOrder.MiscellaneousLaborCostID,
                 //MiscellaneousMaterialsCostID = workorderWrapper.workOrderWrapper.workOrder.MiscellaneousMaterialsCostID,
                 workOrder.AdditionalDetails = AdditionalDetailsText; //String.IsNullOrEmpty(AdditionalDetails1.Text) ? null : AdditionalDetails1.Text;

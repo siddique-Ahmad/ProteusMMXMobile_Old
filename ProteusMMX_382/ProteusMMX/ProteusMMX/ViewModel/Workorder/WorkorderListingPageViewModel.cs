@@ -2497,6 +2497,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             CultureName = AppSettings.UserCultureName,
                             UserId = Convert.ToInt32(UserID),
                             ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                            DistributeCost= workorderWrapper.workOrderWrapper.workOrder.DistributeCost,
                             workOrder = new workOrders
                             {
                                 IsSignatureValidated = false,
@@ -2536,6 +2537,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         CultureName = AppSettings.UserCultureName,
                         UserId = Convert.ToInt32(UserID),
                         ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                        DistributeCost = workorderWrapper.workOrderWrapper.workOrder.DistributeCost,
                         workOrder = new workOrders
                         {
                             IsSignatureValidated = false,

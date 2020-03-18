@@ -509,7 +509,7 @@ namespace ProteusMMX.ViewModel
 
 
 
-                    var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName, BlackhawkCryptographer.Encrypt(Password));
+                    var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName,Password);
                     if (user != null && user.mmxUser != null)
                     {
                         // user.mmxUser.P
@@ -662,7 +662,7 @@ namespace ProteusMMX.ViewModel
                 AppSettings.BaseURL = SiteUrl;
                 AppSettings.APIVersion = apiVersion.APIVersion;
 
-                var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName, BlackhawkCryptographer.Encrypt(Password));
+                var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName,Password);
                 if (user == null || user.mmxUser == null || Convert.ToBoolean(user.servicestatus) == false)
                 {
                     UserDialogs.Instance.HideLoading();
@@ -1028,6 +1028,8 @@ namespace ProteusMMX.ViewModel
                                     Application.Current.Properties["WorkorderCauseKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes").Expression;
                                     Application.Current.Properties["WorkorderTargetKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression;
                                     Application.Current.Properties["WorkorderDetailsControls"] = WorkOrderSubModule;
+                                    Application.Current.Properties["DistributeCost"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression;
+                                    
                                 }
                                 catch (Exception)
                                 {
@@ -1092,8 +1094,16 @@ namespace ProteusMMX.ViewModel
                         if (WorkOrderInspectionSubModule.listControls != null && WorkOrderInspectionSubModule.listControls.Count > 0)
                         {
 
-                            Application.Current.Properties["AssociateEmployeeContr"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateEmployeeContr").Expression;
-                            Application.Current.Properties["AssociateInspection"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateInspection").Expression;
+                            try
+                            {
+                                Application.Current.Properties["AssociateEmployeeContr"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateEmployeeContr").Expression;
+                                Application.Current.Properties["AssociateInspection"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateInspection").Expression;
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
                         }
                     }
                 }

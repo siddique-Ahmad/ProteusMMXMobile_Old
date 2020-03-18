@@ -106,8 +106,8 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public string SignatureIntent { get; set; }
         public string Signature { get; set; }
 
-       // public string TotalTime { get; set; }
-
+        // public string TotalTime { get; set; }
+        public bool? DistributeCost { get; set; }
         public string TotalTime { get; set; }
         public DateTime? SignatureTimestamp { get; set; }
     }

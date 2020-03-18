@@ -1,4 +1,5 @@
 ﻿using ProteusMMX.Helpers;
+using ProteusMMX.Model.AssetModel;
 using ProteusMMX.ViewModel.Asset;
 using System;
 using System.Collections.Generic;
@@ -11,14 +12,17 @@ using Xamarin.Forms.Xaml;
 
 namespace ProteusMMX.Views.Asset.Templates.ViewCells
 {
-	 [XamlCompilation(XamlCompilationOptions.Skip)]
-	public partial class AssetsViewCell : ViewCell
-	{
-		public AssetsViewCell (ref object ParentContext)
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Skip)]
+    public partial class AssetsViewCell : ViewCell
+    {
+        ViewCell theViewCell = new ViewCell();
+        public AssetsViewCell(ref object ParentContext)
+        {
+            InitializeComponent();
             string DescriptionTabKey = "";
+            this.ParentContext = ParentContext;
             this.AssetName.Text = WebControlTitle.GetTargetNameByTitleName("AssetName");
+            this.ShowAssetSystem.Text = WebControlTitle.GetTargetNameByTitleName("show")+ " "  + WebControlTitle.GetTargetNameByTitleName("AssetSystem");
             this.AssetNumber.Text = WebControlTitle.GetTargetNameByTitleName("AssetNumber");
             if (Application.Current.Properties.ContainsKey("DescriptionTabKey"))
             {
@@ -46,6 +50,27 @@ namespace ProteusMMX.Views.Asset.Templates.ViewCells
             {
                 (bindable as AssetsViewCell).ParentContext = newValue;
             }
+        }
+        private async void Button_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var item = theViewCell.BindingContext as Assets;
+
+                await (ParentContext as AssetListingPageViewModel).NavigationFromAssetListing(item.AssetSystemID.ToString(), item.AssetSystemName, item.AssetSystemNumber);
+
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+        }
+        private void OnBindingContextChanged(object sender, EventArgs e)
+        {
+             theViewCell = ((ViewCell)sender);
+
+            
         }
     }
 }
