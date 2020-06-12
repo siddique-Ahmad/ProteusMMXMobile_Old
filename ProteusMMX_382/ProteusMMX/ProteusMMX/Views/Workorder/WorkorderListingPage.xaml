@@ -136,6 +136,8 @@
                             <ColumnDefinition Width="4.4*"/>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
@@ -149,13 +151,28 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>-->
 
-                        <Label Text="{Binding TotalRecordTitle}"  Grid.Column="2" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
-                        <Label Text=":" Grid.Column="3" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
-                        <Label Text="{Binding TotalRecordCount}" Grid.Column="4" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
+                        <Label Text="{Binding TotalRecordTitle}"  Grid.Column="3" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
+                        <Label Text=":" Grid.Column="4" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
+                        <Label Text="{Binding TotalRecordCount}" Grid.Column="5" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
+                        <Button Clicked="Button_Clicked" BackgroundColor="White" IsVisible="{Binding ShowMore}" TextColor="Black" HorizontalOptions="Center"  Grid.Row="0" Grid.Column="2">
+                            <Button.Image>
+                                <OnPlatform x:TypeArguments="FileImageSource">
+                                    <OnPlatform.iOS>
+                                        <FileImageSource File="Dot.png"/>
+                                    </OnPlatform.iOS>
+                                    <OnPlatform.Android>
+                                        <FileImageSource File="Assets/Dot.png"/>
+                                    </OnPlatform.Android>
+                                    <OnPlatform.WinPhone>
+                                        <FileImageSource File="Assets/Dot.png"/>
+                                    </OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </Button.Image>
+
+                        </Button>
 
 
-
-                        <Label Text="{Binding SortByLocationLabelTitle}" Grid.Row="1"/>
+                        <!--<Label Text="{Binding SortByLocationLabelTitle}" Grid.Row="1"/>
                         <Picker  Grid.Column="1" ItemsSource="{Binding SortByLocationpickerTitles}" SelectedItem="{Binding LocationSelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding LocationSelectedIndexPicker , Mode=TwoWay}" Grid.Row="1"/>
 
                         <Label Text="{Binding SortByShiftLabelTitle}" Grid.Row="2"/>
@@ -167,7 +184,7 @@
 
 
                         <Label  Text="{Binding SortByDuedateTitle}" Grid.Row="4"/>
-                        <!--<DatePicker Date ="{Binding DueDate}"  Margin="0,0,30,0" Grid.Column="1"  Grid.Row="4"/>-->
+                        --><!--<DatePicker Date ="{Binding DueDate}"  Margin="0,0,30,0" Grid.Column="1"  Grid.Row="4"/>--><!--
                         <Button FontSize="Small" Text="{Binding SortByDateText}" Command="{Binding ShowDateCommand}" Grid.Row="4" Grid.Column="1" HeightRequest="35"  BackgroundColor="LightSkyBlue" HorizontalOptions="Fill">
                             
                         </Button>
@@ -184,9 +201,9 @@
                                         Command="{Binding DateCommand}"
                                          NumberOfTapsRequired="1" />
                             </Image.GestureRecognizers>
-                        </Image>
+                        </Image>-->
 
-                        <StackLayout IsVisible="{Binding TotalRecordForPhone}" Grid.Row="5" Orientation="Horizontal" >
+                        <StackLayout IsVisible="{Binding TotalRecordForPhone}" Grid.Row="1" Orientation="Horizontal" >
                             <Label Text="{Binding TotalRecordTitle}"/>
                             <Label Text=":" Grid.Column="3"/>
                             <Label Text="{Binding TotalRecordCount}"/>

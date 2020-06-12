@@ -26,7 +26,7 @@ namespace ProteusMMX.Services.SelectionListPageServices.Stockroom
            
             if (string.IsNullOrWhiteSpace(SEARCHSTOCKROOMNAME))
             {
-                builder.AppendToPath("");
+                builder.AppendToPath("null");
 
             }
             else

@@ -1,5 +1,4 @@
 ﻿using Acr.UserDialogs;
-using ProteusMMX.Crypto;
 using ProteusMMX.Model;
 using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Services.Authentication;
@@ -7,25 +6,19 @@ using ProteusMMX.Services.FormLoadInputs;
 using ProteusMMX.Services.Translations;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Utils;
-using ProteusMMX.ViewModel.Workorder;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
-using ProteusMMX.Helpers;
 using System.Text.RegularExpressions;
-using Plugin.Connectivity;
 using ProteusMMX.Helpers.Storage;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Net;
 using Microsoft.AppCenter.Crashes;
-using System.Web;
 
 namespace ProteusMMX.ViewModel
 {
@@ -449,7 +442,25 @@ namespace ProteusMMX.ViewModel
             try
             {
 
-               
+
+                //var factory = new WSTrustChannelFactory(new UserNameWSTrustBinding(), "https://yourdomain.com/adfs/services/trust/13/UsernameMixed")
+                //{
+                //    TrustVersion = TrustVersion.WSTrustFeb2005
+                //};
+
+                //factory.Credentials.UserName.UserName = "";
+                //factory.Credentials.UserName.Password = "";
+
+                //var rstoken = new Microsoft.IdentityModel.Protocols.WSTrust.RequestSecurityToken
+                //{
+                //    RequestType = WSTrust13Constants.RequestTypes.Issue,
+                //    AppliesTo = new EndpointAddress("https://yourdomain.com/yourservice"),
+                //    KeyType = WSTrust13Constants.KeyTypes.Bearer
+                //};
+
+                //var channel = factory.CreateChannel();
+
+                //channel.Issue(rstoken);
 
                 if (navigationData != null)
                 {
@@ -1176,6 +1187,9 @@ namespace ProteusMMX.ViewModel
 
             ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "Details");
             ServiceOutput FormControlsAndRightsForButton = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "ServiceRequest");
+            ServiceOutput FormControlsAndRightsForOperatorTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "OperatorTag");
+            ServiceOutput FormControlsAndRightsForMaintenanceTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "MaintenanceTag");
+            ServiceOutput FormControlsAndRightsForSHETag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "SHETag");
 
             if (FormControlsAndRightsForButton != null && FormControlsAndRightsForButton.lstModules != null && FormControlsAndRightsForButton.lstModules.Count > 0)
             {
@@ -1221,19 +1235,6 @@ namespace ProteusMMX.ViewModel
                 }
             }
 
-
-
-
-
-
-
-
-
-                        
-
-
-
-                   
             if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
             {
                 var ServiceRequestModule = FormControlsAndRightsForDetails.lstModules[0];
@@ -1259,7 +1260,84 @@ namespace ProteusMMX.ViewModel
                 }
             }
 
+            if (FormControlsAndRightsForSHETag != null && FormControlsAndRightsForSHETag.lstModules != null && FormControlsAndRightsForSHETag.lstModules.Count > 0)
+            {
+                var ServiceRequestModuleSHETAg = FormControlsAndRightsForSHETag.lstModules[0];
+                if (ServiceRequestModuleSHETAg.ModuleName == "SHETagDetail") //ModuleName can't be  changed in service 
+                {
+                    if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                    {
+                        var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                        if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                        {
+
+
+
+                            Application.Current.Properties["SHETagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                        }
+
+
+
+                    }
+                }
+            }
+
+            if (FormControlsAndRightsForMaintenanceTag != null && FormControlsAndRightsForMaintenanceTag.lstModules != null && FormControlsAndRightsForMaintenanceTag.lstModules.Count > 0)
+            {
+                var ServiceRequestModuleSHETAg = FormControlsAndRightsForMaintenanceTag.lstModules[0];
+                if (ServiceRequestModuleSHETAg.ModuleName == "MaintenanceTagDetail") //ModuleName can't be  changed in service 
+                {
+                    if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                    {
+                        var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                        if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                        {
+
+
+
+                            Application.Current.Properties["MaintenanceTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                        }
+
+
+
+                    }
+                }
+            }
+
+            if (FormControlsAndRightsForOperatorTag != null && FormControlsAndRightsForOperatorTag.lstModules != null && FormControlsAndRightsForOperatorTag.lstModules.Count > 0)
+            {
+                var ServiceRequestModuleSHETAg = FormControlsAndRightsForOperatorTag.lstModules[0];
+                if (ServiceRequestModuleSHETAg.ModuleName == "OperatorTagDetail") //ModuleName can't be  changed in service 
+                {
+                    if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                    {
+                        var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                        if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                        {
+
+
+
+                            Application.Current.Properties["OperatorTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                        }
+
+
+
+                    }
+                }
+            }
         }
+
+
+
+
+
+
+
+
+
 
         public async Task GetAssetControlRights()
         {
