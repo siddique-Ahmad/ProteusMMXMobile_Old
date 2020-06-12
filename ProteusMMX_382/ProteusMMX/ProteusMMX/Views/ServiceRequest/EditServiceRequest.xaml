@@ -251,6 +251,11 @@
                                 <!--<DatePicker Date="{Binding RequiredDate}"  MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}"/>-->
                                 <controls:RequiredDateCustomDatePicker SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}" />
                             </StackLayout>
+
+                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1" IsEnabled="{Binding TagTypeIsEnabled}" IsVisible="{Binding TagTypeIsVisible}">
+                                <Label Text="{Binding TagTypeLabelTitle}" Grid.Row="0"/>
+                                <Picker Grid.Column="1" BackgroundColor="{Binding ColorBackground}" ItemsSource="{Binding TagTypePickerTitles}" SelectedItem="{Binding TagTypeSelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding TagTypeSelectedIndexPicker , Mode=TwoWay}" Grid.Row="0"/>
+                            </StackLayout>
                         </Grid>
 
                         <Grid

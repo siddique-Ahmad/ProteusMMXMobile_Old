@@ -4201,6 +4201,12 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             if (Application.Current.Properties.ContainsKey("DistributeCost"))
             {
+
+                if (DistributeCostforAssetsystem == null)
+                {
+                    IsCostLayoutIsVisible = false;
+                    return;
+                }
                 var WorkorderDIstributeCost = Application.Current.Properties["DistributeCost"].ToString();
                 if (WorkorderDIstributeCost != null && WorkorderDIstributeCost == "E")
                 {
