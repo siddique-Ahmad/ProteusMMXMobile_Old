@@ -110,5 +110,9 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public bool? DistributeCost { get; set; }
         public string TotalTime { get; set; }
         public DateTime? SignatureTimestamp { get; set; }
+
+        
+        public bool? ParentandChildCost { get; set; }
+        public bool? ChildCost { get; set; }
     }
 }

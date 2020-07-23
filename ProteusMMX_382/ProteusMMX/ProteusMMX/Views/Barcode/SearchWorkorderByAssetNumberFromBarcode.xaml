@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Barcode.SearchWorkorderByAssetNumberFromBarcode"
              xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
-             xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-             xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-             Title="{Binding PageTitle}" 
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
+             Title="{Binding PageTitle}"
              BackgroundColor="{StaticResource BackgroundColor}" >
 
 
@@ -30,6 +30,9 @@
                                                         TomorrowDayTemplate="{StaticResource  TomorrowViewTemplate}">
             </templates:WorkorderListingTemplateSelector>-->
 
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
             <templates:WorkorderListingTemplateSelector x:Key="DateTemplateSelector">
             </templates:WorkorderListingTemplateSelector>
 
@@ -40,7 +43,7 @@
         <ToolbarItem Text=":"  Icon="Assets/filter.png" Command="{Binding SortByCommand}"/>
         <ToolbarItem Text="1"  Icon="Assets/Dot.png" Command="{Binding ToolbarCommand}"/>
 
-        
+       
     </ContentPage.ToolbarItems>-->
 
 
@@ -100,9 +103,11 @@
                     <ColumnDefinition Width="3.5*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-                <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
-                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
+                <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                    <control1:BorderlessEntry
+                       Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" Style="{StaticResource EntryStyle}"/>
+                </border:SfBorder>
+                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />
 
                 <Grid Grid.Row="1" Grid.ColumnSpan="2" >
                     <Grid>
@@ -114,7 +119,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Text="{Binding WorkorderTypeLabelTitle}"/>
+                        <Label Text="{Binding WorkorderTypeLabelTitle}" Style="{StaticResource LabelStyle}"/>
                         <Picker Grid.Column="1" ItemsSource="{Binding PickerTitles}" SelectedItem="{Binding SelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding SelectedIndexPicker , Mode=TwoWay}"/>
 
                         <!--<Grid Grid.Column="2" ColumnSpacing="0">-->
@@ -125,9 +130,9 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>-->
 
-                        <Label Text="{Binding TotalRecordTitle}"  Grid.Column="2" />
-                        <Label Text=":" Grid.Column="3"/>
-                        <Label Text="{Binding TotalRecordCount}" Grid.Column="4" />
+                        <Label Text="{Binding TotalRecordTitle}"  Grid.Column="2" Style="{StaticResource LabelStyle}"/>
+                        <Label Text=":" Grid.Column="3" Style="{StaticResource LabelStyle}"/>
+                        <Label Text="{Binding TotalRecordCount}" Grid.Column="4" Style="{StaticResource LabelStyle}"/>
                         <!--</Grid>-->
 
                     </Grid>

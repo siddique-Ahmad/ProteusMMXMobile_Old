@@ -22,7 +22,26 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
 			InitializeComponent ();
 		}
 
+        bool isExpanded = false;
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            if (isExpanded)
+            {
+                await ShowMore.FadeTo(0);
+                ShowMore.IsVisible = !isExpanded;
+                this.Tapped.Text = "Show More";
 
+            }
+            else
+            {
+                ShowMore.IsVisible = !isExpanded;
+                await ShowMore.FadeTo(1);
+                this.Tapped.Text = "See less";
+            }
+
+            isExpanded = !isExpanded;
+
+        }
         public DayAfterTomorrowViewCell(ref object ParentContext)
         {
             InitializeComponent();

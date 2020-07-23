@@ -570,7 +570,7 @@ namespace ProteusMMX.ViewModel.Inventory
             }
         }
 
-        
+
 
         string _adjustmentquantitytitle;
         public string Adjustmentquantitytitle
@@ -1087,6 +1087,7 @@ namespace ProteusMMX.ViewModel.Inventory
                     OnPropertyChanged(nameof(QuantityAllocatedText));
                 }
             }
+
         }
 
         string _shelfBinName;
@@ -1279,8 +1280,8 @@ namespace ProteusMMX.ViewModel.Inventory
         ButtonControls TRansactor;
         ButtonControls UnitCost;
 
-        
-       bool _SelfBinIsVisible = true;
+
+        bool _SelfBinIsVisible = true;
         public bool SelfBinIsVisible
         {
             get
@@ -1857,8 +1858,6 @@ namespace ProteusMMX.ViewModel.Inventory
                 OperationInProgress = false;
                 FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.InventoryModuleName);
                 await CreateControlsForPage(FormControlsAndRights);
-                
-
 
 
             }
@@ -1970,7 +1969,7 @@ namespace ProteusMMX.ViewModel.Inventory
 
                                     if (InventoryDetailsTab.listControls != null && InventoryDetailsTab.listControls.Count > 0)
                                     {
-                                        
+
                                         var UpdateLastPhysicalInventorydate = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UpdateLastPhysicalInventorydate");
                                         var UserField1 = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UserField1");
                                         var UserField2 = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UserField2");
@@ -2389,7 +2388,10 @@ namespace ProteusMMX.ViewModel.Inventory
                     this.PartNumberText = trasactiontype.PartNumber;
                     this.QuantityOnHandText = trasactiontype.QuantityOnHand;
                     this.StockroomNameText = trasactiontype.StockroomName;
-                    this.QuantityAllocatedText = this.QuantityAllocatedText;
+                    this.QuantityAllocatedText = Math.Round(Convert.ToDecimal(this.QuantityAllocatedText), 2).ToString();
+                    //trasactiontype.QuantityAllocatedText = decimal.Parse(string.Format(StringFormat.NumericZero(), trasactiontype.Quan));
+
+
 
                     this.UnitCostText = string.Format(StringFormat.CurrencyZero(), trasactiontype.OriginalAmount == null ? 0 : trasactiontype.OriginalAmount);
 
@@ -2415,8 +2417,8 @@ namespace ProteusMMX.ViewModel.Inventory
         {
             try
             {
-               
-                if(PhysicalDateSwitch==true)
+
+                if (PhysicalDateSwitch == true)
                 {
                     LastPhysicalInventorydate = true;
                 }
@@ -2461,6 +2463,7 @@ namespace ProteusMMX.ViewModel.Inventory
                 {
 
                     var k = Convert.ToInt32(AdjustmentQuantityText);
+                    //var k = decimal.Parse(AdjustmentQuantityText);
                 }
                 catch (Exception ex)
                 {
@@ -2521,7 +2524,7 @@ namespace ProteusMMX.ViewModel.Inventory
                     UserField3 = UserField3,
                     UserField4 = UserField4,
                     ModifiedUserName = AppSettings.User.UserName,
-                    UpdateLastPhysicalInventorydate=LastPhysicalInventorydate,
+                    UpdateLastPhysicalInventorydate = LastPhysicalInventorydate,
                     UnitCost = decimal.Parse(this.UnitCostText)
 
                 };

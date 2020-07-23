@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              x:Class="ProteusMMX.Views.ClosedWorkorder.ClosedWorkorderDetailsPage"
              Title="{Binding PageTitle}" 
               Icon="details.png"
@@ -24,6 +26,14 @@
             </ToolbarItem.Icon>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
 
 
@@ -104,18 +114,20 @@
                             <StackLayout IsVisible="{Binding DescriptionLayout}" Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Label Text="{Binding DescriptionTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding DescriptionText}" IsEnabled="False" />-->
-                                
-                                <dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="False">
-                                    <dependencyinterface:CustomEditor.HeightRequest>
-                                        <OnPlatform x:TypeArguments="x:Double" Default="56">
-                                            <On Platform="iOS" Value="56"/>
-                                            <On Platform="Android" Value="60"/>
-                                            <On Platform="WinPhone" Value="56"/>
-                                            <On Platform="UWP" Value="56"/>
-                                        </OnPlatform>
-                                    </dependencyinterface:CustomEditor.HeightRequest>
-                                
-                                </dependencyinterface:CustomEditor>
+
+                                <border:SfBorder CornerRadius="5">
+                                    <dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="False">
+                                        <dependencyinterface:CustomEditor.HeightRequest>
+                                            <OnPlatform x:TypeArguments="x:Double" Default="56">
+                                                <On Platform="iOS" Value="56"/>
+                                                <On Platform="Android" Value="60"/>
+                                                <On Platform="WinPhone" Value="56"/>
+                                                <On Platform="UWP" Value="56"/>
+                                            </OnPlatform>
+                                        </dependencyinterface:CustomEditor.HeightRequest>
+
+                                    </dependencyinterface:CustomEditor>
+                                </border:SfBorder>
                                 <Label Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
@@ -129,24 +141,32 @@
 
                             <StackLayout IsVisible="{Binding RequiredDateLayout}" Orientation="Vertical" Grid.Row="2" Grid.Column="0">
                                 <Label Text="{Binding RequiredDateTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding RequiredDate}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding RequiredDate}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
                             <StackLayout IsVisible="{Binding WorkStartedDateLayout}" Orientation="Vertical" Grid.Row="2" Grid.Column="1">
                                 <Label Text="{Binding WorkStartedDateTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding WorkStartedDate}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding WorkStartedDate}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
 
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding WorkorderCompletionDateLayout}" Orientation="Vertical" Grid.Row="3" Grid.Column="0">
                                 <Label Text="{Binding WorkorderCompletionDateTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding WorkorderCompletionDate}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding WorkorderCompletionDate}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding ActivationDateLayout}" Orientation="Vertical" Grid.Row="3" Grid.Column="1">
                                 <Label Text="{Binding ActivationDateTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding ActivationDateText}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding ActivationDateText}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="0" IsVisible="{Binding AssetIsVisible}">
@@ -156,35 +176,33 @@
 
                             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="1" IsVisible="{Binding RequestedDateIsVisible}">
                                 <Label Text="{Binding WorkRequestedDateTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding RequestedDate}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding RequestedDate}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding FacilityLayout}" Orientation="Vertical" Grid.Row="5" Grid.Column="0">
                                 <Label Text="{Binding FacilityTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding FacilityName}" IsEnabled="False"></Entry>
+
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding FacilityName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding LocationLayoutIsVisible}" Orientation="Vertical" Grid.Row="5" Grid.Column="1">
                                 <Label Text="{Binding LocationTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding LocationName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding LocationName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
                             <StackLayout  IsVisible="{Binding AssetLayout}" Orientation="Vertical" Grid.Row="6" Grid.Column="0">
                                 <Label Text="{Binding AssetsTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding AssetName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding AssetName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
-
-                            <!--<StackLayout  IsVisible="{Binding AssetSystemLayoutIsVisible}" Orientation="Vertical" Grid.Row="6" Grid.Column="1">
-                                <Label Text="{Binding AssetSystemTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding AssetSystemName}" IsEnabled="False"></Entry>
-                            </StackLayout>
-
-
-                            <StackLayout  IsVisible="{Binding AssignToEmployeeLayout}" Orientation="Vertical" Grid.Row="7" Grid.Column="0">
-                                <Label Text="{Binding AssignToEmployeeTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding AssignToEmployeeName}" IsEnabled="False"></Entry>
-                            </StackLayout>-->
 
                             <StackLayout  IsVisible="{Binding AssetSystemLayoutIsVisible}" Orientation="Vertical" Grid.Row="6" Grid.Column="1">
 
@@ -219,101 +237,140 @@
 
                             <StackLayout  IsVisible="{Binding AssignToEmployeeLayout}" Orientation="Vertical" Grid.Row="7" Grid.Column="0">
                                 <Label Text="{Binding AssignToEmployeeTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding AssignToEmployeeName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding AssignToEmployeeName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Horizontal" Grid.Row="7" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand"  IsVisible="{Binding IsCostLayoutIsVisible}">
-                                <dependencyinterface:LoginSwitch x:Name="CostSwitch" IsEnabled="True"  IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"  Grid.Column="1" VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="7"></dependencyinterface:LoginSwitch>
-                                <Label  x:Name="LabelSwitch1"  Grid.Column="1" Grid.Row="7" IsEnabled="{Binding UpdateLastPhysicalDateEnabled}" FontAttributes="Bold" Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" >
+                            <StackLayout  Orientation="Horizontal" Grid.Row="7"  Grid.Column="1" IsVisible="{Binding IsCostLayoutIsVisible}">
+                                <dependencyinterface:LoginSwitch x:Name="CostSwitch" IsEnabled="False" Margin="10,10,10,10" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="7">
+                                </dependencyinterface:LoginSwitch>
+                                <Label  x:Name="CostSwitch1"   FontAttributes="Bold" Margin="10,10,10,10" Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
 
                                 </Label>
+                                <StackLayout Grid.Column="2" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}" >
+                                    <buttons:SfRadioButton x:Name="RadioButton" IsEnabled="False" IsChecked="{Binding ChildCostDistributed}" Margin="10,10,10,10" Text="{Binding ChargeCostsOnlyToChildAssets}" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
+                                    <buttons:SfRadioButton x:Name="Button1" IsEnabled="False" IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}" Margin="10,10,10,10" Text="{Binding ParentCostsOnly}" StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
+                                </StackLayout>
                             </StackLayout>
 
 
                             <StackLayout  IsVisible="{Binding WorkorderRequesterLayout}" Orientation="Vertical" Grid.Row="8" Grid.Column="0">
                                 <Label Text="{Binding WorkorderRequesterTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding WorkorderRequesterName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding WorkorderRequesterName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout  IsVisible="{Binding CostCenterLayoutIsVisible}" Orientation="Vertical" Grid.Row="8" Grid.Column="1">
                                 <Label Text="{Binding CostCenterTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding CostCenterName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding CostCenterName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
                             <StackLayout IsVisible="{Binding PriorityLayout}" Orientation="Vertical" Grid.Row="9" Grid.Column="0">
                                 <Label Text="{Binding PriorityTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding PriorityName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding PriorityName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding ShiftLayoutIsVisible}" Orientation="Vertical" Grid.Row="9" Grid.Column="1">
                                 <Label Text="{Binding ShiftTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding ShiftName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding ShiftName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding WorkorderStatusLayout}" Orientation="Vertical" Grid.Row="10" Grid.Column="0">
                                 <Label Text="{Binding WorkorderStatusTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding WorkorderStatusName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding WorkorderStatusName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding WorkorderTypeLayout}" Orientation="Vertical" Grid.Row="10" Grid.Column="1">
                                 <Label Text="{Binding WorkorderTypeTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding WorkorderTypeName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding WorkorderTypeName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout  Orientation="Vertical" Grid.Row="11" Grid.Column="0" IsVisible="{Binding CauseIsVisible}" >
                                 <Label Text="{Binding CauseTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding CauseName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding CauseName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding MaintenanceCodeLayout}" Orientation="Vertical" Grid.Row="11" Grid.Column="1">
                                 <Label Text="{Binding MaintenanceCodeTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding MaintenanceCodeName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding MaintenanceCodeName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
                             <StackLayout IsVisible="{Binding EstimstedDowntimeLayout}" Orientation="Vertical" Grid.Row="12" Grid.Column="0">
                                 <Label Text="{Binding EstimstedDowntimeTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding EstimstedDowntimeText}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding EstimstedDowntimeText}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding ActualDowntimeLayout}"  Orientation="Vertical" Grid.Row="12" Grid.Column="1">
                                 <Label Text="{Binding ActualDowntimeTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding ActualDowntimeText}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding ActualDowntimeText}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding MiscellaneousLabourCostLayoutIsVisible}" Orientation="Vertical" Grid.Row="13" Grid.Column="0">
                                 <Label Text="{Binding MiscellaneousLabourCostTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding MiscellaneousLabourCostText}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding MiscellaneousLabourCostText}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding MiscellaneousMaterialCostLayout}" Orientation="Vertical" Grid.Row="13" Grid.Column="1">
                                 <Label Text="{Binding MiscellaneousMaterialCostTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding MiscellaneousMaterialCostText}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding MiscellaneousMaterialCostText}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                          
+
 
                             <StackLayout IsVisible="{Binding ClosedDateLayout}" Orientation="Vertical" Grid.Row="14" Grid.Column="0">
                                 <Label Text="{Binding ClosedDateTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding ClosedDateText}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding ClosedDateText}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                           
+
 
                             <StackLayout IsVisible="{Binding DigitalSignaturesLayout}" Orientation="Vertical" Grid.Row="14" Grid.Column="1">
                                 <Label Text="{Binding DigitalSignaturesTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding DigitalSignatures}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding DigitalSignatures}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding projectLayout}" Orientation="Vertical" Grid.Row="15" Grid.Column="0">
                                 <Label Text="{Binding ProjectTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding Project}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding Project}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding RequesterFullNameLayout}" Orientation="Vertical" Grid.Row="15" Grid.Column="1">
                                 <Label Text="{Binding RequesterFullNameTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding RequesterFullName}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding RequesterFullName}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
@@ -321,168 +378,227 @@
 
                             <StackLayout  IsVisible="{Binding RequesterPhoneLayout}" Orientation="Vertical" Grid.Row="16" Grid.Column="0">
                                 <Label Text="{Binding RequesterPhoneTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding RequesterPhone}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding RequesterPhone}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
+
                             <StackLayout IsVisible="{Binding RequesterEmailLayout}" Orientation="Vertical" Grid.Row="16" Grid.Column="1">
                                 <Label Text="{Binding RequesterEmailTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding RequesterEmail}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding RequesterEmail}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout  Orientation="Vertical" Grid.Row="17" Grid.Column="0" IsVisible="{Binding RequestedNumberIsVisible}">
                                 <Label Text="{Binding RequestNumberTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding RequestNumber}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding RequestNumber}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
 
 
-                            <StackLayout Orientation="Vertical" Grid.Row="17" Grid.Column="0" IsVisible="{Binding SectionNameIsVisible }">
+                            <StackLayout Orientation="Vertical" Grid.Row="17" Grid.Column="1" IsVisible="{Binding SectionNameIsVisible }">
                                 <Label Text="{Binding SectionNameTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <Entry Text="{Binding SectionNameText}" IsEnabled="False"></Entry>
                             </StackLayout>
 
 
 
-                            <StackLayout IsVisible="{Binding UserField1Layout}" Orientation="Vertical" Grid.Row="17" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding UserField1Layout}" Orientation="Vertical" Grid.Row="18" Grid.Column="0">
                                 <Label Text="{Binding UserField1Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField1}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField1}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding UserField2Layout}" Orientation="Vertical" Grid.Row="18" Grid.Column="0" >
+                            <StackLayout IsVisible="{Binding UserField2Layout}" Orientation="Vertical" Grid.Row="18" Grid.Column="1" >
                                 <Label Text="{Binding UserField2Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField2}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField2}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding   UserField3Layout}" Orientation="Vertical" Grid.Row="18" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding   UserField3Layout}" Orientation="Vertical" Grid.Row="19" Grid.Column="0">
                                 <Label Text="{Binding  UserField3Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField3}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField3}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding  UserField4Layout}" Orientation="Vertical" Grid.Row="20" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding  UserField4Layout}" Orientation="Vertical" Grid.Row="19" Grid.Column="1">
                                 <Label Text="{Binding  UserField4Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField4}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField4}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
-                            <StackLayout IsVisible="{Binding  UserField5Layout}" Orientation="Vertical" Grid.Row="20" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding  UserField5Layout}" Orientation="Vertical" Grid.Row="20" Grid.Column="0">
                                 <Label Text="{Binding  UserField5Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField5}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField5}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding  UserField6Layout}" Orientation="Vertical" Grid.Row="21" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding  UserField6Layout}" Orientation="Vertical" Grid.Row="20" Grid.Column="1">
                                 <Label Text="{Binding  UserField6Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField6}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField6}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding  UserField7Layout}" Orientation="Vertical" Grid.Row="21" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding  UserField7Layout}" Orientation="Vertical" Grid.Row="21" Grid.Column="0">
                                 <Label Text="{Binding  UserField7Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField7}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField7}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding  UserField8Layout}" Orientation="Vertical" Grid.Row="22" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding  UserField8Layout}" Orientation="Vertical" Grid.Row="21" Grid.Column="1">
                                 <Label Text="{Binding  UserField8Title}" TextColor="Black"  FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField8}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField8}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
-                            <StackLayout  IsVisible="{Binding  UserField9Layout}" Orientation="Vertical" Grid.Row="22" Grid.Column="1">
+                            <StackLayout  IsVisible="{Binding  UserField9Layout}" Orientation="Vertical" Grid.Row="22" Grid.Column="0">
                                 <Label Text="{Binding  UserField9Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField9}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField9}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout  IsVisible="{Binding  UserField10Layout}" Orientation="Vertical" Grid.Row="23" Grid.Column="0">
+                            <StackLayout  IsVisible="{Binding  UserField10Layout}" Orientation="Vertical" Grid.Row="22" Grid.Column="1">
                                 <Label Text="{Binding  UserField10Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField10}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField10}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
 
 
 
-                            <StackLayout IsVisible="{Binding UserField11Layout}" Orientation="Vertical" Grid.Row="23" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding UserField11Layout}" Orientation="Vertical" Grid.Row="23" Grid.Column="0">
                                 <Label Text="{Binding UserField11Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField11}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField11}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding UserField12Layout}" Orientation="Vertical" Grid.Row="24" Grid.Column="0" >
+                            <StackLayout IsVisible="{Binding UserField12Layout}" Orientation="Vertical" Grid.Row="23" Grid.Column="1" >
                                 <Label Text="{Binding UserField12Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField12}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField12}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding   UserField13Layout}" Orientation="Vertical" Grid.Row="24" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding   UserField13Layout}" Orientation="Vertical" Grid.Row="24" Grid.Column="0">
                                 <Label Text="{Binding  UserField13Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField13}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField13}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding  UserField14Layout}" Orientation="Vertical" Grid.Row="25" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding  UserField14Layout}" Orientation="Vertical" Grid.Row="24" Grid.Column="1">
                                 <Label Text="{Binding  UserField14Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField14}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField14}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
-                            <StackLayout IsVisible="{Binding  UserField15Layout}" Orientation="Vertical" Grid.Row="25" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding  UserField15Layout}" Orientation="Vertical" Grid.Row="25" Grid.Column="0">
                                 <Label Text="{Binding  UserField15Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField15}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField15}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding  UserField16Layout}" Orientation="Vertical" Grid.Row="26" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding  UserField16Layout}" Orientation="Vertical" Grid.Row="25" Grid.Column="1">
                                 <Label Text="{Binding  UserField16Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField16}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField16}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding  UserField17Layout}" Orientation="Vertical" Grid.Row="26" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding  UserField17Layout}" Orientation="Vertical" Grid.Row="26" Grid.Column="0">
                                 <Label Text="{Binding  UserField17Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField17}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField17}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding  UserField18Layout}" Orientation="Vertical" Grid.Row="27" Grid.Column="0">
+                            <StackLayout IsVisible="{Binding  UserField18Layout}" Orientation="Vertical" Grid.Row="26" Grid.Column="1">
                                 <Label Text="{Binding  UserField18Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField18}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField18}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
-                            <StackLayout  IsVisible="{Binding  UserField19Layout}" Orientation="Vertical" Grid.Row="27" Grid.Column="1">
+                            <StackLayout  IsVisible="{Binding  UserField19Layout}" Orientation="Vertical" Grid.Row="27" Grid.Column="0">
                                 <Label Text="{Binding  UserField19Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField19}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField19}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout  IsVisible="{Binding  UserField20Layout}" Orientation="Vertical" Grid.Row="28" Grid.Column="0">
+                            <StackLayout  IsVisible="{Binding  UserField20Layout}" Orientation="Vertical" Grid.Row="27" Grid.Column="1">
                                 <Label Text="{Binding  UserField20Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField20}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField20}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
-                            <StackLayout IsVisible="{Binding  UserField21Layout}" Orientation="Vertical" Grid.Row="28" Grid.Column="1">
+                            <StackLayout IsVisible="{Binding  UserField21Layout}" Orientation="Vertical" Grid.Row="28" Grid.Column="0">
                                 <Label Text="{Binding  UserField21Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField21}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField21}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
 
-                            <StackLayout  IsVisible="{Binding  UserField22Layout}" Orientation="Vertical" Grid.Row="29" Grid.Column="0">
+                            <StackLayout  IsVisible="{Binding  UserField22Layout}" Orientation="Vertical" Grid.Row="28" Grid.Column="1">
                                 <Label Text="{Binding  UserField22Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField22}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField22}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout  IsVisible="{Binding  UserField23Layout}" Orientation="Vertical" Grid.Row="29" Grid.Column="1">
+                            <StackLayout  IsVisible="{Binding  UserField23Layout}" Orientation="Vertical" Grid.Row="29" Grid.Column="0">
                                 <Label Text="{Binding  UserField23Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField23}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField23}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout  IsVisible="{Binding  UserField24Layout}" Orientation="Vertical" Grid.Row="30" Grid.Column="0">
+                            <StackLayout  IsVisible="{Binding  UserField24Layout}" Orientation="Vertical" Grid.Row="29" Grid.Column="1">
                                 <Label Text="{Binding  UserField24Title}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding UserField24}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding UserField24}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
+                            </StackLayout>
+
+                            <StackLayout   Orientation="Vertical" Grid.Row="30" Grid.Column="0">
+                                <Label Text="{Binding  ApprovalLevelTitle}" TextColor="Black" FontAttributes="Bold"/>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding ApprovalLevel}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout   Orientation="Vertical" Grid.Row="30" Grid.Column="1">
-                                <Label Text="{Binding  ApprovalLevelTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding ApprovalLevel}" IsEnabled="False"></Entry>
-                            </StackLayout>
-
-                            <StackLayout   Orientation="Vertical" Grid.Row="31" Grid.Column="0">
                                 <Label Text="{Binding  ApprovalNumberTitle}" TextColor="Black" FontAttributes="Bold"/>
-                                <Entry Text="{Binding ApprovalNumber}" IsEnabled="False"></Entry>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry Text="{Binding ApprovalNumber}" IsEnabled="False"></Entry>
+                                </border:SfBorder>
                             </StackLayout>
-                            <StackLayout Orientation="Vertical" Grid.Row="31" Grid.Column="1">
+                            <StackLayout Orientation="Vertical" Grid.Row="31" Grid.Column="0">
                                 <Label Text="{Binding TotalTimeTilte}" TextColor="Black" FontAttributes="Bold">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -491,13 +607,17 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <Entry IsEnabled="False" Text="{Binding TotalTimeText}"/>
+                                <border:SfBorder CornerRadius="5">
+                                    <Entry IsEnabled="False" Text="{Binding TotalTimeText}"/>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="32" IsVisible="{Binding  AdditionalDetailsIsVisible }" Grid.ColumnSpan="2">
                                 <Label Text="{Binding AdditionalDetailsTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150" />-->
-                                <dependencyinterface:CustomEditor Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
+                                <border:SfBorder CornerRadius="5">
+                                    <dependencyinterface:CustomEditor Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
+                                </border:SfBorder>
                                 <Label Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
@@ -510,7 +630,9 @@
                             <StackLayout Orientation="Vertical" Grid.Row="33" IsVisible="{Binding  InternalNoteIsVisible }" Grid.ColumnSpan="2">
                                 <Label Text="{Binding InternalNoteTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
-                                <dependencyinterface:CustomEditor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
+                                <border:SfBorder CornerRadius="5">
+                                    <dependencyinterface:CustomEditor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
+                                </border:SfBorder>
                                 <Label Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
@@ -523,7 +645,9 @@
                             <StackLayout x:Name="SignatureLayout" Orientation="Vertical" IsVisible="{Binding  SignaturesIsVisible }" Grid.ColumnSpan="2">
                                 <Label Text="{Binding Signatures}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
-                                <dependencyinterface:CustomEditor Text="{Binding SignatureText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
+                                <border:SfBorder CornerRadius="5">
+                                    <dependencyinterface:CustomEditor Text="{Binding SignatureText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
+                                </border:SfBorder>
                                 <Label Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
@@ -533,10 +657,10 @@
                                 </Label>
                             </StackLayout>
 
-                          
+
 
                         </Grid>
-                      
+
 
 
                     </Grid>

@@ -1,10 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             xmlns:templates="clr-namespace:ProteusMMX.Views.PurchaseOrder.Templates;assembly=ProteusMMX"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.PurchaseOrder.ReceivePuchaseOrderAsset"
-             Title="{Binding PageTitle}" 
+             Title="{Binding PageTitle}"
              BackgroundColor="{StaticResource BackgroundColor}" >
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <templates:PurchaseorderListingTemplateSelector x:Key="DateTemplateSelector">
+            </templates:PurchaseorderListingTemplateSelector>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
@@ -28,11 +46,11 @@
         <Grid Margin="10,0,0,0" Padding="10,10,10,10" RowSpacing="5">
 
 
-         
+
 
 
             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0">
-                <Label Text="{Binding ReceiverNameTitle}" TextColor="Black">
+                <Label Text="{Binding ReceiverNameTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -45,7 +63,7 @@
 
 
             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0">
-                <Label Text="{Binding ReceivedDateTitle}" TextColor="Black">
+                <Label Text="{Binding ReceivedDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -57,7 +75,7 @@
             </StackLayout>
 
             <StackLayout  Grid.Row="2"  Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="INumber" TextColor="Black"  Text="{Binding InvoiceNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                <Label x:Name="INumber" TextColor="Black"  Text="{Binding InvoiceNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -65,12 +83,14 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <Entry x:Name="InvoiceNumber" Text="{Binding InvoiceNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></Entry>
-
+                <border:SfBorder CornerRadius="5">
+                    <control1:BorderlessEntry
+                        x:Name="InvoiceNumber" Text="{Binding InvoiceNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                </border:SfBorder>
             </StackLayout>
 
             <StackLayout  Grid.Row="3"  Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="PackNumber" TextColor="Black" Text="{Binding PackagingSlipNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                <Label x:Name="PackNumber" TextColor="Black" Text="{Binding PackagingSlipNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -78,12 +98,24 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <Entry x:Name="PackagingSlipNumber" Text="{Binding PackagingSlipNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></Entry>
-
+                <border:SfBorder CornerRadius="5">
+                    <control1:BorderlessEntry
+                        x:Name="PackagingSlipNumber" Text="{Binding PackagingSlipNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                </border:SfBorder>
             </StackLayout>
 
             <StackLayout Orientation="Vertical" Grid.Row="4">
-                <Button Text="{Binding ReceiveTitle}" TextColor="Black"  BackgroundColor="{Binding ColorBackground}"  IsEnabled="{Binding ReceivedButtonIsEnabled}" IsVisible="{Binding ReceivedButtonIsVisible}" Command="{Binding ReceivePurchaseOrderAssetCommand}"  />
+                <!--<Button Text="{Binding ReceiveTitle}" TextColor="Black"  BackgroundColor="{Binding ColorBackground}"  IsEnabled="{Binding ReceivedButtonIsEnabled}" IsVisible="{Binding ReceivedButtonIsVisible}" Command="{Binding ReceivePurchaseOrderAssetCommand}"  />-->
+                <buttons:SfButton
+                        CornerRadius="5"
+                        Grid.Row="4"
+                        BackgroundColor="#87CEFA"
+                        VerticalOptions="StartAndExpand"
+                        Command="{Binding ReceivePurchaseOrderAssetCommand}"
+                        IsVisible="{Binding ReceivedButtonIsVisible}"
+                        IsEnabled="{Binding ReceivedButtonIsEnabled}"
+                        Text="{Binding ReceiveTitle}" >
+                </buttons:SfButton>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

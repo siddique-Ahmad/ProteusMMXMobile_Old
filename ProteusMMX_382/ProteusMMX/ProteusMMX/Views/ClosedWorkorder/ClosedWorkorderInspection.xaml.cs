@@ -139,6 +139,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         BackgroundColor = Color.FromHex("#87CEFA"),
                         CommandParameter = item,
                         WidthRequest = 60,
+                        CornerRadius = 5,
                         HeightRequest = 20,
                         FontSize = 10,
                         BorderColor = Color.Black,
@@ -152,6 +153,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         Text = WebControlTitle.GetTargetNameByTitleName("Start"),
                         BackgroundColor = Color.FromHex("#87CEFA"),
                         CommandParameter = item,
+                        CornerRadius = 5,
                         BorderColor = Color.Black,
                         TextColor = Color.White
 
@@ -168,6 +170,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         CommandParameter = item,
                         WidthRequest = 60,
                         HeightRequest = 20,
+                        CornerRadius = 5,
                         FontSize = 9,
                         BorderColor = Color.Black,
                         TextColor = Color.White
@@ -180,13 +183,14 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
                         BackgroundColor = Color.FromHex("#87CEFA"),
                         CommandParameter = item,
+                        CornerRadius = 5,
                         BorderColor = Color.Black,
                         TextColor = Color.White
                     };
                 }
 
-                Entry hoursEntry = new Entry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "hh" };
-                Entry minuteEntry = new Entry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "mm", };
+                Entry hoursEntry = new MyEntry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "hh" };
+                Entry minuteEntry = new MyEntry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "mm", };
                 if (ParentLayout.Children.Count > 4)
                 {
                     break;
@@ -232,6 +236,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         // SelectedDate = Convert.ToDateTime(item.StartDate),
                         //  BackgroundColor = Color.FromHex("#87CEFA"),
                         HeightRequest = 2,
+                       // CornerRadius = 5,
                         HorizontalOptions = LayoutOptions.Start
 
                     };
@@ -327,12 +332,12 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     if (Device.Idiom == TargetIdiom.Tablet)
                     {
 
-                     
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                      
+
+                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+
                     }
                     else
                     {
@@ -345,24 +350,24 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                     if (Device.Idiom == TargetIdiom.Tablet)
                     {
-                       
 
-                            startStopButtonGrid.Children.Add(startButton, 0, 1);
-                            startStopButtonGrid.Children.Add(stopButton, 1, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
-                            startStopButtonGrid.Children.Add(hoursEntry, 3, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
-                            startStopButtonGrid.Children.Add(minuteEntry, 5, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate"), VerticalOptions = LayoutOptions.Center }, 6, 0);
-                            startStopButtonGrid.Children.Add(startDate, 6, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 7, 0);
-                            startStopButtonGrid.Children.Add(CompletionDate, 7, 1);
-                            
+
+                        startStopButtonGrid.Children.Add(startButton, 0, 1);
+                        startStopButtonGrid.Children.Add(stopButton, 1, 1);
+                        startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
+                        startStopButtonGrid.Children.Add(hoursEntry, 3, 1);
+                        startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
+                        startStopButtonGrid.Children.Add(minuteEntry, 5, 1);
+                        startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate"), VerticalOptions = LayoutOptions.Center }, 6, 0);
+                        startStopButtonGrid.Children.Add(startDate, 6, 1);
+                        startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 7, 0);
+                        startStopButtonGrid.Children.Add(CompletionDate, 7, 1);
+
 
                         //}
                         //else
                         //{
-                           
+
 
                         //    startStopButtonGrid.Children.Add(startButton, 1, 0);
                         //    startStopButtonGrid.Children.Add(stopButton, 2, 0);
@@ -375,7 +380,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         //    startStopButtonGrid.Children.Add(startDate, 8, 0);
                         //    startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate") }, 9, 0);
                         //    startStopButtonGrid.Children.Add(CompletionDate, 10, 0);
-                            
+
                         //}
                         // startStopButtonGrid.Children.Add(new Label { Text = item.EmployeeLaborCraftID.ToString() + ":" + "EmployeeLaborCraft", IsVisible = false, BackgroundColor = Color.FromHex("#87CEFA"), }, 12, 0);
 
@@ -383,7 +388,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     }
                     else
                     {
-                       
+
 
                         startStopButtonGrid.Children.Add(startButton, 1, 0);
                         startStopButtonGrid.Children.Add(stopButton, 2, 0);
@@ -396,7 +401,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 9, 0);
                         startStopButtonGrid.Children.Add(CompletionDate, 10, 0);
                         startStopButtonGrid.Children.Add(new Label { Text = item.EmployeeLaborCraftID.ToString() + ":" + "EmployeeLaborCraft", IsVisible = false, BackgroundColor = Color.FromHex("#87CEFA"), }, 11, 0);
-                     
+
 
 
 
@@ -407,6 +412,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     {
                         Orientation = StackOrientation.Vertical,
                         Spacing = 10,
+
                         HorizontalOptions = LayoutOptions.StartAndExpand,
                         Children =
                                 {
@@ -415,7 +421,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     };
 
                 }
-               
+
                 ParentLayout.Children.Add(layout1);
             }
             foreach (var item in ClosedWorkorderInspectionList.workorderContractor)
@@ -440,6 +446,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         CommandParameter = item,
                         WidthRequest = 60,
                         HeightRequest = 20,
+                        CornerRadius = 5,
                         FontSize = 10,
                         BorderColor = Color.Black,
                         TextColor = Color.White
@@ -452,6 +459,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         Text = WebControlTitle.GetTargetNameByTitleName("Start"),
                         BackgroundColor = Color.FromHex("#87CEFA"),
                         CommandParameter = item,
+                        CornerRadius = 5,
                         BorderColor = Color.Black,
                         TextColor = Color.White
 
@@ -467,6 +475,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         BackgroundColor = Color.FromHex("#87CEFA"),
                         CommandParameter = item,
                         WidthRequest = 60,
+                        CornerRadius = 5,
                         HeightRequest = 20,
                         FontSize = 9,
                         BorderColor = Color.Black,
@@ -481,14 +490,15 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         BackgroundColor = Color.FromHex("#87CEFA"),
                         CommandParameter = item,
                         BorderColor = Color.Black,
+                        CornerRadius = 5,
                         TextColor = Color.White
                     };
                 }
 
 
 
-                Entry hoursEntry = new Entry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "hh" };
-                Entry minuteEntry = new Entry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "mm", };
+                Entry hoursEntry = new MyEntry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "hh" };
+                Entry minuteEntry = new MyEntry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "mm", };
                 if (ParentLayout.Children.Count > 4)
                 {
                     break;
@@ -709,12 +719,12 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     if (Device.Idiom == TargetIdiom.Tablet)
                     {
 
-                        
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                      
+
+                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+
                     }
                     else
                     {
@@ -729,25 +739,25 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     if (Device.Idiom == TargetIdiom.Tablet)
                     {
 
-                      
 
 
-                            startStopButtonGrid.Children.Add(startButton, 0, 1);
-                            startStopButtonGrid.Children.Add(stopButton, 1, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
-                            startStopButtonGrid.Children.Add(hoursEntry, 3, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
-                            startStopButtonGrid.Children.Add(minuteEntry, 5, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate"), VerticalOptions = LayoutOptions.Center }, 6, 0);
-                            startStopButtonGrid.Children.Add(startDate, 6, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 7, 0);
-                            startStopButtonGrid.Children.Add(CompletionDate, 7, 1);
-                            
+
+                        startStopButtonGrid.Children.Add(startButton, 0, 1);
+                        startStopButtonGrid.Children.Add(stopButton, 1, 1);
+                        startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
+                        startStopButtonGrid.Children.Add(hoursEntry, 3, 1);
+                        startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
+                        startStopButtonGrid.Children.Add(minuteEntry, 5, 1);
+                        startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate"), VerticalOptions = LayoutOptions.Center }, 6, 0);
+                        startStopButtonGrid.Children.Add(startDate, 6, 1);
+                        startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 7, 0);
+                        startStopButtonGrid.Children.Add(CompletionDate, 7, 1);
+
 
                         //}
                         //else
                         //{
-                            
+
 
                         //    startStopButtonGrid.Children.Add(startButton, 1, 0);
                         //    startStopButtonGrid.Children.Add(stopButton, 2, 0);
@@ -760,13 +770,13 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         //    startStopButtonGrid.Children.Add(startDate, 8, 0);
                         //    startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate") }, 9, 0);
                         //    startStopButtonGrid.Children.Add(CompletionDate, 10, 0);
-                            
+
                         //}
 
                     }
                     else
                     {
-                        
+
 
                         startStopButtonGrid.Children.Add(startButton, 1, 0);
                         startStopButtonGrid.Children.Add(stopButton, 2, 0);
@@ -779,7 +789,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                         startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 9, 0);
                         startStopButtonGrid.Children.Add(CompletionDate, 10, 0);
                         startStopButtonGrid.Children.Add(new Label { Text = item.ContractorLaborCraftID.ToString() + ":" + "ContractorLaborCraft", IsVisible = false, BackgroundColor = Color.FromHex("#87CEFA"), }, 11, 0);
-                        
+
 
 
 
@@ -798,7 +808,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     };
 
                 }
-               
+
                 ParentLayout.Children.Add(layout1);
             }
 
@@ -919,7 +929,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
         async void HoursTextChanged(object sender, EventArgs e)
         {
-            Entry e1 = sender as Entry;
+            Entry e1 = sender as MyEntry;
             String val = e1.Text; //Get Current Text
 
             if (val.Contains(" "))//If it is more than your character restriction
@@ -1158,9 +1168,9 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
 
                                 //TODO: Add the NA button over here
-                               // btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
-                              //  btnFalse.Clicked += BtnNo_Clicked;
-                              //  btnNA.Clicked += BtnNA_Clicked;
+                                // btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
+                                //  btnFalse.Clicked += BtnNo_Clicked;
+                                //  btnNA.Clicked += BtnNA_Clicked;
 
                                 grid.Children.Add(btnTrue, 0, 0);
                                 grid.Children.Add(btnFalse, 1, 0);
@@ -1224,9 +1234,9 @@ namespace ProteusMMX.Views.ClosedWorkorder
                             }
                             else
                             {
-                                var btnTrue = new Button() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                var btnFalse = new Button() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                var btnNA = new Button() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
+                                var btnTrue = new Button() { VerticalOptions = LayoutOptions.Start, CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
+                                var btnFalse = new Button() { VerticalOptions = LayoutOptions.Start, CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
+                                var btnNA = new Button() { VerticalOptions = LayoutOptions.Start, CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
                                 //Bind the ResponseSubType in Buttons
                                 btnTrue.BindingContext = item.ResponseSubType;
                                 btnFalse.BindingContext = item.ResponseSubType;
@@ -1234,9 +1244,9 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
 
                                 //TODO: Add the NA button over here
-                               // btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
-                              //  btnFalse.Clicked += BtnNo_Clicked;
-                              //  btnNA.Clicked += BtnNA_Clicked;
+                                // btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
+                                //  btnFalse.Clicked += BtnNo_Clicked;
+                                //  btnNA.Clicked += BtnNA_Clicked;
 
                                 grid.Children.Add(btnTrue, 0, 0);
                                 grid.Children.Add(btnFalse, 1, 0);
@@ -1622,10 +1632,10 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                                 if (Device.Idiom == TargetIdiom.Phone)
                                 {
-                                    var btnTruePF = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
-                                    var btnFalsePF = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
-                                   // btnTruePF.Clicked += BtnTrue_Clicked;
-                                   // btnFalsePF.Clicked += BtnFalse_Clicked;
+                                    var btnTruePF = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Pass", CornerRadius = 5, BackgroundColor = Color.Gray };
+                                    var btnFalsePF = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Fail", CornerRadius = 5, BackgroundColor = Color.Gray };
+                                    // btnTruePF.Clicked += BtnTrue_Clicked;
+                                    // btnFalsePF.Clicked += BtnFalse_Clicked;
 
                                     gridPF.Children.Add(btnTruePF, 0, 0);
                                     gridPF.Children.Add(btnFalsePF, 1, 0);
@@ -1647,10 +1657,10 @@ namespace ProteusMMX.Views.ClosedWorkorder
                                 }
                                 else
                                 {
-                                    var btnTruePF = new Button() { HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
-                                    var btnFalsePF = new Button() { HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
+                                    var btnTruePF = new Button() { HorizontalOptions = LayoutOptions.End, CornerRadius = 5, Text = "Pass", BackgroundColor = Color.Gray };
+                                    var btnFalsePF = new Button() { HorizontalOptions = LayoutOptions.End, CornerRadius = 5, Text = "Fail", BackgroundColor = Color.Gray };
                                     //btnTruePF.Clicked += BtnTrue_Clicked;
-                                   // btnFalsePF.Clicked += BtnFalse_Clicked;
+                                    // btnFalsePF.Clicked += BtnFalse_Clicked;
 
                                     gridPF.Children.Add(btnTruePF, 0, 0);
                                     gridPF.Children.Add(btnFalsePF, 1, 0);
@@ -1704,11 +1714,11 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                                 GenerateAnswerText(item1);
 
-                                Layout = new Entry() { IsEnabled = false, Keyboard = Keyboard.Numeric, HorizontalOptions = LayoutOptions.End };
+                                Layout = new MyEntry() { IsEnabled = false, Keyboard = Keyboard.Numeric, HorizontalOptions = LayoutOptions.End };
 
-                                (Layout as Entry).BindingContext = new Range() { MaxRange = item1.MaxRange, MinRange = item1.MinRange };
-                                (Layout as Entry).TextChanged += StandardRange_TextChanged;
-                                (Layout as Entry).Text = item1.AnswerDescription;
+                                (Layout as MyEntry).BindingContext = new Range() { MaxRange = item1.MaxRange, MinRange = item1.MinRange };
+                                (Layout as MyEntry).TextChanged += StandardRange_TextChanged;
+                                (Layout as MyEntry).Text = item1.AnswerDescription;
 
 
                                 sta = new Grid() { };
@@ -1747,9 +1757,9 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                                 if (Device.Idiom == TargetIdiom.Phone)
                                 {
-                                    var btnTrue = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                    var btnFalse = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                    var btnNA = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
+                                    var btnTrue = new Button() { HeightRequest = 36, CornerRadius = 5, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
+                                    var btnFalse = new Button() { HeightRequest = 36, CornerRadius = 5, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
+                                    var btnNA = new Button() { HeightRequest = 36, CornerRadius = 5, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
                                     //Bind the ResponseSubType in Buttons
                                     btnTrue.BindingContext = item1.ResponseSubType;
                                     btnFalse.BindingContext = item1.ResponseSubType;
@@ -1822,9 +1832,9 @@ namespace ProteusMMX.Views.ClosedWorkorder
                                 }
                                 else
                                 {
-                                    var btnTrue = new Button() { HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                    var btnFalse = new Button() { HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                    var btnNA = new Button() { HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
+                                    var btnTrue = new Button() { HorizontalOptions = LayoutOptions.End, CornerRadius = 5, Text = "Yes", BackgroundColor = Color.Gray };
+                                    var btnFalse = new Button() { HorizontalOptions = LayoutOptions.End, CornerRadius = 5, Text = "No", BackgroundColor = Color.Gray };
+                                    var btnNA = new Button() { HorizontalOptions = LayoutOptions.End, CornerRadius = 5, Text = "NA", BackgroundColor = Color.Gray };
                                     //Bind the ResponseSubType in Buttons
                                     btnTrue.BindingContext = item1.ResponseSubType;
                                     btnFalse.BindingContext = item1.ResponseSubType;
@@ -1909,7 +1919,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                                 else
                                 {
                                     sta.Children.Add(Layout, 1, 0);
-                                   
+
                                 }
                                 layout1.Children.Add(sta);
                                 break;
@@ -1930,9 +1940,9 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                                 GenerateAnswerText(item1);
 
-                                Layout = new Entry() { IsEnabled = false, Keyboard = Keyboard.Numeric, HorizontalOptions = LayoutOptions.End };
-                                (Layout as Entry).Text = item1.AnswerDescription;
-                                (Layout as Entry).TextChanged += OnlyNumeric_TextChanged;
+                                Layout = new MyEntry() { IsEnabled = false, Keyboard = Keyboard.Numeric, HorizontalOptions = LayoutOptions.End };
+                                (Layout as MyEntry).Text = item1.AnswerDescription;
+                                (Layout as MyEntry).TextChanged += OnlyNumeric_TextChanged;
 
 
                                 sta = new Grid() { };
@@ -2119,6 +2129,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
             btn.BackgroundColor = Color.FromHex("#a0e8a0");
             btn.TextColor = Color.White;
             btn.FontAttributes = FontAttributes.Bold;
+
 
             var grid = (sender as Button).Parent as Grid;
             var btnFalse = grid.Children[1] as Button;
