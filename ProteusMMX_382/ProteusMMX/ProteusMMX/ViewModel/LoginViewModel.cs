@@ -482,7 +482,8 @@ namespace ProteusMMX.ViewModel
                 }
                 else
                 {
-                   // UserDialogs.Instance.ShowLoading("Please wait..loading all data");
+                   
+                    UserDialogs.Instance.ShowLoading("Please wait..loading all data");
                 }
 
 
