@@ -3,12 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              x:Class="ProteusMMX.Views.Asset.CreateNewAssetPage"
                Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
     <ContentPage.Resources>
         <ResourceDictionary>
-            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -31,7 +34,7 @@
     </ContentPage.ToolbarItems>
 
 
-    
+
     <ContentPage.Content>
 
         <Grid>
@@ -81,7 +84,7 @@
                                 <ColumnDefinition  Width="*" />
                             </Grid.ColumnDefinitions>
 
-                          
+
 
                             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Label Text="{Binding AssetNameTitle}" TextColor="Black">
@@ -95,22 +98,25 @@
 
 
 
-                                    <!--<Editor Text="{Binding AssetNameText}" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}"/>-->
-                                <dependencyinterface:CustomEditor  Text="{Binding AssetNameText}" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}"></dependencyinterface:CustomEditor>
-
+                                <!--<Editor Text="{Binding AssetNameText}" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}"/>-->
+                                <border:SfBorder CornerRadius="5">
+                                    <dependencyinterface:CustomEditor  Text="{Binding AssetNameText}" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Label Text="{Binding AssetNumberTitle}" TextColor="Black" >
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
-                                           <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                           <OnPlatform.Android>Bold</OnPlatform.Android>
-                                         </OnPlatform>
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
                                 <!--<Editor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"/>-->
-                                <dependencyinterface:CustomEditor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                <border:SfBorder CornerRadius="5">
+                                    <dependencyinterface:CustomEditor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                </border:SfBorder>
                             </StackLayout>
 
 
@@ -125,7 +131,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <Button Text="{Binding FacilityName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding FacilityCommand}" IsEnabled="{Binding FacilityIsEnable}" />
+                                <Button Text="{Binding FacilityName}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding FacilityCommand}" IsEnabled="{Binding FacilityIsEnable}" />
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="1" IsVisible="{Binding LocationIsVisible}">
@@ -137,7 +143,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <Button Text="{Binding LocationName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding LocationCommand}" IsEnabled="{Binding LocationIsEnable}" IsVisible="{Binding LocationForLicensingIsVisible}" />
+                                <Button Text="{Binding LocationName}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding LocationCommand}" IsEnabled="{Binding LocationIsEnable}" IsVisible="{Binding LocationForLicensingIsVisible}" />
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" IsVisible="{Binding AssetSystemIsVisible}">
@@ -149,7 +155,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <Button Text="{Binding AssetSystemName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding AssetSystemCommand}" IsEnabled="{Binding AssetSystemIsEnable}" />
+                                <Button Text="{Binding AssetSystemName}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding AssetSystemCommand}" IsEnabled="{Binding AssetSystemIsEnable}" />
                             </StackLayout>
 
 
@@ -161,8 +167,8 @@
                                             <OnPlatform.Android>Bold</OnPlatform.Android>
                                         </OnPlatform>
                                     </Label.FontAttributes>
-                                </Label> 
-                                <Button Text="{Binding CategoryText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding CategoryCommand}" IsEnabled="{Binding CategoryIsEnable}" />
+                                </Label>
+                                <Button Text="{Binding CategoryText}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding CategoryCommand}" IsEnabled="{Binding CategoryIsEnable}" />
                             </StackLayout>
 
 
@@ -175,7 +181,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <Button Text="{Binding VendorText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding VendorCommand}"  IsEnabled="{Binding VendorIsEnable}" />
+                                <Button Text="{Binding VendorText}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding VendorCommand}"  IsEnabled="{Binding VendorIsEnable}" />
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="1" IsVisible="{Binding RuntimeUnitIsVisible}">
@@ -187,7 +193,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <Button Text="{Binding RuntimeUnitText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding RuntimeUnitCommand}"  IsEnabled="{Binding RuntimeUnitCommandIsEnable}" />
+                                <Button Text="{Binding RuntimeUnitText}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding RuntimeUnitCommand}"  IsEnabled="{Binding RuntimeUnitCommandIsEnable}" />
                             </StackLayout>
 
                         </Grid>
@@ -216,9 +222,11 @@
                                             <OnPlatform.Android>Bold</OnPlatform.Android>
                                         </OnPlatform>
                                     </Label.FontAttributes>
-                                </Label> 
+                                </Label>
                                 <!--<Editor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>-->
-                                <dependencyinterface:CustomEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></dependencyinterface:CustomEditor>
+                                <border:SfBorder CornerRadius="5">
+                                    <dependencyinterface:CustomEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></dependencyinterface:CustomEditor>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <Image Grid.Column="1" Grid.Row="0" Source="Assets/mic.png">
@@ -231,8 +239,8 @@
 
                         </Grid>
 
-                        <Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="3" Margin="10,10,10,10" Command="{Binding SaveAssetCommand}" VerticalOptions="StartAndExpand" />
-                        <!--HeightRequest="40"--> 
+                        <Button Text="{Binding SaveTitle}" CornerRadius="5" Style="{StaticResource SaveButtonStyle}" Grid.Row="3" Margin="10,10,10,10" Command="{Binding SaveAssetCommand}" VerticalOptions="StartAndExpand" />
+                        <!--HeightRequest="40"-->
                         <!--<ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 
 

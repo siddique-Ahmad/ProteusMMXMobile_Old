@@ -169,7 +169,8 @@ namespace ProteusMMX.Model.WorkOrderModel
 
         public bool? DistributeCost { get; set; }
 
-
+        public bool? ParentandChildCost { get; set; }
+        public bool? ChildCost { get; set; }
 
         #region New Properties 31.5.2018
 

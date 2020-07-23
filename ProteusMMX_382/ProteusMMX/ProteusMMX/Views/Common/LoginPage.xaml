@@ -1,199 +1,129 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              xmlns:DependencyInterface="clr-namespace:ProteusMMX.DependencyInterface;assembly=ProteusMMX"
-             xmlns:androidWidget1="http://xamarin.com/schemas/2014/forms"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.Common.LoginPage"
-             Title="{Binding PageTitle}" 
-             BackgroundColor="{StaticResource BackgroundColor}">
+             Title="{Binding PageTitle}"
+             BackgroundColor="{StaticResource White}">
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <ContentPage.Content>
         <ScrollView>
             <Grid>
-
-                <Grid
+                <Grid        
                 Padding="10,10,10,10"
                 RowSpacing="5"
-                VerticalOptions="Fill" ColumnSpacing="0">
+                VerticalOptions="Fill" ColumnSpacing="0"/>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
 
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
 
-                    <Label IsVisible="{Binding SiteUrlLabelVisibility}" Grid.Row="0" Text="{Binding SiteUrlLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-                    <!--<Entry    />-->
+                <border:SfBorder Margin="30,30,30,30"
+                                 
+                                 BorderColor="Black"
+                                 BorderWidth="2"
+                                 CornerRadius="5">
 
-                    <Entry x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" Grid.Row="1" Text="{Binding SiteUrl, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" >
-                        <!--<Entry.Behaviors>
-                            <b:EventToCommandBehavior EventName="Completed"
-                                          Command="{Binding CompletedCommand}"
-                                         />
-                        </Entry.Behaviors>-->
-                    </Entry>
-                    <Label Grid.Row="2" Text="{Binding UserNameLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-                    <Entry Grid.Row="3" Text="{Binding UserName, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
+                    <StackLayout Padding="20,20,20,20" Orientation="Vertical" Grid.Row="1" Grid.Column="1" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" BackgroundColor="White">
 
-                    <Label Grid.Row="4" Text="{Binding PasswordLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-                    <Entry Grid.Row="5" Text="{Binding Password, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>
+                        <Label IsVisible="{Binding SiteUrlLabelVisibility}" Grid.Row="1" Text="{Binding SiteUrlLabel}" Style="{StaticResource LabelStyle}" Grid.ColumnSpan="2"/>
+                        <!--<Entry x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" Grid.Row="1" Text="{Binding SiteUrl, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />-->
 
-                    <!--<controls:CustomCheckBox IsVisible="{Binding RememberMeVisibility}" Grid.Row="6" IsChecked="{Binding RememberMe, Mode=TwoWay}" x:Name="CheckBox_RememberMe" />-->
+                        <border:SfBorder
+                       Grid.Row="2"
+                        HeightRequest="35"
+                        BackgroundColor="{DynamicResource Gray-White}"
+                        Style="{StaticResource SfBorderStyle}">
+                            <control1:BorderlessEntry
+                            x:Name="SiteURLEvent"
+                            
+                            IsVisible="{Binding SiteUrlEntryVisibility}"
+                            Text="{Binding SiteUrl, Mode=TwoWay}"
+                            TextColor="{DynamicResource Gray-900}"/>
+                        </border:SfBorder>
 
+                        <Label Grid.Row="3" Text="{Binding UserNameLabel}" Style="{StaticResource LabelStyle}" Grid.ColumnSpan="2" />
+                        <!--<Entry Grid.Row="3" Text="{Binding UserName, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />-->
 
-                    <DependencyInterface:LoginSwitch x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}"  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="6"></DependencyInterface:LoginSwitch>
-                    <Label x:Name="LabelSwitch1" IsVisible="{Binding LabelSwitch, Mode=TwoWay}" Grid.Column="1" Grid.Row="6" FontAttributes="Bold" Text="Remember Me" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" >
-                        <!--<Label.IsVisible>
-                        
-                            <OnPlatform x:TypeArguments="x:Boolean">
-                                <On Platform="iOS">true</On>
-                                <On Platform="Android">true</On>
-                                <On Platform="WinPhone">false</On>
-                            </OnPlatform>
-                        </Label.IsVisible>-->
-                    </Label>
-                   
-                    <!--<androidWidget1:Switch  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="StartAndExpand"/>-->
-                    <Button Grid.Row="7" Text="{Binding LoginButtonLabel}" Style="{StaticResource LoginButtonStyle}"  Command="{Binding LoginCommand}" Grid.ColumnSpan="2" />
-
-                    <Label IsVisible="{Binding CopyrightLabelVisibility}" Grid.Row="8" Text="{Binding CopyrightLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-                    <Label Margin="40,0,0,0" IsVisible="{Binding SupportLabelVisibility}" Grid.Row="9" Text="{Binding SupportLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}"  TextColor="{StaticResource RedColor}" Grid.ColumnSpan="2" />
-
-                    <!--<controls:CustomDatePicker Grid.Row="10" SelectedDate="{Binding PresentDate}" MinimumDate="{Binding PastDate}" MaximumDate="{Binding FutureDate}" />-->
-
-
-                </Grid>
-
-                <ActivityIndicator Grid.Row="0" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+                        <border:SfBorder
+                        Grid.Row="4"
+                        HeightRequest="35"
+                        BackgroundColor="{DynamicResource Gray-White}"
+                        Style="{StaticResource SfBorderStyle}">
+                            <control1:BorderlessEntry
+                           
+                            Text="{Binding UserName, Mode=TwoWay}"
+                            TextColor="{DynamicResource Gray-900}" />
+                        </border:SfBorder>
 
 
-                <!--<Grid RowSpacing="5">
+                        <Label Grid.Row="5" Text="{Binding PasswordLabel}" Style="{StaticResource LabelStyle}" Grid.ColumnSpan="2" />
+                        <!--<Entry Grid.Row="5" Text="{Binding Password, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>-->
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Text="Workorder Number"  />
-                        <Label Text=":" Grid.Column="1"  />
-                        <Label Text="123456789" Grid.Column="2" />
-                        <Label Text="✓" Grid.Column="3" TextColor="LightGreen" Style="{StaticResource BoldLabelStyle}" />
-
-                    </Grid>
-
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Text="Target Name"  />
-                        <Label Text=":" Grid.Column="1"  />
-                        <Label Text="123456789" Grid.Column="2" />
-                        <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
-
-                    </Grid>
-
-                    <Grid Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Text="Workorder Type"  />
-                        <Label Text=":" Grid.Column="1"  />
-                        <Label Text="123456789" Grid.Column="2"  />
-                        <Label Text="" Grid.Column="3" TextColor="LightGreen" />
-
-                    </Grid>
-
-                    <Grid Grid.Row="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Text="Description"  />
-                        <Label Text=":" Grid.Column="1"  />
-                        <Label Text="123456789" Grid.Column="2"  />
-                        <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
-
-                    </Grid>
-
-                    <Grid Grid.Row="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Text="Required Date"  />
-                        <Label Text=":" Grid.Column="1"  />
-                        <Label Text="123456789" Grid.Column="2"  />
-                        <Label Text="" Grid.Column="3" TextColor="LightGreen" />
-
-                    </Grid>
-
-                    <Grid Grid.Row="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label Text="Activation Date"  />
-                        <Label Text=":" Grid.Column="1"  />
-                        <Label Text="123456789" Grid.Column="2" />
-                        <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
-
-                    </Grid>
+                        <border:SfBorder
+                        Grid.Row="6"
+                        HeightRequest="35"
+                        BackgroundColor="{DynamicResource Gray-White}"
+                        Style="{StaticResource SfBorderStyle}">
+                            <control1:BorderlessEntry
+                            
+                            IsPassword="True"
+                            Placeholder="Password"
+                            Text="{Binding Password, Mode=TwoWay}"
+                            TextColor="{DynamicResource Gray-900}"/>
+                        </border:SfBorder>
 
 
-                </Grid>-->
+                        <DependencyInterface:LoginSwitch x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}"  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="6"></DependencyInterface:LoginSwitch>
+                        <Label x:Name="LabelSwitch1" IsVisible="{Binding LabelSwitch, Mode=TwoWay}" Grid.Column="1" Grid.Row="6" Style="{StaticResource LabelStyle}" Text="Remember Me" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" />
+
+                        <!--<Button Grid.Row="7" Text="{Binding LoginButtonLabel}" Style="{StaticResource LoginButtonStyle}"  Command="{Binding LoginCommand}" Grid.ColumnSpan="2" />-->
 
 
+                        <buttons:SfButton
+                        Grid.Row="8"
+                        Margin="0,10"
+                        CornerRadius="5"
+                        Command="{Binding LoginCommand}"
+                        Style="{StaticResource SfButtonStyle}"
+                        Text="{Binding LoginButtonLabel}" />
+
+                        <Label IsVisible="{Binding CopyrightLabelVisibility}"  Grid.Row="9" Text="{Binding CopyrightLabel}" HorizontalOptions="Center" Style="{StaticResource LabelStyle}" Grid.ColumnSpan="2" />
+                        <Label Margin="40,0,0,0" IsVisible="{Binding SupportLabelVisibility}" Grid.Row="10" Text="{Binding SupportLabel}" HorizontalOptions="Center" Style="{StaticResource LabelStyle}"  TextColor="{StaticResource RedColor}" Grid.ColumnSpan="2" />
+
+                        <ActivityIndicator  IsVisible="{Binding OperationInProgress}" Grid.Row="0" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+
+                    </StackLayout>
+                </border:SfBorder>
             </Grid>
-           
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

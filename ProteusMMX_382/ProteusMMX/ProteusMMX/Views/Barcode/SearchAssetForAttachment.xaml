@@ -3,10 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Barcode.SearchAssetForAttachment"
              xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-             xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
-             Title="{Binding PageTitle}" 
+             xmlns:templates="clr-namespace:ProteusMMX.Views.PurchaseOrder.Templates;assembly=ProteusMMX"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
+             Title="{Binding PageTitle}"
              BackgroundColor="{StaticResource BackgroundColor}" >
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <templates:PurchaseorderListingTemplateSelector x:Key="DateTemplateSelector">
+            </templates:PurchaseorderListingTemplateSelector>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
@@ -44,9 +58,11 @@
                         <ColumnDefinition Width="3.5*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-
-                    <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
-                    <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
+                    <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                        <control1:BorderlessEntry
+                      Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}"/>
+                    </border:SfBorder>
+                    <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />
 
 
                 </Grid>
@@ -55,8 +71,8 @@
                         Padding="10,10,10,10"
                         VerticalOptions="Fill">
 
-                        <cv:CarouselView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"   ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" Position="{Binding SelectedPosition}"  PositionSelected="CarouselView_PositionSelected" >
-                            <cv:CarouselView.ItemTemplate>
+                        <controls:CarouselViewControl HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"   ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" Position="{Binding SelectedPosition}">
+                            <controls:CarouselViewControl.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -66,9 +82,9 @@
                                         <Image Grid.RowSpan="2"   Aspect="AspectFit"  Source="{Binding AttachmentImageSource}"/>
                                     </Grid>
                                 </DataTemplate>
-                            </cv:CarouselView.ItemTemplate>
-                        </cv:CarouselView>
-                        <Label x:Name="swipe" Text="{Binding SwipeText}" TextColor="Silver" HorizontalOptions= "Center" Grid.Row="1"></Label>
+                            </controls:CarouselViewControl.ItemTemplate>
+                        </controls:CarouselViewControl>
+                        <Label x:Name="swipe" Text="{Binding SwipeText}" TextColor="Silver" HorizontalOptions= "Center" Grid.Row="1" Style="{StaticResource LabelStyle}"></Label>
                         <Grid x:Name="GridSwipeButtons">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
@@ -78,8 +94,8 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Label x:Name="ImageCountLabel" TextColor="Black" HorizontalOptions= "Center" Grid.Row="0" Grid.ColumnSpan="2" FontSize="Medium"></Label>
-                            <Button Grid.Column="0" Grid.Row="1" HorizontalOptions="End" Clicked="Previous_Clicked" BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969" >
+                            <Label x:Name="ImageCountLabel" TextColor="Black" HorizontalOptions= "Center" Grid.Row="0" Grid.ColumnSpan="2" FontSize="Medium" Style="{StaticResource LabelStyle}"></Label>
+                            <Button Grid.Column="0" Grid.Row="1" HorizontalOptions="End" Clicked="Previous_Clicked" BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="Black" CornerRadius="5">
                                 <Button.Image>
                                     <OnPlatform x:TypeArguments="FileImageSource">
                                         <OnPlatform.iOS>
@@ -94,7 +110,7 @@
                                     </OnPlatform>
                                 </Button.Image>
                             </Button>
-                            <Button Grid.Column="1" Grid.Row="1" HorizontalOptions="Start" Clicked="Next_Clicked" BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969"  >
+                            <Button Grid.Column="1" Grid.Row="1" HorizontalOptions="Start" Clicked="Next_Clicked" BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="Black"  CornerRadius="5">
                                 <Button.Image>
                                     <OnPlatform x:TypeArguments="FileImageSource">
                                         <OnPlatform.iOS>
@@ -112,7 +128,7 @@
                         </Grid>
                         <Grid>
 
-                            <Button x:Name="PDFGrid" Text="" HorizontalOptions="End" IsVisible = "true" WidthRequest = "60" HeightRequest = "60" Margin = "0,0,160,0" BackgroundColor="White" Command="{Binding DocCommand}" >
+                            <Button x:Name="PDFGrid" Text="" HorizontalOptions="End" IsVisible = "true" WidthRequest = "60" HeightRequest = "60" Margin = "0,0,160,0" BackgroundColor="White" Command="{Binding DocCommand}" CornerRadius="5" BorderColor="Black">
                                 <Button.Image>
                                     <OnPlatform x:TypeArguments="FileImageSource">
                                         <OnPlatform.iOS>

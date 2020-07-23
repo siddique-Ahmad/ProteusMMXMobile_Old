@@ -2,15 +2,27 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.WorkOrderStockRoomPartsListing"
-             x:Name="WorkOrderStockRoomPartsListing"
              xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
-             xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-             xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-             Title="{Binding PageTitle}" 
-              Icon="parts.png"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
+             Title="{Binding PageTitle}"
+             Icon="parts.png"
              BackgroundColor="{StaticResource BackgroundColor}">
+
     <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <templates:WorkOrderStockRoomPartsListingTemplateSelector x:Key="DateTemplateSelector">
+            </templates:WorkOrderStockRoomPartsListingTemplateSelector>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!--<ContentPage.Resources>
         <ResourceDictionary>
 
             <templates:WorkOrderStockRoomPartsListingTemplateSelector x:Key="DateTemplateSelector">
@@ -19,7 +31,7 @@
 
 
         </ResourceDictionary>
-    </ContentPage.Resources>
+    </ContentPage.Resources>-->
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
@@ -45,7 +57,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-           
+
 
             <Grid Grid.Row="1"  Padding="10,10,10,10">
 
@@ -58,8 +70,10 @@
                     <ColumnDefinition Width="3.5*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-
-                <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                    <control1:BorderlessEntry
+                        Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                </border:SfBorder>
                 <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
 
                 <Grid Grid.Row="1" Grid.ColumnSpan="2" >
@@ -68,14 +82,16 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-
                     <Button  Text="{Binding AddStockroompartTitle}" IsVisible="{Binding StockroomPartIsVisible}" IsEnabled="{Binding StockroomPartIsEnabled}" Style="{StaticResource LoginButtonStyle}" Command="{Binding AddPartCommand}" />
+
+
+
                     <Button Grid.Column="1"  Text="{Binding NonStockPartsTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding GetNonStockroomPartCommand}" />
 
 
                 </Grid>
 
-                <ListView  Grid.Row="2" Grid.ColumnSpan="2" 
+                <ListView  Grid.Row="2" Grid.ColumnSpan="2"
                          ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"

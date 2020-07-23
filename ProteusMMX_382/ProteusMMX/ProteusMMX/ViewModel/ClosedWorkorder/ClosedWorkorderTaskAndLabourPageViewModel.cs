@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using ProteusMMX.DependencyInterface;
 using ProteusMMX.Helpers;
 using ProteusMMX.Helpers.DateTime;
 using ProteusMMX.Helpers.Storage;
@@ -397,6 +398,24 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
+        string _entryHours;
+        public string EntryHours
+        {
+            get
+            {
+                return _entryHours;
+            }
+
+            set
+            {
+                if (value != _entryHours)
+                {
+                    _addTaskTitle = value;
+                    OnPropertyChanged(nameof(EntryHours));
+                }
+            }
+        }
+
 
 
 
@@ -410,6 +429,8 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
 
         public ICommand ScanCommand => new AsyncCommand(SearchWorkorder);
+
+        public string CornerRadius { get; private set; }
 
         #endregion
 
@@ -577,6 +598,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
 
                     AddTaskTitle = WebControlTitle.GetTargetNameByTitleName("AddTask");
+                    EntryHours = WebControlTitle.GetTargetNameByTitleName("hh");
 
                     SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchByTaskNumberOrDescription");
                     GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
@@ -599,6 +621,8 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
+
+
         public async Task GenerateTaskAndLabourLayout()
         {
 
@@ -607,6 +631,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
                 StackLayout contentLayout = await GetContentLayout();
 
+                var control = new MyEntry();
                 //clear the contentLayout 
                 contentLayout.Children.Clear();
 
@@ -623,8 +648,8 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     foreach (var item in workorderLabour.clWorkOrderWrapper.clworkOrderLabors)
                     {
 
-                      
-                   
+
+
 
                         Label taskNumberLabel = new Label { TextColor = Color.Black };
                         taskNumberLabel.Text = WebControlTitle.GetTargetNameByTitleName("TaskNumber") + ": " + item.TaskNumber;
@@ -635,7 +660,8 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         Button startButton = new Button
                         {
                             Text = WebControlTitle.GetTargetNameByTitleName("Start"),
-                            IsVisible=false,
+                            IsVisible = false,
+                            CornerRadius = 5,
                             BackgroundColor = Color.FromHex("#87CEFA"),
                             CommandParameter = item,
                             BorderColor = Color.Black,
@@ -647,6 +673,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                             Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
                             BackgroundColor = Color.FromHex("#87CEFA"),
                             CommandParameter = item,
+                            CornerRadius = 5,
                             IsVisible = false,
                             BorderColor = Color.Black,
                             TextColor = Color.White
@@ -657,6 +684,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                             Text = WebControlTitle.GetTargetNameByTitleName("Save"),
                             BackgroundColor = Color.FromHex("#87CEFA"),
                             CommandParameter = item,
+                            CornerRadius = 5,
                             IsVisible = false,
                             BorderColor = Color.Black,
                             TextColor = Color.White
@@ -667,17 +695,22 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                             Text = WebControlTitle.GetTargetNameByTitleName("Complete"),
                             BackgroundColor = Color.FromHex("#87CEFA"),
                             CommandParameter = item,
+                            CornerRadius = 5,
                             IsVisible = false,
                             BorderColor = Color.Black,
                             TextColor = Color.White
                         };
 
 
-                        Entry hoursEntry = new Entry { TextColor = Color.Black, Placeholder = "hh" };
-                        Entry minuteEntry = new Entry { TextColor = Color.Black, Placeholder = "mm", };
 
-                        Entry hoursEntryforRate2 = new Entry { TextColor = Color.Black, Placeholder = "hh" };
-                        Entry minuteEntryforRate2 = new Entry { TextColor = Color.Black, Placeholder = "mm", };
+                        Entry hoursEntry = new MyEntry
+
+                        { TextColor = Color.Black, Placeholder = "hh" };
+
+                        Entry minuteEntry = new MyEntry { TextColor = Color.Black, Placeholder = "mm", };
+
+                        Entry hoursEntryforRate2 = new MyEntry { TextColor = Color.Black, Placeholder = "hh" };
+                        Entry minuteEntryforRate2 = new MyEntry { TextColor = Color.Black, Placeholder = "mm", };
 
                         Label startDateLabel = new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate") };
                         DatePicker startDatePicker = new DatePicker() { HorizontalOptions = LayoutOptions.Start, Date = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone), MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date };
@@ -685,7 +718,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
 
                         Label completionDateLabel = new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), TextColor = Color.Black, };
-                        Button completeDateButton = new Button() { HorizontalOptions = LayoutOptions.FillAndExpand, HeightRequest = 35, WidthRequest = 180, BackgroundColor = Color.FromHex("#87CEFA"), };
+                        Button completeDateButton = new Button() { HorizontalOptions = LayoutOptions.FillAndExpand, HeightRequest = 35, WidthRequest = 180, CornerRadius = 5, BackgroundColor = Color.FromHex("#87CEFA"), };
 
                         //CompHours.Clicked += CompletionDate_Clicked;
 
@@ -696,6 +729,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
                         DateTime startDateTask = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
                         startDatePicker.Date = startDateTask;
+
 
 
 
@@ -828,7 +862,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         WorkOrderLabor savedWorkOrderLabor = null;
                         try
                         {
-                           
+
 
                         }
                         catch (Exception)
@@ -982,7 +1016,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         //    }
                         //};
 
-                      //  completeDateButton.Clicked += CompletionDate_Clicked;
+                        //  completeDateButton.Clicked += CompletionDate_Clicked;
 
                         var taskNumberGrid = new Grid();
                         taskNumberGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1.5, GridUnitType.Star) });
@@ -1392,7 +1426,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
+                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -1401,7 +1435,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     await NavigationService.RemoveBackStackAsync();
                 }
 
-               
+
 
 
             }

@@ -2,6 +2,7 @@
 using ProteusMMX.ViewModel;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
+using Syncfusion.XForms.Buttons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -138,6 +139,30 @@ namespace ProteusMMX.Views.Workorder
             tnobj.AssetSystemName = ViewModel.AssetSystemName;
             tnobj.AssetSystemNumber = ViewModel.AssetSystemNumber;
             ViewModel._navigationService.NavigateToAsync<ShowAssetSystemViewModel>(tnobj);
+        }
+        private void RadioButton_StateChanged(object sender, StateChangedEventArgs e)
+        {
+            if (RadioButton.IsChecked == false)
+            {
+                return;
+            }
+            else
+            {
+                Button1.IsChecked = false;
+            }
+
+        }
+        private void Button1_StateChanged(object sender, StateChangedEventArgs e)
+        {
+            if (Button1.IsChecked == false)
+            {
+                return;
+            }
+            else
+            {
+                RadioButton.IsChecked = false;
+            }
+
         }
     }
 }

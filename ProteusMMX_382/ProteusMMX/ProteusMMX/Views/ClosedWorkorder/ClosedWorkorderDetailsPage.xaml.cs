@@ -72,5 +72,29 @@ namespace ProteusMMX.Views.ClosedWorkorder
             ViewModel._navigationService.NavigateToAsync<ShowAssetSystemViewModel>(tnobj);
 
         }
+        private void RadioButton_StateChanged(object sender, Syncfusion.XForms.Buttons.StateChangedEventArgs e)
+        {
+            if (RadioButton.IsChecked == false)
+            {
+                return;
+            }
+            else
+            {
+                Button1.IsChecked = false;
+            }
+        }
+
+        private void Button1_StateChanged(object sender, Syncfusion.XForms.Buttons.StateChangedEventArgs e)
+        {
+            if (Button1.IsChecked == false)
+            {
+                return;
+            }
+            else
+            {
+                RadioButton.IsChecked = false;
+            }
+
+        }
     }
 }

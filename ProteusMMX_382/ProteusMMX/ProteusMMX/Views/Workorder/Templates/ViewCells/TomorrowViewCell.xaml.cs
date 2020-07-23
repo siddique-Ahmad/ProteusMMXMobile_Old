@@ -177,7 +177,26 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             { }
         }
 
+        bool isExpanded = false;
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            if (isExpanded)
+            {
+                await ShowMore.FadeTo(0);
+                ShowMore.IsVisible = !isExpanded;
+                this.Tapped.Text = "Show More";
 
+            }
+            else
+            {
+                ShowMore.IsVisible = !isExpanded;
+                await ShowMore.FadeTo(1);
+                this.Tapped.Text = "See less";
+            }
+
+            isExpanded = !isExpanded;
+
+        }
 
         private static void OnParentContextPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {

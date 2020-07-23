@@ -32,12 +32,11 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         ServiceOutput response;
         protected readonly IAuthenticationService _authenticationService;
 
-        public readonly INavigationService _navigationService;
-
         protected readonly IFormLoadInputService _formLoadInputService;
 
         protected readonly ICloseWorkorderService _closeWorkorderService;
 
+        public readonly INavigationService _navigationService;
 
         #endregion
 
@@ -52,12 +51,29 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
         public ICommand InternalNotesTapCommand => new AsyncCommand(ShowInternalNotesDescription);
 
-        
+
 
         #endregion
 
         #region Properties
 
+        string _assetSystemNumber;
+        public string AssetSystemNumber
+        {
+            get
+            {
+                return _assetSystemNumber;
+            }
+
+            set
+            {
+                if (value != _assetSystemNumber)
+                {
+                    _assetSystemNumber = value;
+                    OnPropertyChanged(nameof(AssetSystemNumber));
+                }
+            }
+        }
 
         string _WorkRequestedDateTitle;
         public string WorkRequestedDateTitle
@@ -232,7 +248,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
-        
+
 
         #region Page Properties
 
@@ -462,7 +478,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
-        
+
 
         int? _closedWorkorderID;
         public int? ClosedWorkorderID
@@ -993,41 +1009,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
-        bool _isCostDistributed = false;
-        public bool IsCostDistributed
-        {
-            get
-            {
-                return _isCostDistributed;
-            }
-
-            set
-            {
-                if (value != _isCostDistributed)
-                {
-                    _isCostDistributed = value;
-                    OnPropertyChanged("IsCostDistributed");
-                }
-            }
-        }
-        bool _ShowAssociatedAssets = false;
-        public bool ShowAssociatedAssets
-        {
-            get
-            {
-                return _ShowAssociatedAssets;
-            }
-
-            set
-            {
-                if (value != _ShowAssociatedAssets)
-                {
-                    _ShowAssociatedAssets = value;
-                    OnPropertyChanged(nameof(ShowAssociatedAssets));
-                }
-            }
-        }
-
 
         // Facility
         int? _facilityID;
@@ -1285,24 +1266,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 {
                     _assetSystemName = value;
                     OnPropertyChanged(nameof(AssetSystemName));
-                }
-            }
-        }
-
-        string _assetSystemNumber;
-        public string AssetSystemNumber
-        {
-            get
-            {
-                return _assetSystemNumber;
-            }
-
-            set
-            {
-                if (value != _assetSystemNumber)
-                {
-                    _assetSystemNumber = value;
-                    OnPropertyChanged(nameof(AssetSystemNumber));
                 }
             }
         }
@@ -2173,7 +2136,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
-        
+
         // EstimstedDowntime
 
         decimal? _estimstedDowntimeText;
@@ -2709,59 +2672,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
-        string _distributeCostforAssetsystem;
-        public string DistributeCostforAssetsystem
-        {
-            get
-            {
-                return _distributeCostforAssetsystem;
-            }
 
-            set
-            {
-                if (value != _distributeCostforAssetsystem)
-                {
-                    _distributeCostforAssetsystem = value;
-                    OnPropertyChanged(nameof(DistributeCostforAssetsystem));
-                }
-            }
-        }
-
-        string _associatedAssets;
-        public string AssociatedAssets
-        {
-            get
-            {
-                return _associatedAssets;
-            }
-
-            set
-            {
-                if (value != _associatedAssets)
-                {
-                    _associatedAssets = value;
-                    OnPropertyChanged(nameof(AssociatedAssets));
-                }
-            }
-        }
-
-        bool _isCostLayoutIsVisible = true;
-        public bool IsCostLayoutIsVisible
-        {
-            get
-            {
-                return _isCostLayoutIsVisible;
-            }
-
-            set
-            {
-                if (value != _isCostLayoutIsVisible)
-                {
-                    _isCostLayoutIsVisible = value;
-                    OnPropertyChanged(nameof(IsCostLayoutIsVisible));
-                }
-            }
-        }
         //EstimatedDowntime
         //string _estimatedDowntime;
         //public string EstimatedDowntime
@@ -2873,6 +2784,42 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 {
                     _miscellaneousMaterialsCostID = value;
                     OnPropertyChanged(nameof(MiscellaneousMaterialsCostID));
+                }
+            }
+        }
+
+        string _chargeCostsOnlyToChildAssets;
+        public string ChargeCostsOnlyToChildAssets
+        {
+            get
+            {
+                return _chargeCostsOnlyToChildAssets;
+            }
+
+            set
+            {
+                if (value != _chargeCostsOnlyToChildAssets)
+                {
+                    _chargeCostsOnlyToChildAssets = value;
+                    OnPropertyChanged(nameof(ChargeCostsOnlyToChildAssets));
+                }
+            }
+        }
+
+        string _parentCostsOnly;
+        public string ParentCostsOnly
+        {
+            get
+            {
+                return _parentCostsOnly;
+            }
+
+            set
+            {
+                if (value != _parentCostsOnly)
+                {
+                    _parentCostsOnly = value;
+                    OnPropertyChanged(nameof(ParentCostsOnly));
                 }
             }
         }
@@ -4268,7 +4215,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
-        
+
         bool _requestedNumberIsVisible = true;
         public bool RequestedNumberIsVisible
         {
@@ -4304,7 +4251,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
-        
+
         bool _sectionNameIsVisible = true;
         public bool SectionNameIsVisible
         {
@@ -4322,6 +4269,131 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
+        bool _ShowAssociatedAssets = false;
+        public bool ShowAssociatedAssets
+        {
+            get
+            {
+                return _ShowAssociatedAssets;
+            }
+
+            set
+            {
+                if (value != _ShowAssociatedAssets)
+                {
+                    _ShowAssociatedAssets = value;
+                    OnPropertyChanged(nameof(ShowAssociatedAssets));
+                }
+            }
+        }
+        bool _isCostDistributed = false;
+        public bool IsCostDistributed
+        {
+            get
+            {
+                return _isCostDistributed;
+            }
+
+            set
+            {
+                if (value != _isCostDistributed)
+                {
+                    _isCostDistributed = value;
+                    OnPropertyChanged("IsCostDistributed");
+                }
+            }
+        }
+
+        bool _childCostDistributed = false;
+        public bool ChildCostDistributed
+        {
+            get
+            {
+                return _childCostDistributed;
+            }
+
+            set
+            {
+                if (value != _childCostDistributed)
+                {
+                    _childCostDistributed = value;
+                    OnPropertyChanged("ChildCostDistributed");
+                }
+            }
+        }
+
+        bool _parentCostDistributed = false;
+        public bool ParentCostDistributed
+        {
+            get
+            {
+                return _parentCostDistributed;
+            }
+
+            set
+            {
+                if (value != _parentCostDistributed)
+                {
+                    _parentCostDistributed = value;
+                    OnPropertyChanged("ParentCostDistributed");
+                }
+            }
+        }
+
+        string _distributeCostforAssetsystem;
+        public string DistributeCostforAssetsystem
+        {
+            get
+            {
+                return _distributeCostforAssetsystem;
+            }
+
+            set
+            {
+                if (value != _distributeCostforAssetsystem)
+                {
+                    _distributeCostforAssetsystem = value;
+                    OnPropertyChanged(nameof(DistributeCostforAssetsystem));
+                }
+            }
+        }
+
+        bool _isCostLayoutIsVisible = true;
+        public bool IsCostLayoutIsVisible
+        {
+            get
+            {
+                return _isCostLayoutIsVisible;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsVisible)
+                {
+                    _isCostLayoutIsVisible = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisible));
+                }
+            }
+        }
+
+        bool _isCostLayoutIsEnable = true;
+        public bool IsCostLayoutIsEnable
+        {
+            get
+            {
+                return _isCostLayoutIsEnable;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsEnable)
+                {
+                    _isCostLayoutIsEnable = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsEnable));
+                }
+            }
+        }
+
 
         #region Methods
         public override async Task InitializeAsync(object navigationData)
@@ -4346,7 +4418,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
                 //FormLoadInputForWorkorder = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
                 await SetTitlesPropertiesForPage();
-                 response = await _closeWorkorderService.ClosedWorkOrders(this.ClosedWorkorderID.ToString(), this.UserID);
+                response = await _closeWorkorderService.ClosedWorkOrders(this.ClosedWorkorderID.ToString(), this.UserID);
 
                 if (response != null && response.clWorkOrderWrapper != null && response.clWorkOrderWrapper.clworkOrder != null)
                 {
@@ -4376,7 +4448,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         CauseName = response.clWorkOrderWrapper.Causes[0].CauseNumber;
                     }
                 }
-              //  FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.WorkorderModuleName);
+                //  FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.WorkorderModuleName);
                 await CreateControlsForPage();
                 OperationInProgress = false;
 
@@ -4393,13 +4465,12 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
-        public ClosedWorkorderDetailsPageViewModel(IAuthenticationService authenticationService, INavigationService navigationService, IFormLoadInputService formLoadInputService, ICloseWorkorderService closeWorkorderService)
+        public ClosedWorkorderDetailsPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, ICloseWorkorderService closeWorkorderService, INavigationService navigationService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _closeWorkorderService = closeWorkorderService;
             _navigationService = navigationService;
-
         }
 
         public async Task SetTitlesPropertiesForPage()
@@ -4488,7 +4559,8 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 MoreText = WebControlTitle.GetTargetNameByTitleName("More");
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 Signatures = WebControlTitle.GetTargetNameByTitleName("Signatures");
-                AssociatedAssets = WebControlTitle.GetTargetNameByTitleName("AssociatedAssets");
+                ChargeCostsOnlyToChildAssets = WebControlTitle.GetTargetNameByTitleName("ChargeCostsOnlyToChildAssets");
+                ParentCostsOnly = WebControlTitle.GetTargetNameByTitleName("Chargecosttotheparentsystemandchildassets");
                 DistributeCostforAssetsystem = WebControlTitle.GetTargetNameByTitleName("DistributeCostforAssetsystem");
                 if (DistributeCostforAssetsystem == null)
                 {
@@ -4551,6 +4623,29 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
 
+            if (Application.Current.Properties.ContainsKey("DistributeCost"))
+            {
+                if (DistributeCostforAssetsystem == null)
+                {
+                    IsCostLayoutIsVisible = false;
+                    return;
+                }
+                var WorkorderDIstributeCost = Application.Current.Properties["DistributeCost"].ToString();
+                if (WorkorderDIstributeCost != null && WorkorderDIstributeCost == "E")
+                {
+
+                    this.IsCostLayoutIsVisible = true;
+                }
+                else if (WorkorderDIstributeCost != null && WorkorderDIstributeCost == "V")
+                {
+                    this.IsCostLayoutIsEnable = false;
+                }
+                else
+                {
+                    this.IsCostLayoutIsVisible = false;
+                }
+            }
+
 
             if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(false))
             {
@@ -4569,7 +4664,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 this.AssetSystemLayoutIsVisible = false;
                 this.CostCenterLayoutIsVisible = false;
                 this.ShiftLayoutIsVisible = false;
-               // this.MiscellaneousLabourCostLayoutIsVisible = false;
+                // this.MiscellaneousLabourCostLayoutIsVisible = false;
                 this.MiscellaneousMaterialCostLayout = false;
                 this.WorkorderRequesterLayout = false;
                 this.RequestedDateIsVisible = false;
@@ -4631,7 +4726,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
                     if (response != null && response.clWorkOrderWrapper != null && response.clWorkOrderWrapper.clworkOrder != null)
                     {
-                      
+
                     }
 
 
@@ -4661,10 +4756,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
 
             var workorder = closeWorkorder;
-            if(workorder.DistributeCost==true)
-            {
-                IsCostDistributed = true;
-            }
+
             this.WorkorderNumberText = workorder.WorkOrderNumber;
             this.JobNumberText = workorder.JobNumber;
             this.DescriptionText = workorder.Description;
@@ -4672,7 +4764,25 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             this.AdditionalDetailsText = workorder.AdditionalDetails;
             this.RequiredDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.RequiredDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
             this.InternalNoteText = workorder.InternalNote;
+
             /// Workorder Start Date Property Set
+            /// 
+
+            if (workorder.DistributeCost == true)
+            {
+                IsCostDistributed = true;
+            }
+
+            if (workorder.ParentandChildCost == true)
+            {
+                ParentCostDistributed = true;
+            }
+
+            if (workorder.ChildCost == true)
+            {
+                ChildCostDistributed = true;
+            }
+
             if (workorder.WorkStartedDate == null)
             {
                 this.WorkStartedDate = null;
@@ -4746,26 +4856,26 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 AssetName = workorder.AssetName;
             }
             AssetID = workorder.AssetID;
+
             if (!string.IsNullOrEmpty(workorder.AssetSystemName))
             {
                 AssetSystemName = ShortString.shorten(workorder.AssetSystemName);
                 ShowAssociatedAssets = true;
-               
+            }
+            else
+            {
+                AssetSystemName = workorder.AssetSystemName;
+
+            }
+
+            if (!string.IsNullOrEmpty(workorder.AssetSystemName))
+            {
+                AssetSystemName = ShortString.shorten(workorder.AssetSystemName);
             }
             else
             {
                 AssetSystemName = workorder.AssetSystemName;
             }
-
-            if (!string.IsNullOrEmpty(workorder.AssetSystemNumber))
-            {
-                AssetSystemNumber = ShortString.shorten(workorder.AssetSystemNumber);
-            }
-            else
-            {
-                AssetSystemNumber = workorder.AssetSystemNumber;
-            }
-
             if (!string.IsNullOrEmpty(workorder.CostCenterName))
             {
                 CostCenterName = ShortString.shorten(workorder.CostCenterName);
@@ -4775,7 +4885,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 CostCenterName = workorder.CostCenterName;
             }
 
-            
+
 
             if (!string.IsNullOrEmpty(workorder.WorkOrderRequesterName))
             {
@@ -4836,11 +4946,11 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 this.SectionNameText = workorder.SectionName;
             }
             AssignToEmployeeName = workorder.AssignToEmployee;
-          
-          
-           EstimstedDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.EstimatedDowntime == null ? 0 : workorder.EstimatedDowntime));
-          
-         
+
+
+            EstimstedDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.EstimatedDowntime == null ? 0 : workorder.EstimatedDowntime));
+
+
             ActualDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.ActualDowntime == null ? 0 : workorder.ActualDowntime));
 
             MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
@@ -4877,9 +4987,12 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             UserField23 = workorder.UserField23;
             UserField24 = workorder.UserField24;
 
-
+            workorder.DistributeCost = IsCostDistributed;
+            workorder.ParentandChildCost = ParentCostDistributed;
+            workorder.ChildCost = ChildCostDistributed;
             ApprovalLevel = workorder.ApprovalLevel;
             ApprovalNumber = workorder.ApprovalNumber;
+
             #endregion
 
 
@@ -4889,7 +5002,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             //ActivationDateText = workorder.ActivationDate.ToString();
             ClosedDateText = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ClosedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
 
-          //  ClosedDateText = workorder.ClosedDate.ToString();
+            //  ClosedDateText = workorder.ClosedDate.ToString();
             ConfirmEmail = workorder.ConfirmEmail;
 
             DigitalSignatures = workorder.DigitalSignatures;
@@ -4900,7 +5013,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             RequesterEmail = workorder.RequesterEmail;
             RequesterPhone = workorder.RequesterPhone;
             RequestNumber = workorder.RequestNumber;
-           // RequestedDate = workorder.RequestedDate.ToString();
+            // RequestedDate = workorder.RequestedDate.ToString();
             RequestedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.RequestedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
 
             if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(false))
@@ -4922,7 +5035,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             {
                 this.SectionNameIsVisible = false;
             }
-           
+
 
             #endregion
 
@@ -4951,7 +5064,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 TargetNavigationData tnobj = new TargetNavigationData();
                 tnobj.Description = AdditionalDetailsText;
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
-              // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
+                // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
             }
             catch (Exception ex)
             {

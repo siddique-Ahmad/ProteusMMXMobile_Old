@@ -34,9 +34,11 @@ namespace ProteusMMX.UWP
         /// </summary>
         public App()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mjc1MzM3QDMxMzgyZTMxMmUzMEZUNkMzUExDNUxsMHA5WGZLdVVPWktYUkl1UTN0NGNFajdBMFB0RUoyd1k9");
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             AppCenter.Start("7529a611-c100-4257-872f-a9315b2161dc", typeof(Analytics));
+           
             //AppCenter.Start("4556bc5f-b45d-41f9-ace8-ecbcba330909", typeof(Analytics));
             //AppCenter.Start("4556bc5f-b45d-41f9-ace8-ecbcba330909", typeof(Push));
             //Analytics.TrackEvent("My custom event");
@@ -74,6 +76,16 @@ namespace ProteusMMX.UWP
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerPage).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingBarcodeImageViewRenderer).GetTypeInfo().Assembly);
+
+                ///Syncfusion Assembly include/////////////////
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfButtonRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfCheckBoxRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Border.SfBorderRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Graphics.SfGradientViewRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.ListView.XForms.UWP.SfListViewRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.ComboBox.SfComboBoxRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfRadioButtonRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfSegmentedControlRenderer).GetTypeInfo().Assembly);
 
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
                 Xamarin.Forms.DependencyService.Register<PDFViewer>();

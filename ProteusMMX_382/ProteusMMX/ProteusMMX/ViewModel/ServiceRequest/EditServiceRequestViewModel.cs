@@ -4678,7 +4678,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         private void GenerateTextBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new Entry();
+            var control = new MyEntry();
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;
@@ -4708,7 +4708,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         private void GenerateComboBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new Picker();
+            var control = new MyPicker();
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;

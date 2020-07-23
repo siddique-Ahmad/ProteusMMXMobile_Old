@@ -2,20 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.WorkorderListingPage"
-             x:Name="WorkorderListingPage"
                xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:local="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
              xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
              xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-             Title="{Binding PageTitle}" 
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             Title="{Binding PageTitle}"
              BackgroundColor="{StaticResource BackgroundColor}" >
 
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
             <!--<DataTemplate x:Key="DayAfterTomorrowTemplate">
                 <viewCells:DayAfterTomorrowViewCell ParentBindingContext="{Binding BindingContext , Source= {x:Reference WorkorderListingPage}}"/>
             </DataTemplate>
@@ -61,7 +65,7 @@
         <ToolbarItem Text=":"  Icon="Assets/filter.png" Command="{Binding SortByCommand}"/>
         <ToolbarItem Text="1"  Icon="Assets/Dot.png" Command="{Binding ToolbarCommand}"/>
 
-        
+       
     </ContentPage.ToolbarItems>-->
 
 
@@ -98,7 +102,7 @@
             </ToolbarItem.Icon>
         </ToolbarItem>
 
-      
+
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
@@ -122,8 +126,10 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
-                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
+                <border:SfBorder CornerRadius="5">
+                    <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                </border:SfBorder>
+                <Button Grid.Column="1" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
 
                 <Grid Grid.Row="1" Grid.ColumnSpan="2"  >
                     <Grid>
@@ -141,10 +147,12 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Label Text="{Binding WorkorderTypeLabelTitle}" Grid.Row="0"/>
-                        <Picker Grid.Column="1" ItemsSource="{Binding PickerTitles}" SelectedItem="{Binding SelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding SelectedIndexPicker , Mode=TwoWay}" Grid.Row="0"/>
-
-                        <!--<Grid Grid.Column="2" ColumnSpacing="0">--><!--
+                        <Label Text="{Binding WorkorderTypeLabelTitle}" Grid.Row="0" />
+                        <border:SfBorder CornerRadius="5" Grid.Column="1" Grid.Row="0">
+                            <Picker ItemsSource="{Binding PickerTitles}" SelectedItem="{Binding SelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding SelectedIndexPicker , Mode=TwoWay}" />
+                        </border:SfBorder>
+                        <!--<Grid Grid.Column="2" ColumnSpacing="0">-->
+                        <!--
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
@@ -184,9 +192,11 @@
 
 
                         <Label  Text="{Binding SortByDuedateTitle}" Grid.Row="4"/>
-                        --><!--<DatePicker Date ="{Binding DueDate}"  Margin="0,0,30,0" Grid.Column="1"  Grid.Row="4"/>--><!--
+                        -->
+                        <!--<DatePicker Date ="{Binding DueDate}"  Margin="0,0,30,0" Grid.Column="1"  Grid.Row="4"/>-->
+                        <!--
                         <Button FontSize="Small" Text="{Binding SortByDateText}" Command="{Binding ShowDateCommand}" Grid.Row="4" Grid.Column="1" HeightRequest="35"  BackgroundColor="LightSkyBlue" HorizontalOptions="Fill">
-                            
+                           
                         </Button>
                         <Image Grid.Column="2" Grid.Row="4" Source="Assets/Remove.png">
                             <Image.Source>
@@ -214,7 +224,9 @@
                     </Grid>
                 </Grid>
 
-                <ListView Grid.Row="2" Grid.ColumnSpan="2"
+                <StackLayout Spacing="0" Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HeightRequest="40">
+                    <ListView 
+
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"
@@ -223,7 +235,8 @@
                           ItemAppearing="ListView_ItemAppearing"
                           behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding WorkorderSelectedCommand}">
 
-                </ListView>
+                    </ListView>
+                </StackLayout>
             </Grid>
 
             <ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
