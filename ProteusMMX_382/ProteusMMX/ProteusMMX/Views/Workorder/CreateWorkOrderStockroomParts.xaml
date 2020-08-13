@@ -102,7 +102,9 @@
                     </Label.FontAttributes>
                 </Label>
                 <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
-                <Button Text="{Binding ShelfBinText}" Style="{StaticResource TargetButtonStyle}" BackgroundColor="LightGray" TextColor="Black" IsEnabled="False" />
+                <border:SfBorder CornerRadius="5">
+                    <Button Text="{Binding ShelfBinText}" Style="{StaticResource TargetButtonStyle}" BackgroundColor="LightGray" TextColor="Black" IsEnabled="False" />
+                </border:SfBorder>
                 <!--</border:SfBorder>-->
             </StackLayout>
 
@@ -158,12 +160,13 @@
 
                 <!--<buttons:SfButton Style="{StaticResource SfButtonStyle}">-->
                 <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding SaveStockroomPartsCommand}"  />-->
-                <buttons:SfButton                                          
+                <Button     
+                    CornerRadius="5"
                        VerticalOptions="StartAndExpand"
                        Command="{Binding SaveStockroomPartsCommand}"
-                       Style="{StaticResource SfButtonStyle}"                      
+                       Style="{StaticResource LoginButtonStyle}"                      
                        Text="{Binding SaveTitle}" >
-                </buttons:SfButton>
+                </Button>
             </StackLayout>
 
 

@@ -35,7 +35,7 @@
             <Style x:Key="LoginButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorButton}" />
                 <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
-                <Setter Property="BorderColor" Value="{StaticResource DarkGrayColor}" />
+                <Setter Property="BorderColor" Value="Black"/>
                 <Setter Property="CornerRadius" Value="5" />
             </Style>
 
@@ -44,7 +44,7 @@
             <Style x:Key="SaveButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorButton}" />
                 <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
-                <Setter Property="BorderColor" Value="{StaticResource DarkGrayColor}" />
+                <Setter Property="BorderColor" Value="Black"/>
                 <Setter Property="HeightRequest" Value="40" />
                 <Setter Property="CornerRadius" Value="5" />
             </Style>
@@ -52,7 +52,7 @@
             <Style x:Key="TargetButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorButton}" />
                 <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
-                <!--<Setter Property="BorderColor" Value="{StaticResource DarkGrayColor}" />-->
+                <Setter Property="BorderColor" Value="Black"/>
                 <Setter Property="HeightRequest" Value="35" />
                 <Setter Property="CornerRadius" Value="5"/>
             </Style>

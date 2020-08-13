@@ -3589,7 +3589,7 @@ namespace ProteusMMX.ViewModel.Asset
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
                 SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 //AssetNameTitle = WebControlTitle.GetTargetNameByTitleName("AssetName");
-                //AssetNumberTitle = WebControlTitle.GetTargetNameByTitleName("AssetNumber");
+              
                 FacilityTitle = WebControlTitle.GetTargetNameByTitleName("Facility");
                 LocationTitle = WebControlTitle.GetTargetNameByTitleName("Location");
                // AssetSystemTitle = WebControlTitle.GetTargetNameByTitleName("AssetSystem");
@@ -6584,7 +6584,7 @@ namespace ProteusMMX.ViewModel.Asset
                         tnobj.LocationName = this.LocationName;
                         tnobj.AssetID = this.AssetID;
                         tnobj.AssetName = String.IsNullOrEmpty(this.AssetNameText) ? null : this.AssetNameText.Trim();
-                        
+                        tnobj.CurrentRuntime = CurrentRuntimeText;
                         await NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>(tnobj);
 
                     }

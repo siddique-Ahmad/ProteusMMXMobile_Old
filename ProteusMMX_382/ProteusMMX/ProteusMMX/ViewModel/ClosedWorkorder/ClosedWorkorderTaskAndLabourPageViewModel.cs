@@ -849,12 +849,12 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         Entry descriptionEntry;
                         if (String.IsNullOrEmpty(item.Description))
                         {
-                            descriptionEntry = new Entry { IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), Text = item.Description, WidthRequest = 300, HeightRequest = 150 };
+                            descriptionEntry = new MyEntry { IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), Text = item.Description, WidthRequest = 300, HeightRequest = 150 };
                         }
                         else
                         {
                             string result = RemoveHTML.StripHtmlTags(item.Description);
-                            descriptionEntry = new Entry { IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), Text = result, WidthRequest = 300, HeightRequest = 150 };
+                            descriptionEntry = new MyEntry { IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), Text = result, WidthRequest = 300, HeightRequest = 150 };
                         }
 
 

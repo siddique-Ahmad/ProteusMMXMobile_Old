@@ -10,6 +10,7 @@ using ProteusMMX.Helpers.Validation;
 using ProteusMMX.Model;
 using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.WorkOrderModel;
+using ProteusMMX.Services.Asset;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
 using ProteusMMX.Services.SelectionListPageServices;
@@ -37,7 +38,12 @@ namespace ProteusMMX.ViewModel.Workorder
     {
         #region Fields
 
+        string CurrentRuntimeEnablevalue = string.Empty;
+        string CurrentRuntimeVisiblevalue = string.Empty;
+
         protected readonly IAuthenticationService _authenticationService;
+
+        protected readonly IAssetModuleService _assetService;
 
         protected readonly IFormLoadInputService _formLoadInputService;
 
@@ -1784,6 +1790,115 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _assignToEmployeeID = value;
                     OnPropertyChanged(nameof(AssignToEmployeeID));
+                }
+            }
+        }
+
+        bool _currentRuntimeIsVisible = false;
+        public bool CurrentRuntimeIsVisible
+        {
+            get
+            {
+                return _currentRuntimeIsVisible;
+            }
+
+            set
+            {
+                if (value != _currentRuntimeIsVisible)
+                {
+                    _currentRuntimeIsVisible = value;
+                    OnPropertyChanged(nameof(CurrentRuntimeIsVisible));
+                }
+            }
+        }
+
+        string _CurrentRuntimeText;
+        public string CurrentRuntimeText
+        {
+            get
+            {
+                return _CurrentRuntimeText;
+            }
+
+            set
+            {
+                if (value != _CurrentRuntimeText)
+                {
+                    _CurrentRuntimeText = value;
+                    OnPropertyChanged(nameof(CurrentRuntimeText));
+                }
+            }
+        }
+
+        string _CurrentRuntimeTitle;
+        public string CurrentRuntimeTitle
+        {
+            get
+            {
+                return _CurrentRuntimeTitle;
+            }
+
+            set
+            {
+                if (value != _CurrentRuntimeTitle)
+                {
+                    _CurrentRuntimeTitle = value;
+                    OnPropertyChanged(nameof(CurrentRuntimeTitle));
+                }
+            }
+        }
+
+        bool _CurrentRuntimeIsEnable = true;
+        public bool CurrentRuntimeIsEnable
+        {
+            get
+            {
+                return _CurrentRuntimeIsEnable;
+            }
+
+            set
+            {
+                if (value != _CurrentRuntimeIsEnable)
+                {
+                    _CurrentRuntimeIsEnable = value;
+                    OnPropertyChanged(nameof(CurrentRuntimeIsEnable));
+                }
+            }
+        }
+
+
+        bool _IsCostLayoutIsVisibleForPhone = false;
+        public bool IsCostLayoutIsVisibleForPhone
+        {
+            get
+            {
+                return _IsCostLayoutIsVisibleForPhone;
+            }
+
+            set
+            {
+                if (value != _IsCostLayoutIsVisibleForPhone)
+                {
+                    _IsCostLayoutIsVisibleForPhone = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisibleForPhone));
+                }
+            }
+        }
+
+        bool _IsCostLayoutIsVisibleForTab = false;
+        public bool IsCostLayoutIsVisibleForTab
+        {
+            get
+            {
+                return _IsCostLayoutIsVisibleForTab;
+            }
+
+            set
+            {
+                if (value != _IsCostLayoutIsVisibleForTab)
+                {
+                    _IsCostLayoutIsVisibleForTab = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisibleForTab));
                 }
             }
         }
@@ -4064,6 +4179,14 @@ namespace ProteusMMX.ViewModel.Workorder
                         this.AssetSystemID = navigationParams.AssetSystemID;
                         this.AssetSystemName = navigationParams.AssetSystemName;
                     }
+
+
+                    //Set CurrentRuntime
+                    if (navigationParams.CurrentRuntime != null)
+                    {
+                        this.CurrentRuntimeText = navigationParams.CurrentRuntime.ToString();
+
+                    }
                 }
                 var facilityResponse = await _facilityService.GetFacilities(UserID, "1", "10", "null");
                 if (facilityResponse != null && facilityResponse.targetWrapper != null && facilityResponse.targetWrapper.facilities != null)
@@ -4088,6 +4211,14 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 await SetTitlesPropertiesForPage();
                 await CreateControlsForPage();
+                if (Device.Idiom == TargetIdiom.Phone)
+                {
+                    this.IsCostLayoutIsVisibleForPhone = true;
+                }
+                else
+                {
+                    this.IsCostLayoutIsVisibleForTab = true;
+                }
             }
             catch (Exception ex)
             {
@@ -4098,18 +4229,20 @@ namespace ProteusMMX.ViewModel.Workorder
                 OperationInProgress = false;
             }
         }
-        public CreateWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService, IFacilityService facilityService)
+        public CreateWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService, IFacilityService facilityService, IAssetModuleService assetService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _workorderService = workorderService;
             _facilityService = facilityService;
+            _assetService = assetService;
         }
 
         public async Task SetTitlesPropertiesForPage()
         {
             try
             {
+                CurrentRuntimeTitle = WebControlTitle.GetTargetNameByTitleName("CurrentRuntime");
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
@@ -4402,7 +4535,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         OverriddenControlsNew.Add(WorkOrderNumber);
                         WorkorderControlsNew.Remove(WorkOrderNumber);
                     }
-
+                    var CurrentRuntime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "CurrentRuntime");
+                    if (CurrentRuntime != null)
+                    {
+                        CurrentRuntimeTitle = CurrentRuntime.TargetName;
+                        OverriddenControlsNew.Add(CurrentRuntime);
+                        CurrentRuntimeVisiblevalue = CurrentRuntime.Expression;
+                        CurrentRuntimeEnablevalue = CurrentRuntime.Expression;
+                        
+                    }
                     var JobNumber = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "JobNumber");
                     if (JobNumber != null)
                     {
@@ -9285,7 +9426,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         }
 
-        private void OnAssetRequested(object obj)
+        private async void OnAssetRequested(object obj)
         {
 
             if (obj != null)
@@ -9295,12 +9436,55 @@ namespace ProteusMMX.ViewModel.Workorder
                 this.AssetID = asset.AssetID;
                 this.AssetName = ShortString.shorten(asset.AssetName);
 
+                if (this.AssetID == null || this.AssetID == 0)
+                {
+                    CurrentRuntimeIsVisible = false;
+
+                }
+
+                else
+                {
+                    var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString());
+
+                    if (string.IsNullOrWhiteSpace(AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString()))
+                    {
+                        this.CurrentRuntimeText = "0.0";
+
+
+                    }
+
+                    else
+                    {
+                        this.CurrentRuntimeText = AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString();
+
+                    }
+
+                    if (CurrentRuntimeVisiblevalue == "E")
+                    {
+                        CurrentRuntimeIsVisible = true;
+                    }
+                    else if (CurrentRuntimeVisiblevalue == "V")
+                    {
+                        CurrentRuntimeIsEnable = false;
+                    }
+                    else
+                    {
+                        CurrentRuntimeIsVisible = false;
+                    }
+                }
+
                 // if Asset is selected reset the   Asset System
 
             }
-
-
         }
+
+
+
+        
+    
+
+
+    
 
         private void OnAssetSystemRequested(object obj)
         {
@@ -9634,6 +9818,13 @@ namespace ProteusMMX.ViewModel.Workorder
                 #region workOrder properties initialzation
 
                 workOrder.ModifiedUserName = AppSettings.User.UserName;
+                if (string.IsNullOrWhiteSpace(CurrentRuntimeText))
+                {
+                    this.CurrentRuntimeText = "0.00";
+
+
+                }
+                workOrder.CurrentRuntime = CurrentRuntimeText;
                 workOrder.Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim();
                 workOrder.RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay);
                 workOrder.WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null;

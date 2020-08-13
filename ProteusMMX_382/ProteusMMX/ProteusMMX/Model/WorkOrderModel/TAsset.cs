@@ -12,5 +12,17 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string AssetName { get; set; }
         public string AssetNumber { get; set; }
 
+        public string AssetNumberLocal
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(AssetName))
+                {
+                    return AssetNumber;
+                }
+                return AssetNumber + "(" + AssetName + ")";
+            }
+        }
+
     }
 }

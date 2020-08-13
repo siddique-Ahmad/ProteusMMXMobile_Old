@@ -865,9 +865,9 @@ namespace ProteusMMX.Views.Workorder
                         startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                         CompletionDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
 
-                        stopButton.BackgroundColor = BackgroundColor = Color.FromHex("#D3D3D3");
+                        stopButton.BackgroundColor = BackgroundColor = Color.FromHex("#708090");
                         stopButton.IsEnabled = false;
-                        startButton.BackgroundColor = BackgroundColor = Color.FromHex("#D3D3D3");
+                        startButton.BackgroundColor = BackgroundColor = Color.FromHex("#708090");
                         startButton.IsEnabled = false;
                         this.BackgroundColor = Color.White;
 
@@ -1366,9 +1366,9 @@ namespace ProteusMMX.Views.Workorder
 
                         //  startDate.SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
                         // CompletionDate.SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                        stopButton.BackgroundColor = BackgroundColor = Color.FromHex("#D3D3D3");
+                        stopButton.BackgroundColor = BackgroundColor = Color.FromHex("#708090");
                         stopButton.IsEnabled = false;
-                        startButton.BackgroundColor = BackgroundColor = Color.FromHex("#D3D3D3");
+                        startButton.BackgroundColor = BackgroundColor = Color.FromHex("#708090");
                         startButton.IsEnabled = false;
                         this.BackgroundColor = Color.White;
 
@@ -2300,31 +2300,31 @@ namespace ProteusMMX.Views.Workorder
                             GenerateAnswerText(item);
 
 
-                            Layout = new Picker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                            Layout = new MyPicker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
 
                             if (!string.IsNullOrWhiteSpace(item.Option1))
-                                (Layout as Picker).Items.Add(item.Option1);
+                                (Layout as MyPicker).Items.Add(item.Option1);
                             if (!string.IsNullOrWhiteSpace(item.Option2))
-                                (Layout as Picker).Items.Add(item.Option2);
+                                (Layout as MyPicker).Items.Add(item.Option2);
                             if (!string.IsNullOrWhiteSpace(item.Option3))
-                                (Layout as Picker).Items.Add(item.Option3);
+                                (Layout as MyPicker).Items.Add(item.Option3);
                             if (!string.IsNullOrWhiteSpace(item.Option4))
-                                (Layout as Picker).Items.Add(item.Option4);
+                                (Layout as MyPicker).Items.Add(item.Option4);
                             if (!string.IsNullOrWhiteSpace(item.Option5))
-                                (Layout as Picker).Items.Add(item.Option5);
+                                (Layout as MyPicker).Items.Add(item.Option5);
                             if (!string.IsNullOrWhiteSpace(item.Option6))
-                                (Layout as Picker).Items.Add(item.Option6);
+                                (Layout as MyPicker).Items.Add(item.Option6);
                             if (!string.IsNullOrWhiteSpace(item.Option7))
-                                (Layout as Picker).Items.Add(item.Option7);
+                                (Layout as MyPicker).Items.Add(item.Option7);
                             if (!string.IsNullOrWhiteSpace(item.Option8))
-                                (Layout as Picker).Items.Add(item.Option8);
+                                (Layout as MyPicker).Items.Add(item.Option8);
                             if (!string.IsNullOrWhiteSpace(item.Option9))
-                                (Layout as Picker).Items.Add(item.Option9);
+                                (Layout as MyPicker).Items.Add(item.Option9);
                             if (!string.IsNullOrWhiteSpace(item.Option10))
-                                (Layout as Picker).Items.Add(item.Option10);
+                                (Layout as MyPicker).Items.Add(item.Option10);
 
-                            var index = (Layout as Picker).Items.IndexOf(item.AnswerDescription);
-                            (Layout as Picker).SelectedIndex = index;
+                            var index = (Layout as MyPicker).Items.IndexOf(item.AnswerDescription);
+                            (Layout as MyPicker).SelectedIndex = index;
 
                             sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
                             sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
@@ -2886,32 +2886,32 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 GenerateAnswerText(item1);
 
-                                Layout = new Picker() { WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center };
+                                Layout = new MyPicker() { WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center };
 
                                 if (!string.IsNullOrWhiteSpace(item1.Option1))
-                                    (Layout as Picker).Items.Add(item1.Option1);
+                                    (Layout as MyPicker).Items.Add(item1.Option1);
                                 if (!string.IsNullOrWhiteSpace(item1.Option2))
-                                    (Layout as Picker).Items.Add(item1.Option2);
+                                    (Layout as MyPicker).Items.Add(item1.Option2);
                                 if (!string.IsNullOrWhiteSpace(item1.Option3))
-                                    (Layout as Picker).Items.Add(item1.Option3);
+                                    (Layout as MyPicker).Items.Add(item1.Option3);
                                 if (!string.IsNullOrWhiteSpace(item1.Option4))
-                                    (Layout as Picker).Items.Add(item1.Option4);
+                                    (Layout as MyPicker).Items.Add(item1.Option4);
                                 if (!string.IsNullOrWhiteSpace(item1.Option5))
-                                    (Layout as Picker).Items.Add(item1.Option5);
+                                    (Layout as MyPicker).Items.Add(item1.Option5);
                                 if (!string.IsNullOrWhiteSpace(item1.Option6))
-                                    (Layout as Picker).Items.Add(item1.Option6);
+                                    (Layout as MyPicker).Items.Add(item1.Option6);
                                 if (!string.IsNullOrWhiteSpace(item1.Option7))
-                                    (Layout as Picker).Items.Add(item1.Option7);
+                                    (Layout as MyPicker).Items.Add(item1.Option7);
                                 if (!string.IsNullOrWhiteSpace(item1.Option8))
-                                    (Layout as Picker).Items.Add(item1.Option8);
+                                    (Layout as MyPicker).Items.Add(item1.Option8);
                                 if (!string.IsNullOrWhiteSpace(item1.Option9))
-                                    (Layout as Picker).Items.Add(item1.Option9);
+                                    (Layout as MyPicker).Items.Add(item1.Option9);
                                 if (!string.IsNullOrWhiteSpace(item1.Option10))
-                                    (Layout as Picker).Items.Add(item1.Option10);
+                                    (Layout as MyPicker).Items.Add(item1.Option10);
 
 
-                                var index = (Layout as Picker).Items.IndexOf(item1.AnswerDescription);
-                                (Layout as Picker).SelectedIndex = index;
+                                var index = (Layout as MyPicker).Items.IndexOf(item1.AnswerDescription);
+                                (Layout as MyPicker).SelectedIndex = index;
 
                                 sta = new Grid() { };
                                 sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });

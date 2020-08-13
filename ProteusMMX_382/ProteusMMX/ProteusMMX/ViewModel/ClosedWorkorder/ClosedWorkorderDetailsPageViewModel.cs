@@ -407,7 +407,78 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
 
         #endregion
+        bool _currentRuntimeIsVisible = true;
+        public bool CurrentRuntimeIsVisible
+        {
+            get
+            {
+                return _currentRuntimeIsVisible;
+            }
 
+            set
+            {
+                if (value != _currentRuntimeIsVisible)
+                {
+                    _currentRuntimeIsVisible = value;
+                    OnPropertyChanged(nameof(CurrentRuntimeIsVisible));
+                }
+            }
+
+        }
+
+ string _currentRuntimeTitle;
+       public string CurrentRuntimeTitle
+       {
+           get
+           {
+               return _currentRuntimeTitle;
+           }
+
+           set
+           {
+               if (value != _currentRuntimeTitle)
+               {
+                   _currentRuntimeTitle = value;
+                   OnPropertyChanged(nameof(CurrentRuntimeTitle));
+               }
+           }
+       }
+
+string _currentRuntime;
+       public string CurrentRuntime
+       {
+           get
+           {
+               return _currentRuntime;
+           }
+
+           set
+           {
+               if (value != _currentRuntime)
+               {
+                   _currentRuntime = value;
+                   OnPropertyChanged(nameof(CurrentRuntime));
+               }
+           }
+       }
+
+ string _currentRuntimeText;
+       public string CurrentRuntimeText
+       {
+           get
+           {
+               return _currentRuntimeText;
+           }
+
+           set
+           {
+               if (value != _currentRuntimeText)
+               {
+                   _currentRuntimeText = value;
+                   OnPropertyChanged(nameof(CurrentRuntimeText));
+               }
+           }
+       }
         #region CreateWorkorder Properties
         string _sectionNameTitle;
         public string SectionNameTitle
@@ -1842,7 +1913,41 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
+        bool _IsCostLayoutIsVisibleForPhone = false;
+        public bool IsCostLayoutIsVisibleForPhone
+        {
+            get
+            {
+                return _IsCostLayoutIsVisibleForPhone;
+            }
 
+            set
+            {
+                if (value != _IsCostLayoutIsVisibleForPhone)
+                {
+                    _IsCostLayoutIsVisibleForPhone = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisibleForPhone));
+                }
+            }
+        }
+
+        bool _IsCostLayoutIsVisibleForTab = false;
+        public bool IsCostLayoutIsVisibleForTab
+        {
+            get
+            {
+                return _IsCostLayoutIsVisibleForTab;
+            }
+
+            set
+            {
+                if (value != _IsCostLayoutIsVisibleForTab)
+                {
+                    _IsCostLayoutIsVisibleForTab = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisibleForTab));
+                }
+            }
+        }
         string _causeName;
         public string CauseName
         {
@@ -2580,24 +2685,24 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         }
 
 
-        //CurrentRuntime
-        string _currentRuntime;
-        public string CurrentRuntime
-        {
-            get
-            {
-                return _currentRuntime;
-            }
+        ////CurrentRuntime
+        //string _currentRuntime;
+        //public string CurrentRuntime
+        //{
+        //    get
+        //    {
+        //        return _currentRuntime;
+        //    }
 
-            set
-            {
-                if (value != _currentRuntime)
-                {
-                    _currentRuntime = value;
-                    OnPropertyChanged(nameof(CurrentRuntime));
-                }
-            }
-        }
+        //    set
+        //    {
+        //        if (value != _currentRuntime)
+        //        {
+        //            _currentRuntime = value;
+        //            OnPropertyChanged(nameof(CurrentRuntime));
+        //        }
+        //    }
+        //}
 
 
         //DiagnosticTime
@@ -4450,6 +4555,14 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
                 //  FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.WorkorderModuleName);
                 await CreateControlsForPage();
+                if (Device.Idiom == TargetIdiom.Phone)
+                {
+                    this.IsCostLayoutIsVisibleForPhone = true;
+                }
+                else
+                {
+                    this.IsCostLayoutIsVisibleForTab = true;
+                }
                 OperationInProgress = false;
 
             }
@@ -4477,6 +4590,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
             try
             {
+                CurrentRuntimeTitle = WebControlTitle.GetTargetNameByTitleName("CurrentRuntime");
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("Details");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
@@ -4567,7 +4681,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     IsCostLayoutIsVisible = false;
                 }
 
-
+                
 
 
             }
@@ -4756,7 +4870,12 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
 
             var workorder = closeWorkorder;
+            if (workorder.AssetID == null || workorder.AssetID == 0)
+            {
+                CurrentRuntimeIsVisible = false;
 
+            }
+            this.CurrentRuntimeText = workorder.CurrentRuntime;
             this.WorkorderNumberText = workorder.WorkOrderNumber;
             this.JobNumberText = workorder.JobNumber;
             this.DescriptionText = workorder.Description;

@@ -31,7 +31,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NodaTime" Version="1.4.0" />
     <PackageReference Include="PCLCrypto" Version="2.0.147" />
-    <PackageReference Include="Rg.Plugins.Popup" Version="1.0.4" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.1.3.73-pre" />
     <PackageReference Include="sqlite-net-pcl" Version="1.4.118" />
     <PackageReference Include="Syncfusion.Licensing" Version="18.1.0.55" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.55" />
@@ -176,6 +176,9 @@
     <EmbeddedResource Update="Views\SelectionListPages\AssetSystemListSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\SelectionListPages\Asset\Style.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\SelectionListPages\AssignToListSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -203,8 +206,14 @@
     <EmbeddedResource Update="Views\SelectionListPages\PurchaseOrder\PurchaseOrderShelfBinListSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\SelectionListPages\PurchaseOrder\Style.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\SelectionListPages\ShiftListSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SelectionListPages\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SelectionListPages\WorkorderRequesterListSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
@@ -215,14 +224,23 @@
     <EmbeddedResource Update="Views\SelectionListPages\WorkorderTypeListSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\SelectionListPages\Workorder\Parts\Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\SelectionListPages\Workorder\TaskAndLabour\ContractorListSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SelectionListPages\Workorder\TaskAndLabour\EmployeeListSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\SelectionListPages\Workorder\TaskAndLabour\Style.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\SelectionListPages\Workorder\TaskAndLabour\TaskListSelectionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SelectionListPages\Workorder\Tools\Style.xaml">
+      <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ServiceRequest\Style.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
