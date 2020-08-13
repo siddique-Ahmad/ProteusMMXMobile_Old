@@ -575,7 +575,7 @@ namespace ProteusMMX.Views.Workorder
                                 // GenerateAnswerText(item);
 
 
-                                Layout = new Picker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                                Layout = new MyPicker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
 
                                 //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option1))
                                 //    (Layout as Picker).Items.Add(Miscellaneous.Option1);
@@ -598,8 +598,8 @@ namespace ProteusMMX.Views.Workorder
                                 //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option10))
                                 //    (Layout as Picker).Items.Add(Miscellaneous.Option10);
 
-                                var index = (Layout as Picker).Items.IndexOf(string.Empty);
-                                (Layout as Picker).SelectedIndex = index;
+                                var index = (Layout as MyPicker).Items.IndexOf(string.Empty);
+                                (Layout as MyPicker).SelectedIndex = index;
 
                                 sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
                                 sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
@@ -1161,7 +1161,7 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 // GenerateAnswerText(item1);
 
-                                Layout = new Picker() { WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center };
+                                Layout = new MyPicker() { WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center };
 
                                 //if (!string.IsNullOrWhiteSpace(item1.Option1))
                                 //    (Layout as Picker).Items.Add(item1.Option1);
@@ -1185,8 +1185,8 @@ namespace ProteusMMX.Views.Workorder
                                 //    (Layout as Picker).Items.Add(item1.Option10);
 
 
-                                var index = (Layout as Picker).Items.IndexOf(string.Empty);
-                                (Layout as Picker).SelectedIndex = index;
+                                var index = (Layout as MyPicker).Items.IndexOf(string.Empty);
+                                (Layout as MyPicker).SelectedIndex = index;
 
                                 sta = new Grid() { };
                                 sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });

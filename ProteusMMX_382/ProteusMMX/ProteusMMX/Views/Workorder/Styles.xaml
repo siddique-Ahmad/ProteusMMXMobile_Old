@@ -92,9 +92,9 @@
     <!--  Common style for borders  -->
     <Style x:Key="SfBorderStyle" TargetType="border:SfBorder">
         <!--<Setter Property="BackgroundColor" Value="{StaticResource BorderBackgroundColor}" />-->
-        <Setter Property="BorderColor" Value="Gray" />
+        <Setter Property="BorderColor" Value="Black" />
         <Setter Property="CornerRadius" Value="5" />
-        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="BorderWidth" Value="1" />
 
     </Style>
 

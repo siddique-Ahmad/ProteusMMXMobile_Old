@@ -20,6 +20,7 @@ using ProteusMMX.Services.Workorder.TaskAndLabour;
 using ProteusMMX.Utils;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.SelectionListPagesViewModels;
+using Syncfusion.XForms.Border;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -968,18 +969,18 @@ namespace ProteusMMX.ViewModel.Workorder
                                 employeeNameGrid.Children.Add(new Label { TextColor = Color.Black, Text = contractorNameTitle + item.ContractorName + "(" + item.LaborCraftCode + ")" }, 0, 0);
                             }
                         }
-                        Entry descriptionEntry;
+                        MyEntry descriptionEntry;
 
-
+                     
                         if (String.IsNullOrEmpty(item.Description))
                         {
-                            descriptionEntry = new Entry { IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), Text = item.Description, WidthRequest = 300, HeightRequest = 150 };
+                            descriptionEntry = new MyEntry { IsEnabled = false,  BackgroundColor = Color.FromHex("#C0C2C9"), Text = item.Description, WidthRequest = 300, HeightRequest = 150 };
                             //LabelDescription = new Label { IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), Text = item.Description, WidthRequest = 300, HeightRequest = 150, LineBreakMode = LineBreakMode.WordWrap };
                         }
                         else
                         {
                             string result = RemoveHTML.StripHtmlTags(item.Description);
-                            descriptionEntry = new Entry { IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), Text = result, WidthRequest = 300, HeightRequest = 150 };
+                            descriptionEntry = new MyEntry { IsEnabled = false, BackgroundColor = Color.FromHex("#C0C2C9"), Text = result, WidthRequest = 300, HeightRequest = 150 };
                             //LabelDescription = new Label { IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), Text = result, WidthRequest = 300, HeightRequest = 150, LineBreakMode = LineBreakMode.WordWrap };
                         }
 
@@ -1380,13 +1381,14 @@ namespace ProteusMMX.ViewModel.Workorder
                         completeButton.Clicked += (sender, e) =>
                         {
                             stopButton.IsEnabled = false;
-                            stopButton.BackgroundColor = Color.FromHex("#D3D3D3");
+                            
+                            stopButton.BackgroundColor = Color.FromHex("#708090");
 
                             completeButton.IsEnabled = false;
-                            completeButton.BackgroundColor = Color.FromHex("#D3D3D3");
+                            completeButton.BackgroundColor = Color.FromHex("#708090");
 
                             startButton.IsEnabled = false;
-                            startButton.BackgroundColor = Color.FromHex("#D3D3D3");
+                            startButton.BackgroundColor = Color.FromHex("#708090");
 
                             completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
                             var parent = completeButton.Parent;
@@ -1397,13 +1399,13 @@ namespace ProteusMMX.ViewModel.Workorder
                         completeButtonforRate2.Clicked += (sender, e) =>
                         {
                             stopButtonforRate2.IsEnabled = false;
-                            stopButtonforRate2.BackgroundColor = Color.FromHex("#D3D3D3");
+                            stopButtonforRate2.BackgroundColor = Color.FromHex("#708090");
 
                             completeButtonforRate2.IsEnabled = false;
-                            completeButtonforRate2.BackgroundColor = Color.FromHex("#D3D3D3");
+                            completeButtonforRate2.BackgroundColor = Color.FromHex("#708090");
 
                             startButtonforRate2.IsEnabled = false;
-                            startButtonforRate2.BackgroundColor = Color.FromHex("#D3D3D3");
+                            startButtonforRate2.BackgroundColor = Color.FromHex("#708090");
 
                             completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
                             var parent = completeButtonforRate2.Parent;
@@ -2072,7 +2074,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             //btnStart.IsEnabled = false;
             //btnStart.BackgroundColor = Color.FromHex("#D3D3D3");
-            Entry e1 = sender as Entry;
+            Entry e1 = sender as MyEntry;
             String val = e1.Text; //Get Current Text
 
             if (val.Contains(" "))//If it is more than your character restriction
@@ -2095,7 +2097,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             //btnStart.IsEnabled = false;
             //btnStart.BackgroundColor = Color.FromHex("#D3D3D3");
-            Entry e1 = sender as Entry;
+            Entry e1 = sender as MyEntry;
             String val = e1.Text; //Get Current Text
 
             if (val.Contains(" "))//If it is more than your character restriction

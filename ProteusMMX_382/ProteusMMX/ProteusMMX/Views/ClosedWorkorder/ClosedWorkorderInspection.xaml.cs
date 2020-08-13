@@ -189,8 +189,8 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     };
                 }
 
-                Entry hoursEntry = new MyEntry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "hh" };
-                Entry minuteEntry = new MyEntry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "mm", };
+                Entry hoursEntry = new MyEntry {  IsEnabled = false, BackgroundColor = Color.FromHex("#DCDCDC"), TextColor = Color.Black, Placeholder = "hh" };
+                Entry minuteEntry = new MyEntry { IsEnabled = false, BackgroundColor = Color.FromHex("#DCDCDC"), TextColor = Color.Black, Placeholder = "mm", };
                 if (ParentLayout.Children.Count > 4)
                 {
                     break;
@@ -497,8 +497,8 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
 
 
-                Entry hoursEntry = new MyEntry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "hh" };
-                Entry minuteEntry = new MyEntry { WidthRequest = 50, IsEnabled = false, BackgroundColor = Color.FromHex("#D3D3D3"), TextColor = Color.Black, Placeholder = "mm", };
+                Entry hoursEntry = new MyEntry {  IsEnabled = false, BackgroundColor = Color.FromHex("#DCDCDC"), TextColor = Color.Black, Placeholder = "hh" };
+                Entry minuteEntry = new MyEntry {  IsEnabled = false, BackgroundColor = Color.FromHex("#DCDCDC"), TextColor = Color.Black, Placeholder = "mm", };
                 if (ParentLayout.Children.Count > 4)
                 {
                     break;

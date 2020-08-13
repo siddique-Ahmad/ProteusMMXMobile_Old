@@ -1,4 +1,5 @@
 ﻿using ProteusMMX.Helpers;
+using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.Utils;
 using ProteusMMX.ViewModel.Workorder;
@@ -16,6 +17,19 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PastViewCell : ViewCell
     {
+        List<FormControl> _workorderControlsNew = new List<FormControl>();
+        public List<FormControl> WorkorderControlsNew
+        {
+            get
+            {
+                return _workorderControlsNew;
+            }
+
+            set
+            {
+                _workorderControlsNew = value;
+            }
+        }
 
         Color rowcolor = Color.White;
         public PastViewCell()
@@ -47,7 +61,11 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
         public PastViewCell(ref object ParentContext)
         {
             InitializeComponent();
-
+            if (Application.Current.Properties.ContainsKey("WorkorderDetailsControls"))
+            {
+                SubModule WorkorderDetails = Application.Current.Properties["WorkorderDetailsControls"] as SubModule;
+                WorkorderControlsNew = WorkorderDetails.listControls;
+            }
             string WorkOrderTypeKeyValue = "";
             string WorkOrderStartedDateKeyValue = "";
             string WorkOrderCompletionDateKeyValue = "";
@@ -55,14 +73,60 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             string DescriptionKeyValue = "";
             string PriorityKeyValue = "";
 
-            // this.CloseWorkorderMenuItem.Text = WebControlTitle.GetTargetNameByTitleName("CloseWorkOrder");
-            this.ParentContext = ParentContext;
-            this.WorkorderNumberLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkorderNumber");
 
-            this.RequiredDateLabel.Text = WebControlTitle.GetTargetNameByTitleName("RequiredDate");
-            this.TargetNameLabel.Text = WebControlTitle.GetTargetNameByTitleName("Target") + " " + WebControlTitle.GetTargetNameByTitleName("Name");
-            // this.WorkorderTypeLabel.Text = (ParentContext as WorkorderListingPageViewModel).WorkOrderTypeTitle;
-            this.ActivationDateLabel.Text = WebControlTitle.GetTargetNameByTitleName("ActivationDate");
+            this.ParentContext = ParentContext;
+
+            /// For workordernumber////
+            var workorderNumber = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkOrderNumber");
+            if (workorderNumber != null)
+            {
+                this.WorkorderNumberLabel.Text = workorderNumber.TargetName;
+
+            }
+            else
+            {
+                this.WorkorderNumberLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkorderNumber");
+            }
+
+            /// For Requireddate////
+            var requiredDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "RequiredDate");
+            if (requiredDate != null)
+            {
+                this.RequiredDateLabel.Text = requiredDate.TargetName;
+
+            }
+            else
+            {
+                this.RequiredDateLabel.Text = WebControlTitle.GetTargetNameByTitleName("RequiredDate");
+            }
+
+            /// For TargetName///
+            var target = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "AssetID");
+            if (target != null)
+            {
+                this.TargetNameLabel.Text = target.TargetName;
+
+            }
+            else
+            {
+                this.TargetNameLabel.Text = WebControlTitle.GetTargetNameByTitleName("Target");
+            }
+
+
+
+
+            ///For ActivationDate///
+            var activationDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "ActivationDate");
+            if (activationDate != null)
+            {
+                this.ActivationDateLabel.Text = activationDate.TargetName;
+
+            }
+            else
+            {
+                this.ActivationDateLabel.Text = WebControlTitle.GetTargetNameByTitleName("ActivationDate");
+            }
+
 
             if (Application.Current.Properties.ContainsKey("PriorityKey"))
             {
@@ -74,35 +138,68 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
                 this.PriorityColon.IsVisible = true;
             }
 
-            this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
-            this.WorkorderTypeColon.IsVisible = true;
-            //if (Application.Current.Properties.ContainsKey("WorkOrderTypeKey"))
-            //{
-            //    WorkOrderTypeKeyValue = Application.Current.Properties["WorkOrderTypeKey"].ToString();
-            //}
-            //if (WorkOrderTypeKeyValue == "E" || WorkOrderTypeKeyValue == "V")
-            //{
+            ////For Workordertype////
+            var workOrderType = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkTypeID");
+            if (workOrderType != null)
+            {
+                this.WorkorderTypeLabel.Text = workOrderType.TargetName;
 
-            //}
+            }
+            else
+            {
+                this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
+            }
+
+            this.WorkorderTypeColon.IsVisible = true;
+
+
+            ////For Workorderstartdate/////
             if (Application.Current.Properties.ContainsKey("WorkOrderStartedDateKey"))
             {
                 WorkOrderStartedDateKeyValue = Application.Current.Properties["WorkOrderStartedDateKey"].ToString();
             }
             if (WorkOrderStartedDateKeyValue == "E" || WorkOrderStartedDateKeyValue == "V")
             {
-                this.WorkStartedDateLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkStartedDate");
+                var workStartedDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkStartedDate");
+                if (workStartedDate != null)
+                {
+                    this.WorkStartedDateLabel.Text = workStartedDate.TargetName;
+
+                }
+                else
+                {
+                    this.WorkStartedDateLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkStartedDate");
+                }
+
+
                 this.WorkStartedDateVisible.IsVisible = true;
             }
+
+
+            ////For WorkorderCompletiondate//////
             if (Application.Current.Properties.ContainsKey("WorkOrderCompletionDateKey"))
             {
                 WorkOrderCompletionDateKeyValue = Application.Current.Properties["WorkOrderCompletionDateKey"].ToString();
             }
             if (WorkOrderCompletionDateKeyValue == "E" || WorkOrderCompletionDateKeyValue == "V")
             {
-                this.WorkCompletionDateLabel.Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
-                this.WorkCompletionDateVisible.IsVisible = true;
+                var completionDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "CompletionDate");
+                if (completionDate != null)
+                {
+                    this.WorkCompletionDateLabel.Text = completionDate.TargetName;
 
+                }
+                else
+                {
+                    this.WorkCompletionDateLabel.Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
+                }
+
+
+                this.WorkCompletionDateVisible.IsVisible = true;
             }
+
+
+            /// For WorkorderRequestedDate//////////
             if (Application.Current.Properties.ContainsKey("WorkOrderRequestedDateKey"))
             {
                 WorkOrderRequestedDateKeyValue = Application.Current.Properties["WorkOrderRequestedDateKey"].ToString();
@@ -111,17 +208,40 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             {
                 if (WorkOrderRequestedDateKeyValue == "E" || WorkOrderRequestedDateKeyValue == "V")
                 {
-                    this.WorkRequestedDateLabel.Text = WebControlTitle.GetTargetNameByTitleName("RequestedDate");
+                    var requestedate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "RequestedDate");
+                    if (requestedate != null)
+                    {
+                        this.WorkRequestedDateLabel.Text = requestedate.TargetName;
+
+                    }
+                    else
+                    {
+                        this.WorkRequestedDateLabel.Text = WebControlTitle.GetTargetNameByTitleName("RequestedDate");
+                    }
+
                     this.WorkRequestedDateVisible.IsVisible = true;
                 }
             }
+
+            /// For Description//////////
             if (Application.Current.Properties.ContainsKey("DescriptionKey"))
             {
                 DescriptionKeyValue = Application.Current.Properties["DescriptionKey"].ToString();
             }
             if (DescriptionKeyValue == "E" || DescriptionKeyValue == "V")
             {
-                this.DescriptionLabel.Text = WebControlTitle.GetTargetNameByTitleName("Description");
+
+                var description = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "Description");
+                if (description != null)
+                {
+                    this.DescriptionLabel.Text = description.TargetName;
+
+                }
+                else
+                {
+                    this.DescriptionLabel.Text = WebControlTitle.GetTargetNameByTitleName("Description");
+                }
+
                 this.DescriptionVisible.IsVisible = true;
             }
         }

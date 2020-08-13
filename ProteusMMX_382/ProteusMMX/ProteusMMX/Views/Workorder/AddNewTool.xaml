@@ -109,19 +109,19 @@
 
                         </StackLayout>
 
-                        <buttons:SfButton
-                         
+                        <Button
+                         CornerRadius="5"
                         Grid.Row="2"                                            
                         VerticalOptions="StartAndExpand"
                         Command="{Binding SaveToolCommand}"
-                        Style="{StaticResource SfButtonStyle}"
+                        Style="{StaticResource LoginButtonStyle}"
                         Grid.ColumnSpan="2"
                         Text="{Binding SaveTitle}" >
 
 
                             <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="2" Grid.ColumnSpan="2"  Command="{Binding SaveToolCommand}" />-->
 
-                        </buttons:SfButton>
+                        </Button>
                     </Grid>
 
                 </ScrollView>

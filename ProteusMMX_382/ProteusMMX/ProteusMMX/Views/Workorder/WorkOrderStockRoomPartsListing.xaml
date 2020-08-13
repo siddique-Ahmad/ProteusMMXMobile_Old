@@ -70,9 +70,8 @@
                     <ColumnDefinition Width="3.5*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:BorderlessEntry
-                        Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                <border:SfBorder CornerRadius="5">
+                    <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
                 </border:SfBorder>
                 <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
 

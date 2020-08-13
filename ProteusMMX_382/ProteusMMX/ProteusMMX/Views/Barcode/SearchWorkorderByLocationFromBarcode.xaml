@@ -119,7 +119,9 @@
                         </Grid.ColumnDefinitions>
 
                         <Label Text="{Binding WorkorderTypeLabelTitle}" Style="{StaticResource LabelStyle}"/>
-                        <Picker Grid.Column="1" ItemsSource="{Binding PickerTitles}" SelectedItem="{Binding SelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding SelectedIndexPicker , Mode=TwoWay}"/>
+                        <border:SfBorder CornerRadius="5" Grid.Column="1">
+                            <Picker  ItemsSource="{Binding PickerTitles}" SelectedItem="{Binding SelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding SelectedIndexPicker , Mode=TwoWay}"/>
+                        </border:SfBorder>
 
                         <!--<Grid Grid.Column="2" ColumnSpacing="0">-->
                         <!--

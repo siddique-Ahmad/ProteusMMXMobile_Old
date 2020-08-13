@@ -135,15 +135,15 @@
                     <Button Text="{Binding SaveTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding SaveEditStockroomPartsCommand}" IsEnabled="{Binding StockroomPartIsEnabled}" />
                 </buttons:SfButton>-->
 
-                <buttons:SfButton
+                <Button
                         Grid.Row="4"
-                     
+                     CornerRadius="5"
                             VerticalOptions="StartAndExpand"
                         Command="{Binding SaveEditStockroomPartsCommand}"
-                        Style="{StaticResource SfButtonStyle}"
+                        Style="{StaticResource LoginButtonStyle}"
                        IsEnabled="{Binding StockroomPartIsEnabled}"
                         Text="{Binding SaveTitle}" >
-                </buttons:SfButton>
+                </Button>
             </StackLayout>
 
         </Grid>

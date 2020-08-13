@@ -99,6 +99,7 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public string RequesterPhone { get; set; }
         public string TargetName { get; set; }
 
+        public string CurrentRuntime { get; set; }
         public string SectionName { get; set; }
 
         public string ApprovalLevel { get; set; }
