@@ -71,11 +71,13 @@ namespace ProteusMMX.UWP
 
 
                 List<Assembly> assembliesToInclude = new List<Assembly>();
-                assembliesToInclude = Rg.Plugins.Popup.Windows.Popup.GetExtraAssemblies().ToList();
+                assembliesToInclude = Rg.Plugins.Popup.Popup.GetExtraAssemblies().ToList();
+               
                 assembliesToInclude.Add(typeof(SignaturePad.Forms.SignaturePadCanvasRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerPage).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingBarcodeImageViewRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(CarouselView.FormsPlugin.UWP.CarouselViewRenderer).GetTypeInfo().Assembly);
 
                 ///Syncfusion Assembly include/////////////////
                 assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfButtonRenderer).GetTypeInfo().Assembly);
@@ -89,7 +91,8 @@ namespace ProteusMMX.UWP
 
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
                 Xamarin.Forms.DependencyService.Register<PDFViewer>();
-               
+                Rg.Plugins.Popup.Popup.Init();
+                //Xamarin.Forms.Forms.Init(e, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
 
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
