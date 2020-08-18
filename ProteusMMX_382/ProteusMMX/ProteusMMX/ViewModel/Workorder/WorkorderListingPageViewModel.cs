@@ -906,7 +906,23 @@ namespace ProteusMMX.ViewModel.Workorder
                 OnPropertyChanged(nameof(WorkorderTypeFilterText));
             }
         }
+        string _FailedInspectionTitle;
+        public string FailedInspectionTitle
+        {
+            get
+            {
+                return _FailedInspectionTitle;
+            }
 
+            set
+            {
+                if (value != _FailedInspectionTitle)
+                {
+                    _FailedInspectionTitle = value;
+                    OnPropertyChanged("FailedInspectionTitle");
+                }
+            }
+        }
         string _locationNameFilterText;
         public string LocationNameFilterText
         {
@@ -1390,6 +1406,7 @@ namespace ProteusMMX.ViewModel.Workorder
             //var titles = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
             //if (titles != null && titles.CFLI.Count > 0 && titles.listWebControlTitles.Count > 0)
             {
+                FailedInspectionTitle = WebControlTitle.GetTargetNameByTitleName("FailedInspection");
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrders");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
@@ -1421,18 +1438,18 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic") || AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Professional"))
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle,FailedInspectionTitle };
 
                     }
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle };
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle,FailedInspectionTitle };
                     }
 
                 }
                 else
                 {
-                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle,FailedInspectionTitle };
                 }
                 WorkorderTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
                 SortByLocationLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Location");
@@ -1728,7 +1745,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 if (AppSettings.User.ULFeatures)
                 {
-                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle,DemandMaintenenceTitle, EmergencyMaintenanceTitle,PreventiveMaintenenceTitle, };
+                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle,DemandMaintenenceTitle, PreventiveMaintenenceTitle,EmergencyMaintenanceTitle, FailedInspectionTitle };
                     //this.SelectedIndexPicker = 0;
                    
 
@@ -1736,7 +1753,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else
                 {
-                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle, DemandMaintenenceTitle, PreventiveMaintenenceTitle };
+                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle, DemandMaintenenceTitle, PreventiveMaintenenceTitle,FailedInspectionTitle };
                    // this.SelectedIndexPicker = 0;
                    
                 }
@@ -2138,7 +2155,11 @@ namespace ProteusMMX.ViewModel.Workorder
                     await RefillWorkorderCollection();
 
                 }
-
+                else if (SelectedPickerText == FailedInspectionTitle)
+                {
+                     WorkorderTypeFilterText = "FailedInspection";
+                      await RefillWorkorderCollection();
+                }
                 else
                 {
                     WorkorderTypeFilterText = null;
@@ -2296,7 +2317,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 ///TODO: Get Inspection InspectionSignatureResponse
                 var InspectionSignatureResponse = await _workorderService.IsSignatureRequiredOnInspection(WorkorderID.ToString());
-                if (InspectionSignatureResponse.IsSignatureRequiredAndEmpty && (InspectionUser ?? false))
+                if (InspectionSignatureResponse.IsSignatureRequiredAndEmpty)
                 {
                     UserDialogs.Instance.HideLoading();
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillallsignaturesinWorkordersInspectionstocloseWorkorder"), 2000);

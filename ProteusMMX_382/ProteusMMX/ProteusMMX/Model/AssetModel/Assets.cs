@@ -86,6 +86,9 @@ namespace ProteusMMX.Model.AssetModel
         public decimal? OriginalCost { get; set; }
         public string LOTOUrl { get; set; }
 
+        public int? ProfileID { get; set; }
+        public string Base64Image { get; set; }
+
         public bool ShowAssetSystem
         {
             get

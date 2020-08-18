@@ -67,6 +67,9 @@
                         <Label Text="{Binding QuantityAllocatedText}"/>
                     </StackLayout>
 
+                    <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="5">
+                        <Image   Source="{Binding AttachmentImageSource}"/>
+                    </StackLayout>
 
                 </StackLayout>
                 <StackLayout x:Name="Phone" Orientation="Vertical">
@@ -94,7 +97,9 @@
                         </StackLayout>
                     </StackLayout>
 
-
+                    <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="5">
+                        <Image   Source="{Binding AttachmentImageSource}"/>
+                    </StackLayout>
                 </StackLayout>
 
                 <!--</Grid>-->

@@ -56,7 +56,7 @@ namespace ProteusMMX.Views.Workorder
         Button btnAddEmployee;
         Button btnAddContractor;
         //Task<ServiceOutput> flInput;
-        public int? WorkorderID { get; set; }
+        public int WorkorderID { get; set; }
         public string BaseURL { get; set; }
 
         ServiceOutput CC;
@@ -1633,6 +1633,8 @@ namespace ProteusMMX.Views.Workorder
         private async Task RetriveAllWorkorderInspectionsAsync()
         {
 
+           
+
             CC = await ViewModel._inspectionService.GetWorkorderInspection(this.WorkorderID.ToString(), AppSettings.User.UserID.ToString());
             if (CC.listInspection == null || CC.listInspection.Count > 0)
             {
@@ -1688,10 +1690,41 @@ namespace ProteusMMX.Views.Workorder
 
 
             }
+            if (CC.listInspection.Count > 0 && CC.workOrderEmployee.Count == 0)
+            {
+                ServiceOutput taskResponse = null;
 
+                taskResponse = await ViewModel._taskService.GetEmployee(UserID, "0", "0", AppSettings.User.EmployeeName, "Inspection", this.WorkorderID);
 
+                if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
+                {
+                    var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
+                    if (assingedToEmployees != null)
+                    {
+                        this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
+                        this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName) + "(" + assingedToEmployees.First().LaborCraftCode + ")";
+                    }
+
+                }
+                Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/AssociateEmployeeAndContractorLaborCraftToWorkOrder");
+
+                var payload = new Dictionary<string, string>
+            {
+              {"EmployeeLaborCraftID", this.EmployeeID.ToString()},
+              {"WorkorderID", WorkorderID.ToString()},
+               {"ContractorLaborCraftID","0"}
+            };
+
+                string strPayload = JsonConvert.SerializeObject(payload);
+                HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+                var t = Task.Run(() => SendURI(posturi, c));
+
+                OnAppearing();
+            }
 
             BindLayout(CC.listInspection);
+
+
         }
 
         private void Timer_Clicked(object sender, EventArgs e)

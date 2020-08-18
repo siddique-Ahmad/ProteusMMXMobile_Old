@@ -19,6 +19,9 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Net;
 using Microsoft.AppCenter.Crashes;
+using ProteusMMX.Helpers.Attachment;
+using System.IO;
+using ProteusMMX.DependencyInterface;
 
 namespace ProteusMMX.ViewModel
 {
@@ -34,7 +37,16 @@ namespace ProteusMMX.ViewModel
         #endregion
         private static ISettings Settings => CrossSettings.Current;
         #region Properties
-
+        private Xamarin.Forms.ImageSource _attachmentImageSource;
+        public Xamarin.Forms.ImageSource AttachmentImageSource
+        {
+            get { return _attachmentImageSource; }
+            set
+            {
+                _attachmentImageSource = value;
+                OnPropertyChanged("AttachmentImageSource");
+            }
+        }
 
         ServiceOutput _formControlsAndRights;
         public ServiceOutput FormControlsAndRights
@@ -443,24 +455,7 @@ namespace ProteusMMX.ViewModel
             {
 
 
-                //var factory = new WSTrustChannelFactory(new UserNameWSTrustBinding(), "https://yourdomain.com/adfs/services/trust/13/UsernameMixed")
-                //{
-                //    TrustVersion = TrustVersion.WSTrustFeb2005
-                //};
-
-                //factory.Credentials.UserName.UserName = "";
-                //factory.Credentials.UserName.Password = "";
-
-                //var rstoken = new Microsoft.IdentityModel.Protocols.WSTrust.RequestSecurityToken
-                //{
-                //    RequestType = WSTrust13Constants.RequestTypes.Issue,
-                //    AppliesTo = new EndpointAddress("https://yourdomain.com/yourservice"),
-                //    KeyType = WSTrust13Constants.KeyTypes.Bearer
-                //};
-
-                //var channel = factory.CreateChannel();
-
-                //channel.Issue(rstoken);
+              
 
                 if (navigationData != null)
                 {
@@ -496,6 +491,32 @@ namespace ProteusMMX.ViewModel
                 var FDAKey = await _authenticationService.GetFDAValidationAsync(AppSettings.BaseURL, null);
                 if (FDAKey != null)
                 {
+
+                    ////Set Company Profile Picture///////
+                 
+                    string newcompanyprofilebase64 = string.Empty;
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        string companyprofilebase64 = FDAKey.CompanyProfileLogo;
+                        newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
+                        if(string.IsNullOrWhiteSpace(newcompanyprofilebase64))
+                        {
+                            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
+                        }
+                        byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
+                        MemoryStream stream = new MemoryStream(imgUser);
+                        bool isimage = Extension.IsImage(stream);
+                        if (isimage == true)
+                        {
+
+                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
+
+
+
+                        }
+                    }
+
                     if (FDAKey.FDAEnable && FDAKey.Signvalue=="True")
                     {
 

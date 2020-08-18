@@ -40,5 +40,7 @@ namespace ProteusMMX.Model.InventoryModel
         public decimal? QuantityAllocated { get; set; }
         public string ShelfBin { get; set; }
         public string SerialNumber { get; set; }
+
+       
     }
 }
