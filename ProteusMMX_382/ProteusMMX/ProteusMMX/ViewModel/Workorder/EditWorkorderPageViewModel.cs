@@ -10973,8 +10973,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 #region Auto Fill Start Date and completion date from inspection
 
 
-                if (InspectionUser == true) //checks whether User have inspection role or not
-                {
+                //if (InspectionUser == true) //checks whether User have inspection role or not
+                //{
                     if (Inspection.listInspection != null && Inspection.listInspection.Count > 0) //checks whether inspection present in workorder or not
                     {
 
@@ -11099,7 +11099,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
 
 
-                }
+               // }
 
 
                 #endregion
@@ -12620,8 +12620,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 //TODO: apply the time zone. (Done)
-                if (InspectionUser ?? false) //checks whether User have inspection role or not
-                {
+                //if (InspectionUser ?? false) //checks whether User have inspection role or not
+                //{
                     string inspectionStartDate = null;
                     string inspectionCompletionDate = null;
                     if (Inspection.listInspection != null && Inspection.listInspection.Count > 0) //checks whether inspection present in workorder or not
@@ -12764,7 +12764,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
 
 
-                }
+               // }
 
                 #endregion
 
@@ -14635,7 +14635,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 ///TODO: Get Inspection InspectionSignatureResponse
                 var InspectionSignatureResponse = await _workorderService.IsSignatureRequiredOnInspection(WorkorderID.ToString());
-                if (InspectionSignatureResponse.IsSignatureRequiredAndEmpty && (InspectionUser ?? false))
+                if (InspectionSignatureResponse.IsSignatureRequiredAndEmpty)
                 {
                     UserDialogs.Instance.HideLoading();
 

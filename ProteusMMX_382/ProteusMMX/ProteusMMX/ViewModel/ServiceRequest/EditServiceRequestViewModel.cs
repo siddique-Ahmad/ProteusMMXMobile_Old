@@ -8664,31 +8664,32 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
 
 
-               
-               
+                
+
+                var page = new SRDecline(UserID, ServiceRequestID, _serviceRequestService);
+                await PopupNavigation.PushAsync(page);
 
 
-
-                var yourobject = new ServiceRequests
-                {
-                   
-                    
-                        UserId= Convert.ToInt32(this.UserID),
-                        ServiceRequestID = this.ServiceRequestID,
+                //var yourobject = new ServiceRequests
+                //{
 
 
-                };
+                //        UserId= Convert.ToInt32(this.UserID),
+                //        ServiceRequestID = this.ServiceRequestID,
 
 
-                var response = await _serviceRequestService.DeclineServiceRequest(yourobject);
+                //};
 
-                if (Boolean.Parse(response.servicestatus))
-                {
-                    await NavigationService.NavigateBackAsync();
-                }
-                UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                //var response = await _serviceRequestService.DeclineServiceRequest(yourobject);
+
+                //if (Boolean.Parse(response.servicestatus))
+                //{
+                //    await NavigationService.NavigateBackAsync();
+                //}
+                //UserDialogs.Instance.HideLoading();
+
+                // OperationInProgress = false;
 
             }
             catch (Exception ex)

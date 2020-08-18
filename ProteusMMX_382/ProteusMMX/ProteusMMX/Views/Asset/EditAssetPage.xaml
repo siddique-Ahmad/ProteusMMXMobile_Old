@@ -84,39 +84,42 @@
 
 
 
-                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                                <Label Text="{Binding AssetNameTitle}" TextColor="Black">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <!--<Editor Text="{Binding AssetNameText}" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}"/>-->
-                                <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor Text="{Binding AssetNameText}" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}"></dependencyinterface:CustomEditor>
-                                </border:SfBorder>
+                            <StackLayout Orientation="Vertical" Grid.Row="0">
+                                <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <Label Text="{Binding AssetNameTitle}" TextColor="Black">
+                                        <Label.FontAttributes>
+                                            <OnPlatform x:TypeArguments="FontAttributes">
+                                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                                            </OnPlatform>
+                                        </Label.FontAttributes>
+                                    </Label>
+                                    <!--<Editor Text="{Binding AssetNameText}" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}"/>-->
+                                    <border:SfBorder CornerRadius="5">
+                                        <dependencyinterface:CustomEditor Text="{Binding AssetNameText}" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                    </border:SfBorder>
+                                </StackLayout>
+
+                                <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                                    <Label Text="{Binding AssetNumberTitle}" TextColor="Black">
+                                        <Label.FontAttributes>
+                                            <OnPlatform x:TypeArguments="FontAttributes">
+                                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                                            </OnPlatform>
+                                        </Label.FontAttributes>
+                                    </Label>
+                                    <!--<Editor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"/>-->
+                                    <border:SfBorder CornerRadius="5">
+                                        <dependencyinterface:CustomEditor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                    </border:SfBorder>
+                                </StackLayout>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                                <Label Text="{Binding AssetNumberTitle}" TextColor="Black">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <!--<Editor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"/>-->
-                                <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"></dependencyinterface:CustomEditor>
-                                </border:SfBorder>
+                            <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="1">
+                                <Image   Source="{Binding AttachmentImageSource}"/>
+                              
                             </StackLayout>
-
-
-
-
 
                             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0" IsVisible="{Binding LocationIsVisible}">
                                 <Label Text="{Binding FacilityTitle}" TextColor="Black">

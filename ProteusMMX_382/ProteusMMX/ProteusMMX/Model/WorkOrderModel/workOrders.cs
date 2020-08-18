@@ -145,6 +145,64 @@ namespace ProteusMMX.Model.WorkOrderModel
                 return false;
             }
         }
+        //public string WorkOrderHasAttachmentwithCount { get; set; }
+        //public bool WorkOrderHasAttachment
+        //{
+        //    get
+        //    {
+        //        if (this.WorkOrderHasAttachmentwithCount != null)
+        //        {
+        //            return true;
+        //        }
+
+        //        return false;
+        //    }
+        //}
+
+        //public string IsWorkOrderHasFailedInspection { get; set; }
+        //public bool WorkOrderHasFailedInspection
+        //{
+        //    get
+        //    {
+        //        if (this.IsWorkOrderHasFailedInspection != null)
+        //        {
+        //            return true;
+        //        }
+
+        //        return false;
+        //    }
+        //}
+        public string WorkOrderHasAttachment { get; set; }
+        public bool WorkOrderAttachmentFlag
+        {
+            get
+            {
+                if (this.WorkOrderHasAttachment == "True")
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+        public string IsWorkOrderHasFailedInspection { get; set; }
+        public bool WorkOrderHasFailedInspection
+        {
+            get
+            {
+                if (this.IsWorkOrderHasFailedInspection == "True")
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+
+        public int? WorkOrderAttachmentCount { get; set; }
+
+
         public string WorkOrderApproved { get; set; }
         public bool WorkOrderApprovedFlag
         {

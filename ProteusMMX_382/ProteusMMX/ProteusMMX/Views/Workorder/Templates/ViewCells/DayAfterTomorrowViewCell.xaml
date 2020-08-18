@@ -259,6 +259,27 @@
                         </Image.Source>
 
                     </Image>
+                    <Image  Grid.Column="5"  IsVisible="{Binding WorkOrderAttachmentFlag}">
+                        <Image.Source>
+                            <OnPlatform  x:TypeArguments="ImageSource">
+                                <OnPlatform.iOS>woattachment.png</OnPlatform.iOS>
+                                <OnPlatform.Android>woattachment.png</OnPlatform.Android>
+                                <OnPlatform.WinPhone>Assets/woattachment.png</OnPlatform.WinPhone>
+                            </OnPlatform>
+                        </Image.Source>
+
+                    </Image>
+
+                    <Image  Grid.Column="6"  IsVisible="{Binding WorkOrderHasFailedInspection}">
+                        <Image.Source>
+                            <OnPlatform  x:TypeArguments="ImageSource">
+                                <OnPlatform.iOS>Priority.png</OnPlatform.iOS>
+                                <OnPlatform.Android>Priority.png</OnPlatform.Android>
+                                <OnPlatform.WinPhone>Assets/Priority.png</OnPlatform.WinPhone>
+                            </OnPlatform>
+                        </Image.Source>
+
+                    </Image>
 
                 </Grid>
 

@@ -14,6 +14,7 @@ namespace ProteusMMX.Model
 {
     public class ServiceOutput
     {
+        public string CompanyProfileLogo { get; set; }
         public workOrderWrapper workOrderWrapper { get; set; }
 
         public List<AssignTo> assignToEmployees { get; set; }

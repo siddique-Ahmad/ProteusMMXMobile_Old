@@ -1,6 +1,8 @@
 ﻿using Acr.UserDialogs;
 using ProteusMMX.Constants;
+using ProteusMMX.DependencyInterface;
 using ProteusMMX.Helpers;
+using ProteusMMX.Helpers.Attachment;
 using ProteusMMX.Helpers.StringFormatter;
 using ProteusMMX.Model;
 using ProteusMMX.Model.CommonModels;
@@ -18,6 +20,7 @@ using ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.Parts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -775,7 +778,16 @@ namespace ProteusMMX.ViewModel.Inventory
             get { return _serverTimeZone; }
         }
 
-
+        private Xamarin.Forms.ImageSource _attachmentImageSource;
+        public Xamarin.Forms.ImageSource AttachmentImageSource
+        {
+            get { return _attachmentImageSource; }
+            set
+            {
+                _attachmentImageSource = value;
+                OnPropertyChanged("AttachmentImageSource");
+            }
+        }
         #region Normal Field Properties
 
         string _partNameText;
@@ -2382,7 +2394,22 @@ namespace ProteusMMX.ViewModel.Inventory
                 var TransactionParameters = await _inventoryService.GetTransactionReason(StockroompartID.ToString(), UserID);
                 if (TransactionParameters != null && TransactionParameters.inventoryWrapper.trasactionDialog != null)
                 {
+                    ////Set Part Profile Picture///////
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        byte[] imgUser = StreamToBase64.StringToByte(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image);
+                        MemoryStream stream = new MemoryStream(imgUser);
+                        bool isimage = Extension.IsImage(stream);
+                        if (isimage == true)
+                        {
 
+                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
+
+
+
+                        }
+                    }
                     var trasactiontype = TransactionParameters.inventoryWrapper.trasactionDialog;
                     this.PartNameText = trasactiontype.PartName;
                     this.PartNumberText = trasactiontype.PartNumber;
