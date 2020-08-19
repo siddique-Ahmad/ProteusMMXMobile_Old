@@ -138,6 +138,7 @@
     <Content Include="Assets\InventoryParts.png" />
     <Content Include="Assets\mic.png" />
     <Content Include="Assets\pdfword.png" />
+    <Content Include="Assets\ProteusCMMS.png" />
     <Content Include="Assets\Receiving.jpg" />
     <Content Include="Assets\Remove.png" />
     <Content Include="Assets\Requester.png" />
@@ -212,7 +213,7 @@
       <Version>2.0.147</Version>
     </PackageReference>
     <PackageReference Include="Rg.Plugins.Popup">
-      <Version>1.0.4</Version>
+      <Version>1.1.3.73-pre</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.4.118</Version>
