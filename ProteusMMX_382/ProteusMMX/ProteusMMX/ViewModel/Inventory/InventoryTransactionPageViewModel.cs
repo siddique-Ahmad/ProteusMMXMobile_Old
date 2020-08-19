@@ -2534,7 +2534,8 @@ namespace ProteusMMX.ViewModel.Inventory
                 if (response != null && bool.Parse(response.servicestatus))
                 {
                     Application.Current.Properties["CallfromTransactionPage"] = "true";
-                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Transactionissuccessfullysaved"), 2000);
+                    //DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Transactionissuccessfullysaved"), 2000);
+                    DialogService.ShowAlertAsync(WebControlTitle.GetTargetNameByTitleName("Transactionissuccessfullysaved"), response.TransactionNumber, "OK");
                     await NavigationService.NavigateBackAsync();
 
                 }
