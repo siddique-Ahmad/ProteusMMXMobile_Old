@@ -110,5 +110,7 @@ namespace ProteusMMX.Model
         public List<Module> lstModules { get; set; }
         public bool AssetExist { get; set; }
         public int? RecordCount { get; set; }
+
+        public string TransactionNumber { get; set; }
     }
 }
