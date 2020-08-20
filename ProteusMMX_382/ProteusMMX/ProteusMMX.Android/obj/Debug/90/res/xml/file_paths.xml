@@ -1,0 +1,10 @@
+<paths xmlns:android="http://schemas.android.com/apk/res/android"><!--<external-path name="my_images" path="Android/data/com.proteusMMX.MM.FileProvider/files/Pictures" />
+    <external-path name="my_movies" path="Android/data/com.proteusMMX.MM.FileProvider/files/Movies" />
+
+
+  <external-files-path name="my_images" path="." />
+  <external-files-path name="my_movies" path="." />-->--&gt;
+
+
+
+  <external-path path="Android/data/com.proteusMMX.MM.FileProvider/" name="files_root" /><external-path path="." name="external_storage_root" /></paths>

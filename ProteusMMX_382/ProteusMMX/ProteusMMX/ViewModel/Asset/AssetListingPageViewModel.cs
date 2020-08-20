@@ -7,6 +7,7 @@ using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.Services.Asset;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
+using ProteusMMX.Services.Navigation;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Utils;
 using ProteusMMX.ViewModel.Miscellaneous;
@@ -34,6 +35,8 @@ namespace ProteusMMX.ViewModel.Asset
         protected readonly IFormLoadInputService _formLoadInputService;
 
         protected readonly IAssetModuleService _assetService;
+
+        public readonly INavigationService _navigationService;
 
         Page page;
 
@@ -223,6 +226,25 @@ namespace ProteusMMX.ViewModel.Asset
                 {
                     _assetName = value;
                     OnPropertyChanged("AssetName");
+                }
+            }
+        }
+
+
+        string _showAssetSystem;
+        public string ShowAssetSystem
+        {
+            get
+            {
+                return _showAssetSystem;
+            }
+
+            set
+            {
+                if (value != _showAssetSystem)
+                {
+                    _showAssetSystem = value;
+                    OnPropertyChanged("ShowAssetSystem");
                 }
             }
         }
@@ -656,14 +678,37 @@ namespace ProteusMMX.ViewModel.Asset
             }
         }
 
-        public AssetListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IAssetModuleService assetService)
+        //public AssetListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IAssetModuleService assetService)
+        //{
+        //    _authenticationService = authenticationService;
+        //    _formLoadInputService = formLoadInputService;
+        //    _assetService = assetService;
+
+        //}
+
+        public AssetListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IAssetModuleService assetService, INavigationService navigationService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _assetService = assetService;
-           
-        }
+            _navigationService = navigationService;
 
+        }
+        //public async Task NavigationFromAssetListing(string AssetSytemName,string AssetSystemNumber)
+        //{
+        //    TargetNavigationData tnobj = new TargetNavigationData();
+        //    tnobj.Description = AssetSytemName +"     " + AssetSystemNumber;
+        //    await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
+        //}
+
+        public async Task NavigationFromAssetListing(string AssetSystemID, string AssetSytemName, string AssetSystemNumber)
+        {
+            TargetNavigationData tnobj = new TargetNavigationData();
+            tnobj.AssetSystemID = Convert.ToInt32(AssetSystemID);
+            tnobj.AssetSystemName = AssetSytemName;
+            tnobj.AssetSystemNumber = AssetSystemNumber;
+            await NavigationService.NavigateToAsync<ShowAssetSystemViewModel>(tnobj);
+        }
         public async Task SetTitlesPropertiesForPage()
         {
 
@@ -674,6 +719,7 @@ namespace ProteusMMX.ViewModel.Asset
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
                 SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 AssetName = WebControlTitle.GetTargetNameByTitleName("AssetName");
+                ShowAssetSystem = WebControlTitle.GetTargetNameByTitleName("show") + " " + WebControlTitle.GetTargetNameByTitleName("AssetSystem");
                 AssetNumber = WebControlTitle.GetTargetNameByTitleName("AssetNumber");
                 Description = WebControlTitle.GetTargetNameByTitleName("Description");
                 CreateNewAsset = WebControlTitle.GetTargetNameByTitleName("CreateAsset");

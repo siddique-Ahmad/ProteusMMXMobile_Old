@@ -1,4 +1,6 @@
 ﻿using Acr.UserDialogs;
+
+using Microsoft.AppCenter.Crashes;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using ProteusMMX.Constants;
@@ -796,6 +798,7 @@ namespace ProteusMMX.ViewModel
 
             try
             {
+               
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                 //OperationInProgress = true;
 

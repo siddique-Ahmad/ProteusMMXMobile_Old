@@ -10,6 +10,8 @@ namespace ProteusMMX.Services.Asset
     {
         Task<ServiceOutput> GetAssets(string UserID, string PageNumber, string RowCount);
 
+        Task<ServiceOutput> AssetsByAssetSystemID(string AssetSystemID, string PageNumber, string RowsPage, string AssetSystemNumber,string Search);
+
         Task<ServiceOutput> GetAssetsBYAssetID(string AssetID);
 
         Task<ServiceOutput> GetCategory(string UserID, string SearchCategory);

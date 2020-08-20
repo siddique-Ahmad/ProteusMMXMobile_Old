@@ -1,6 +1,7 @@
 ﻿using ProteusMMX.DependencyInterface;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
+using Syncfusion.XForms.Buttons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -115,11 +116,29 @@ namespace ProteusMMX.Views.Workorder
                 e1.Text = val; //Set the Old value
             }
         }
-        //void OnTapGestureRecognizerTapped(object sender, EventArgs args)
-        //{
-        //    string Value = DependencyService.Get<ISpeechToText>().SpeechToText().ToString();
+        private void RadioButton_StateChanged(object sender, StateChangedEventArgs e)
+        {
+            if (RadioButton.IsChecked == false)
+            {
+                return;
+            }
+            else
+            {
+                Button1.IsChecked = false;
+            }
 
-        //    this.AdditionalDetailsText += " " + Value;
-        //}
+        }
+        private void Button1_StateChanged(object sender, StateChangedEventArgs e)
+        {
+            if (Button1.IsChecked == false)
+            {
+                return;
+            }
+            else
+            {
+                RadioButton.IsChecked = false;
+            }
+
+        }
     }
 }

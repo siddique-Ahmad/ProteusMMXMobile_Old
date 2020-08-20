@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+                 x:Class="ProteusMMX.Views.ShowMore">
+
+    <AbsoluteLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+        <border:SfBorder CornerRadius="5">
+            <StackLayout VerticalOptions="Center" Spacing="0" HorizontalOptions="Center">
+
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HeightRequest="200"  Padding="20,20,20,15" WidthRequest="370" BackgroundColor="White">
+                    <StackLayout.Resources>
+                        <ResourceDictionary Source="Style.xaml" />
+                    </StackLayout.Resources>
+
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="8.8*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Label x:Name="SortByLocationLableTitle" Grid.Row="1"/>
+                        <border:SfBorder CornerRadius="5" Grid.Row="1" Grid.Column="1">
+                            <Picker x:Name="LocationPicker"  SelectedIndexChanged="LocationSelectedIndexPicker" />
+                        </border:SfBorder>
+                        <Image Grid.Column="2" Grid.Row="1"  WidthRequest="30" HeightRequest="30" Source="Assets/clear.png">
+                            <Image.Source>
+                                <OnPlatform  x:TypeArguments="ImageSource">
+                                    <OnPlatform.iOS>clear.png</OnPlatform.iOS>
+                                    <OnPlatform.Android>Assets/clear.png</OnPlatform.Android>
+                                    <OnPlatform.WinPhone>Assets/clear.png</OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </Image.Source>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                         Tapped="OnLocationClearTapped"
+                                         NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+
+                        <Label x:Name="SortByShiftLabelTitle" Grid.Row="2"/>
+                        <border:SfBorder CornerRadius="5"  Grid.Column="1" Grid.Row="2">
+                            <Picker x:Name="ShiftPicker" SelectedIndexChanged="ShiftSelectedIndexPicker" />
+                        </border:SfBorder>
+                        <Image Grid.Column="2" Grid.Row="2"  WidthRequest="30" HeightRequest="30" Source="Assets/clear.png">
+                            <Image.Source>
+                                <OnPlatform  x:TypeArguments="ImageSource">
+                                    <OnPlatform.iOS>clear.png</OnPlatform.iOS>
+                                    <OnPlatform.Android>Assets/clear.png</OnPlatform.Android>
+                                    <OnPlatform.WinPhone>Assets/clear.png</OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </Image.Source>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                         Tapped="OnShiftClearTapped"
+                                         NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+
+                        <Label Text="{Binding SortByPriorityLabelTitle}" x:Name="SortByPriorityLabelTitle" Grid.Row="3"/>
+                        <border:SfBorder CornerRadius="5" Grid.Column="1" Grid.Row="3">
+                            <Picker x:Name="PriorityPicker"   SelectedIndexChanged="PrioritySelectedIndexPicker" />
+                        </border:SfBorder>
+                        <Image Grid.Column="2" Grid.Row="3"  WidthRequest="30" HeightRequest="30" Source="Assets/clear.png">
+                            <Image.Source>
+                                <OnPlatform  x:TypeArguments="ImageSource">
+                                    <OnPlatform.iOS>clear.png</OnPlatform.iOS>
+                                    <OnPlatform.Android>Assets/clear.png</OnPlatform.Android>
+                                    <OnPlatform.WinPhone>Assets/clear.png</OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </Image.Source>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                         Tapped="OnPriorityClearTapped"
+                                         NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+
+                        <Label Text="{Binding SortByDuedateTitle}" x:Name="SortByDueDateTitle" Grid.Row="4"/>
+                        <!--<DatePicker Date ="{Binding DueDate}"  Margin="0,0,30,0" Grid.Column="1"  Grid.Row="4"/>-->
+
+                        <Button FontSize="Small" CornerRadius="5" x:Name="SortByDateText"  Clicked="ShowDateCommand"  Grid.Row="4" Grid.Column="1" HeightRequest="35"  BackgroundColor="LightSkyBlue" HorizontalOptions="Fill">
+
+
+                        </Button>
+
+
+                        <Image Grid.Column="2" Grid.Row="4"  WidthRequest="30" HeightRequest="30" Source="Assets/clear.png">
+                            <Image.Source>
+                                <OnPlatform  x:TypeArguments="ImageSource">
+                                    <OnPlatform.iOS>clear.png</OnPlatform.iOS>
+                                    <OnPlatform.Android>Assets/clear.png</OnPlatform.Android>
+                                    <OnPlatform.WinPhone>Assets/clear.png</OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </Image.Source>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                        Tapped="OnDateClearTapped"
+                                         NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+
+                        <!--<Button Text="OK" Clicked="Button_OKClicked" BackgroundColor="LightSkyBlue"  Grid.Column="1" Grid.Row="5" >
+
+                    </Button>
+
+                    <Button Text="Cancel" Clicked="Button_CancelClicked" BackgroundColor="LightSkyBlue" Grid.Column="1" Grid.Row="6">
+
+                    </Button>-->
+
+                        <StackLayout  Grid.Column="1" Grid.Row="5" Orientation="Horizontal">
+
+                            <Button x:Name="OKButton" CornerRadius="5" Clicked="Button_OKClicked" WidthRequest="80" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" BackgroundColor="LightSkyBlue" />
+
+                            <Button x:Name="CancelButton" CornerRadius="5" Clicked="Button_CancelClicked" BackgroundColor="LightSkyBlue" WidthRequest="90" VerticalOptions="CenterAndExpand" Grid.Column="2" Grid.Row="5"  HorizontalOptions="CenterAndExpand" >
+                            </Button>
+
+                        </StackLayout>
+
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+        </border:SfBorder>
+    </AbsoluteLayout>
+</pages:PopupPage>

@@ -58,7 +58,7 @@
                 </Grid.ColumnDefinitions>-->
 
 
-                <ListView Grid.Row="1" Grid.ColumnSpan="2"
+            <ListView Grid.Row="1" Grid.ColumnSpan="2"
                          ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"
@@ -67,10 +67,10 @@
                           
                           behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding WorkorderNonStockroomPartSelectedCommand}">
 
-                </ListView>
+            </ListView>
 
-           <!-- </Grid>-->
-           
+            <!-- </Grid>-->
+
         </Grid>
 
 

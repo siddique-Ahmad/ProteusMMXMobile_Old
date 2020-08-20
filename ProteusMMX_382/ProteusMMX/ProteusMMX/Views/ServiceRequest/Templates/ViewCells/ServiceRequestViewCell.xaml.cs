@@ -1,4 +1,5 @@
 ﻿using ProteusMMX.Helpers;
+using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.ServiceRequestModel;
 using ProteusMMX.ViewModel.ServiceRequest;
 using System;
@@ -15,21 +16,71 @@ namespace ProteusMMX.Views.Service_Request.Templates.ViewCells
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ServiceRequestViewCell : ViewCell
     {
+        List<FormControl> _serviceRequestControlsNew = new List<FormControl>();
+        public List<FormControl> ServiceRequestControlsNew
+        {
+            get
+            {
+                return _serviceRequestControlsNew;
+            }
+
+            set
+            {
+                _serviceRequestControlsNew = value;
+            }
+        }
         public ServiceRequestViewCell(ref object ParentContext)
         {
             InitializeComponent();
+
+            if (Application.Current.Properties.ContainsKey("ServiceRequestDetailsControls"))
+            {
+                SubModule ServiceRequestSubModule = Application.Current.Properties["ServiceRequestDetailsControls"] as SubModule;
+                ServiceRequestControlsNew = ServiceRequestSubModule.listControls;
+            }
             string PriorityTabKeyvalue = "";
             this.ParentContext = ParentContext;
-            this.RequestNumber.Text = WebControlTitle.GetTargetNameByTitleName("RequestNumber");
-            this.Description.Text = WebControlTitle.GetTargetNameByTitleName("Description");
+            
+            var requestNumber = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "RequestNumber");
+            if (requestNumber != null)
+            {
+                this.RequestNumber.Text = requestNumber.TargetName;
+
+            }
+            else
+            {
+                this.RequestNumber.Text = WebControlTitle.GetTargetNameByTitleName("RequestNumber");
+            }
+
+
+            var description = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "Description");
+            if (description != null)
+            {
+                this.Description.Text = description.TargetName;
+
+            }
+            else
+            {
+                this.Description.Text = WebControlTitle.GetTargetNameByTitleName("Description");
+            }
+           
             if (Application.Current.Properties.ContainsKey("PriorityTabKey"))
             {
                 PriorityTabKeyvalue = Application.Current.Properties["PriorityTabKey"].ToString();
             }
             if (PriorityTabKeyvalue == "E" || PriorityTabKeyvalue == "V")
             {
-                //this.PriorityName.Text = (ParentContext as ServiceRequestListingPageViewModel).Priority;
-                this.PriorityName.Text = WebControlTitle.GetTargetNameByTitleName("Priority");
+                var priorityID = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "PriorityID");
+                if (priorityID != null)
+                {
+                    this.PriorityName.Text = priorityID.TargetName;
+
+                }
+                else
+                {
+                    this.PriorityName.Text = WebControlTitle.GetTargetNameByTitleName("Priority");
+                }
+               
                 this.PriorityColon.IsVisible = true;
             }
         }
