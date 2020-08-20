@@ -72,6 +72,16 @@ namespace ProteusMMX.Views.Barcode
             }
         }
 
-        
+        private void CarouselView_PositionSelected(object sender, SelectedPositionChangedEventArgs e)
+        {
+            try
+            {
+
+                //this.ImageCountLabel.Text = (Int32.Parse(e.SelectedPosition.ToString()) + 1) + "/" + vm.Zoos.Count;
+            }
+            catch (Exception)
+            {
+            }
+        }
     }
 }

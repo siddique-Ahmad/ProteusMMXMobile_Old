@@ -26,7 +26,6 @@ namespace ProteusMMX.Views.Workorder
 	 [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class CreateWorkorderFromInspectionPageContent : ContentPage
     {
-        public string CurrentRuntimeValue;
         private int? WorkorderID;
         private string baseURL;
         private string UserID = AppSettings.User.UserID.ToString();
@@ -60,13 +59,9 @@ namespace ProteusMMX.Views.Workorder
         {
             try
             {
-
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                 abc = await WorkorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
-                if (abc.workOrderWrapper.workOrder.CurrentRuntime != null)
-                {
-                    CurrentRuntimeValue = abc.workOrderWrapper.workOrder.CurrentRuntime;
-                }
+
                 bool fdasignatureKey = AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation;
 
                 if (fdasignatureKey == true)
@@ -112,7 +107,6 @@ namespace ProteusMMX.Views.Workorder
                                 AdditionalDetails = AdditionalDetails.Text,
                                 LocationID = abc.workOrderWrapper.workOrder.LocationID,
                                 FacilityID = 0,
-                                CurrentRuntime = CurrentRuntimeValue,
                                 AssetID = abc.workOrderWrapper.workOrder.AssetID,
                                 AssetSystemID = abc.workOrderWrapper.workOrder.AssetSystemID,
                                 AssignedToEmployeeID = abc.workOrderWrapper.workOrder.AssignedToEmployeeID,
@@ -201,7 +195,6 @@ namespace ProteusMMX.Views.Workorder
                             AdditionalDetails = AdditionalDetails.Text,
                             LocationID = abc.workOrderWrapper.workOrder.LocationID,
                             FacilityID = 0,
-                            CurrentRuntime = CurrentRuntimeValue,
                             AssetID = abc.workOrderWrapper.workOrder.AssetID,
                             AssetSystemID = abc.workOrderWrapper.workOrder.AssetSystemID,
                             AssignedToEmployeeID = abc.workOrderWrapper.workOrder.AssignedToEmployeeID,

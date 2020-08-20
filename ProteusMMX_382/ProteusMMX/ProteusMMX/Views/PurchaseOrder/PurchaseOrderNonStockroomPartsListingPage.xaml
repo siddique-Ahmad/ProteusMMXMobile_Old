@@ -60,7 +60,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-
+               
 
                 <ListView Grid.Row="2" Grid.ColumnSpan="2"
                           ItemTemplate="{StaticResource DateTemplateSelector}"

@@ -1,6 +1,5 @@
 ﻿using Acr.UserDialogs;
 using ProteusMMX.Helpers;
-using ProteusMMX.Helpers.StringFormatter;
 using ProteusMMX.Model;
 using ProteusMMX.Model.AssetModel;
 using ProteusMMX.Model.CommonModels;
@@ -792,12 +791,12 @@ namespace ProteusMMX.ViewModel.Inventory
                 }
             }
         }
+                              
+          
 
 
 
-
-
-
+        
         public PartListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IInventoryService inventoryService)
         {
             _authenticationService = authenticationService;
@@ -880,7 +879,7 @@ namespace ProteusMMX.ViewModel.Inventory
                 {
 
                     var stockroomparts = stockroomPartResponse.inventoryWrapper.stockroomparts;
-                    //List<StockroomPart> finalstockroompart = stockroomparts.Select(a => new StockroomPart() { PartName = a.PartName, PartNumber = a.PartNumber,QuantityOnHand = a.QuantityOnHand,SerialNumber =a.SerialNumber ,ShelfBin = a.ShelfBin, QuantityAllocated = decimal.Parse(string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(a.QuantityAllocated.ToString()) ? 0 : decimal.Parse(a.QuantityAllocated.ToString()))) }).ToList();
+
                     await AddStockroomPartsInStockroomPartsCollection(stockroomparts);
                     TotalRecordCount = stockroomPartResponse.inventoryWrapper.recordCountStockRoomParts;
                 }

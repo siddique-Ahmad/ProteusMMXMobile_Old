@@ -1,8 +1,6 @@
 ﻿using ProteusMMX.Helpers;
 using ProteusMMX.Model.AssetModel;
 using ProteusMMX.Model.WorkOrderModel;
-using ProteusMMX.Services.Workorder;
-using ProteusMMX.ViewModel.Workorder;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,7 +25,7 @@ namespace ProteusMMX.Model.CommonModels
 
         public string SearchCriteria { get; set; }
         public int? LocationID { get; set; }
-        public decimal? QuantityAllocated { get; set; }
+        public int? QuantityAllocated { get; set; }
         public int? ToolCribID { get; set; }
         public int? RequisitionID { get; set; }
 
@@ -69,9 +67,6 @@ namespace ProteusMMX.Model.CommonModels
         public string Description { get; set; }
         public string AssetSystemName { get; set; }
 
-        public string AssetSystemNumber { get; set; }
-
-        public string CurrentRuntime { get; set; }
         public bool IsLocationCallFrombarcodePage { get; set; }
 
         public bool IsAssetCallFrombarcodePage { get; set; }
@@ -79,10 +74,6 @@ namespace ProteusMMX.Model.CommonModels
         public bool IsLoginCallfromRiskPage { get; set; }
 
         public List<ShelfBin> lstShelfBin { get; set; }
-
-        public WorkorderListingPageViewModel ViewModel { get; set; }
-
-        public  IWorkorderService WorkorderService { get; set; }
 
         public List<SignatureAuditDetail> SignatureAuditDetails { get; set; }
 

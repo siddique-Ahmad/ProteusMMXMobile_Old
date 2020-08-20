@@ -2,22 +2,21 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Barcode.SearchAssetFromBarcode" x:Name="AssetListingPage"
-             xmlns:templates="clr-namespace:ProteusMMX.Views.Asset.Templates;assembly=ProteusMMX"
+              xmlns:templates="clr-namespace:ProteusMMX.Views.Asset.Templates;assembly=ProteusMMX"
+             xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             xmlns:viewCells="clr-namespace:ProteusMMX.Views.Asset.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
-             Title="{Binding PageTitle}"
+             Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
-
     <ContentPage.Resources>
         <ResourceDictionary>
 
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Style.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
+
 
             <templates:AssetListingTemplateSelector x:Key="DateTemplateSelector">
             </templates:AssetListingTemplateSelector>
+
+
 
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -63,15 +62,12 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:BorderlessEntry
-                Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
-                </border:SfBorder>
-                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />
 
-                <Label Grid.Column="2" Text= "{Binding TotalRecordTitle}" Style="{StaticResource LabelStyle}"/>
-                <Label Text=":" Grid.Column="3" Style="{StaticResource LabelStyle}"/>
-                <Label Text="{Binding TotalRecordCount}"  Grid.Column="4" Style="{StaticResource LabelStyle}"/>
+                <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
+                <Label Grid.Column="2" Text= "{Binding TotalRecordTitle}" />
+                <Label Text=":" Grid.Column="3"/>
+                <Label Text="{Binding TotalRecordCount}"  Grid.Column="4" />
 
                 <ListView Grid.Row="2" Grid.ColumnSpan="5"
                           ItemTemplate="{StaticResource DateTemplateSelector}"

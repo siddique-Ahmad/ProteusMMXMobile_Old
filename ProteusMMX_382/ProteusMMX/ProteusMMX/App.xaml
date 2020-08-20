@@ -2,17 +2,11 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:ProteusMMX.Converters;assembly=ProteusMMX"
-             xmlns:themes = "clr-namespace:ProteusMMX.Themes;assembly=ProteusMMX"
-             xmlns:themes1="clr-namespace:Syncfusion.XForms.Themes;assembly=Syncfusion.Core.XForms"
              x:Class="ProteusMMX.App">
     <Application.Resources>
 
-
-
+       
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <themes1:LightTheme />
-            </ResourceDictionary.MergedDictionaries >
             <!-- COLORS -->
             <Color x:Key="BackgroundColor">#FFFFFF</Color>
             <Color x:Key="BlackColor">#000000</Color>
@@ -35,26 +29,21 @@
             <Style x:Key="LoginButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorButton}" />
                 <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
-                <Setter Property="BorderColor" Value="Black"/>
-                <Setter Property="CornerRadius" Value="5" />
+                <Setter Property="BorderColor" Value="{StaticResource DarkGrayColor}" />
             </Style>
-
-
 
             <Style x:Key="SaveButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorButton}" />
                 <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
-                <Setter Property="BorderColor" Value="Black"/>
+                <Setter Property="BorderColor" Value="{StaticResource DarkGrayColor}" />
                 <Setter Property="HeightRequest" Value="40" />
-                <Setter Property="CornerRadius" Value="5" />
             </Style>
 
             <Style x:Key="TargetButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorButton}" />
                 <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
-                <Setter Property="BorderColor" Value="Black"/>
+                <Setter Property="BorderColor" Value="{StaticResource DarkGrayColor}" />
                 <Setter Property="HeightRequest" Value="35" />
-                <Setter Property="CornerRadius" Value="5"/>
             </Style>
 
             <Style x:Key="BoldLabelStyle" TargetType="Label">
@@ -76,12 +65,11 @@
             <!-- CONVERTERS -->
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
             <converters:DateTimeConverterXaml x:Key="DateTimeConverterXaml" />
-
-
+            
         </ResourceDictionary>
 
 
-
+     
 
     </Application.Resources>
 </Application>

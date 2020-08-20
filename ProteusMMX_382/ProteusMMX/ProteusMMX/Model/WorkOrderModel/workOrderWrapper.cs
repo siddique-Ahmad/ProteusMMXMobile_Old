@@ -60,7 +60,7 @@ namespace ProteusMMX.Model.WorkOrderModel
         public List<RiskInspectionAnswers> RiskQuestions { get; set; }
         public string LOTOUrl { get; set; }
 
-        public bool? DistributeCost { get; set; }
+        
 
         public List<SignatureAuditDetail> SignatureAuditDetails { get; set; }
 

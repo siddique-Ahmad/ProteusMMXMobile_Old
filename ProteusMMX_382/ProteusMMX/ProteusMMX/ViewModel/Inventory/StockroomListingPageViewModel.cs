@@ -714,7 +714,7 @@ namespace ProteusMMX.ViewModel.Inventory
             try
             {
                 OperationInProgress = true;
-                var stockroomResponse = await _inventoryService.GetStockrooms(UserID, PageNumber.ToString(), RowCount.ToString(),"null");
+                var stockroomResponse = await _inventoryService.GetStockrooms(UserID, PageNumber.ToString(), RowCount.ToString());
                 if (stockroomResponse != null && stockroomResponse.inventoryWrapper != null
                     && stockroomResponse.inventoryWrapper.stockrooms != null && stockroomResponse.inventoryWrapper.stockrooms.Count > 0)
                 {

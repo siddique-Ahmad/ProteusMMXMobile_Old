@@ -30,9 +30,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="*" />
-                -->
-        <!--<RowDefinition Height="100" />-->
-        <!--
+                --><!--<RowDefinition Height="100" />--><!--
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -40,7 +38,7 @@
 
 
 
-        <!--<Grid  >
+            <!--<Grid  >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -147,9 +145,7 @@
                                 </Label.FontAttributes>
                             </Label>
                         </StackLayout>
-                        -->
-        <!--<controls:CustomDatePicker SelectedDate="{Binding WorkStartedDate1}" />-->
-        <!--
+                        --><!--<controls:CustomDatePicker SelectedDate="{Binding WorkStartedDate1}" />--><!--
                         <Button x:Name="PickerInspectionStartDateTablet" Grid.Row="1"  Grid.Column="0" Text="+" BorderColor="Black" BackgroundColor="#87CEFA"  Clicked="PickerInspectionStartDate_Clicked" TextColor="White"/>
                         <Image Grid.Row="1"  Grid.Column="1">
                             <Image.Source>
@@ -173,9 +169,7 @@
                             </Image.GestureRecognizers>
                         </Image>
                         <Label Grid.Column="2" Grid.Row="1"/>
-                        -->
-        <!--<DatePicker x:Name="PickerInspectionStartDate"  HorizontalOptions="Start" />-->
-        <!--
+                        --><!--<DatePicker x:Name="PickerInspectionStartDate"  HorizontalOptions="Start" />--><!--
 
 
                         <StackLayout Orientation="Vertical" Grid.Row="2" >
@@ -212,9 +206,7 @@
                             </Image.GestureRecognizers>
                         </Image>
                         <Label Grid.Column="2" Grid.Row="3"/>
-                        -->
-        <!--<DatePicker x:Name="PickerInspectionCompletionDate"  HorizontalOptions="Start"/>-->
-        <!--
+                        --><!--<DatePicker x:Name="PickerInspectionCompletionDate"  HorizontalOptions="Start"/>--><!--
 
                        
 
@@ -311,27 +303,27 @@
                 </StackLayout>
             </Grid>-->
 
+            
+            <ScrollView  >
 
-        <ScrollView  >
-
-            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Vertical">
                 <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}"/>
                 <StackLayout Padding="5" x:Name="ParentLayout">
 
+                    </StackLayout>
+                    
+                    <StackLayout Padding="5" x:Name="MainLayout">
+
+                    </StackLayout>
                 </StackLayout>
 
-                <StackLayout Padding="5" x:Name="MainLayout">
+               
+            </ScrollView>
 
-                </StackLayout>
-            </StackLayout>
-
-
-        </ScrollView>
-
-        <!--<Button Text="Add Inspections" Grid.Row="1" BackgroundColor="#87CEFA" TextColor="White" Clicked="AddInspectionClicked" Margin="20,0,20,10" IsVisible ="true"></Button>-->
+            <!--<Button Text="Add Inspections" Grid.Row="1" BackgroundColor="#87CEFA" TextColor="White" Clicked="AddInspectionClicked" Margin="20,0,20,10" IsVisible ="true"></Button>-->
 
 
 
-
+        
     </ContentPage.Content>
 </ContentPage>

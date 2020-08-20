@@ -3,21 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.WorkOrderTools"
              xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
-             Title="{Binding PageTitle}"
-             Icon="tools.png"
+             xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
+             xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             Title="{Binding PageTitle}" 
+               Icon="tools.png"
              BackgroundColor="{StaticResource BackgroundColor}">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-
-            <templates:ToolsListingTemplateSelector x:Key="DateTemplateSelector">
-            </templates:ToolsListingTemplateSelector>
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
@@ -37,7 +28,7 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <!--<ContentPage.Resources>
+    <ContentPage.Resources>
         <ResourceDictionary>
 
             <templates:ToolsListingTemplateSelector x:Key="DateTemplateSelector">
@@ -46,7 +37,7 @@
 
 
         </ResourceDictionary>
-    </ContentPage.Resources>-->
+    </ContentPage.Resources>
 
 
     <ContentPage.Content>
@@ -61,9 +52,9 @@
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"
                           CachingStrategy="RecycleElement"
-                         
+                          
                           ItemsSource="{Binding ToolsCollection}">
-
+             
             </ListView>
 
 

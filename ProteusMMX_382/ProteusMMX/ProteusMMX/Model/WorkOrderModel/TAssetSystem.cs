@@ -11,17 +11,5 @@ namespace ProteusMMX.Model.WorkOrderModel
         public int? AssetSystemID { get; set; }
         public string AssetSystemName { get; set; }
         public string AssetSystemNumber { get; set; }
-
-        public string AssetSystemNumberLocal
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(AssetSystemName))
-                {
-                    return AssetSystemNumber;
-                }
-                return AssetSystemNumber + "(" + AssetSystemName + ")";
-            }
-        }
     }
 }

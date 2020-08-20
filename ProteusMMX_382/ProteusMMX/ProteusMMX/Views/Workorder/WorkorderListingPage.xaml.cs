@@ -1,8 +1,6 @@
-﻿using ProteusMMX.Model.CommonModels;
-using ProteusMMX.Model.WorkOrderModel;
+﻿using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
-using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,13 +76,8 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private async void Button_Clicked(object sender, EventArgs e)
+        private void Button_Clicked(object sender, EventArgs e)
         {
-            TargetNavigationData tnobj = new TargetNavigationData();
-            tnobj.ViewModel = ViewModel;
-            tnobj.WorkorderService = ViewModel._workorderService;
-            var morepage = new ShowMore(tnobj);
-            await Navigation.PushPopupAsync(morepage);
 
         }
 

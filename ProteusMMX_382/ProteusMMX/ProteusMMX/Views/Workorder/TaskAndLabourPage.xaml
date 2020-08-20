@@ -1,21 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
+             xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              x:Class="ProteusMMX.Views.Workorder.TaskAndLabourPage"
-             Title="{Binding PageTitle}"
-             Icon="tasksandlabors.png"
+             Title="{Binding PageTitle}" 
+              Icon="tasksandlabors.png"
              BackgroundColor="{StaticResource BackgroundColor}" >
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
@@ -56,23 +47,18 @@
                     </Grid.ColumnDefinitions>
 
 
-                    <!--<Entry IsVisible="{Binding TaskLabourSearchBoxIsEnable , Mode=TwoWay}" Placeholder="{Binding SearchPlaceholder}" Style="{StaticResource EntryStyle}"  Text="{Binding SearchText}" />
-                    <Button IsVisible="{Binding TaskLabourSearchButtonIsEnable , Mode=TwoWay}" Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />-->
-
-                    <border:SfBorder  IsVisible="{Binding TaskLabourSearchBoxIsEnable , Mode=TwoWay}" Style="{StaticResource SfBorderStyle}">
-                        <control1:BorderlessEntry
-                        Placeholder="{Binding SearchPlaceholder}"   Text="{Binding SearchText}"/>
-                    </border:SfBorder>
+                    <Entry IsVisible="{Binding TaskLabourSearchBoxIsEnable , Mode=TwoWay}" Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
                     <Button IsVisible="{Binding TaskLabourSearchButtonIsEnable , Mode=TwoWay}" Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
-                    <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}" Style="{StaticResource LabelStyle}"/>
+                    <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}"/>
+
                 </Grid>
 
                 <ScrollView Grid.Row="1">
-
+                    
                     <!--This is gonna be content grid-->
                     <StackLayout >
 
-
+                        
                     </StackLayout>
                 </ScrollView>
 

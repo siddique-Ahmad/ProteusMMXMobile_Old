@@ -684,7 +684,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
 
-                //    FormLoadInputForWorkorder = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
+            //    FormLoadInputForWorkorder = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
                 await SetTitlesPropertiesForPage();
 
 
@@ -713,24 +713,24 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
 
+                
+                    PageTitle = WebControlTitle.GetTargetNameByTitleName("CreateStockroomParts");
+                    WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
+                    LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
+                    StockRoomNametitle = WebControlTitle.GetTargetNameByTitleName("Stockroom");
+                    PartNumberTitle = WebControlTitle.GetTargetNameByTitleName("Parts");
+                    QuantityRequiredtitle = WebControlTitle.GetTargetNameByTitleName("QuantityRequired");
+                    QuantityAllocatedtitle = WebControlTitle.GetTargetNameByTitleName("QuantityAllocated");
+                    UnitCosttitle = WebControlTitle.GetTargetNameByTitleName("UnitCost");
+                    GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
+                    ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
+                    SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
+                    ShelfBintitle = WebControlTitle.GetTargetNameByTitleName("ShelfBin");
+                    CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
+                    SaveTitle = WebControlTitle.GetTargetNameByTitleName("Save");
+                    SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
 
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("CreateStockroomParts");
-                WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
-                LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
-                StockRoomNametitle = WebControlTitle.GetTargetNameByTitleName("Stockroom");
-                PartNumberTitle = WebControlTitle.GetTargetNameByTitleName("Parts");
-                QuantityRequiredtitle = WebControlTitle.GetTargetNameByTitleName("QuantityRequired");
-                QuantityAllocatedtitle = WebControlTitle.GetTargetNameByTitleName("QuantityAllocated");
-                UnitCosttitle = WebControlTitle.GetTargetNameByTitleName("UnitCost");
-                GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
-                ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
-                SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
-                ShelfBintitle = WebControlTitle.GetTargetNameByTitleName("ShelfBin");
-                CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
-                SaveTitle = WebControlTitle.GetTargetNameByTitleName("Save");
-                SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-
-
+              
             }
             catch (Exception ex)
             {
@@ -886,18 +886,18 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
 
 
-                //else if (string.IsNullOrWhiteSpace(QuantityAllocatedText))
-                //{
-                //    UserDialogs.Instance.HideLoading();
-                //    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Quantityallocatedismandatoryfield"));
-                //    return;
-                //}
-                //else if (string.IsNullOrWhiteSpace(QuantityRequiredText))
-                //{
-                //    UserDialogs.Instance.HideLoading();
-                //    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("QunatityRequiredismandatoryfield"));
-                //    return;
-                //}
+                else if (string.IsNullOrWhiteSpace(QuantityAllocatedText))
+                {
+                    UserDialogs.Instance.HideLoading();
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Quantityallocatedismandatoryfield"));
+                    return;
+                }
+                else if (string.IsNullOrWhiteSpace(QuantityRequiredText))
+                {
+                    UserDialogs.Instance.HideLoading();
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("QunatityRequiredismandatoryfield"));
+                    return;
+                }
 
                 else
                 {
@@ -926,8 +926,8 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
                     try
                     {
-                        var s = decimal.Parse(QuantityAllocatedText);
-                        var k = decimal.Parse(QuantityRequiredText);
+                        var s = Convert.ToInt32(QuantityAllocatedText);
+                        var k = Convert.ToInt32(QuantityRequiredText);
                     }
                     catch (Exception ex)
                     {
@@ -953,8 +953,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 #region workOrderStockroompart properties initialzation
 
 
-                workOrderStockroompart.QuantityAllocated = decimal.Parse(QuantityAllocatedText);
-                workOrderStockroompart.QuantityRequired = decimal.Parse(QuantityRequiredText);
+                workOrderStockroompart.QuantityAllocated = int.Parse(QuantityAllocatedText);
+                workOrderStockroompart.QuantityRequired = int.Parse(QuantityRequiredText);
                 workOrderStockroompart.StockroomPartID = StockroompartID;
                 workOrderStockroompart.WorkOrderID = WorkorderID;
                 workOrderStockroompart.ShelfBinID = this.ShelfBinID;

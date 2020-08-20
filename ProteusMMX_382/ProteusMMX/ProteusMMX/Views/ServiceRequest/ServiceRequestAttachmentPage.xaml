@@ -38,8 +38,8 @@
                         Padding="10,10,10,10"
                         VerticalOptions="Fill">
 
-                        <controls:CarouselViewControl HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" Position="{Binding SelectedPosition}"  PositionSelected="CarouselView_PositionSelected" >
-                            <controls:CarouselViewControl.ItemTemplate>
+                        <cv:CarouselView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" Position="{Binding SelectedPosition}"  PositionSelected="CarouselView_PositionSelected" >
+                            <cv:CarouselView.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
                                         <Grid.RowDefinitions>
@@ -49,8 +49,8 @@
                                         <Image Grid.RowSpan="2" Aspect="AspectFit"  Source="{Binding AttachmentImageSource}"/>
                                     </Grid>
                                 </DataTemplate>
-                            </controls:CarouselViewControl.ItemTemplate>
-                        </controls:CarouselViewControl>
+                            </cv:CarouselView.ItemTemplate>
+                        </cv:CarouselView>
                         <Label x:Name="swipe" Text="{Binding SwipeText}" TextColor="Silver" HorizontalOptions= "Center" Grid.Row="1">
                             <Label.FontAttributes>
                                 <OnPlatform x:TypeArguments="FontAttributes">

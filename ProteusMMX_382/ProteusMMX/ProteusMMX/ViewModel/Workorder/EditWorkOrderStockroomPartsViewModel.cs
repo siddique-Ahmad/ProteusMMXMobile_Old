@@ -783,8 +783,8 @@ namespace ProteusMMX.ViewModel.Workorder
                     var workorderstkpart = workordersResponse.workOrderWrapper.workOrderStockroomPart;
                     StockroompartID = workorderstkpart.StockroomPartID;
                     WorkorderstockroompartID = workorderstkpart.WorkOrderStockroomPartID;
-                    QuantityAllocatedText = string.Format(StringFormat.NumericZero(), workorderstkpart.QuantityAllocated == null ? 0 : workorderstkpart.QuantityAllocated);
-                    QuantityRequiredText = string.Format(StringFormat.NumericZero(), workorderstkpart.QuantityRequired == null ? 0 : workorderstkpart.QuantityRequired);
+                    QuantityAllocatedText = workorderstkpart.QuantityAllocated.ToString();
+                    QuantityRequiredText = workorderstkpart.QuantityRequired.ToString();
                     StockroomNameText = workorderstkpart.StockroomName;
                     PartNumberText = workorderstkpart.PartNumber;
                     UnitCostText = string.Format(StringFormat.CurrencyZero(), workorderstkpart.UnitCostAmount == null ? 0 : workorderstkpart.UnitCostAmount);
@@ -877,8 +877,8 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
                     try
                     {
-                        var s = decimal.Parse(QuantityAllocatedText);
-                        var k = decimal.Parse(QuantityRequiredText);
+                        var s = Convert.ToInt32(QuantityAllocatedText);
+                        var k = Convert.ToInt32(QuantityRequiredText);
                     }
                     catch (Exception ex)
                     {
@@ -906,8 +906,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 #region workOrderStockroompart properties initialzation
 
 
-                workOrderStockroompart.QuantityAllocated = decimal.Parse(QuantityAllocatedText);
-                workOrderStockroompart.QuantityRequired = decimal.Parse(QuantityRequiredText);
+                workOrderStockroompart.QuantityAllocated = int.Parse(QuantityAllocatedText);
+                workOrderStockroompart.QuantityRequired = int.Parse(QuantityRequiredText);
                 workOrderStockroompart.StockroomPartID = StockroompartID;
                 workOrderStockroompart.WorkOrderID = this.WorkorderID;
                 workOrderStockroompart.WorkOrderStockroomPartID = WorkorderstockroompartID;

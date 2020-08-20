@@ -1,20 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              x:Class="ProteusMMX.Views.Workorder.AddNewTool"
-             Title="{Binding PageTitle}"
+             xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
@@ -50,8 +40,8 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto" />
-
-
+                          
+                          
                         </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
@@ -60,7 +50,7 @@
                         </Grid.ColumnDefinitions>
 
                         <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                            <Label Text="{Binding ToolCribTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                            <Label Text="{Binding ToolCribTitle}" TextColor="Black">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
                                         <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -68,14 +58,10 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-
-                            <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
                             <Button Text="{Binding ToolCribText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ToolCribCommand}"  />
-                            <!--</border:SfBorder>-->
-
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                            <Label Text="{Binding ToolNumbertitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                            <Label Text="{Binding ToolNumbertitle}" TextColor="Black">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
                                         <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -87,41 +73,27 @@
 
                             <Grid Grid.Row="1"  >
 
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3.5*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3.5*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                                <!--<border:SfBorder Style="{StaticResource SfBorderStyle}" Grid.Column="0">-->
-                                <Button Grid.Column="0" Text="{Binding ToolNumberText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ToolNumberCommand}"  />
-                                <!--</border:SfBorder>-->
+                            <Button Text="{Binding ToolNumberText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ToolNumberCommand}"  />
+                            <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
 
-                                <!--<border:SfBorder Style="{StaticResource SfBorderStyle}" Grid.Column="1">-->
-                                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />
-                                <!--</border:SfBorder>-->
-                            </Grid>
+                        </Grid>
 
 
                         </StackLayout>
 
-                        <Button
-                         CornerRadius="5"
-                        Grid.Row="2"                                            
-                        VerticalOptions="StartAndExpand"
-                        Command="{Binding SaveToolCommand}"
-                        Style="{StaticResource LoginButtonStyle}"
-                        Grid.ColumnSpan="2"
-                        Text="{Binding SaveTitle}" >
 
+                        <Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="2" Grid.ColumnSpan="2"  Command="{Binding SaveToolCommand}" />
 
-                            <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="2" Grid.ColumnSpan="2"  Command="{Binding SaveToolCommand}" />-->
-
-                        </Button>
                     </Grid>
 
                 </ScrollView>

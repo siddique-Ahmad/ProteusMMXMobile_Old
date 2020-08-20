@@ -1,8 +1,6 @@
 ﻿using Acr.UserDialogs;
 using ProteusMMX.Constants;
-using ProteusMMX.DependencyInterface;
 using ProteusMMX.Helpers;
-using ProteusMMX.Helpers.Attachment;
 using ProteusMMX.Helpers.StringFormatter;
 using ProteusMMX.Model;
 using ProteusMMX.Model.CommonModels;
@@ -20,7 +18,6 @@ using ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.Parts;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -573,7 +570,7 @@ namespace ProteusMMX.ViewModel.Inventory
             }
         }
 
-
+        
 
         string _adjustmentquantitytitle;
         public string Adjustmentquantitytitle
@@ -778,16 +775,7 @@ namespace ProteusMMX.ViewModel.Inventory
             get { return _serverTimeZone; }
         }
 
-        private Xamarin.Forms.ImageSource _attachmentImageSource;
-        public Xamarin.Forms.ImageSource AttachmentImageSource
-        {
-            get { return _attachmentImageSource; }
-            set
-            {
-                _attachmentImageSource = value;
-                OnPropertyChanged("AttachmentImageSource");
-            }
-        }
+
         #region Normal Field Properties
 
         string _partNameText;
@@ -1099,7 +1087,6 @@ namespace ProteusMMX.ViewModel.Inventory
                     OnPropertyChanged(nameof(QuantityAllocatedText));
                 }
             }
-
         }
 
         string _shelfBinName;
@@ -1292,8 +1279,8 @@ namespace ProteusMMX.ViewModel.Inventory
         ButtonControls TRansactor;
         ButtonControls UnitCost;
 
-
-        bool _SelfBinIsVisible = true;
+        
+       bool _SelfBinIsVisible = true;
         public bool SelfBinIsVisible
         {
             get
@@ -1870,6 +1857,8 @@ namespace ProteusMMX.ViewModel.Inventory
                 OperationInProgress = false;
                 FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.InventoryModuleName);
                 await CreateControlsForPage(FormControlsAndRights);
+                
+
 
 
             }
@@ -1981,7 +1970,7 @@ namespace ProteusMMX.ViewModel.Inventory
 
                                     if (InventoryDetailsTab.listControls != null && InventoryDetailsTab.listControls.Count > 0)
                                     {
-
+                                        
                                         var UpdateLastPhysicalInventorydate = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UpdateLastPhysicalInventorydate");
                                         var UserField1 = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UserField1");
                                         var UserField2 = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UserField2");
@@ -2394,31 +2383,13 @@ namespace ProteusMMX.ViewModel.Inventory
                 var TransactionParameters = await _inventoryService.GetTransactionReason(StockroompartID.ToString(), UserID);
                 if (TransactionParameters != null && TransactionParameters.inventoryWrapper.trasactionDialog != null)
                 {
-                    ////Set Part Profile Picture///////
-                    if (Device.RuntimePlatform == Device.UWP)
-                    {
-                        byte[] imgUser = StreamToBase64.StringToByte(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image);
-                        MemoryStream stream = new MemoryStream(imgUser);
-                        bool isimage = Extension.IsImage(stream);
-                        if (isimage == true)
-                        {
 
-                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
-                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
-
-
-
-                        }
-                    }
                     var trasactiontype = TransactionParameters.inventoryWrapper.trasactionDialog;
                     this.PartNameText = trasactiontype.PartName;
                     this.PartNumberText = trasactiontype.PartNumber;
                     this.QuantityOnHandText = trasactiontype.QuantityOnHand;
                     this.StockroomNameText = trasactiontype.StockroomName;
-                    this.QuantityAllocatedText = Math.Round(Convert.ToDecimal(this.QuantityAllocatedText), 2).ToString();
-                    //trasactiontype.QuantityAllocatedText = decimal.Parse(string.Format(StringFormat.NumericZero(), trasactiontype.Quan));
-
-
+                    this.QuantityAllocatedText = this.QuantityAllocatedText;
 
                     this.UnitCostText = string.Format(StringFormat.CurrencyZero(), trasactiontype.OriginalAmount == null ? 0 : trasactiontype.OriginalAmount);
 
@@ -2444,8 +2415,8 @@ namespace ProteusMMX.ViewModel.Inventory
         {
             try
             {
-
-                if (PhysicalDateSwitch == true)
+               
+                if(PhysicalDateSwitch==true)
                 {
                     LastPhysicalInventorydate = true;
                 }
@@ -2490,7 +2461,6 @@ namespace ProteusMMX.ViewModel.Inventory
                 {
 
                     var k = Convert.ToInt32(AdjustmentQuantityText);
-                    //var k = decimal.Parse(AdjustmentQuantityText);
                 }
                 catch (Exception ex)
                 {
@@ -2551,7 +2521,7 @@ namespace ProteusMMX.ViewModel.Inventory
                     UserField3 = UserField3,
                     UserField4 = UserField4,
                     ModifiedUserName = AppSettings.User.UserName,
-                    UpdateLastPhysicalInventorydate = LastPhysicalInventorydate,
+                    UpdateLastPhysicalInventorydate=LastPhysicalInventorydate,
                     UnitCost = decimal.Parse(this.UnitCostText)
 
                 };
@@ -2561,8 +2531,7 @@ namespace ProteusMMX.ViewModel.Inventory
                 if (response != null && bool.Parse(response.servicestatus))
                 {
                     Application.Current.Properties["CallfromTransactionPage"] = "true";
-                    //DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Transactionissuccessfullysaved"), 2000);
-                    DialogService.ShowAlertAsync(WebControlTitle.GetTargetNameByTitleName("Transactionissuccessfullysaved"), response.TransactionNumber, "OK");
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Transactionissuccessfullysaved"), 2000);
                     await NavigationService.NavigateBackAsync();
 
                 }

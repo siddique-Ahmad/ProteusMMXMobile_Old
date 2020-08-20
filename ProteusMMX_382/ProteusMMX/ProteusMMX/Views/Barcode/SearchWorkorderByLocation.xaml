@@ -1,22 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.Barcode.SearchWorkorderByLocation"
-             Title="{Binding PageTitle}"
+               Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Style.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
@@ -55,11 +42,9 @@
                     <ColumnDefinition Width="3.5*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:BorderlessEntry
-                       Text="{Binding SearchText}" />
-                </border:SfBorder>
-                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />
+
+                <Entry  Text="{Binding SearchText}" />
+                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
 
 
             </Grid>

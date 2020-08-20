@@ -28,15 +28,13 @@ namespace ProteusMMX.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-           
 
-            //  AppCenter.Start("24b17e2f-b607-4143-abd0-60877acd4676", typeof(Analytics), typeof(Crashes));
-
+          //  AppCenter.Start("24b17e2f-b607-4143-abd0-60877acd4676", typeof(Analytics), typeof(Crashes));
+            
             AppCenter.Start("7edb0700-5702-4890-9beb-3561942dd6f4", typeof(Analytics), typeof(Crashes));
             CrossCurrentActivity.Current.Init(this, bundle);
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             UserDialogs.Init(this);
-            Rg.Plugins.Popup.Popup.Init(this, bundle);
             LoadApplication(new App());
         }
 
