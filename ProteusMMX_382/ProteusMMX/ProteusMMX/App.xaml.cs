@@ -29,6 +29,7 @@ namespace ProteusMMX
        
         public App()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mjc1MzM3QDMxMzgyZTMxMmUzMEZUNkMzUExDNUxsMHA5WGZLdVVPWktYUkl1UTN0NGNFajdBMFB0RUoyd1k9");
             InitializeComponent();
             try
             {
