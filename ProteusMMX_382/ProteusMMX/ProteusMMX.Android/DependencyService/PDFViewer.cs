@@ -106,7 +106,7 @@ namespace ProteusMMX.Droid.DependencyService
 
                 Java.IO.File file = new Java.IO.File(path);
                 file.SetReadable(true);
-                Android.Net.Uri uri = Android.Support.V4.Content.FileProvider.GetUriForFile(Xamarin.Forms.Forms.Context, "com.proteusMMX.MM.fileprovider", file);
+                Android.Net.Uri uri = Android.Support.V4.Content.FileProvider.GetUriForFile(Xamarin.Forms.Forms.Context, "com.proteusMMX.MMC.fileprovider", file);
                 Intent intent = new Intent(Intent.ActionView);
                 intent.SetDataAndType(uri, application);
                 intent.AddFlags(ActivityFlags.GrantReadUriPermission);
