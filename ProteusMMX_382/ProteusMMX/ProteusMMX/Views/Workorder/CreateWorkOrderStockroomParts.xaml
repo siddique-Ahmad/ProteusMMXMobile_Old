@@ -1,22 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
+              xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             xmlns:b="clr-namespace:ProteusMMX.Behaviors"
              x:Class="ProteusMMX.Views.Workorder.CreateWorkOrderStockroomParts"
-             Title="{Binding PageTitle}"
+             Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
@@ -42,7 +31,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2">
-                <Label Text="{Binding StockRoomNametitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                <Label Text="{Binding StockRoomNametitle}" TextColor="Black">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -50,14 +39,12 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
-                <Button Text="{Binding StockroomNameText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding StockroomNameCommand}"/>
-                <!--</border:SfBorder>-->
+                <Button Text="{Binding StockroomNameText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding StockroomNameCommand}"  />
             </StackLayout>
 
 
             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2">
-                <Label Text="{Binding PartNumberTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                <Label Text="{Binding PartNumberTitle}" TextColor="Black">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -78,22 +65,16 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!--<border:SfBorder Style="{StaticResource SfBorderStyle}" >-->
-                    <Button Grid.Column="0" Text="{Binding PartNumberText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding PartNumberCommand}"  />
+                    <Button Text="{Binding PartNumberText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding PartNumberCommand}"  />
+                    <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
 
-                    <!--</border:SfBorder>-->
-
-                    <!--<border:SfBorder Style="{StaticResource SfBorderStyle}" >-->
-
-                    <Button  Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />
-                    <!--</border:SfBorder>-->
                 </Grid>
 
 
             </StackLayout>
 
             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0">
-                <Label Text="{Binding ShelfBintitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                <Label Text="{Binding ShelfBintitle}" TextColor="Black">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -101,15 +82,11 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
-                <border:SfBorder CornerRadius="5">
-                    <Button Text="{Binding ShelfBinText}" Style="{StaticResource TargetButtonStyle}" BackgroundColor="LightGray" TextColor="Black" IsEnabled="False" />
-                </border:SfBorder>
-                <!--</border:SfBorder>-->
+                <Button Text="{Binding ShelfBinText}" Style="{StaticResource TargetButtonStyle}" BackgroundColor="LightGray" TextColor="Black" IsEnabled="False" />
             </StackLayout>
 
             <StackLayout  Orientation="Vertical" Grid.Row="2" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="QRequired"   Text="{Binding QuantityRequiredtitle}" HorizontalOptions="FillAndExpand" TextColor="Black" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
+                <Label x:Name="QRequired"   Text="{Binding QuantityRequiredtitle}" HorizontalOptions="FillAndExpand" TextColor="Black" VerticalOptions="Center">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -117,14 +94,12 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:BorderlessEntry
-                      x:Name="QuantityRequired" Text="{Binding QuantityRequiredText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextChanged="QuantityRequired_TextChanged" />
-                </border:SfBorder>
+                <Entry x:Name="QuantityRequired" Text="{Binding QuantityRequiredText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Keyboard="Numeric" TextChanged="QuantityRequired_TextChanged" ></Entry>
+
             </StackLayout>
 
             <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="QAllocated"  Text="{Binding QuantityAllocatedtitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                <Label x:Name="QAllocated"  Text="{Binding QuantityAllocatedtitle}" TextColor="Black">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -132,14 +107,12 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:BorderlessEntry
-                       x:Name="QuantityAllocated" Text="{Binding QuantityAllocatedText}" TextChanged="QuantityAllocated_TextChanged"/>
-                </border:SfBorder>
+                <Entry Keyboard="Numeric" x:Name="QuantityAllocated" Text="{Binding QuantityAllocatedText}" TextChanged="QuantityAllocated_TextChanged"></Entry>
+
             </StackLayout>
 
             <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1">
-                <Label x:Name="UCost"   Text="{Binding UnitCosttitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                <Label x:Name="UCost"   Text="{Binding UnitCosttitle}" TextColor="Black">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -147,26 +120,14 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:BorderlessEntry
-                         x:Name="UnitCost" Text="{Binding UnitCostText}" TextChanged="UnitCost_TextChanged"/>
+                <Entry x:Name="UnitCost" Text="{Binding UnitCostText}" TextChanged="UnitCost_TextChanged">
 
-
-                </border:SfBorder>
+                </Entry>
 
             </StackLayout>
 
             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="2">
-
-                <!--<buttons:SfButton Style="{StaticResource SfButtonStyle}">-->
-                <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding SaveStockroomPartsCommand}"  />-->
-                <Button     
-                    CornerRadius="5"
-                       VerticalOptions="StartAndExpand"
-                       Command="{Binding SaveStockroomPartsCommand}"
-                       Style="{StaticResource LoginButtonStyle}"                      
-                       Text="{Binding SaveTitle}" >
-                </Button>
+                <Button Text="{Binding SaveTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding SaveStockroomPartsCommand}"  />
             </StackLayout>
 
 

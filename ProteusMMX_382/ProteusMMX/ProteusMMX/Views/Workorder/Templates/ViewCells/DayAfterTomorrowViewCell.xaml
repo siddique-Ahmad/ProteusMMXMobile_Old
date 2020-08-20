@@ -4,423 +4,184 @@
              x:Class="ProteusMMX.Views.Workorder.Templates.ViewCells.DayAfterTomorrowViewCell"
         Appearing="Cell_OnAppearing"
           BindingContextChanged="OnBindingContextChanged">
-    <!--<ViewCell.View>
-        <StackLayout x:Name="TopLayout">
-            <StackLayout.Resources>
-                <ResourceDictionary Source="Styles.xaml" />
-            </StackLayout.Resources>
-            <Grid RowSpacing="2" Margin="0,16,16,8" BackgroundColor="{Binding BackgroundColor}">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackLayout
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Orientation="Horizontal"/>
-
-
-                  
-
-                    <Label x:Name="WorkorderNumberLabel" />
-                    <Label Text=":" Grid.Column="1"  />
-                    <Label Text="{Binding WorkOrderNumber}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
-
-                    <Label Text="✓" Grid.Column="3"  TextColor="Green"  Style="{StaticResource BoldLabelStyle}" IsVisible="{Binding WorkOrderCompleted}">
-                        <Label.FontSize>
-                            <OnPlatform x:TypeArguments="x:Double" Default="30">
-                                <On Platform="iOS" Value="30"/>
-                                <On Platform="Android" Value="25"/>
-                                <On Platform="WinPhone" Value="56"/>
-                                <On Platform="UWP" Value="20"/>
-                            </OnPlatform>
-                        </Label.FontSize>
-
-
-                    </Label>
-                    <Image  Grid.Column="4"  IsVisible="{Binding WorkOrderApprovedFlag}">
-                        <Image.Source>
-                            <OnPlatform  x:TypeArguments="ImageSource">
-                                <OnPlatform.iOS>ThumbsUp.png</OnPlatform.iOS>
-                                <OnPlatform.Android>ThumbsUp.png</OnPlatform.Android>
-                                <OnPlatform.WinPhone>Assets/ThumbsUp.png</OnPlatform.WinPhone>
-                            </OnPlatform>
-                        </Image.Source>
-
-                    </Image>
-
-
-
-
-                </Grid>
-                <StackLayout HeightRequest="20">
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label x:Name="TargetNameLabel"  />
-                        <Label Text=":" Grid.Column="1"  />
-                        <Label Text="{Binding TargetName}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-
-                    </Grid>
-
-                    <Grid x:Name="WorkorderTypeColon" IsVisible="False" Grid.Row="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label x:Name="WorkorderTypeLabel"/>
-                        <Label Text=":" Grid.Column="1"  />
-                        <Label Text="{Binding WorkOrderType}" Grid.Column="2"   />
-                        <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
-                            <Label Text="(" />
-                            <Label Text="{Binding PriorityName}" />
-                            <Label Text=")" />
-                        </StackLayout>
-                    </Grid>
-
-                    <Grid x:Name="DescriptionVisible" IsVisible="False" Grid.Row="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label x:Name="DescriptionLabel" FontSize="05"  />
-                        <Label Text=":" Grid.Column="1"  />
-                        <Label Text="{Binding Description}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
-                        <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
-
-                    </Grid>
-
-                    <Grid Grid.Row="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label x:Name="RequiredDateLabel" FontSize="05" />
-                        <Label Text=":" Grid.Column="1"  />
-                        <Label Text="{Binding RequiredDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  TextColor="Green"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-                        <Label Text="" Grid.Column="3" TextColor="LightGreen" />
-
-                    </Grid>
-
-                    <StackLayout x:Name="ShowMore" IsVisible="False" Grid.Row="5">
-                        <Grid Grid.Row="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label x:Name="ActivationDateLabel" FontSize="05" />
-                            <Label Text=":" Grid.Column="1"  />
-                            <Label Text="{Binding ActivationDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-                            <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
-
-                        </Grid>
-                        <Grid x:Name="WorkStartedDateVisible" IsVisible="False" Grid.Row="6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label x:Name="WorkStartedDateLabel" FontSize="05"  />
-                            <Label Text=":" Grid.Column="1"  />
-                            <Label Text="{Binding WorkStartedDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
-                            <Label Text="" Grid.Column="3" />
-
-                        </Grid>
-                        <Grid x:Name="WorkCompletionDateVisible" IsVisible="False" Grid.Row="7">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label x:Name="WorkCompletionDateLabel"  FontSize="05" />
-                            <Label Text=":" Grid.Column="1"  />
-                            <Label Text="{Binding CompletionDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
-                            <Label Text="" Grid.Column="3" />
-
-                        </Grid>
-                        <Grid x:Name="WorkRequestedDateVisible" IsVisible="False" Grid.Row="8">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-
-                            <Label x:Name="WorkRequestedDateLabel" FontSize="05" />
-                            <Label Text=":" Grid.Column="1"  />
-                            <Label Text="{Binding RequestedDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-                            <Label Text="" Grid.Column="3" />
-
-                        </Grid>
-                    </StackLayout>
-                    <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
-
-                    <StackLayout Grid.Row="6" Spacing="0" >
-                        <Button Text="Show More" x:Name="Tapped" TextColor="Blue" BorderWidth="0" CornerRadius="40" Clicked="TapGestureRecognizer_Tapped"  BorderColor="Transparent"  BackgroundColor="Transparent"  HorizontalOptions="Start" Grid.Row="8" Grid.Column="0">
-
-                        </Button>
-                    </StackLayout>
-                </StackLayout>
-            </Grid>
-        </StackLayout>
-    </ViewCell.View>-->
     <ViewCell.View>
-        <StackLayout x:Name="TopLayout">
-            <StackLayout.Resources>
-                <ResourceDictionary Source="Styles.xaml" />
-            </StackLayout.Resources>
+        <Grid RowSpacing="5" BackgroundColor="{Binding BackgroundColor}">
 
-            <Grid RowSpacing="2" Margin="0,16,16,8" BackgroundColor="{Binding BackgroundColor}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                <Label x:Name="WorkorderNumberLabel" />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding WorkOrderNumber}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
 
-                    <StackLayout
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Orientation="Horizontal"/>
-
-                    <!--Text="{Binding Source={x:Reference timePicker},Path=Time.TotalSeconds,StringFormat='{0} total seconds'}"-->
-                    <!--<Label Text="{Binding Source={x:Reference PastViewCell}, Path=  }"  />-->
-
-                    <Label x:Name="WorkorderNumberLabel"  Style="{StaticResource ItemDescriptionStyle}"/>
-                    <Label Text=":" Grid.Column="1"  Style="{StaticResource ItemDescriptionStyle}" />
-                    <Label Text="{Binding WorkOrderNumber}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-                    <Label Text="✓" Grid.Column="3"  TextColor="Green"  Style="{StaticResource BoldLabelStyle}" IsVisible="{Binding WorkOrderCompleted}">
-                        <Label.FontSize>
-                            <OnPlatform x:TypeArguments="x:Double" Default="30">
-                                <On Platform="iOS" Value="30"/>
-                                <On Platform="Android" Value="25"/>
-                                <On Platform="WinPhone" Value="56"/>
-                                <On Platform="UWP" Value="20"/>
-                            </OnPlatform>
-                        </Label.FontSize>
+                <Label Text="✓" Grid.Column="3"  TextColor="Green"  Style="{StaticResource BoldLabelStyle}" IsVisible="{Binding WorkOrderCompleted}">
+                    <Label.FontSize>
+                        <OnPlatform x:TypeArguments="x:Double" Default="30">
+                            <On Platform="iOS" Value="30"/>
+                            <On Platform="Android" Value="25"/>
+                            <On Platform="WinPhone" Value="56"/>
+                            <On Platform="UWP" Value="20"/>
+                        </OnPlatform>
+                    </Label.FontSize>
 
 
-                    </Label>
-                    <Image  Grid.Column="4"  IsVisible="{Binding WorkOrderApprovedFlag}">
-                        <Image.Source>
-                            <OnPlatform  x:TypeArguments="ImageSource">
-                                <OnPlatform.iOS>ThumbsUp.png</OnPlatform.iOS>
-                                <OnPlatform.Android>ThumbsUp.png</OnPlatform.Android>
-                                <OnPlatform.WinPhone>Assets/ThumbsUp.png</OnPlatform.WinPhone>
-                            </OnPlatform>
-                        </Image.Source>
+                </Label>
+                <Image  Grid.Column="4"  IsVisible="{Binding WorkOrderApprovedFlag}">
+                    <Image.Source>
+                        <OnPlatform  x:TypeArguments="ImageSource">
+                            <OnPlatform.iOS>ThumbsUp.png</OnPlatform.iOS>
+                            <OnPlatform.Android>ThumbsUp.png</OnPlatform.Android>
+                            <OnPlatform.WinPhone>Assets/ThumbsUp.png</OnPlatform.WinPhone>
+                        </OnPlatform>
+                    </Image.Source>
 
-                    </Image>
-                    <Image  Grid.Column="5"  IsVisible="{Binding WorkOrderAttachmentFlag}">
-                        <Image.Source>
-                            <OnPlatform  x:TypeArguments="ImageSource">
-                                <OnPlatform.iOS>woattachment.png</OnPlatform.iOS>
-                                <OnPlatform.Android>woattachment.png</OnPlatform.Android>
-                                <OnPlatform.WinPhone>Assets/woattachment.png</OnPlatform.WinPhone>
-                            </OnPlatform>
-                        </Image.Source>
-
-                    </Image>
-
-                    <Image  Grid.Column="6"  IsVisible="{Binding WorkOrderHasFailedInspection}">
-                        <Image.Source>
-                            <OnPlatform  x:TypeArguments="ImageSource">
-                                <OnPlatform.iOS>Priority.png</OnPlatform.iOS>
-                                <OnPlatform.Android>Priority.png</OnPlatform.Android>
-                                <OnPlatform.WinPhone>Assets/Priority.png</OnPlatform.WinPhone>
-                            </OnPlatform>
-                        </Image.Source>
-
-                    </Image>
-
-                </Grid>
-
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label x:Name="TargetNameLabel" Style="{StaticResource ItemDescriptionStyle}" />
-                    <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}"  />
-                    <Label Text="{Binding TargetName}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
-
-                </Grid>
-
-                <Grid x:Name="WorkorderTypeColon" IsVisible="False" Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label  x:Name="WorkorderTypeLabel" Style="{StaticResource ItemDescriptionStyle}" />
-                    <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                    <Label Text="{Binding WorkOrderType}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" />
-                    <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
-                        <Label Text="(" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding PriorityName}" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text=")" Style="{StaticResource ItemDescriptionStyle}"/>
-                    </StackLayout>
-                </Grid>
-
-                <Grid x:Name="DescriptionVisible" IsVisible="False" Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label x:Name="DescriptionLabel" Style="{StaticResource ItemDescriptionStyle}" />
-                    <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}"/>
-                    <Label Text="{Binding Description}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
-                    <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
-
-                </Grid>
-
-                <Grid Grid.Row="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label x:Name="RequiredDateLabel" Style="{StaticResource ItemDescriptionStyle}" />
-                    <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                    <Label Text="{Binding RequiredDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" TextColor="Green"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
-                    <Label Text="" Grid.Column="3" TextColor="LightGreen" />
-
-                </Grid>
-
-                <StackLayout x:Name="ShowMore" Spacing="0" IsVisible="False" Grid.Row="5">
-
-                    <Grid Grid.Row="5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label x:Name="ActivationDateLabel" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding ActivationDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-                        <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
-
-                    </Grid>
-                    <Grid x:Name="WorkStartedDateVisible" IsVisible="False" Grid.Row="6">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label x:Name="WorkStartedDateLabel" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding WorkStartedDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-                        <Label Text="" Grid.Column="3" />
-
-                    </Grid>
-                    <Grid x:Name="WorkCompletionDateVisible" IsVisible="False" Grid.Row="7">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label x:Name="WorkCompletionDateLabel" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding CompletionDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-                        <Label Text="" Grid.Column="3" />
-
-                    </Grid>
-                    <Grid x:Name="WorkRequestedDateVisible" IsVisible="False" Grid.Row="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label x:Name="WorkRequestedDateLabel"  Style="{StaticResource ItemDescriptionStyle}"  />
-                        <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding RequestedDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-                        <Label Text="" Grid.Column="3" />
-
-                    </Grid>
-
-
-                </StackLayout>
-                <StackLayout Grid.Row="6" Spacing="0">
-                    <Button x:Name="Tapped" Text="ShowMore"  BorderWidth="0" Padding="1" FontSize="14" CornerRadius="4" Clicked="TapGestureRecognizer_Tapped" TextColor="Blue"  BackgroundColor="Transparent" HorizontalOptions="Start"  Grid.Row="8" Grid.Column="0">
-
-                    </Button>
-                </StackLayout>
-
-                <!--<BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" />-->
-
+                </Image>
 
 
 
 
             </Grid>
-        </StackLayout>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="TargetNameLabel"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding TargetName}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
+               
+            </Grid>
+
+            <Grid x:Name="WorkorderTypeColon" IsVisible="False" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="WorkorderTypeLabel"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding WorkOrderType}" Grid.Column="2"   />
+                <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
+                    <Label Text="(" />
+                    <Label Text="{Binding PriorityName}" />
+                    <Label Text=")" />
+                </StackLayout>
+            </Grid>
+
+            <Grid x:Name="DescriptionVisible" IsVisible="False" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="DescriptionLabel"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding Description}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
+                <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
+
+            </Grid>
+
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="RequiredDateLabel" />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding RequiredDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  TextColor="Green"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
+                <Label Text="" Grid.Column="3" TextColor="LightGreen" />
+
+            </Grid>
+
+            <Grid Grid.Row="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="ActivationDateLabel"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding ActivationDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
+                <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
+
+            </Grid>
+            <Grid x:Name="WorkStartedDateVisible" IsVisible="False" Grid.Row="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="WorkStartedDateLabel"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding WorkStartedDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
+                <Label Text="" Grid.Column="3" />
+
+            </Grid>
+            <Grid x:Name="WorkCompletionDateVisible" IsVisible="False" Grid.Row="7">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="WorkCompletionDateLabel"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding CompletionDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
+                <Label Text="" Grid.Column="3" />
+
+            </Grid>
+            <Grid x:Name="WorkRequestedDateVisible" IsVisible="False" Grid.Row="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="WorkRequestedDateLabel"  />
+                <Label Text=":" Grid.Column="1"  />
+                <Label Text="{Binding RequestedDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
+                <Label Text="" Grid.Column="3" />
+
+            </Grid>
+            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
+
+
+
+        </Grid>
     </ViewCell.View>
+
     <!--<ViewCell.ContextActions>
         <MenuItem x:Name="CloseWorkorderMenuItem"   Clicked="CloseWorkorder"  CommandParameter="{Binding .}"  Text="Close Workorder" />
     </ViewCell.ContextActions>-->

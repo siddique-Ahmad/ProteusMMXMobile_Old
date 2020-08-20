@@ -4,7 +4,6 @@
               xmlns:templates="clr-namespace:ProteusMMX.Views.ClosedWorkorder.Templates;assembly=ProteusMMX"
              x:Class="ProteusMMX.Views.ClosedWorkorder.ClosedWorkorderListingPage"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              Title="{Binding PageTitle}" 
              x:Name="ClosedWorkorderListingPageXaml"
              BackgroundColor="{StaticResource BackgroundColor}">
@@ -29,9 +28,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
 
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+
 
             <templates:ClosedWorkorderListingPageTemplateSelector x:Key="DateTemplateSelector">
             </templates:ClosedWorkorderListingPageTemplateSelector>
@@ -64,10 +61,8 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <border:SfBorder CornerRadius="5">
-                    <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding ListingSearchText}" />
-                </border:SfBorder>
-                <Button Grid.Column="1" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchListClosedWorkorder}" />
+                <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding ListingSearchText}" />
+                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchListClosedWorkorder}" />
                 <Label Grid.Column="2" Text= "{Binding TotalRecordTitle}" IsVisible="{Binding TotalRecordForTab}"/>
                 <Label Text=":" Grid.Column="3" IsVisible="{Binding TotalRecordForTab}"/>
                 <Label Text="{Binding TotalRecordCount}"  Grid.Column="4" IsVisible="{Binding TotalRecordForTab}"/>

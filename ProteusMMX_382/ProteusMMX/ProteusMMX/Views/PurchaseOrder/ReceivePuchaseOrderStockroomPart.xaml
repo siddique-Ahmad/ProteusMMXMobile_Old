@@ -2,26 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
-             xmlns:templates="clr-namespace:ProteusMMX.Views.PurchaseOrder.Templates;assembly=ProteusMMX"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.PurchaseOrder.ReceivePuchaseOrderStockroomPart"
-             Title="{Binding PageTitle}"
+               Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Style.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-
-            <templates:PurchaseorderListingTemplateSelector x:Key="DateTemplateSelector">
-            </templates:PurchaseorderListingTemplateSelector>
-
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
@@ -43,10 +26,10 @@
     <ContentPage.Content >
 
         <Grid Margin="10,0,0,0" Padding="10,10,10,10" RowSpacing="5">
-
-
+            
+            
             <StackLayout  Grid.Row="0"  Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="QReceived" TextColor="Black" Text="{Binding QuantityReceivedTitle}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
+                <Label x:Name="QReceived" TextColor="Black" Text="{Binding QuantityReceivedTitle}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -54,15 +37,12 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <border:SfBorder CornerRadius="5">
-                    <control1:BorderlessEntry
-                        x:Name="QuantityReceived" Text="{Binding QuantityReceivedText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextChanged="QuantityReceived_TextChanged"/>
+                <Entry x:Name="QuantityReceived" Text="{Binding QuantityReceivedText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextChanged="QuantityReceived_TextChanged"></Entry>
 
-                </border:SfBorder>
             </StackLayout>
 
             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0">
-                <Label Text="{Binding BalanceDue}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                <Label Text="{Binding BalanceDue}" TextColor="Black">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -74,7 +54,7 @@
             </StackLayout>
 
             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0">
-                <Label Text="{Binding ShelfBintitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                <Label Text="{Binding ShelfBintitle}" TextColor="Black">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -87,7 +67,7 @@
 
 
             <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0">
-                <Label Text="{Binding ReceiverNameTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                <Label Text="{Binding ReceiverNameTitle}" TextColor="Black">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -98,7 +78,7 @@
                 <Button Text="{Binding ReceiverName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ReceiverCommand}"/>
             </StackLayout>
 
-
+           
 
 
             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="0">
@@ -114,7 +94,7 @@
             </StackLayout>
 
             <StackLayout  Grid.Row="5"  Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="INumber" TextColor="Black" Text="{Binding InvoiceNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
+                <Label x:Name="INumber" TextColor="Black" Text="{Binding InvoiceNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -122,14 +102,12 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <border:SfBorder CornerRadius="5">
-                    <control1:BorderlessEntry
-                        x:Name="InvoiceNumber" Text="{Binding InvoiceNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                </border:SfBorder>
+                <Entry x:Name="InvoiceNumber" Text="{Binding InvoiceNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></Entry>
+
             </StackLayout>
 
             <StackLayout  Grid.Row="6"  Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="PackNumber" TextColor="Black"  Text="{Binding PackagingSlipNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
+                <Label x:Name="PackNumber" TextColor="Black"  Text="{Binding PackagingSlipNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -137,24 +115,12 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <border:SfBorder CornerRadius="5">
-                    <control1:BorderlessEntry
-                x:Name="PackagingSlipNumber" Text="{Binding PackagingSlipNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
-                </border:SfBorder>
+                <Entry x:Name="PackagingSlipNumber" Text="{Binding PackagingSlipNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></Entry>
+
             </StackLayout>
 
-            <StackLayout Orientation="Vertical"  Grid.Row="7">
-                <!--<Button Text="{Binding ReceiveTitle}" TextColor="Black"  BackgroundColor="{Binding ColorBackground}" IsEnabled="{Binding ReceivedButtonIsEnabled}" IsVisible="{Binding ReceivedButtonIsVisible}" Command="{Binding ReceivePurchaseOrderPartCommand}"  />-->
-                <buttons:SfButton
-                        CornerRadius="5"
-                        Grid.Row="7"
-                        BackgroundColor="#87CEFA"
-                        VerticalOptions="StartAndExpand"
-                        Command="{Binding ReceivePurchaseOrderPartCommand}"
-                        IsVisible="{Binding ReceivedButtonIsVisible}"
-                        IsEnabled="{Binding ReceivedButtonIsEnabled}"
-                        Text="{Binding ReceiveTitle}" >
-                </buttons:SfButton>
+            <StackLayout Orientation="Vertical" Grid.Row="7">
+                <Button Text="{Binding ReceiveTitle}" TextColor="Black"  BackgroundColor="{Binding ColorBackground}" IsEnabled="{Binding ReceivedButtonIsEnabled}" IsVisible="{Binding ReceivedButtonIsVisible}" Command="{Binding ReceivePurchaseOrderPartCommand}"  />
             </StackLayout>
         </Grid>
     </ContentPage.Content>

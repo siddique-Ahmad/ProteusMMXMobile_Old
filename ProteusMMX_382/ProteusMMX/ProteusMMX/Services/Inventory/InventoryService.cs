@@ -17,23 +17,14 @@ namespace ProteusMMX.Services.Inventory
         {
             _requestService = requestService;
         }
-        public Task<ServiceOutput> GetStockrooms(string UserID, string PageNumber, string RowCount,string searchstockrromName)
+        public Task<ServiceOutput> GetStockrooms(string UserID, string PageNumber, string RowCount)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetStockrooms);
             builder.AppendToPath(UserID);
             builder.AppendToPath(PageNumber);
             builder.AppendToPath(RowCount);
-            if (String.IsNullOrWhiteSpace(searchstockrromName))
-            {
-                builder.AppendToPath("null");
-            }
-            else
-            {
-                builder.AppendToPath(searchstockrromName);
-            }
 
-          
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }

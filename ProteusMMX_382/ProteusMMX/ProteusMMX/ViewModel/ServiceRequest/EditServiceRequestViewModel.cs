@@ -289,79 +289,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
-        string _tagTypeSelectedPickerText;
-        public string TagTypeSelectedPickerText
-        {
-            get
-            {
-                return _tagTypeSelectedPickerText;
-            }
-
-            set
-            {
-                if (value != _tagTypeSelectedPickerText)
-                {
-                    _tagTypeSelectedPickerText = value;
-                    OnPropertyChanged("TagTypeSelectedPickerText");
-                }
-            }
-        }
-        string _tagTypeLabelTitle;
-        public string TagTypeLabelTitle
-        {
-            get
-            {
-                return _tagTypeLabelTitle;
-            }
-
-            set
-            {
-                if (value != _tagTypeLabelTitle)
-                {
-                    _tagTypeLabelTitle = value;
-                    OnPropertyChanged("TagTypeLabelTitle");
-                }
-            }
-        }
-
-        ObservableCollection<string> _tagTypePickerTitles;
-
-        public ObservableCollection<string> TagTypePickerTitles
-        {
-            get
-            {
-                return _tagTypePickerTitles;
-            }
-
-            set
-            {
-                if (value != _tagTypePickerTitles)
-                {
-                    _tagTypePickerTitles = value;
-                    OnPropertyChanged("TagTypePickerTitles");
-
-                }
-            }
-
-        }
-
-        int _tagTypeSelectedIndexPicker = -1;
-        public int TagTypeSelectedIndexPicker
-        {
-            get
-            {
-                return _tagTypeSelectedIndexPicker;
-            }
-
-            set
-            {
-                _tagTypeSelectedIndexPicker = value;
-                OnPropertyChanged("TagTypeSelectedIndexPicker");
-                RefillTagTypeFromPicker();
-
-
-            }
-        }
         string _logoutTitle = "";
         public string LogoutTitle
         {
@@ -2251,26 +2178,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
             }
         }
-
-        bool _tagTypeIsVisible = true;
-        public bool TagTypeIsVisible
-        {
-            get
-            {
-                return _tagTypeIsVisible;
-            }
-
-            set
-            {
-                if (value != _tagTypeIsVisible)
-                {
-                    _tagTypeIsVisible = value;
-                    OnPropertyChanged(nameof(TagTypeIsVisible));
-                }
-            }
-        }
-
-        
         bool _AssetIdIsVisible = true;
         public bool AssetIdIsVisible
         {
@@ -2343,24 +2250,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
             }
         }
-        bool _tagTypeIsEnabled = true;
-        public bool TagTypeIsEnabled
-        {
-            get
-            {
-                return _tagTypeIsEnabled;
-            }
 
-            set
-            {
-                if (value != _tagTypeIsEnabled)
-                {
-                    _tagTypeIsEnabled = value;
-                    OnPropertyChanged(nameof(TagTypeIsEnabled));
-                }
-            }
-        }
-        
         // ActualDowntime
 
         string _actualDowntimeText;
@@ -2377,24 +2267,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 {
                     _actualDowntimeText = value;
                     OnPropertyChanged(nameof(ActualDowntimeText));
-                }
-            }
-        }
-
-        Color _colorBackground;
-        public Color ColorBackground
-        {
-            get
-            {
-                return _colorBackground;
-            }
-
-            set
-            {
-                if (value != _colorBackground)
-                {
-                    _colorBackground = value;
-                    OnPropertyChanged(nameof(ColorBackground));
                 }
             }
         }
@@ -3844,8 +3716,30 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                     }
                 }
-          
-              
+                //ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "Details");
+
+                //if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
+                //{
+                //    var ServiceRequestModule = FormControlsAndRightsForDetails.lstModules[0];
+                //    if (ServiceRequestModule.ModuleName == "Details") //ModuleName can't be  changed in service 
+                //    {
+                //        if (ServiceRequestModule.lstSubModules != null && ServiceRequestModule.lstSubModules.Count > 0)
+                //        {
+                //            var ServiceRequestSubModule = ServiceRequestModule.lstSubModules[0];
+                //            if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                //            {
+
+
+                //                ServiceRequestControlsNew = ServiceRequestSubModule.listControls;
+
+
+                //            }
+
+
+
+                //        }
+                //    }
+                //}
                 if (Application.Current.Properties.ContainsKey("ServiceRequestDetailsControls"))
                 {
                     SubModule ServiceRequestSubModule = Application.Current.Properties["ServiceRequestDetailsControls"] as SubModule;
@@ -3934,14 +3828,11 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
 
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("Details");
-                TagTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("TagType");
-               
                 //PageTitle = WebControlTitle.GetTargetNameByTitleName("ServiceRequest")+" - "+ RequestNumber;
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
                 SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-                TagTypePickerTitles = new ObservableCollection<string>() {"SHE Tag", "Maintenance Tag", "Operator Tag" };
                 //DescriptionTitle = WebControlTitle.GetTargetNameByTitleName("Description");
                 AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
                 FacilityTitle = WebControlTitle.GetTargetNameByTitleName("Facility");
@@ -4678,7 +4569,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         private void GenerateTextBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new MyEntry();
+            var control = new Entry();
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;
@@ -4708,7 +4599,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         private void GenerateComboBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new MyPicker();
+            var control = new Picker();
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;
@@ -7280,7 +7171,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
         public async Task SetControlsPropertiesForPage()
         {
-            ServiceRequestWrapper = await _serviceRequestService.GetServiceRequestDetailByServiceRequestID(this.ServiceRequestID.ToString(),AppSettings.User.UserID.ToString());
+             ServiceRequestWrapper = await _serviceRequestService.GetServiceRequestDetailByServiceRequestID(this.ServiceRequestID.ToString(),AppSettings.User.UserID.ToString());
             bool fdasignatureKey = AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation;
 
             if (fdasignatureKey == true)
@@ -7307,89 +7198,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 var serviceRequest = ServiceRequestWrapper.serviceRequestWrapper.serviceRequest;
 
                 DescriptionText = serviceRequest.Description;
-                TagTypeSelectedPickerText = serviceRequest.TagType;
-                if(string.IsNullOrWhiteSpace(TagTypeSelectedPickerText))
-                {
 
-                    TagTypeIsVisible = false;
-                }
-                else
-                {
-                    /////Added Rights for SHE Tag,Maintenanace tag and Operator Tag/////////////
-                    if(serviceRequest.TagType=="SHE Tag")
-                    {
-                        if (Application.Current.Properties.ContainsKey("SHETagTypeKey"))
-                        {
-                            var SHETagTypeKey = Application.Current.Properties["SHETagTypeKey"].ToString();
-                            if (SHETagTypeKey != null)
-                            {
-                                if (SHETagTypeKey == "E")
-                                {
-                                    this.TagTypeIsEnabled = true;
-                                }
-                                else if (SHETagTypeKey == "V")
-                                {
-                                    this.TagTypeIsEnabled = false;
-                                    ColorBackground = Color.FromHex("#D3D3D3");
-                                }
-                                else
-                                {
-                                    this.TagTypeIsVisible = false;
-                                }
-
-                            }
-                        }
-                    }
-
-                    if (serviceRequest.TagType == "Maintenance Tag")
-                    {
-                        if (Application.Current.Properties.ContainsKey("MaintenanceTagTypeKey"))
-                        {
-                            var MaintenanceTagTypeKey = Application.Current.Properties["MaintenanceTagTypeKey"].ToString();
-                            if (MaintenanceTagTypeKey != null)
-                            {
-                                if (MaintenanceTagTypeKey == "E")
-                                {
-                                    this.TagTypeIsEnabled = true;
-                                }
-                                else if (MaintenanceTagTypeKey == "V")
-                                {
-                                    this.TagTypeIsEnabled = false;
-                                    ColorBackground = Color.FromHex("#D3D3D3");
-                                }
-                                else
-                                {
-                                    this.TagTypeIsVisible = false;
-                                }
-
-                            }
-                        }
-                    }
-                    if (serviceRequest.TagType == "Operator Tag")
-                    {
-                        if (Application.Current.Properties.ContainsKey("OperatorTagTypeKey"))
-                        {
-                            var OperatorTagTypeKey = Application.Current.Properties["OperatorTagTypeKey"].ToString();
-                            if (OperatorTagTypeKey != null)
-                            {
-                                if (OperatorTagTypeKey == "E")
-                                {
-                                    this.TagTypeIsEnabled = true;
-                                }
-                                else if (OperatorTagTypeKey == "V")
-                                {
-                                    this.TagTypeIsEnabled = false;
-                                    ColorBackground = Color.FromHex("#D3D3D3");
-                                }
-                                else
-                                {
-                                    this.TagTypeIsVisible = false;
-                                }
-
-                            }
-                        }
-                    }
-                }
                 AdditionalDetailsText = serviceRequest.AdditionalDetails;
                 /// Set Targets and Other
                 /// 
@@ -7741,7 +7550,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ServiceRequest.ShiftID = ShiftID;
                 ServiceRequest.WorkOrderStatusID = WorkorderStatusID;
                 ServiceRequest.WorkTypeID = WorkorderTypeID;
-                ServiceRequest.TagType = TagTypeSelectedPickerText;
                 ServiceRequest.MaintenanceCodeID = MaintenanceCodeID;
 
                 ServiceRequest.AdministratorID = null;
@@ -8664,32 +8472,31 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
 
 
-                
-
-                var page = new SRDecline(UserID, ServiceRequestID, _serviceRequestService);
-                await PopupNavigation.PushAsync(page);
+               
+               
 
 
-                //var yourobject = new ServiceRequests
-                //{
+
+                var yourobject = new ServiceRequests
+                {
+                   
+                    
+                        UserId= Convert.ToInt32(this.UserID),
+                        ServiceRequestID = this.ServiceRequestID,
 
 
-                //        UserId= Convert.ToInt32(this.UserID),
-                //        ServiceRequestID = this.ServiceRequestID,
+                };
 
 
-                //};
+                var response = await _serviceRequestService.DeclineServiceRequest(yourobject);
 
+                if (Boolean.Parse(response.servicestatus))
+                {
+                    await NavigationService.NavigateBackAsync();
+                }
+                UserDialogs.Instance.HideLoading();
 
-                //var response = await _serviceRequestService.DeclineServiceRequest(yourobject);
-
-                //if (Boolean.Parse(response.servicestatus))
-                //{
-                //    await NavigationService.NavigateBackAsync();
-                //}
-                //UserDialogs.Instance.HideLoading();
-
-                // OperationInProgress = false;
+               // OperationInProgress = false;
 
             }
             catch (Exception ex)
@@ -8787,37 +8594,14 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
             }
         }
-        private async Task RefillTagTypeFromPicker()
-        {
-            if (TagTypeSelectedIndexPicker == -1)
-            {
-                return;
-            }
-
-            var SelectedPickerText = TagTypePickerTitles[TagTypeSelectedIndexPicker];
-            TagTypeSelectedPickerText = SelectedPickerText;
-            //var ShiftSelectedPickerText = SortByShiftpickerTitles[ShiftSelectedIndexPicker];
-            //var PrioritySelectedPickerText = SortByPriorityPickerTitles[PrioritySelectedIndexPicker];
-
-
-            //if (SelectedPickerText == SelectTitle)
-            //{
-            //    WorkorderTypeFilterText = null;
-            //    await RefillWorkorderCollection();
-            //}
-
-
-            //else
-            //{
-            //    WorkorderTypeFilterText = null;
-            //    await RefillWorkorderCollection();
-            //}
-
-
-
-
-        }
+        //public static bool IsPhoneNumber(string number)
+        //{
+        //    if (string.IsNullOrWhiteSpace(number))
+        //    {
+        //        return true;
+        //    }
+        //    return number.All(char.IsDigit);
+        //}
        
-
     }
 }

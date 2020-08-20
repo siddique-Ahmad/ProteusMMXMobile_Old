@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              x:Class="ProteusMMX.Views.ClosedWorkorder.SearchClosedWorkorderPage"
              Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}">
@@ -25,14 +24,6 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
 
     <ContentPage.Content>
         <Grid>
@@ -53,7 +44,7 @@
                         <Grid
                             Padding="10,10,10,10"
                             RowSpacing="5"
-                            VerticalOptions="Fill">
+                            VerticalOptions="Fill">     
 
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -70,25 +61,20 @@
                                 <ColumnDefinition  Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <border:SfBorder CornerRadius="5">
-                                <Entry Grid.Row="0" Placeholder="{Binding CloseWorkorderByAssetNumberPlaceholderText}" Grid.Column="0" Text="{Binding CloseWorkorderByAssetNumberText , Mode=TwoWay}" />
-                            </border:SfBorder>
-                            <Button Grid.Row="0" CornerRadius="5" Grid.Column="1" Text="{Binding SearchButtonTitle1 , Mode=TwoWay }" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchCloseWorkorderByAssetNumberCommand}" />
+                            <Entry Grid.Row="0" Placeholder="{Binding CloseWorkorderByAssetNumberPlaceholderText}" Grid.Column="0" Text="{Binding CloseWorkorderByAssetNumberText , Mode=TwoWay}" />
+                            <Button Grid.Row="0" Grid.Column="1" Text="{Binding SearchButtonTitle1 , Mode=TwoWay }" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchCloseWorkorderByAssetNumberCommand}" />
 
-                            <border:SfBorder CornerRadius="5" Grid.Row="1" Grid.Column="0">
-                                <Entry  Placeholder="{Binding CloseWorkorderByWorkorderNumberPlaceholderText}" Text="{Binding CloseWorkorderByWorkorderNumberText , Mode=TwoWay}" />
-                            </border:SfBorder>
-                            <Button Grid.Row="1" CornerRadius="5" Grid.Column="1" Text="{Binding SearchButtonTitle2, Mode=TwoWay}" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchCloseWorkorderByWorkorderNumberCommand}"/>
 
-                            <border:SfBorder CornerRadius="5"  Grid.Row="2" Grid.Column="0">
-                                <Entry Placeholder="{Binding CloseWorkorderByLocationPlaceholderText}" Text="{Binding CloseWorkorderByLocationText , Mode=TwoWay}" IsVisible="{Binding LocationPlaceholderLicensingVisibility}" />
-                            </border:SfBorder>
-                            <Button Grid.Row="2" CornerRadius="5" Grid.Column="1" Text="{Binding SearchButtonTitle3, Mode=TwoWay}" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchCloseWorkorderByLocationCommand}" IsVisible="{Binding LocationPlaceholderLicensingVisibility}"/>
+                            <Entry Grid.Row="1" Grid.Column="0" Placeholder="{Binding CloseWorkorderByWorkorderNumberPlaceholderText}" Text="{Binding CloseWorkorderByWorkorderNumberText , Mode=TwoWay}" />
+                            <Button Grid.Row="1" Grid.Column="1" Text="{Binding SearchButtonTitle2, Mode=TwoWay}" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchCloseWorkorderByWorkorderNumberCommand}"/>
 
-                            <border:SfBorder CornerRadius="5" Grid.Row="3" Grid.Column="0">
-                                <Entry  Placeholder="{Binding CloseWorkorderByPartNumberPlaceholderText}"  Text="{Binding CloseWorkorderByPartNumberText , Mode=TwoWay}" IsVisible="{Binding PartPlaceholderLicensingVisibility}" />
-                            </border:SfBorder>
-                            <Button Grid.Row="3" CornerRadius="5" Grid.Column="1" Text="{Binding SearchButtonTitle4, Mode=TwoWay}" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchCloseWorkorderByPartNumberCommand}" IsVisible="{Binding PartPlaceholderLicensingVisibility}"/>
+
+                            <Entry Grid.Row="2" Grid.Column="0" Placeholder="{Binding CloseWorkorderByLocationPlaceholderText}" Text="{Binding CloseWorkorderByLocationText , Mode=TwoWay}" IsVisible="{Binding LocationPlaceholderLicensingVisibility}" />
+                            <Button Grid.Row="2" Grid.Column="1" Text="{Binding SearchButtonTitle3, Mode=TwoWay}" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchCloseWorkorderByLocationCommand}" IsVisible="{Binding LocationPlaceholderLicensingVisibility}"/>
+
+
+                            <Entry Grid.Row="3" Grid.Column="0" Placeholder="{Binding CloseWorkorderByPartNumberPlaceholderText}"  Text="{Binding CloseWorkorderByPartNumberText , Mode=TwoWay}" IsVisible="{Binding PartPlaceholderLicensingVisibility}" />
+                            <Button Grid.Row="3" Grid.Column="1" Text="{Binding SearchButtonTitle4, Mode=TwoWay}" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchCloseWorkorderByPartNumberCommand}" IsVisible="{Binding PartPlaceholderLicensingVisibility}"/>
 
                             <Grid Grid.Row="4" Grid.ColumnSpan="2">
                                 <Grid.RowDefinitions>
@@ -98,7 +84,7 @@
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition  Width="*"/>
+                                    <ColumnDefinition  Width="*" />
                                     <ColumnDefinition  Width="*" />
                                 </Grid.ColumnDefinitions>
 
@@ -106,19 +92,17 @@
                                 <Label Grid.Row="1" Grid.Column="0" Style="{StaticResource BoldLabelStyle}" Text="{Binding StartDateTitle}" />
                                 <Label Grid.Row="1" Grid.Column="1" Style="{StaticResource BoldLabelStyle}" Text="{Binding EndDateTitle}" />
 
-                                <border:SfBorder CornerRadius="5" Grid.Row="2" HorizontalOptions="Start" Grid.Column="0" >
-                                    <DatePicker  Date="{Binding StartDate , Mode=TwoWay}" />
-                                </border:SfBorder>
-                                <border:SfBorder CornerRadius="5" Grid.Row="2" HorizontalOptions="Start"  Grid.Column="1">
-                                    <DatePicker  Date="{Binding EndDate , Mode=TwoWay}" />
-                                </border:SfBorder>
+                                <DatePicker Grid.Row="2" Grid.Column="0" HorizontalOptions="Start" Date="{Binding StartDate , Mode=TwoWay}" />
+                                <DatePicker Grid.Row="2" Grid.Column="1" HorizontalOptions="Start" Date="{Binding EndDate , Mode=TwoWay}" />
+
+
                             </Grid>
 
-                            <Button Grid.Row="5" Grid.Column="0" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}"  Command="{Binding SearchCloseWorkorderByDateCommand}"/>
+                            <Button Grid.Row="5" Grid.Column="0"  Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}"  Command="{Binding SearchCloseWorkorderByDateCommand}"/>
 
                         </Grid>
 
-
+                      
 
                         <!--<ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 

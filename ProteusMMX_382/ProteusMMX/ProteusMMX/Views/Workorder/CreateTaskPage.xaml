@@ -4,19 +4,8 @@
              x:Class="ProteusMMX.Views.Workorder.CreateTaskPage"
              xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             Title="{Binding PageTitle}"
+             Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
@@ -36,6 +25,7 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
+ 
 
     <ContentPage.Content>
         <Grid  Padding="10,10,10,10">
@@ -74,7 +64,7 @@
                         </Grid.ColumnDefinitions>
 
                         <StackLayout IsVisible="{Binding TaskIsVisible}" Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                            <Label Text="{Binding TaskTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                            <Label Text="{Binding TaskTitle}" TextColor="Black">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
                                         <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -82,13 +72,11 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
                             <Button Text="{Binding TaskName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding TaskCommand}" IsEnabled="{Binding TaskIsEnable}" />
-                            <!--</border:SfBorder>-->
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" IsVisible="{Binding TaskIsVisible}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                            <Label Text="{Binding DescriptionTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                            <Label Text="{Binding DescriptionTitle}" TextColor="Black">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
                                         <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -97,14 +85,11 @@
                                 </Label.FontAttributes>
                             </Label>
                             <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" HeightRequest="100"/>-->
-                            <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="100">
-
-                                <dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" ></dependencyinterface:CustomEditor>
-                            </border:SfBorder>
+                            <dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" HeightRequest="100"></dependencyinterface:CustomEditor>
                         </StackLayout>
 
                         <StackLayout IsVisible="{Binding EmployeeIsVisible}" Orientation="Vertical" Grid.Row="2" Grid.Column="0">
-                            <Label Text="{Binding EmployeeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                            <Label Text="{Binding EmployeeTitle}" TextColor="Black">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
                                         <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -112,13 +97,11 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
                             <Button Text="{Binding EmployeeName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding EmployeeCommand}" IsEnabled="{Binding EmployeeIsEnable}" />
-                            <!--</border:SfBorder>-->
                         </StackLayout>
 
                         <StackLayout IsVisible="{Binding ContractorIsVisible}" Orientation="Vertical" Grid.Row="2" Grid.Column="1">
-                            <Label Text="{Binding ContractorTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                            <Label Text="{Binding ContractorTitle}" TextColor="Black">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
                                         <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -126,13 +109,11 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
                             <Button Text="{Binding ContractorName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ContractorCommand}" IsEnabled="{Binding ContractorIsEnable}" />
-                            <!--</border:SfBorder>-->
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" IsVisible="{Binding TaskStartedDateIsVisible}">
-                            <Label Text="{Binding TaskStartedDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                            <Label Text="{Binding TaskStartedDateTitle}" TextColor="Black">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
                                         <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -145,7 +126,7 @@
 
 
                         <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1" IsVisible="{Binding TaskCompletionDateIsVisible}">
-                            <Label Text="{Binding TaskCompletionDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                            <Label Text="{Binding TaskCompletionDateTitle}" TextColor="Black">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
                                         <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -157,16 +138,9 @@
                         </StackLayout>
 
 
-                        <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}" />-->
-                        <buttons:SfButton
-                        Grid.Row="4"
-                                Grid.ColumnSpan="2"
-                     
-                        Command="{Binding SaveCommand}"
-                        Style="{StaticResource SfButtonStyle}"
-                       
-                        Text="{Binding SaveTitle}" >
-                        </buttons:SfButton>
+
+                        <Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}" />
+                    
                     </Grid>
 
                 </ScrollView>

@@ -9,6 +9,9 @@ namespace ProteusMMX.Model.InventoryModel
     public class Part
     {
         public int PartID { get; set; }
+        public int? QuantityOnHand { get; set; }
+        public int? QuantityAllocated { get; set; }
+        public int? StockroomPartID { get; set; }
         public string PartNumber { get; set; }
         public string PartName { get; set; }
         public int CategoryID { get; set; }
@@ -35,12 +38,9 @@ namespace ProteusMMX.Model.InventoryModel
         public string UserField10 { get; set; }
         public string CategoryName { get; set; }
         public string StockClassName { get; set; }
-        public int? StockroomPartID { get; set; }
-        public int? QuantityOnHand { get; set; }
-        public decimal? QuantityAllocated { get; set; }
-        public string ShelfBin { get; set; }
-        public string SerialNumber { get; set; }
 
-       
+        public string ShelfBin { get; set; }
+
+        public string SerialNumber { get; set; }
     }
 }

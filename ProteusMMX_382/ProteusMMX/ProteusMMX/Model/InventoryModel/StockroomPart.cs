@@ -10,6 +10,8 @@ namespace ProteusMMX.Model.InventoryModel
     public class StockroomPart
     {
         public int? StockroomPartID { get; set; }
+
+        public bool? IsPartSerialized { get; set; }
         public string SerialNumber { get; set; }
         public string ShelfBin { get; set; }
         public int? QuantityOnHand { get; set; }
@@ -26,8 +28,8 @@ namespace ProteusMMX.Model.InventoryModel
         public string CategoryName { get; set; }
         public decimal? UnitCostAmount { get; set; }
         public string UnitCostCurrency { get; set; }
-        public decimal? QuantityAllocated { get; set; }
-        public decimal? TotalQuantityAvailable { get; set; }
+        public int? QuantityAllocated { get; set; }
+        public int? TotalQuantityAvailable { get; set; }
         public int? EconomicOrderQuantity { get; set; }
         public int? PhysicalInventoryFrequency { get; set; }
         public DateTime? LastPhysicalInventoryDate { get; set; }
@@ -37,8 +39,9 @@ namespace ProteusMMX.Model.InventoryModel
         public decimal? CarryingCostAmount { get; set; }
         public string CarryingCostCurrency { get; set; }
         public string IsCriticalPart { get; set; }
+
         public decimal? OriginalAmount { get; set; }
-        public bool? IsPartSerialized { get; set; }
+
         public List<ShelfBin> ShelfBins { get; set; }
 
         public string PartNumberLocal
