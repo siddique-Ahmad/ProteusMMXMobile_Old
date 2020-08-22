@@ -29,9 +29,11 @@
         <border:SfBorder CornerRadius="5">
         <Entry Grid.Row="4" x:Name="PassLabel" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>
         </border:SfBorder>
-        <Button x:Name="ok" CornerRadius="5" Clicked="OK_Clicked" />
+        <Button BackgroundColor="Accent" x:Name="ok" CornerRadius="5" Clicked="OK_Clicked" />
 
 
+        
+        
         </StackLayout>
   
 </pages:PopupPage>
