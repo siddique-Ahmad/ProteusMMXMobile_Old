@@ -117,7 +117,7 @@
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="1">
-                                <Image   Source="{Binding AttachmentImageSource}"/>
+                                <Image HeightRequest="160" WidthRequest="100"  Source="{Binding AttachmentImageSource}"/>
                               
                             </StackLayout>
 
