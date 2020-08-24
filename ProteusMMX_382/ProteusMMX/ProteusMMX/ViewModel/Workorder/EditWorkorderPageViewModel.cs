@@ -5517,7 +5517,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "ClosedDate"));
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "ActivationDate"));
 
-               // WorkorderControlsNew.RemoveAll((i => i.ControlName == "CurrentRuntime"));
+                WorkorderControlsNew.RemoveAll((i => i.ControlName == "CurrentRuntime"));
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequestedDate"));
                 if (AppSettings.User.blackhawkLicValidator.RiskAssasment.Equals(false))
                 {

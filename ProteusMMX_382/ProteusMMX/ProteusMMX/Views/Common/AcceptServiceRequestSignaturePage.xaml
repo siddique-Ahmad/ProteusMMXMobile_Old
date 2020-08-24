@@ -16,24 +16,24 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    <StackLayout Margin="40,40,40,40" Padding="20,20,20,20" Spacing="10" VerticalOptions="Center"  BackgroundColor="White" HorizontalOptions="FillAndExpand" >
+    <Frame CornerRadius="10" Margin="40,40,40,40"   VerticalOptions="Center"  BackgroundColor="White" HorizontalOptions="FillAndExpand" >
+        <StackLayout Margin="40,40,40,40" Padding="20,20,20,20" Spacing="10" VerticalOptions="Center"  BackgroundColor="White" HorizontalOptions="FillAndExpand" >
 
-        <Label Grid.Row="0" x:Name="HeaderLabel" FontSize="Medium"  HorizontalOptions="Center" Text="Header" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
+            <Label Grid.Row="0" x:Name="HeaderLabel" FontSize="Medium"  HorizontalOptions="Center" Text="Header" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
 
-        <Label Grid.Row="1" x:Name="Username" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-        <border:SfBorder CornerRadius="5">
-        <Entry Grid.Row="2" x:Name="UserLabel"  TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
-        </border:SfBorder>
-        <Label Grid.Row="3" x:Name="Pass" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-        <border:SfBorder CornerRadius="5">
-        <Entry Grid.Row="4" x:Name="PassLabel" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>
-        </border:SfBorder>
-        <Button BackgroundColor="Accent" x:Name="ok" CornerRadius="5" Clicked="OK_Clicked" />
+            <Label Grid.Row="1" x:Name="Username" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
+            <border:SfBorder CornerRadius="5">
+                <Entry Grid.Row="2" x:Name="UserLabel"  TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
+            </border:SfBorder>
+            <Label Grid.Row="3" x:Name="Pass" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
+            <border:SfBorder CornerRadius="5">
+                <Entry Grid.Row="4" x:Name="PassLabel" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>
+            </border:SfBorder>
+            <Button BackgroundColor="LightSkyBlue" x:Name="ok" CornerRadius="5" Clicked="OK_Clicked" />
 
 
-        
-        
+
+
         </StackLayout>
-  
+    </Frame>
 </pages:PopupPage>

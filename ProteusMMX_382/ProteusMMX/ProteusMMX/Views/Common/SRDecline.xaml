@@ -30,7 +30,7 @@
         <border:SfBorder CornerRadius="5">
             <dependencyinterface:CustomEditor Grid.Row="1" x:Name="Reason" TextColor="{StaticResource ColorLabel}"  Grid.ColumnSpan="2"/>
         </border:SfBorder>
-        <Button x:Name="ok" Clicked="OK_Clicked" Text="OK" HeightRequest="30" Grid.Row="2" Grid.Column="0" CornerRadius="5"/>
+        <Button  x:Name="ok" Clicked="OK_Clicked" Text="OK" HeightRequest="30" Grid.Row="2" Grid.Column="0" CornerRadius="5"/>
         <Button x:Name="cancel" Clicked= "CANCEL_Clicked" Text="Cancel" HeightRequest="30" Grid.Row="2" Grid.Column="1" CornerRadius="5"/>
 
     </StackLayout>
