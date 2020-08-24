@@ -38,7 +38,7 @@
           
 
 
-            <Button Text="OK" Clicked="OK_Clicked" />
+            <Button CornerRadius="5" Text="OK" Clicked="OK_Clicked" />
 
 
         </Grid>
