@@ -192,7 +192,7 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
-        string _pageTitle = "MMX Login";
+        string _pageTitle = "ProteusMMX Login";
         public string PageTitle
         {
             get
@@ -210,7 +210,7 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        string _siteUrlLabel = "MMX URL";
+        string _siteUrlLabel = "ProteusMMX URL";
         public string SiteUrlLabel
         {
             get
@@ -246,7 +246,7 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        string _userNameLabel = "UserName";
+        string _userNameLabel = "User Name";
         public string UserNameLabel
         {
             get
@@ -372,7 +372,7 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        string _copyrightLabel = "Copyright @ Eagle Technology Inc.";
+        string _copyrightLabel = "Copyright @ 2020 Eagle Technology Inc.";
         public string CopyrightLabel
         {
             get
