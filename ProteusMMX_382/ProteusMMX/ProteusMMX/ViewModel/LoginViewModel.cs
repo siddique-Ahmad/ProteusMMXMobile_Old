@@ -507,7 +507,7 @@ namespace ProteusMMX.ViewModel
 
 
 
-                    var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName,Password);
+                    var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName, BlackhawkCryptographer.Encrypt(Password));
                     if (user != null && user.mmxUser != null)
                     {
                         // user.mmxUser.P
@@ -660,7 +660,7 @@ namespace ProteusMMX.ViewModel
                 AppSettings.BaseURL = SiteUrl;
                 AppSettings.APIVersion = apiVersion.APIVersion;
 
-                var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName,Password);
+                var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName, BlackhawkCryptographer.Encrypt(Password));
                 if (user == null || user.mmxUser == null || Convert.ToBoolean(user.servicestatus) == false)
                 {
                     UserDialogs.Instance.HideLoading();
