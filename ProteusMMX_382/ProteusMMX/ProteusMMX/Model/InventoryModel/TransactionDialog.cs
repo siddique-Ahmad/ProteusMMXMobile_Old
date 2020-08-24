@@ -23,7 +23,8 @@ namespace ProteusMMX.Model.InventoryModel
         public List<TransactionType> transactionTypes { get; set; }
         public List<TransactionReason> transactionReasons { get; set; }
         public List<CostCenter> costCenters { get; set; }
-
+        public int? ProfileID { get; set; }
+        public string Base64Image { get; set; }
         public List<ShelfBin> shelfBins { get; set; }
     }
 }

@@ -1583,7 +1583,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
                 ///TODO: Get Inspection InspectionSignatureResponse
                 var InspectionSignatureResponse = await _workorderService.IsSignatureRequiredOnInspection(WorkorderID.ToString());
-                if (InspectionSignatureResponse.IsSignatureRequiredAndEmpty && (InspectionUser ?? false))
+                if (InspectionSignatureResponse.IsSignatureRequiredAndEmpty)
                 {
                     UserDialogs.Instance.HideLoading();
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillallsignaturesinWorkordersInspectionstocloseWorkorder"), 2000);

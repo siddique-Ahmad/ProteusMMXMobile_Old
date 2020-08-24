@@ -769,7 +769,7 @@ namespace ProteusMMX.Services.Navigation
             _mappings.Add(typeof(SearchWorkorderByLocationFromBarcodeViewModel), typeof(SearchWorkorderByLocationFromBarcode));
             _mappings.Add(typeof(SearchWorkorderByAssetNumberFromBarcodeViewModel), typeof(SearchWorkorderByAssetNumberFromBarcode));
             _mappings.Add(typeof(SearchAssetFromBarcodeViewModel), typeof(SearchAssetFromBarcode));
-
+            _mappings.Add(typeof(ShowAssetSystemViewModel), typeof(ShowAssetSystem));
 
             _mappings.Add(typeof(SignatureHistoryViewModel), typeof(SignatureHistory));
 

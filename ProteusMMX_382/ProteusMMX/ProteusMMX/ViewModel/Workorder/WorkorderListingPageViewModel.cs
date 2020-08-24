@@ -36,7 +36,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         protected readonly IFormLoadInputService _formLoadInputService;
 
-        protected readonly IWorkorderService _workorderService;
+        public readonly IWorkorderService _workorderService;
 
 
         #endregion
@@ -194,7 +194,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _sortByDateText = value;
                     OnPropertyChanged("SortByDateText");
-                    RefillDueDateFromPicker();
+                   // RefillDueDateFromPicker();
                 }
             }
         }
@@ -906,7 +906,23 @@ namespace ProteusMMX.ViewModel.Workorder
                 OnPropertyChanged(nameof(WorkorderTypeFilterText));
             }
         }
+        string _FailedInspectionTitle;
+        public string FailedInspectionTitle
+        {
+            get
+            {
+                return _FailedInspectionTitle;
+            }
 
+            set
+            {
+                if (value != _FailedInspectionTitle)
+                {
+                    _FailedInspectionTitle = value;
+                    OnPropertyChanged("FailedInspectionTitle");
+                }
+            }
+        }
         string _locationNameFilterText;
         public string LocationNameFilterText
         {
@@ -1052,7 +1068,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 _locationSelectedIndexPicker = value;
                 OnPropertyChanged("LocationSelectedIndexPicker");
-                RefillLocationFromPicker();
+              
             }
         }
 
@@ -1068,7 +1084,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 _shiftSelectedIndexPicker = value;
                 OnPropertyChanged("ShiftSelectedIndexPicker");
-                RefillShiftFromPicker();
+                //RefillShiftFromPicker();
                
             }
         }
@@ -1085,7 +1101,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 _prioritySelectedIndexPicker = value;
                 OnPropertyChanged("PrioritySelectedIndexPicker");
-                RefillPriorityFromPicker();
+                //RefillPriorityFromPicker();
                
             }
         }
@@ -1390,6 +1406,7 @@ namespace ProteusMMX.ViewModel.Workorder
             //var titles = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
             //if (titles != null && titles.CFLI.Count > 0 && titles.listWebControlTitles.Count > 0)
             {
+                FailedInspectionTitle = WebControlTitle.GetTargetNameByTitleName("FailedInspection");
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrders");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
@@ -1421,18 +1438,18 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic") || AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Professional"))
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle,FailedInspectionTitle };
 
                     }
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle };
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle,FailedInspectionTitle };
                     }
 
                 }
                 else
                 {
-                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle,FailedInspectionTitle };
                 }
                 WorkorderTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
                 SortByLocationLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Location");
@@ -1728,7 +1745,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 if (AppSettings.User.ULFeatures)
                 {
-                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle,DemandMaintenenceTitle, EmergencyMaintenanceTitle,PreventiveMaintenenceTitle, };
+                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle,DemandMaintenenceTitle, PreventiveMaintenenceTitle,EmergencyMaintenanceTitle, FailedInspectionTitle };
                     //this.SelectedIndexPicker = 0;
                    
 
@@ -1736,7 +1753,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else
                 {
-                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle, DemandMaintenenceTitle, PreventiveMaintenenceTitle };
+                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle, DemandMaintenenceTitle, PreventiveMaintenenceTitle,FailedInspectionTitle };
                    // this.SelectedIndexPicker = 0;
                    
                 }
@@ -2004,37 +2021,32 @@ namespace ProteusMMX.ViewModel.Workorder
 
         }
 
-        private async Task RefillLocationFromPicker()
+        private async Task RefillLocationFromPicker(string Locationfilter)
         {
-            if (LocationSelectedIndexPicker == -1)
-            {
-                return;
-            }
-              var LocationSelectedPickerText = SortByLocationpickerTitles[LocationSelectedIndexPicker];
-           
-            if (LocationSelectedPickerText == SelectTitle)
+            //if (LocationSelectedIndexPicker == -1)
+            //{
+            //    return;
+            //}
+            //  var LocationSelectedPickerText = SortByLocationpickerTitles[LocationSelectedIndexPicker];
+
+            if (string.IsNullOrWhiteSpace(Locationfilter))
             {
                 LocationNameFilterText = null;
                 await RefillWorkorderCollection();
             }
             else
             {
-                LocationNameFilterText = LocationSelectedPickerText;
+                LocationNameFilterText = Locationfilter;
                 await RefillWorkorderCollection();
 
             }
 
         }
 
-        private async Task RefillShiftFromPicker()
+        private async Task RefillShiftFromPicker(string Shiftfilter)
         {
-            if (ShiftSelectedIndexPicker == -1)
-            {
-                return;
-            }
-            var ShiftSelectedPickerText = SortByShiftpickerTitles[ShiftSelectedIndexPicker];
-
-            if (ShiftSelectedPickerText == SelectTitle)
+           
+            if (string.IsNullOrWhiteSpace(Shiftfilter))
             {
                 ShiftNameFilterText = null;
                 await RefillWorkorderCollection();
@@ -2042,14 +2054,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
             else
             {
-                var filtered = from kvp in sortByShiftpickerTitlesitems
-                               where kvp.Value.ToLower() == ShiftSelectedPickerText.ToLower()
-                               select kvp.Key;
-                int? firstItem = filtered.ElementAt(0);
+            //    var filtered = from kvp in sortByShiftpickerTitlesitems
+            //                   where kvp.Value.ToLower() == Shiftfilter.ToLower()
+            //                   select kvp.Key;
+            //    int? firstItem = filtered.ElementAt(0);
 
                 //    var FinalLocationFilter = sortByLocationpickerTitlesitems.Where(t => t.Value.ToLower() == LocationSelectedPickerText.ToLower());
                 //var FinalLocationFilter2 = FinalLocationFilter as sortByLocationpickerTitlesitems;
-                ShiftNameFilterText = firstItem.ToString();
+                ShiftNameFilterText = Shiftfilter.ToString();
                 await RefillWorkorderCollection();
             }
 
@@ -2058,7 +2070,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         }
-        private async Task RefillDueDateFromPicker()
+        private async Task RefillDueDateFromPicker(string SortByDateText)
         {
            
             if(!string.IsNullOrWhiteSpace(SortByDateText))
@@ -2071,29 +2083,17 @@ namespace ProteusMMX.ViewModel.Workorder
                 SortByDueDate = "null";
             }
             await RefillWorkorderCollection();
-            // if (SortByDateText == null)
-            // {
-            //     IsGetWorkorderCallFromRequiredDate = false;
-            //     await RefillWorkorderCollection();
-            // }
-            // else
-            // {
-
-            //     GetWorkordersRequiredDate();
-            //}
-
-
-
+           
         }
-        private async Task RefillPriorityFromPicker()
+        private async Task RefillPriorityFromPicker(string Priorityfilter)
         {
-            if (PrioritySelectedIndexPicker == -1)
-            {
-                return;
-            }
-            var PrioritySelectedPickerText = SortByPriorityPickerTitles[PrioritySelectedIndexPicker];
+            //if (PrioritySelectedIndexPicker == -1)
+            //{
+            //    return;
+            //}
+            //var PrioritySelectedPickerText = SortByPriorityPickerTitles[PrioritySelectedIndexPicker];
 
-            if (PrioritySelectedPickerText == SelectTitle)
+            if (string.IsNullOrWhiteSpace(Priorityfilter))
             {
                 PriorityNameFilterText = null;
                 await RefillWorkorderCollection();
@@ -2101,14 +2101,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
             else
             {
-                var filtered = from kvp in sortByPrioritypickerTitlesitems
-                               where kvp.Value.ToLower() == PrioritySelectedPickerText.ToLower()
-                               select kvp.Key;
-                int? firstItem = filtered.ElementAt(0);
+                //var filtered = from kvp in sortByPrioritypickerTitlesitems
+                //               where kvp.Value.ToLower() == PrioritySelectedPickerText.ToLower()
+                //               select kvp.Key;
+                //int? firstItem = filtered.ElementAt(0);
 
                 //    var FinalLocationFilter = sortByLocationpickerTitlesitems.Where(t => t.Value.ToLower() == LocationSelectedPickerText.ToLower());
                 //var FinalLocationFilter2 = FinalLocationFilter as sortByLocationpickerTitlesitems;
-                PriorityNameFilterText = firstItem.ToString();
+                PriorityNameFilterText = Priorityfilter.ToString();
                 await RefillWorkorderCollection();
             }
 
@@ -2155,7 +2155,11 @@ namespace ProteusMMX.ViewModel.Workorder
                     await RefillWorkorderCollection();
 
                 }
-
+                else if (SelectedPickerText == FailedInspectionTitle)
+                {
+                     WorkorderTypeFilterText = "FailedInspection";
+                      await RefillWorkorderCollection();
+                }
                 else
                 {
                     WorkorderTypeFilterText = null;
@@ -2313,7 +2317,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 ///TODO: Get Inspection InspectionSignatureResponse
                 var InspectionSignatureResponse = await _workorderService.IsSignatureRequiredOnInspection(WorkorderID.ToString());
-                if (InspectionSignatureResponse.IsSignatureRequiredAndEmpty && (InspectionUser ?? false))
+                if (InspectionSignatureResponse.IsSignatureRequiredAndEmpty)
                 {
                     UserDialogs.Instance.HideLoading();
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillallsignaturesinWorkordersInspectionstocloseWorkorder"), 2000);
@@ -2497,6 +2501,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             CultureName = AppSettings.UserCultureName,
                             UserId = Convert.ToInt32(UserID),
                             ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                            DistributeCost= workorderWrapper.workOrderWrapper.workOrder.DistributeCost,
                             workOrder = new workOrders
                             {
                                 IsSignatureValidated = false,
@@ -2536,6 +2541,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         CultureName = AppSettings.UserCultureName,
                         UserId = Convert.ToInt32(UserID),
                         ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                        DistributeCost = workorderWrapper.workOrderWrapper.workOrder.DistributeCost,
                         workOrder = new workOrders
                         {
                             IsSignatureValidated = false,
@@ -2584,120 +2590,172 @@ namespace ProteusMMX.ViewModel.Workorder
         }
         public async Task OnViewAppearingAsync(VisualElement view)
         {
-            //IsGetWorkorderCallFromRequiredDate = false;
-           
             if (string.IsNullOrWhiteSpace(this.SearchText))
             {
                 await RefillWorkorderCollection();
 
             }
-            var workordersResponse = await _workorderService.GetWorkorderDDRecord(UserID);
+            
+            if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
+            {
+                var Locationfilter = Application.Current.Properties["LocationFilterkey"];
+                if (Locationfilter != null)
+                {
+                    await RefillLocationFromPicker(Locationfilter.ToString());
+
+                }
+                else
+                {
+                    await RefillLocationFromPicker(null);
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
+            {
+                var Shiftfilter = Application.Current.Properties["ShiftFilterkey"];
+                if (Shiftfilter != null)
+                {
+                    await RefillShiftFromPicker(Shiftfilter.ToString());
+
+                }
+                else
+                {
+                    await RefillShiftFromPicker(null);
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
+            {
+                var Priorityfilter = Application.Current.Properties["PriorityFilterkey"];
+                if (Priorityfilter != null)
+                {
+                    await RefillPriorityFromPicker(Priorityfilter.ToString());
+
+                }
+                else
+                {
+                    await RefillPriorityFromPicker(null);
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("DateFilterkey"))
+            {
+                var datefilter = Application.Current.Properties["DateFilterkey"];
+                if (datefilter != null)
+                {
+                    await RefillDueDateFromPicker(datefilter.ToString());
+
+                }
+                else
+                {
+                    await RefillDueDateFromPicker(null);
+                }
+            }
+           
+            //var workordersResponse = await _workorderService.GetWorkorderDDRecord(UserID);
 
 
-            if(!SortByLocationpickerTitles.Contains(SelectTitle))
-            {
-                SortByLocationpickerTitles.Add(SelectTitle);
-            }
-            if (!SortByShiftpickerTitles.Contains(SelectTitle))
-            {
-                SortByShiftpickerTitles.Add(SelectTitle);
-            }
-            if (!SortByPriorityPickerTitles.Contains(SelectTitle))
-            {
-                SortByPriorityPickerTitles.Add(SelectTitle);
-            }
+            //if(!SortByLocationpickerTitles.Contains(SelectTitle))
+            //{
+            //    SortByLocationpickerTitles.Add(SelectTitle);
+            //}
+            //if (!SortByShiftpickerTitles.Contains(SelectTitle))
+            //{
+            //    SortByShiftpickerTitles.Add(SelectTitle);
+            //}
+            //if (!SortByPriorityPickerTitles.Contains(SelectTitle))
+            //{
+            //    SortByPriorityPickerTitles.Add(SelectTitle);
+            //}
 
            
           
-            if (workordersResponse != null && workordersResponse.Location != null && workordersResponse.Location.Count > 0)
-            {
+            //if (workordersResponse != null && workordersResponse.Location != null && workordersResponse.Location.Count > 0)
+            //{
 
               
-                foreach (var item in workordersResponse.Location)
-                {
-                    if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
-                    {
+            //    foreach (var item in workordersResponse.Location)
+            //    {
+            //        if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
+            //        {
                         
-                    }
-                    else
-                    {
+            //        }
+            //        else
+            //        {
 
-                        if (!String.IsNullOrWhiteSpace(item.LocationName))
-                        {
+            //            if (!String.IsNullOrWhiteSpace(item.LocationName))
+            //            {
 
-                            SortByLocationpickerTitles.Add(item.LocationName);
-                        }
+            //                SortByLocationpickerTitles.Add(item.LocationName);
+            //            }
 
 
                         
 
-                    }
+            //        }
                    
-                }
+            //    }
 
 
-            }
+            //}
 
-            if (workordersResponse != null && workordersResponse.Shifts != null && workordersResponse.Shifts.Count > 0)
-            {
+            //if (workordersResponse != null && workordersResponse.Shifts != null && workordersResponse.Shifts.Count > 0)
+            //{
 
-                foreach (var item in workordersResponse.Shifts)
-                {
-                    if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
-                    {
+            //    foreach (var item in workordersResponse.Shifts)
+            //    {
+            //        if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
+            //        {
                        
-                    }
-                    else
-                    {
+            //        }
+            //        else
+            //        {
 
-                        if (!String.IsNullOrWhiteSpace(item.ShiftName))
-                        {
-                            if (!sortByShiftpickerTitlesitems.ContainsKey(item.ShiftID))
-                            {
-                                sortByShiftpickerTitlesitems.Add(item.ShiftID, item.ShiftName);
-                            }
-                            SortByShiftpickerTitles.Add(item.ShiftName);
+            //            if (!String.IsNullOrWhiteSpace(item.ShiftName))
+            //            {
+            //                if (!sortByShiftpickerTitlesitems.ContainsKey(item.ShiftID))
+            //                {
+            //                    sortByShiftpickerTitlesitems.Add(item.ShiftID, item.ShiftName);
+            //                }
+            //                SortByShiftpickerTitles.Add(item.ShiftName);
 
 
-                        }
+            //            }
 
-                    }
-                }
+            //        }
+            //    }
                
-            }
+            //}
 
-            if (workordersResponse != null && workordersResponse.Priority != null && workordersResponse.Priority.Count > 0)
-            {
+            //if (workordersResponse != null && workordersResponse.Priority != null && workordersResponse.Priority.Count > 0)
+            //{
               
-                foreach (var item in workordersResponse.Priority)
-                {
+            //    foreach (var item in workordersResponse.Priority)
+            //    {
                    
                    
-                    if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
-                    {
+            //        if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
+            //        {
                       
                        
-                    }
-                    else
-                    {
+            //        }
+            //        else
+            //        {
 
-                        if (!String.IsNullOrWhiteSpace(item.PriorityName))
-                        {
-                            if (!sortByPrioritypickerTitlesitems.ContainsKey(item.PriorityID))
-                            {
-                                sortByPrioritypickerTitlesitems.Add(item.PriorityID, item.PriorityName);
-                            }
-                            SortByPriorityPickerTitles.Add(item.PriorityName);
+            //            if (!String.IsNullOrWhiteSpace(item.PriorityName))
+            //            {
+            //                if (!sortByPrioritypickerTitlesitems.ContainsKey(item.PriorityID))
+            //                {
+            //                    sortByPrioritypickerTitlesitems.Add(item.PriorityID, item.PriorityName);
+            //                }
+            //                SortByPriorityPickerTitles.Add(item.PriorityName);
 
 
-                        }
+            //            }
 
-                    }
+            //        }
                    
-                }
+            //    }
                
 
-            }
+            //}
 
            
 
@@ -2724,8 +2782,38 @@ namespace ProteusMMX.ViewModel.Workorder
 
             ///Clear RequiredDate////
             SortByDateText = null;
+            SortByDueDate = null;
 
             this.SearchText = null;
+
+            if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
+            {
+                Application.Current.Properties.Remove("LocationFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
+            {
+                Application.Current.Properties.Remove("ShiftFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("ShiftFilterkeyText"))
+            {
+                Application.Current.Properties.Remove("ShiftFilterkeyText");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
+            {
+                Application.Current.Properties.Remove("PriorityFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityFilterkeyText"))
+            {
+                Application.Current.Properties.Remove("PriorityFilterkeyText");
+            }
+            if (Application.Current.Properties.ContainsKey("DateFilterkey"))
+            {
+                Application.Current.Properties.Remove("DateFilterkey");
+            }
+          
+         
+           
+            
         }
 
         private void SetCompletionDateResult(DatePromptResult result)

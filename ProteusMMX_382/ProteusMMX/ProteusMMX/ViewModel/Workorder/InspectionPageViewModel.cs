@@ -9,6 +9,7 @@ using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
 using ProteusMMX.Services.Navigation;
+using ProteusMMX.Services.SelectionListPageServices.Workorder.TaskAndLabour;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Services.Workorder.Attachments;
 using ProteusMMX.Services.Workorder.Inspection;
@@ -27,7 +28,7 @@ using System.Windows.Input;
 using Xamarin.Forms;
 namespace ProteusMMX.ViewModel.Workorder
 {
-    class InspectionPageViewModel : ViewModelBase
+    public class InspectionPageViewModel : ViewModelBase
     {
         #region Fields
 
@@ -37,7 +38,7 @@ namespace ProteusMMX.ViewModel.Workorder
         public readonly INavigationService _navigationService;
         protected readonly IFormLoadInputService _formLoadInputService;
         public readonly ITaskAndLabourService _taskAndLabourService;
-
+        public readonly ITaskService _taskService;
 
         string CreateWorkorderRights;
         #endregion
@@ -460,7 +461,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        public InspectionPageViewModel(IAuthenticationService authenticationService, IInspectionService inspectionService, IWorkorderService workorderService,IFormLoadInputService formLoadInputService, INavigationService navigationService, ITaskAndLabourService taskAndLabourService)
+        public InspectionPageViewModel(IAuthenticationService authenticationService, IInspectionService inspectionService, IWorkorderService workorderService,IFormLoadInputService formLoadInputService, INavigationService navigationService, ITaskAndLabourService taskAndLabourService, ITaskService taskService)
         {
             _authenticationService = authenticationService;
             _inspectionService = inspectionService;
@@ -468,6 +469,7 @@ namespace ProteusMMX.ViewModel.Workorder
             _formLoadInputService = formLoadInputService;
             _navigationService = navigationService;
             _taskAndLabourService = taskAndLabourService;
+            _taskService = taskService;
 
 
         }

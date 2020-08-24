@@ -14,6 +14,7 @@ namespace ProteusMMX.Model
 {
     public class ServiceOutput
     {
+        public string CompanyProfileLogo { get; set; }
         public workOrderWrapper workOrderWrapper { get; set; }
 
         public List<AssignTo> assignToEmployees { get; set; }
@@ -26,6 +27,8 @@ namespace ProteusMMX.Model
         public MMXUser mmxUser { get; set; }
 
         public AssetWrapper assetWrapper { get; set; }
+
+        public AssetForAssWrapper assetforassWrapper { get; set; }
 
         public MMXBOWrapper targetWrapper { get; set; }
 
@@ -107,5 +110,7 @@ namespace ProteusMMX.Model
         public List<Module> lstModules { get; set; }
         public bool AssetExist { get; set; }
         public int? RecordCount { get; set; }
+
+        public string TransactionNumber { get; set; }
     }
 }

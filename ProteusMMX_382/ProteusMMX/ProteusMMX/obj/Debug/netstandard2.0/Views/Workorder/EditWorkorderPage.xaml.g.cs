@@ -20,6 +20,30 @@ namespace ProteusMMX.Views.Workorder {
         private global::Xamarin.Forms.Grid GridButtonHeight;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::ProteusMMX.Controls.BorderlessEntry Description;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::Syncfusion.XForms.Buttons.SfRadioButton RadioButton;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::Syncfusion.XForms.Buttons.SfRadioButton Button1;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::ProteusMMX.Controls.BorderlessEntry EstimstedDowntime;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::ProteusMMX.Controls.BorderlessEntry ActualDowntime;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::ProteusMMX.Controls.BorderlessEntry MiscellaneousLabourCost;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::ProteusMMX.Controls.BorderlessEntry MiscellaneousMaterialCost;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
+        private global::ProteusMMX.Controls.BorderlessEntry CurrentRuntime;
+        
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private global::Xamarin.Forms.Grid Grid_column;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
@@ -35,6 +59,14 @@ namespace ProteusMMX.Views.Workorder {
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(EditWorkorderPage));
             GridButtonHeight = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Grid>(this, "GridButtonHeight");
+            Description = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "Description");
+            RadioButton = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Syncfusion.XForms.Buttons.SfRadioButton>(this, "RadioButton");
+            Button1 = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Syncfusion.XForms.Buttons.SfRadioButton>(this, "Button1");
+            EstimstedDowntime = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "EstimstedDowntime");
+            ActualDowntime = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "ActualDowntime");
+            MiscellaneousLabourCost = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "MiscellaneousLabourCost");
+            MiscellaneousMaterialCost = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "MiscellaneousMaterialCost");
+            CurrentRuntime = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "CurrentRuntime");
             Grid_column = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Grid>(this, "Grid_column");
             Grid_column1 = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Grid>(this, "Grid_column1");
             Grid_column2 = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Grid>(this, "Grid_column2");

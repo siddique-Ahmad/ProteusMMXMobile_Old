@@ -22,7 +22,7 @@
             </ToolbarItem.Icon>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
-    
+
     <ContentPage.Content>
 
 
@@ -40,13 +40,15 @@
 
 
         </ScrollView>
-        
+
         <!--<Grid Padding="20" x:Name="grid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="*" />
-                --><!--<RowDefinition Height="100" />--><!--
+                -->
+        <!--<RowDefinition Height="100" />-->
+        <!--
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -94,13 +96,17 @@
                         <StackLayout Orientation="Vertical">
                             <Label  x:Name="InspectionStartDateLabel"  Text="Inspection Start Date: " TextColor="Black" />
                             <Button x:Name="PickerInspectionStartDate" IsEnabled="False" Text="+" BorderColor="Black" TextColor="Black" FontAttributes="Bold" HeightRequest="40"/>
-                            --><!--<DatePicker x:Name="PickerInspectionStartDate"  HorizontalOptions="Start" />--><!--
+                            -->
+        <!--<DatePicker x:Name="PickerInspectionStartDate"  HorizontalOptions="Start" />-->
+        <!--
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" Grid.Row="1" >
                             <Label x:Name="InspectionCompletionDateLabel" Text="Inspection Completion Date: " TextColor="Black" />
                             <Button x:Name="PickerInspectionCompletionDate" IsEnabled="False" Text="+" BorderColor="Black" TextColor="Black" FontAttributes="Bold" HeightRequest="40"/>
-                            --><!--<DatePicker x:Name="PickerInspectionCompletionDate"  HorizontalOptions="Start"/>--><!--
+                            -->
+        <!--<DatePicker x:Name="PickerInspectionCompletionDate"  HorizontalOptions="Start"/>-->
+        <!--
                         </StackLayout>
 
                     </Grid>
@@ -117,7 +123,9 @@
                 </StackLayout>
             </ScrollView>
 
-            --><!--<Button Text="Add Inspections" Grid.Row="1" BackgroundColor="#87CEFA" TextColor="White" Clicked="AddInspectionClicked" Margin="20,0,20,10" IsVisible ="true"></Button>--><!--
+            -->
+        <!--<Button Text="Add Inspections" Grid.Row="1" BackgroundColor="#87CEFA" TextColor="White" Clicked="AddInspectionClicked" Margin="20,0,20,10" IsVisible ="true"></Button>-->
+        <!--
 
 
 
