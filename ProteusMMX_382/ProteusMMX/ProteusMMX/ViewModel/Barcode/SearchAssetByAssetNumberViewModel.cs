@@ -659,7 +659,9 @@ namespace ProteusMMX.ViewModel.Barcode
         {
             TargetNavigationData tnobj = new TargetNavigationData();
             tnobj.SearchText = this.SearchText;
-            await NavigationService.NavigateToAsync<SearchAssetFromBarcodeViewModel>(tnobj);
+           
+            // await NavigationService.NavigateToAsync<SearchAssetFromBarcodeViewModel>(tnobj);
+            await NavigationService.NavigateToAsync<AssetListingPageViewModel>(tnobj);
         }
 
         private void SearchText_TextChanged()

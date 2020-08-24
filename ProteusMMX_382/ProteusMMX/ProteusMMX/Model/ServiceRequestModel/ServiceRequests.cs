@@ -86,7 +86,7 @@ namespace ProteusMMX.Model.ServiceRequestModel
         public string FacilityName { get; set; }
 
         public int UserId { get; set; }
-
+        public string TagType { get; set; }
         public bool IsSignatureValidated { get; set; }
     }
 }

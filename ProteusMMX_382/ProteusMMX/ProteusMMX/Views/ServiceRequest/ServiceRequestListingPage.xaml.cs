@@ -20,6 +20,7 @@ namespace ProteusMMX.Views.ServiceRequest
 			InitializeComponent ();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+           
         }
         public ServiceRequestListingPageViewModel ViewModel
         {
@@ -54,6 +55,7 @@ namespace ProteusMMX.Views.ServiceRequest
 
             if (BindingContext is IHandleViewAppearing viewAware)
             {
+                //Application.Current.Properties["ServiceRequestListingViewModel"] = ViewModel;
                 await viewAware.OnViewAppearingAsync(this);
             }
         }

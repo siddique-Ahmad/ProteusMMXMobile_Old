@@ -5,6 +5,7 @@ using ProteusMMX.Controls;
 using ProteusMMX.Converters;
 using ProteusMMX.DependencyInterface;
 using ProteusMMX.Helpers;
+using ProteusMMX.Helpers.Attachment;
 using ProteusMMX.Helpers.DateTime;
 using ProteusMMX.Helpers.StringFormatter;
 using ProteusMMX.Helpers.Validation;
@@ -439,7 +440,16 @@ namespace ProteusMMX.ViewModel.Asset
                 }
             }
         }
-
+        private Xamarin.Forms.ImageSource _attachmentImageSource;
+        public Xamarin.Forms.ImageSource AttachmentImageSource
+        {
+            get { return _attachmentImageSource; }
+            set
+            {
+                _attachmentImageSource = value;
+                OnPropertyChanged("AttachmentImageSource");
+            }
+        }
         string _assetNameText;
         public string AssetNameText
         {
@@ -3589,7 +3599,7 @@ namespace ProteusMMX.ViewModel.Asset
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
                 SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 //AssetNameTitle = WebControlTitle.GetTargetNameByTitleName("AssetName");
-                //AssetNumberTitle = WebControlTitle.GetTargetNameByTitleName("AssetNumber");
+              
                 FacilityTitle = WebControlTitle.GetTargetNameByTitleName("Facility");
                 LocationTitle = WebControlTitle.GetTargetNameByTitleName("Location");
                // AssetSystemTitle = WebControlTitle.GetTargetNameByTitleName("AssetSystem");
@@ -4090,7 +4100,7 @@ namespace ProteusMMX.ViewModel.Asset
         private void GenerateTextBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new Entry();
+            var control = new MyEntry();
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;
@@ -4126,7 +4136,7 @@ namespace ProteusMMX.ViewModel.Asset
         private void GenerateComboBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new Picker();
+            var control = new MyPicker();
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;
@@ -6584,7 +6594,7 @@ namespace ProteusMMX.ViewModel.Asset
                         tnobj.LocationName = this.LocationName;
                         tnobj.AssetID = this.AssetID;
                         tnobj.AssetName = String.IsNullOrEmpty(this.AssetNameText) ? null : this.AssetNameText.Trim();
-                        
+                        tnobj.CurrentRuntime = CurrentRuntimeText;
                         await NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>(tnobj);
 
                     }
@@ -6705,9 +6715,27 @@ namespace ProteusMMX.ViewModel.Asset
             {
 
                 var asset = AssetWrapper.assetWrapper.asset;
-                
-                //string base64 = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Pages/Common/AsyncHandler.ashx?Module=Assets" + "&Mode=Get" + "&&Id="+asset.AssetID)).ToString();
-                //var attachment = ServiceCallWebClient(base64,"Get",null,null);
+
+                ////Set Asset Profile Picture///////
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    byte[] imgUser = StreamToBase64.StringToByte(asset.Base64Image);
+                    MemoryStream stream = new MemoryStream(imgUser);
+                    bool isimage = Extension.IsImage(stream);
+                    if (isimage == true)
+                    {
+
+                        byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                        AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
+
+                       
+                       
+                    }
+                }
+                       
+
+
+
                 AdditionalDetailsText = asset.AdditionalDetails;
                 Description = asset.Description;
                 if (!string.IsNullOrEmpty(asset.AssetName))

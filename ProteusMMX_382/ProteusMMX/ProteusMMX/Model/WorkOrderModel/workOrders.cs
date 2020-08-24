@@ -120,6 +120,8 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string MaintenanceCodeName { get; set; }
         public string AssetName { get; set; }
         public string AssetSystemName { get; set; }
+
+        public string AssetSystemNumber { get; set; }
         public string LocationName { get; set; }
 
         public string CostCenterName { get; set; }
@@ -143,6 +145,64 @@ namespace ProteusMMX.Model.WorkOrderModel
                 return false;
             }
         }
+        //public string WorkOrderHasAttachmentwithCount { get; set; }
+        //public bool WorkOrderHasAttachment
+        //{
+        //    get
+        //    {
+        //        if (this.WorkOrderHasAttachmentwithCount != null)
+        //        {
+        //            return true;
+        //        }
+
+        //        return false;
+        //    }
+        //}
+
+        //public string IsWorkOrderHasFailedInspection { get; set; }
+        //public bool WorkOrderHasFailedInspection
+        //{
+        //    get
+        //    {
+        //        if (this.IsWorkOrderHasFailedInspection != null)
+        //        {
+        //            return true;
+        //        }
+
+        //        return false;
+        //    }
+        //}
+        public string WorkOrderHasAttachment { get; set; }
+        public bool WorkOrderAttachmentFlag
+        {
+            get
+            {
+                if (this.WorkOrderHasAttachment == "True")
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+        public string IsWorkOrderHasFailedInspection { get; set; }
+        public bool WorkOrderHasFailedInspection
+        {
+            get
+            {
+                if (this.IsWorkOrderHasFailedInspection == "True")
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+
+        public int? WorkOrderAttachmentCount { get; set; }
+
+
         public string WorkOrderApproved { get; set; }
         public bool WorkOrderApprovedFlag
         {
@@ -165,7 +225,10 @@ namespace ProteusMMX.Model.WorkOrderModel
 
         public bool IsSignatureValidated { get; set; }
 
-       
+        public bool? DistributeCost { get; set; }
+
+        public bool? ParentandChildCost { get; set; }
+        public bool? ChildCost { get; set; }
 
         #region New Properties 31.5.2018
 

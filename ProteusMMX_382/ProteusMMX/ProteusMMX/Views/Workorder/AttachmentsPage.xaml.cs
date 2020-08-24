@@ -142,17 +142,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void CarouselView_PositionSelected(object sender, SelectedPositionChangedEventArgs e)
-        {
-            try
-            {
-
-                //this.ImageCountLabel.Text = (Int32.Parse(e.SelectedPosition.ToString()) + 1) + "/" + vm.Zoos.Count;
-            }
-            catch (Exception)
-            {
-            }
-        }
+      
         public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
         {
             ServiceOutput responseContent = new ServiceOutput();

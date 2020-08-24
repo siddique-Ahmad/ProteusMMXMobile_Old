@@ -1,6 +1,8 @@
-﻿using ProteusMMX.ViewModel;
+﻿using ProteusMMX.Model.CommonModels;
+using ProteusMMX.ViewModel;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
+using Syncfusion.XForms.Buttons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,6 +128,41 @@ namespace ProteusMMX.Views.Workorder
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
             }
+        }
+
+        EditWorkorderPageViewModel ViewModel => this.BindingContext as EditWorkorderPageViewModel;
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            TargetNavigationData tnobj = new TargetNavigationData();
+            tnobj.AssetSystemID = ViewModel.AssetSystemID;
+            tnobj.AssetSystemName = ViewModel.AssetSystemName;
+            tnobj.AssetSystemNumber = ViewModel.AssetSystemNumber;
+            ViewModel._navigationService.NavigateToAsync<ShowAssetSystemViewModel>(tnobj);
+        }
+        private void RadioButton_StateChanged(object sender, StateChangedEventArgs e)
+        {
+            if (RadioButton.IsChecked == false)
+            {
+                return;
+            }
+            else
+            {
+                Button1.IsChecked = false;
+            }
+
+        }
+        private void Button1_StateChanged(object sender, StateChangedEventArgs e)
+        {
+            if (Button1.IsChecked == false)
+            {
+                return;
+            }
+            else
+            {
+                RadioButton.IsChecked = false;
+            }
+
         }
     }
 }

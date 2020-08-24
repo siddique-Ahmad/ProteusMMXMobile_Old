@@ -164,8 +164,8 @@ namespace ProteusMMX.ViewModel
             _containerBuilder.RegisterType<SearchWorkorderByLocationFromBarcodeViewModel>();
             _containerBuilder.RegisterType<SearchWorkorderByAssetNumberFromBarcodeViewModel>();
             _containerBuilder.RegisterType<SearchAssetFromBarcodeViewModel>();
-            
-            
+            _containerBuilder.RegisterType<ShowAssetSystemViewModel>();
+
             #region Register service for list Pages
 
             _containerBuilder.RegisterType<FacilityService>().As<IFacilityService>();

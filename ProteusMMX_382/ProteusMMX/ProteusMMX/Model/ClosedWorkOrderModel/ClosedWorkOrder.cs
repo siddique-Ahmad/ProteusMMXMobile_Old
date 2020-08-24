@@ -99,6 +99,7 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public string RequesterPhone { get; set; }
         public string TargetName { get; set; }
 
+        public string CurrentRuntime { get; set; }
         public string SectionName { get; set; }
 
         public string ApprovalLevel { get; set; }
@@ -106,9 +107,13 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public string SignatureIntent { get; set; }
         public string Signature { get; set; }
 
-       // public string TotalTime { get; set; }
-
+        // public string TotalTime { get; set; }
+        public bool? DistributeCost { get; set; }
         public string TotalTime { get; set; }
         public DateTime? SignatureTimestamp { get; set; }
+
+        
+        public bool? ParentandChildCost { get; set; }
+        public bool? ChildCost { get; set; }
     }
 }

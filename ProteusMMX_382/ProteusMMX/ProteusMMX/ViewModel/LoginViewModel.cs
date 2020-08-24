@@ -1,5 +1,4 @@
 ﻿using Acr.UserDialogs;
-using ProteusMMX.Crypto;
 using ProteusMMX.Model;
 using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Services.Authentication;
@@ -7,25 +6,22 @@ using ProteusMMX.Services.FormLoadInputs;
 using ProteusMMX.Services.Translations;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Utils;
-using ProteusMMX.ViewModel.Workorder;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
-using ProteusMMX.Helpers;
 using System.Text.RegularExpressions;
-using Plugin.Connectivity;
 using ProteusMMX.Helpers.Storage;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Net;
 using Microsoft.AppCenter.Crashes;
-using System.Web;
+using ProteusMMX.Helpers.Attachment;
+using System.IO;
+using ProteusMMX.DependencyInterface;
 
 namespace ProteusMMX.ViewModel
 {
@@ -41,7 +37,16 @@ namespace ProteusMMX.ViewModel
         #endregion
         private static ISettings Settings => CrossSettings.Current;
         #region Properties
-
+        private Xamarin.Forms.ImageSource _attachmentImageSource;
+        public Xamarin.Forms.ImageSource AttachmentImageSource
+        {
+            get { return _attachmentImageSource; }
+            set
+            {
+                _attachmentImageSource = value;
+                OnPropertyChanged("AttachmentImageSource");
+            }
+        }
 
         ServiceOutput _formControlsAndRights;
         public ServiceOutput FormControlsAndRights
@@ -187,7 +192,7 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
-        string _pageTitle = "MMX Login";
+        string _pageTitle = "ProteusMMX Login";
         public string PageTitle
         {
             get
@@ -205,7 +210,7 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        string _siteUrlLabel = "MMX URL";
+        string _siteUrlLabel = "ProteusMMX URL";
         public string SiteUrlLabel
         {
             get
@@ -367,7 +372,7 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        string _copyrightLabel = "Copyright @ Eagle Technology Inc.";
+        string _copyrightLabel = "Copyright @ 2020 Eagle Technology Inc.";
         public string CopyrightLabel
         {
             get
@@ -449,7 +454,8 @@ namespace ProteusMMX.ViewModel
             try
             {
 
-               
+
+              
 
                 if (navigationData != null)
                 {
@@ -457,6 +463,8 @@ namespace ProteusMMX.ViewModel
 
                     var navigationParams = navigationData as TargetNavigationData;
                     WorkorderID = navigationParams.WorkOrderId;
+
+
 
 
 
@@ -469,6 +477,7 @@ namespace ProteusMMX.ViewModel
                 }
                 else
                 {
+                   
                     UserDialogs.Instance.ShowLoading("Please wait..loading all data");
                 }
 
@@ -482,6 +491,32 @@ namespace ProteusMMX.ViewModel
                 var FDAKey = await _authenticationService.GetFDAValidationAsync(AppSettings.BaseURL, null);
                 if (FDAKey != null)
                 {
+
+                    ////Set Company Profile Picture///////
+                 
+                    string newcompanyprofilebase64 = string.Empty;
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        string companyprofilebase64 = FDAKey.CompanyProfileLogo;
+                        newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
+                        if(string.IsNullOrWhiteSpace(newcompanyprofilebase64))
+                        {
+                            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
+                        }
+                        byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
+                        MemoryStream stream = new MemoryStream(imgUser);
+                        bool isimage = Extension.IsImage(stream);
+                        if (isimage == true)
+                        {
+
+                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 120);
+                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
+
+
+
+                        }
+                    }
+
                     if (FDAKey.FDAEnable && FDAKey.Signvalue=="True")
                     {
 
@@ -507,7 +542,7 @@ namespace ProteusMMX.ViewModel
 
 
 
-                    var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName, BlackhawkCryptographer.Encrypt(Password));
+                    var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName,Password);
                     if (user != null && user.mmxUser != null)
                     {
                         // user.mmxUser.P
@@ -660,7 +695,7 @@ namespace ProteusMMX.ViewModel
                 AppSettings.BaseURL = SiteUrl;
                 AppSettings.APIVersion = apiVersion.APIVersion;
 
-                var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName, BlackhawkCryptographer.Encrypt(Password));
+                var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName,Password);
                 if (user == null || user.mmxUser == null || Convert.ToBoolean(user.servicestatus) == false)
                 {
                     UserDialogs.Instance.HideLoading();
@@ -1026,6 +1061,8 @@ namespace ProteusMMX.ViewModel
                                     Application.Current.Properties["WorkorderCauseKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes").Expression;
                                     Application.Current.Properties["WorkorderTargetKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression;
                                     Application.Current.Properties["WorkorderDetailsControls"] = WorkOrderSubModule;
+                                    Application.Current.Properties["DistributeCost"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression;
+                                    
                                 }
                                 catch (Exception)
                                 {
@@ -1090,8 +1127,16 @@ namespace ProteusMMX.ViewModel
                         if (WorkOrderInspectionSubModule.listControls != null && WorkOrderInspectionSubModule.listControls.Count > 0)
                         {
 
-                            Application.Current.Properties["AssociateEmployeeContr"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateEmployeeContr").Expression;
-                            Application.Current.Properties["AssociateInspection"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateInspection").Expression;
+                            try
+                            {
+                                Application.Current.Properties["AssociateEmployeeContr"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateEmployeeContr").Expression;
+                                Application.Current.Properties["AssociateInspection"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateInspection").Expression;
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
                         }
                     }
                 }
@@ -1164,6 +1209,9 @@ namespace ProteusMMX.ViewModel
 
             ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "Details");
             ServiceOutput FormControlsAndRightsForButton = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "ServiceRequest");
+            ServiceOutput FormControlsAndRightsForOperatorTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "OperatorTag");
+            ServiceOutput FormControlsAndRightsForMaintenanceTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "MaintenanceTag");
+            ServiceOutput FormControlsAndRightsForSHETag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "SHETag");
 
             if (FormControlsAndRightsForButton != null && FormControlsAndRightsForButton.lstModules != null && FormControlsAndRightsForButton.lstModules.Count > 0)
             {
@@ -1209,19 +1257,6 @@ namespace ProteusMMX.ViewModel
                 }
             }
 
-
-
-
-
-
-
-
-
-                        
-
-
-
-                   
             if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
             {
                 var ServiceRequestModule = FormControlsAndRightsForDetails.lstModules[0];
@@ -1247,7 +1282,84 @@ namespace ProteusMMX.ViewModel
                 }
             }
 
+            if (FormControlsAndRightsForSHETag != null && FormControlsAndRightsForSHETag.lstModules != null && FormControlsAndRightsForSHETag.lstModules.Count > 0)
+            {
+                var ServiceRequestModuleSHETAg = FormControlsAndRightsForSHETag.lstModules[0];
+                if (ServiceRequestModuleSHETAg.ModuleName == "SHETagDetail") //ModuleName can't be  changed in service 
+                {
+                    if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                    {
+                        var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                        if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                        {
+
+
+
+                            Application.Current.Properties["SHETagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                        }
+
+
+
+                    }
+                }
+            }
+
+            if (FormControlsAndRightsForMaintenanceTag != null && FormControlsAndRightsForMaintenanceTag.lstModules != null && FormControlsAndRightsForMaintenanceTag.lstModules.Count > 0)
+            {
+                var ServiceRequestModuleSHETAg = FormControlsAndRightsForMaintenanceTag.lstModules[0];
+                if (ServiceRequestModuleSHETAg.ModuleName == "MaintenanceTagDetail") //ModuleName can't be  changed in service 
+                {
+                    if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                    {
+                        var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                        if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                        {
+
+
+
+                            Application.Current.Properties["MaintenanceTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                        }
+
+
+
+                    }
+                }
+            }
+
+            if (FormControlsAndRightsForOperatorTag != null && FormControlsAndRightsForOperatorTag.lstModules != null && FormControlsAndRightsForOperatorTag.lstModules.Count > 0)
+            {
+                var ServiceRequestModuleSHETAg = FormControlsAndRightsForOperatorTag.lstModules[0];
+                if (ServiceRequestModuleSHETAg.ModuleName == "OperatorTagDetail") //ModuleName can't be  changed in service 
+                {
+                    if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                    {
+                        var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                        if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                        {
+
+
+
+                            Application.Current.Properties["OperatorTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                        }
+
+
+
+                    }
+                }
+            }
         }
+
+
+
+
+
+
+
+
+
 
         public async Task GetAssetControlRights()
         {

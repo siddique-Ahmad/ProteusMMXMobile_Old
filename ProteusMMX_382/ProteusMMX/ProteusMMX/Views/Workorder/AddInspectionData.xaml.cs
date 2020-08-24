@@ -206,8 +206,8 @@ namespace ProteusMMX.Views.Workorder
 
                                 if (Device.Idiom == TargetIdiom.Phone)
                                 {
-                                    var btnTruePF = new Button() { HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
-                                    var btnFalsePF = new Button() { HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
+                                    var btnTruePF = new Button() {CornerRadius=5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
+                                    var btnFalsePF = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
                                     // btnTruePF.Clicked += BtnTrue_Clicked;
                                     // btnFalsePF.Clicked += BtnFalse_Clicked;
 
@@ -230,8 +230,8 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 else
                                 {
-                                    var btnTruePF = new Button() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
-                                    var btnFalsePF = new Button() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
+                                    var btnTruePF = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
+                                    var btnFalsePF = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
                                     //  btnTruePF.Clicked += BtnTrue_Clicked;
                                     // btnFalsePF.Clicked += BtnFalse_Clicked;
 
@@ -289,13 +289,13 @@ namespace ProteusMMX.Views.Workorder
                                     Label = new Label { Text = Miscellaneous.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
                                 }
 
-                                Layout = new Entry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Start, };
+                                Layout = new MyEntry {  Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Start, };
 
                                 // GenerateAnswerText(item);
 
-                                (Layout as Entry).BindingContext = new Range() { MaxRange = Miscellaneous.MaxRange, MinRange = Miscellaneous.MinRange };
+                                (Layout as MyEntry).BindingContext = new Range() { MaxRange = Miscellaneous.MaxRange, MinRange = Miscellaneous.MinRange };
                                 //(Layout as Entry).TextChanged += StandardRange_TextChanged;
-                                (Layout as Entry).Text = string.Empty;
+                                (Layout as MyEntry).Text = string.Empty;
 
                                 sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
                                 sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
@@ -333,9 +333,9 @@ namespace ProteusMMX.Views.Workorder
 
                                 if (Device.Idiom == TargetIdiom.Phone)
                                 {
-                                    var btnTrue = new Button() { HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                    var btnFalse = new Button() { HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                    var btnNA = new Button() { HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
+                                    var btnTrue = new Button() {CornerRadius=5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
+                                    var btnFalse = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
+                                    var btnNA = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
                                     //Bind the ResponseSubType in Buttons
                                     // btnTrue.BindingContext = Miscellaneous.ResponseSubType;
                                     //  btnFalse.BindingContext = Miscellaneous.ResponseSubType;
@@ -409,9 +409,9 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 else
                                 {
-                                    var btnTrue = new Button() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                    var btnFalse = new Button() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                    var btnNA = new Button() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
+                                    var btnTrue = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
+                                    var btnFalse = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
+                                    var btnNA = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
                                     //Bind the ResponseSubType in Buttons
                                     // btnTrue.BindingContext = item.ResponseSubType;
                                     // btnFalse.BindingContext = item.ResponseSubType;
@@ -515,8 +515,8 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 // GenerateAnswerText(item);
 
-                                Layout = new Entry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Start };
-                                (Layout as Entry).Text = string.Empty;
+                                Layout = new MyEntry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Start };
+                                (Layout as MyEntry).Text = string.Empty;
                                 // (Layout as Entry).TextChanged += OnlyNumeric_TextChanged;
 
                                 sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
@@ -575,7 +575,7 @@ namespace ProteusMMX.Views.Workorder
                                 // GenerateAnswerText(item);
 
 
-                                Layout = new Picker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                                Layout = new MyPicker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
 
                                 //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option1))
                                 //    (Layout as Picker).Items.Add(Miscellaneous.Option1);
@@ -598,8 +598,8 @@ namespace ProteusMMX.Views.Workorder
                                 //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option10))
                                 //    (Layout as Picker).Items.Add(Miscellaneous.Option10);
 
-                                var index = (Layout as Picker).Items.IndexOf(string.Empty);
-                                (Layout as Picker).SelectedIndex = index;
+                                var index = (Layout as MyPicker).Items.IndexOf(string.Empty);
+                                (Layout as MyPicker).SelectedIndex = index;
 
                                 sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
                                 sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
@@ -644,7 +644,7 @@ namespace ProteusMMX.Views.Workorder
                                 break;
                         }
 
-                        var btnsave = new Button() {StyleId=Miscellaneous.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Add"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                        var btnsave = new Button() {CornerRadius=5, StyleId=Miscellaneous.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Add"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                         btnsave.Clicked += Btnsave_Clicked;
 
 
@@ -797,8 +797,8 @@ namespace ProteusMMX.Views.Workorder
                                 gridPF.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                                 if (Device.Idiom == TargetIdiom.Phone)
                                 {
-                                    var btnTruePF = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
-                                    var btnFalsePF = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
+                                    var btnTruePF = new Button() {CornerRadius=5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
+                                    var btnFalsePF = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
                                     // btnTruePF.Clicked += BtnTrue_Clicked;
                                     // btnFalsePF.Clicked += BtnFalse_Clicked;
 
@@ -822,8 +822,8 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 else
                                 {
-                                    var btnTruePF = new Button() { HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
-                                    var btnFalsePF = new Button() { HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
+                                    var btnTruePF = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
+                                    var btnFalsePF = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
                                     //btnTruePF.Clicked += BtnTrue_Clicked;
                                     // btnFalsePF.Clicked += BtnFalse_Clicked;
 
@@ -878,11 +878,11 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 //GenerateAnswerText(item1);
 
-                                Layout = new Entry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
+                                Layout = new MyEntry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
 
-                                (Layout as Entry).BindingContext = new Range() { MaxRange = item1.MaxRange, MinRange = item1.MinRange };
+                                (Layout as MyEntry).BindingContext = new Range() { MaxRange = item1.MaxRange, MinRange = item1.MinRange };
                                 //(Layout as Entry).TextChanged += StandardRange_TextChanged;
-                                (Layout as Entry).Text = string.Empty;
+                                (Layout as MyEntry).Text = string.Empty;
 
 
                                 sta = new Grid() { };
@@ -919,9 +919,9 @@ namespace ProteusMMX.Views.Workorder
                                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                                 if (Device.Idiom == TargetIdiom.Phone)
                                 {
-                                    var btnTrue = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                    var btnFalse = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                    var btnNA = new Button() { HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
+                                    var btnTrue = new Button() {CornerRadius=5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
+                                    var btnFalse = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
+                                    var btnNA = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
                                     //Bind the ResponseSubType in Buttons
                                     //btnTrue.BindingContext = item1.ResponseSubType;
                                     //btnFalse.BindingContext = item1.ResponseSubType;
@@ -994,9 +994,9 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 else
                                 {
-                                    var btnTrue = new Button() { HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                    var btnFalse = new Button() { HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                    var btnNA = new Button() { HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
+                                    var btnTrue = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
+                                    var btnFalse = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
+                                    var btnNA = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
                                     //Bind the ResponseSubType in Buttons
                                     // btnTrue.BindingContext = item1.ResponseSubType;
                                     // btnFalse.BindingContext = item1.ResponseSubType;
@@ -1100,8 +1100,8 @@ namespace ProteusMMX.Views.Workorder
 
                                 //  GenerateAnswerText(item1);
 
-                                Layout = new Entry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
-                                (Layout as Entry).Text = string.Empty;
+                                Layout = new MyEntry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
+                                (Layout as MyEntry).Text = string.Empty;
                                 //(Layout as Entry).TextChanged += OnlyNumeric_TextChanged;
 
 
@@ -1161,7 +1161,7 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 // GenerateAnswerText(item1);
 
-                                Layout = new Picker() { WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center };
+                                Layout = new MyPicker() { WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center };
 
                                 //if (!string.IsNullOrWhiteSpace(item1.Option1))
                                 //    (Layout as Picker).Items.Add(item1.Option1);
@@ -1185,8 +1185,8 @@ namespace ProteusMMX.Views.Workorder
                                 //    (Layout as Picker).Items.Add(item1.Option10);
 
 
-                                var index = (Layout as Picker).Items.IndexOf(string.Empty);
-                                (Layout as Picker).SelectedIndex = index;
+                                var index = (Layout as MyPicker).Items.IndexOf(string.Empty);
+                                (Layout as MyPicker).SelectedIndex = index;
 
                                 sta = new Grid() { };
                                 sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
@@ -1229,7 +1229,7 @@ namespace ProteusMMX.Views.Workorder
 
                     }
 
-                    var btnSaveSection = new Button() { Text = WebControlTitle.GetTargetNameByTitleName("Add"), CommandParameter = commonSections, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnSaveSection = new Button() {CornerRadius=5, Text = WebControlTitle.GetTargetNameByTitleName("Add"), CommandParameter = commonSections, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnSaveSection.Clicked += BtnSaveSection_Clicked;
 
 

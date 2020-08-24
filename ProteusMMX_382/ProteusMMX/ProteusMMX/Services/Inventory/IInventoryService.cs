@@ -8,7 +8,7 @@ namespace ProteusMMX.Services.Inventory
 {
     public interface IInventoryService
     {
-        Task<ServiceOutput> GetStockrooms(string UserID, string PageNumber, string RowCount);
+        Task<ServiceOutput> GetStockrooms(string UserID, string PageNumber, string RowCount, string searchstockrromName);
 
         Task<ServiceOutput> GetPerformBY(string UserID);
 

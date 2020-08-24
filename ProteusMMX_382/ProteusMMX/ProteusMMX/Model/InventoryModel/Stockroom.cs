@@ -8,12 +8,13 @@ namespace ProteusMMX.Model.InventoryModel
 {
     public class Stockroom
     {
+        
         public int? StockroomID { get; set; }
         public string StockroomName { get; set; }
         public int? NumberOfParts { get; set; }
         public int? QuantityOnHand { get; set; }
-        public int? QuantityAllocated { get; set; }
-        public int? TotalQuantityAvailable { get; set; }
+        public decimal? QuantityAllocated { get; set; }
+        public decimal? TotalQuantityAvailable { get; set; }
         public decimal? TotalCostAmount { get; set; }
         public string TotalCostCurrency { get; set; }
         public string UserField1 { get; set; }
@@ -28,3 +29,6 @@ namespace ProteusMMX.Model.InventoryModel
         public string UserField10 { get; set; }
     }
 }
+    
+
+

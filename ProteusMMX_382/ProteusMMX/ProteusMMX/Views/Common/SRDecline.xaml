@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             x:Class="ProteusMMX.Views.Common.SRDecline">
+
+    <StackLayout  Margin="40,40,40,40" Padding="20,20,20,20" Spacing="10" VerticalOptions="Center"  BackgroundColor="White"  >
+
+        <Label Grid.Row="0" x:Name="HeaderLabel" FontSize="Medium"  HorizontalOptions="Center" Text="Notes" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
+
+        <!--<Label Grid.Row="1" x:Name="Username" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
+            <Entry Grid.Row="2" x:Name="UserLabel"  TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
+
+            <Label Grid.Row="3" x:Name="Pass" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />-->
+        <Entry Grid.Row="1" x:Name="PassLabel" TextColor="{StaticResource ColorLabel}"  Grid.ColumnSpan="2"/>
+        <Button x:Name="ok" Clicked="OK_Clicked" Text="OK" HeightRequest="30" Grid.Row="2" Grid.Column="0" />
+        <Button x:Name="cancel" Clicked= "CANCEL_Clicked" Text="Cancel" HeightRequest="30" Grid.Row="2" Grid.Column="1" />
+
+    </StackLayout>
+
+</pages:PopupPage>
+
