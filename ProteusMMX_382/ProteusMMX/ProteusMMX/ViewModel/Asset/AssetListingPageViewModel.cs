@@ -617,6 +617,7 @@ namespace ProteusMMX.ViewModel.Asset
                 if (navigationData != null)
                 {
 
+
                     var navigationParams = navigationData as TargetNavigationData;
                     this.SearchText = navigationParams.SearchText;
 

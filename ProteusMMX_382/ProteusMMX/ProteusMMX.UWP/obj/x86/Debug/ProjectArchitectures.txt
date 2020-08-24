@@ -1,1 +1,0 @@
-B:\Github\ProteusMMXMobile\ProteusMMX_382\ProteusMMX\ProteusMMX.UWP\ProteusMMX.UWP.csproj;x86

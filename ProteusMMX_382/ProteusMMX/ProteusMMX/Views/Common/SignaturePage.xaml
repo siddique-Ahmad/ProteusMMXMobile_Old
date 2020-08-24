@@ -12,7 +12,7 @@
                                    VerticalOptions="FillAndExpand"
                                    HeightRequest="200"
                                    x:Name="signatureView"/>
-        <Button Text="OK" Clicked="OK_Clicked" />
+        <Button CornerRadius="5" Text="OK" Clicked="OK_Clicked" />
 
 
     </StackLayout>

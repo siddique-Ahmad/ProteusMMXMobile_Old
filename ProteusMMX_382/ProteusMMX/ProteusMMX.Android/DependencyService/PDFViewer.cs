@@ -8,6 +8,7 @@ using ProteusMMX.DependencyInterface;
 using ProteusMMX.Droid.DependencyService;
 using Android.Support.V4.Content;
 using Xamarin.Forms;
+using Android.Support.Compat;
 using Android.OS;
 using Java.IO;
 using Plugin.Permissions;

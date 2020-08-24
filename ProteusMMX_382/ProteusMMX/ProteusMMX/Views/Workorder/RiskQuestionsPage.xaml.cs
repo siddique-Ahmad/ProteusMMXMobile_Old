@@ -173,7 +173,7 @@ namespace ProteusMMX.Views.Workorder
                 MainLayout.Children.Add(SectionLabel);
                 MainLayout.Children.Add(mainLayoutGroup);
             }
-            btnsave = new Button() { Text = WebControlTitle.GetTargetNameByTitleName("Save")+"*", HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+            btnsave = new Button() { Text = WebControlTitle.GetTargetNameByTitleName("Save")+"*", HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"),CornerRadius=5, TextColor = Color.White, BorderColor = Color.Black };
             btnsave.Clicked += Btnsave_Clicked;
             Label lbl = new Label { HorizontalTextAlignment = TextAlignment.Center, Text = WebControlTitle.GetTargetNameByTitleName("SavewillbeconsideredasESignature") };
             MainLayout.Children.Add(btnsave);

@@ -20,29 +20,29 @@ namespace ProteusMMX.Views.Workorder {
         private global::Xamarin.Forms.Label QRequired;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
-        private global::ProteusMMX.Controls.BorderlessEntry QuantityRequired;
+        private global::Xamarin.Forms.Entry QuantityRequired;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private global::Xamarin.Forms.Label QAllocated;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
-        private global::ProteusMMX.Controls.BorderlessEntry QuantityAllocated;
+        private global::Xamarin.Forms.Entry QuantityAllocated;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private global::Xamarin.Forms.Label UCost;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
-        private global::ProteusMMX.Controls.BorderlessEntry UnitCost;
+        private global::Xamarin.Forms.Entry UnitCost;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(CreateWorkOrderStockroomParts));
             QRequired = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "QRequired");
-            QuantityRequired = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "QuantityRequired");
+            QuantityRequired = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Entry>(this, "QuantityRequired");
             QAllocated = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "QAllocated");
-            QuantityAllocated = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "QuantityAllocated");
+            QuantityAllocated = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Entry>(this, "QuantityAllocated");
             UCost = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "UCost");
-            UnitCost = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "UnitCost");
+            UnitCost = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Entry>(this, "UnitCost");
         }
     }
 }
