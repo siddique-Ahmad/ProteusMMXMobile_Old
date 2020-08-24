@@ -20,29 +20,29 @@ namespace ProteusMMX.Views.PurchaseOrder {
         private global::Xamarin.Forms.Label QReceived;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
-        private global::ProteusMMX.Controls.BorderlessEntry QuantityReceived;
+        private global::Xamarin.Forms.Entry QuantityReceived;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private global::Xamarin.Forms.Label INumber;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
-        private global::ProteusMMX.Controls.BorderlessEntry InvoiceNumber;
+        private global::Xamarin.Forms.Entry InvoiceNumber;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private global::Xamarin.Forms.Label PackNumber;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
-        private global::ProteusMMX.Controls.BorderlessEntry PackagingSlipNumber;
+        private global::Xamarin.Forms.Entry PackagingSlipNumber;
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private void InitializeComponent() {
             global::Xamarin.Forms.Xaml.Extensions.LoadFromXaml(this, typeof(ReceivePuchaseOrderStockroomPart));
             QReceived = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "QReceived");
-            QuantityReceived = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "QuantityReceived");
+            QuantityReceived = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Entry>(this, "QuantityReceived");
             INumber = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "INumber");
-            InvoiceNumber = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "InvoiceNumber");
+            InvoiceNumber = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Entry>(this, "InvoiceNumber");
             PackNumber = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Label>(this, "PackNumber");
-            PackagingSlipNumber = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::ProteusMMX.Controls.BorderlessEntry>(this, "PackagingSlipNumber");
+            PackagingSlipNumber = global::Xamarin.Forms.NameScopeExtensions.FindByName<global::Xamarin.Forms.Entry>(this, "PackagingSlipNumber");
         }
     }
 }
