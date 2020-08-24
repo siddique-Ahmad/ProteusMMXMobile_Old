@@ -68,7 +68,7 @@
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="5">
-                        <Image   Source="{Binding AttachmentImageSource}"/>
+                        <Image  WidthRequest="160" HeightRequest="100"   Source="{Binding AttachmentImageSource}"/>
                     </StackLayout>
 
                 </StackLayout>
@@ -98,7 +98,7 @@
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="5">
-                        <Image   Source="{Binding AttachmentImageSource}"/>
+                        <Image  WidthRequest="160" HeightRequest="100"   Source="{Binding AttachmentImageSource}"/>
                     </StackLayout>
                 </StackLayout>
 
