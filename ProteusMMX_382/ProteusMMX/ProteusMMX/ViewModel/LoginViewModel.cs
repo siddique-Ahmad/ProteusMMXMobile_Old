@@ -516,6 +516,27 @@ namespace ProteusMMX.ViewModel
 
                         }
                     }
+                    else
+                    {
+                        string companyprofilebase64 = FDAKey.CompanyProfileLogo;
+                        newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
+                        if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
+                        {
+                            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
+                        }
+                        byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
+                        MemoryStream stream = new MemoryStream(imgUser);
+                        bool isimage = Extension.IsImage(stream);
+                        if (isimage == true)
+                        {
+
+                            // byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 120);
+                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
+
+
+
+                        }
+                    }
 
                     if (FDAKey.FDAEnable && FDAKey.Signvalue=="True")
                     {

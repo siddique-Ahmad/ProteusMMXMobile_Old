@@ -52,10 +52,10 @@
 
 
                     <border:SfBorder Margin="50,50,50,50" BorderColor="LightGray" BorderWidth="2" CornerRadius="5">
-                        <StackLayout Padding="20,20,20,20" VerticalOptions="Center" Orientation="Horizontal">
+                        <StackLayout Padding="20,20,20,20" VerticalOptions="Center">
 
 
-                            <StackLayout  Grid.Row="1" Grid.Column="0" Grid.RowSpan="4" Orientation="Vertical" Spacing="100" >
+                            <StackLayout  Grid.Row="1" Orientation="Horizontal" Spacing="250" >
                                 <Image Source="tapped.jpg">
                                     <Image.Source>
                                         <OnPlatform x:TypeArguments="FileImageSource">
@@ -77,31 +77,23 @@
                                 </Image>
 
                             </StackLayout>
-                            <StackLayout Grid.Row="1"  Grid.Column="1"  Grid.ColumnSpan="2">
-
-                                <BoxView HeightRequest="350" WidthRequest="2" BackgroundColor="Gray"/>
-
-                            </StackLayout>
-                            <StackLayout Grid.Row="1" Grid.Column="2" >
-                                <Label IsVisible="{Binding SiteUrlLabelVisibility}" Grid.Row="0" Grid.Column="1" Text="{Binding SiteUrlLabel}" Style="{StaticResource BoldLabelStyle}"  />
+                           
+                         
+                                <Label IsVisible="{Binding SiteUrlLabelVisibility}" Grid.Row="2" Text="{Binding SiteUrlLabel}" Style="{StaticResource BoldLabelStyle}"  />
                                 <!--<Entry    />-->
                                 <border:SfBorder CornerRadius="5">
-                                    <Entry x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" Grid.Row="1" Text="{Binding SiteUrl, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" >
-                                        <!--<Entry.Behaviors>
-                            <b:EventToCommandBehavior EventName="Completed"
-                                          Command="{Binding CompletedCommand}"
-                                         />
-                        </Entry.Behaviors>-->
+                                    <Entry x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" Grid.Row="3" Text="{Binding SiteUrl, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}">
+                                        
                                     </Entry>
                                 </border:SfBorder>
 
-                                <Label Grid.Row="2" Text="{Binding UserNameLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
+                                <Label Grid.Row="4" Text="{Binding UserNameLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
                                 <border:SfBorder CornerRadius="5">
-                                    <Entry Grid.Row="3" Text="{Binding UserName, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
+                                    <Entry Grid.Row="5" Text="{Binding UserName, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
                                 </border:SfBorder>
-                                <Label Grid.Row="4" Text="{Binding PasswordLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
+                                <Label Grid.Row="6" Text="{Binding PasswordLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
                                 <border:SfBorder CornerRadius="5">
-                                    <Entry Grid.Row="5" Text="{Binding Password, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>
+                                    <Entry Grid.Row="7" Text="{Binding Password, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>
                                 </border:SfBorder>
                                 <!--<controls:CustomCheckBox IsVisible="{Binding RememberMeVisibility}" Grid.Row="6" IsChecked="{Binding RememberMe, Mode=TwoWay}" x:Name="CheckBox_RememberMe" />-->
 
@@ -121,11 +113,11 @@
 
 
                                 <!--<androidWidget1:Switch  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="StartAndExpand"/>-->
-                                <Button Grid.Row="7" Text="{Binding LoginButtonLabel}" Style="{StaticResource LoginButtonStyle}"  Command="{Binding LoginCommand}" Grid.ColumnSpan="2" />
+                                <Button Grid.Row="9" Text="{Binding LoginButtonLabel}" Style="{StaticResource LoginButtonStyle}"  Command="{Binding LoginCommand}" Grid.ColumnSpan="2" />
 
-                                <Label IsVisible="{Binding CopyrightLabelVisibility}" Grid.Row="8" Text="{Binding CopyrightLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-                                <Label Margin="40,0,0,0" IsVisible="{Binding SupportLabelVisibility}" Grid.Row="9" Text="{Binding SupportLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}"  TextColor="{StaticResource RedColor}" Grid.ColumnSpan="2" />
-                            </StackLayout>
+                                <Label IsVisible="{Binding CopyrightLabelVisibility}" Grid.Row="10" Text="{Binding CopyrightLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
+                                <Label Margin="40,0,0,0" IsVisible="{Binding SupportLabelVisibility}" Grid.Row="11" Text="{Binding SupportLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}"  TextColor="{StaticResource RedColor}" Grid.ColumnSpan="2" />
+                            
                             <!--<controls:CustomDatePicker Grid.Row="10" SelectedDate="{Binding PresentDate}" MinimumDate="{Binding PastDate}" MaximumDate="{Binding FutureDate}" />-->
                         </StackLayout>
                     </border:SfBorder>
