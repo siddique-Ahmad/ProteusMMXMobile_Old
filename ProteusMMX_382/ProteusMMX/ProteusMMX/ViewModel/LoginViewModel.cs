@@ -192,7 +192,7 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
-        string _pageTitle = "ProteusMMX Login";
+        string _pageTitle = "MMX Login";
         public string PageTitle
         {
             get
@@ -210,7 +210,7 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        string _siteUrlLabel = "ProteusMMX URL";
+        string _siteUrlLabel = "MMX URL";
         public string SiteUrlLabel
         {
             get
@@ -372,7 +372,7 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        string _copyrightLabel = "Copyright @ 2020 Eagle Technology Inc.";
+        string _copyrightLabel = "Copyright @ Eagle Technology Inc.";
         public string CopyrightLabel
         {
             get
@@ -509,7 +509,7 @@ namespace ProteusMMX.ViewModel
                         if (isimage == true)
                         {
 
-                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 120);
+                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
                             AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
 
 
