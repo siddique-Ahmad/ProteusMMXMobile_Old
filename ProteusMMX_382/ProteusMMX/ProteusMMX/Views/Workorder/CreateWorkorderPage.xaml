@@ -562,6 +562,17 @@
                                     <dependencyinterface:CustomEditor  Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
 
                                 </border:SfBorder>
+
+                                <buttons:SfButton
+                        Grid.Row="5"
+                        CornerRadius="5"
+                        VerticalOptions="StartAndExpand"
+                        Style="{StaticResource SfButtonStyle}"
+                        Command="{Binding SaveWorkorderCommand}"
+                        IsVisible="{Binding EditWorkIsVisible}"
+                        IsEnabled="{Binding EditWorkIsEnable}"
+                        Text="{Binding SaveTitle}" />
+                                
                             </StackLayout>
 
 
@@ -570,14 +581,7 @@
 
                         <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40" VerticalOptions="StartAndExpand" />-->
 
-                        <Button
-                        Grid.Row="4"
-                        VerticalOptions="StartAndExpand"
-                        Style="{StaticResource SaveButtonStyle}"
-                        Command="{Binding SaveWorkorderCommand}"
-                        IsVisible="{Binding EditWorkIsVisible}"
-                        IsEnabled="{Binding EditWorkIsEnable}"
-                        Text="{Binding SaveTitle}" />
+                        
 
                         <!--<ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 
