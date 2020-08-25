@@ -133,7 +133,7 @@
                        
                        
                         Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                             x:Name="Description"
                            
                             Text="{Binding DescriptionText}"
@@ -318,14 +318,18 @@
                                 <Button Text="{Binding AssignToEmployeeName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding AssignToCommand}" IsEnabled="{Binding AssignToEmployeeIsEnable}" />
 
                             </StackLayout>
-                            <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Orientation="Horizontal" Grid.Row="8">
-                                <dependencyinterface:LoginSwitch  Margin="10,10,10,10"  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
+                            <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="8">
+                                <StackLayout Orientation="Horizontal">
+                                <dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
                                 </dependencyinterface:LoginSwitch>
-                                <Label     FontAttributes="Bold" Margin="20,20,20,20" Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
+                                <Label     FontAttributes="Bold"  Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
 
                                 </Label>
+                                </StackLayout>
                                 <StackLayout Grid.Column="2" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}" >
                                     <buttons:SfRadioButton  IsChecked="{Binding ChildCostDistributed}" Margin="10,10,10,10" Text="{Binding ChargeCostsOnlyToChildAssets}" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}">
                                     <buttons:SfRadioButton  IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}" Margin="10,10,10,10" Text="{Binding ParentCostsOnly}" StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
 
                                 </StackLayout>
@@ -481,7 +485,7 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" CornerRadius="5">
-                                    <Entry IsEnabled="False" Text="{Binding TotalTimeText}"/>
+                                    <control1:CustomEntry IsEnabled="False" Text="{Binding TotalTimeText}"/>
                                 </border:SfBorder>
                               
                             </StackLayout>
@@ -499,7 +503,7 @@
 
                                 <border:SfBorder
                                     Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                                     x:Name="EstimstedDowntime"      
                             Text="{Binding EstimstedDowntimeText}"
                                         IsEnabled="{Binding EstimstedDowntimeIsEnable , Mode=TwoWay}"
@@ -521,7 +525,7 @@
 
                                 <border:SfBorder
                                     Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                             x:Name="ActualDowntime"
                                        
                             Text="{Binding ActualDowntimeText}"
@@ -542,7 +546,7 @@
                                 </Label>
 
                                 <border:SfBorder   Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                                  
                                
                            x:Name="MiscellaneousLabourCost"
@@ -567,7 +571,7 @@
 
                                 <border:SfBorder
                                     Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                             x:Name="MiscellaneousMaterialCost"                              
                             Text="{Binding MiscellaneousMaterialCostText}"
                                    
@@ -588,7 +592,7 @@
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
 
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                            x:Name="CurrentRuntime"                              
                            Text="{Binding CurrentRuntimeText}"
                                   

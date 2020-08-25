@@ -232,16 +232,20 @@
                             </StackLayout>-->
 
 
-                            <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Orientation="Horizontal" Grid.Row="8">
+                            <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="8">
+                                <StackLayout Orientation="Horizontal">
                                 <dependencyinterface:LoginSwitch  Margin="10,10,10,10"  IsEnabled='False' IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
                                 </dependencyinterface:LoginSwitch>
                                 <Label     FontAttributes="Bold" Margin="20,20,20,20" Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
 
                                 </Label>
-                                <StackLayout Grid.Column="2" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}" >
+                                </StackLayout>
+                                <StackLayout Grid.Column="2" Orientation="Horizontal" IsEnabled="False" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}" >
                                     <buttons:SfRadioButton IsEnabled="False" IsChecked="{Binding ChildCostDistributed}" Margin="10,10,10,10" Text="{Binding ChargeCostsOnlyToChildAssets}" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" IsEnabled="False" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}">
                                     <buttons:SfRadioButton  IsEnabled="False" IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}" Margin="10,10,10,10" Text="{Binding ParentCostsOnly}" StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
-
+                  
                                 </StackLayout>
 
                             </StackLayout>
