@@ -632,6 +632,8 @@
                                          NumberOfTapsRequired="1" />
                                     </Label.GestureRecognizers>
                                 </Label>
+                                
+
 
                             </StackLayout>
 
@@ -663,6 +665,19 @@
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
                                     <dependencyinterface:CustomEditor  Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
                                 </border:SfBorder>
+
+                                <Button
+                        Grid.Row="5"
+                        x:Name="SaveButton"
+                        CornerRadius="5"
+                        VerticalOptions="StartAndExpand"
+                        Command="{Binding SaveWorkorderCommand}"
+                        Style="{StaticResource SaveButtonStyle}"
+                        IsVisible="{Binding EditWorkIsVisible}"
+                        IsEnabled="{Binding EditWorkIsEnable}"
+                        Text="{Binding SaveTitle}" />
+
+
                             </StackLayout>
 
 
@@ -695,20 +710,11 @@
 
                             </StackLayout>
 
+                          
 
                         </Grid>
 
-                        <Button
-                        Grid.Row="5"
-                        x:Name="SaveButton"
-                        CornerRadius="5"
-                        VerticalOptions="StartAndExpand"
-                        Command="{Binding SaveWorkorderCommand}"
-                        Style="{StaticResource SaveButtonStyle}"
-                        IsVisible="{Binding EditWorkIsVisible}"
-                        IsEnabled="{Binding EditWorkIsEnable}"
-                        Text="{Binding SaveTitle}" />
-                       
+                        
                     </Grid>
                 </ScrollView>
 

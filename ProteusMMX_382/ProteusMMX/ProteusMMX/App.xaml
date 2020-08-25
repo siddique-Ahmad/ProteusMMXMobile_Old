@@ -53,6 +53,7 @@
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorButton}" />
                 <Setter Property="TextColor" Value="{StaticResource WhiteColor}" />
                 <Setter Property="BorderColor" Value="Black"/>
+                <Setter Property="FontSize" Value="12"/>
                 <Setter Property="HeightRequest" Value="35" />
                 <Setter Property="CornerRadius" Value="5"/>
             </Style>
