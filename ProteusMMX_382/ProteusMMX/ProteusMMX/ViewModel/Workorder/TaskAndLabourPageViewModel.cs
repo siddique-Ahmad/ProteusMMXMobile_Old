@@ -56,6 +56,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         #region Page Properties
 
+        string LabourEstimatedHours = string.Empty;
+
         string _pageTitle = "";
         public string PageTitle
         {
@@ -684,6 +686,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
             try
             {
+                if (Application.Current.Properties.ContainsKey("LabourEstimatedHours"))
+                {
+                    LabourEstimatedHours = Application.Current.Properties["LabourEstimatedHours"].ToString();
+                   
+                }
 
                 StackLayout contentLayout = await GetContentLayout();
 
@@ -1443,7 +1450,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                         taskNumberGrid.Children.Add(taskNumberLabel, 0, 0);
-                        taskNumberGrid.Children.Add(estimatedHourLabel, 1, 0);
+                        if (LabourEstimatedHours == "N")
+                        {
+
+                        }
+                        else
+                        {
+                            taskNumberGrid.Children.Add(estimatedHourLabel, 1, 0);
+                        }
                         taskNumberGrid.Children.Add(saveButton, 2, 0);
 
                         string lbldesc = RemoveHTML.StripHtmlTags(descriptionEntry.Text);

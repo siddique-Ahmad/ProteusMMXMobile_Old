@@ -1114,6 +1114,7 @@ namespace ProteusMMX.ViewModel
 
                                 Application.Current.Properties["TaskandLabourTabKey"] = WorkOrderTaskModule.Expression;
                                 Application.Current.Properties["CreateTask"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                Application.Current.Properties["LabourEstimatedHours"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "EstimatedHours").Expression;
                                 Application.Current.Properties["WOLabourTime"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkOrderLaborTime").Expression;
 
 
