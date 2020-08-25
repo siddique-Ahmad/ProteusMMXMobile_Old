@@ -65,7 +65,7 @@
                                         </Image.Source>
                                     </Image>
 
-                                    <Image Source="{Binding AttachmentImageSource}" Grid.Row="2" Grid.Column="0">
+                                    <Image WidthRequest="160" HeightRequest="100"  Source="{Binding AttachmentImageSource}" Grid.Row="2" Grid.Column="0">
 
                                     </Image>
                                 </StackLayout>
@@ -77,13 +77,13 @@
                                             <Image.Source>
                                                 <OnPlatform x:TypeArguments="FileImageSource">
                                                     <OnPlatform.iOS>
-                                                    <FileImageSource File="Proteus_CMMS.png"/>
+                                                    <FileImageSource File="ProteusCMMS.png"/>
                                                     </OnPlatform.iOS>
                                                     <OnPlatform.Android>
-                                                    <FileImageSource File="Proteus_CMMS.png"/>
+                                                    <FileImageSource File="ProteusCMMS.png"/>
                                                     </OnPlatform.Android>
                                                     <OnPlatform.WinPhone>
-                                                    <FileImageSource File="Assets/Proteus_CMMS.png"/>
+                                                    <FileImageSource File="Assets/ProteusCMMS.png"/>
                                                     </OnPlatform.WinPhone>
                                                 </OnPlatform>
                                             </Image.Source>
