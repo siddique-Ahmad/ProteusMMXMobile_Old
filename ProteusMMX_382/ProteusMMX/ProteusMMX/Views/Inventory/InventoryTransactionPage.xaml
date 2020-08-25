@@ -45,7 +45,8 @@
                     <ColumnDefinition Width="25.00*" />
                     <ColumnDefinition Width="25.00*" />
                 </Grid.ColumnDefinitions>-->
-                <StackLayout x:Name="Tablet" Orientation="Horizontal" Padding="10,10,10,10" Spacing="100">
+                <StackLayout Margin="10,0,10,0" Grid.Row="0" Grid.RowSpan="2">
+                <StackLayout x:Name="Tablet" Orientation="Horizontal" Padding="10,10,10,10" Spacing="80">
                     <StackLayout Orientation="Vertical"  Grid.Row="0" Grid.Column="1" IsVisible="{Binding PartNameIsVisible}">
                         <Label Text="{Binding PartNameTitle}" TextColor="Black"  FontAttributes="Bold"/>
                         <Label Text="{Binding PartNameText}"/>
@@ -68,12 +69,12 @@
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="5">
-                        <Image  WidthRequest="160" HeightRequest="100"   Source="{Binding AttachmentImageSource}"/>
+                        <Image  WidthRequest="120" HeightRequest="80"   Source="{Binding AttachmentImageSource}"/>
                     </StackLayout>
 
                 </StackLayout>
-                <StackLayout x:Name="Phone" Orientation="Vertical">
-                    <StackLayout Orientation="Horizontal" Spacing="20">
+                <StackLayout x:Name="Phone" Orientation="Vertical" >
+                    <StackLayout Orientation="Horizontal" Spacing="10">
                         <StackLayout Orientation="Vertical"  Grid.Row="0" Grid.Column="1" IsVisible="{Binding PartNameIsVisible}">
                             <Label Text="{Binding PartNameTitle}" TextColor="Black"  FontAttributes="Bold"/>
                             <Label Text="{Binding PartNameText}"/>
@@ -85,7 +86,7 @@
                         </StackLayout>
                     </StackLayout>
 
-                    <StackLayout  Orientation="Horizontal" Spacing="20">
+                    <StackLayout  Orientation="Horizontal" Spacing="10">
                         <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="3" IsVisible="{Binding QuantityOnHandIsVisible}">
                             <Label Text="{Binding QuantityOnHandTitle}" TextColor="Black" FontAttributes="Bold"/>
                             <Label Text="{Binding QuantityOnHandText}"/>
@@ -98,7 +99,7 @@
                     </StackLayout>
 
                     <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="5">
-                        <Image  WidthRequest="160" HeightRequest="100"   Source="{Binding AttachmentImageSource}"/>
+                        <Image  WidthRequest="100" HeightRequest="60"   Source="{Binding AttachmentImageSource}"/>
                     </StackLayout>
                 </StackLayout>
 
@@ -106,7 +107,7 @@
 
 
 
-
+                
                 <StackLayout Orientation="Horizontal" Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding UpdateLastPhysicalDateVisible}">
 
                     <DependencyInterface:LoginSwitch x:Name="LoginSwitch1" IsEnabled="{Binding UpdateLastPhysicalDateEnabled}" IsToggled="{Binding PhysicalDateSwitch, Mode=TwoWay}"  Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="6"></DependencyInterface:LoginSwitch>
@@ -116,8 +117,8 @@
                     </Label>
                 </StackLayout>
 
-
-                <StackLayout Orientation="Vertical" Grid.Row="2" IsVisible="{Binding TransactionTypeIsVisible}">
+                
+                    <StackLayout Orientation="Vertical" Grid.Row="2" IsVisible="{Binding TransactionTypeIsVisible}">
                     <Label Text="{Binding TransactionTypetitle}" TextColor="Black">
                         <Label.FontAttributes>
                             <OnPlatform x:TypeArguments="FontAttributes">
@@ -301,7 +302,7 @@
                 <StackLayout Orientation="Vertical" Grid.Row="15" IsVisible="{Binding Perform_TransactionIsVisible}">
                     <Button Text="{Binding SaveTitle}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding PerformInventoryCommand}" IsEnabled="{Binding Perform_TransactionIsEnabled}" />
                 </StackLayout>
-
+                </StackLayout>
 
             </Grid>
         </ScrollView>

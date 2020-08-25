@@ -114,7 +114,7 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource BorderBackgroundColor}" />
         <Setter Property="BorderColor" Value="Black" />
         <Setter Property="CornerRadius" Value="5" />
-        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="BorderWidth" Value="1" />
 
     </Style>
 
