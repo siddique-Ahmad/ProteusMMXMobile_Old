@@ -295,7 +295,7 @@
 
                         <Label Grid.Row="7" Text="{Binding APIVersion}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Style="{StaticResource LabelStyle}" />
                         <Label Grid.Row="8" Text="{Binding CopyrightLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Style="{StaticResource LabelStyle}" />
-                        <Label Grid.Row="9" Text="{Binding SupportLabel}" HorizontalOptions="Center" Style="{StaticResource LabelStyle}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="{StaticResource RedColor}" />
+                        <Label Grid.Row="9" Text="{Binding SupportLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
 
 
                     </Grid>
