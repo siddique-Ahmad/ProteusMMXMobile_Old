@@ -4,6 +4,7 @@
               xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:Control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.ServiceRequest.EditServiceRequest"
               Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
@@ -87,7 +88,7 @@
                                 </Label>
                                 <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"/>-->
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                    <Control1:UnderLineEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></Control1:UnderLineEditor>
                                 </border:SfBorder>
                             </StackLayout>
 
