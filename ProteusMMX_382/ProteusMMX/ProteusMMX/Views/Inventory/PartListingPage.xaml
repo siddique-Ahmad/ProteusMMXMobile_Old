@@ -7,6 +7,7 @@
              xmlns:viewCells="clr-namespace:ProteusMMX.Views.Inventory.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
     <ContentPage.Resources>
@@ -69,7 +70,7 @@
                 </Grid.ColumnDefinitions>
 
                 <border:SfBorder CornerRadius="5">
-                    <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                    <control1:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
                 </border:SfBorder>
                 <Button Grid.Column="1" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
                 <Label Grid.Column="2" IsVisible="{Binding TotalRecordForTab}"  Text= "{Binding TotalRecordTitle}" />

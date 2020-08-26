@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.ClosedWorkorder.ClosedWorkorderTaskAndLabourPage"
              xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              Title="{Binding PageTitle}" 
               Icon="tasksandlabors.png"
              BackgroundColor="{StaticResource BackgroundColor}" >
@@ -56,7 +57,7 @@
 
                     <!--This is gonna be content grid-->
                     <StackLayout >
-                        <Entry Text="{Binding entryHours }" x:Name="hh" IsEnabled="False"></Entry>
+                        <control1:CustomEntry Text="{Binding entryHours }" x:Name="hh" IsEnabled="False"></control1:CustomEntry>
                     </StackLayout>
                 </ScrollView>
 

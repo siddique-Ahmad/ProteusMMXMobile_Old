@@ -60,7 +60,7 @@
                     <Button IsVisible="{Binding TaskLabourSearchButtonIsEnable , Mode=TwoWay}" Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />-->
 
                     <border:SfBorder  IsVisible="{Binding TaskLabourSearchBoxIsEnable , Mode=TwoWay}" Style="{StaticResource SfBorderStyle}">
-                        <control1:BorderlessEntry
+                        <control1:CustomEntry
                         Placeholder="{Binding SearchPlaceholder}"   Text="{Binding SearchText}"/>
                     </border:SfBorder>
                     <Button IsVisible="{Binding TaskLabourSearchButtonIsEnable , Mode=TwoWay}" Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />

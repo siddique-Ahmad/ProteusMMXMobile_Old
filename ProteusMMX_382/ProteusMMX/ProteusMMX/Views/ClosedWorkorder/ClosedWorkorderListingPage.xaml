@@ -5,6 +5,7 @@
              x:Class="ProteusMMX.Views.ClosedWorkorder.ClosedWorkorderListingPage"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              Title="{Binding PageTitle}" 
              x:Name="ClosedWorkorderListingPageXaml"
              BackgroundColor="{StaticResource BackgroundColor}">
@@ -65,7 +66,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <border:SfBorder CornerRadius="5">
-                    <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding ListingSearchText}" />
+                    <control1:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding ListingSearchText}" />
                 </border:SfBorder>
                 <Button Grid.Column="1" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding SearchListClosedWorkorder}" />
                 <Label Grid.Column="2" Text= "{Binding TotalRecordTitle}" IsVisible="{Binding TotalRecordForTab}"/>
