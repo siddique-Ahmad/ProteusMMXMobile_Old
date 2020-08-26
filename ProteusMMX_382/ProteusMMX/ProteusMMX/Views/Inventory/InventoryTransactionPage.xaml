@@ -46,7 +46,7 @@
                     <ColumnDefinition Width="25.00*" />
                     <ColumnDefinition Width="25.00*" />
                 </Grid.ColumnDefinitions>-->
-                <StackLayout Margin="10,0,10,0" Grid.Row="0" Grid.RowSpan="2">
+                <StackLayout Margin="10,0,10,0">
                 <StackLayout x:Name="Tablet" Orientation="Horizontal" Padding="10,10,10,10" Spacing="80">
                     <StackLayout Orientation="Vertical"  Grid.Row="0" Grid.Column="1" IsVisible="{Binding PartNameIsVisible}">
                         <Label Text="{Binding PartNameTitle}" TextColor="Black"  FontAttributes="Bold"/>
