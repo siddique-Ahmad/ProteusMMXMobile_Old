@@ -4,6 +4,7 @@
                xmlns:DependencyInterface="clr-namespace:ProteusMMX.DependencyInterface;assembly=ProteusMMX" 
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.Inventory.InventoryTransactionPage"
                Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
@@ -141,7 +142,7 @@
                         </Label.FontAttributes>
                     </Label>
                     <border:SfBorder CornerRadius="5">
-                        <Entry x:Name="AdjustmentQuantity" Text="{Binding AdjustmentQuantityText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" IsEnabled="{Binding AdjustmentQuantityIsEnabled}" TextChanged="AdjustmentQuantity_TextChanged"></Entry>
+                            <control1:CustomEntry x:Name="AdjustmentQuantity" Text="{Binding AdjustmentQuantityText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" IsEnabled="{Binding AdjustmentQuantityIsEnabled}" TextChanged="AdjustmentQuantity_TextChanged"></control1:CustomEntry>
                     </border:SfBorder>
                 </StackLayout>
 
@@ -221,7 +222,7 @@
                         </Label.FontAttributes>
                     </Label>
                     <border:SfBorder CornerRadius="5">
-                        <Entry x:Name="UnitCost" Text="{Binding UnitCostText}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding UnitCostIsEnabled}" VerticalOptions="Center" TextChanged="UnitCost_TextChanged"></Entry>
+                            <control1:CustomEntry x:Name="UnitCost" Text="{Binding UnitCostText}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding UnitCostIsEnabled}" VerticalOptions="Center" TextChanged="UnitCost_TextChanged"></control1:CustomEntry>
                     </border:SfBorder>
                 </StackLayout>
 
@@ -251,7 +252,7 @@
                         </Label.FontAttributes>
                     </Label>
                     <border:SfBorder CornerRadius="5">
-                        <Entry x:Name="Userfield1" Text="{Binding UserField1}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild1IsEnabled}" VerticalOptions="Center"></Entry>
+                            <control1:CustomEntry x:Name="Userfield1" Text="{Binding UserField1}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild1IsEnabled}" VerticalOptions="Center"></control1:CustomEntry>
                     </border:SfBorder>
                 </StackLayout>
 
@@ -265,7 +266,7 @@
                         </Label.FontAttributes>
                     </Label>
                     <border:SfBorder CornerRadius="5">
-                        <Entry x:Name="Userfield2" Text="{Binding UserField2}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild2IsEnabled}" VerticalOptions="Center"></Entry>
+                            <control1:CustomEntry x:Name="Userfield2" Text="{Binding UserField2}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild2IsEnabled}" VerticalOptions="Center"></control1:CustomEntry>
                     </border:SfBorder>
                 </StackLayout>
 
@@ -279,7 +280,7 @@
                         </Label.FontAttributes>
                     </Label>
                     <border:SfBorder CornerRadius="5">
-                        <Entry x:Name="Userfield3" Text="{Binding UserField3}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild3IsEnabled}" VerticalOptions="Center"></Entry>
+                            <control1:CustomEntry x:Name="Userfield3" Text="{Binding UserField3}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild3IsEnabled}" VerticalOptions="Center"></control1:CustomEntry>
                     </border:SfBorder>
                 </StackLayout>
 
@@ -293,7 +294,7 @@
                         </Label.FontAttributes>
                     </Label>
                     <border:SfBorder CornerRadius="5">
-                        <Entry x:Name="Userfield4" Text="{Binding UserField4}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild4IsEnabled}" VerticalOptions="Center"></Entry>
+                            <control1:CustomEntry x:Name="Userfield4" Text="{Binding UserField4}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild4IsEnabled}" VerticalOptions="Center"></control1:CustomEntry>
                     </border:SfBorder>
                 </StackLayout>
 

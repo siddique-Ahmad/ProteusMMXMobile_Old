@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.SelectionListPages.Workorder.Parts.PartListSelectionPage">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -35,7 +36,7 @@
                 </Grid.ColumnDefinitions>
 
                 <border:SfBorder CornerRadius="5">
-                    <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                    <control1:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
                 </border:SfBorder>
                 <Button CornerRadius="5" Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
                 <Button CornerRadius="5" Grid.Row="2"  Grid.ColumnSpan="2" Text="{Binding SelectTitle}" Command="{Binding SelectNullCommand}" BackgroundColor="White" />

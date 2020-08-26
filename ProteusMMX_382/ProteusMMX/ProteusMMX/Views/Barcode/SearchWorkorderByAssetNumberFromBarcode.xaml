@@ -16,7 +16,7 @@
 
             <!--<DataTemplate x:Key="DayAfterTomorrowTemplate">
                 <viewCells:DayAfterTomorrowViewCell ParentBindingContext="{Binding BindingContext , Source= {x:Reference WorkorderListingPage}}"/>
-            </DataTemplate>
+            </DataTemplate>B:\Github\ProteusMMXMobile\ProteusMMX_382\ProteusMMX\ProteusMMX\Views\Barcode\SearchWorkorderByAssetNumberFromBarcode.xaml.cs
             <DataTemplate x:Key="PastViewTemplate" >
                 <viewCells:PastViewCell  ParentBindingContext="{Binding BindingContext , Source= {x:Reference WorkorderListingPage}}"/>
             </DataTemplate>
@@ -104,7 +104,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:BorderlessEntry
+                    <control1:CustomEntry
                        Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}"/>
                 </border:SfBorder>
                 <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />

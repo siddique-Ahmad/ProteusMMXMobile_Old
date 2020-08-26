@@ -97,18 +97,18 @@
                                 <Label IsVisible="{Binding SiteUrlLabelVisibility}" Grid.Row="2" Text="{Binding SiteUrlLabel}" Style="{StaticResource BoldLabelStyle}"  />
                                 <!--<Entry    />-->
                             <border:SfBorder Style="{StaticResource SfBorderStyle}" CornerRadius="5">
-                                    <Entry x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" Grid.Row="3" Text="{Binding SiteUrl, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}">
+                                    <control1:CustomEntry x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" Grid.Row="3" Text="{Binding SiteUrl, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}">
                                         
-                                    </Entry>
+                                    </control1:CustomEntry>
                                 </border:SfBorder>
 
                                 <Label Grid.Row="4" Text="{Binding UserNameLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" CornerRadius="5">
-                                    <Entry Grid.Row="5" Text="{Binding UserName, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
+                                    <control1:CustomEntry Grid.Row="5" Text="{Binding UserName, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
                                 </border:SfBorder>
                                 <Label Grid.Row="6" Text="{Binding PasswordLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
                             <border:SfBorder Style="{StaticResource SfBorderStyle}" CornerRadius="5">
-                                    <Entry Grid.Row="7" Text="{Binding Password, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>
+                                    <control1:CustomEntry Grid.Row="7" Text="{Binding Password, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>
                                 </border:SfBorder>
                                 <!--<controls:CustomCheckBox IsVisible="{Binding RememberMeVisibility}" Grid.Row="6" IsChecked="{Binding RememberMe, Mode=TwoWay}" x:Name="CheckBox_RememberMe" />-->
 
