@@ -238,7 +238,7 @@
                     </Label>
                     <!--<Editor x:Name="Description" Text="{Binding DescriptionText}" HorizontalOptions="FillAndExpand"  IsEnabled="{Binding DescriptionIsEnabled}" VerticalOptions="Center"></Editor>-->
                     <border:SfBorder CornerRadius="5">
-                        <dependencyinterface:CustomEditor x:Name="Description" Text="{Binding DescriptionText}" HorizontalOptions="FillAndExpand"  IsEnabled="{Binding DescriptionIsEnabled}" VerticalOptions="Center"></dependencyinterface:CustomEditor>
+                        <control1:UnderLineEditor x:Name="Description" Text="{Binding DescriptionText}" HorizontalOptions="FillAndExpand"  IsEnabled="{Binding DescriptionIsEnabled}" VerticalOptions="Center"></control1:UnderLineEditor>
                     </border:SfBorder>
                 </StackLayout>
 
