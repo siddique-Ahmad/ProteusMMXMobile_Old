@@ -44,7 +44,7 @@
 
 
 
-                    <border:SfBorder Margin="40,50,50,50" BorderColor="LightGray" BorderWidth="1" CornerRadius="5">
+                    <border:SfBorder Margin="40,50,40,50" BorderColor="LightGray" BorderWidth="1" CornerRadius="5">
                         <StackLayout Padding="10,20,20,20" VerticalOptions="Center">
 
                             <StackLayout x:Name="Tablet" Orientation="Horizontal">
