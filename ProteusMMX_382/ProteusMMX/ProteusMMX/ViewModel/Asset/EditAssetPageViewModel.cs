@@ -6716,40 +6716,7 @@ namespace ProteusMMX.ViewModel.Asset
 
                 var asset = AssetWrapper.assetWrapper.asset;
 
-                ////Set Asset Profile Picture///////
-                if (Device.RuntimePlatform == Device.UWP)
-                {
-                    byte[] imgUser = StreamToBase64.StringToByte(asset.Base64Image);
-                    MemoryStream stream = new MemoryStream(imgUser);
-                    bool isimage = Extension.IsImage(stream);
-                    if (isimage == true)
-                    {
-
-                        byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
-                        AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
-
-                       
-                       
-                    }
-                }
-                else
-                {
-                    byte[] imgUser = StreamToBase64.StringToByte(asset.Base64Image);
-                    MemoryStream stream = new MemoryStream(imgUser);
-                    bool isimage = Extension.IsImage(stream);
-                    if (isimage == true)
-                    {
-
-                        //byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
-                        AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
-
-
-
-                    }
-                }
-
-
-
+                
 
                 AdditionalDetailsText = asset.AdditionalDetails;
                 Description = asset.Description;
@@ -6887,8 +6854,44 @@ namespace ProteusMMX.ViewModel.Asset
                 #endregion
 
 
-              
+
                 #endregion
+
+                ////Set Asset Profile Picture///////
+                if (!string.IsNullOrWhiteSpace(asset.Base64Image))
+                {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        byte[] imgUser = StreamToBase64.StringToByte(asset.Base64Image);
+                        MemoryStream stream = new MemoryStream(imgUser);
+                        bool isimage = Extension.IsImage(stream);
+                        if (isimage == true)
+                        {
+
+                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
+
+
+
+                        }
+                    }
+                    else
+                    {
+                        byte[] imgUser = StreamToBase64.StringToByte(asset.Base64Image);
+                        MemoryStream stream = new MemoryStream(imgUser);
+                        bool isimage = Extension.IsImage(stream);
+                        if (isimage == true)
+                        {
+
+                            //byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
+
+
+
+                        }
+                    }
+                }
+
 
 
 

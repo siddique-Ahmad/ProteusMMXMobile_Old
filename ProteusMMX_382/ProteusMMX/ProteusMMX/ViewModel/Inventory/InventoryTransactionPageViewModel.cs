@@ -2394,49 +2394,52 @@ namespace ProteusMMX.ViewModel.Inventory
                 var TransactionParameters = await _inventoryService.GetTransactionReason(StockroompartID.ToString(), UserID);
                 if (TransactionParameters != null && TransactionParameters.inventoryWrapper.trasactionDialog != null)
                 {
-                    ////Set Part Profile Picture///////
-                    if (Device.RuntimePlatform == Device.UWP)
-                    {
-                        byte[] imgUser = StreamToBase64.StringToByte(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image);
-                        MemoryStream stream = new MemoryStream(imgUser);
-                        bool isimage = Extension.IsImage(stream);
-                        if (isimage == true)
-                        {
-
-                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
-                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
-
-
-
-                        }
-                    }
-                    else
-                    {
-                        byte[] imgUser = StreamToBase64.StringToByte(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image);
-                        MemoryStream stream = new MemoryStream(imgUser);
-                        bool isimage = Extension.IsImage(stream);
-                        if (isimage == true)
-                        {
-
-                            //byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
-                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
-
-
-
-                        }
-                    }
                     var trasactiontype = TransactionParameters.inventoryWrapper.trasactionDialog;
                     this.PartNameText = trasactiontype.PartName;
                     this.PartNumberText = trasactiontype.PartNumber;
                     this.QuantityOnHandText = trasactiontype.QuantityOnHand;
                     this.StockroomNameText = trasactiontype.StockroomName;
                     this.QuantityAllocatedText = Math.Round(Convert.ToDecimal(this.QuantityAllocatedText), 2).ToString();
-                    //trasactiontype.QuantityAllocatedText = decimal.Parse(string.Format(StringFormat.NumericZero(), trasactiontype.Quan));
-
-
-
                     this.UnitCostText = string.Format(StringFormat.CurrencyZero(), trasactiontype.OriginalAmount == null ? 0 : trasactiontype.OriginalAmount);
 
+
+                    ////Set Part Profile Picture///////
+                    if (!string.IsNullOrWhiteSpace(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image))
+                    {
+
+
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            byte[] imgUser = StreamToBase64.StringToByte(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image);
+                            MemoryStream stream = new MemoryStream(imgUser);
+                            bool isimage = Extension.IsImage(stream);
+                            if (isimage == true)
+                            {
+
+                                byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
+
+
+
+                            }
+                        }
+                        else
+                        {
+                            byte[] imgUser = StreamToBase64.StringToByte(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image);
+                            MemoryStream stream = new MemoryStream(imgUser);
+                            bool isimage = Extension.IsImage(stream);
+                            if (isimage == true)
+                            {
+
+                                //byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
+
+
+
+                            }
+                        }
+                    }
+                   
 
 
 

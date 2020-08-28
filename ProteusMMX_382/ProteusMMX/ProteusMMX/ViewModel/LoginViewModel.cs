@@ -493,48 +493,50 @@ namespace ProteusMMX.ViewModel
                 {
 
                     ////Set Company Profile Picture///////
-                 
-                    string newcompanyprofilebase64 = string.Empty;
-                    if (Device.RuntimePlatform == Device.UWP)
+                    if (!string.IsNullOrWhiteSpace(FDAKey.CompanyProfileLogo))
                     {
-                        string companyprofilebase64 = FDAKey.CompanyProfileLogo;
-                        newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
-                        if(string.IsNullOrWhiteSpace(newcompanyprofilebase64))
+                        string newcompanyprofilebase64 = string.Empty;
+                        if (Device.RuntimePlatform == Device.UWP)
                         {
-                            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
+                            string companyprofilebase64 = FDAKey.CompanyProfileLogo;
+                            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
+                            if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
+                            {
+                                newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
+                            }
+                            byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
+                            MemoryStream stream = new MemoryStream(imgUser);
+                            bool isimage = Extension.IsImage(stream);
+                            if (isimage == true)
+                            {
+
+                                byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
+
+
+
+                            }
                         }
-                        byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
-                        MemoryStream stream = new MemoryStream(imgUser);
-                        bool isimage = Extension.IsImage(stream);
-                        if (isimage == true)
+                        else
                         {
+                            string companyprofilebase64 = FDAKey.CompanyProfileLogo;
+                            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
+                            if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
+                            {
+                                newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
+                            }
+                            byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
+                            MemoryStream stream = new MemoryStream(imgUser);
+                            bool isimage = Extension.IsImage(stream);
+                            if (isimage == true)
+                            {
 
-                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
-                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
-
-
-
-                        }
-                    }
-                    else
-                    {
-                        string companyprofilebase64 = FDAKey.CompanyProfileLogo;
-                        newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
-                        if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
-                        {
-                            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
-                        }
-                        byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
-                        MemoryStream stream = new MemoryStream(imgUser);
-                        bool isimage = Extension.IsImage(stream);
-                        if (isimage == true)
-                        {
-
-                            // byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 120);
-                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
+                                // byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 120);
+                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
 
 
 
+                            }
                         }
                     }
 
