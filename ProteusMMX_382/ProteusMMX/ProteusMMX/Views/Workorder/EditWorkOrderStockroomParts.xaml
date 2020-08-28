@@ -49,7 +49,7 @@
                     </Label.FontAttributes>
                 </Label>
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <Entry x:Name="StockroomName"  IsEnabled="False" Text="{Binding StockroomNameText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></Entry>
+                    <control1:CustomEntry x:Name="StockroomName"  IsEnabled="False" Text="{Binding StockroomNameText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></control1:CustomEntry>
                 </border:SfBorder>
             </StackLayout>
 
@@ -64,7 +64,7 @@
                     </Label.FontAttributes>
                 </Label>
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <Entry x:Name="PartNumber" IsEnabled="False" Text="{Binding PartNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></Entry>
+                    <control1:CustomEntry x:Name="PartNumber" IsEnabled="False" Text="{Binding PartNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></control1:CustomEntry>
                 </border:SfBorder>
             </StackLayout>
 
@@ -93,7 +93,7 @@
                     </Label.FontAttributes>
                 </Label>
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:BorderlessEntry
+                    <control1:CustomEntry
                         x:Name="QuantityRequired" Text="{Binding QuantityRequiredText}" TextChanged="QuantityRequired_TextChanged"/>
                 </border:SfBorder>
             </StackLayout>
@@ -108,7 +108,7 @@
                     </Label.FontAttributes>
                 </Label>
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:BorderlessEntry
+                    <control1:CustomEntry
                         x:Name="QuantityAllocated" Text="{Binding QuantityAllocatedText}"  TextChanged="QuantityAllocated_TextChanged"/>
                 </border:SfBorder>
             </StackLayout>
@@ -123,7 +123,7 @@
                     </Label.FontAttributes>
                 </Label>
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:BorderlessEntry
+                    <control1:CustomEntry
                         x:Name="UnitCost" Text="{Binding UnitCostText}" TextChanged="UnitCost_TextChanged"/>
                 </border:SfBorder>
             </StackLayout>

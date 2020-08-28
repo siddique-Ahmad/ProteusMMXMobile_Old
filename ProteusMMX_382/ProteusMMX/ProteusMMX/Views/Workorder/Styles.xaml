@@ -71,7 +71,8 @@
         </Setter>
         <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
         <Setter Property="FontFamily" Value="MS Reference Sans Serif" />
-        <Setter Property="BorderWidth" Value="2" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="BorderColor" Value="Black"/>
         <Setter Property="FontSize" Value="12" />
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
