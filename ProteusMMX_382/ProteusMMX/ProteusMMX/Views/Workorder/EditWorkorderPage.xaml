@@ -160,7 +160,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                             
+
                                 <controls:CustomDatePicker SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}"  IsEnabled="{Binding RequiredDateIsEnable}"  />
                             </StackLayout>
 
@@ -271,7 +271,7 @@
 
                             </StackLayout>
 
-                            
+
                             <StackLayout Orientation="Vertical" Grid.Row="6" Grid.Column="1" IsVisible="{Binding AssetIsVisible}">
 
                                 <StackLayout Orientation="Horizontal">
@@ -320,11 +320,11 @@
                             </StackLayout>
                             <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="8">
                                 <StackLayout Orientation="Horizontal">
-                                <dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
-                                </dependencyinterface:LoginSwitch>
-                                <Label     FontAttributes="Bold"  Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
+                                    <dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
+                                    </dependencyinterface:LoginSwitch>
+                                    <Label     FontAttributes="Bold"  Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
 
-                                </Label>
+                                    </Label>
                                 </StackLayout>
                                 <StackLayout Grid.Column="2" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}" >
                                     <buttons:SfRadioButton  IsChecked="{Binding ChildCostDistributed}" Margin="10,10,10,10" Text="{Binding ChargeCostsOnlyToChildAssets}" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
@@ -487,7 +487,7 @@
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" CornerRadius="5">
                                     <control1:CustomEntry IsEnabled="False" Text="{Binding TotalTimeText}"/>
                                 </border:SfBorder>
-                              
+
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="13" Grid.Column="1" IsVisible="{Binding EstimstedDowntimeIsVisible}">
@@ -636,14 +636,10 @@
                                          NumberOfTapsRequired="1" />
                                     </Label.GestureRecognizers>
                                 </Label>
-                                
-                                
-
-
                             </StackLayout>
-
-                          
                         </Grid>
+
+
 
                         <Grid Margin="10,0,20,0"  Grid.Row="3" x:Name="Grid_column1" IsVisible="{Binding InternalNotesIsVisible}" >
                             <Grid.ColumnDefinitions>
@@ -663,68 +659,63 @@
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
                                     <control1:UnderLineEditor  Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
                                 </border:SfBorder>
+                            </StackLayout>
+                        </Grid>
 
-                                <Grid Margin="10,0,20,0"  Grid.Row="4" x:Name="Grid_column2" IsVisible="{Binding SignaturesIsVisible}" >
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1500*" ></ColumnDefinition>
-                                        <ColumnDefinition Width="40*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
+                        <Grid Margin="10,0,20,0"  Grid.Row="4" x:Name="Grid_column2" IsVisible="{Binding SignaturesIsVisible}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1500*" ></ColumnDefinition>
+                                <ColumnDefinition Width="40*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
 
-                                    <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
-                                        <Label Text="{Binding Signatures}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                                            <Label.FontAttributes>
-                                                <OnPlatform x:TypeArguments="FontAttributes">
-                                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                                    <OnPlatform.Android>Bold</OnPlatform.Android>
-                                                </OnPlatform>
-                                            </Label.FontAttributes>
-                                        </Label>
-                                        <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                                            <control1:UnderLineEditor  Text="{Binding SignatureText}" IsEnabled="False"  />
-                                        </border:SfBorder>
-                                        <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer
+                            <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
+                                <Label Text="{Binding Signatures}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes">
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Label.FontAttributes>
+                                </Label>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                    <control1:UnderLineEditor  Text="{Binding SignatureText}" IsEnabled="False"  />
+                                </border:SfBorder>
+                                <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
                                         Command="{Binding TapCommandSignature}"
                                          NumberOfTapsRequired="1" />
-                                            </Label.GestureRecognizers>
-                                        </Label>
+                                    </Label.GestureRecognizers>
+                                </Label>
 
-                                    </StackLayout>
-
-
-
-                                </Grid>
-
-
-                                <Button
+                                <buttons:SfButton
                         Grid.Row="5"
                         x:Name="SaveButton"
                         CornerRadius="5"
                         VerticalOptions="StartAndExpand"
                         Command="{Binding SaveWorkorderCommand}"
-                        Style="{StaticResource SaveButtonStyle}"
+                        Style="{StaticResource SfButtonStyle}"
                         IsVisible="{Binding EditWorkIsVisible}"
                         IsEnabled="{Binding EditWorkIsEnable}"
                         Text="{Binding SaveTitle}" />
 
-                                
-
                             </StackLayout>
-
-
                         </Grid>
+
+
                        
-                        
+
+
+
                     </Grid>
                 </ScrollView>
-
             </Grid>
-
             <ActivityIndicator IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
-
         </Grid>
-      
-
     </ContentPage.Content>
 </ContentPage>
+
+
+
+               
+           
