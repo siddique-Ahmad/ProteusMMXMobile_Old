@@ -1364,20 +1364,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                
                 OperationInProgress = false;
-                //if (string.IsNullOrWhiteSpace(this.SearchText))
-                //{
-                //    //await GetWorkorders();
-                //}
-                ////else if (IsLocationCallFrombarcodePage)
-                ////{
-                ////    await GetWorkordersFromLocation();
-                ////}
-                //else
-                //{
-
-                //    await GetWorkordersFromAsset();
-
-                //}
+               
 
 
             }
@@ -1403,9 +1390,7 @@ namespace ProteusMMX.ViewModel.Workorder
         public async Task SetTitlesPropertiesForPage()
         {
 
-            //var titles = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
-            //if (titles != null && titles.CFLI.Count > 0 && titles.listWebControlTitles.Count > 0)
-            {
+           
                 FailedInspectionTitle = WebControlTitle.GetTargetNameByTitleName("FailedInspection");
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrders");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
@@ -1429,8 +1414,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
 
-                ///Add the titles in picker titles
-                /// 
+            
                 await AddTitlesToPicker();
 
                
@@ -1473,7 +1457,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 WorkCompletionDateTitle = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
                 WorkRequestedDateTitle = WebControlTitle.GetTargetNameByTitleName("RequestedDate");
 
-            }
+          
         }
         public async Task ShowActions()
         {
@@ -2595,7 +2579,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 await RefillWorkorderCollection();
 
             }
-            
+
             if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
             {
                 var Locationfilter = Application.Current.Properties["LocationFilterkey"];
@@ -2648,116 +2632,8 @@ namespace ProteusMMX.ViewModel.Workorder
                     await RefillDueDateFromPicker(null);
                 }
             }
-           
-            //var workordersResponse = await _workorderService.GetWorkorderDDRecord(UserID);
 
 
-            //if(!SortByLocationpickerTitles.Contains(SelectTitle))
-            //{
-            //    SortByLocationpickerTitles.Add(SelectTitle);
-            //}
-            //if (!SortByShiftpickerTitles.Contains(SelectTitle))
-            //{
-            //    SortByShiftpickerTitles.Add(SelectTitle);
-            //}
-            //if (!SortByPriorityPickerTitles.Contains(SelectTitle))
-            //{
-            //    SortByPriorityPickerTitles.Add(SelectTitle);
-            //}
-
-           
-          
-            //if (workordersResponse != null && workordersResponse.Location != null && workordersResponse.Location.Count > 0)
-            //{
-
-              
-            //    foreach (var item in workordersResponse.Location)
-            //    {
-            //        if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
-            //        {
-                        
-            //        }
-            //        else
-            //        {
-
-            //            if (!String.IsNullOrWhiteSpace(item.LocationName))
-            //            {
-
-            //                SortByLocationpickerTitles.Add(item.LocationName);
-            //            }
-
-
-                        
-
-            //        }
-                   
-            //    }
-
-
-            //}
-
-            //if (workordersResponse != null && workordersResponse.Shifts != null && workordersResponse.Shifts.Count > 0)
-            //{
-
-            //    foreach (var item in workordersResponse.Shifts)
-            //    {
-            //        if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
-            //        {
-                       
-            //        }
-            //        else
-            //        {
-
-            //            if (!String.IsNullOrWhiteSpace(item.ShiftName))
-            //            {
-            //                if (!sortByShiftpickerTitlesitems.ContainsKey(item.ShiftID))
-            //                {
-            //                    sortByShiftpickerTitlesitems.Add(item.ShiftID, item.ShiftName);
-            //                }
-            //                SortByShiftpickerTitles.Add(item.ShiftName);
-
-
-            //            }
-
-            //        }
-            //    }
-               
-            //}
-
-            //if (workordersResponse != null && workordersResponse.Priority != null && workordersResponse.Priority.Count > 0)
-            //{
-              
-            //    foreach (var item in workordersResponse.Priority)
-            //    {
-                   
-                   
-            //        if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
-            //        {
-                      
-                       
-            //        }
-            //        else
-            //        {
-
-            //            if (!String.IsNullOrWhiteSpace(item.PriorityName))
-            //            {
-            //                if (!sortByPrioritypickerTitlesitems.ContainsKey(item.PriorityID))
-            //                {
-            //                    sortByPrioritypickerTitlesitems.Add(item.PriorityID, item.PriorityName);
-            //                }
-            //                SortByPriorityPickerTitles.Add(item.PriorityName);
-
-
-            //            }
-
-            //        }
-                   
-            //    }
-               
-
-            //}
-
-           
 
 
         }

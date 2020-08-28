@@ -5402,12 +5402,12 @@ namespace ProteusMMX.ViewModel.Workorder
                                     break;
                                 }
 
-                            case "CurrentRuntime":
-                                {
-                                    CurrentRuntimeIsEnable = ApplyIsEnable(item.Expression);
-                                    CurrentRuntimeIsVisible = ApplyIsVisible(item.Expression);
-                                    break;
-                                }
+                            //case "CurrentRuntime":
+                            //    {
+                            //        CurrentRuntimeIsEnable = ApplyIsEnable(item.Expression);
+                            //        CurrentRuntimeIsVisible = ApplyIsVisible(item.Expression);
+                            //        break;
+                            //    }
 
 
                             case "ShiftID":
