@@ -4,6 +4,7 @@
              xmlns:templates="clr-namespace:ProteusMMX.Views.Asset.Templates"
              xmlns:viewCells="clr-namespace:ProteusMMX.Views.Asset.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             xmlns:Control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.ShowAssetSystem">
     <ContentPage.Resources>
 
@@ -67,7 +68,7 @@
                 </Grid.RowDefinitions>
             </Grid>
 
-            <Entry Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="2" />
+            <Control1:CustomEntry Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="2" />
                 <Button   Text="{Binding SearchButtonTitle}"  Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}"  Grid.Column="1" Grid.Row="2" />
                 <Label   Text= "{Binding TotalRecordTitle}" IsVisible="{Binding TotalRecordForTab}"  Grid.Column="2" Grid.Row="2" />
             <Label  Text=":"  IsVisible="{Binding TotalRecordForTab}"  Grid.Column="3" Grid.Row="2"/>

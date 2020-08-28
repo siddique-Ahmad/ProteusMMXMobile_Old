@@ -11,7 +11,7 @@
         <border:SfBorder CornerRadius="5">
             <StackLayout VerticalOptions="Center" Spacing="0" HorizontalOptions="Center">
 
-                <StackLayout Orientation="Vertical" VerticalOptions="Center" HeightRequest="200"  Padding="20,20,20,15" WidthRequest="370" BackgroundColor="White">
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HeightRequest="250"  Padding="20,20,20,15" WidthRequest="370" BackgroundColor="White">
                     <StackLayout.Resources>
                         <ResourceDictionary Source="Style.xaml" />
                     </StackLayout.Resources>
