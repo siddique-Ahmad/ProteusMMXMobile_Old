@@ -252,7 +252,9 @@
                     <Label x:Name="WorkorderNumberLabel"  Style="{StaticResource ItemDescriptionStyle}"/>
                     <Label Text=":" Grid.Column="1"  Style="{StaticResource ItemDescriptionStyle}" />
                     <Label Text="{Binding WorkOrderNumber}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-                    <Label Text="✓" Grid.Column="3"  TextColor="Green"  Style="{StaticResource BoldLabelStyle}" IsVisible="{Binding WorkOrderCompleted}">
+                </Grid>
+                <Grid Grid.Column="1" Grid.Row="0"  HorizontalOptions="Start">
+                    <Label FontAttributes="Bold" Text="✓" Grid.Column="3"  TextColor="Green"  Style="{StaticResource BoldLabelStyle}" IsVisible="{Binding WorkOrderCompleted}">
                         <Label.FontSize>
                             <OnPlatform x:TypeArguments="x:Double" Default="30">
                                 <On Platform="iOS" Value="30"/>
