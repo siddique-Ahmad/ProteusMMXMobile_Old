@@ -12954,7 +12954,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 var workOrder = new workOrders();
                 #region workOrder properties initialzation
-                if (string.IsNullOrWhiteSpace(CurrentRuntimeText.ToString()))
+                if (string.IsNullOrWhiteSpace(CurrentRuntimeText))
                 {
                     this.CurrentRuntimeText = "0.00";
 
