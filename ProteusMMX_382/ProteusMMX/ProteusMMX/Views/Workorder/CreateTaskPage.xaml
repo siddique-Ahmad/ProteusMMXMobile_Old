@@ -99,7 +99,7 @@
                             <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" HeightRequest="100"/>-->
                             <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="100">
 
-                                <dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" ></dependencyinterface:CustomEditor>
+                                <controls:UnderLineEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" ></controls:UnderLineEditor>
                             </border:SfBorder>
                         </StackLayout>
 

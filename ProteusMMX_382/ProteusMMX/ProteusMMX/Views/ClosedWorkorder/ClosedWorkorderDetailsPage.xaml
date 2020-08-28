@@ -117,17 +117,17 @@
                                 <!--<Editor Text="{Binding DescriptionText}" IsEnabled="False" />-->
 
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="False">
-                                        <dependencyinterface:CustomEditor.HeightRequest>
+                                    <control1:UnderLineEditor Text="{Binding DescriptionText}" IsEnabled="False">
+                                        <control1:UnderLineEditor.HeightRequest>
                                             <OnPlatform x:TypeArguments="x:Double" Default="56">
                                                 <On Platform="iOS" Value="56"/>
                                                 <On Platform="Android" Value="60"/>
                                                 <On Platform="WinPhone" Value="56"/>
                                                 <On Platform="UWP" Value="56"/>
                                             </OnPlatform>
-                                        </dependencyinterface:CustomEditor.HeightRequest>
+                                        </control1:UnderLineEditor.HeightRequest>
 
-                                    </dependencyinterface:CustomEditor>
+                                    </control1:UnderLineEditor>
                                 </border:SfBorder>
                                 <Label Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
@@ -644,7 +644,7 @@
                                 <Label Text="{Binding AdditionalDetailsTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150" />-->
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
+                                    <control1:UnderLineEditor Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150"></control1:UnderLineEditor>
                                 </border:SfBorder>
                                 <Label Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
@@ -659,7 +659,7 @@
                                 <Label Text="{Binding InternalNoteTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
+                                    <control1:UnderLineEditor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150"></control1:UnderLineEditor>
                                 </border:SfBorder>
                                 <Label Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
@@ -674,7 +674,7 @@
                                 <Label Text="{Binding Signatures}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor Text="{Binding SignatureText}" IsEnabled="False" HeightRequest="150"></dependencyinterface:CustomEditor>
+                                    <control1:UnderLineEditor Text="{Binding SignatureText}" IsEnabled="False" HeightRequest="150"></control1:UnderLineEditor>
                                 </border:SfBorder>
                                 <Label Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>

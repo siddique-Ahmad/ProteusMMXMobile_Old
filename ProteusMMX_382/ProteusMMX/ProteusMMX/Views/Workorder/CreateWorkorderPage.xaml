@@ -532,7 +532,7 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}"  HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                                    <dependencyinterface:CustomEditor  Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                    <control1:UnderLineEditor Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}"></control1:UnderLineEditor>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -564,7 +564,7 @@
 
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}"  HeightRequest="150" WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
 
-                                    <dependencyinterface:CustomEditor  Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
+                                    <control1:UnderLineEditor  Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
 
                                 </border:SfBorder>
 

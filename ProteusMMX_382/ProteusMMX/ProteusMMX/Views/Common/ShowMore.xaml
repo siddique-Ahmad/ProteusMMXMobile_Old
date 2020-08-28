@@ -121,9 +121,9 @@
 
                         <StackLayout  Grid.Column="1" Grid.Row="5" Orientation="Horizontal">
 
-                            <Button x:Name="OKButton" CornerRadius="5" Clicked="Button_OKClicked" WidthRequest="80" HeightRequest="60" HorizontalOptions="Center" FontSize="Micro"  VerticalOptions="CenterAndExpand" BackgroundColor="LightSkyBlue" />
+                            <Button x:Name="OKButton" CornerRadius="5" Clicked="Button_OKClicked" WidthRequest="80" HeightRequest="60" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" BackgroundColor="LightSkyBlue" />
 
-                            <Button x:Name="CancelButton" CornerRadius="5" FontSize="Micro"  Clicked="Button_CancelClicked" BackgroundColor="LightSkyBlue" HeightRequest="60" WidthRequest="90" VerticalOptions="CenterAndExpand" Grid.Column="2" Grid.Row="5"  HorizontalOptions="CenterAndExpand" >
+                            <Button x:Name="CancelButton" CornerRadius="5"  Clicked="Button_CancelClicked" BackgroundColor="LightSkyBlue" HeightRequest="60" WidthRequest="90" VerticalOptions="CenterAndExpand" Grid.Column="2" Grid.Row="5"  HorizontalOptions="CenterAndExpand" >
                             </Button>
 
                         </StackLayout>

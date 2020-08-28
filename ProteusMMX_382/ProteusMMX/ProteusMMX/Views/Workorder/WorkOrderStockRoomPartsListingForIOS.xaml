@@ -6,6 +6,7 @@
              xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             xmlns:Control1="clr-namespace:ProteusMMX.Controls"
              Title="{Binding PageTitle}" 
               Icon="parts.png"
              BackgroundColor="{StaticResource BackgroundColor}">
@@ -58,7 +59,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                <Control1:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
                 <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
 
                 <Grid Grid.Row="1" Grid.ColumnSpan="2" >

@@ -115,7 +115,7 @@
                                 </Label>
                                 <!--<Editor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"/>-->
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                    <controls:UnderLineEditor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"></controls:UnderLineEditor>
                                 </border:SfBorder>
                             </StackLayout>
 
