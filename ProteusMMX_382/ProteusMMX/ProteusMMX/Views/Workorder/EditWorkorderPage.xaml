@@ -611,82 +611,106 @@
 
 
                         </Grid>
-                        <Grid Margin="10,0,20,0" Grid.Row="2" x:Name="Grid_column" IsVisible="{Binding AdditionalDetailsIsVisible}" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1500*" ></ColumnDefinition>
-                                <ColumnDefinition Width="40*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
+                        <StackLayout Grid.Row="2">
 
-                            <StackLayout  Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
-                                <Label Text="{Binding AdditionalDetailsTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                                    <control1:UnderLineEditor   Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" />
-                                </border:SfBorder>
-                                <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer
+                            <Grid Margin="10,0,20,0" Grid.Row="2" x:Name="Grid_column" IsVisible="{Binding AdditionalDetailsIsVisible}" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1500*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="40*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout  Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
+                                    <Label Text="{Binding AdditionalDetailsTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                        <Label.FontAttributes>
+                                            <OnPlatform x:TypeArguments="FontAttributes">
+                                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                                            </OnPlatform>
+                                        </Label.FontAttributes>
+                                    </Label>
+                                    <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                        <control1:UnderLineEditor   Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" />
+                                    </border:SfBorder>
+                                    <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
                                         Command="{Binding TapCommand2}"
                                          NumberOfTapsRequired="1" />
-                                    </Label.GestureRecognizers>
-                                </Label>
-                            </StackLayout>
-                        </Grid>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </StackLayout>
 
 
-
-                        <Grid Margin="10,0,20,0"  Grid.Row="3" x:Name="Grid_column1" IsVisible="{Binding InternalNotesIsVisible}" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1500*" ></ColumnDefinition>
-                                <ColumnDefinition Width="40*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-
-                            <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
-                                <Label Text="{Binding InternalNotesTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                                    <control1:UnderLineEditor  Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
-                                </border:SfBorder>
-                            </StackLayout>
-                        </Grid>
-
-                        <Grid Margin="10,0,20,0"  Grid.Row="4" x:Name="Grid_column2" IsVisible="{Binding SignaturesIsVisible}" >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1500*" ></ColumnDefinition>
-                                <ColumnDefinition Width="40*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-
-                            <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
-                                <Label Text="{Binding Signatures}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                                    <control1:UnderLineEditor  Text="{Binding SignatureText}" IsEnabled="False"  />
-                                </border:SfBorder>
-                                <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
-                                    <Label.GestureRecognizers>
+                                <Image Grid.Column="1" Grid.Row="0" Source="Assets/mic.png">
+                                    <Image.GestureRecognizers>
                                         <TapGestureRecognizer
+                                        Command="{Binding TapCommand}"
+                                         NumberOfTapsRequired="1" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                            </Grid>
+
+
+
+                            <Grid Margin="10,0,20,0"  Grid.Row="3" x:Name="Grid_column1" IsVisible="{Binding InternalNotesIsVisible}" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1500*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="40*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
+                                    <Label Text="{Binding InternalNotesTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                        <Label.FontAttributes>
+                                            <OnPlatform x:TypeArguments="FontAttributes">
+                                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                                            </OnPlatform>
+                                        </Label.FontAttributes>
+                                    </Label>
+                                    <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                        <control1:UnderLineEditor  Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
+                                    </border:SfBorder>
+                                    <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                        Command="{Binding }"
+                                         NumberOfTapsRequired="1" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+
+                                </StackLayout>
+                            </Grid>
+
+                            <Grid Margin="10,0,20,0"  Grid.Row="4" x:Name="Grid_column2" IsVisible="{Binding SignaturesIsVisible}" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1500*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="40*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
+                                    <Label Text="{Binding Signatures}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                        <Label.FontAttributes>
+                                            <OnPlatform x:TypeArguments="FontAttributes">
+                                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                                            </OnPlatform>
+                                        </Label.FontAttributes>
+                                    </Label>
+                                    <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                        <control1:UnderLineEditor  Text="{Binding SignatureText}" IsEnabled="False"  />
+                                    </border:SfBorder>
+                                    <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
                                         Command="{Binding TapCommandSignature}"
                                          NumberOfTapsRequired="1" />
-                                    </Label.GestureRecognizers>
-                                </Label>
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </StackLayout>
+
+                            </Grid>
+                            <StackLayout  Margin="10,0,20,0" WidthRequest="40">
 
                                 <buttons:SfButton
                         Grid.Row="5"
@@ -699,11 +723,14 @@
                         IsEnabled="{Binding EditWorkIsEnable}"
                         Text="{Binding SaveTitle}" />
 
+
                             </StackLayout>
-                        </Grid>
+                        </StackLayout>
 
 
-                       
+
+
+
 
 
 
