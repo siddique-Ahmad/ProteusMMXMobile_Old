@@ -2847,6 +2847,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
+
         bool _additionalDetailsIsEnable = true;
         public bool AdditionalDetailsIsEnable
         {
@@ -3186,6 +3187,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _internalNoteText = value;
                     OnPropertyChanged(nameof(InternalNoteText));
+                }
+            }
+        }
+
+        string _internalNotesTextForMobile;
+        public string InternalNotesTextForMobile
+        {
+            get
+            {
+                return _internalNotesTextForMobile;
+            }
+
+            set
+            {
+                if (value != _internalNotesTextForMobile)
+                {
+                    _internalNoteText = value;
+                    OnPropertyChanged(nameof(InternalNotesTextForMobile));
                 }
             }
         }
@@ -4584,6 +4603,8 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand TapCommand1 => new AsyncCommand(ShowMoreDescription);
 
         public ICommand TapCommand2 => new AsyncCommand(ShowMoreAdditionalDetails);
+
+        public ICommand TapCommand3 => new AsyncCommand(InternalNotesDetails);
 
         public ICommand TapCommandSignature => new AsyncCommand(ShowSignatures);
 
@@ -15005,6 +15026,43 @@ namespace ProteusMMX.ViewModel.Workorder
                 else
                 {
                     tnobj.Description = AdditionalDetailsText;
+                }
+
+                await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
+                // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+
+                //OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+
+                // OperationInProgress = false;
+
+            }
+        }
+
+        public async Task InternalNotesDetails()
+        {
+
+            try
+            {
+                UserDialogs.Instance.HideLoading();
+
+                TargetNavigationData tnobj = new TargetNavigationData();
+                if (Device.Idiom == TargetIdiom.Phone)
+                {
+                    tnobj.Description = InternalNotesTextForMobile;
+                }
+                else
+                {
+                    tnobj.Description = InternalNoteText;
                 }
 
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
