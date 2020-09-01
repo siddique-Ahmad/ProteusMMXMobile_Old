@@ -150,17 +150,13 @@
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
                     <control1:CustomEntry
                          x:Name="UnitCost" Text="{Binding UnitCostText}" TextChanged="UnitCost_TextChanged"/>
-
-
                 </border:SfBorder>
 
             </StackLayout>
 
             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="2">
-
-                <!--<buttons:SfButton Style="{StaticResource SfButtonStyle}">-->
-                <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding SaveStockroomPartsCommand}"  />-->
                 <Button     
+                    FontSize="10"
                     CornerRadius="5"
                        VerticalOptions="StartAndExpand"
                        Command="{Binding SaveStockroomPartsCommand}"
