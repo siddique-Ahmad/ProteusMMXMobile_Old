@@ -34,6 +34,7 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
         Color rowcolor = Color.White;
         public TomorrowViewCell()
         {
+           
             InitializeComponent();
         }
 

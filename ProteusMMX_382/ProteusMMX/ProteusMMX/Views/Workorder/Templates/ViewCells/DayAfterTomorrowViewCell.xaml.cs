@@ -33,7 +33,8 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
         Color rowcolor = Color.White;
         public DayAfterTomorrowViewCell ()
 		{
-			InitializeComponent ();
+            
+            InitializeComponent ();
 		}
 
         bool isExpanded = false;
