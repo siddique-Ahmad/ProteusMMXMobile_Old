@@ -164,7 +164,7 @@
                         CornerRadius="5"
                         Command="{Binding SaveCommand}"
                         Style="{StaticResource SaveButtonStyle}"
-                        HeightRequest="30"
+                        HeightRequest="40"
                         Text="{Binding SaveTitle}" >
                         </Button>
                     </Grid>

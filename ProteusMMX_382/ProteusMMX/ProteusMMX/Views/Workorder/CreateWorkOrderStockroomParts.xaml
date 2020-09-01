@@ -156,7 +156,7 @@
 
             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="2">
                 <Button     
-                    FontSize="10"
+                    
                     CornerRadius="5"
                        VerticalOptions="StartAndExpand"
                        Command="{Binding SaveStockroomPartsCommand}"
