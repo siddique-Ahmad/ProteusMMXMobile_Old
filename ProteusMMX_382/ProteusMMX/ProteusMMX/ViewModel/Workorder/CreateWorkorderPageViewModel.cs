@@ -421,6 +421,43 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        bool _isCostLayoutIsVisibleForChild = true;
+        public bool IsCostLayoutIsVisibleForChild
+        {
+            get
+            {
+                return _isCostLayoutIsVisibleForChild;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsVisibleForChild)
+                {
+                    _isCostLayoutIsVisibleForChild = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisibleForChild));
+                }
+            }
+        }
+
+        bool _isCostLayoutIsVisibleForParent = true;
+        public bool IsCostLayoutIsVisibleForParent
+        {
+            get
+            {
+                return _isCostLayoutIsVisibleForParent;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsVisibleForParent)
+                {
+                    _isCostLayoutIsVisibleForParent = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisibleForParent));
+                }
+            }
+        }
+
+
         string _saveTitle;
         public string SaveTitle
         {
@@ -4209,8 +4246,6 @@ namespace ProteusMMX.ViewModel.Workorder
                     this.AssignToEmployeeID = employeeAssignTo.employeesAssignedTo.FirstOrDefault().SelectedValue;
                     this.AssignToEmployeeName = employeeAssignTo.employeesAssignedTo.FirstOrDefault().SelectedText;
                 }
-                await SetTitlesPropertiesForPage();
-                await CreateControlsForPage();
                 if (Device.Idiom == TargetIdiom.Phone)
                 {
                     this.IsCostLayoutIsVisibleForPhone = true;
@@ -4219,6 +4254,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     this.IsCostLayoutIsVisibleForTab = true;
                 }
+                await SetTitlesPropertiesForPage();
+                await CreateControlsForPage();
+                
             }
             catch (Exception ex)
             {
@@ -4269,7 +4307,17 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (DistributeCostforAssetsystem == null)
                 {
                     IsCostLayoutIsVisible = false;
+                   
+                  
                 }
+                if(ParentCostsOnly == null || ChargeCostsOnlyToChildAssets == null)
+                {
+                   
+                    IsCostLayoutIsVisibleForChild = false;
+                    IsCostLayoutIsVisibleForParent = false;
+                   
+                }
+                
             }
             catch (Exception ex)
             {

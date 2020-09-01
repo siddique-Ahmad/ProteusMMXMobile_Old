@@ -1408,33 +1408,54 @@ namespace ProteusMMX.ViewModel.Workorder
                 AscendingTitle = WebControlTitle.GetTargetNameByTitleName("Ascending");
                 DescendingTitle = WebControlTitle.GetTargetNameByTitleName("Descending");
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-
-
-
-
-
-
-            
                 await AddTitlesToPicker();
 
-               
-                if (AppSettings.User.ULFeatures)
-                {
-                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic") || AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Professional"))
-                    {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle,FailedInspectionTitle };
+            if (AppSettings.User.ULFeatures)
+            {
 
+                if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic") || AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Professional"))
+                {
+                    if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
+                    {
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
                     }
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle,FailedInspectionTitle };
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
+                    }
+                }
+
+
+
+                else
+                {
+
+
+                    if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
+                    {
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle };
+                    }
+                    else
+                    {
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle };
                     }
 
+                }
+            }
+
+
+            else
+            {
+                if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
+                {
+                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
                 }
                 else
                 {
                     PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle,FailedInspectionTitle };
                 }
+               
+            }
                 WorkorderTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
                 SortByLocationLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Location");
                 SortByShiftLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Shift");
@@ -1727,27 +1748,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 SortByShiftpickerTitles.Add(SelectTitle);
                 SortByPriorityPickerTitles.Add(SelectTitle);
 
-                if (AppSettings.User.ULFeatures)
-                {
-                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle,DemandMaintenenceTitle, PreventiveMaintenenceTitle,EmergencyMaintenanceTitle, FailedInspectionTitle };
-                    //this.SelectedIndexPicker = 0;
-                   
-
-                }
-
-                else
-                {
-                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle, DemandMaintenenceTitle, PreventiveMaintenenceTitle,FailedInspectionTitle };
-                   // this.SelectedIndexPicker = 0;
-                   
-                }
                
-                //SelectedIndexPicker = 0;
-                //LocationSelectedIndexPicker = 0;
-                //ShiftSelectedIndexPicker = 0;
-                //PrioritySelectedIndexPicker = 0;
-                //IsGetWorkorderCall = true;
-
             }
             catch (Exception ex)
             {
