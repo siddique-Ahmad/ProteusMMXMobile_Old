@@ -424,7 +424,41 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+        bool _isCostLayoutIsVisibleForChild = true;
+        public bool IsCostLayoutIsVisibleForChild
+        {
+            get
+            {
+                return _isCostLayoutIsVisibleForChild;
+            }
 
+            set
+            {
+                if (value != _isCostLayoutIsVisibleForChild)
+                {
+                    _isCostLayoutIsVisibleForChild = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisibleForChild));
+                }
+            }
+        }
+
+        bool _isCostLayoutIsVisibleForParent = true;
+        public bool IsCostLayoutIsVisibleForParent
+        {
+            get
+            {
+                return _isCostLayoutIsVisibleForParent;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsVisibleForParent)
+                {
+                    _isCostLayoutIsVisibleForParent = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisibleForParent));
+                }
+            }
+        }
         bool _isCostLayoutIsVisible = true;
         public bool IsCostLayoutIsVisible
         {
@@ -4653,6 +4687,14 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                     }
                 }
+                if (Device.Idiom == TargetIdiom.Phone)
+                {
+                    this.IsCostLayoutIsVisibleForPhone = true;
+                }
+                else
+                {
+                    this.IsCostLayoutIsVisibleForTab = true;
+                }
                 //FormLoadInputForWorkorder = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
                 await SetTitlesPropertiesForPage();
 
@@ -4673,14 +4715,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 //  FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.WorkorderModuleName);
                 await CreateControlsForPage();
 
-                if (Device.Idiom == TargetIdiom.Phone)
-                {
-                    this.IsCostLayoutIsVisibleForPhone = true;
-                }
-                else
-                {
-                    this.IsCostLayoutIsVisibleForTab = true;
-                }
+               
                 //await SetTitlesPropertiesForPage(FormLoadInputForWorkorder);
                 //await CreateControlsForPage(FormLoadInputForWorkorder);
 
@@ -4755,6 +4790,13 @@ namespace ProteusMMX.ViewModel.Workorder
                     if (DistributeCostforAssetsystem == null)
                     {
                         IsCostLayoutIsVisible = false;
+                    }
+                    if (ParentCostsOnly == null || ChargeCostsOnlyToChildAssets == null)
+                    {
+
+                        IsCostLayoutIsVisibleForChild = false;
+                        IsCostLayoutIsVisibleForParent = false;
+
                     }
 
                     //ParentCostDistributed = WebControlTitle.GetTargetNameByTitleName("ParentCostDistributed");
