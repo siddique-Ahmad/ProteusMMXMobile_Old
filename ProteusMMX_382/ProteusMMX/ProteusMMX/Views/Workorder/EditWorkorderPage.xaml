@@ -293,10 +293,6 @@
 
 
                                     </Label>
-
-
-
-
                                 </StackLayout>
 
                                 <Button Text="{Binding AssetSystemName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding AssetSystemCommand}" IsVisible="{Binding AssetSystemIsVisibleForLicensing}" IsEnabled="{Binding AssetIsEnable}" />
@@ -498,7 +494,6 @@
                                     </Label.FontAttributes>
                                 </Label>
 
-
                                 <border:SfBorder
                                     Style="{StaticResource SfBorderStyle}">
                                     <control1:CustomEntry
@@ -638,6 +633,13 @@
 
 
                             <Image Grid.Column="1" Grid.Row="0" Source="Assets/mic.png">
+                                <Image.Source>
+                                    <OnPlatform  x:TypeArguments="ImageSource">
+                                        <OnPlatform.iOS>mic.png</OnPlatform.iOS>
+                                        <OnPlatform.Android>mic.png</OnPlatform.Android>
+                                        <OnPlatform.WinPhone>Assets/mic.png</OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer
                                         Command="{Binding TapCommand}"
@@ -708,8 +710,6 @@
                         </Grid>
 
                         <Button x:Name="SaveButton" Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="5" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>
-
-
 
                     </Grid>
                 </ScrollView>

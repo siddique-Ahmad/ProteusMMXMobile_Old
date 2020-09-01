@@ -111,14 +111,6 @@
                             </Image.GestureRecognizers>
                         </Image>
 
-                        <!--<Button Text="OK" Clicked="Button_OKClicked" BackgroundColor="LightSkyBlue"  Grid.Column="1" Grid.Row="5" >
-
-                    </Button>
-
-                    <Button Text="Cancel" Clicked="Button_CancelClicked" BackgroundColor="LightSkyBlue" Grid.Column="1" Grid.Row="6">
-
-                    </Button>-->
-
                         <StackLayout  Grid.Column="1" Grid.Row="5" Orientation="Horizontal">
 
                             <Button x:Name="OKButton" CornerRadius="5" Clicked="Button_OKClicked" WidthRequest="80" HeightRequest="60" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" BackgroundColor="LightSkyBlue" />
