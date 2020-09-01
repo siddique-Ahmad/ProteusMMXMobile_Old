@@ -537,6 +537,13 @@
                             </StackLayout>
 
                             <Image Grid.Column="1" Grid.Row="0" Source="Assets/mic.png">
+                                <Image.Source>
+                                    <OnPlatform  x:TypeArguments="ImageSource">
+                                        <OnPlatform.iOS>mic.png</OnPlatform.iOS>
+                                        <OnPlatform.Android>Assets/mic.png</OnPlatform.Android>
+                                        <OnPlatform.WinPhone>Assets/mic.png</OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer
                                         Command="{Binding TapCommand}"
