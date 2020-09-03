@@ -30,7 +30,7 @@
             </Grid>
             <Grid>
 
-                <Button x:Name="ShowAssetSystem" Text="{Binding ShowAssetSystem}" IsVisible="{Binding ShowAssetSystem}" TextColor="Blue" BackgroundColor="Transparent" BorderColor="Transparent" HorizontalOptions="End" BorderWidth="0" Opacity="3" BorderRadius="0"  Clicked="Button_Clicked"/>
+                <Button x:Name="ShowAssetSystem" Text="{Binding ShowAssetSystem}" FontSize="Micro"  IsVisible="{Binding ShowAssetSystem}" TextColor="Blue" BackgroundColor="Transparent" BorderColor="Transparent" HorizontalOptions="End" BorderWidth="0" Opacity="3" BorderRadius="0"  Clicked="Button_Clicked"/>
 
 
             </Grid>
