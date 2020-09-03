@@ -69,8 +69,8 @@
                 </Grid.RowDefinitions>
             </Grid>
 
-            <border:SfBorder CornerRadius="5" >
-            <Control1:CustomEntry Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="2" />
+            <border:SfBorder CornerRadius="5" Grid.Row="2" Grid.Column="0">
+            <Control1:CustomEntry Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="2" Grid.Column="0" />
             </border:SfBorder>
             <Button   Text="{Binding SearchButtonTitle}"  Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}"  Grid.Column="1" Grid.Row="2" />
                 <Label   Text= "{Binding TotalRecordTitle}" IsVisible="{Binding TotalRecordForTab}"  Grid.Column="2" Grid.Row="2" />
