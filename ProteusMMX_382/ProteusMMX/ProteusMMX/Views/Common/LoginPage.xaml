@@ -7,7 +7,7 @@
              xmlns:control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.Common.LoginPage"
              Title="{Binding PageTitle}"
-             BackgroundColor="{StaticResource White}">
+             Padding="0">
 
 
     <ContentPage.Resources>
@@ -20,6 +20,23 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
+        <Grid>
+            <Image Source="LoginPageBackgroundImage.png" Aspect="AspectFill">
+                <Image.Source>
+                    <OnPlatform x:TypeArguments="FileImageSource">
+                        <OnPlatform.iOS>
+                            <FileImageSource File="LoginPageBackgroundImage.png"/>
+                        </OnPlatform.iOS>
+                        <OnPlatform.Android>
+                            <FileImageSource File="LoginPageBackgroundImage.png"/>
+                        </OnPlatform.Android>
+                        <OnPlatform.WinPhone>
+                            <FileImageSource File="Assets/LoginPageBackgroundImage.png"/>
+                        </OnPlatform.WinPhone>
+                    </OnPlatform>
+                </Image.Source>
+            </Image>
+            <StackLayout>
         <ScrollView>
             <Grid>
 
@@ -45,7 +62,7 @@
 
 
                     <border:SfBorder Margin="40,50,30,50" BorderColor="LightGray" BorderWidth="1" CornerRadius="5">
-                        <StackLayout Padding="10,20,10,20" VerticalOptions="Center">
+                        <StackLayout Padding="10,20,10,20" BackgroundColor="White" VerticalOptions="Center">
 
                             <StackLayout x:Name="Tablet" Orientation="Horizontal">
                                 <StackLayout  Grid.Row="1" Orientation="Horizontal" Spacing="250" >
@@ -72,7 +89,7 @@
                             </StackLayout>
 
                             <StackLayout x:Name="Phone" Orientation="Horizontal" Padding="5,5,5,5">
-                                    <StackLayout Grid.RowSpan="1" Grid.Row="1" Orientation="Horizontal" Spacing="80"  >
+                                    <StackLayout Grid.RowSpan="1" Grid.Row="1" Orientation="Horizontal" Spacing="150"  >
                                         <Image HeightRequest="160" WidthRequest="100" Source="tapped.jpg">
                                             <Image.Source>
                                                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -144,6 +161,8 @@
 
             </Grid>
         </ScrollView>
+        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
 <!--<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"

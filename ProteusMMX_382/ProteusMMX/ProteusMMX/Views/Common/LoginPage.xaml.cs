@@ -25,6 +25,7 @@ namespace ProteusMMX.Views.Common
         {
             
             InitializeComponent();
+
             if (Device.Idiom == TargetIdiom.Phone)
             {
                 Phone.IsVisible = true;
