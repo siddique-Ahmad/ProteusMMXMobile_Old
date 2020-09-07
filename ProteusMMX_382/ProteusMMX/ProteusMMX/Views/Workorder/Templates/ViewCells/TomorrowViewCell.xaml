@@ -256,19 +256,17 @@
                 
                 <!--<StackLayout x:Name="Tablet" Grid.Row="0" Grid.Column="1">-->
                 <Grid Grid.Column="3" Grid.Row="0"  HorizontalOptions="Start">
-                    <Label FontAttributes="Bold" Text="✓" Grid.Column="2"  TextColor="Green"  Style="{StaticResource BoldLabelStyle}" IsVisible="{Binding WorkOrderCompleted}">
-                        <Label.FontSize>
-                            <OnPlatform x:TypeArguments="x:Double" Default="30">
-                                <On Platform="iOS" Value="30"/>
-                                <On Platform="Android" Value="25"/>
-                                <On Platform="WinPhone" Value="56"/>
-                                <On Platform="UWP" Value="20"/>
-                            </OnPlatform>
-                        </Label.FontSize>
-
-
-                    </Label>
-                    <Image  Grid.Column="4"  IsVisible="{Binding WorkOrderApprovedFlag}">
+                        <Image Grid.Column="3" IsVisible="{Binding WorkOrderCompleted}">
+                            <Image.Source>
+                                <OnPlatform x:TypeArguments="ImageSource" >
+                                    <OnPlatform.iOS>GreenTickMark.png</OnPlatform.iOS>
+                                    <OnPlatform.Android>GreenTickMark.png</OnPlatform.Android>
+                                    <OnPlatform.WinPhone>Assets/GreenTickMark.png</OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </Image.Source>
+                        </Image>
+                    
+                        <Image  Grid.Column="4"  IsVisible="{Binding WorkOrderApprovedFlag}">
                         <Image.Source>
                             <OnPlatform  x:TypeArguments="ImageSource">
                                 <OnPlatform.iOS>ThumbsUp.png</OnPlatform.iOS>
