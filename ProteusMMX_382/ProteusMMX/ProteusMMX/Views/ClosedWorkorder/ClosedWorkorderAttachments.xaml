@@ -36,20 +36,17 @@
                     <StackLayout  
                         Padding="10,10,10,10"
                         VerticalOptions="Fill">
-
-                        <controls:CarouselViewControl HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" Position="{Binding SelectedPosition}"  PositionSelected="CarouselView_PositionSelected" >
-                            <controls:CarouselViewControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Image Grid.RowSpan="2" Aspect="AspectFit" Source="{Binding AttachmentImageSource}"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </controls:CarouselViewControl.ItemTemplate>
-                        </controls:CarouselViewControl>
+                        <StackLayout HeightRequest="350" WidthRequest="350">
+                            <controls:CarouselViewControl HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" Position="{Binding SelectedPosition}"  PositionSelected="CarouselView_PositionSelected" >
+                                <controls:CarouselViewControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout HeightRequest="450" WidthRequest='450'>
+                                            <Image Grid.RowSpan="2" Aspect="AspectFit" Source="{Binding AttachmentImageSource}"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </controls:CarouselViewControl.ItemTemplate>
+                            </controls:CarouselViewControl>
+                        </StackLayout>
                         <Label x:Name="swipe" Text="{Binding SwipeText}" TextColor="Silver" HorizontalOptions= "Center" Grid.Row="1"></Label>
                         <Grid x:Name="GridSwipeButtons">
                             <Grid.RowDefinitions>
