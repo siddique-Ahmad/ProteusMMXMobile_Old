@@ -1311,7 +1311,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                         if (isimage == true)
                                         {
 
-                                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 350, 350);
+                                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 350,350 );
 
 
                                             Attachments.Add(new WorkorderAttachment
