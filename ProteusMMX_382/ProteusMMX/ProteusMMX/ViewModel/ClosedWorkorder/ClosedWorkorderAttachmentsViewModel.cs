@@ -765,25 +765,45 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                                 }
                                 else
                                 {
-                                    byte[] imgUser = StreamToBase64.StringToByte(file.attachmentFile);
-                                    MemoryStream stream = new MemoryStream(imgUser);
-                                    bool isimage = Extension.IsImage(stream);
-                                    if (isimage == true)
+
+                                    if (Device.RuntimePlatform == Device.UWP)
+                                    {
+                                        byte[] imgUser = StreamToBase64.StringToByte(file.attachmentFile);
+                                        MemoryStream stream = new MemoryStream(imgUser);
+                                        bool isimage = Extension.IsImage(stream);
+                                        if (isimage == true)
+                                        {
+
+                                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 350, 350);
+
+
+                                            Attachments.Add(new WorkorderAttachment
+                                            {
+                                                IsSynced = true,
+                                                attachmentFileExtension = file.attachmentFileExtension,
+                                              
+                                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage)))),
+                                               
+                                            }
+                                            );
+                                           
+
+
+                                        }
+                                    }
+                                    else
                                     {
 
-                                        //byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 350, 350);
-
-
+                                        
                                         Attachments.Add(new WorkorderAttachment
                                         {
                                             IsSynced = true,
                                             attachmentFileExtension = file.attachmentFileExtension,
-                                            ImageBytes = imgUser, //byteImage,
-                                           // WorkOrderAttachmentID = file.WorkOrderAttachmentID,
-                                            // AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage)))),
-                                            AttachmentImageSource = ImageSource.FromStream(() => new MemoryStream(imgUser))
+                                           
+                                            AttachmentImageSource = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Inspection/Service/AttachmentItem.ashx?Id=" + file.ClosedWorkOrderAttachmentID + "&&Module=closeworkorder"))
+
                                         }
-                                        );
+                                     );
                                     }
 
 
