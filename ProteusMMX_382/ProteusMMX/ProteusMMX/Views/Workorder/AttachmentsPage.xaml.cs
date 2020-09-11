@@ -118,29 +118,29 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void Next_Clicked(object sender, EventArgs e)
-        {
-            try
-            {
-                this.CarouselView.Position += 1;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
+        //private void Next_Clicked(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //       // this.CarouselView.Position += 1;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine(ex.Message);
+        //    }
+        //}
 
-        private void Previous_Clicked(object sender, EventArgs e)
-        {
-            try
-            {
-                this.CarouselView.Position -= 1;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message);
-            }
-        }
+        //private void Previous_Clicked(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //       // this.CarouselView.Position -= 1;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine(ex.Message);
+        //    }
+        //}
 
       
         public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
