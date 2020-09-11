@@ -77,7 +77,7 @@ namespace ProteusMMX.UWP
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerPage).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingBarcodeImageViewRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(CarouselView.FormsPlugin.UWP.CarouselViewRenderer).GetTypeInfo().Assembly);
+               // assembliesToInclude.Add(typeof(CarouselView.FormsPlugin.UWP.CarouselViewRenderer).GetTypeInfo().Assembly);
 
                 ///Syncfusion Assembly include/////////////////
                 assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfButtonRenderer).GetTypeInfo().Assembly);

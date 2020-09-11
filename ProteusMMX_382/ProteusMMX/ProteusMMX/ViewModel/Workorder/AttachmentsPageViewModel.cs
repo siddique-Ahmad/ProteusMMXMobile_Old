@@ -360,6 +360,21 @@ namespace ProteusMMX.ViewModel.Workorder
         public ObservableCollection<WorkorderAttachment> Attachments { get; set; }
         public ObservableCollection<string> DocumentAttachments { get; set; }
 
+        int _selectedIndexItem = -1;
+        public int SelectedIndexItem
+        {
+            get
+            {
+                return _selectedIndexItem;
+            }
+
+            set
+            {
+                _selectedIndexItem = value;
+                OnPropertyChanged("SelectedIndexItem");
+               
+            }
+        }
 
         int _selectedPosition;
         public int SelectedPosition
@@ -1088,7 +1103,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
              
 
-                var position = this.SelectedPosition;
+                var position = this.SelectedIndexItem;
 
                 if (Attachments.Count == 0)
                 {
