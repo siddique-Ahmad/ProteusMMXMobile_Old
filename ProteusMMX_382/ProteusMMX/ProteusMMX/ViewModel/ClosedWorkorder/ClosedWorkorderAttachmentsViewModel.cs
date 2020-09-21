@@ -249,7 +249,23 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
         #region Attachment Page Properties
 
+        string _imageText;
+        public string ImageText
+        {
+            get
+            {
+                return _imageText;
+            }
 
+            set
+            {
+                if (value != _imageText)
+                {
+                    _imageText = value;
+                    OnPropertyChanged(nameof(ImageText));
+                }
+            }
+        }
         Page _page;
         public Page Page
         {
@@ -480,7 +496,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
 
 
-
+                    ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + 0;
 
 
 
@@ -781,6 +797,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
                         if (attachment.clWorkOrderWrapper.clattachments.Count > 0)
                         {
+                            ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.clWorkOrderWrapper.clattachments.Count;
                             foreach (var file in attachment.clWorkOrderWrapper.clattachments)
                             {
 

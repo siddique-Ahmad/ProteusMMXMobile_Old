@@ -170,7 +170,25 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        
+        string _imageText;
+        public string ImageText
+        {
+            get
+            {
+                return _imageText;
+            }
+
+            set
+            {
+                if (value != _imageText)
+                {
+                    _imageText = value;
+                    OnPropertyChanged(nameof(ImageText));
+                }
+            }
+        }
+
+
         string _welcomeTextTitle;
         public string WelcomeTextTitle
         {
@@ -707,7 +725,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     DeleteTitle = WebControlTitle.GetTargetNameByTitleName("Delete");
                     SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
 
-
+                    ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + 0;
 
 
 
@@ -1325,7 +1343,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         if (attachment.workOrderWrapper.attachments.Count > 0)
                         {
-
+                            ImageText = WebControlTitle.GetTargetNameByTitleName("Total")+ " " + WebControlTitle.GetTargetNameByTitleName("Image")+ " : " + attachment.workOrderWrapper.attachments.Count;
                             foreach (var file in attachment.workOrderWrapper.attachments)
                             {
 

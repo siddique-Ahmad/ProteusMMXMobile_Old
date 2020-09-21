@@ -341,7 +341,23 @@ namespace ProteusMMX.ViewModel.Barcode
 
 
         #region Attachment Page Properties
+        string _imageText;
+        public string ImageText
+        {
+            get
+            {
+                return _imageText;
+            }
 
+            set
+            {
+                if (value != _imageText)
+                {
+                    _imageText = value;
+                    OnPropertyChanged(nameof(ImageText));
+                }
+            }
+        }
 
         Page _page;
         public Page Page
@@ -576,7 +592,7 @@ namespace ProteusMMX.ViewModel.Barcode
                     SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                     SwipeText = WebControlTitle.GetTargetNameByTitleName("Pleaseswipelefttoright");
 
-
+                    ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + 0;
 
 
 
@@ -976,6 +992,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
                         if (attachment.assetWrapper.attachments.Count > 0)
                         {
+                            ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.assetWrapper.attachments.Count;
                             foreach (var file in attachment.assetWrapper.attachments)
                             {
 
