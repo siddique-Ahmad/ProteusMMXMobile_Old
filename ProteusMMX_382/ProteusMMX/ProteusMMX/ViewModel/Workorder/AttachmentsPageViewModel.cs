@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using Newtonsoft.Json;
+using PanCardView.Extensions;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using ProteusMMX.DependencyInterface;
@@ -83,7 +84,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-
+        
+        
         ServiceOutput _formLoadInputForWorkorder;
         public ServiceOutput FormLoadInputForWorkorder //Use For Only translation purposes
         {
@@ -404,7 +406,13 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand DeleteCommand => new AsyncCommand(DeleteAttachment);
         public ICommand SaveCommand => new AsyncCommand(SaveAttachment);
 
+        public bool IsAutoAnimationRunning { get; set; }
 
+        public bool IsUserInteractionRunning { get; set; }
+
+        public ICommand PanPositionChangedCommand { get; }
+
+        
 
         #endregion
 
@@ -618,7 +626,23 @@ namespace ProteusMMX.ViewModel.Workorder
             {
 
             };
+            PanPositionChangedCommand = new Command(v =>
+            {
+                if (IsAutoAnimationRunning || IsUserInteractionRunning)
+                {
+                    return;
+                }
 
+                var index = SelectedIndexItem + (bool.Parse(v.ToString()) ? 1 : -1);
+                if (index < 0 || index >= Attachments.Count)
+                {
+                    return;
+                }
+                SelectedIndexItem = index;
+               
+            });
+
+           
         }
 
         public async Task SetTitlesPropertiesForPage()

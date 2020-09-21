@@ -48,21 +48,7 @@
                             </cards:CarouselView>
                         </StackLayout>
                         <Grid>
-                            <Image  IsEnabled="False" HeightRequest="50" HorizontalOptions="Center" WidthRequest="60" IsVisible="true" BackgroundColor="White">
-                                <Image.Source>
-                                    <OnPlatform x:TypeArguments="FileImageSource">
-                                        <OnPlatform.iOS>
-                                            <FileImageSource File="leftrightarrow.png"/>
-                                        </OnPlatform.iOS>
-                                        <OnPlatform.Android>
-                                            <FileImageSource File="leftrightarrow.png"/>
-                                        </OnPlatform.Android>
-                                        <OnPlatform.WinPhone>
-                                            <FileImageSource File="Assets/leftrightarrow.png"/>
-                                        </OnPlatform.WinPhone>
-                                    </OnPlatform>
-                                </Image.Source>
-                            </Image>
+                         
 
                             <Label   Text="{Binding SwipeText}"  FontAttributes="Bold" TextColor="Black" HorizontalOptions= "Center" Grid.Row="1">
                                 <Label.FontAttributes>
@@ -75,7 +61,39 @@
 
 
                         </Grid>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
 
+                            <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="False"  BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969" >
+                                <Button.Image>
+                                    <OnPlatform x:TypeArguments="FileImageSource">
+                                        <OnPlatform.iOS>
+                                            <FileImageSource File="ArrowLeft.png"/>
+                                        </OnPlatform.iOS>
+                                        <OnPlatform.Android>
+                                            <FileImageSource File="ArrowLeft.png"/>
+                                        </OnPlatform.Android>
+                                        <OnPlatform.WinPhone>
+                                            <FileImageSource File="Assets/ArrowLeft.png"/>
+                                        </OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Button.Image>
+                            </Button>
+                            <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="True"  BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969"  >
+                                <Button.Image>
+                                    <OnPlatform x:TypeArguments="FileImageSource">
+                                        <OnPlatform.iOS>
+                                            <FileImageSource File="ArrowRight.png"/>
+                                        </OnPlatform.iOS>
+                                        <OnPlatform.Android>
+                                            <FileImageSource File="ArrowRight.png"/>
+                                        </OnPlatform.Android>
+                                        <OnPlatform.WinPhone>
+                                            <FileImageSource File="Assets/ArrowRight.png"/>
+                                        </OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Button.Image>
+                            </Button>
+                        </StackLayout>
                         <Grid>
 
                             <Button x:Name="PDFGrid" Text="" HorizontalOptions="End" IsVisible = "true" WidthRequest = "60" HeightRequest = "60" Margin = "0,0,160,0" BackgroundColor="White" Command="{Binding DocCommand}" >

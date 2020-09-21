@@ -751,46 +751,7 @@ namespace ProteusMMX.ViewModel.Inventory
                     StockRoomTransactionDialogVisibility = false;
                 }
             }
-            FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.InventoryModuleName);
-            if (FormControlsAndRights != null && FormControlsAndRights.lstModules != null && FormControlsAndRights.lstModules.Count > 0)
-            {
-                var InventoryModule = FormControlsAndRights.lstModules[0];
-                if (InventoryModule.ModuleName == "Inventory") //ModuleName can't be  changed in service 
-                {
-                    if (InventoryModule.lstSubModules != null && InventoryModule.lstSubModules.Count > 0)
-                    {
-                        var InventorySubModule = InventoryModule.lstSubModules.FirstOrDefault(i => i.SubModuleName == "Stockrooms");
-
-                        if (InventorySubModule != null)
-                        {
-                            if (InventorySubModule.Button != null && InventorySubModule.Button.Count > 0)
-                            {
-
-
-                            }
-                            if (InventorySubModule.listDialoges != null && InventorySubModule.listDialoges.Count > 0)
-                            {
-                                var InventoryDialog = InventorySubModule.listDialoges.FirstOrDefault(i => i.DialogName == "StockroomParts");
-
-
-                                var InventoryPartDialog = InventoryDialog.listTab.FirstOrDefault(i => i.DialogTabName == "StockroomPartDialog");
-                                {
-
-                                    if (InventoryPartDialog.listTabDialog != null && InventoryPartDialog.listTabDialog.Count > 0)
-                                    {
-                                        var Detailstab = InventoryPartDialog.listTabDialog.FirstOrDefault(i => i.TabDialogName == "Details");
-                                        var shelfBin = Detailstab.ButtonControls.FirstOrDefault(i => i.Name == "ShelfBin");
-
-                                        Application.Current.Properties["ShelfBinKey"] = shelfBin.Expression;
-
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+           
         }
 
 

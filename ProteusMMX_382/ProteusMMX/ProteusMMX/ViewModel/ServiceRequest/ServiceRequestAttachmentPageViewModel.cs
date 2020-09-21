@@ -392,7 +392,11 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         public ICommand CameraCommand => new AsyncCommand(OpenMedia);
         public ICommand DeleteCommand => new AsyncCommand(DeleteAttachment);
         public ICommand SaveCommand => new AsyncCommand(SaveAttachment);
+        public bool IsAutoAnimationRunning { get; set; }
 
+        public bool IsUserInteractionRunning { get; set; }
+
+        public ICommand PanPositionChangedCommand { get; }
 
 
         #endregion
@@ -607,6 +611,20 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
 
             };
+            PanPositionChangedCommand = new Command(v =>
+            {
+                if (IsAutoAnimationRunning || IsUserInteractionRunning)
+                {
+                    return;
+                }
+
+                var index = SelectedIndexItem + (bool.Parse(v.ToString()) ? 1 : -1);
+                if (index < 0 || index >= Attachments.Count)
+                {
+                    return;
+                }
+                SelectedIndexItem = index;
+            });
 
         }
 
