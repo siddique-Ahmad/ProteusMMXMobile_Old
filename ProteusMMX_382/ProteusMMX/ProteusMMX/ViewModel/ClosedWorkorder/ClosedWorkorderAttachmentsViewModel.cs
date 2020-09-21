@@ -335,6 +335,21 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         public ObservableCollection<WorkorderAttachment> Attachments { get; set; }
         public ObservableCollection<string> DocumentAttachments { get; set; }
 
+        int _selectedIndexItem = -1;
+        public int SelectedIndexItem
+        {
+            get
+            {
+                return _selectedIndexItem;
+            }
+
+            set
+            {
+                _selectedIndexItem = value;
+                OnPropertyChanged("SelectedIndexItem");
+
+            }
+        }
 
         int _selectedPosition;
         public int SelectedPosition
@@ -361,7 +376,11 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
         public ICommand DocCommand => new AsyncCommand(OpenDoc);
         public ICommand CameraCommand => new AsyncCommand(OpenMedia);
-      
+        public bool IsAutoAnimationRunning { get; set; }
+
+        public bool IsUserInteractionRunning { get; set; }
+
+        public ICommand PanPositionChangedCommand { get; }
 
 
 
@@ -426,7 +445,20 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             {
 
             };
+            PanPositionChangedCommand = new Command(v =>
+            {
+                if (IsAutoAnimationRunning || IsUserInteractionRunning)
+                {
+                    return;
+                }
 
+                var index = SelectedIndexItem + (bool.Parse(v.ToString()) ? 1 : -1);
+                if (index < 0 || index >= Attachments.Count)
+                {
+                    return;
+                }
+                SelectedIndexItem = index;
+            });
         }
 
         public async Task 
