@@ -61,7 +61,16 @@
                             </StackLayout>
 
                             <Grid>
-                               
+
+                                <Label   Text="{Binding ImageText}"  FontAttributes="Bold" TextColor="Black" HorizontalOptions= "Center" Grid.Row="0">
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes">
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Label.FontAttributes>
+                                </Label>
+
                                 <Label   Text="{Binding SwipeText}"  FontAttributes="Bold" TextColor="Black" HorizontalOptions= "Center" Grid.Row="1">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">

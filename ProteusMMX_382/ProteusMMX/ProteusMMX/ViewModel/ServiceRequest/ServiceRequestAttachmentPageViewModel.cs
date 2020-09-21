@@ -262,7 +262,23 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
         #region Attachment Page Properties
+        string _imageText;
+        public string ImageText
+        {
+            get
+            {
+                return _imageText;
+            }
 
+            set
+            {
+                if (value != _imageText)
+                {
+                    _imageText = value;
+                    OnPropertyChanged(nameof(ImageText));
+                }
+            }
+        }
 
         Page _page;
         public Page Page
@@ -689,7 +705,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     SwipeText = WebControlTitle.GetTargetNameByTitleName("Pleaseswipelefttoright");
                     DeleteTitle = WebControlTitle.GetTargetNameByTitleName("Delete");
                     SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-
+                    ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + 0;
 
 
 
@@ -1294,6 +1310,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                         if (attachment.serviceRequestWrapper.attachments.Count > 0)
                         {
+                            ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.serviceRequestWrapper.attachments.Count;
 
                             foreach (var file in attachment.serviceRequestWrapper.attachments)
                             {
