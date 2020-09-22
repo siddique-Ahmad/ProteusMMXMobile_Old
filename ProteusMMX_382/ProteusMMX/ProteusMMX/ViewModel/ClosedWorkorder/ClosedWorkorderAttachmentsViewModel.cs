@@ -750,11 +750,11 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             {
                 OperationInProgress = true;
 
-                if (IsDataRequested)
-                {
-                    IsDataRequested = false;
-                    return;
-                }
+                //if (IsDataRequested)
+                //{
+                //    IsDataRequested = false;
+                //    return;
+                //}
 
                 try
                 {
