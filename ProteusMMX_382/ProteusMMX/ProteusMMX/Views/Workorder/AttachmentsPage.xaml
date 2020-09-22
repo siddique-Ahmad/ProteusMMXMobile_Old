@@ -60,7 +60,7 @@
                         </cards:CarouselView>
                             </StackLayout>
 
-                            <Grid>
+                            <Grid Grid.Row="1">
 
                                 <Label   Text="{Binding ImageText}"  FontAttributes="Bold" TextColor="Black" HorizontalOptions= "Center" Grid.Row="0">
                                     <Label.FontAttributes>
@@ -70,7 +70,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-
+                                
                                 <Label   Text="{Binding SwipeText}"  FontAttributes="Bold" TextColor="Black" HorizontalOptions= "Center" Grid.Row="1">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -79,9 +79,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-
-                            </Grid>
-                            <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                            <StackLayout Orientation="Horizontal" Grid.RowSpan="2" Grid.Row="2" HorizontalOptions="CenterAndExpand">
 
                                 <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="False"  BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969" >
                                     <Button.Image>
@@ -114,9 +112,12 @@
                                     </Button.Image>
                                 </Button>
                             </StackLayout>
+
+                            </Grid>
+                        
                             <Grid>
 
-                            <Button x:Name="PDFGrid" Text="" HorizontalOptions="End" IsVisible = "true" WidthRequest = "60" HeightRequest = "60" Margin = "0,0,160,0" BackgroundColor="White" Command="{Binding DocCommand}" BorderColor="Black" CornerRadius="5">
+                            <Button x:Name="PDFGrid" Text="" HorizontalOptions="End" IsVisible = "true" WidthRequest = "60" HeightRequest = "60" Margin = "0,0,180,0" BackgroundColor="White" Command="{Binding DocCommand}" BorderColor="Black" CornerRadius="5">
                                 <Button.Image>
                                     <OnPlatform x:TypeArguments="FileImageSource">
                                         <OnPlatform.iOS>
@@ -132,7 +133,7 @@
                                 </Button.Image>
                             </Button>
 
-                            <Button x:Name="CameraButton" IsVisible="{Binding AttachmentCameraButtonIsVisible}" IsEnabled="{Binding AttachmentCameraButtonIsEnabled}" HorizontalOptions="End" WidthRequest = "60" Margin = "0,0,80,0" BackgroundColor="White" Command="{Binding CameraCommand}" BorderColor="Black" CornerRadius="5">
+                            <Button x:Name="CameraButton" IsVisible="{Binding AttachmentCameraButtonIsVisible}" IsEnabled="{Binding AttachmentCameraButtonIsEnabled}" HorizontalOptions="End" WidthRequest = "60" Margin = "0,0,100,0" BackgroundColor="White" Command="{Binding CameraCommand}" BorderColor="Black" CornerRadius="5">
                                 <Button.Image>
                                     <OnPlatform x:TypeArguments="FileImageSource">
                                         <OnPlatform.iOS>
