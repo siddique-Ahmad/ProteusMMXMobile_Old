@@ -968,127 +968,111 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 }
-
-                //FormLoadInputForWorkorder = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
                 await SetTitlesPropertiesForPage();
                 OperationInProgress = false;
-                FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.WorkorderModuleName);
-              
-                if (FormControlsAndRights != null && FormControlsAndRights.lstModules != null && FormControlsAndRights.lstModules.Count > 0)
-                {
-                    var workordersModule = FormControlsAndRights.lstModules[0];
-                    if (workordersModule.ModuleName == "WorkOrders") //ModuleName can't be  changed in service 
+
+                    if (Application.Current.Properties.ContainsKey("TaskTabDetails"))
                     {
-                        if (workordersModule.lstSubModules != null && workordersModule.lstSubModules.Count > 0)
+                        var TaskTabDetails = Application.Current.Properties["TaskTabDetails"].ToString();
+                        if (TaskTabDetails != null && TaskTabDetails == "E")
                         {
-                            var inspectionSubModule = workordersModule.lstSubModules.FirstOrDefault(i => i.SubModuleName == "INSP/Cal"); //SubModuleName can't be  changed in service
-                            var workorderSubModule = workordersModule.lstSubModules.FirstOrDefault(i => i.SubModuleName == "WorkOrders");
-
-                            if (workorderSubModule != null)
-                            {
-                                if (workorderSubModule.Button != null && workorderSubModule.Button.Count > 0)
-                                {
-                                    // CloseWorkorderRights = workorderSubModule.Button.FirstOrDefault(i => i.Name == "Close");
-
-                                }
-
-                                if (workorderSubModule.listDialoges != null && workorderSubModule.listDialoges.Count > 0)
-                                {
-                                    var WorkorderDialog = workorderSubModule.listDialoges.FirstOrDefault(i => i.DialogName == "WorkOrderDialog");
-                                    if (WorkorderDialog != null && WorkorderDialog.listTab != null && WorkorderDialog.listTab.Count > 0)
-                                    {
-                                        var DetailsTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Details");
-                                        var AdditionalDetailsTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "AdditionalDetails");
-                                        var CauseTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Causes");
-                                        var TaskLabourTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "TasksandLabor");
-
-                                        if (TaskLabourTab.ButtonControls != null && TaskLabourTab.ButtonControls.Count > 0)
-                                        {
-                                           // CreateTask = TaskLabourTab.ButtonControls.FirstOrDefault(i => i.Name == "Add");
-
-                                        }
-                                        var TaskLabourDetailsTab = TaskLabourTab.listTabDialog.FirstOrDefault(i => i.TabDialogName == "WorkOrderLaborDialog");
-                                        var TaskLabourDetailsListTab = TaskLabourDetailsTab.listTab.FirstOrDefault(i => i.Name == "Details");
-
-                                        var TaskTabDetails = TaskLabourDetailsListTab.listControls.FirstOrDefault(i => i.ControlName == "TaskID");
-                                        var HourAtRate1 = TaskLabourDetailsListTab.listControls.FirstOrDefault(i => i.ControlName == "HoursAtRate1");
-                                        var EmployeeTab = TaskLabourDetailsListTab.listControls.FirstOrDefault(i => i.ControlName == "EmployeeLaborCraftID");
-                                        var ContractorTab = TaskLabourDetailsListTab.listControls.FirstOrDefault(i => i.ControlName == "ContractorLaborCraftID");
-                                        var StartdateTab = TaskLabourDetailsListTab.listControls.FirstOrDefault(i => i.ControlName == "StartDate");
-                                        var CompletionDateTab = TaskLabourDetailsListTab.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate");
-
-                                        if(TaskTabDetails!=null && TaskTabDetails.Expression=="E")
-                                        {
-                                            this.TaskIsVisible = true;
-                                        }
-                                        else if(TaskTabDetails.Expression == "V")
-                                        {
-                                            this.TaskIsEnable = false;
-                                        }
-                                        else
-                                        {
-                                            this.TaskIsVisible = true;
-                                        }
-                                        if (EmployeeTab != null && EmployeeTab.Expression == "E")
-                                        {
-                                            this.EmployeeIsVisible = true;
-                                        }
-                                        else if (EmployeeTab.Expression == "V")
-                                        {
-                                            this.EmployeeIsEnable = false;
-                                        }
-                                        else
-                                        {
-                                            this.EmployeeIsVisible = false;
-                                        }
-                                        if (ContractorTab != null && ContractorTab.Expression == "E")
-                                        {
-                                            this.ContractorIsVisible = true;
-                                        }
-                                        else if (ContractorTab.Expression == "V")
-                                        {
-                                            this.ContractorIsEnable = false;
-                                        }
-                                        else
-                                        {
-                                            this.ContractorIsVisible = false;
-                                        }
-                                        if (StartdateTab != null && StartdateTab.Expression == "E")
-                                        {
-                                            this.TaskStartedDateIsVisible = true;
-                                        }
-                                        else if (ContractorTab.Expression == "V")
-                                        {
-                                            this.TaskStartedDateIsEnable = false;
-                                        }
-                                        else
-                                        {
-                                            this.TaskStartedDateIsVisible = false;
-                                        }
-                                        if (CompletionDateTab != null && CompletionDateTab.Expression == "E")
-                                        {
-                                            this.TaskCompletionDateIsVisible = true;
-                                        }
-                                        else if (CompletionDateTab.Expression == "V")
-                                        {
-                                            this.TaskCompletionDateIsEnable = false;
-                                        }
-                                        else
-                                        {
-                                            this.TaskCompletionDateIsVisible = false;
-                                        }
-                                        if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
-                                        {
-                                            this.ContractorIsVisible = false;
-
-                                        }
-
-                                    }
-                                }
-                            }
+                            this.TaskIsVisible = true;
                         }
+                        else if (TaskTabDetails == "V")
+                        {
+                            this.TaskIsEnable = false;
+                        }
+                        else
+                        {
+                            this.TaskIsVisible = true;
+                        }
+
+
                     }
-                }
+                    if (Application.Current.Properties.ContainsKey("EmployeeTab"))
+                    {
+                        var EmployeeTab = Application.Current.Properties["EmployeeTab"].ToString();
+                        if (EmployeeTab != null && EmployeeTab == "E")
+                        {
+                            this.EmployeeIsVisible = true;
+                        }
+                        else if (EmployeeTab == "V")
+                        {
+                            this.EmployeeIsEnable = false;
+                        }
+                        else
+                        {
+                            this.EmployeeIsVisible = false;
+                        }
+
+
+                    }
+                    if (Application.Current.Properties.ContainsKey("ContractorTab"))
+                    {
+                        var ContractorTab = Application.Current.Properties["ContractorTab"].ToString();
+                        if (ContractorTab != null && ContractorTab == "E")
+                        {
+                            this.ContractorIsVisible = true;
+                        }
+                        else if (ContractorTab == "V")
+                        {
+                            this.ContractorIsEnable = false;
+                        }
+                        else
+                        {
+                            this.ContractorIsVisible = false;
+                        }
+
+
+                    }
+
+                    if (Application.Current.Properties.ContainsKey("StartdateTab"))
+                    {
+                        var StartdateTab = Application.Current.Properties["StartdateTab"].ToString();
+                        if (StartdateTab != null && StartdateTab == "E")
+                        {
+                            this.TaskStartedDateIsVisible = true;
+                        }
+                        else if (StartdateTab == "V")
+                        {
+                            this.TaskStartedDateIsEnable = false;
+                        }
+                        else
+                        {
+                            this.TaskStartedDateIsVisible = false;
+                        }
+
+
+                    }
+
+                    if (Application.Current.Properties.ContainsKey("CompletionDateTab"))
+                    {
+                        var CompletionDateTab = Application.Current.Properties["CompletionDateTab"].ToString();
+                        if (CompletionDateTab != null && CompletionDateTab == "E")
+                        {
+                            this.TaskCompletionDateIsVisible = true;
+                        }
+                        else if (CompletionDateTab == "V")
+                        {
+                            this.TaskCompletionDateIsEnable = false;
+                        }
+                        else
+                        {
+                            this.TaskCompletionDateIsVisible = false;
+                        }
+
+
+                    }
+
+
+                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                    {
+                        this.ContractorIsVisible = false;
+
+                    }
+                
+
+                                  
                 ServiceOutput taskResponse = null;
 
                 taskResponse = await _taskService.GetEmployee(UserID,"0","0", AppSettings.User.EmployeeName, "TaskAndLabor",this.WorkorderID);
