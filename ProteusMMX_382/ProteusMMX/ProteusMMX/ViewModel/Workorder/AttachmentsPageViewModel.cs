@@ -1410,7 +1410,11 @@ namespace ProteusMMX.ViewModel.Workorder
                             }
                         }
                     }
-                               
+                    else
+                    {
+                        ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + 0;
+                    }
+
                 }
                 catch (Exception ex)
                 {

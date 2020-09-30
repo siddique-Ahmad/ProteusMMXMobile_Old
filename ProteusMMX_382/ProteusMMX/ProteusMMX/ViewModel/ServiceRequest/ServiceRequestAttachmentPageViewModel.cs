@@ -1378,6 +1378,10 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             }
                         }
                     }
+                    else
+                    {
+                        ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + 0;
+                    }
 
                 }
                 catch (Exception ex)
