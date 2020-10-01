@@ -1907,6 +1907,7 @@ namespace ProteusMMX.Views.Workorder
                     {
                         Orientation = StackOrientation.Vertical,
                         HorizontalOptions = LayoutOptions.StartAndExpand,
+                        Spacing = 20,
                         Children = { }
 
                     };
@@ -2402,10 +2403,10 @@ namespace ProteusMMX.Views.Workorder
                             break;
                     }
 
-                    var btnsave = new Button() { CornerRadius = 5, Text = WebControlTitle.GetTargetNameByTitleName("Save"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnsave = new Button() { CornerRadius = 5, WidthRequest = 300, HeightRequest = 40, Text = WebControlTitle.GetTargetNameByTitleName("Save"), HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnsave.Clicked += Btnsave_Clicked;
 
-                    var btnDelete = new Button() { CornerRadius = 5, StyleId = item.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnDelete = new Button() { CornerRadius = 5, WidthRequest = 300, HeightRequest = 40, StyleId = item.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnDelete.Clicked += BtnDelete_Clicked;
 
                     #region Add Signature image
@@ -2491,6 +2492,7 @@ namespace ProteusMMX.Views.Workorder
                     {
                         Orientation = StackOrientation.Vertical,
                         HorizontalOptions = LayoutOptions.StartAndExpand,
+                        Spacing = 20,
                         Children = { }
 
                     };
@@ -2987,10 +2989,10 @@ namespace ProteusMMX.Views.Workorder
 
                     }
 
-                    var btnSaveSection = new Button() { CornerRadius = 5, Text = WebControlTitle.GetTargetNameByTitleName("Save"), CommandParameter = commonSections, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnSaveSection = new Button() { CornerRadius = 5, WidthRequest = 300, Text = WebControlTitle.GetTargetNameByTitleName("Save"), CommandParameter = commonSections, HeightRequest = 40, BackgroundColor = Color.FromHex("#87CEFA"), HorizontalOptions = LayoutOptions.Center, TextColor = Color.White, BorderColor = Color.Black };
                     btnSaveSection.Clicked += BtnSaveSection_Clicked;
 
-                    var btnDelete = new Button() { CornerRadius = 5, StyleId = item.SectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnDelete = new Button() { CornerRadius = 5, WidthRequest = 300, StyleId = item.SectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HeightRequest = 40, HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnDelete.Clicked += BtnSectionDelete_Clicked;
 
 
@@ -3006,7 +3008,7 @@ namespace ProteusMMX.Views.Workorder
                         imageView.Source = ImageSource.FromStream(() => new MemoryStream(byteImg));
                         layout1.Children.Add(imageView);
 
-                        var addSignatureButton = new Button() {CornerRadius=5, Text = WebControlTitle.GetTargetNameByTitleName("AddSignature"), BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                        var addSignatureButton = new Button() { CornerRadius = 5, WidthRequest = 300, Text = WebControlTitle.GetTargetNameByTitleName("AddSignature"), HeightRequest = 40, BackgroundColor = Color.FromHex("#87CEFA"), HorizontalOptions = LayoutOptions.Center, TextColor = Color.White, BorderColor = Color.Black };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
                         layout1.Children.Add(addSignatureButton);
 
