@@ -150,6 +150,7 @@ namespace ProteusMMX.Views.Workorder
                         {
                             Orientation = StackOrientation.Vertical,
                             HorizontalOptions = LayoutOptions.StartAndExpand,
+                            Spacing = 25,
                             Children = { }
 
                         };
@@ -644,7 +645,7 @@ namespace ProteusMMX.Views.Workorder
                                 break;
                         }
 
-                        var btnsave = new Button() {CornerRadius=5, StyleId=Miscellaneous.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Add"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                        var btnsave = new Button() { CornerRadius = 5, StyleId = Miscellaneous.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Add"), WidthRequest = 300, HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                         btnsave.Clicked += Btnsave_Clicked;
 
 
@@ -1229,7 +1230,7 @@ namespace ProteusMMX.Views.Workorder
 
                     }
 
-                    var btnSaveSection = new Button() {CornerRadius=5, Text = WebControlTitle.GetTargetNameByTitleName("Add"), CommandParameter = commonSections, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnSaveSection = new Button() {CornerRadius=5, Text = WebControlTitle.GetTargetNameByTitleName("Add"), WidthRequest = 300, HorizontalOptions = LayoutOptions.Center , CommandParameter = commonSections, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnSaveSection.Clicked += BtnSaveSection_Clicked;
 
 
