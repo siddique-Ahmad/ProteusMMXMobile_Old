@@ -7,6 +7,7 @@ using ProteusMMX.Model;
 using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.Services.Request;
 using ProteusMMX.ViewModel.Miscellaneous;
+using Syncfusion.XForms.Expander;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +27,9 @@ namespace ProteusMMX.Views.Workorder
     {
         ServiceOutput Inspectiondata;
         private readonly IRequestService _requestService;
+
+        StackLayout MainLayout = new StackLayout();
+        StackLayout MainLayoutGroup = new StackLayout();
         public int? WorkorderID { get; set; }
         public AddInspectionData(int? workorderid)
         {
@@ -138,23 +142,100 @@ namespace ProteusMMX.Views.Workorder
 
         private void BindLayout(List<WorkOrderInspectionData> listInspection)
         {
-            // List<ExistingInspections> listInspection
-           // List<WorkOrderInspectionData> distinctList = listInspection.OrderByDescending(x => x.SectionName="Miscellaneous Questions").ToList();
+            int singlecount = 0;
+            int Groupcount;
+            try
+            {
+
+                var filteredResult = from s in listInspection
+                                     where s.SectionName == "Miscellaneous Questions"
+                                     select s;
+                if (filteredResult.Any())
+                {
+                    singlecount = filteredResult.ElementAt(0).sectiondata.Count;
+                }
+                else
+                {
+                    singlecount = 0;
+                }
+
+                Groupcount = listInspection.Where(a => a.SectionName != "Miscellaneous Questions").Count();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+
+            //Expander One
+            SfExpander expander1;
+            expander1 = new SfExpander();
+
+            SfExpander expander;
+            ScrollView scrollView;
+            StackLayout stack;
+            scrollView = new ScrollView();
+            scrollView.Margin = 20;
+
+            stack = new StackLayout();
+
+            //Expander two
+            expander = new SfExpander();
+
+            //Expander Header for Single
+            var headergrid = new Grid()
+            {
+                HeightRequest = 60
+            };
+            var headerLabel = new Label()
+            {
+                TextColor = Color.Black,
+                FontSize=15,
+                FontAttributes=FontAttributes.Bold,
+                BackgroundColor = Color.LightSkyBlue,
+                HorizontalTextAlignment = TextAlignment.Center,
+                Text = "Miscellaneous Questions" + "(" + singlecount + ")",
+                VerticalTextAlignment = TextAlignment.Center
+            };
+            headergrid.Children.Add(headerLabel);
+            expander.Header = headergrid;
+
+
+            //Expander Header for Group
+            var headergrid1 = new Grid()
+            {
+                HeightRequest = 60
+            };
+            var headerLabel1 = new Label()
+            {
+                TextColor = Color.Black,
+                FontSize = 15,
+                FontAttributes = FontAttributes.Bold,
+                BackgroundColor = Color.LightSkyBlue,
+                HorizontalTextAlignment = TextAlignment.Center,
+                Text = "Group Sections" + "(" + Groupcount + ")",
+                VerticalTextAlignment = TextAlignment.Center
+            };
+            headergrid1.Children.Add(headerLabel1);
+            expander1.Header = headergrid1;
+
+
             foreach (var item in listInspection)
             {
+
                 if (item.SectionName == "Miscellaneous Questions")
                 {
+
                     foreach (var Miscellaneous in item.sectiondata)
                     {
                         var layout2 = new StackLayout
                         {
                             Orientation = StackOrientation.Vertical,
                             HorizontalOptions = LayoutOptions.StartAndExpand,
-                            Spacing = 25,
                             Children = { }
 
                         };
-                        //var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest = 3, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
 
                         var mainLayoutGroupSingle = new StackLayout
                         {
@@ -163,24 +244,16 @@ namespace ProteusMMX.Views.Workorder
                             Children = { layout2 }
 
                         };
-                        //mainLayoutGroup.Children.Add(oneBox);
 
 
-                        //var frame = new Frame
-                        //{
-                        //    Padding = new Thickness(10, 10, 10, 10),
-                        //    OutlineColor = Color.Accent,
-                        //    HorizontalOptions = LayoutOptions.FillAndExpand,
-                        //    Content = mainLayoutGroup,
-                        //};
 
 
                         View Question;
                         View Label;
-                        //View LabelHours;
                         View Layout;
-
                         Grid sta;
+
+
                         switch (Miscellaneous.ResponseType)
                         {
                             case "Pass/Fail":
@@ -207,7 +280,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 if (Device.Idiom == TargetIdiom.Phone)
                                 {
-                                    var btnTruePF = new Button() {CornerRadius=5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
+                                    var btnTruePF = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
                                     var btnFalsePF = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
                                     // btnTruePF.Clicked += BtnTrue_Clicked;
                                     // btnFalsePF.Clicked += BtnFalse_Clicked;
@@ -290,7 +363,7 @@ namespace ProteusMMX.Views.Workorder
                                     Label = new Label { Text = Miscellaneous.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
                                 }
 
-                                Layout = new MyEntry {  Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Start, };
+                                Layout = new MyEntry { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Start, };
 
                                 // GenerateAnswerText(item);
 
@@ -323,9 +396,6 @@ namespace ProteusMMX.Views.Workorder
                                     Label = new Label { Text = Miscellaneous.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
                                 }
 
-
-                                //  GenerateAnswerText(item);
-
                                 var grid = new Grid() { HorizontalOptions = LayoutOptions.End };
                                 grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
                                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
@@ -334,19 +404,9 @@ namespace ProteusMMX.Views.Workorder
 
                                 if (Device.Idiom == TargetIdiom.Phone)
                                 {
-                                    var btnTrue = new Button() {CornerRadius=5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
+                                    var btnTrue = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
                                     var btnFalse = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
                                     var btnNA = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
-                                    //Bind the ResponseSubType in Buttons
-                                    // btnTrue.BindingContext = Miscellaneous.ResponseSubType;
-                                    //  btnFalse.BindingContext = Miscellaneous.ResponseSubType;
-                                    //  btnNA.BindingContext = Miscellaneous.ResponseSubType;
-
-
-                                    //TODO: Add the NA button over here
-                                    // btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
-                                    // btnFalse.Clicked += BtnNo_Clicked;
-                                    // btnNA.Clicked += BtnNA_Clicked;
 
                                     grid.Children.Add(btnTrue, 0, 0);
                                     grid.Children.Add(btnFalse, 1, 0);
@@ -372,40 +432,6 @@ namespace ProteusMMX.Views.Workorder
 
                                     }
 
-                                    //#region Negative response create workorder btnshow
-                                    //if (Miscellaneous.ResponseSubType == null || Miscellaneous.ResponseSubType == false)
-                                    //{
-                                    //    switch (Miscellaneous.AnswerDescription)
-                                    //    {
-                                    //        case "":
-                                    //            break;
-                                    //        case "NA":
-                                    //            break;
-                                    //        case "Yes":
-                                    //            // btnCreateWorkorder.IsVisible = true;
-                                    //            break;
-                                    //        case "No":
-                                    //            break;
-
-                                    //    }
-                                    //}
-                                    //else
-                                    //{
-                                    //    switch (item.AnswerDescription)
-                                    //    {
-                                    //        case "":
-                                    //            break;
-                                    //        case "NA":
-                                    //            break;
-                                    //        case "Yes":
-                                    //            break;
-                                    //        case "No":
-                                    //            //btnCreateWorkorder.IsVisible = true;
-                                    //            break;
-
-                                    //    }
-                                    //}
-                                    //#endregion
 
                                 }
                                 else
@@ -413,16 +439,6 @@ namespace ProteusMMX.Views.Workorder
                                     var btnTrue = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
                                     var btnFalse = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
                                     var btnNA = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
-                                    //Bind the ResponseSubType in Buttons
-                                    // btnTrue.BindingContext = item.ResponseSubType;
-                                    // btnFalse.BindingContext = item.ResponseSubType;
-                                    // btnNA.BindingContext = item.ResponseSubType;
-
-
-                                    //TODO: Add the NA button over here
-                                    //  btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
-                                    //  btnFalse.Clicked += BtnNo_Clicked;
-                                    //  btnNA.Clicked += BtnNA_Clicked;
 
                                     grid.Children.Add(btnTrue, 0, 0);
                                     grid.Children.Add(btnFalse, 1, 0);
@@ -448,40 +464,7 @@ namespace ProteusMMX.Views.Workorder
 
                                     }
 
-                                    //#region Negative response create workorder btnshow
-                                    //if (item.ResponseSubType == null || item.ResponseSubType == false)
-                                    //{
-                                    //    switch (item.AnswerDescription)
-                                    //    {
-                                    //        case "":
-                                    //            break;
-                                    //        case "NA":
-                                    //            break;
-                                    //        case "Yes":
-                                    //            // btnCreateWorkorder.IsVisible = true;
-                                    //            break;
-                                    //        case "No":
-                                    //            break;
 
-                                    //    }
-                                    //}
-                                    //else
-                                    //{
-                                    //    switch (item.AnswerDescription)
-                                    //    {
-                                    //        case "":
-                                    //            break;
-                                    //        case "NA":
-                                    //            break;
-                                    //        case "Yes":
-                                    //            break;
-                                    //        case "No":
-                                    //            // btnCreateWorkorder.IsVisible = true;
-                                    //            break;
-
-                                    //    }
-                                    //}
-                                    //#endregion
                                 }
                                 Layout = grid;
                                 sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
@@ -578,26 +561,6 @@ namespace ProteusMMX.Views.Workorder
 
                                 Layout = new MyPicker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
 
-                                //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option1))
-                                //    (Layout as Picker).Items.Add(Miscellaneous.Option1);
-                                //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option2))
-                                //    (Layout as Picker).Items.Add(Miscellaneous.Option2);
-                                //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option3))
-                                //    (Layout as Picker).Items.Add(Miscellaneous.Option3);
-                                //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option4))
-                                //    (Layout as Picker).Items.Add(Miscellaneous.Option4);
-                                //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option5))
-                                //    (Layout as Picker).Items.Add(Miscellaneous.Option5);
-                                //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option6))
-                                //    (Layout as Picker).Items.Add(Miscellaneous.Option6);
-                                //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option7))
-                                //    (Layout as Picker).Items.Add(Miscellaneous.Option7);
-                                //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option8))
-                                //    (Layout as Picker).Items.Add(Miscellaneous.Option8);
-                                //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option9))
-                                //    (Layout as Picker).Items.Add(Miscellaneous.Option9);
-                                //if (!string.IsNullOrWhiteSpace(Miscellaneous.Option10))
-                                //    (Layout as Picker).Items.Add(Miscellaneous.Option10);
 
                                 var index = (Layout as MyPicker).Items.IndexOf(string.Empty);
                                 (Layout as MyPicker).SelectedIndex = index;
@@ -644,33 +607,9 @@ namespace ProteusMMX.Views.Workorder
 
                                 break;
                         }
-
-                        var btnsave = new Button() { CornerRadius = 5, StyleId = Miscellaneous.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Add"), WidthRequest = 300, HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
-                        btnsave.Clicked += Btnsave_Clicked;
-
-
-
-                        //#region Add Signature image
-                        //if (item.SignatureRequired.GetValueOrDefault())
-                        //{
-                        //    //var imageView = new CustomImage() { ImageBase64String = ImageBase64 };
-                        //    var imageView = new CustomImage() { ImageBase64String = item.SignatureString, HeightRequest = 150 };
-                        //    byte[] byteImg = Convert.FromBase64String(item.SignatureString);
-
-                        //    // byte[] byteImageCompr = DependencyService.Get<IResizeImage>().ResizeImageAndroid(byteImg, 350, 350);
-                        //    imageView.Source = ImageSource.FromStream(() => new MemoryStream(byteImg));
-                        //    layout2.Children.Add(imageView);
-
-                        //    var addSignatureButton = new Button() { Text = WebControlTitle.GetTargetNameByTitleName("AddSignature"), BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
-                        //    addSignatureButton.Clicked += AddSignatureButton_Clicked;
-                        //    layout2.Children.Add(addSignatureButton);
-
-                        //    var s = item.SignaturePath;
-                        //}
-                        //#endregion
-
-                        layout2.Children.Add(btnsave);
-
+                        var btnSave = new Button() { StyleId = Miscellaneous.InspectionID.ToString(), CornerRadius = 5, Text = WebControlTitle.GetTargetNameByTitleName("Add"), WidthRequest = 300, HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                        btnSave.Clicked += Btnsave_Clicked;
+                        layout2.Children.Add(btnSave);
                         #region Estimated Hour Region
                         if (Device.Idiom == TargetIdiom.Phone)
                         {
@@ -698,32 +637,17 @@ namespace ProteusMMX.Views.Workorder
                         #endregion
                         var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest = 2, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
                         mainLayoutGroupSingle.Children.Add(oneBox);
-
                         MainLayout.Children.Add(mainLayoutGroupSingle);
-
-                        // this.AnswerText.Append(System.Environment.NewLine);
-
-
                     }
-                }
 
+                }
                 else
                 {
+
+
+
+
                     List<WorkOrderInspectionData> commonSections = listInspection.Where(a => a.SectionName != "Miscellaneous Questions").ToList();
-                    //  List<WorkOrderInspectionData> commonSections = new List<WorkOrderInspectionData>();
-
-                    //foreach (var item1 in listInspection)
-                    //{
-                    //    if (item1.IsAdded == false)
-                    //    {
-                    //        if (item.SectionID == item1.SectionID)
-                    //        {
-                    //            commonSections.Add(item1);
-                    //            item1.IsAdded = true;
-                    //        }
-                    //    }
-                    //}
-
 
                     if (commonSections.Count == 0)
                     {
@@ -737,7 +661,6 @@ namespace ProteusMMX.Views.Workorder
                         Children = { }
 
                     };
-                    //var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest = 3, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
 
                     var mainLayoutGroup = new StackLayout
                     {
@@ -746,25 +669,9 @@ namespace ProteusMMX.Views.Workorder
                         Children = { layout1 }
 
                     };
-                    //mainLayoutGroup.Children.Add(oneBox);
-
-                    //var frame = new Frame
-                    //{
-                    //    Padding = new Thickness(10, 10, 10, 10),
-                    //    OutlineColor = Color.Accent,
-                    //    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    //    Content = mainLayoutGroup,
-                    //};
-
 
                     string sectionName = "" + item.SectionName;
                     layout1.Children.Add(new Label() { Text = sectionName, Font = Font.SystemFontOfSize(20, FontAttributes.Bold), HorizontalTextAlignment = TextAlignment.Center });
-
-                    //this.AnswerText.Append("Group Name: ");
-                    //this.AnswerText.Append(sectionName);
-                    //this.AnswerText.Append(System.Environment.NewLine);
-
-
 
                     foreach (var item1 in item.sectiondata)
                     {
@@ -798,7 +705,7 @@ namespace ProteusMMX.Views.Workorder
                                 gridPF.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                                 if (Device.Idiom == TargetIdiom.Phone)
                                 {
-                                    var btnTruePF = new Button() {CornerRadius=5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
+                                    var btnTruePF = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
                                     var btnFalsePF = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
                                     // btnTruePF.Clicked += BtnTrue_Clicked;
                                     // btnFalsePF.Clicked += BtnFalse_Clicked;
@@ -920,18 +827,9 @@ namespace ProteusMMX.Views.Workorder
                                 grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
                                 if (Device.Idiom == TargetIdiom.Phone)
                                 {
-                                    var btnTrue = new Button() {CornerRadius=5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
+                                    var btnTrue = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
                                     var btnFalse = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
                                     var btnNA = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
-                                    //Bind the ResponseSubType in Buttons
-                                    //btnTrue.BindingContext = item1.ResponseSubType;
-                                    //btnFalse.BindingContext = item1.ResponseSubType;
-                                    // btnNA.BindingContext = item1.ResponseSubType;
-
-                                    //TODO: Add the NA button over here
-                                    //btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
-                                    //btnFalse.Clicked += BtnNo_Clicked;
-                                    //btnNA.Clicked += BtnNA_Clicked;
 
                                     grid.Children.Add(btnTrue, 0, 0);
                                     grid.Children.Add(btnFalse, 1, 0);
@@ -958,60 +856,13 @@ namespace ProteusMMX.Views.Workorder
                                     }
 
 
-                                    //#region Negative response create workorder btnshow
-                                    //if (item1.ResponseSubType == null || item1.ResponseSubType == false)
-                                    //{
-                                    //    switch (item1.AnswerDescription)
-                                    //    {
-                                    //        case "":
-                                    //            break;
-                                    //        case "NA":
-                                    //            break;
-                                    //        case "Yes":
-                                    //            //   btnCreateWorkorder.IsVisible = true;
-                                    //            break;
-                                    //        case "No":
-                                    //            break;
 
-                                    //    }
-                                    //}
-                                    //else
-                                    //{
-                                    //    switch (item1.AnswerDescription)
-                                    //    {
-                                    //        case "":
-                                    //            break;
-                                    //        case "NA":
-                                    //            break;
-                                    //        case "Yes":
-                                    //            break;
-                                    //        case "No":
-                                    //            // btnCreateWorkorder.IsVisible = true;
-                                    //            break;
-
-                                    //    }
-                                    //}
-                                    //#endregion
                                 }
                                 else
                                 {
                                     var btnTrue = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
                                     var btnFalse = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
                                     var btnNA = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
-                                    //Bind the ResponseSubType in Buttons
-                                    // btnTrue.BindingContext = item1.ResponseSubType;
-                                    // btnFalse.BindingContext = item1.ResponseSubType;
-                                    // btnNA.BindingContext = item1.ResponseSubType;
-
-                                    //TODO: Add the NA button over here
-                                    // btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
-                                    // btnFalse.Clicked += BtnNo_Clicked;
-                                    // btnNA.Clicked += BtnNA_Clicked;
-
-                                    grid.Children.Add(btnTrue, 0, 0);
-                                    grid.Children.Add(btnFalse, 1, 0);
-                                    grid.Children.Add(btnNA, 2, 0);
-                                    //TODO: Add the NA button in grid
 
 
 
@@ -1033,40 +884,6 @@ namespace ProteusMMX.Views.Workorder
                                     }
 
 
-                                    //#region Negative response create workorder btnshow
-                                    //if (item1.ResponseSubType == null || item1.ResponseSubType == false)
-                                    //{
-                                    //    switch (item1.AnswerDescription)
-                                    //    {
-                                    //        case "":
-                                    //            break;
-                                    //        case "NA":
-                                    //            break;
-                                    //        case "Yes":
-                                    //            //  btnCreateWorkorder.IsVisible = true;
-                                    //            break;
-                                    //        case "No":
-                                    //            break;
-
-                                    //    }
-                                    //}
-                                    //else
-                                    //{
-                                    //    switch (item1.AnswerDescription)
-                                    //    {
-                                    //        case "":
-                                    //            break;
-                                    //        case "NA":
-                                    //            break;
-                                    //        case "Yes":
-                                    //            break;
-                                    //        case "No":
-                                    //            //  btnCreateWorkorder.IsVisible = true;
-                                    //            break;
-
-                                    //    }
-                                    //}
-                                    //#endregion
                                 }
                                 Layout = grid;
                                 sta = new Grid() { };
@@ -1164,27 +981,6 @@ namespace ProteusMMX.Views.Workorder
 
                                 Layout = new MyPicker() { WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center };
 
-                                //if (!string.IsNullOrWhiteSpace(item1.Option1))
-                                //    (Layout as Picker).Items.Add(item1.Option1);
-                                //if (!string.IsNullOrWhiteSpace(item1.Option2))
-                                //    (Layout as Picker).Items.Add(item1.Option2);
-                                //if (!string.IsNullOrWhiteSpace(item1.Option3))
-                                //    (Layout as Picker).Items.Add(item1.Option3);
-                                //if (!string.IsNullOrWhiteSpace(item1.Option4))
-                                //    (Layout as Picker).Items.Add(item1.Option4);
-                                //if (!string.IsNullOrWhiteSpace(item1.Option5))
-                                //    (Layout as Picker).Items.Add(item1.Option5);
-                                //if (!string.IsNullOrWhiteSpace(item1.Option6))
-                                //    (Layout as Picker).Items.Add(item1.Option6);
-                                //if (!string.IsNullOrWhiteSpace(item1.Option7))
-                                //    (Layout as Picker).Items.Add(item1.Option7);
-                                //if (!string.IsNullOrWhiteSpace(item1.Option8))
-                                //    (Layout as Picker).Items.Add(item1.Option8);
-                                //if (!string.IsNullOrWhiteSpace(item1.Option9))
-                                //    (Layout as Picker).Items.Add(item1.Option9);
-                                //if (!string.IsNullOrWhiteSpace(item1.Option10))
-                                //    (Layout as Picker).Items.Add(item1.Option10);
-
 
                                 var index = (Layout as MyPicker).Items.IndexOf(string.Empty);
                                 (Layout as MyPicker).SelectedIndex = index;
@@ -1230,15 +1026,8 @@ namespace ProteusMMX.Views.Workorder
 
                     }
 
-                    var btnSaveSection = new Button() {CornerRadius=5, Text = WebControlTitle.GetTargetNameByTitleName("Add"), WidthRequest = 300, HorizontalOptions = LayoutOptions.Center , CommandParameter = commonSections, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnSaveSection = new Button() { CornerRadius = 5, Text = WebControlTitle.GetTargetNameByTitleName("Add"), WidthRequest = 300, HorizontalOptions = LayoutOptions.Center, CommandParameter = commonSections, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnSaveSection.Clicked += BtnSaveSection_Clicked;
-
-
-
-
-
-
-
                     layout1.Children.Add(btnSaveSection);
 
                     #region Estimated Hour Region
@@ -1265,17 +1054,25 @@ namespace ProteusMMX.Views.Workorder
                     }
                     #endregion
                     var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest = 2, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
-
                     mainLayoutGroup.Children.Add(oneBox);
+                    MainLayoutGroup.Children.Add(mainLayoutGroup);
 
-                    MainLayout.Children.Add(mainLayoutGroup);
 
-                    //this.AnswerText.Append(System.Environment.NewLine);
-                    //this.AnswerText.Append(System.Environment.NewLine);
 
                 }
 
             }
+            expander.Content = MainLayout;
+            expander1.Content = MainLayoutGroup;
+            stack.Children.Add(expander);
+            stack.Children.Add(expander1);
+            scrollView.Content = stack;
+            this.Content = scrollView;
+
+
+
+
+
         }
 
 
