@@ -25,12 +25,7 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <!--<Grid Padding="20" x:Name="grid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="*" />
-                -->
+       
         <!--<RowDefinition Height="100" />-->
         <!--
             </Grid.RowDefinitions>
