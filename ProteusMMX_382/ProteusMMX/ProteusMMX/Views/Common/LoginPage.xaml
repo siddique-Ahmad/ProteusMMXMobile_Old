@@ -21,21 +21,23 @@
 
     <ContentPage.Content>
         <Grid>
-            <Image Source="LoginPageBackgroundImage.png" Aspect="AspectFill">
+            <Image Grid.Column="0" Grid.Row="0" Source="BackgroundImage.jpg" Aspect="AspectFill">
                 <Image.Source>
                     <OnPlatform x:TypeArguments="FileImageSource">
                         <OnPlatform.iOS>
-                            <FileImageSource File="LoginPageBackgroundImage.png"/>
+                            <FileImageSource File="BackgroundImage.jpg"/>
                         </OnPlatform.iOS>
                         <OnPlatform.Android>
-                            <FileImageSource File="LoginPageBackgroundImage.png"/>
+                            <FileImageSource File="BackgroundImage.jpg" />
                         </OnPlatform.Android>
                         <OnPlatform.WinPhone>
-                            <FileImageSource File="Assets/LoginPageBackgroundImage.png"/>
+                            <FileImageSource File="Assets/BackgroundImage.jpg"/>
                         </OnPlatform.WinPhone>
                     </OnPlatform>
                 </Image.Source>
             </Image>
+
+          
             <StackLayout>
         <ScrollView>
             <Grid>
@@ -145,7 +147,7 @@
 
 
                                 <!--<androidWidget1:Switch  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="StartAndExpand"/>-->
-                                <Button Grid.Row="9" Text="{Binding LoginButtonLabel}" Style="{StaticResource LoginButtonStyle}" BorderColor="LightGray"  Command="{Binding LoginCommand}" Grid.ColumnSpan="2" />
+                                    <Button Grid.Row="9" Text="{Binding LoginButtonLabel}" Style="{StaticResource LoginButtonStyle}" BorderColor="LightGray" ContentLayout="Left,5" Image="Button.png" Command="{Binding LoginCommand}" Grid.ColumnSpan="2" />
 
                                 <Label IsVisible="{Binding CopyrightLabelVisibility}" Grid.Row="10" Text="{Binding CopyrightLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
                                 <Label IsVisible="{Binding SupportLabelVisibility}" Grid.Row="11" Text="{Binding SupportLabel}" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" FontSize="Micro" Grid.ColumnSpan="2" />
