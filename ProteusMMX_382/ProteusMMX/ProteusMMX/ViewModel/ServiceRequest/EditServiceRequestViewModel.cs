@@ -7390,7 +7390,15 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         }
                     }
                 }
-                AdditionalDetailsText = serviceRequest.AdditionalDetails;
+                if(!string.IsNullOrWhiteSpace(serviceRequest.AdditionalDetails))
+                {
+                    AdditionalDetailsText = RemoveHTML.StripHTML(serviceRequest.AdditionalDetails);
+                }
+                else
+                {
+                    AdditionalDetailsText = serviceRequest.AdditionalDetails;
+                }
+               
                 /// Set Targets and Other
                 /// 
                 if (!string.IsNullOrEmpty(serviceRequest.FacilityName))
