@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.proteusMMX.MM" android:installLocation="auto" android:versionName="Release 3.8.2" android:versionCode="5">
-	<uses-sdk android:minSdkVersion="10" android:targetSdkVersion="28" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.proteusMMX.MMD" android:installLocation="auto" android:versionName="3.13" android:versionCode="16">
+	<uses-sdk android:minSdkVersion="10" android:targetSdkVersion="29" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.FLASHLIGHT" />
@@ -8,11 +8,12 @@
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 	<application android:label="ProteusMMX" android:largeHeap="true" android:icon="@drawable/icon">
 		<!--<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.proteusMMX.MMS.fileprovider" android:exported="false" android:grantUriPermissions="true">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
 		</provider>-->
-		<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.proteusMMX.MM.fileprovider" android:exported="false" android:grantUriPermissions="true">
+		<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.proteusMMX.MMD.fileprovider" android:exported="false" android:grantUriPermissions="true">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
 		</provider>
 	</application>

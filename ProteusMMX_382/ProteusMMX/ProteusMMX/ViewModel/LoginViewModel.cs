@@ -22,6 +22,10 @@ using Microsoft.AppCenter.Crashes;
 using ProteusMMX.Helpers.Attachment;
 using System.IO;
 using ProteusMMX.DependencyInterface;
+using Windows.UI.ViewManagement;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
+using ProteusMMX.Crypto;
 
 namespace ProteusMMX.ViewModel
 {
@@ -455,8 +459,6 @@ namespace ProteusMMX.ViewModel
             {
 
 
-              
-
                 if (navigationData != null)
                 {
 
@@ -717,7 +719,7 @@ namespace ProteusMMX.ViewModel
 
                 AppSettings.BaseURL = SiteUrl;
                 AppSettings.APIVersion = apiVersion.APIVersion;
-
+              
                 var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName,Password);
                 if (user == null || user.mmxUser == null || Convert.ToBoolean(user.servicestatus) == false)
                 {
@@ -847,7 +849,7 @@ namespace ProteusMMX.ViewModel
 
         }
       
-    public async Task GetWorkorderModuleRights()
+         public async Task GetWorkorderModuleRights()
         {
             FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(AppSettings.User.UserID.ToString(), AppSettings.WorkorderModuleName);
             if (FormControlsAndRights != null && FormControlsAndRights.lstModules != null && FormControlsAndRights.lstModules.Count > 0)
@@ -1087,7 +1089,7 @@ namespace ProteusMMX.ViewModel
                                     Application.Current.Properties["DistributeCost"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression;
                                     
                                 }
-                                catch (Exception)
+                                catch (Exception ex)
                                 {
 
                                   
@@ -1113,29 +1115,26 @@ namespace ProteusMMX.ViewModel
                             if (WorkOrderTaskSubModule.listControls != null && WorkOrderTaskSubModule.listControls.Count > 0)
                             {
 
-
-                                Application.Current.Properties["TaskandLabourTabKey"] = WorkOrderTaskModule.Expression;
-                                Application.Current.Properties["CreateTask"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
                                 try
                                 {
+                                    Application.Current.Properties["TaskandLabourTabKey"] = WorkOrderTaskModule.Expression;
+                                    Application.Current.Properties["CreateTask"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
                                     Application.Current.Properties["LabourEstimatedHours"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "EstimatedHours").Expression;
+                                    Application.Current.Properties["WOLabourTime"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkOrderLaborTime").Expression;
+                                    Application.Current.Properties["TaskTabDetails"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "TaskID").Expression;
+                                    Application.Current.Properties["HourAtRate1"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "HoursAtRate1").Expression;
+                                    Application.Current.Properties["EmployeeTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "EmployeeLaborCraftID").Expression;
+                                    Application.Current.Properties["ContractorTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "ContractorLaborCraftID").Expression;
+                                    Application.Current.Properties["StartdateTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "StartDate").Expression;
+                                    Application.Current.Properties["CompletionDateTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression;
+
                                 }
                                 catch (Exception ex)
                                 {
 
-
+                                   
                                 }
-                               
-                                Application.Current.Properties["WOLabourTime"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkOrderLaborTime").Expression;
-
-
-                                Application.Current.Properties["TaskTabDetails"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "TaskID").Expression;
-                                Application.Current.Properties["HourAtRate1"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "HoursAtRate1").Expression;
-                                Application.Current.Properties["EmployeeTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "EmployeeLaborCraftID").Expression;
-                                Application.Current.Properties["ContractorTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "ContractorLaborCraftID").Expression;
-                                Application.Current.Properties["StartdateTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "StartDate").Expression;
-                                Application.Current.Properties["CompletionDateTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression;
-
+                                
 
 
                             }
@@ -1184,10 +1183,18 @@ namespace ProteusMMX.ViewModel
                         if (WorkOrderToolsSubModule.listControls != null && WorkOrderToolsSubModule.listControls.Count > 0)
                         {
 
+                            try
+                            {
+                                Application.Current.Properties["CreateTool"] = WorkOrderToolsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                Application.Current.Properties["DeleteTool"] = WorkOrderToolsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
 
-                            Application.Current.Properties["CreateTool"] = WorkOrderToolsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
-                            Application.Current.Properties["DeleteTool"] = WorkOrderToolsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+                            }
+                            catch (Exception ex)
+                            {
 
+                               
+                            }
+                           
                         }
                     }
                 }
@@ -1202,11 +1209,19 @@ namespace ProteusMMX.ViewModel
                         if (WorkOrderPartsSubModule.listControls != null && WorkOrderPartsSubModule.listControls.Count > 0)
                         {
 
+                            try
+                            {
+                                Application.Current.Properties["AddParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                Application.Current.Properties["EditParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+                                Application.Current.Properties["RemoveParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
 
-                            Application.Current.Properties["AddParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
-                            Application.Current.Properties["EditParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
-                            Application.Current.Properties["RemoveParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+                            }
+                            catch (Exception ex)
+                            {
 
+                              
+                            }
+                           
                         }
                     }
                 }
@@ -1220,11 +1235,19 @@ namespace ProteusMMX.ViewModel
                         var WorkOrderAttachmentSubModule = WorkOrderAttachmentModule.lstSubModules[0];
                         if (WorkOrderAttachmentSubModule.listControls != null && WorkOrderAttachmentSubModule.listControls.Count > 0)
                         {
+                            try
+                            {
+                                Application.Current.Properties["CreateAttachment"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                Application.Current.Properties["DeleteAttachments"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
 
+                            }
+                            catch (Exception ex)
+                            {
 
-                            Application.Current.Properties["CreateAttachment"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
-                            Application.Current.Properties["DeleteAttachments"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+                              
+                            }
 
+                           
                         }
                     }
                 }
@@ -1239,160 +1262,209 @@ namespace ProteusMMX.ViewModel
 
         public async Task GetServiceRequestControlRights()
         {
-
-            ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "Details");
-            ServiceOutput FormControlsAndRightsForButton = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "ServiceRequest");
-            ServiceOutput FormControlsAndRightsForOperatorTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "OperatorTag");
-            ServiceOutput FormControlsAndRightsForMaintenanceTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "MaintenanceTag");
-            ServiceOutput FormControlsAndRightsForSHETag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "SHETag");
-
-            if (FormControlsAndRightsForButton != null && FormControlsAndRightsForButton.lstModules != null && FormControlsAndRightsForButton.lstModules.Count > 0)
+            try
             {
-                var ServiceRequestModule = FormControlsAndRightsForButton.lstModules[0];
-                if (ServiceRequestModule.ModuleName == "ServiceRequests") //ModuleName can't be  changed in service 
+                ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "Details");
+                ServiceOutput FormControlsAndRightsForButton = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "ServiceRequest");
+                ServiceOutput FormControlsAndRightsForOperatorTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "OperatorTag");
+                ServiceOutput FormControlsAndRightsForMaintenanceTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "MaintenanceTag");
+                ServiceOutput FormControlsAndRightsForSHETag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "SHETag");
+
+                if (FormControlsAndRightsForButton != null && FormControlsAndRightsForButton.lstModules != null && FormControlsAndRightsForButton.lstModules.Count > 0)
                 {
-                    if (ServiceRequestModule.lstSubModules != null && ServiceRequestModule.lstSubModules.Count > 0)
+                    var ServiceRequestModule = FormControlsAndRightsForButton.lstModules[0];
+                    if (ServiceRequestModule.ModuleName == "ServiceRequests") //ModuleName can't be  changed in service 
                     {
-                        var ServiceRequestSubModule = ServiceRequestModule.lstSubModules[0];
-                        if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                        if (ServiceRequestModule.lstSubModules != null && ServiceRequestModule.lstSubModules.Count > 0)
                         {
+                            var ServiceRequestSubModule = ServiceRequestModule.lstSubModules[0];
+                            if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                            {
+
+                                try
+                                {
+                                    Application.Current.Properties["AcceptKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Accept").Expression;
+                                    Application.Current.Properties["DEclineKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Decline").Expression;
+                                    Application.Current.Properties["CreateServiceRequestKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
+                                    Application.Current.Properties["EditServiceRequestKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
 
 
 
-                            Application.Current.Properties["AcceptKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Accept").Expression;
-                            Application.Current.Properties["DEclineKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Decline").Expression;
-                            Application.Current.Properties["CreateServiceRequestKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
-                            Application.Current.Properties["EditServiceRequestKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
 
 
+                            }
 
 
 
                         }
+                    }
+                    var ServiceRequestModuleAttachment = FormControlsAndRightsForButton.lstModules[2];
+                    if (ServiceRequestModuleAttachment.ModuleName == "Attachments") //ModuleName can't be  changed in service 
+                    {
+                        if (ServiceRequestModuleAttachment.lstSubModules != null && ServiceRequestModuleAttachment.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModule = ServiceRequestModuleAttachment.lstSubModules[0];
+                            if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                            {
+                                try
+                                {
+                                    Application.Current.Properties["CreateSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                    Application.Current.Properties["RemoveSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+                                    Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestModuleAttachment.Expression;
+                                }
+                                catch (Exception ex)
+                                {
 
 
+                                }
 
+                            }
+                        }
                     }
                 }
-                var ServiceRequestModuleAttachment = FormControlsAndRightsForButton.lstModules[2];
-                if (ServiceRequestModuleAttachment.ModuleName == "Attachments") //ModuleName can't be  changed in service 
+
+                if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
                 {
-                    if (ServiceRequestModuleAttachment.lstSubModules != null && ServiceRequestModuleAttachment.lstSubModules.Count > 0)
+                    var ServiceRequestModule = FormControlsAndRightsForDetails.lstModules[0];
+                    if (ServiceRequestModule.ModuleName == "Details") //ModuleName can't be  changed in service 
                     {
-                        var ServiceRequestSubModule = ServiceRequestModuleAttachment.lstSubModules[0];
-                        if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                        if (ServiceRequestModule.lstSubModules != null && ServiceRequestModule.lstSubModules.Count > 0)
                         {
-                            Application.Current.Properties["CreateSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
-                            Application.Current.Properties["RemoveSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
-                            Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestModuleAttachment.Expression;
+                            var ServiceRequestSubModule = ServiceRequestModule.lstSubModules[0];
+                            if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                            {
+
+
+                                try
+                                {
+                                    Application.Current.Properties["PriorityTabKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
+                                    Application.Current.Properties["ServiceRequestAdditionalDetailsKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
+                                    Application.Current.Properties["ServiceRequestDetailsControls"] = ServiceRequestSubModule;
+                                    Application.Current.Properties["ServiceRequestTarget"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression; ;
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+                            }
+
+
+
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForSHETag != null && FormControlsAndRightsForSHETag.lstModules != null && FormControlsAndRightsForSHETag.lstModules.Count > 0)
+                {
+                    var ServiceRequestModuleSHETAg = FormControlsAndRightsForSHETag.lstModules[0];
+                    if (ServiceRequestModuleSHETAg.ModuleName == "SHETagDetail") //ModuleName can't be  changed in service 
+                    {
+                        if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                            if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                            {
+
+
+                                try
+                                {
+                                    Application.Current.Properties["SHETagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+                            }
+
+
+
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForMaintenanceTag != null && FormControlsAndRightsForMaintenanceTag.lstModules != null && FormControlsAndRightsForMaintenanceTag.lstModules.Count > 0)
+                {
+                    var ServiceRequestModuleSHETAg = FormControlsAndRightsForMaintenanceTag.lstModules[0];
+                    if (ServiceRequestModuleSHETAg.ModuleName == "MaintenanceTagDetail") //ModuleName can't be  changed in service 
+                    {
+                        if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                            if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                            {
+
+
+                                try
+                                {
+                                    Application.Current.Properties["MaintenanceTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+                            }
+
+
+
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForOperatorTag != null && FormControlsAndRightsForOperatorTag.lstModules != null && FormControlsAndRightsForOperatorTag.lstModules.Count > 0)
+                {
+                    var ServiceRequestModuleSHETAg = FormControlsAndRightsForOperatorTag.lstModules[0];
+                    if (ServiceRequestModuleSHETAg.ModuleName == "OperatorTagDetail") //ModuleName can't be  changed in service 
+                    {
+                        if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                            if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                            {
+
+                                try
+                                {
+                                    Application.Current.Properties["OperatorTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+
+                            }
+
+
+
                         }
                     }
                 }
             }
-
-            if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
+            catch (Exception ex)
             {
-                var ServiceRequestModule = FormControlsAndRightsForDetails.lstModules[0];
-                if (ServiceRequestModule.ModuleName == "Details") //ModuleName can't be  changed in service 
-                {
-                    if (ServiceRequestModule.lstSubModules != null && ServiceRequestModule.lstSubModules.Count > 0)
-                    {
-                        var ServiceRequestSubModule = ServiceRequestModule.lstSubModules[0];
-                        if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
-                        {
 
-
-
-                            Application.Current.Properties["PriorityTabKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
-                            Application.Current.Properties["ServiceRequestAdditionalDetailsKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
-                            Application.Current.Properties["ServiceRequestDetailsControls"] = ServiceRequestSubModule;
-                            Application.Current.Properties["ServiceRequestTarget"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression; ;
-                        }
-
-
-
-                    }
-                }
+               
             }
-
-            if (FormControlsAndRightsForSHETag != null && FormControlsAndRightsForSHETag.lstModules != null && FormControlsAndRightsForSHETag.lstModules.Count > 0)
-            {
-                var ServiceRequestModuleSHETAg = FormControlsAndRightsForSHETag.lstModules[0];
-                if (ServiceRequestModuleSHETAg.ModuleName == "SHETagDetail") //ModuleName can't be  changed in service 
-                {
-                    if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
-                    {
-                        var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
-                        if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
-                        {
-
-
-
-                            Application.Current.Properties["SHETagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
-
-                        }
-
-
-
-                    }
-                }
-            }
-
-            if (FormControlsAndRightsForMaintenanceTag != null && FormControlsAndRightsForMaintenanceTag.lstModules != null && FormControlsAndRightsForMaintenanceTag.lstModules.Count > 0)
-            {
-                var ServiceRequestModuleSHETAg = FormControlsAndRightsForMaintenanceTag.lstModules[0];
-                if (ServiceRequestModuleSHETAg.ModuleName == "MaintenanceTagDetail") //ModuleName can't be  changed in service 
-                {
-                    if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
-                    {
-                        var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
-                        if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
-                        {
-
-
-
-                            Application.Current.Properties["MaintenanceTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
-
-                        }
-
-
-
-                    }
-                }
-            }
-
-            if (FormControlsAndRightsForOperatorTag != null && FormControlsAndRightsForOperatorTag.lstModules != null && FormControlsAndRightsForOperatorTag.lstModules.Count > 0)
-            {
-                var ServiceRequestModuleSHETAg = FormControlsAndRightsForOperatorTag.lstModules[0];
-                if (ServiceRequestModuleSHETAg.ModuleName == "OperatorTagDetail") //ModuleName can't be  changed in service 
-                {
-                    if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
-                    {
-                        var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
-                        if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
-                        {
-
-
-
-                            Application.Current.Properties["OperatorTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
-
-                        }
-
-
-
-                    }
-                }
-            }
+            
         }
-
-
-
-
-
-
-
-
-
 
         public async Task GetAssetControlRights()
         {
@@ -1410,9 +1482,18 @@ namespace ProteusMMX.ViewModel
                         var AssetSubModule = AssetModule.lstSubModules[0];
                         if (AssetSubModule.listControls != null && AssetSubModule.listControls.Count > 0)
                         {
-                            Application.Current.Properties["CreateAssetKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
-                            Application.Current.Properties["EditAssetKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
-                            Application.Current.Properties["IssueWorkorderKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "IssueWorkOrder").Expression;
+                            try
+                            {
+                                Application.Current.Properties["CreateAssetKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
+                                Application.Current.Properties["EditAssetKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+                                Application.Current.Properties["IssueWorkorderKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "IssueWorkOrder").Expression;
+
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
 
 
 
@@ -1435,11 +1516,20 @@ namespace ProteusMMX.ViewModel
                         var AssetSubModule = AssetModule.lstSubModules[0];
                         if (AssetSubModule.listControls != null && AssetSubModule.listControls.Count > 0)
                         {
-                            Application.Current.Properties["DescriptionTabKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
-                            Application.Current.Properties["AssetAdditionalDetailsTabKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
-                            Application.Current.Properties["AssetLocationDetailsTabKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "Location").Expression;
-                           // Application.Current.Properties["AssetDetailsTabKey"] = AssetSubModule;    
-                            Application.Current.Properties["AssetsDetailsControls"] = AssetSubModule;
+                            try
+                            {
+                                Application.Current.Properties["DescriptionTabKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
+                                Application.Current.Properties["AssetAdditionalDetailsTabKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
+                                Application.Current.Properties["AssetLocationDetailsTabKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "Location").Expression;
+                                // Application.Current.Properties["AssetDetailsTabKey"] = AssetSubModule;    
+                                Application.Current.Properties["AssetsDetailsControls"] = AssetSubModule;
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
+
 
 
                         }
@@ -1468,11 +1558,20 @@ namespace ProteusMMX.ViewModel
                         var POSubModule = POModule.lstSubModules[0];
                         if (POSubModule.listControls != null && POSubModule.listControls.Count > 0)
                         {
-                            Application.Current.Properties["NonStockroomParts"] = POSubModule.listControls.FirstOrDefault(i => i.ControlName == "NonStockroomParts").Expression;
-                            Application.Current.Properties["Parts"] = POSubModule.listControls.FirstOrDefault(i => i.ControlName == "Parts").Expression;
-                            Application.Current.Properties["Assets"] = POSubModule.listControls.FirstOrDefault(i => i.ControlName == "Assets").Expression;
+                            try
+                            {
+                                Application.Current.Properties["NonStockroomParts"] = POSubModule.listControls.FirstOrDefault(i => i.ControlName == "NonStockroomParts").Expression;
+                                Application.Current.Properties["Parts"] = POSubModule.listControls.FirstOrDefault(i => i.ControlName == "Parts").Expression;
+                                Application.Current.Properties["Assets"] = POSubModule.listControls.FirstOrDefault(i => i.ControlName == "Assets").Expression;
 
-                            
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
+
+
 
                         }
 
@@ -1505,16 +1604,24 @@ namespace ProteusMMX.ViewModel
                                 var PurchaseOrderDialog = PurchaseOrderSubModule.listDialoges.FirstOrDefault(i => i.DialogName == "Receiving");
                                 if (PurchaseOrderDialog != null && PurchaseOrderDialog.listTab != null && PurchaseOrderDialog.listTab.Count > 0)
                                 {
-                                    var PONonStockPartsTab = PurchaseOrderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "NonStockroomParts");
-                                    var POAssetsTab = PurchaseOrderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Assets");
-                                    var POPartsTab = PurchaseOrderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Parts");
-                                    var POPartsRecieveButton = POPartsTab.ButtonControls.FirstOrDefault(i => i.Name == "ReceiveParts");
-                                    var PONonStockPartsRecieveButton = PONonStockPartsTab.ButtonControls.FirstOrDefault(i => i.Name == "ReceiveNonStockroomParts");
-                                    var POAssetsRecieveButton = POAssetsTab.ButtonControls.FirstOrDefault(i => i.Name == "ReceiveAssets");
+                                    try
+                                    {
+                                        var PONonStockPartsTab = PurchaseOrderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "NonStockroomParts");
+                                        var POAssetsTab = PurchaseOrderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Assets");
+                                        var POPartsTab = PurchaseOrderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Parts");
+                                        var POPartsRecieveButton = POPartsTab.ButtonControls.FirstOrDefault(i => i.Name == "ReceiveParts");
+                                        var PONonStockPartsRecieveButton = PONonStockPartsTab.ButtonControls.FirstOrDefault(i => i.Name == "ReceiveNonStockroomParts");
+                                        var POAssetsRecieveButton = POAssetsTab.ButtonControls.FirstOrDefault(i => i.Name == "ReceiveAssets");
 
-                                    Application.Current.Properties["ReceiveParts"] = POPartsRecieveButton.Expression;
-                                    Application.Current.Properties["ReceiveNonStockroomParts"] = PONonStockPartsRecieveButton.Expression;
-                                    Application.Current.Properties["ReceiveAssets"] = POAssetsRecieveButton.Expression;
+                                        Application.Current.Properties["ReceiveParts"] = POPartsRecieveButton.Expression;
+                                        Application.Current.Properties["ReceiveNonStockroomParts"] = PONonStockPartsRecieveButton.Expression;
+                                        Application.Current.Properties["ReceiveAssets"] = POAssetsRecieveButton.Expression;
+                                    }
+                                    catch (Exception ex)
+                                    {
+
+
+                                    }
 
                                 }
                             }
@@ -1542,27 +1649,36 @@ namespace ProteusMMX.ViewModel
                         var StockroomPartsSubModule = StockroomParts.lstSubModules[0];
                         if (StockroomPartsSubModule.listControls != null && StockroomPartsSubModule.listControls.Count > 0)
                         {
-                            Application.Current.Properties["StockroomPartsVisibilityKey"] = StockroomParts.Expression;
-                            Application.Current.Properties["StockroomTransactionDialog"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "StockroomTransactionDialog").Expression;
-                            Application.Current.Properties["ShelfBinKey"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "ShelfBin").Expression;
+                            try
+                            {
+                                Application.Current.Properties["StockroomPartsVisibilityKey"] = StockroomParts.Expression;
+                                Application.Current.Properties["StockroomTransactionDialog"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "StockroomTransactionDialog").Expression;
+                                Application.Current.Properties["ShelfBinKey"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "ShelfBin").Expression;
 
-                            Application.Current.Properties["InventoryPerformTransaction"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "PerformTransaction").Expression;
-                            Application.Current.Properties["UpdateLastPhysicalInventorydate"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UpdateLastPhysicalInventorydate").Expression;
-                            Application.Current.Properties["InventoryUserField1"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField1").Expression;
-                            Application.Current.Properties["InventoryUserField2"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField2").Expression;
-                            Application.Current.Properties["InventoryUserField3"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField3").Expression;
-                            Application.Current.Properties["InventoryUserField4"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField4").Expression;
-                            Application.Current.Properties["InventoryPartNumber"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "PartNumber").Expression;
-                            Application.Current.Properties["InventoryPartName"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "PartName").Expression;
-                            Application.Current.Properties["InventoryQuantityOnHand"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "QuantityOnHand").Expression;
-                            Application.Current.Properties["InventoryCostCenterName"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "CostCenterName").Expression;
-                            Application.Current.Properties["InventoryDescription"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
-                            Application.Current.Properties["InventoryTransactionReasonName"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "TransactionReasonName").Expression;
-                            Application.Current.Properties["InventoryTransactor"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Transactor").Expression;
-                            Application.Current.Properties["InventoryUnitCostID"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UnitCostID").Expression;
-                            Application.Current.Properties["InventoryCheckOutTo"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "CheckOutTo").Expression;
-                            Application.Current.Properties["InventoryTransactionType"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "TransactionType").Expression;
-                            Application.Current.Properties["InventoryTransactionQuantity"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "TransactionQuantity").Expression;
+                                Application.Current.Properties["InventoryPerformTransaction"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "PerformTransaction").Expression;
+                                Application.Current.Properties["UpdateLastPhysicalInventorydate"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UpdateLastPhysicalInventorydate").Expression;
+                                Application.Current.Properties["InventoryUserField1"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField1").Expression;
+                                Application.Current.Properties["InventoryUserField2"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField2").Expression;
+                                Application.Current.Properties["InventoryUserField3"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField3").Expression;
+                                Application.Current.Properties["InventoryUserField4"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField4").Expression;
+                                Application.Current.Properties["InventoryPartNumber"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "PartNumber").Expression;
+                                Application.Current.Properties["InventoryPartName"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "PartName").Expression;
+                                Application.Current.Properties["InventoryQuantityOnHand"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "QuantityOnHand").Expression;
+                                Application.Current.Properties["InventoryCostCenterName"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "CostCenterName").Expression;
+                                Application.Current.Properties["InventoryDescription"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
+                                Application.Current.Properties["InventoryTransactionReasonName"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "TransactionReasonName").Expression;
+                                Application.Current.Properties["InventoryTransactor"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Transactor").Expression;
+                                Application.Current.Properties["InventoryUnitCostID"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UnitCostID").Expression;
+                                Application.Current.Properties["InventoryCheckOutTo"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "CheckOutTo").Expression;
+                                Application.Current.Properties["InventoryTransactionType"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "TransactionType").Expression;
+                                Application.Current.Properties["InventoryTransactionQuantity"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "TransactionQuantity").Expression;
+
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
 
 
                         }
@@ -1579,13 +1695,21 @@ namespace ProteusMMX.ViewModel
                 {
                     if (ClosedWorkorderModule.lstSubModules != null && ClosedWorkorderModule.lstSubModules.Count > 0)
                     {
-                        var ClosedWorkorderSubModule = ClosedWorkorderModule.lstSubModules[0];
-                        if (ClosedWorkorderSubModule.listControls != null && ClosedWorkorderSubModule.listControls.Count > 0)
+                        try
                         {
-                            Application.Current.Properties["ClosedWorkorderCauseTabKey"] = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes").Expression;
-                            Application.Current.Properties["ClosedWorkorderAdditionalDetailsTabKey"] = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
+                            var ClosedWorkorderSubModule = ClosedWorkorderModule.lstSubModules[0];
+                            if (ClosedWorkorderSubModule.listControls != null && ClosedWorkorderSubModule.listControls.Count > 0)
+                            {
+                                Application.Current.Properties["ClosedWorkorderCauseTabKey"] = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes").Expression;
+                                Application.Current.Properties["ClosedWorkorderAdditionalDetailsTabKey"] = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
 
-                            Application.Current.Properties["ClosedWorkorderInternalNotesKey"] = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "InternalNote").Expression;
+                                Application.Current.Properties["ClosedWorkorderInternalNotesKey"] = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "InternalNote").Expression;
+
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+
 
                         }
 
