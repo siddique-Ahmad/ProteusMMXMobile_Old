@@ -6716,9 +6716,16 @@ namespace ProteusMMX.ViewModel.Asset
 
                 var asset = AssetWrapper.assetWrapper.asset;
 
-                
 
-                AdditionalDetailsText = asset.AdditionalDetails;
+                if (!string.IsNullOrWhiteSpace(asset.AdditionalDetails))
+                {
+                    AdditionalDetailsText = RemoveHTML.StripHTML(asset.AdditionalDetails);
+                }
+                else
+                {
+                    AdditionalDetailsText = asset.AdditionalDetails;
+                }
+               
                 Description = asset.Description;
                 if (!string.IsNullOrEmpty(asset.AssetName))
                 {

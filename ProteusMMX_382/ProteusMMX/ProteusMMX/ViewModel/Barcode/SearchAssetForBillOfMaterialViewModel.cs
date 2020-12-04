@@ -704,7 +704,7 @@ namespace ProteusMMX.ViewModel.Barcode
             PartSize = WebControlTitle.GetTargetNameByTitleName("PartSize");
             Description = WebControlTitle.GetTargetNameByTitleName("Description");
             SerialNumber = WebControlTitle.GetTargetNameByTitleName("SerialNumber");
-            SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("AssetNumber");
+            SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchorScanByAssetNumberNameTag");
             GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
             ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
             SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");

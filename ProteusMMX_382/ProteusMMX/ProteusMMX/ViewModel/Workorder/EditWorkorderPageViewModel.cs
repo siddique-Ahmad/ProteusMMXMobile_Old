@@ -11436,12 +11436,12 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     if (Device.Idiom == TargetIdiom.Phone)
                     {
-                        this.AdditionalDetailsTextForMobile = workorder.AdditionalDetails;
-                        this.AdditionalDetailsText = ShortString.shortenMobile(workorder.AdditionalDetails);
+                        this.AdditionalDetailsTextForMobile = RemoveHTML.StripHTML(workorder.AdditionalDetails);
+                        this.AdditionalDetailsText = RemoveHTML.StripHTML(ShortString.shortenMobile(workorder.AdditionalDetails));
                     }
                     else
                     {
-                        this.AdditionalDetailsText = workorder.AdditionalDetails;
+                        this.AdditionalDetailsText = RemoveHTML.StripHTML(workorder.AdditionalDetails);
                     }
 
                 }
