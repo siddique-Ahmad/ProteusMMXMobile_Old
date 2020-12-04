@@ -17,7 +17,7 @@ using Microsoft.AppCenter.Crashes;
 
 namespace ProteusMMX.Droid
 {
-    [Activity(Label = "ProteusMMX", Icon = "@drawable/icon", Theme = "@style/MainTheme", ScreenOrientation = ScreenOrientation.Portrait)]
+    [Activity(Label = "ProteusMMX", Icon = "@drawable/icon", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.User)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
