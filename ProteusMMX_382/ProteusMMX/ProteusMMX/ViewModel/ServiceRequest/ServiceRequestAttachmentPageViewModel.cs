@@ -1357,6 +1357,27 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                                         }
                                     }
+                                    else if (Device.RuntimePlatform == Device.Android)
+                                    {
+                                        byte[] imgUser = StreamToBase64.StringToByte(file.attachmentFile);
+                                        MemoryStream stream = new MemoryStream(imgUser);
+                                        bool isimage = Extension.IsImage(stream);
+                                        if (isimage == true)
+                                        {
+
+                                            Attachments.Add(new ServicerequestAttachment
+                                            {
+                                                IsSynced = true,
+                                                attachmentFileExtension = file.attachmentFileExtension,
+                                                //ImageBytes = imgUser, //byteImage,
+                                                ServiceRequestAttachmentID = file.ServiceRequestAttachmentID,
+                                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser)))),
+
+                                            }
+                                            );
+
+                                        }
+                                    }
                                     else
                                     {
 
