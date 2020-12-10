@@ -840,6 +840,27 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
                                         }
                                     }
+                                    else if (Device.RuntimePlatform == Device.Android)
+                                    {
+                                        byte[] imgUser = StreamToBase64.StringToByte(file.attachmentFile);
+                                        MemoryStream stream = new MemoryStream(imgUser);
+                                        bool isimage = Extension.IsImage(stream);
+                                        if (isimage == true)
+                                        {
+
+                                            Attachments.Add(new WorkorderAttachment
+                                            {
+                                                IsSynced = true,
+                                                attachmentFileExtension = file.attachmentFileExtension,
+                                                //ImageBytes = imgUser, //byteImage,
+                                              //  WorkOrderAttachmentID = file.WorkOrderAttachmentID,
+                                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser)))),
+
+                                            }
+                                            );
+
+                                        }
+                                    }
                                     else
                                     {
 
