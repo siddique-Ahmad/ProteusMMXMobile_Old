@@ -1447,7 +1447,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                             //  Layout = new Picker() {Title=item.AnswerDescription, IsEnabled = false, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
 
-                            Label Label1 = new Label { Text = item.AnswerDescription, BackgroundColor = Color.FromHex("#d3d3d3"), WidthRequest = 40, IsEnabled = false, HorizontalOptions = LayoutOptions.End };
+                            Label Label1 = new Label { Text = item.AnswerDescription, BackgroundColor = Color.FromHex("#d3d3d3"), IsEnabled = false, HorizontalOptions = LayoutOptions.End };
 
 
                             sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
@@ -2004,7 +2004,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                                 GenerateAnswerText(item1);
 
                                 //Layout = new Picker() {Title=item.AnswerDescription, IsEnabled = false, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center };
-                                Label Label1 = new Label { Text = item1.AnswerDescription, BackgroundColor = Color.FromHex("#d3d3d3"), WidthRequest = 40, IsEnabled = false, HorizontalOptions = LayoutOptions.End };
+                                Label Label1 = new Label { Text = item1.AnswerDescription, BackgroundColor = Color.FromHex("#d3d3d3"), IsEnabled = false, HorizontalOptions = LayoutOptions.End };
 
 
 

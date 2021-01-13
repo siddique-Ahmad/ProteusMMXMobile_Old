@@ -2334,7 +2334,14 @@ namespace ProteusMMX.Views.Workorder
                             GenerateAnswerText(item);
 
 
-                            Layout = new MyPicker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                            if (Device.RuntimePlatform == Device.UWP)
+                            {
+                                Layout = new MyPicker() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                            }
+                            else
+                            {
+                                Layout = new MyPicker() { WidthRequest = 300, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                            }
 
                             if (!string.IsNullOrWhiteSpace(item.Option1))
                                 (Layout as MyPicker).Items.Add(item.Option1);
@@ -2908,7 +2915,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 break;
 
-                            case "Multiple Choice":
+                             case "Multiple Choice":
                                 Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
 
                                 if (Device.Idiom == TargetIdiom.Phone)
@@ -2921,7 +2928,14 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 GenerateAnswerText(item1);
 
-                                Layout = new MyPicker() { WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center };
+                                if (Device.RuntimePlatform == Device.UWP)
+                                {
+                                    Layout = new MyPicker() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                                }
+                                else
+                                {
+                                    Layout = new MyPicker() {WidthRequest=300,VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                                }
 
                                 if (!string.IsNullOrWhiteSpace(item1.Option1))
                                     (Layout as MyPicker).Items.Add(item1.Option1);
