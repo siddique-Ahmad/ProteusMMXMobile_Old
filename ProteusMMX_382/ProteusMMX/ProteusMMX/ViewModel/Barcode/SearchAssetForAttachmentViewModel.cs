@@ -585,7 +585,7 @@ namespace ProteusMMX.ViewModel.Barcode
                     LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
                     CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
                     SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-                    SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchorScanByAssetNumberNameTag");
+                    SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("AssetNumber");
                     GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
                     ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
                     SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
