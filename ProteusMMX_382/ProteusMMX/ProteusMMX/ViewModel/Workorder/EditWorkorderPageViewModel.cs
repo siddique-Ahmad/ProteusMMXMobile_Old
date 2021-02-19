@@ -2844,23 +2844,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        string _additionalDetailsTextforMobile;
-        public string AdditionalDetailsTextForMobile
-        {
-            get
-            {
-                return _additionalDetailsTextforMobile;
-            }
-
-            set
-            {
-                if (value != _additionalDetailsTextforMobile)
-                {
-                    _additionalDetailsTextforMobile = value;
-                    OnPropertyChanged(nameof(AdditionalDetailsTextForMobile));
-                }
-            }
-        }
+        
 
         string _additionalDetailsTitle;
         public string AdditionalDetailsTitle
@@ -11434,16 +11418,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 this.DescriptionText = workorder.Description;
                 if (!string.IsNullOrWhiteSpace(workorder.AdditionalDetails))
                 {
-                    if (Device.Idiom == TargetIdiom.Phone)
-                    {
-                        this.AdditionalDetailsTextForMobile = RemoveHTML.StripHTML(workorder.AdditionalDetails);
-                        this.AdditionalDetailsText = RemoveHTML.StripHTML(ShortString.shortenMobile(workorder.AdditionalDetails));
-                    }
-                    else
-                    {
+                   
                         this.AdditionalDetailsText = RemoveHTML.StripHTML(workorder.AdditionalDetails);
-                    }
-
+                    
                 }
 
 
@@ -15061,14 +15038,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                if (Device.Idiom == TargetIdiom.Phone)
-                {
-                    tnobj.Description = AdditionalDetailsTextForMobile;
-                }
-                else
-                {
+                
                     tnobj.Description = AdditionalDetailsText;
-                }
+               
 
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
@@ -15098,14 +15070,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                if (Device.Idiom == TargetIdiom.Phone)
-                {
-                    tnobj.Description = InternalNotesTextForMobile;
-                }
-                else
-                {
-                    tnobj.Description = InternalNoteText;
-                }
+               
+                 tnobj.Description = InternalNoteText;
+             
 
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 

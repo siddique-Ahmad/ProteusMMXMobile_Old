@@ -849,11 +849,17 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
 
                         }
-                        hoursEntry.TextChanged += OnTextChanged1;
-                        minuteEntry.TextChanged += HoursTextChanged;
+                        //hoursEntry.TextChanged += OnTextChanged1;
+                        //minuteEntry.TextChanged += HoursTextChanged;
 
-                        hoursEntryforRate2.TextChanged += OnTextChanged1;
-                        minuteEntryforRate2.TextChanged += HoursTextChanged;
+                        //hoursEntryforRate2.TextChanged += OnTextChanged1;
+                        //minuteEntryforRate2.TextChanged += HoursTextChanged;
+
+                        hoursEntry.Keyboard = Keyboard.Numeric;
+                        minuteEntry.Keyboard = Keyboard.Numeric;
+
+                        hoursEntryforRate2.Keyboard = Keyboard.Numeric;
+                        minuteEntryforRate2.Keyboard = Keyboard.Numeric;
 
 
                         var startStopButtonGrid = new Grid();
