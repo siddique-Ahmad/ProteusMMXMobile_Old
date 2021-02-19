@@ -14,6 +14,7 @@ using Microsoft.AppCenter.Analytics;
 
 using Android.Content.Res;
 using Microsoft.AppCenter.Crashes;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace ProteusMMX.Droid
 {
@@ -38,6 +39,7 @@ namespace ProteusMMX.Droid
             UserDialogs.Init(this);
             Rg.Plugins.Popup.Popup.Init(this, bundle);
             LoadApplication(new App());
+            Xamarin.Forms.Application.Current.On<Xamarin.Forms.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
