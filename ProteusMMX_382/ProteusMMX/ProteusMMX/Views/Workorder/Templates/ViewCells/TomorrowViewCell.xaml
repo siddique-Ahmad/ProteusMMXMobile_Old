@@ -328,10 +328,10 @@
 
                     <Label  x:Name="WorkorderTypeLabel" Style="{StaticResource ItemDescriptionStyle}" />
                     <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                    <Label Text="{Binding WorkOrderType}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" />
+                    <Label LineBreakMode="TailTruncation"  Text="{Binding WorkOrderType}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" />
                     <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
                         <Label Text="(" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding PriorityName}" Style="{StaticResource ItemDescriptionStyle}" />
+                        <Label  LineBreakMode="TailTruncation"  Text="{Binding PriorityName}" Style="{StaticResource ItemDescriptionStyle}" />
                         <Label Text=")" Style="{StaticResource ItemDescriptionStyle}"/>
                     </StackLayout>
                 </Grid>

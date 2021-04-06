@@ -2296,6 +2296,29 @@ namespace ProteusMMX.ViewModel.Workorder
                    
                 }
 
+                #region check if all answers of a sections are required
+
+                // check if all answers of a sections are required///////
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null))
+                {
+                    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.sections != null && workorderWrapper.workOrderWrapper.sections.Count > 0))
+                    {
+                        StringBuilder RequiredSection = new StringBuilder();
+
+                        foreach (var item in workorderWrapper.workOrderWrapper.sections)
+                        {
+                            RequiredSection.Append(item.SectionName);
+                            RequiredSection.Append(",");
+                        }
+
+                        await DialogService.ShowAlertAsync(RequiredSection.ToString().TrimEnd(','), WebControlTitle.GetTargetNameByTitleName("PleaseProvideFollowingSectionQuestionAnswer"), "OK");
+                        return;
+
+
+                    }
+                }
+
+                #endregion
 
                 #region Check signature required in inspection
 
@@ -2365,7 +2388,33 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     if (Inspection.listInspection != null && Inspection.listInspection.Count > 0)
                     {
+                        bool InspectionEmployeeHours = false;
+                        bool InspectionContractorHours = false;
+                        if (!Inspection.workOrderEmployee.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+                        {
+                            InspectionEmployeeHours = Inspection.workOrderEmployee.All(a => int.Parse((a.InspectionTime)) > 0);
+                        }
 
+                        if (!Inspection.workorderContractor.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+                        {
+                            InspectionContractorHours = Inspection.workorderContractor.All(a => int.Parse(a.InspectionTime) > 0);
+                        }
+
+
+
+
+                        if (InspectionEmployeeHours == false)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"), 2000);
+                            return;
+                        }
+                        if (InspectionContractorHours == false)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"), 2000);
+                            return;
+                        }
                     }
                     else
                     {
@@ -2374,7 +2423,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             UserDialogs.Instance.HideLoading();
 
-                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Taskandlaborisrequiredforclosedworkorder"), 2000);
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TasksandLaborOrInspectionIsRequiredForCloseWO"), 2000);
                             return;
                         }
                         else if ((workorderLabourWrapper.workOrderWrapper.workOrderLabors.Count > 0))
