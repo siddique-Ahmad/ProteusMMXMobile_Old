@@ -376,7 +376,7 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        string _copyrightLabel = "Copyright @ 2020 Eagle Technology Inc.";
+        string _copyrightLabel = "Copyright @ 2021 Eagle Technology Inc.";
         public string CopyrightLabel
         {
             get
