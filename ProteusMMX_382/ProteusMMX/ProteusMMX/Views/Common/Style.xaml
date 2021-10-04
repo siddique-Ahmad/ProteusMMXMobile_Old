@@ -73,7 +73,7 @@
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
         <Setter Property="FontAttributes" Value="Bold"/>
-       
+
     </Style>
 
     <!--  Common style for flat buttons  -->
@@ -100,6 +100,146 @@
         <Setter Property="BorderWidth" Value="1" />
 
     </Style>
+
+    <!-- Common style for borderless entries -->
+    <Style x:Key="BorderlessEntryStyle" TargetType="control:BorderlessEntry">
+        <Setter Property="FontFamily" Value="Montserrat-Regular" />
+        <Setter Property="PlaceholderColor" Value="{DynamicResource Gray-700}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="ReturnType" Value="Done" />
+    </Style>
+
+    <!--  Common style for blue gradient view  -->
+    <Style x:Key="BlueGradientStyle" TargetType="graphics:SfGradientView">
+        <Setter Property="Opacity" Value="0.82" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="BackgroundBrush">
+            <Setter.Value>
+                <graphics:SfLinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <graphics:SfLinearGradientBrush.GradientStops>
+                        <graphics:SfGradientStop Offset="0.0" Color="#3F0041" />
+                        <graphics:SfGradientStop Offset="1.0" Color="#012E8B" />
+                    </graphics:SfLinearGradientBrush.GradientStops>
+                </graphics:SfLinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Common style for Gradient buttons  -->
+    <Style x:Key="GradientButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="BackgroundGradient">
+            <Setter.Value>
+                <graphics:SfLinearGradientBrush>
+                    <graphics:SfLinearGradientBrush.GradientStops>
+                        <graphics:SfGradientStop Offset="0" Color="#4CAEE3" />
+                        <graphics:SfGradientStop Offset="1" Color="#4CAEE3" />
+                    </graphics:SfLinearGradientBrush.GradientStops>
+                </graphics:SfLinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="CornerRadius" Value="15" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!--  Common style for Transparent buttons  -->
+    <Style x:Key="TransparentButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{DynamicResource HyperLink}" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="VerticalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="CornerRadius" Value="4" />
+    </Style>
+
+    <!--  Common style for Icon buttons  -->
+    <Style x:Key="IconButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="FontIcons" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="WidthRequest" Value="40" />
+        <Setter Property="CornerRadius" Value="20" />
+    </Style>
+
+    <!--  Common style for Simple buttons  -->
+    <Style x:Key="SimpleButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="BackgroundColor" Value="{DynamicResource Gray-White}" />
+        <Setter Property="WidthRequest" Value="155" />
+        <Setter Property="CornerRadius" Value="1" />
+        <Setter Property="BorderWidth" Value="0" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="FontFamily" Value="Montserrat-SemiBold" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <!--  Common style for violet gradient view  -->
+    <Style x:Key="VioletGradientStyle" TargetType="graphics:SfGradientView">
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="BackgroundBrush">
+            <Setter.Value>
+                <graphics:SfLinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <graphics:SfLinearGradientBrush.GradientStops>
+                        <graphics:SfGradientStop Offset="0.0" Color="#713d74" />
+                        <graphics:SfGradientStop Offset="1.0" Color="#221e60" />
+                    </graphics:SfLinearGradientBrush.GradientStops>
+                </graphics:SfLinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Common style for primary gradient view  -->
+    <Style x:Key="PrimaryGradientStyle" TargetType="graphics:SfGradientView">
+        <Setter Property="BackgroundBrush">
+            <Setter.Value>
+                <graphics:SfLinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                    <graphics:SfLinearGradientBrush.GradientStops>
+                        <graphics:SfGradientStop Offset="0" Color="{DynamicResource PrimaryColor}" />
+                        <graphics:SfGradientStop Offset="1" Color="{DynamicResource PrimaryGradient}" />
+                    </graphics:SfLinearGradientBrush.GradientStops>
+                </graphics:SfLinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--  Common style for pink gradient view  -->
+    <Style x:Key="PinkGradientStyle" TargetType="graphics:SfGradientView">
+        <Setter Property="BackgroundBrush">
+            <Setter.Value>
+                <graphics:SfLinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <graphics:SfLinearGradientBrush.GradientStops>
+                        <graphics:SfGradientStop Offset="0.0" Color="#d54381" />
+                        <graphics:SfGradientStop Offset="1.0" Color="#7644ad" />
+                    </graphics:SfLinearGradientBrush.GradientStops>
+                </graphics:SfLinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
 
     <!--  Common style for gradient view  -->
     <Style x:Key="SfGradientViewStyle" TargetType="graphics:SfGradientView">
@@ -135,6 +275,39 @@
         </Setter>
     </Style>
 
+    <!--  Common style for theme borders  -->
+    <Style x:Key="LoginFormBorderlessEntryBorderStyle" TargetType="border:SfBorder">
+        <Setter Property="BackgroundColor" Value="{StaticResource BorderBackgroundColor}" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
+
+    <!--  Common style for entry borders  -->
+    <Style x:Key="ThemeBorderStyle" TargetType="border:SfBorder">
+        <Setter Property="BackgroundColor" Value="{DynamicResource Gray-Bg}" />
+        <Setter Property="BorderColor" Value="Transparent" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+    </Style>
+
+    <!--  Common style for forms borders  -->
+    <Style x:Key="DataFormBorderlessEntryBorderStyle" TargetType="border:SfBorder">
+        <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
+        <Setter Property="CornerRadius" Value="4" />
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Gray-Bg}" />
+    </Style>
+
+    <!--  Common style for profile border style  -->
+    <Style x:Key="ProfileBorderStyle" TargetType="border:SfBorder">
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="BorderColor" Value="{DynamicResource Gray-Bg}" />
+        <Setter Property="CornerRadius" Value="20" />
+    </Style>
+
 
     <Style x:Key="HeaderLabelStyle" TargetType="Label">
         <Setter Property="FontFamily" Value="{DynamicResource Montserrat-Bold}"/>
@@ -150,6 +323,20 @@
         <Setter Property="Margin" Value="0,8"/>
         <Setter Property="BackgroundColor" Value="{DynamicResource Gray-White}"/>
     </Style>
+
+    <!--<Style x:Key="CustomShadowFrameStyle" TargetType="control:CustomShadowFrame">
+        <Setter Property="BackgroundColor" Value="{DynamicResource GrayShadowColor}" />
+        <Setter Property="BorderColor" Value="{DynamicResource GrayShadowColor}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="HasShadow" Value="True" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="Radius" Value="12" />
+        <Setter Property="ShadowOffSetHeight" Value="4" />
+        <Setter Property="ShadowOffsetWidth" Value="0" />
+        <Setter Property="ShadowOpacity" Value="0.12" />
+    </Style>-->
 
     <Style x:Key="BusinessFormBorderStyle" TargetType="border:SfBorder">
         <Setter Property="BorderColor" Value="{DynamicResource Gray-300}"/>

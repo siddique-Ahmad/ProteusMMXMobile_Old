@@ -169,11 +169,13 @@
     <Compile Include="DependencyService\CustomEntryRenderer.cs" />
     <Compile Include="DependencyService\CustomPickerRenderer.cs" />
     <Compile Include="DependencyService\CustomSwitchRenderer.cs" />
+    <Compile Include="DependencyService\ImageEntryRenderer.cs" />
     <Compile Include="DependencyService\LoginSwitchRenderer.cs" />
     <Compile Include="DependencyService\MyEntryRenderer.cs" />
     <Compile Include="DependencyService\PDFViewer.cs" />
     <Compile Include="DependencyService\ResizeImage.cs" />
     <Compile Include="DependencyService\SimpleStorage.cs" />
+    <Compile Include="Effects\DroidBackgroundEntryEffect.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -328,6 +330,24 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\BackgroundImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Backgroundlogin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\bottomimg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\passicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\submitbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\urlicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\usericon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
