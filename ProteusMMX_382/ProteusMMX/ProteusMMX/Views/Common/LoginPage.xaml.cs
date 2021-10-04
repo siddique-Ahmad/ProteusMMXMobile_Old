@@ -53,7 +53,7 @@ namespace ProteusMMX.Views.Common
                     {
                         if (FDALicensekey.FDAEnable && FDALicensekey.Signvalue == "True")
                         {
-                            LoginSwitch1.IsVisible = false;
+                            //LoginSwitch1.IsVisible = false;
                             LabelSwitch1.IsVisible = false;
 
 

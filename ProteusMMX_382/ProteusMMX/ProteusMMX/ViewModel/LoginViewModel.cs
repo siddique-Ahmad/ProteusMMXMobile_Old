@@ -376,7 +376,7 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        string _copyrightLabel = "Copyright @ 2020 Eagle Technology Inc.";
+        string _copyrightLabel = "Copyright @ 2021 Eagle Technology Inc.";
         public string CopyrightLabel
         {
             get
@@ -451,6 +451,8 @@ namespace ProteusMMX.ViewModel
 
         #region Commands
         public ICommand LoginCommand => new AsyncCommand(LoginAsync);
+        public ICommand OnLoginTapCommand => new AsyncCommand(OnLoginTapAsync);
+
         #endregion
         public override async Task InitializeAsync(object navigationData)
         {
@@ -479,7 +481,7 @@ namespace ProteusMMX.ViewModel
                 }
                 else
                 {
-                   
+
                     UserDialogs.Instance.ShowLoading("Please wait..loading all data");
                 }
 
@@ -542,7 +544,7 @@ namespace ProteusMMX.ViewModel
                         }
                     }
 
-                    if (FDAKey.FDAEnable && FDAKey.Signvalue=="True")
+                    if (FDAKey.FDAEnable && FDAKey.Signvalue == "True")
                     {
 
                         SiteUrl = AppSettings.BaseURL;
@@ -567,7 +569,7 @@ namespace ProteusMMX.ViewModel
 
 
 
-                    var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName,Password);
+                    var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName, Password);
                     if (user != null && user.mmxUser != null)
                     {
                         // user.mmxUser.P
@@ -591,11 +593,11 @@ namespace ProteusMMX.ViewModel
 
                         Application.Current.Properties["Password"] = Password;
                         await InitializeTranslations();
-                        await GetWorkorderControlRights();
-                        await GetServiceRequestControlRights();
-                        await GetAssetControlRights();
-                        await GetClosedWorkorderandInventoryControlRights();
-                        await GetPurchaseOrderControlRights();
+                        //await GetWorkorderControlRights();
+                        //await GetServiceRequestControlRights();
+                        //await GetAssetControlRights();
+                        //await GetClosedWorkorderandInventoryControlRights();
+                        //await GetPurchaseOrderControlRights();
                         UserDialogs.Instance.HideLoading();
                         OperationInProgress = false;
                         await NavigationService.NavigateToAsync<DashboardPageViewModel>();
@@ -634,7 +636,8 @@ namespace ProteusMMX.ViewModel
             _formLoadInputService = formloadservice;
             _workorderService = workorderService;
         }
-        public async Task LoginAsync()
+
+        public async Task OnLoginTapAsync()
         {
             try
             {
@@ -645,82 +648,15 @@ namespace ProteusMMX.ViewModel
                 if (string.IsNullOrEmpty(SiteUrl))
                 {
                     UserDialogs.Instance.HideLoading();
-
-                    // DialogService.ShowToast(, 2000);
                     await DialogService.ShowAlertAsync("Please enter Site Url", "Alert", "OK");
                     return;
                 }
 
-                else
-                {
-                    ServiceOutput httpsscheme = new ServiceOutput();
-                   
-                    SiteUrl = Regex.Replace(SiteUrl, "[^a-zA-Z0-9-_./:]+", "", RegexOptions.Compiled);
-                    var builder = new UriBuilder(SiteUrl);
-                    SiteUrl = RemovePortIfDefault(builder.Uri).ToString();
-
-                    bool IsValidEmail = Regex.IsMatch(SiteUrl,
-                @"^(http|https)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$",
-                RegexOptions.IgnoreCase);
-
-                    if(IsValidEmail)
-                    {
-                        apiVersion = await _authenticationService.GetAPIVersion(SiteUrl);
-                        
-                        if(apiVersion!=null)
-                        {
-                            //httpsscheme = await _authenticationService.GetFDAValidationAsync(SiteUrl, null);
-                            //if (!string.IsNullOrWhiteSpace(httpsscheme.AcknowledgementURLProtocol) && httpsscheme.AcknowledgementURLProtocol.ToLower() == "true")
-                            //{
-                            //    builder.Scheme = "https";
-                            //}
-                            //else
-                            //{
-                            //    builder.Scheme = "http";
-                            //}
-                            //var result = builder.Uri;
-                            //SiteUrl = RemovePortIfDefault(result).ToString();
-                            
-                        }
-                        else
-                        {
-                            UserDialogs.Instance.HideLoading();
-
-                            await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
-                            return;
-                        }
-
-                    }
-                    else
-                    {
-                        UserDialogs.Instance.HideLoading();
-
-                        await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
-                        return;
-                    }
-
-                   
-                   
-                }
-
-
-                apiVersion = await _authenticationService.GetAPIVersion(SiteUrl);
-
-
-                if (apiVersion == null)
-                {
-                    UserDialogs.Instance.HideLoading();
-
-                    await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
-                    return;
-
-                }
-               
 
                 AppSettings.BaseURL = SiteUrl;
                 AppSettings.APIVersion = apiVersion.APIVersion;
-              
-                var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName,Password);
+
+                var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName, Password);
                 if (user == null || user.mmxUser == null || Convert.ToBoolean(user.servicestatus) == false)
                 {
                     UserDialogs.Instance.HideLoading();
@@ -738,14 +674,13 @@ namespace ProteusMMX.ViewModel
                     return;
                 }
                 /// Save the MMXUser the so we can reuse that.
-                /// 
 
                 AppSettings.User = user.mmxUser;
                 AppSettings.UserName = UserName;
                 AppSettings.Password = Password;
 
-                var FDALicenseKey = await _authenticationService.GetFDAValidationAsync(SiteUrl, null);
-                if (FDALicenseKey.FDAEnable && FDALicenseKey.Signvalue == "True")
+                //var FDALicenseKey = await _authenticationService.GetFDAValidationAsync(SiteUrl, null);
+                if (user.mmxUser.blackhawkLicValidator.FDAEnable && user.mmxUser.blackhawkLicValidator.Signvalue == "True")
                 {
 
                 }
@@ -767,7 +702,7 @@ namespace ProteusMMX.ViewModel
                         RememberMeSwitchValue = "false";
                     }
 
-                 
+
                 }
 
 
@@ -776,16 +711,13 @@ namespace ProteusMMX.ViewModel
                 SignatureStorage.Storage.Set("FDASignatureUserValidated", "False");
                 Application.Current.Properties["Password"] = Password;
                 await InitializeTranslations();
-                await GetWorkorderControlRights();
-                await GetServiceRequestControlRights();
-                await GetAssetControlRights();
-                await GetPurchaseOrderControlRights();
-                await GetClosedWorkorderandInventoryControlRights();
-                // await GetWorkorderModuleRights();
-                // await GetServiceRequestModuleRights();
-                // await GetAssetModuleRights();
-                // First push page than remove last.
+                //await GetWorkorderControlRights();
+                //await GetServiceRequestControlRights();
+                //await GetAssetControlRights();
+                //await GetPurchaseOrderControlRights();
+                //await GetClosedWorkorderandInventoryControlRights();
                 UserDialogs.Instance.HideLoading();
+
 
                 await NavigationService.NavigateToAsync<DashboardPageViewModel>();
                 await NavigationService.RemoveLastFromBackStackAsync();
@@ -793,9 +725,7 @@ namespace ProteusMMX.ViewModel
                 {
                     Settings.Remove(nameof(UserName));
                     Settings.Remove(nameof(Password));
-                    //Settings.Remove(nameof(SiteUrl));
 
-                    // Settings.Remove(nameof(user));
                 }
 
 
@@ -812,17 +742,178 @@ namespace ProteusMMX.ViewModel
             {
                 UserDialogs.Instance.HideLoading();
                 OperationInProgress = false;
-                //   await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
 
             }
         }
+        public async Task LoginAsync()
+        {
+            //try
+            //{
+
+            //    ServiceOutput apiVersion = new ServiceOutput();
+            //    UserDialogs.Instance.ShowLoading("Please wait..loading all data");
+
+            //    if (string.IsNullOrEmpty(SiteUrl))
+            //    {
+            //        UserDialogs.Instance.HideLoading();
+            //        await DialogService.ShowAlertAsync("Please enter Site Url", "Alert", "OK");
+            //        return;
+            //    }
+
+            //    //else
+            //    //{
+            //    //    ServiceOutput httpsscheme = new ServiceOutput();
+
+            //    //    SiteUrl = Regex.Replace(SiteUrl, "[^a-zA-Z0-9-_./:]+", "", RegexOptions.Compiled);
+            //    //    var builder = new UriBuilder(SiteUrl);
+            //    //    SiteUrl = RemovePortIfDefault(builder.Uri).ToString();
+
+            //    //    bool IsValidEmail = Regex.IsMatch(SiteUrl,
+            //    //@"^(http|https)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$",
+            //    //RegexOptions.IgnoreCase);
+
+            //    //    if(IsValidEmail)
+            //    //    {
+            //    //        apiVersion = await _authenticationService.GetAPIVersion(SiteUrl);
+
+            //    //        if(apiVersion!=null)
+            //    //        {
+
+            //    //        }
+            //    //        else
+            //    //        {
+            //    //            UserDialogs.Instance.HideLoading();
+
+            //    //            await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
+            //    //            return;
+            //    //        }
+
+            //    //    }
+            //    //    else
+            //    //    {
+            //    //        UserDialogs.Instance.HideLoading();
+
+            //    //        await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
+            //    //        return;
+            //    //    }
+
+
+
+            //    //}
+
+
+            //    //apiVersion = await _authenticationService.GetAPIVersion(SiteUrl);
+
+
+            //    //if (apiVersion == null)
+            //    //{
+            //    //    UserDialogs.Instance.HideLoading();
+
+            //    //    await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
+            //    //    return;
+
+            //    //}
+
+
+            //    AppSettings.BaseURL = SiteUrl;
+            //    AppSettings.APIVersion = apiVersion.APIVersion;
+
+            //    var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName,Password);
+            //    if (user == null || user.mmxUser == null || Convert.ToBoolean(user.servicestatus) == false)
+            //    {
+            //        UserDialogs.Instance.HideLoading();
+
+            //        await DialogService.ShowAlertAsync("Please Enter Valid Credential.", "Alert", "OK");
+
+            //        return;
+            //    }
+            //    if (user.mmxUser.UserLicense == "Web")
+            //    {
+            //        UserDialogs.Instance.HideLoading();
+
+            //        DialogService.ShowToast("Current User Doesnot have Mobile License", 2000);
+
+            //        return;
+            //    }
+            //    /// Save the MMXUser the so we can reuse that.
+
+            //    AppSettings.User = user.mmxUser;
+            //    AppSettings.UserName = UserName;
+            //    AppSettings.Password = Password;
+
+            //    var FDALicenseKey = await _authenticationService.GetFDAValidationAsync(SiteUrl, null);
+            //    if (FDALicenseKey.FDAEnable && FDALicenseKey.Signvalue == "True")
+            //    {
+
+            //    }
+            //    else
+            //    {
+            //        if (Application.Current.Properties.ContainsKey("RememberMeSwitchKey"))
+            //        {
+            //            RememberMeSwitchValue = Application.Current.Properties["RememberMeSwitchKey"].ToString();
+            //        }
+            //        if (RememberMeSwitch == true)
+            //        {
+
+            //            RememberMeSwitchValue = "true";
+            //            Application.Current.Properties["RememberMeSwitchKey"] = "true";
+            //        }
+            //        else
+            //        {
+            //            Application.Current.Properties["RememberMeSwitchKey"] = "false";
+            //            RememberMeSwitchValue = "false";
+            //        }
+
+
+            //    }
+
+
+            //    // Initialize Translations Property
+            //    Application.Current.Properties["UserNameType"] = "TextBox";
+            //    SignatureStorage.Storage.Set("FDASignatureUserValidated", "False");
+            //    Application.Current.Properties["Password"] = Password;
+            //    await InitializeTranslations();
+            //    //await GetWorkorderControlRights();
+            //    //await GetServiceRequestControlRights();
+            //    //await GetAssetControlRights();
+            //    //await GetPurchaseOrderControlRights();
+            //    //await GetClosedWorkorderandInventoryControlRights();
+            //    UserDialogs.Instance.HideLoading();
+
+
+            //    await NavigationService.NavigateToAsync<DashboardPageViewModel>();
+            //    await NavigationService.RemoveLastFromBackStackAsync();
+            //    if (RememberMeSwitch == false)
+            //    {
+            //        Settings.Remove(nameof(UserName));
+            //        Settings.Remove(nameof(Password));
+
+            //    }
+
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    UserDialogs.Instance.HideLoading();
+            //    OperationInProgress = false;
+            //    Crashes.TrackError(ex);
+
+            //}
+
+            //finally
+            //{
+            //    UserDialogs.Instance.HideLoading();
+            //    OperationInProgress = false;
+
+            //}
+        }
         public static Uri RemovePortIfDefault(Uri uri)
         {
-            
-                UriBuilder builder = new UriBuilder(uri);
-                builder.Port = -1;
-                return builder.Uri;
-            
+
+            UriBuilder builder = new UriBuilder(uri);
+            builder.Port = -1;
+            return builder.Uri;
+
         }
 
         public async Task InitializeTranslations()
@@ -848,8 +939,8 @@ namespace ProteusMMX.ViewModel
             }
 
         }
-      
-         public async Task GetWorkorderModuleRights()
+
+        public async Task GetWorkorderModuleRights()
         {
             FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(AppSettings.User.UserID.ToString(), AppSettings.WorkorderModuleName);
             if (FormControlsAndRights != null && FormControlsAndRights.lstModules != null && FormControlsAndRights.lstModules.Count > 0)
@@ -1077,7 +1168,7 @@ namespace ProteusMMX.ViewModel
                                     Application.Current.Properties["WorkOrderTypeKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkTypeID").Expression;
                                     Application.Current.Properties["DescriptionKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
                                     Application.Current.Properties["PriorityKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
-                                   
+
                                     ///Set workOrderEdit Page Rights
 
 
@@ -1087,14 +1178,14 @@ namespace ProteusMMX.ViewModel
                                     Application.Current.Properties["WorkorderTargetKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression;
                                     Application.Current.Properties["WorkorderDetailsControls"] = WorkOrderSubModule;
                                     Application.Current.Properties["DistributeCost"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression;
-                                    
+
                                 }
                                 catch (Exception ex)
                                 {
 
-                                  
+
                                 }
-                                
+
 
 
                             }
@@ -1132,9 +1223,9 @@ namespace ProteusMMX.ViewModel
                                 catch (Exception ex)
                                 {
 
-                                   
+
                                 }
-                                
+
 
 
                             }
@@ -1192,9 +1283,9 @@ namespace ProteusMMX.ViewModel
                             catch (Exception ex)
                             {
 
-                               
+
                             }
-                           
+
                         }
                     }
                 }
@@ -1219,9 +1310,9 @@ namespace ProteusMMX.ViewModel
                             catch (Exception ex)
                             {
 
-                              
+
                             }
-                           
+
                         }
                     }
                 }
@@ -1244,10 +1335,10 @@ namespace ProteusMMX.ViewModel
                             catch (Exception ex)
                             {
 
-                              
+
                             }
 
-                           
+
                         }
                     }
                 }
@@ -1255,9 +1346,9 @@ namespace ProteusMMX.ViewModel
             catch (Exception)
             {
 
-               
+
             }
-           
+
         }
 
         public async Task GetServiceRequestControlRights()
@@ -1461,9 +1552,9 @@ namespace ProteusMMX.ViewModel
             catch (Exception ex)
             {
 
-               
+
             }
-            
+
         }
 
         public async Task GetAssetControlRights()
@@ -1471,7 +1562,7 @@ namespace ProteusMMX.ViewModel
 
             ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "Assets", "Details");
             ServiceOutput FormControlsAndRightsForButton = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "Assets", "Assets");
-            
+
             if (FormControlsAndRightsForButton != null && FormControlsAndRightsForButton.lstModules != null && FormControlsAndRightsForButton.lstModules.Count > 0)
             {
                 var AssetModule = FormControlsAndRightsForButton.lstModules[0];
@@ -1628,7 +1719,7 @@ namespace ProteusMMX.ViewModel
                         }
                     }
                 }
-                
+
             }
 
         }
@@ -1747,7 +1838,7 @@ namespace ProteusMMX.ViewModel
                 return null;
             }
         }
-    
+
 
         #region Test Region 
 
@@ -1779,6 +1870,6 @@ namespace ProteusMMX.ViewModel
 
         #endregion
 
-      
+
     }
 }
