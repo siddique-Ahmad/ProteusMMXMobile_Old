@@ -1364,20 +1364,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                
                 OperationInProgress = false;
-                //if (string.IsNullOrWhiteSpace(this.SearchText))
-                //{
-                //    //await GetWorkorders();
-                //}
-                ////else if (IsLocationCallFrombarcodePage)
-                ////{
-                ////    await GetWorkordersFromLocation();
-                ////}
-                //else
-                //{
-
-                //    await GetWorkordersFromAsset();
-
-                //}
+               
 
 
             }
@@ -1403,9 +1390,7 @@ namespace ProteusMMX.ViewModel.Workorder
         public async Task SetTitlesPropertiesForPage()
         {
 
-            //var titles = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
-            //if (titles != null && titles.CFLI.Count > 0 && titles.listWebControlTitles.Count > 0)
-            {
+           
                 FailedInspectionTitle = WebControlTitle.GetTargetNameByTitleName("FailedInspection");
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrders");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
@@ -1423,35 +1408,55 @@ namespace ProteusMMX.ViewModel.Workorder
                 AscendingTitle = WebControlTitle.GetTargetNameByTitleName("Ascending");
                 DescendingTitle = WebControlTitle.GetTargetNameByTitleName("Descending");
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-
-
-
-
-
-
-                ///Add the titles in picker titles
-                /// 
                 await AddTitlesToPicker();
 
-               
-                if (AppSettings.User.ULFeatures)
-                {
-                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic") || AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Professional"))
-                    {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle,FailedInspectionTitle };
+            if (AppSettings.User.ULFeatures)
+            {
 
+                if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic") || AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Professional"))
+                {
+                    if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
+                    {
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
                     }
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle,FailedInspectionTitle };
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
+                    }
+                }
+
+
+
+                else
+                {
+
+
+                    if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
+                    {
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle };
+                    }
+                    else
+                    {
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle };
                     }
 
+                }
+            }
+
+
+            else
+            {
+                if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
+                {
+                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
                 }
                 else
                 {
                     PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle,FailedInspectionTitle };
                 }
-                WorkorderTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
+               
+            }
+                WorkorderTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("SortByWorkOrderType");
                 SortByLocationLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Location");
                 SortByShiftLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Shift");
                 SortByDuedateTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Due") + " " + WebControlTitle.GetTargetNameByTitleName("Date");
@@ -1473,7 +1478,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 WorkCompletionDateTitle = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
                 WorkRequestedDateTitle = WebControlTitle.GetTargetNameByTitleName("RequestedDate");
 
-            }
+          
         }
         public async Task ShowActions()
         {
@@ -1743,27 +1748,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 SortByShiftpickerTitles.Add(SelectTitle);
                 SortByPriorityPickerTitles.Add(SelectTitle);
 
-                if (AppSettings.User.ULFeatures)
-                {
-                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle,DemandMaintenenceTitle, PreventiveMaintenenceTitle,EmergencyMaintenanceTitle, FailedInspectionTitle };
-                    //this.SelectedIndexPicker = 0;
-                   
-
-                }
-
-                else
-                {
-                    this.PickerTitles = new ObservableCollection<string>() { SelectTitle, DemandMaintenenceTitle, PreventiveMaintenenceTitle,FailedInspectionTitle };
-                   // this.SelectedIndexPicker = 0;
-                   
-                }
                
-                //SelectedIndexPicker = 0;
-                //LocationSelectedIndexPicker = 0;
-                //ShiftSelectedIndexPicker = 0;
-                //PrioritySelectedIndexPicker = 0;
-                //IsGetWorkorderCall = true;
-
             }
             catch (Exception ex)
             {
@@ -2311,6 +2296,29 @@ namespace ProteusMMX.ViewModel.Workorder
                    
                 }
 
+                #region check if all answers of a sections are required
+
+                // check if all answers of a sections are required///////
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null))
+                {
+                    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.sections != null && workorderWrapper.workOrderWrapper.sections.Count > 0))
+                    {
+                        StringBuilder RequiredSection = new StringBuilder();
+
+                        foreach (var item in workorderWrapper.workOrderWrapper.sections)
+                        {
+                            RequiredSection.Append(item.SectionName);
+                            RequiredSection.Append(",");
+                        }
+
+                        await DialogService.ShowAlertAsync(RequiredSection.ToString().TrimEnd(','), WebControlTitle.GetTargetNameByTitleName("PleaseProvideFollowingSectionQuestionAnswer"), "OK");
+                        return;
+
+
+                    }
+                }
+
+                #endregion
 
                 #region Check signature required in inspection
 
@@ -2380,7 +2388,33 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     if (Inspection.listInspection != null && Inspection.listInspection.Count > 0)
                     {
+                        bool InspectionEmployeeHours = false;
+                        bool InspectionContractorHours = false;
+                        if (!Inspection.workOrderEmployee.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+                        {
+                            InspectionEmployeeHours = Inspection.workOrderEmployee.All(a => int.Parse((a.InspectionTime)) > 0);
+                        }
 
+                        if (!Inspection.workorderContractor.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+                        {
+                            InspectionContractorHours = Inspection.workorderContractor.All(a => int.Parse(a.InspectionTime) > 0);
+                        }
+
+
+
+
+                        if (InspectionEmployeeHours == false)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"), 2000);
+                            return;
+                        }
+                        if (InspectionContractorHours == false)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"), 2000);
+                            return;
+                        }
                     }
                     else
                     {
@@ -2389,7 +2423,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             UserDialogs.Instance.HideLoading();
 
-                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Taskandlaborisrequiredforclosedworkorder"), 2000);
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TasksandLaborOrInspectionIsRequiredForCloseWO"), 2000);
                             return;
                         }
                         else if ((workorderLabourWrapper.workOrderWrapper.workOrderLabors.Count > 0))
@@ -2595,7 +2629,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 await RefillWorkorderCollection();
 
             }
-            
+
             if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
             {
                 var Locationfilter = Application.Current.Properties["LocationFilterkey"];
@@ -2648,116 +2682,8 @@ namespace ProteusMMX.ViewModel.Workorder
                     await RefillDueDateFromPicker(null);
                 }
             }
-           
-            //var workordersResponse = await _workorderService.GetWorkorderDDRecord(UserID);
 
 
-            //if(!SortByLocationpickerTitles.Contains(SelectTitle))
-            //{
-            //    SortByLocationpickerTitles.Add(SelectTitle);
-            //}
-            //if (!SortByShiftpickerTitles.Contains(SelectTitle))
-            //{
-            //    SortByShiftpickerTitles.Add(SelectTitle);
-            //}
-            //if (!SortByPriorityPickerTitles.Contains(SelectTitle))
-            //{
-            //    SortByPriorityPickerTitles.Add(SelectTitle);
-            //}
-
-           
-          
-            //if (workordersResponse != null && workordersResponse.Location != null && workordersResponse.Location.Count > 0)
-            //{
-
-              
-            //    foreach (var item in workordersResponse.Location)
-            //    {
-            //        if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
-            //        {
-                        
-            //        }
-            //        else
-            //        {
-
-            //            if (!String.IsNullOrWhiteSpace(item.LocationName))
-            //            {
-
-            //                SortByLocationpickerTitles.Add(item.LocationName);
-            //            }
-
-
-                        
-
-            //        }
-                   
-            //    }
-
-
-            //}
-
-            //if (workordersResponse != null && workordersResponse.Shifts != null && workordersResponse.Shifts.Count > 0)
-            //{
-
-            //    foreach (var item in workordersResponse.Shifts)
-            //    {
-            //        if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
-            //        {
-                       
-            //        }
-            //        else
-            //        {
-
-            //            if (!String.IsNullOrWhiteSpace(item.ShiftName))
-            //            {
-            //                if (!sortByShiftpickerTitlesitems.ContainsKey(item.ShiftID))
-            //                {
-            //                    sortByShiftpickerTitlesitems.Add(item.ShiftID, item.ShiftName);
-            //                }
-            //                SortByShiftpickerTitles.Add(item.ShiftName);
-
-
-            //            }
-
-            //        }
-            //    }
-               
-            //}
-
-            //if (workordersResponse != null && workordersResponse.Priority != null && workordersResponse.Priority.Count > 0)
-            //{
-              
-            //    foreach (var item in workordersResponse.Priority)
-            //    {
-                   
-                   
-            //        if (LocationSelectedIndexPicker != -1 || ShiftSelectedIndexPicker != -1 || PrioritySelectedIndexPicker != -1)
-            //        {
-                      
-                       
-            //        }
-            //        else
-            //        {
-
-            //            if (!String.IsNullOrWhiteSpace(item.PriorityName))
-            //            {
-            //                if (!sortByPrioritypickerTitlesitems.ContainsKey(item.PriorityID))
-            //                {
-            //                    sortByPrioritypickerTitlesitems.Add(item.PriorityID, item.PriorityName);
-            //                }
-            //                SortByPriorityPickerTitles.Add(item.PriorityName);
-
-
-            //            }
-
-            //        }
-                   
-            //    }
-               
-
-            //}
-
-           
 
 
         }

@@ -424,7 +424,41 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+        bool _isCostLayoutIsVisibleForChild = true;
+        public bool IsCostLayoutIsVisibleForChild
+        {
+            get
+            {
+                return _isCostLayoutIsVisibleForChild;
+            }
 
+            set
+            {
+                if (value != _isCostLayoutIsVisibleForChild)
+                {
+                    _isCostLayoutIsVisibleForChild = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisibleForChild));
+                }
+            }
+        }
+
+        bool _isCostLayoutIsVisibleForParent = true;
+        public bool IsCostLayoutIsVisibleForParent
+        {
+            get
+            {
+                return _isCostLayoutIsVisibleForParent;
+            }
+
+            set
+            {
+                if (value != _isCostLayoutIsVisibleForParent)
+                {
+                    _isCostLayoutIsVisibleForParent = value;
+                    OnPropertyChanged(nameof(IsCostLayoutIsVisibleForParent));
+                }
+            }
+        }
         bool _isCostLayoutIsVisible = true;
         public bool IsCostLayoutIsVisible
         {
@@ -2810,23 +2844,23 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        string _additionalDetailsTextforMobile;
-        public string AdditionalDetailsTextForMobile
-        {
-            get
-            {
-                return _additionalDetailsTextforMobile;
-            }
+        //string _additionalDetailsTextforMobile;
+        //public string AdditionalDetailsTextForMobile
+        //{
+        //    get
+        //    {
+        //        return _additionalDetailsTextforMobile;
+        //    }
 
-            set
-            {
-                if (value != _additionalDetailsTextforMobile)
-                {
-                    _additionalDetailsTextforMobile = value;
-                    OnPropertyChanged(nameof(AdditionalDetailsTextForMobile));
-                }
-            }
-        }
+        //    set
+        //    {
+        //        if (value != _additionalDetailsTextforMobile)
+        //        {
+        //            _additionalDetailsTextforMobile = value;
+        //            OnPropertyChanged(nameof(AdditionalDetailsTextForMobile));
+        //        }
+        //    }
+        //}
 
         string _additionalDetailsTitle;
         public string AdditionalDetailsTitle
@@ -2845,6 +2879,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+
 
 
         bool _additionalDetailsIsEnable = true;
@@ -3186,6 +3221,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _internalNoteText = value;
                     OnPropertyChanged(nameof(InternalNoteText));
+                }
+            }
+        }
+
+        string _internalNotesTextForMobile;
+        public string InternalNotesTextForMobile
+        {
+            get
+            {
+                return _internalNotesTextForMobile;
+            }
+
+            set
+            {
+                if (value != _internalNotesTextForMobile)
+                {
+                    _internalNoteText = value;
+                    OnPropertyChanged(nameof(InternalNotesTextForMobile));
                 }
             }
         }
@@ -4585,6 +4638,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public ICommand TapCommand2 => new AsyncCommand(ShowMoreAdditionalDetails);
 
+        public ICommand TapCommand3 => new AsyncCommand(InternalNotesDetails);
+
         public ICommand TapCommandSignature => new AsyncCommand(ShowSignatures);
 
 
@@ -4632,6 +4687,14 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                     }
                 }
+                if (Device.Idiom == TargetIdiom.Phone)
+                {
+                    this.IsCostLayoutIsVisibleForPhone = true;
+                }
+                else
+                {
+                    this.IsCostLayoutIsVisibleForTab = true;
+                }
                 //FormLoadInputForWorkorder = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
                 await SetTitlesPropertiesForPage();
 
@@ -4652,14 +4715,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 //  FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.WorkorderModuleName);
                 await CreateControlsForPage();
 
-                if (Device.Idiom == TargetIdiom.Phone)
-                {
-                    this.IsCostLayoutIsVisibleForPhone = true;
-                }
-                else
-                {
-                    this.IsCostLayoutIsVisibleForTab = true;
-                }
+               
                 //await SetTitlesPropertiesForPage(FormLoadInputForWorkorder);
                 //await CreateControlsForPage(FormLoadInputForWorkorder);
 
@@ -4734,6 +4790,13 @@ namespace ProteusMMX.ViewModel.Workorder
                     if (DistributeCostforAssetsystem == null)
                     {
                         IsCostLayoutIsVisible = false;
+                    }
+                    if (ParentCostsOnly == null || ChargeCostsOnlyToChildAssets == null)
+                    {
+
+                        IsCostLayoutIsVisibleForChild = false;
+                        IsCostLayoutIsVisibleForParent = false;
+
                     }
 
                     //ParentCostDistributed = WebControlTitle.GetTargetNameByTitleName("ParentCostDistributed");
@@ -5402,12 +5465,12 @@ namespace ProteusMMX.ViewModel.Workorder
                                     break;
                                 }
 
-                            case "CurrentRuntime":
-                                {
-                                    CurrentRuntimeIsEnable = ApplyIsEnable(item.Expression);
-                                    CurrentRuntimeIsVisible = ApplyIsVisible(item.Expression);
-                                    break;
-                                }
+                            //case "CurrentRuntime":
+                            //    {
+                            //        CurrentRuntimeIsEnable = ApplyIsEnable(item.Expression);
+                            //        CurrentRuntimeIsVisible = ApplyIsVisible(item.Expression);
+                            //        break;
+                            //    }
 
 
                             case "ShiftID":
@@ -5517,7 +5580,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "ClosedDate"));
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "ActivationDate"));
 
-               // WorkorderControlsNew.RemoveAll((i => i.ControlName == "CurrentRuntime"));
+                WorkorderControlsNew.RemoveAll((i => i.ControlName == "CurrentRuntime"));
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequestedDate"));
                 if (AppSettings.User.blackhawkLicValidator.RiskAssasment.Equals(false))
                 {
@@ -11371,15 +11434,15 @@ namespace ProteusMMX.ViewModel.Workorder
                 this.DescriptionText = workorder.Description;
                 if (!string.IsNullOrWhiteSpace(workorder.AdditionalDetails))
                 {
-                    if (Device.Idiom == TargetIdiom.Phone)
-                    {
-                        this.AdditionalDetailsTextForMobile = workorder.AdditionalDetails;
-                        this.AdditionalDetailsText = ShortString.shortenMobile(workorder.AdditionalDetails);
-                    }
-                    else
-                    {
-                        this.AdditionalDetailsText = workorder.AdditionalDetails;
-                    }
+                    //if (Device.Idiom == TargetIdiom.Phone)
+                    //{
+                    //    //this.AdditionalDetailsTextForMobile = RemoveHTML.StripHTML(workorder.AdditionalDetails);
+                    //    this.AdditionalDetailsText = RemoveHTML.StripHTML(workorder.AdditionalDetails);
+                    //}
+                    //else
+                    //{
+                        this.AdditionalDetailsText = RemoveHTML.StripHTML(workorder.AdditionalDetails);
+                   // }
 
                 }
 
@@ -12420,6 +12483,31 @@ namespace ProteusMMX.ViewModel.Workorder
                 var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
 
+                #region check if all answers of a sections are required
+
+                // check if all answers of a sections are required///////
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null))
+                {
+                    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.sections != null && workorderWrapper.workOrderWrapper.sections.Count>0))
+                    {
+                        StringBuilder RequiredSection = new StringBuilder();
+
+                        foreach (var item in workorderWrapper.workOrderWrapper.sections)
+                        {
+                            RequiredSection.Append(item.SectionName);
+                            RequiredSection.Append(",");
+                        }
+
+                        await DialogService.ShowAlertAsync(RequiredSection.ToString().TrimEnd(','), WebControlTitle.GetTargetNameByTitleName("PleaseProvideFollowingSectionQuestionAnswer"), "OK");
+                        return;
+
+
+                    }
+                }
+
+                #endregion
+
+
                 ///TODO: Get Workorder data and check IsCheckedAutoFillStartdateOnTaskAndLabor
                 ///If True and Workorder startdate is  null and the initial start date of Task and labour is not null
                 ///then display message PleaseFirstClearTaskstartdate from task and Labour then you can clear the 
@@ -12954,7 +13042,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 var workOrder = new workOrders();
                 #region workOrder properties initialzation
-                if (string.IsNullOrWhiteSpace(CurrentRuntimeText.ToString()))
+                if (string.IsNullOrWhiteSpace(CurrentRuntimeText))
                 {
                     this.CurrentRuntimeText = "0.00";
 
@@ -14629,6 +14717,32 @@ namespace ProteusMMX.ViewModel.Workorder
                 var InspectionTime = await _workorderService.GetWorkorderInspectionTime(UserID, WorkorderID.ToString());
 
 
+                #region check if all answers of a sections are required
+
+               // check if all answers of a sections are required///////
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null))
+                {
+                    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.sections != null && workorderWrapper.workOrderWrapper.sections.Count > 0))
+                    {
+                        StringBuilder RequiredSection = new StringBuilder();
+
+                        foreach (var item in workorderWrapper.workOrderWrapper.sections)
+                        {
+                            RequiredSection.Append(item.SectionName);
+                            RequiredSection.Append(",");
+                        }
+                       
+                        await DialogService.ShowAlertAsync(RequiredSection.ToString().TrimEnd(','), WebControlTitle.GetTargetNameByTitleName("PleaseProvideFollowingSectionQuestionAnswer"), "OK");
+                        return;
+
+
+                    }
+                }
+
+                #endregion
+
+                
+
 
                 #region Check signature required in inspection
 
@@ -14685,13 +14799,40 @@ namespace ProteusMMX.ViewModel.Workorder
                 #endregion
 
 
-                #region Check Task and Labour data
+                #region Check Task and Labour/Inspection data
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedLaborHours))
                 {
 
 
                     if (Inspection.listInspection != null && Inspection.listInspection.Count > 0)
                     {
+                        bool InspectionEmployeeHours = false;
+                        bool InspectionContractorHours = false;
+                        if (!Inspection.workOrderEmployee.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+                        {
+                             InspectionEmployeeHours = Inspection.workOrderEmployee.All(a => int.Parse((a.InspectionTime)) > 0);
+                        }
+
+                        if (!Inspection.workorderContractor.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+                        {
+                             InspectionContractorHours = Inspection.workorderContractor.All(a => int.Parse(a.InspectionTime) > 0);
+                        }
+
+
+
+
+                        if (InspectionEmployeeHours == false)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"), 2000);
+                            return;
+                        }
+                        if (InspectionContractorHours == false)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"), 2000);
+                            return;
+                        }
 
                     }
                     else
@@ -14701,7 +14842,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             UserDialogs.Instance.HideLoading();
 
-                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Taskandlaborisrequiredforclosedworkorder"), 2000);
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TasksandLaborOrInspectionIsRequiredForCloseWO"), 2000);
                             return;
                         }
                         else if ((workorderLabourWrapper.workOrderWrapper.workOrderLabors.Count > 0))
@@ -14998,13 +15139,50 @@ namespace ProteusMMX.ViewModel.Workorder
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
+                //if (Device.Idiom == TargetIdiom.Phone)
+                //{
+                //    tnobj.Description = AdditionalDetailsTextForMobile;
+                //}
+                //else
+                //{
+                    tnobj.Description = AdditionalDetailsText;
+               // }
+
+                await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
+                // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+
+                //OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+
+                // OperationInProgress = false;
+
+            }
+        }
+
+        public async Task InternalNotesDetails()
+        {
+
+            try
+            {
+                UserDialogs.Instance.HideLoading();
+
+                TargetNavigationData tnobj = new TargetNavigationData();
                 if (Device.Idiom == TargetIdiom.Phone)
                 {
-                    tnobj.Description = AdditionalDetailsTextForMobile;
+                    tnobj.Description = InternalNotesTextForMobile;
                 }
                 else
                 {
-                    tnobj.Description = AdditionalDetailsText;
+                    tnobj.Description = InternalNoteText;
                 }
 
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);

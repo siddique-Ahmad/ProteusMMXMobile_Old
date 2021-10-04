@@ -2,33 +2,5 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.AddInspectionData">
-    <ContentPage.Content>
-        <Grid Padding="20" x:Name="grid">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="10" />
-                <RowDefinition Height="*" />
-                <!--<RowDefinition Height="100" />-->
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-
-
-          
-            <ScrollView Grid.Row="2"  >
-
-             
-                   
-                    <StackLayout Padding="5" x:Name="MainLayout">
-
-                    </StackLayout>
-               
-
-
-            </ScrollView>
-
-        </Grid>
-    </ContentPage.Content>
+  
 </ContentPage>

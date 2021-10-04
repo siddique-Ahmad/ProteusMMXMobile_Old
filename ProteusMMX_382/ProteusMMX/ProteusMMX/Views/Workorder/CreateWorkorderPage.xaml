@@ -129,7 +129,7 @@
                        
                      
                                     Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                             x:Name="Description"
                             
                             Text="{Binding DescriptionText}"
@@ -241,15 +241,20 @@
                                 <!--</border:SfBorder>-->
                             </StackLayout>
 
-                            <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Orientation="Horizontal" Grid.Row="6">
-                                <dependencyinterface:LoginSwitch  Margin="10,10,10,10"  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
-                                </dependencyinterface:LoginSwitch>
-                                <Label     FontAttributes="Bold" Margin="20,20,20,20" Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
+                            <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}"  Grid.Row="6">
+                                <StackLayout Orientation="Horizontal">
+                                    <dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" >
+                                    </dependencyinterface:LoginSwitch>
+                                    <Label     FontAttributes="Bold" Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
 
-                                </Label>
-                                <StackLayout Grid.Column="2" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}" >
-                                    <buttons:SfRadioButton  IsChecked="{Binding ChildCostDistributed}" Margin="10,10,10,10" Text="{Binding ChargeCostsOnlyToChildAssets}" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
-                                    <buttons:SfRadioButton  IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}" Margin="10,10,10,10" Text="{Binding ParentCostsOnly}" StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
+                                    </Label>
+                                </StackLayout>
+
+                                <StackLayout Grid.Column="2" Orientation="Horizontal" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}" >
+                                    <buttons:SfRadioButton IsVisible="{Binding IsCostLayoutIsVisibleForChild}" IsChecked="{Binding ChildCostDistributed}" Margin="10,10,10,10" Text="{Binding ChargeCostsOnlyToChildAssets}" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}">
+                                    <buttons:SfRadioButton IsVisible="{Binding IsCostLayoutIsVisibleForParent}" IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}" Margin="10,10,10,10" Text="{Binding ParentCostsOnly}" StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
 
                                 </StackLayout>
 
@@ -401,7 +406,7 @@
                                 <!--<controls:NumericEntry Text="{Binding EstimstedDowntimeText}" IsEnabled="{Binding EstimstedDowntimeIsEnable}"/>-->
                                 <border:SfBorder
                                     Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                                    
                                     x:Name="EstimstedDowntime"
                                            
@@ -425,7 +430,7 @@
                                 <!--<controls:NumericEntry Text="{Binding ActualDowntimeText}" IsEnabled="{Binding ActualDowntimeIsEnable}" />-->
                                 <border:SfBorder
                                     Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                             x:Name="ActualDowntime"
                                        
                             Text="{Binding ActualDowntimeText}"
@@ -446,7 +451,7 @@
                                 </Label>
                                 <!--<controls:NumericEntry Text="{Binding MiscellaneousLabourCostText}" IsEnabled="{Binding MiscellaneousLabourCostIsEnable}"/>-->
                                 <border:SfBorder   Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                                    
                                  
                             x:Name="MiscellaneousLabourCost"
@@ -471,7 +476,7 @@
                                 <!--<controls:NumericEntry Text="{Binding MiscellaneousMaterialCostText}" IsEnabled="{Binding MiscellaneousMaterialCostIsEnable}"/>-->
                                 <border:SfBorder
                                     Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                             x:Name="MiscellaneousMaterialCost"                              
                             Text="{Binding MiscellaneousMaterialCostText}"
                                    
@@ -492,7 +497,7 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <control1:BorderlessEntry
+                                    <control1:CustomEntry
                            x:Name="CurrentRuntime"                              
                            Text="{Binding CurrentRuntimeText}"
                                   
@@ -511,14 +516,15 @@
 
 
                         </Grid>
+                     
                         <Grid Margin="10,0,20,0" Grid.Row="2" x:Name="Grid_column" IsVisible="{Binding AdditionalDetailsIsVisible}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1500*" ></ColumnDefinition>
                                 <ColumnDefinition Width="40*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
-                            <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
-                                <Label Text="{Binding AdditionalDetailsTitle}" TextColor="Black" Style="{StaticResource LabelStyle}" >
+                            <StackLayout  Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
+                                <Label Text="{Binding AdditionalDetailsTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
                                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -526,12 +532,27 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}"  HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                                    <dependencyinterface:CustomEditor  Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                    <control1:UnderLineEditor   Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" />
                                 </border:SfBorder>
+                                <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                        Command="{Binding TapCommand2}"
+                                         NumberOfTapsRequired="1" />
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </StackLayout>
 
+
                             <Image Grid.Column="1" Grid.Row="0" Source="Assets/mic.png">
+                                <Image.Source>
+                                    <OnPlatform  x:TypeArguments="ImageSource">
+                                        <OnPlatform.iOS>mic.png</OnPlatform.iOS>
+                                        <OnPlatform.Android>mic.png</OnPlatform.Android>
+                                        <OnPlatform.WinPhone>Assets/mic.png</OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer
                                         Command="{Binding TapCommand}"
@@ -541,13 +562,15 @@
 
                         </Grid>
 
-                        <Grid Grid.Row="3" x:Name="Grid_column1" IsVisible="{Binding InternalNotesIsVisible}" >
+
+
+                        <Grid Margin="10,0,20,0"  Grid.Row="3" x:Name="Grid_column1" IsVisible="{Binding InternalNotesIsVisible}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1500*" ></ColumnDefinition>
                                 <ColumnDefinition Width="40*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
 
-                            <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  Margin="10,10,10,10"  >
+                            <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
                                 <Label Text="{Binding InternalNotesTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -556,31 +579,22 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}"  HeightRequest="150" WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-
-                                    <dependencyinterface:CustomEditor  Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
-
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                    <control1:UnderLineEditor  Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
                                 </border:SfBorder>
+                                <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                        Command="{Binding TapCommand3}"
+                                         NumberOfTapsRequired="1" />
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </StackLayout>
-
 
                         </Grid>
 
-
-                        <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40" VerticalOptions="StartAndExpand" />-->
-
-                        <Button
-                        Grid.Row="4"
-                        VerticalOptions="StartAndExpand"
-                        Style="{StaticResource SaveButtonStyle}"
-                        Command="{Binding SaveWorkorderCommand}"
-                        IsVisible="{Binding EditWorkIsVisible}"
-                        IsEnabled="{Binding EditWorkIsEnable}"
-                        Text="{Binding SaveTitle}" />
-
-                        <!--<ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
-
+                       
+                        <Button x:Name="SaveButton" Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>
 
                     </Grid>
                 </ScrollView>

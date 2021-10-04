@@ -92,7 +92,7 @@
                                 </Label>
                                 <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"/>-->
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                    <controls:UnderLineEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></controls:UnderLineEditor>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -285,7 +285,7 @@
                                 </Label>
                                 <!--<Editor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>-->
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></dependencyinterface:CustomEditor>
+                                    <controls:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></controls:UnderLineEditor>
                                 </border:SfBorder>
                             </StackLayout>
 

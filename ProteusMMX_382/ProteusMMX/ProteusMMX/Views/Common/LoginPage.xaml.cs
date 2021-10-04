@@ -26,6 +26,16 @@ namespace ProteusMMX.Views.Common
             
             InitializeComponent();
 
+            if (Device.Idiom == TargetIdiom.Phone)
+            {
+                Phone.IsVisible = true;
+                Tablet.IsVisible = false;
+            }
+            else
+            {
+                Phone.IsVisible = false;
+                Tablet.IsVisible = true;
+            }
             //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
             //((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
             NavigationPage.SetHasBackButton(this, false);

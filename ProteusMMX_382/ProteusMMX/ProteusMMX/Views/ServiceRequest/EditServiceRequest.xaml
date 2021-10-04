@@ -4,6 +4,7 @@
               xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:Control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.ServiceRequest.EditServiceRequest"
               Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
@@ -87,7 +88,7 @@
                                 </Label>
                                 <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"/>-->
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></dependencyinterface:CustomEditor>
+                                    <Control1:UnderLineEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></Control1:UnderLineEditor>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -284,7 +285,7 @@
                                 </Label>
                                 <!--<Editor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>-->
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></dependencyinterface:CustomEditor>
+                                    <Control1:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></Control1:UnderLineEditor>
                                 </border:SfBorder>
                                 <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
@@ -320,7 +321,7 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder CornerRadius="5">
-                                    <dependencyinterface:CustomEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding SignatureText}" IsEnabled="False"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+                                    <Control1:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding SignatureText}" IsEnabled="False"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
                                 </border:SfBorder>
                                 <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>

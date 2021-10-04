@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:CarouselView.FormsPlugin.Abstractions;assembly=CarouselView.FormsPlugin.Abstractions"
-             xmlns:cv="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.CarouselView"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              Title="{Binding PageTitle}" 
               BackgroundColor="{StaticResource BackgroundColor}"
              x:Class="ProteusMMX.Views.ServiceRequest.ServiceRequestAttachmentPage">
@@ -37,38 +36,20 @@
                     <StackLayout  
                         Padding="10,10,10,10"
                         VerticalOptions="Fill">
+                        <StackLayout HeightRequest="350" WidthRequest="350">
+                            <cards:CarouselView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}" >
+                                <cards:CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout HeightRequest="450" WidthRequest='450'>
+                                            <Image Grid.RowSpan="2" Aspect="AspectFit"  Source="{Binding AttachmentImageSource}"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </cards:CarouselView.ItemTemplate>
+                            </cards:CarouselView>
+                        </StackLayout>
+                        <Grid>
 
-                        <controls:CarouselViewControl HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" Position="{Binding SelectedPosition}"  PositionSelected="CarouselView_PositionSelected" >
-                            <controls:CarouselViewControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Image Grid.RowSpan="2" Aspect="AspectFit"  Source="{Binding AttachmentImageSource}"/>
-                                    </Grid>
-                                </DataTemplate>
-                            </controls:CarouselViewControl.ItemTemplate>
-                        </controls:CarouselViewControl>
-                        <Label x:Name="swipe" Text="{Binding SwipeText}" TextColor="Silver" HorizontalOptions= "Center" Grid.Row="1">
-                            <Label.FontAttributes>
-                                <OnPlatform x:TypeArguments="FontAttributes">
-                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                    <OnPlatform.Android>Bold</OnPlatform.Android>
-                                </OnPlatform>
-                            </Label.FontAttributes>
-                        </Label>
-                        <Grid x:Name="GridSwipeButtons">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Label x:Name="ImageCountLabel" TextColor="Black" HorizontalOptions= "Center" Grid.Row="0" Grid.ColumnSpan="2" FontSize="Medium">
+                            <Label   Text="{Binding ImageText}" TextColor="Black" HorizontalOptions= "Center" Grid.Row="0">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
                                         <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -76,7 +57,20 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <Button Grid.Column="0" Grid.Row="1" HorizontalOptions="End" Clicked="Previous_Clicked" BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969" >
+                            <Label   Text="{Binding SwipeText}"  TextColor="Black" HorizontalOptions= "Center" Grid.Row="1">
+                                <Label.FontAttributes>
+                                    <OnPlatform x:TypeArguments="FontAttributes">
+                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                        <OnPlatform.Android>Bold</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Label.FontAttributes>
+                            </Label>
+
+
+                        </Grid>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+
+                            <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="False"  BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969" >
                                 <Button.Image>
                                     <OnPlatform x:TypeArguments="FileImageSource">
                                         <OnPlatform.iOS>
@@ -91,7 +85,7 @@
                                     </OnPlatform>
                                 </Button.Image>
                             </Button>
-                            <Button Grid.Column="1" Grid.Row="1" HorizontalOptions="Start" Clicked="Next_Clicked" BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969"  >
+                            <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="True"  BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969"  >
                                 <Button.Image>
                                     <OnPlatform x:TypeArguments="FileImageSource">
                                         <OnPlatform.iOS>
@@ -106,10 +100,10 @@
                                     </OnPlatform>
                                 </Button.Image>
                             </Button>
-                        </Grid>
+                        </StackLayout>
                         <Grid>
 
-                            <Button x:Name="PDFGrid" Text="" HorizontalOptions="End" IsVisible = "true" WidthRequest = "60" HeightRequest = "60" Margin = "0,0,160,0" BackgroundColor="White" Command="{Binding DocCommand}" >
+                            <Button x:Name="PDFGrid" Text="" HorizontalOptions="End" CornerRadius="5" IsVisible = "true" WidthRequest = "60" HeightRequest = "60" BorderColor="Black" Margin = "0,0,180,0" BackgroundColor="White" Command="{Binding DocCommand}" >
                                 <Button.Image>
                                     <OnPlatform x:TypeArguments="FileImageSource">
                                         <OnPlatform.iOS>
@@ -125,7 +119,7 @@
                                 </Button.Image>
                             </Button>
 
-                            <Button x:Name="CameraButton" IsVisible="{Binding AttachmentCameraButtonIsVisible}" IsEnabled="{Binding AttachmentCameraButtonIsEnabled}" HorizontalOptions="End" WidthRequest = "60" Margin = "0,0,80,0" BackgroundColor="White" Command="{Binding CameraCommand}">
+                            <Button x:Name="CameraButton" CornerRadius="5" IsVisible="{Binding AttachmentCameraButtonIsVisible}" IsEnabled="{Binding AttachmentCameraButtonIsEnabled}" HorizontalOptions="End" WidthRequest = "60" Margin = "0,0,100,0" BackgroundColor="White" BorderColor="Black" Command="{Binding CameraCommand}">
                                 <Button.Image>
                                     <OnPlatform x:TypeArguments="FileImageSource">
                                         <OnPlatform.iOS>
@@ -141,7 +135,7 @@
                                 </Button.Image>
                             </Button>
 
-                            <Button x:Name="DeleteButton" IsVisible="{Binding AttachmentDeleteButtonIsVisible}" IsEnabled="{Binding AttachmentDeleteButtonIsEnabled}" Text="{Binding DeleteTitle}" HorizontalOptions="End"   BorderColor = "Black" BackgroundColor="#87CEFA" TextColor = "White" WidthRequest = "80" HeightRequest="50" Margin="0,10,0,10" Command="{Binding DeleteCommand}" ></Button>
+                            <Button x:Name="DeleteButton" IsVisible="{Binding AttachmentDeleteButtonIsVisible}" CornerRadius="5" IsEnabled="{Binding AttachmentDeleteButtonIsEnabled}" Text="{Binding DeleteTitle}" HorizontalOptions="End"   BorderColor = "Black" BackgroundColor="#87CEFA" TextColor = "White" WidthRequest = "80" HeightRequest="50" Margin="0,10,0,10" Command="{Binding DeleteCommand}" ></Button>
                         </Grid>
                         <Button x:Name="SaveButton" IsVisible="False" IsEnabled="{Binding AttachmentSaveButtonIsEnabled}" Text="{Binding SaveTitle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" BorderColor = "Black" BackgroundColor="#87CEFA" TextColor = "White" Command="{Binding SaveCommand}" ></Button>
                     </StackLayout>

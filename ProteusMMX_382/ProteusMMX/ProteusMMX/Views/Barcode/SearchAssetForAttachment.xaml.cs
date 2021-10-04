@@ -52,7 +52,7 @@ namespace ProteusMMX.Views.Barcode
         {
             try
             {
-                this.CarouselView.Position += 1;
+                //this.CarouselView.Position += 1;
             }
             catch (Exception ex)
             {
@@ -64,7 +64,7 @@ namespace ProteusMMX.Views.Barcode
         {
             try
             {
-                this.CarouselView.Position -= 1;
+               // this.CarouselView.Position -= 1;
             }
             catch (Exception ex)
             {

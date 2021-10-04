@@ -341,7 +341,23 @@ namespace ProteusMMX.ViewModel.Barcode
 
 
         #region Attachment Page Properties
+        string _imageText;
+        public string ImageText
+        {
+            get
+            {
+                return _imageText;
+            }
 
+            set
+            {
+                if (value != _imageText)
+                {
+                    _imageText = value;
+                    OnPropertyChanged(nameof(ImageText));
+                }
+            }
+        }
 
         Page _page;
         public Page Page
@@ -428,6 +444,21 @@ namespace ProteusMMX.ViewModel.Barcode
         public ObservableCollection<WorkorderAttachment> Attachments { get; set; }
         public ObservableCollection<string> DocumentAttachments { get; set; }
 
+        int _selectedIndexItem = -1;
+        public int SelectedIndexItem
+        {
+            get
+            {
+                return _selectedIndexItem;
+            }
+
+            set
+            {
+                _selectedIndexItem = value;
+                OnPropertyChanged("SelectedIndexItem");
+
+            }
+        }
 
         int _selectedPosition;
         public int SelectedPosition
@@ -457,6 +488,11 @@ namespace ProteusMMX.ViewModel.Barcode
 
         public ICommand ScanCommand => new AsyncCommand(SearchAssetAttachment);
 
+        public bool IsAutoAnimationRunning { get; set; }
+
+        public bool IsUserInteractionRunning { get; set; }
+
+        public ICommand PanPositionChangedCommand { get; }
 
 
         #endregion
@@ -520,7 +556,20 @@ namespace ProteusMMX.ViewModel.Barcode
             {
 
             };
+            PanPositionChangedCommand = new Command(v =>
+            {
+                if (IsAutoAnimationRunning || IsUserInteractionRunning)
+                {
+                    return;
+                }
 
+                var index = SelectedIndexItem + (bool.Parse(v.ToString()) ? 1 : -1);
+                if (index < 0 || index >= Attachments.Count)
+                {
+                    return;
+                }
+                SelectedIndexItem = index;
+            });
         }
 
         public async Task SetTitlesPropertiesForPage()
@@ -536,14 +585,14 @@ namespace ProteusMMX.ViewModel.Barcode
                     LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
                     CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
                     SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-                    SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("AssetNumber");
+                    SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchorScanByAssetNumberNameTag");
                     GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
                     ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
                     SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
                     SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                     SwipeText = WebControlTitle.GetTargetNameByTitleName("Pleaseswipelefttoright");
 
-
+                    ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + 0;
 
 
 
@@ -943,6 +992,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
                         if (attachment.assetWrapper.attachments.Count > 0)
                         {
+                            ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.assetWrapper.attachments.Count;
                             foreach (var file in attachment.assetWrapper.attachments)
                             {
 

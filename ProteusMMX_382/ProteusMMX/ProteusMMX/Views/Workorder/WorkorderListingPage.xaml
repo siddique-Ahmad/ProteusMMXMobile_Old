@@ -127,7 +127,7 @@
                 </Grid.ColumnDefinitions>
 
                 <border:SfBorder CornerRadius="5">
-                    <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                    <controls:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
                 </border:SfBorder>
                 <Button Grid.Column="1" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
 

@@ -4,6 +4,7 @@
              x:Class="ProteusMMX.Views.SelectionListPages.AssignToListSelectionPage"
                xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}">
 
@@ -38,7 +39,7 @@
                 </Grid.ColumnDefinitions>
 
                 <border:SfBorder CornerRadius="5">
-                    <Entry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                    <control1:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
                 </border:SfBorder>
                 <Button CornerRadius="5" Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
                 <Button CornerRadius="5" Grid.Row="2"  Grid.ColumnSpan="2" Text="{Binding SelectTitle}" Command="{Binding SelectNullCommand}" BackgroundColor="White" />

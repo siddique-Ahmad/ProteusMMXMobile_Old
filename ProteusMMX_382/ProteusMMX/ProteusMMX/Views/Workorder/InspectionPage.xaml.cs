@@ -1907,6 +1907,7 @@ namespace ProteusMMX.Views.Workorder
                     {
                         Orientation = StackOrientation.Vertical,
                         HorizontalOptions = LayoutOptions.StartAndExpand,
+                        Spacing = 20,
                         Children = { }
 
                     };
@@ -2333,7 +2334,14 @@ namespace ProteusMMX.Views.Workorder
                             GenerateAnswerText(item);
 
 
-                            Layout = new MyPicker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                            if (Device.RuntimePlatform == Device.UWP)
+                            {
+                                Layout = new MyPicker() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                            }
+                            else
+                            {
+                                Layout = new MyPicker() { WidthRequest = 300, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                            }
 
                             if (!string.IsNullOrWhiteSpace(item.Option1))
                                 (Layout as MyPicker).Items.Add(item.Option1);
@@ -2402,10 +2410,10 @@ namespace ProteusMMX.Views.Workorder
                             break;
                     }
 
-                    var btnsave = new Button() { CornerRadius = 5, Text = WebControlTitle.GetTargetNameByTitleName("Save"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnsave = new Button() { CornerRadius = 5, WidthRequest = 300, HeightRequest = 40, Text = WebControlTitle.GetTargetNameByTitleName("Save"), HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnsave.Clicked += Btnsave_Clicked;
 
-                    var btnDelete = new Button() { CornerRadius = 5, StyleId = item.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnDelete = new Button() { CornerRadius = 5, WidthRequest = 300, HeightRequest = 40, StyleId = item.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnDelete.Clicked += BtnDelete_Clicked;
 
                     #region Add Signature image
@@ -2491,6 +2499,7 @@ namespace ProteusMMX.Views.Workorder
                     {
                         Orientation = StackOrientation.Vertical,
                         HorizontalOptions = LayoutOptions.StartAndExpand,
+                        Spacing = 20,
                         Children = { }
 
                     };
@@ -2906,7 +2915,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 break;
 
-                            case "Multiple Choice":
+                             case "Multiple Choice":
                                 Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
 
                                 if (Device.Idiom == TargetIdiom.Phone)
@@ -2919,7 +2928,14 @@ namespace ProteusMMX.Views.Workorder
                                 }
                                 GenerateAnswerText(item1);
 
-                                Layout = new MyPicker() { WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center };
+                                if (Device.RuntimePlatform == Device.UWP)
+                                {
+                                    Layout = new MyPicker() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                                }
+                                else
+                                {
+                                    Layout = new MyPicker() {WidthRequest=300,VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                                }
 
                                 if (!string.IsNullOrWhiteSpace(item1.Option1))
                                     (Layout as MyPicker).Items.Add(item1.Option1);
@@ -2987,10 +3003,10 @@ namespace ProteusMMX.Views.Workorder
 
                     }
 
-                    var btnSaveSection = new Button() { CornerRadius = 5, Text = WebControlTitle.GetTargetNameByTitleName("Save"), CommandParameter = commonSections, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnSaveSection = new Button() { CornerRadius = 5, WidthRequest = 300, Text = WebControlTitle.GetTargetNameByTitleName("Save"), CommandParameter = commonSections, HeightRequest = 40, BackgroundColor = Color.FromHex("#87CEFA"), HorizontalOptions = LayoutOptions.Center, TextColor = Color.White, BorderColor = Color.Black };
                     btnSaveSection.Clicked += BtnSaveSection_Clicked;
 
-                    var btnDelete = new Button() { CornerRadius = 5, StyleId = item.SectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnDelete = new Button() { CornerRadius = 5, WidthRequest = 300, StyleId = item.SectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HeightRequest = 40, HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
                     btnDelete.Clicked += BtnSectionDelete_Clicked;
 
 
@@ -3006,7 +3022,7 @@ namespace ProteusMMX.Views.Workorder
                         imageView.Source = ImageSource.FromStream(() => new MemoryStream(byteImg));
                         layout1.Children.Add(imageView);
 
-                        var addSignatureButton = new Button() {CornerRadius=5, Text = WebControlTitle.GetTargetNameByTitleName("AddSignature"), BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                        var addSignatureButton = new Button() { CornerRadius = 5, WidthRequest = 300, Text = WebControlTitle.GetTargetNameByTitleName("AddSignature"), HeightRequest = 40, BackgroundColor = Color.FromHex("#87CEFA"), HorizontalOptions = LayoutOptions.Center, TextColor = Color.White, BorderColor = Color.Black };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
                         layout1.Children.Add(addSignatureButton);
 

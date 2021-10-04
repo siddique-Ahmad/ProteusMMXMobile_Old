@@ -55,7 +55,7 @@
                     </Label.FontAttributes>
                 </Label>
                 <border:SfBorder CornerRadius="5">
-                    <control1:BorderlessEntry
+                    <control1:CustomEntry
                         x:Name="QuantityReceived" Text="{Binding QuantityReceivedText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextChanged="QuantityReceived_TextChanged"/>
 
                 </border:SfBorder>
@@ -123,7 +123,7 @@
                     </Label.FontAttributes>
                 </Label>
                 <border:SfBorder CornerRadius="5">
-                    <control1:BorderlessEntry
+                    <control1:CustomEntry
                         x:Name="InvoiceNumber" Text="{Binding InvoiceNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
                 </border:SfBorder>
             </StackLayout>
@@ -138,7 +138,7 @@
                     </Label.FontAttributes>
                 </Label>
                 <border:SfBorder CornerRadius="5">
-                    <control1:BorderlessEntry
+                    <control1:CustomEntry
                 x:Name="PackagingSlipNumber" Text="{Binding PackagingSlipNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
                 </border:SfBorder>
             </StackLayout>

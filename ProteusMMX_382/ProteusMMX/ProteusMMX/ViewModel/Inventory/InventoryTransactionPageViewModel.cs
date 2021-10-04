@@ -1862,14 +1862,14 @@ namespace ProteusMMX.ViewModel.Inventory
                 this.ShelfBinName = targetNavigationData.ShelfBin;
                 this.PerformByText = AppSettings.UserName;
                 this.CheckOutText = AppSettings.UserName;
-
-
                 await GetTransactionParameters();
-                // FormLoadInputForWorkorder = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.InventoryModuleName);
                 await SetTitlesPropertiesForPage();
                 OperationInProgress = false;
-                FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.InventoryModuleName);
-                await CreateControlsForPage(FormControlsAndRights);
+                await CreateControlsForPage();
+
+
+
+
 
 
             }
@@ -1938,288 +1938,300 @@ namespace ProteusMMX.ViewModel.Inventory
 
             }
         }
-        public async Task CreateControlsForPage(ServiceOutput FormControlsAndRights)
+        public async Task CreateControlsForPage()
         {
 
-            if (FormControlsAndRights != null && FormControlsAndRights.lstModules != null && FormControlsAndRights.lstModules.Count > 0)
+
+            if (Application.Current.Properties.ContainsKey("InventoryPerformTransaction"))
             {
-                var InventoryModule = FormControlsAndRights.lstModules[0];
-                if (InventoryModule.ModuleName == "Inventory") //ModuleName can't be  changed in service 
+                var Perform_Transaction = Application.Current.Properties["InventoryPerformTransaction"].ToString();
+                if (Perform_Transaction == "E")
                 {
-                    if (InventoryModule.lstSubModules != null && InventoryModule.lstSubModules.Count > 0)
-                    {
-                        var InventorySubModule = InventoryModule.lstSubModules.FirstOrDefault(i => i.SubModuleName == "Stockrooms");
+                    this.Perform_TransactionIsVisible = true;
+                }
+                else if (Perform_Transaction == "V")
+                {
+                    this.Perform_TransactionIsEnabled = false;
 
-                        if (InventorySubModule != null)
-                        {
-                            if (InventorySubModule.Button != null && InventorySubModule.Button.Count > 0)
-                            {
+                }
+                else
+                {
+                    this.Perform_TransactionIsVisible = false;
+                }
+            }
+
+            if (Application.Current.Properties.ContainsKey("InventoryPartNumber"))
+            {
+                var PartNumber = Application.Current.Properties["InventoryPartNumber"].ToString();
+                if (PartNumber == "E" || PartNumber == "V")
+                {
+                    this.PartNumberIsVisible = true;
+                }
+                else
+                {
+                    this.PartNumberIsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryPartName"))
+            {
+                var PartName = Application.Current.Properties["InventoryPartName"].ToString();
+                if (PartName == "E" || PartName == "V")
+                {
+                    this.PartNameIsVisible = true;
+                }
+                else
+                {
+                    this.PartNameIsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryQuantityOnHand"))
+            {
+                var QuantityOnHand = Application.Current.Properties["InventoryQuantityOnHand"].ToString();
+                if (QuantityOnHand == "E" || QuantityOnHand == "V")
+                {
+                    this.QuantityOnHandIsVisible = true;
+                }
+                else
+                {
+                    this.QuantityOnHandIsVisible = false;
+                }
+            }
+
+            if (Application.Current.Properties.ContainsKey("InventoryCostCenterName"))
+            {
+                var CostCenter = Application.Current.Properties["InventoryCostCenterName"].ToString();
+                if (CostCenter == "E")
+                {
+                    CostcenterIsVisibile = true;
+                }
+                else if (CostCenter == "V")
+                {
+                    CostcenterIsEnabled = false;
+                }
+                else
+                {
+                    CostcenterIsVisibile = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryDescription"))
+            {
+                var Description = Application.Current.Properties["InventoryDescription"].ToString();
+                if (Description == "E")
+                {
+                    DescriptionIsVisible = true;
+                }
+                else if (Description == "V")
+                {
+                    DescriptionIsEnabled = false;
+                }
+                else
+                {
+                    DescriptionIsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryTransactionReasonName"))
+            {
+                var TransactionReason = Application.Current.Properties["InventoryTransactionReasonName"].ToString();
+                if (TransactionReason == "E")
+                {
+                    TransactionReasonIsVisible = true;
+                }
+                else if (TransactionReason == "V")
+                {
+                    TransactionReasonIsEnabled = false;
+                }
+                else
+                {
+                    TransactionReasonIsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryTransactor"))
+            {
+                var TRansactor = Application.Current.Properties["InventoryTransactor"].ToString();
+                if (TRansactor == "E")
+                {
+                    TrasnactorIsVisible = true;
+                }
+                else if (TRansactor == "V")
+                {
+                    TrasnactorIsEnabled = false;
+                }
+                else
+                {
+                    TrasnactorIsVisible = false;
+                }
+            }
+
+            //Unit Cost/////////
+            if (Application.Current.Properties.ContainsKey("InventoryUnitCostID"))
+            {
+                var UnitCost = Application.Current.Properties["InventoryUnitCostID"].ToString();
+                if (UnitCost == "E")
+                {
+                    UnitCostIsVisible = true;
+                }
+                else if (UnitCost == "V")
+                {
+                    UnitCostIsEnabled = false;
+                }
+                else
+                {
+                    UnitCostIsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryCheckOutTo"))
+            {
+                var CheckOutTo = Application.Current.Properties["InventoryCheckOutTo"].ToString();
+                if (CheckOutTo == "E")
+                {
+                    this.CheckOutIsVisible = true;
+                }
+                else if (CheckOutTo == "V")
+                {
+                    this.CheckOutIsEnabled = false;
+                }
+                else
+                {
+                    this.CheckOutIsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryTransactionType"))
+            {
+                var TransactionType = Application.Current.Properties["InventoryTransactionType"].ToString();
+                if (TransactionType == "E")
+                {
+                    this.TransactionTypeIsVisible = true;
+                }
+                else if (TransactionType == "V")
+                {
+                    this.TransactionTypeIsEnabled = false;
+                }
+                else
+                {
+                    this.TransactionTypeIsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryTransactionQuantity"))
+            {
+                var Adjustmentquantity = Application.Current.Properties["InventoryTransactionQuantity"].ToString();
+                if (Adjustmentquantity == "E")
+                {
+                    this.AdjustmentQuantityIsVisible = true;
+                }
+                else if (Adjustmentquantity == "V")
+                {
+                    this.AdjustmentQuantityIsEnabled = false;
+                }
+                else
+                {
+                    this.AdjustmentQuantityIsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryUserField1"))
+            {
+                var UserField1 = Application.Current.Properties["InventoryUserField1"].ToString();
+                if (UserField1 == "E")
+                {
+                    this.Userfeild1IsVisible = true;
+                }
+                else if (UserField1 == "V")
+                {
+                    this.Userfeild1IsEnabled = false;
+                }
+                else
+                {
+                    this.Userfeild1IsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryUserField2"))
+            {
+                var UserField2 = Application.Current.Properties["InventoryUserField2"].ToString();
+                if (UserField2 == "E")
+                {
+                    this.Userfeild2IsVisible = true;
+                }
+                else if (UserField2 == "V")
+                {
+                    this.Userfeild2IsEnabled = false;
+                }
+                else
+                {
+                    this.Userfeild2IsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryUserField3"))
+            {
+                var UserField3 = Application.Current.Properties["InventoryUserField3"].ToString();
+                if (UserField3 == "E")
+                {
+                    this.Userfeild3IsVisible = true;
+                }
+                else if (UserField3 == "V")
+                {
+                    this.Userfeild3IsEnabled = false;
+                }
+                else
+                {
+                    this.Userfeild3IsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("InventoryUserField4"))
+            {
+                var UserField4 = Application.Current.Properties["InventoryUserField4"].ToString();
+                if (UserField4 == "E")
+                {
+                    this.Userfeild4IsVisible = true;
+                }
+                else if (UserField4 == "V")
+                {
+                    this.Userfeild4IsEnabled = false;
+                }
+                else
+                {
+                    this.Userfeild4IsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("UpdateLastPhysicalInventorydate"))
+            {
+                var UpdateLastPhysicalInventorydate = Application.Current.Properties["UpdateLastPhysicalInventorydate"].ToString();
+                if (UpdateLastPhysicalInventorydate == "E")
+                {
+                    this.UpdateLastPhysicalDateVisible = true;
+                }
+                else if (UpdateLastPhysicalInventorydate == "V")
+                {
+                    this.UpdateLastPhysicalDateEnabled = false;
+                }
+                else
+                {
+                    this.UpdateLastPhysicalDateVisible = false;
+                }
+            }
 
 
-                            }
-                            if (InventorySubModule.listDialoges != null && InventorySubModule.listDialoges.Count > 0)
-                            {
-                                var InventoryDialog = InventorySubModule.listDialoges.FirstOrDefault(i => i.DialogName == "StockroomParts");
-                                if (InventoryDialog != null && InventoryDialog.listTab != null && InventoryDialog.listTab.Count > 0)
-                                {
-                                    var Perform_Transaction = InventoryDialog.Button.FirstOrDefault(i => i.Name == "PerformTransaction");
-                                    if (Perform_Transaction.Expression == "E")
-                                    {
-                                        this.Perform_TransactionIsVisible = true;
-                                    }
-                                    else if (Perform_Transaction.Expression == "V")
-                                    {
-                                        this.Perform_TransactionIsEnabled = false;
 
-                                    }
-                                    else
-                                    {
-                                        this.Perform_TransactionIsVisible = false;
-                                    }
-                                    var InventoryDetailsTab = InventoryDialog.listTab.FirstOrDefault(i => i.DialogTabName == "StockroomTransactionDialog");
-                                    //var InventoryPartsDetailsTab = InventoryDialog.listTab.FirstOrDefault(i => i.DialogTabName == "StockroomPartDialog");
-
-                                    if (InventoryDetailsTab.listControls != null && InventoryDetailsTab.listControls.Count > 0)
-                                    {
-
-                                        var UpdateLastPhysicalInventorydate = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UpdateLastPhysicalInventorydate");
-                                        var UserField1 = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UserField1");
-                                        var UserField2 = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UserField2");
-                                        var UserField3 = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UserField3");
-                                        var UserField4 = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "UserField4");
-                                        var PartNumber = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "PartNumber");
-                                        var PartName = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "PartName");
-                                        var QuantityOnHand = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "OriginalQuantityOnHand");
-                                        // var QuantityAllocated= InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "PartNumber");
-                                        CostCenter = InventoryDetailsTab.ButtonControls.FirstOrDefault(i => i.Name == "CostCenterName");
-                                        Description = InventoryDetailsTab.ButtonControls.FirstOrDefault(i => i.Name == "Description");
-                                        TransactionReason = InventoryDetailsTab.ButtonControls.FirstOrDefault(i => i.Name == "TransactionReasonName");
-                                        TRansactor = InventoryDetailsTab.ButtonControls.FirstOrDefault(i => i.Name == "Transactor");
-                                        UnitCost = InventoryDetailsTab.ButtonControls.FirstOrDefault(i => i.Name == "UnitCostID");
-                                        var CheckOutTo = InventoryDetailsTab.ButtonControls.FirstOrDefault(i => i.Name == "CheckOutTo");
-                                        var TransactionType = InventoryDetailsTab.ButtonControls.FirstOrDefault(i => i.Name == "TransactionType");
-                                        var Adjustmentquantity = InventoryDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "TransactionQuantity");
-                                        // var Shelf_bin= InventoryPartsDetailsTab.listControls.FirstOrDefault(i => i.ControlName == "ShelfBin");
-
-                                        if (PartNumber.Expression == "E" || PartNumber.Expression == "V")
-                                        {
-                                            this.PartNumberIsVisible = true;
-                                        }
-                                        else
-                                        {
-                                            this.PartNumberIsVisible = false;
-                                        }
-                                        if (PartName.Expression == "E" || PartName.Expression == "V")
-                                        {
-                                            this.PartNameIsVisible = true;
-                                        }
-                                        else
-                                        {
-                                            this.PartNameIsVisible = false;
-                                        }
-                                        if (QuantityOnHand.Expression == "E" || QuantityOnHand.Expression == "V")
-                                        {
-                                            this.QuantityOnHandIsVisible = true;
-                                        }
-                                        else
-                                        {
-                                            this.QuantityOnHandIsVisible = false;
-                                        }
-
-
-                                        if (CostCenter.Expression == "E")
-                                        {
-                                            CostcenterIsVisibile = true;
-                                        }
-                                        else if (CostCenter.Expression == "V")
-                                        {
-                                            CostcenterIsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            CostcenterIsVisibile = false;
-                                        }
-                                        if (Description.Expression == "E")
-                                        {
-                                            DescriptionIsVisible = true;
-                                        }
-                                        else if (Description.Expression == "V")
-                                        {
-                                            DescriptionIsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            DescriptionIsVisible = false;
-                                        }
-
-                                        if (TransactionReason.Expression == "E")
-                                        {
-                                            TransactionReasonIsVisible = true;
-                                        }
-                                        else if (TransactionReason.Expression == "V")
-                                        {
-                                            TransactionReasonIsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            TransactionReasonIsVisible = false;
-                                        }
-
-                                        if (TRansactor.Expression == "E")
-                                        {
-                                            TrasnactorIsVisible = true;
-                                        }
-                                        else if (TRansactor.Expression == "V")
-                                        {
-                                            TrasnactorIsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            TrasnactorIsVisible = false;
-                                        }
-
-                                        //Unit Cost/////////
-                                        if (UnitCost.Expression == "E")
-                                        {
-                                            UnitCostIsVisible = true;
-                                        }
-                                        else if (UnitCost.Expression == "V")
-                                        {
-                                            UnitCostIsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            UnitCostIsVisible = false;
-                                        }
-                                        if (CheckOutTo.Expression == "E")
-                                        {
-                                            this.CheckOutIsVisible = true;
-                                        }
-                                        else if (CheckOutTo.Expression == "V")
-                                        {
-                                            this.CheckOutIsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            this.CheckOutIsVisible = false;
-                                        }
-                                        if (TransactionType.Expression == "E")
-                                        {
-                                            this.TransactionTypeIsVisible = true;
-                                        }
-                                        else if (TransactionType.Expression == "V")
-                                        {
-                                            this.TransactionTypeIsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            this.TransactionTypeIsVisible = false;
-                                        }
-                                        if (Adjustmentquantity.Expression == "E")
-                                        {
-                                            this.AdjustmentQuantityIsVisible = true;
-                                        }
-                                        else if (Adjustmentquantity.Expression == "V")
-                                        {
-                                            this.AdjustmentQuantityIsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            this.AdjustmentQuantityIsVisible = false;
-                                        }
-                                        if (UserField1.Expression == "E")
-                                        {
-                                            this.Userfeild1IsVisible = true;
-                                        }
-                                        else if (UserField1.Expression == "V")
-                                        {
-                                            this.Userfeild1IsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            this.Userfeild1IsVisible = false;
-                                        }
-                                        if (UserField2.Expression == "E")
-                                        {
-                                            this.Userfeild2IsVisible = true;
-                                        }
-                                        else if (UserField2.Expression == "V")
-                                        {
-                                            this.Userfeild2IsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            this.Userfeild2IsVisible = false;
-                                        }
-                                        if (UserField3.Expression == "E")
-                                        {
-                                            this.Userfeild3IsVisible = true;
-                                        }
-                                        else if (UserField3.Expression == "V")
-                                        {
-                                            this.Userfeild3IsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            this.Userfeild3IsVisible = false;
-                                        }
-                                        if (UserField4.Expression == "E")
-                                        {
-                                            this.Userfeild4IsVisible = true;
-                                        }
-                                        else if (UserField4.Expression == "V")
-                                        {
-                                            this.Userfeild4IsEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            this.Userfeild4IsVisible = false;
-                                        }
-                                        if (UpdateLastPhysicalInventorydate.Expression == "E")
-                                        {
-                                            this.UpdateLastPhysicalDateVisible = true;
-                                        }
-                                        else if (UpdateLastPhysicalInventorydate.Expression == "V")
-                                        {
-                                            this.UpdateLastPhysicalDateEnabled = false;
-                                        }
-                                        else
-                                        {
-                                            this.UpdateLastPhysicalDateVisible = false;
-                                        }
-                                    }
-
-                                    var InventoryPartDialog = InventoryDialog.listTab.FirstOrDefault(i => i.DialogTabName == "StockroomPartDialog");
-                                    {
-
-                                        if (InventoryPartDialog.listTabDialog != null && InventoryPartDialog.listTabDialog.Count > 0)
-                                        {
-                                            var Detailstab = InventoryPartDialog.listTabDialog.FirstOrDefault(i => i.TabDialogName == "Details");
-                                            var shelfBin = Detailstab.ButtonControls.FirstOrDefault(i => i.Name == "ShelfBin");
-
-                                            if (shelfBin.Expression == "E")
-                                            {
-                                                SelfBinIsVisible = true;
-                                            }
-                                            else if (shelfBin.Expression == "V")
-                                            {
-                                                SelfBinIsEnable = false;
-                                            }
-                                            else
-                                            {
-                                                SelfBinIsVisible = false;
-                                            }
-
-                                        }
-
-                                    }
-                                }
-                            }
-                        }
-                    }
+            if (Application.Current.Properties.ContainsKey("ShelfBinKey"))
+            {
+                var shelfBin = Application.Current.Properties["ShelfBinKey"].ToString();
+                if (shelfBin == "E")
+                {
+                    SelfBinIsVisible = true;
+                }
+                else if (shelfBin == "V")
+                {
+                    SelfBinIsEnable = false;
+                }
+                else
+                {
+                    SelfBinIsVisible = false;
                 }
             }
         }
+                                   
+                                
+
+                                    
+                               
 
         public async Task ShowActions()
         {
@@ -2394,34 +2406,52 @@ namespace ProteusMMX.ViewModel.Inventory
                 var TransactionParameters = await _inventoryService.GetTransactionReason(StockroompartID.ToString(), UserID);
                 if (TransactionParameters != null && TransactionParameters.inventoryWrapper.trasactionDialog != null)
                 {
-                    ////Set Part Profile Picture///////
-                    if (Device.RuntimePlatform == Device.UWP)
-                    {
-                        byte[] imgUser = StreamToBase64.StringToByte(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image);
-                        MemoryStream stream = new MemoryStream(imgUser);
-                        bool isimage = Extension.IsImage(stream);
-                        if (isimage == true)
-                        {
-
-                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
-                            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
-
-
-
-                        }
-                    }
                     var trasactiontype = TransactionParameters.inventoryWrapper.trasactionDialog;
                     this.PartNameText = trasactiontype.PartName;
                     this.PartNumberText = trasactiontype.PartNumber;
                     this.QuantityOnHandText = trasactiontype.QuantityOnHand;
                     this.StockroomNameText = trasactiontype.StockroomName;
                     this.QuantityAllocatedText = Math.Round(Convert.ToDecimal(this.QuantityAllocatedText), 2).ToString();
-                    //trasactiontype.QuantityAllocatedText = decimal.Parse(string.Format(StringFormat.NumericZero(), trasactiontype.Quan));
-
-
-
                     this.UnitCostText = string.Format(StringFormat.CurrencyZero(), trasactiontype.OriginalAmount == null ? 0 : trasactiontype.OriginalAmount);
 
+
+                    ////Set Part Profile Picture///////
+                    if (!string.IsNullOrWhiteSpace(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image))
+                    {
+
+
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            byte[] imgUser = StreamToBase64.StringToByte(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image);
+                            MemoryStream stream = new MemoryStream(imgUser);
+                            bool isimage = Extension.IsImage(stream);
+                            if (isimage == true)
+                            {
+
+                                byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
+
+
+
+                            }
+                        }
+                        else
+                        {
+                            byte[] imgUser = StreamToBase64.StringToByte(TransactionParameters.inventoryWrapper.trasactionDialog.Base64Image);
+                            MemoryStream stream = new MemoryStream(imgUser);
+                            bool isimage = Extension.IsImage(stream);
+                            if (isimage == true)
+                            {
+
+                                //byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
+
+
+
+                            }
+                        }
+                    }
+                   
 
 
 

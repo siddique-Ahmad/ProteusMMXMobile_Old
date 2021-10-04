@@ -262,7 +262,23 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
         #region Attachment Page Properties
+        string _imageText;
+        public string ImageText
+        {
+            get
+            {
+                return _imageText;
+            }
 
+            set
+            {
+                if (value != _imageText)
+                {
+                    _imageText = value;
+                    OnPropertyChanged(nameof(ImageText));
+                }
+            }
+        }
 
         Page _page;
         public Page Page
@@ -349,6 +365,21 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         public ObservableCollection<ServicerequestAttachment> Attachments { get; set; }
         public ObservableCollection<string> DocumentAttachments { get; set; }
 
+        int _selectedIndexItem = -1;
+        public int SelectedIndexItem
+        {
+            get
+            {
+                return _selectedIndexItem;
+            }
+
+            set
+            {
+                _selectedIndexItem = value;
+                OnPropertyChanged("SelectedIndexItem");
+
+            }
+        }
 
         int _selectedPosition;
         public int SelectedPosition
@@ -377,7 +408,11 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         public ICommand CameraCommand => new AsyncCommand(OpenMedia);
         public ICommand DeleteCommand => new AsyncCommand(DeleteAttachment);
         public ICommand SaveCommand => new AsyncCommand(SaveAttachment);
+        public bool IsAutoAnimationRunning { get; set; }
 
+        public bool IsUserInteractionRunning { get; set; }
+
+        public ICommand PanPositionChangedCommand { get; }
 
 
         #endregion
@@ -592,6 +627,20 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
 
             };
+            PanPositionChangedCommand = new Command(v =>
+            {
+                if (IsAutoAnimationRunning || IsUserInteractionRunning)
+                {
+                    return;
+                }
+
+                var index = SelectedIndexItem + (bool.Parse(v.ToString()) ? 1 : -1);
+                if (index < 0 || index >= Attachments.Count)
+                {
+                    return;
+                }
+                SelectedIndexItem = index;
+            });
 
         }
 
@@ -656,7 +705,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     SwipeText = WebControlTitle.GetTargetNameByTitleName("Pleaseswipelefttoright");
                     DeleteTitle = WebControlTitle.GetTargetNameByTitleName("Delete");
                     SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-
+                    ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + 0;
 
 
 
@@ -1062,7 +1111,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
 
 
-                var position = this.SelectedPosition;
+                var position = this.SelectedIndexItem;
 
                 if (Attachments.Count == 0)
                 {
@@ -1220,11 +1269,11 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 OperationInProgress = true;
 
-                if (IsDataRequested)
-                {
-                    IsDataRequested = false;
-                    return;
-                }
+                //if (IsDataRequested)
+                //{
+                //    IsDataRequested = false;
+                //    return;
+                //}
 
                 try
                 {
@@ -1261,6 +1310,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                         if (attachment.serviceRequestWrapper.attachments.Count > 0)
                         {
+                            ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.serviceRequestWrapper.attachments.Count;
 
                             foreach (var file in attachment.serviceRequestWrapper.attachments)
                             {
@@ -1307,6 +1357,27 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                                         }
                                     }
+                                    else if (Device.RuntimePlatform == Device.Android)
+                                    {
+                                        byte[] imgUser = StreamToBase64.StringToByte(file.attachmentFile);
+                                        MemoryStream stream = new MemoryStream(imgUser);
+                                        bool isimage = Extension.IsImage(stream);
+                                        if (isimage == true)
+                                        {
+
+                                            Attachments.Add(new ServicerequestAttachment
+                                            {
+                                                IsSynced = true,
+                                                attachmentFileExtension = file.attachmentFileExtension,
+                                                //ImageBytes = imgUser, //byteImage,
+                                                ServiceRequestAttachmentID = file.ServiceRequestAttachmentID,
+                                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser)))),
+
+                                            }
+                                            );
+
+                                        }
+                                    }
                                     else
                                     {
 
@@ -1327,6 +1398,10 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                 }
                             }
                         }
+                    }
+                    else
+                    {
+                        ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + 0;
                     }
 
                 }

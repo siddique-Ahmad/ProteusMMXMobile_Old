@@ -104,7 +104,7 @@ namespace ProteusMMX.ViewModel
         }
 
 
-        string _copyrightLabel = "Copyright @ Eagle Technology Inc.";
+        string _copyrightLabel = "Copyright @ 2020 Eagle Technology Inc.";
         public string CopyrightLabel
         {
             get
@@ -405,7 +405,24 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
+        bool _workorderBorderVisibility=true;
+        public bool WorkorderBorderVisibility
+        {
+            get
+            {
+                return _workorderBorderVisibility;
+            }
 
+            set
+            {
+                if (value != _workorderBorderVisibility)
+                {
+                    _workorderBorderVisibility = value;
+                    OnPropertyChanged("WorkorderBorderVisibility");
+                }
+            }
+        }
+        
         bool _closeWorkorderVisibility;
         public bool CloseWorkorderVisibility
         {
@@ -423,7 +440,24 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
+        bool _closedWorkorderBorderVisibility;
+        public bool ClosedWorkorderBorderVisibility
+        {
+            get
+            {
+                return _closedWorkorderBorderVisibility;
+            }
 
+            set
+            {
+                if (value != _closedWorkorderBorderVisibility)
+                {
+                    _closedWorkorderBorderVisibility = value;
+                    OnPropertyChanged("ClosedWorkorderBorderVisibility");
+                }
+            }
+        }
+        
         bool _inventoryTransactionVisibility;
         public bool InventoryTransactionVisibility
         {
@@ -441,7 +475,24 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
+        bool _inventoryBorderVisibility;
+        public bool InventoryBorderVisibility
+        {
+            get
+            {
+                return _inventoryBorderVisibility;
+            }
 
+            set
+            {
+                if (value != _inventoryBorderVisibility)
+                {
+                    _inventoryBorderVisibility = value;
+                    OnPropertyChanged("InventoryBorderVisibility");
+                }
+            }
+        }
+        
         bool _serviceRequestVisibility;
         public bool ServiceRequestVisibility
         {
@@ -459,7 +510,24 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
+        bool _serviceRequestBorderVisibility;
+        public bool ServiceRequestBorderVisibility
+        {
+            get
+            {
+                return _serviceRequestBorderVisibility;
+            }
 
+            set
+            {
+                if (value != _serviceRequestBorderVisibility)
+                {
+                    _serviceRequestBorderVisibility = value;
+                    OnPropertyChanged("ServiceRequestBorderVisibility");
+                }
+            }
+        }
+        
         bool _assetVisibility;
         public bool AssetVisibility
         {
@@ -478,6 +546,24 @@ namespace ProteusMMX.ViewModel
             }
         }
 
+        bool _assetBorderVisibility;
+        public bool AssetBorderVisibility
+        {
+            get
+            {
+                return _assetBorderVisibility;
+            }
+
+            set
+            {
+                if (value != _assetBorderVisibility)
+                {
+                    _assetBorderVisibility = value;
+                    OnPropertyChanged("AssetBorderVisibility");
+                }
+            }
+        }
+        
         bool _barcodeVisibility;
         public bool BarcodeVisibility
         {
@@ -495,7 +581,24 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
+        bool _barcodeBorderVisibility;
+        public bool BarcodeBorderVisibility
+        {
+            get
+            {
+                return _barcodeBorderVisibility;
+            }
 
+            set
+            {
+                if (value != _barcodeBorderVisibility)
+                {
+                    _barcodeBorderVisibility = value;
+                    OnPropertyChanged("BarcodeBorderVisibility");
+                }
+            }
+        }
+        
         bool _receivingVisibility;
         public bool ReceivingVisibility
         {
@@ -513,7 +616,24 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
+        bool _receivingBorderVisibility;
+        public bool ReceivingBorderVisibility
+        {
+            get
+            {
+                return _receivingBorderVisibility;
+            }
 
+            set
+            {
+                if (value != _receivingBorderVisibility)
+                {
+                    _receivingBorderVisibility = value;
+                    OnPropertyChanged("ReceivingBorderVisibility");
+                }
+            }
+        }
+        
         #endregion
 
 
@@ -667,10 +787,12 @@ namespace ProteusMMX.ViewModel
                     if (GlobalModule.Expression == "E" || GlobalModule.Expression == "V")
                     {
                         AssetVisibility = true;
+                        AssetBorderVisibility = true;
                     }
                     else
                     {
                         AssetVisibility = false;
+                        AssetBorderVisibility = false;
                     }
                 }
             }
@@ -685,14 +807,17 @@ namespace ProteusMMX.ViewModel
                     if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
                     {
                         BarcodeVisibility = false;
+                        BarcodeBorderVisibility = false;
                     }
                     else if ((GlobalModule.Expression == "E" || GlobalModule.Expression == "V"))
                     {
                         BarcodeVisibility = true;
+                        BarcodeBorderVisibility = true;
                     }
                     else
                     {
                         BarcodeVisibility = false;
+                        BarcodeBorderVisibility = false;
                     }
                 }
             }
@@ -710,10 +835,12 @@ namespace ProteusMMX.ViewModel
                     if (GlobalModule.Expression == "E" || GlobalModule.Expression == "V")
                     {
                         InventoryTransactionVisibility = true;
+                        InventoryBorderVisibility = true;
                     }
                     else
                     {
                         InventoryTransactionVisibility = false;
+                        InventoryBorderVisibility = false;
                     }
                 }
             }
@@ -728,10 +855,12 @@ namespace ProteusMMX.ViewModel
                     if (GlobalModule.Expression == "E" || GlobalModule.Expression == "V")
                     {
                         ReceivingVisibility = true;
+                        ReceivingBorderVisibility = true;
                     }
                     else
                     {
                         ReceivingVisibility = false;
+                        ReceivingBorderVisibility = false;
                     }
                 }
             }
@@ -746,10 +875,12 @@ namespace ProteusMMX.ViewModel
                     if (GlobalModule.Expression == "E" || GlobalModule.Expression == "V")
                     {
                         ServiceRequestVisibility = true;
+                        ServiceRequestBorderVisibility = true;
                     }
                     else
                     {
                         ServiceRequestVisibility = false;
+                        ServiceRequestBorderVisibility = false;
                     }
                 }
             }
@@ -764,10 +895,12 @@ namespace ProteusMMX.ViewModel
                     if (GlobalModule.Expression == "E" || GlobalModule.Expression == "V")
                     {
                         WorkorderVisibility = true;
+                        WorkorderBorderVisibility = true;
                     }
                     else
                     {
                         WorkorderVisibility = false;
+                        WorkorderBorderVisibility = false;
                     }
                 }
             }
@@ -781,10 +914,12 @@ namespace ProteusMMX.ViewModel
                     if (GlobalModule.Expression == "E" || GlobalModule.Expression == "V")
                     {
                         CloseWorkorderVisibility = true;
+                        ClosedWorkorderBorderVisibility = true;
                     }
                     else
                     {
                         CloseWorkorderVisibility = false;
+                        ClosedWorkorderBorderVisibility = false;
                     }
                 }
             }

@@ -99,7 +99,7 @@
                             <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" HeightRequest="100"/>-->
                             <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="100">
 
-                                <dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" ></dependencyinterface:CustomEditor>
+                                <controls:UnderLineEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" ></controls:UnderLineEditor>
                             </border:SfBorder>
                         </StackLayout>
 
@@ -158,15 +158,15 @@
 
 
                         <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}" />-->
-                        <buttons:SfButton
+                        <Button
                         Grid.Row="4"
-                                Grid.ColumnSpan="2"
-                     
+                        Grid.ColumnSpan="2"
+                        CornerRadius="5"
                         Command="{Binding SaveCommand}"
-                        Style="{StaticResource SfButtonStyle}"
-                       
+                        Style="{StaticResource SaveButtonStyle}"
+                        HeightRequest="40"
                         Text="{Binding SaveTitle}" >
-                        </buttons:SfButton>
+                        </Button>
                     </Grid>
 
                 </ScrollView>

@@ -221,7 +221,7 @@
                 <ResourceDictionary Source="Styles.xaml" />
             </StackLayout.Resources>
 
-            <Grid RowSpacing="2" Margin="0,16,16,8" BackgroundColor="{Binding BackgroundColor}">
+            <Grid RowSpacing="2"  BackgroundColor="{Binding BackgroundColor}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -252,19 +252,21 @@
                     <Label x:Name="WorkorderNumberLabel"  Style="{StaticResource ItemDescriptionStyle}"/>
                     <Label Text=":" Grid.Column="1"  Style="{StaticResource ItemDescriptionStyle}" />
                     <Label Text="{Binding WorkOrderNumber}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-                    <Label Text="✓" Grid.Column="3"  TextColor="Green"  Style="{StaticResource BoldLabelStyle}" IsVisible="{Binding WorkOrderCompleted}">
-                        <Label.FontSize>
-                            <OnPlatform x:TypeArguments="x:Double" Default="30">
-                                <On Platform="iOS" Value="30"/>
-                                <On Platform="Android" Value="25"/>
-                                <On Platform="WinPhone" Value="56"/>
-                                <On Platform="UWP" Value="20"/>
-                            </OnPlatform>
-                        </Label.FontSize>
-
-
-                    </Label>
-                    <Image  Grid.Column="4"  IsVisible="{Binding WorkOrderApprovedFlag}">
+               
+                
+                <!--<StackLayout x:Name="Tablet" Grid.Row="0" Grid.Column="1">-->
+                <Grid Grid.Column="3" Grid.Row="0"  HorizontalOptions="Start">
+                        <Image Grid.Column="3" IsVisible="{Binding WorkOrderCompleted}">
+                            <Image.Source>
+                                <OnPlatform x:TypeArguments="ImageSource" >
+                                    <OnPlatform.iOS>GreenTickMark.png</OnPlatform.iOS>
+                                    <OnPlatform.Android>GreenTickMark.png</OnPlatform.Android>
+                                    <OnPlatform.WinPhone>Assets/GreenTickMark.png</OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </Image.Source>
+                        </Image>
+                    
+                        <Image  Grid.Column="4"  IsVisible="{Binding WorkOrderApprovedFlag}">
                         <Image.Source>
                             <OnPlatform  x:TypeArguments="ImageSource">
                                 <OnPlatform.iOS>ThumbsUp.png</OnPlatform.iOS>
@@ -298,6 +300,9 @@
                     </Image>
 
                 </Grid>
+                </Grid>
+
+
 
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -309,7 +314,7 @@
 
                     <Label x:Name="TargetNameLabel" Style="{StaticResource ItemDescriptionStyle}" />
                     <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}"  />
-                    <Label Text="{Binding TargetName}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
+                    <Label Text="{Binding TargetName}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation" />
 
                 </Grid>
 
@@ -323,10 +328,10 @@
 
                     <Label  x:Name="WorkorderTypeLabel" Style="{StaticResource ItemDescriptionStyle}" />
                     <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                    <Label Text="{Binding WorkOrderType}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" />
+                    <Label LineBreakMode="TailTruncation"  Text="{Binding WorkOrderType}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" />
                     <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
                         <Label Text="(" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding PriorityName}" Style="{StaticResource ItemDescriptionStyle}" />
+                        <Label  LineBreakMode="TailTruncation"  Text="{Binding PriorityName}" Style="{StaticResource ItemDescriptionStyle}" />
                         <Label Text=")" Style="{StaticResource ItemDescriptionStyle}"/>
                     </StackLayout>
                 </Grid>
@@ -341,7 +346,7 @@
 
                     <Label x:Name="DescriptionLabel" Style="{StaticResource ItemDescriptionStyle}" />
                     <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}"/>
-                    <Label Text="{Binding Description}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
+                    <Label Text="{Binding Description}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation" />
                     <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
 
                 </Grid>
@@ -356,7 +361,7 @@
 
                     <Label x:Name="RequiredDateLabel" Style="{StaticResource ItemDescriptionStyle}" />
                     <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                    <Label Text="{Binding RequiredDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" TextColor="Blue"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
+                    <Label Text="{Binding RequiredDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" TextColor="Blue"  LineBreakMode="TailTruncation" />
                     <Label Text="" Grid.Column="3" TextColor="LightGreen" />
 
                 </Grid>
@@ -373,7 +378,7 @@
 
                         <Label x:Name="ActivationDateLabel" Style="{StaticResource ItemDescriptionStyle}" />
                         <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding ActivationDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
+                        <Label Text="{Binding ActivationDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
                         <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
 
                     </Grid>
@@ -387,7 +392,7 @@
 
                         <Label x:Name="WorkStartedDateLabel" Style="{StaticResource ItemDescriptionStyle}" />
                         <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding WorkStartedDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
+                        <Label Text="{Binding WorkStartedDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}"  LineBreakMode="TailTruncation"/>
                         <Label Text="" Grid.Column="3" />
 
                     </Grid>
@@ -401,7 +406,7 @@
 
                         <Label x:Name="WorkCompletionDateLabel" Style="{StaticResource ItemDescriptionStyle}" />
                         <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding CompletionDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
+                        <Label Text="{Binding CompletionDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
                         <Label Text="" Grid.Column="3" />
 
                     </Grid>
@@ -415,7 +420,7 @@
 
                         <Label x:Name="WorkRequestedDateLabel"  Style="{StaticResource ItemDescriptionStyle}"  />
                         <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" />
-                        <Label Text="{Binding RequestedDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
+                        <Label Text="{Binding RequestedDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
                         <Label Text="" Grid.Column="3" />
 
                     </Grid>
