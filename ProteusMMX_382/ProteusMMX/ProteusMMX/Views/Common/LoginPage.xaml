@@ -111,6 +111,11 @@
                             <!-- </StackLayout>-->
                             <!--<Label IsVisible="{Binding SiteUrlLabelVisibility}" Grid.Row="2" Text="{Binding SiteUrlLabel}" TextColor="Black" Style="{StaticResource BoldLabelStyle}"  />-->
                             <!--<Entry    />-->
+                            <Label>
+                                <Label.Text>
+                                    &#10;
+                                </Label.Text>
+                            </Label>
                             <border:SfBorder HeightRequest="43" Style="{StaticResource LoginFormBorderlessEntryBorderStyle}" CornerRadius="15">
                                 <control1:ImageEntry BackgroundColor="#3177b5" x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" TextColor="White" PlaceholderColor="White" Image="urlicon" Text="{Binding SiteUrl, Mode=TwoWay}" Placeholder="Email" Grid.Row="2" 
                         HorizontalOptions="FillAndExpand"/>
