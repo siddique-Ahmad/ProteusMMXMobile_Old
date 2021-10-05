@@ -128,8 +128,8 @@
                             </border:SfBorder>
                             
                             <StackLayout Orientation="Horizontal">
-                                <Switch Grid.Row="5" Grid.Column="0"  HorizontalOptions="Start"   />
-                                <!--<DependencyInterface:LoginSwitch x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}"  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="6"></DependencyInterface:LoginSwitch>-->
+                                <!--<Switch Grid.Row="5" Grid.Column="0"  HorizontalOptions="Start"   />-->
+                                <DependencyInterface:LoginSwitch   x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}"  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="5"></DependencyInterface:LoginSwitch>
                                 <Label x:Name="LabelSwitch1" IsVisible="{Binding LabelSwitch, Mode=TwoWay}" Grid.Column="1" Grid.Row="5" FontAttributes="Bold"  Text="Remember Me" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" >
 
                                 </Label>
