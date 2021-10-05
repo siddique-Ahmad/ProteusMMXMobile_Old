@@ -14,7 +14,6 @@ namespace ProteusMMX
 {
     public static class AppSettings
     {
-
         private static ISettings Settings => CrossSettings.Current;
 
         static string RememberMeSwitchValue = "";
@@ -28,7 +27,7 @@ namespace ProteusMMX
 
         public static string APPVersion
         {
-            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.14.1");
+            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.14.2");
         }
         public static string UserName
         {
