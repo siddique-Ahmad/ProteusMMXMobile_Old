@@ -456,24 +456,13 @@ namespace ProteusMMX.ViewModel
         #endregion
         public override async Task InitializeAsync(object navigationData)
         {
-
             try
             {
-
-
                 if (navigationData != null)
                 {
-
-
                     var navigationParams = navigationData as TargetNavigationData;
                     WorkorderID = navigationParams.WorkOrderId;
-
-
-
-
-
                 }
-
 
                 if (Device.RuntimePlatform == Device.iOS)
                 {
@@ -484,8 +473,6 @@ namespace ProteusMMX.ViewModel
 
                     UserDialogs.Instance.ShowLoading("Please wait..loading all data");
                 }
-
-
 
                 if (Application.Current.Properties.ContainsKey("RememberMeSwitchKey"))
                 {
@@ -593,15 +580,11 @@ namespace ProteusMMX.ViewModel
 
                         Application.Current.Properties["Password"] = Password;
                         await InitializeTranslations();
-                        //await GetWorkorderControlRights();
-                        //await GetServiceRequestControlRights();
-                        //await GetAssetControlRights();
-                        //await GetClosedWorkorderandInventoryControlRights();
-                        //await GetPurchaseOrderControlRights();
                         UserDialogs.Instance.HideLoading();
                         OperationInProgress = false;
                         await NavigationService.NavigateToAsync<DashboardPageViewModel>();
                         await NavigationService.RemoveLastFromBackStackAsync();
+
                     }
 
                     else if (RememberMeSwitch == true && RememberMeSwitchValue == "false")
@@ -609,8 +592,8 @@ namespace ProteusMMX.ViewModel
                         UserDialogs.Instance.HideLoading();
                         OperationInProgress = false;
                         await DialogService.ShowAlertAsync("Please Enter Valid Credential.", "Alert", "OK");
-
                         return;
+
                     }
 
                 }
@@ -654,9 +637,10 @@ namespace ProteusMMX.ViewModel
 
 
                 AppSettings.BaseURL = SiteUrl;
-                AppSettings.APIVersion = apiVersion.APIVersion;
+                
 
                 var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName, Password);
+                AppSettings.APIVersion = user.mmxUser.blackhawkLicValidator.APIVersion;
                 if (user == null || user.mmxUser == null || Convert.ToBoolean(user.servicestatus) == false)
                 {
                     UserDialogs.Instance.HideLoading();
@@ -711,14 +695,7 @@ namespace ProteusMMX.ViewModel
                 SignatureStorage.Storage.Set("FDASignatureUserValidated", "False");
                 Application.Current.Properties["Password"] = Password;
                 await InitializeTranslations();
-                //await GetWorkorderControlRights();
-                //await GetServiceRequestControlRights();
-                //await GetAssetControlRights();
-                //await GetPurchaseOrderControlRights();
-                //await GetClosedWorkorderandInventoryControlRights();
                 UserDialogs.Instance.HideLoading();
-
-
                 await NavigationService.NavigateToAsync<DashboardPageViewModel>();
                 await NavigationService.RemoveLastFromBackStackAsync();
                 if (RememberMeSwitch == false)
@@ -727,6 +704,9 @@ namespace ProteusMMX.ViewModel
                     Settings.Remove(nameof(Password));
 
                 }
+
+
+
 
 
             }
