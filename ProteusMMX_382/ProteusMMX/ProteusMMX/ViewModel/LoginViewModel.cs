@@ -479,17 +479,18 @@ namespace ProteusMMX.ViewModel
                     RememberMeSwitchValue = Application.Current.Properties["RememberMeSwitchKey"].ToString();
                 }
 
-                var FDAKey = await _authenticationService.GetFDAValidationAsync(AppSettings.BaseURL, null);
-                if (FDAKey != null)
+                //var FDAKey = await _authenticationService.GetFDAValidationAsync(AppSettings.BaseURL, null);
+               
+                if (AppSettings.User!=null && AppSettings.User.blackhawkLicValidator.FDAEnable)
                 {
 
                     ////Set Company Profile Picture///////
-                    if (!string.IsNullOrWhiteSpace(FDAKey.CompanyProfileLogo))
+                    if (!string.IsNullOrWhiteSpace(AppSettings.User.blackhawkLicValidator.CompanyProfileLogo))
                     {
                         string newcompanyprofilebase64 = string.Empty;
                         if (Device.RuntimePlatform == Device.UWP)
                         {
-                            string companyprofilebase64 = FDAKey.CompanyProfileLogo;
+                            string companyprofilebase64 = AppSettings.User.blackhawkLicValidator.CompanyProfileLogo;
                             newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
                             if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
                             {
@@ -510,7 +511,7 @@ namespace ProteusMMX.ViewModel
                         }
                         else
                         {
-                            string companyprofilebase64 = FDAKey.CompanyProfileLogo;
+                            string companyprofilebase64 = AppSettings.User.blackhawkLicValidator.CompanyProfileLogo;
                             newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
                             if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
                             {
@@ -531,7 +532,7 @@ namespace ProteusMMX.ViewModel
                         }
                     }
 
-                    if (FDAKey.FDAEnable && FDAKey.Signvalue == "True")
+                    if (AppSettings.User.blackhawkLicValidator.FDAEnable && AppSettings.User.blackhawkLicValidator.Signvalue == "True")
                     {
 
                         SiteUrl = AppSettings.BaseURL;
@@ -657,11 +658,14 @@ namespace ProteusMMX.ViewModel
 
                     return;
                 }
-                /// Save the MMXUser the so we can reuse that.
+                /// Save the MMXUser Properties the so we can reuse that.
 
                 AppSettings.User = user.mmxUser;
                 AppSettings.UserName = UserName;
                 AppSettings.Password = Password;
+                AppSettings.User.blackhawkLicValidator.FDAEnable = user.mmxUser.blackhawkLicValidator.FDAEnable;
+                AppSettings.User.blackhawkLicValidator.Signvalue= user.mmxUser.blackhawkLicValidator.Signvalue;
+                AppSettings.User.blackhawkLicValidator.CompanyProfileLogo = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
 
                 //var FDALicenseKey = await _authenticationService.GetFDAValidationAsync(SiteUrl, null);
                 if (user.mmxUser.blackhawkLicValidator.FDAEnable && user.mmxUser.blackhawkLicValidator.Signvalue == "True")
