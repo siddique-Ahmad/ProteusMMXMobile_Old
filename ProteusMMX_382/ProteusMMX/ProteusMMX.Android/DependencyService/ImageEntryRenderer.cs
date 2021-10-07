@@ -60,7 +60,7 @@ namespace ProteusMMX.Droid.DependencyService
                         break;
                 }
             }
-            editText.CompoundDrawablePadding = 25;
+            editText.CompoundDrawablePadding = 15;
             Control.Background.SetColorFilter(element.LineColor.ToAndroid(), PorterDuff.Mode.SrcAtop);
         }
         private BitmapDrawable GetDrawable(string imageEntryImage)
