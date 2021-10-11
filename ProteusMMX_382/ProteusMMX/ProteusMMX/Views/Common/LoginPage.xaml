@@ -135,7 +135,8 @@
                             <StackLayout Orientation="Horizontal">
                                 <!--<Switch Grid.Row="5" Grid.Column="0"  HorizontalOptions="Start"   />-->
                                 <!--<control1:CustomSwitchColor Margin="50" SwitchOnColor="Blue" SwitchOffColor="Blue" SwitchThumbColor="Blue"/>-->
-                                <control1:CustomSwitchColor  x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}"  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand"   SwitchOnColor="Blue" SwitchOffColor="WhiteSmoke" SwitchThumbColor="Blue" x:Uid="MySwitch" Grid.Row="5"/>
+                                
+                                <control1:CustomSwitchColor  x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}"  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand"   SwitchOnColor="Blue" SwitchOffColor="WhiteSmoke"   SwitchThumbColor="Blue" x:Uid="MySwitch" Grid.Row="5"/>
                                 <Label x:Name="LabelSwitch1" IsVisible="{Binding LabelSwitch, Mode=TwoWay}" Grid.Column="1" Grid.Row="5" FontAttributes="Bold"  Text="Remember Me" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" >
 
                                 </Label>

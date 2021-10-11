@@ -58,7 +58,15 @@ namespace ProteusMMX.Droid.DependencyService
             }
             else
             {
-                Control.ThumbDrawable.SetColorFilter(view.SwitchThumbColor.ToAndroid(), PorterDuff.Mode.Multiply);
+                //if (this.Control.Checked)
+                //{
+                //    this.Control.TrackDrawable.SetColorFilter(view.SwitchThumbColor.ToAndroid(), PorterDuff.Mode.Multiply);
+                //}
+                //else
+                //{
+                //    this.Control.TrackDrawable.SetColorFilter(view.SwitchThumbOffColor.ToAndroid(), PorterDuff.Mode.Multiply);
+                //}
+             Control.ThumbDrawable.SetColorFilter(view.SwitchThumbColor.ToAndroid(), PorterDuff.Mode.Multiply);
                 // Control.SetTrackResource(Resource.Drawable.track);  
             }
         }

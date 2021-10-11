@@ -85,15 +85,15 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
 
             /// For TargetName///
             var target = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "AssetID");
-            if (target != null)
-            {
-                this.TargetNameLabel.Text = target.TargetName;
+            //if (target != null)
+            //{
+            //    this.TargetNameLabel.Text = target.TargetName;
 
-            }
-            else
-            {
-                this.TargetNameLabel.Text = WebControlTitle.GetTargetNameByTitleName("Target");
-            }
+            //}
+            //else
+            //{
+            //    this.TargetNameLabel.Text = WebControlTitle.GetTargetNameByTitleName("Target");
+            //}
 
 
 
@@ -304,14 +304,14 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             {
                 await ShowMore.FadeTo(0);
                 ShowMore.IsVisible = !isExpanded;
-                this.Tapped.Text = "Show More";
+             //   this.Tapped.Text = "Show More";
 
             }
             else
             {
                 ShowMore.IsVisible = !isExpanded;
                 await ShowMore.FadeTo(1);
-                this.Tapped.Text = "See less";
+               // this.Tapped.Text = "See less";
             }
 
             isExpanded = !isExpanded;
