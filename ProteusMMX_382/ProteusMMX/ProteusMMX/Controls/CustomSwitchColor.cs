@@ -41,6 +41,17 @@ namespace ProteusMMX.Controls
             set { SetValue(SwitchThumbColorProperty, value); }
         }
 
+        public static readonly BindableProperty SwitchThumbOffColorProperty =
+         BindableProperty.Create(nameof(SwitchThumbOffColor),
+             typeof(Color), typeof(CustomSwitchColor),
+             Color.Default);
+
+        public Color SwitchThumbOffColor
+        {
+            get { return (Color)GetValue(SwitchThumbOffColorProperty); }
+            set { SetValue(SwitchThumbOffColorProperty, value); }
+        }
+
         public static readonly BindableProperty SwitchThumbImageProperty =
           BindableProperty.Create(nameof(SwitchThumbImage),
               typeof(string),

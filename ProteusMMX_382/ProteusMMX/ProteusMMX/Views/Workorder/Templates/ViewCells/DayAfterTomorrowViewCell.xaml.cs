@@ -38,25 +38,25 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
 		}
 
         bool isExpanded = false;
-        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
-        {
-            if (isExpanded)
-            {
-                await ShowMore.FadeTo(0);
-                ShowMore.IsVisible = !isExpanded;
-                this.Tapped.Text = "Show More";
+        //private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        //{
+        //    if (isExpanded)
+        //    {
+        //        await ShowMore.FadeTo(0);
+        //        ShowMore.IsVisible = !isExpanded;
+        //        this.Tapped.Text = "Show More";
 
-            }
-            else
-            {
-                ShowMore.IsVisible = !isExpanded;
-                await ShowMore.FadeTo(1);
-                this.Tapped.Text = "See less";
-            }
+        //    }
+        //    else
+        //    {
+        //        ShowMore.IsVisible = !isExpanded;
+        //        await ShowMore.FadeTo(1);
+        //        this.Tapped.Text = "See less";
+        //    }
 
-            isExpanded = !isExpanded;
+        //    isExpanded = !isExpanded;
 
-        }
+        //}
         public DayAfterTomorrowViewCell(ref object ParentContext)
         {
             InitializeComponent();
@@ -101,15 +101,15 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
 
             /// For TargetName///
             var target = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "AssetID");
-            if (target != null)
-            {
-                this.TargetNameLabel.Text = target.TargetName;
+            //if (target != null)
+            //{
+            //    this.TargetNameLabel.Text = target.TargetName;
 
-            }
-            else
-            {
-                this.TargetNameLabel.Text = WebControlTitle.GetTargetNameByTitleName("Target");
-            }
+            //}
+            //else
+            //{
+            //    this.TargetNameLabel.Text = WebControlTitle.GetTargetNameByTitleName("Target");
+            //}
            
 
 

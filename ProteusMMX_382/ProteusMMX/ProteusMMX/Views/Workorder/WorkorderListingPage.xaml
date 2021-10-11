@@ -188,7 +188,7 @@
                     </Grid>
                 </Grid>-->
 
-                <StackLayout Spacing="0"  Orientation="Horizontal" Padding="8" Grid.Column="0"  >
+                <StackLayout Spacing="0"  Orientation="Horizontal" Padding="4" Grid.Column="0"  >
                     <ListView HorizontalOptions="FillAndExpand" 
 
                           ItemTemplate="{StaticResource DateTemplateSelector}"
