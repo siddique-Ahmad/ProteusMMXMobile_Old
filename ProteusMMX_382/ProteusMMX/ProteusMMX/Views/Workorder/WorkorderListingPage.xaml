@@ -60,7 +60,7 @@
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Name="MenuItem2"  Text=":" Icon="shfiltericon.png"   Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="shfiltericon.png"   Command="{Binding SortByFilterCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
@@ -75,17 +75,17 @@
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Name="MenuItem3" Text=":" Icon="menuicon.png"   Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem3" Text=":" Icon="dots.png"   Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="menuicon.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/menuicon.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/menuicon.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>

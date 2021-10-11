@@ -1300,6 +1300,8 @@ namespace ProteusMMX.ViewModel.Workorder
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
         public ICommand SortByCommand => new AsyncCommand(SortByAction);
+
+        public ICommand SortByFilterCommand => new AsyncCommand(SortByFilterAction);
         public ICommand ScanCommand => new AsyncCommand(SearchWorkorder);
 
         public ICommand ShowDateCommand => new AsyncCommand(ShowdatePicker);
@@ -1326,6 +1328,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 OperationInProgress = true;
                 Application.Current.Properties["gridrowindex"] = 1;
+                //await GetWorkorderControlRights();
                 await SetTitlesPropertiesForPage();
                 if (Application.Current.Properties.ContainsKey("CloseWorkorderRightsKey"))
                 {
@@ -1545,7 +1548,82 @@ namespace ProteusMMX.ViewModel.Workorder
                 OperationInProgress = false;
             }
         }
+        public async Task SortByFilterAction()
+        {
+            try
+            {
+                var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, new ObservableCollection<string>() { DemandMaintenenceTitle, PreventiveMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle });
+                if (response == CancelTitle)
+                {
+                    this.SelectedSortingText = null;
 
+                }
+
+                //else if (response == AscendingTitle)
+                //{
+                //    this.SelectedSortingText = "ASC";
+                //    //reset pageno. and start search again.
+                //    await RefillWorkorderCollection();
+                //}
+
+                //else if (response == DescendingTitle)
+                //{
+                //    this.SelectedSortingText = "DESC";
+                //    //reset pageno. and start search again.
+                //    await RefillWorkorderCollection();
+                //}
+
+                //else
+                //{
+                //    this.SelectedSortingText = null;
+                //    //reset pageno. and start search again.
+                //    await RefillWorkorderCollection();
+
+                //}
+
+
+
+                if (response == PreventiveMaintenenceTitle)
+                {
+                    WorkorderTypeFilterText = "PreventiveMaintenance";
+                    await RefillWorkorderCollection();
+                }
+
+                else if (response == DemandMaintenenceTitle)
+                {
+                    WorkorderTypeFilterText = "DemandMaintenance";
+                    await RefillWorkorderCollection();
+
+                }
+
+                else if (response == EmergencyMaintenanceTitle)
+                {
+                    WorkorderTypeFilterText = "EmergencyMaintenance";
+                    await RefillWorkorderCollection();
+
+                }
+                else if (response == FailedInspectionTitle)
+                {
+                    WorkorderTypeFilterText = "FailedInspection";
+                    await RefillWorkorderCollection();
+                }
+                else
+                {
+                    WorkorderTypeFilterText = null;
+                    await RefillWorkorderCollection();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                OperationInProgress = false;
+            }
+
+            finally
+            {
+                OperationInProgress = false;
+            }
+        }
         public async Task SortByAction()
         {
             try
@@ -2166,8 +2244,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 if (EditRights == "E" || EditRights == "V")
                 {
-                    //SortByDateText = null;
-                    //sortByPrioritypickerTitlesitems.Clear();
+                    
                     if (AppSettings.User.blackhawkLicValidator.RiskAssasment.Equals(true))
                     {
                         
@@ -2786,6 +2863,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
 
         #endregion
+      
 
     }
 }
