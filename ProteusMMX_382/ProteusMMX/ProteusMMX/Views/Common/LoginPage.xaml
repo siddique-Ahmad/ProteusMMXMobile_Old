@@ -104,7 +104,7 @@
                                 </Image.Source>
                             </Image>
 
-                            <Image HeightRequest="50" WidthRequest="80" Source="{Binding AttachmentImageSource}" Grid.Row="2" Grid.Column="0">
+                            <Image HeightRequest="100" WidthRequest="150" Source="{Binding AttachmentImageSource}" Grid.Row="2" Grid.Column="0">
 
                             </Image>
                             <!--</StackLayout>-->
@@ -117,7 +117,7 @@
                                 </Label.Text>
                             </Label>
                             <border:SfBorder HeightRequest="43" Style="{StaticResource LoginFormBorderlessEntryBorderStyle}" CornerRadius="15">
-                                <control1:ImageEntry BackgroundColor="#3177b5" FontSize="Small" x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" TextColor="White" PlaceholderColor="White" Image="urlicon" Text="{Binding SiteUrl, Mode=TwoWay}" Placeholder="Email" Grid.Row="2" 
+                                <control1:ImageEntry BackgroundColor="#3177b5" FontSize="Small" x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" TextColor="White" PlaceholderColor="White" Image="urlicon" Text="{Binding SiteUrl, Mode=TwoWay}" Placeholder="Url" Grid.Row="2" 
                         HorizontalOptions="FillAndExpand"/>
 
                             </border:SfBorder>

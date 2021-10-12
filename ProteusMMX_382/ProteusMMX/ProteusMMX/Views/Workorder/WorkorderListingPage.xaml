@@ -94,8 +94,8 @@
 
     <ContentPage.Content>
         <Grid BackgroundColor="#fefefe" >           
-            <StackLayout HeightRequest="120">
-            <border:SfBorder  Grid.Row="0"  BorderColor="#006de0" CornerRadius="0,0,25,25"                      
+            <StackLayout HeightRequest="100">
+                <border:SfBorder HeightRequest="100" Grid.Row="0"  BorderColor="#006de0" CornerRadius="0,0,25,25"                      
                        BackgroundColor="#006de0"  >
                     <StackLayout>
                         <Grid Padding="8">
@@ -103,8 +103,14 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                            </Grid.RowDefinitions>
                             <border:SfBorder BackgroundColor="White" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" CornerRadius="10" >
-                                <controls:CustomEntry HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="Black" Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                                <SearchBar x:Name="filterText" HeightRequest="40"
+           HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="Black" Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}"
+            Grid.Row="0"/>
+                                <!--<controls:CustomEntry HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="Black" Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />-->
                                 
                             </border:SfBorder>
                             <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,10,0,0">
@@ -121,9 +127,9 @@
                             </Image>
 
                             <StackLayout IsVisible="{Binding TotalRecordForPhone}" VerticalOptions="Center" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
-                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,30" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}"/>
-                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,30" HorizontalOptions="Center" Text=":" Grid.Column="3"/>
-                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,30" HorizontalOptions="Center" Text="{Binding TotalRecordCount}"/>
+                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}"/>
+                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text=":" Grid.Column="3"/>
+                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordCount}"/>
                             </StackLayout>
 
                             <!--<Label VerticalOptions="Center" Grid.Row="1" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,30" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}" IsVisible="{Binding TotalRecordForTab}"></Label>
@@ -133,7 +139,7 @@
                     </StackLayout>
                 </border:SfBorder>
             </StackLayout>
-            <Grid   Margin="0,90,0,0">
+            <Grid   Margin="0,95,0,0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

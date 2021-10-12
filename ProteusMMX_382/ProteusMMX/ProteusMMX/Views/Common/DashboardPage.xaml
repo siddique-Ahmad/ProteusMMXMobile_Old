@@ -41,17 +41,16 @@
             <Grid>
                 <Grid  >
                     <Grid.RowDefinitions>
-                        <RowDefinition  Height="100*"></RowDefinition>
+                        <RowDefinition  Height="80*"></RowDefinition>
                     </Grid.RowDefinitions>
                 </Grid>
-                <border:SfBorder HeightRequest="120" BorderColor="#006de0" CornerRadius="0,0,25,25"                      
-                       BackgroundColor="#006de0"  >
+                <border:SfBorder HeightRequest="87" BorderColor="#006de0" CornerRadius="0,0,25,25" BackgroundColor="#006de0"  >
                     <Label  VerticalOptions="Center" FontSize="Medium" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,50" HorizontalOptions="Center" Text="{Binding WelcomeTextTitle}"></Label>
                 </border:SfBorder>
             </Grid>
-        </StackLayout>
+        
         <ScrollView>
-            <Grid Padding="30"  Margin="0,50,0,40">
+            <Grid Padding="30"  Margin="0,-39,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="120" />
                     <RowDefinition Height="120" />
@@ -338,5 +337,6 @@
                 </StackLayout>
             </Grid>
         </ScrollView>
+        </StackLayout>
     </Grid>
 </ContentPage>  

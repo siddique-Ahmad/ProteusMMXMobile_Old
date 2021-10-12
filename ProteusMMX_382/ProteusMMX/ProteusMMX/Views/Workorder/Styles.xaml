@@ -97,7 +97,15 @@
         <Setter Property="BorderWidth" Value="1" />
 
     </Style>
-
+    <!--  Common style for borders  -->
+    <Style x:Key="SfButtonStyles" TargetType="buttons:SfButton">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="ImageAlignment" Value="End"></Setter>
+        <Setter Property="ShowIcon" Value="True"></Setter>
+        <Setter Property="WidthRequest" Value="40"></Setter>
+        <Setter Property="ImageSource" Value="unnamed.png"></Setter>
+    </Style>
     <!--  Common style for gradient view  -->
     <Style x:Key="SfGradientViewStyle" TargetType="graphics:SfGradientView">
         <Setter Property="Opacity" Value="0.82" />
