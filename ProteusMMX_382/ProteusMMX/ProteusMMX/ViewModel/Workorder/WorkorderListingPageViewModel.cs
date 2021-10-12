@@ -1559,30 +1559,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
 
-                //else if (response == AscendingTitle)
-                //{
-                //    this.SelectedSortingText = "ASC";
-                //    //reset pageno. and start search again.
-                //    await RefillWorkorderCollection();
-                //}
-
-                //else if (response == DescendingTitle)
-                //{
-                //    this.SelectedSortingText = "DESC";
-                //    //reset pageno. and start search again.
-                //    await RefillWorkorderCollection();
-                //}
-
-                //else
-                //{
-                //    this.SelectedSortingText = null;
-                //    //reset pageno. and start search again.
-                //    await RefillWorkorderCollection();
-
-                //}
-
-
-
+              
                 if (response == PreventiveMaintenenceTitle)
                 {
                     WorkorderTypeFilterText = "PreventiveMaintenance";
@@ -1683,8 +1660,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
 
             SortByDateText = null;
-           // IsGetWorkorderCallFromRequiredDate = false;
-            
+           
         }
         public async Task ShowdatePicker()
         {
@@ -1855,10 +1831,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
         async Task GetWorkorders()
         {
-            //if (IsGetWorkorderCallFromRequiredDate == true)
-            //{
-            //    return;
-            //}
+           
             try
             {
                 OperationInProgress = true;
@@ -1870,32 +1843,10 @@ namespace ProteusMMX.ViewModel.Workorder
                     var workorders = workordersResponse.workOrderWrapper.workOrders;
 
                     await AddWorkordersInWorkorderCollection(workorders);
-                    //if (IsDuedateRecordCount == true)
-                    //{
-                    //    TotalRecordCount = workordersResponse.workOrderWrapper.workOrders.Count;
-                    //    IsDuedateRecordCount = false;
-                    //    return;
-                    //}
-                  //  TotalRecordCount = workordersResponse.workOrderWrapper.WorkOrderCount;
-                    
+                   
                 }
                 TotalRecordCount = workordersResponse.workOrderWrapper.WorkOrderCount;
-                //else
-                //{
-                //    //if (IsDuedateRecordCount == true)
-                //    //{
-                //    //    TotalRecordCount = workordersResponse.workOrderWrapper.workOrders.Count;
-                //    //    IsDuedateRecordCount = false;
-                //    //    return;
-                //    //}
-
-                //    if (workordersResponse.workOrderWrapper.WorkOrderCount == 0)
-                //    {
-                //        TotalRecordCount = 0;
-                //    }
-                //}
-
-
+               
             }
             catch (Exception ex)
             {
@@ -1940,81 +1891,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        //async Task GetWorkordersFromAsset()
-        //{
-        //    try
-        //    {
-        //        OperationInProgress = true;
-        //        var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, WorkorderTypeFilterText, SelectedSortingText);
-        //        // var workordersResponse = await _workorderService.GetWorkorders(UserID,"0","0", SearchText, WorkorderTypeFilterText, SelectedSortingText);
-        //        if (workordersResponse != null && workordersResponse.workOrderWrapper != null
-        //            && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
-        //        {
-
-        //            var workorders = workordersResponse.workOrderWrapper.workOrders;
-        //            await RemoveAllWorkorderFromCollection();
-        //            await AddWorkordersInWorkorderCollection(workorders);
-        //            TotalRecordCount = workordersResponse.workOrderWrapper.workOrders.Count();
-
-
-        //        }
-        //        else
-        //        {
-        //            TotalRecordCount = workordersResponse.workOrderWrapper.workOrders.Count();
-        //            await RemoveAllWorkorderFromCollection();
-
-        //        }
-
-
-
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        OperationInProgress = false;
-        //    }
-
-        //    finally
-        //    {
-        //        OperationInProgress = false;
-        //    }
-        //}
-
-        //async Task GetWorkordersFromLocation()
-        //{
-        //    try
-        //    {
-        //        OperationInProgress = true;
-        //        var workordersResponse = await _workorderService.GetWorkorders(UserID,"0","0", SearchText, WorkorderTypeFilterText, SelectedSortingText);
-        //        if (workordersResponse != null && workordersResponse.workOrderWrapper != null
-        //            && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
-        //        {
-
-        //            var workorders = workordersResponse.workOrderWrapper.workOrders;
-        //            await RemoveAllWorkorderFromCollection();
-        //            await AddWorkordersInWorkorderCollection(workorders);
-        //            TotalRecordCount = workordersResponse.workOrderWrapper.workOrders.Count;
-
-        //        }
-        //        else
-        //        {
-        //            TotalRecordCount = workordersResponse.workOrderWrapper.workOrders.Count;
-        //            await RemoveAllWorkorderFromCollection();
-        //        }
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        OperationInProgress = false;
-        //    }
-
-        //    finally
-        //    {
-        //        OperationInProgress = false;
-        //    }
-        //}
+      
         async Task GetWorkordersFromSearchBar()
         {
             try
@@ -2086,12 +1963,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         private async Task RefillLocationFromPicker(string Locationfilter)
         {
-            //if (LocationSelectedIndexPicker == -1)
-            //{
-            //    return;
-            //}
-            //  var LocationSelectedPickerText = SortByLocationpickerTitles[LocationSelectedIndexPicker];
-
+            
             if (string.IsNullOrWhiteSpace(Locationfilter))
             {
                 LocationNameFilterText = null;
@@ -2117,13 +1989,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             else
             {
-            //    var filtered = from kvp in sortByShiftpickerTitlesitems
-            //                   where kvp.Value.ToLower() == Shiftfilter.ToLower()
-            //                   select kvp.Key;
-            //    int? firstItem = filtered.ElementAt(0);
-
-                //    var FinalLocationFilter = sortByLocationpickerTitlesitems.Where(t => t.Value.ToLower() == LocationSelectedPickerText.ToLower());
-                //var FinalLocationFilter2 = FinalLocationFilter as sortByLocationpickerTitlesitems;
+          
                 ShiftNameFilterText = Shiftfilter.ToString();
                 await RefillWorkorderCollection();
             }
@@ -2150,12 +2016,6 @@ namespace ProteusMMX.ViewModel.Workorder
         }
         private async Task RefillPriorityFromPicker(string Priorityfilter)
         {
-            //if (PrioritySelectedIndexPicker == -1)
-            //{
-            //    return;
-            //}
-            //var PrioritySelectedPickerText = SortByPriorityPickerTitles[PrioritySelectedIndexPicker];
-
             if (string.IsNullOrWhiteSpace(Priorityfilter))
             {
                 PriorityNameFilterText = null;
@@ -2164,13 +2024,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
             else
             {
-                //var filtered = from kvp in sortByPrioritypickerTitlesitems
-                //               where kvp.Value.ToLower() == PrioritySelectedPickerText.ToLower()
-                //               select kvp.Key;
-                //int? firstItem = filtered.ElementAt(0);
-
-                //    var FinalLocationFilter = sortByLocationpickerTitlesitems.Where(t => t.Value.ToLower() == LocationSelectedPickerText.ToLower());
-                //var FinalLocationFilter2 = FinalLocationFilter as sortByLocationpickerTitlesitems;
                 PriorityNameFilterText = Priorityfilter.ToString();
                 await RefillWorkorderCollection();
             }
@@ -2188,10 +2041,6 @@ namespace ProteusMMX.ViewModel.Workorder
             }
           
                 var SelectedPickerText = PickerTitles[SelectedIndexPicker];
-
-                //var ShiftSelectedPickerText = SortByShiftpickerTitles[ShiftSelectedIndexPicker];
-                //var PrioritySelectedPickerText = SortByPriorityPickerTitles[PrioritySelectedIndexPicker];
-
 
                 if (SelectedPickerText == SelectTitle)
                 {
@@ -2594,18 +2443,6 @@ namespace ProteusMMX.ViewModel.Workorder
                     else
                     {
 
-
-                        //var workorder = new workOrderWrapper
-                        //{
-                        //    TimeZone = AppSettings.UserTimeZone,
-                        //    CultureName = AppSettings.UserCultureName,
-                        //    UserId = Convert.ToInt32(UserID),
-                        //    ClientIANATimeZone = AppSettings.ClientIANATimeZone,
-                        //    workOrder = workorderItem
-
-
-                        //};
-
                         var workorder = new workOrderWrapper
                         {
                             TimeZone = AppSettings.UserTimeZone,
@@ -2833,33 +2670,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     SortByDateText = result.SelectedDate.Date.ToString("dd MMM yyyy");
                 }
             }
-                //    var s = sender as Button;
-
-                //    if (result.Value.Date == DateTime.Parse("1/1/0001 12:00:00 AM"))
-                //    {
-                //        s.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date.ToString();
-                //    }
-
-                //    else
-                //    {
-                //        s.Text = result.SelectedDate.ToString();
-                //    }
-
-                //    if (result.Value.Date.Date > DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date)
-                //    {
-                //        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskCompletionDatecannotbefuturedate"));
-                //        s.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date.ToString();
-                //    }
-
-
-                //}
-                //else { }
-                ////else
-                ////{
-                ////    var s = sender as Button;
-                ////    s.Text = "";
-                ////}
-
+               
             }
 
         #endregion
