@@ -4,7 +4,7 @@
               xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
               xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              xmlns:DependencyInterface="clr-namespace:ProteusMMX.DependencyInterface;assembly=ProteusMMX"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls" xmlns:local="clr-namespace:ProteusMMX.Behaviors"
              x:Class="ProteusMMX.Views.Common.LoginPage"
              NavigationPage.HasNavigationBar="False"
             BackgroundColor="Transparent"
@@ -133,10 +133,12 @@
                             </border:SfBorder>
                             
                             <StackLayout Orientation="Horizontal">
-                                <!--<Switch Grid.Row="5" Grid.Column="0"  HorizontalOptions="Start"   />-->
-                                <!--<control1:CustomSwitchColor Margin="50" SwitchOnColor="Blue" SwitchOffColor="Blue" SwitchThumbColor="Blue"/>-->
-                                
-                                <control1:CustomSwitchColor  x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}"  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand"   SwitchOnColor="Blue" SwitchOffColor="WhiteSmoke"   SwitchThumbColor="Blue" x:Uid="MySwitch" Grid.Row="5"/>
+                                <!--<control1:CustomSwitchColor  x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}" Toggled="LoginSwitch1_Toggled" IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand"   SwitchOnColor="Blue" SwitchOffColor="WhiteSmoke" SwitchThumbImage=""  SwitchThumbColor="Blue" x:Uid="MySwitch" Grid.Row="5">
+                                    
+                                </control1:CustomSwitchColor>-->
+                                <buttons:SfSwitch  x:Name="LoginSwitch1" StateChanged="SfSwitch_StateChanged" >
+                                    
+                                </buttons:SfSwitch>
                                 <Label x:Name="LabelSwitch1" IsVisible="{Binding LabelSwitch, Mode=TwoWay}" Grid.Column="1" Grid.Row="5" FontAttributes="Bold"  Text="Remember Me" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" >
 
                                 </Label>

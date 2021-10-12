@@ -4,6 +4,7 @@ using ProteusMMX.Services.FormLoadInputs;
 using ProteusMMX.Services.Translations;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.ViewModel;
+using Syncfusion.XForms.Buttons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,6 +95,32 @@ namespace ProteusMMX.Views.Common
             return true;
         }
 
+        private void LoginSwitch1_Toggled(object sender, ToggledEventArgs e)
+        {
+            //if (LoginSwitch1.IsToggled)
+            //{
+            //    Application.Current.Properties["RememberMeSwitchKey"] = "true";
+            //}
+            //else
+            //{
+            //    Application.Current.Properties["RememberMeSwitchKey"] = "false";
+            //}
+           
+        }
 
+        private void SfSwitch_StateChanged(object sender, Syncfusion.XForms.Buttons.SwitchStateChangedEventArgs e)
+        {
+
+            SfSwitch LoginSwitch = (SfSwitch)sender;
+            if (LoginSwitch.IsOn==true)
+            {
+
+                Application.Current.Properties["RememberMeSwitchKey"] = "true";
+            }
+            else
+            {
+                Application.Current.Properties["RememberMeSwitchKey"] = "false";
+            }
+        }
     }
 }
