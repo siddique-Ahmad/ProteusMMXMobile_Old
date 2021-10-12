@@ -498,8 +498,12 @@ namespace ProteusMMX.ViewModel
                 if (RememberMeSwitch == true)
                 {
 
-                    UserName = AppSettings.UserName;
-                    Password = AppSettings.Password;
+                    UserName = AppSettings.User.UserName;
+                  //  Password = AppSettings.User.Password;
+                    if (Application.Current.Properties.ContainsKey("Password"))
+                    {
+                        Password = Application.Current.Properties["Password"].ToString();
+                    }
                     SiteUrl = AppSettings.BaseURL;
                     RememberMeSwitch = true;
 
