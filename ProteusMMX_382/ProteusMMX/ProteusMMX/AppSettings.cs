@@ -43,12 +43,12 @@ namespace ProteusMMX
             set => Settings.AddOrUpdateValue(nameof(Password), value);
         }
 
-        //public static bool RememberMeSwitch
-        //{
-        //    get => Settings.GetValueOrDefault(nameof(RememberMeSwitch), false);
+        public static bool RememberMeSwitchFlag
+        {
+            get => Settings.GetValueOrDefault(nameof(RememberMeSwitchFlag), false);
 
-        //    set => Settings.AddOrUpdateValue(nameof(RememberMeSwitch), value);
-        //}
+            set => Settings.AddOrUpdateValue(nameof(RememberMeSwitchFlag), value);
+        }
 
         public static string UserCultureName
         {
