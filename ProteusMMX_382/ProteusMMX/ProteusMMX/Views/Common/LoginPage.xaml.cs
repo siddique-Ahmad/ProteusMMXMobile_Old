@@ -114,12 +114,12 @@ namespace ProteusMMX.Views.Common
             SfSwitch LoginSwitch = (SfSwitch)sender;
             if (LoginSwitch.IsOn==true)
             {
-
-                Application.Current.Properties["RememberMeSwitchKey"] = "true";
+                AppSettings.RememberMeSwitchFlag = true;
+                
             }
             else
             {
-                Application.Current.Properties["RememberMeSwitchKey"] = "false";
+                AppSettings.RememberMeSwitchFlag = false;
             }
         }
     }

@@ -475,11 +475,7 @@ namespace ProteusMMX.ViewModel
                     UserDialogs.Instance.ShowLoading("Please wait..loading all data");
                 }
 
-                if (Application.Current.Properties.ContainsKey("RememberMeSwitchKey"))
-                {
-                    RememberMeSwitch =Convert.ToBoolean(Application.Current.Properties["RememberMeSwitchKey"]);
-                }
-
+              
 
                 if (AppSettings.User!=null && AppSettings.User.blackhawkLicValidator.FDAEnable)
                 {
@@ -495,21 +491,16 @@ namespace ProteusMMX.ViewModel
 
                 }
 
-                if (RememberMeSwitch == true)
+                if (AppSettings.RememberMeSwitchFlag == true)
                 {
 
-                    UserName = AppSettings.User.UserName;
-                  //  Password = AppSettings.User.Password;
-                    if (Application.Current.Properties.ContainsKey("Password"))
-                    {
-                        Password = Application.Current.Properties["Password"].ToString();
-                    }
+                    UserName = AppSettings.UserName;
+                    Password = AppSettings.Password;
                     SiteUrl = AppSettings.BaseURL;
-                    RememberMeSwitch = true;
-
+                    
                     if (string.IsNullOrWhiteSpace(UserName) && string.IsNullOrWhiteSpace(Password))
                     {
-                        RememberMeSwitch = false;
+                        AppSettings.RememberMeSwitchFlag = false;
                     }
 
 
@@ -592,7 +583,7 @@ namespace ProteusMMX.ViewModel
 
                     }
 
-                    else if (RememberMeSwitch == true)
+                    else if (AppSettings.RememberMeSwitchFlag == true)
                     {
                         UserDialogs.Instance.HideLoading();
                         OperationInProgress = false;
@@ -689,7 +680,8 @@ namespace ProteusMMX.ViewModel
                 UserDialogs.Instance.HideLoading();
                 await NavigationService.NavigateToAsync<DashboardPageViewModel>();
                 await NavigationService.RemoveLastFromBackStackAsync();
-                if (RememberMeSwitch == false)
+              
+                if (AppSettings.RememberMeSwitchFlag == false)
                 {
                     Settings.Remove(nameof(UserName));
                     Settings.Remove(nameof(Password));
