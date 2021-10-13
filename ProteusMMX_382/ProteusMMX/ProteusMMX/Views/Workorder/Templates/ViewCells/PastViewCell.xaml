@@ -12,7 +12,7 @@
             <StackLayout.Resources>
                 <ResourceDictionary Source="Styles.xaml" />
             </StackLayout.Resources>
-            <Frame BackgroundColor="White"  BorderColor="AntiqueWhite"   CornerRadius="5">
+            <Frame BackgroundColor="White"  BorderColor="DarkGray"    CornerRadius="5">
                 <Grid RowSpacing="2" Padding="0,-15,-20,-15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -39,7 +39,9 @@
 
                         <!--<Label x:Name="WorkorderNumberLabel"  Style="{StaticResource ItemDescriptionStyle}"/>
                         <Label Text=":" Grid.Column="1"  Style="{StaticResource ItemDescriptionStyle}" />-->
-                        <Label TextColor="#006de0"  FontAttributes="Bold" FontSize="18.72" FontFamily="Ebrima">
+                        <!--<StackLayout Grid.Row="1" IsVisible="{Binding AssetSystemFlag}">-->
+                        <StackLayout>
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="16" FontFamily="Ebrima">
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span Text="{Binding FacilityName}"/>
@@ -48,8 +50,25 @@
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
-                        <!--<Label Text="{Binding WorkOrderNumber}" TextColor="#006de0"  FontAttributes="Bold" FontSize="18.72" FontFamily="Ebrima"  LineBreakMode="TailTruncation"/>-->
-
+                            <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" IsVisible="{Binding AssetNameFlag}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding AssetName}"/>
+                                        <Span Text=" (Asset Name)" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label TextColor="#006de0" IsVisible="{Binding AssetSystemNameFlag}" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding AssetSystemName}"/>
+                                        <Span Text=" (Asset System Name)" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <!--<Label Text="{Binding AssetName}" IsVisible="{Binding AssetNameFlag}" TextColor="#006de0" FontAttributes="Bold" FontSize="18.72" FontFamily="Ebrima"/>
+                            <Label Text="{Binding AssetSystemName}" IsVisible="{Binding AssetSystemNameFlag}" TextColor="#006de0" FontAttributes="Bold" FontSize="18.72" FontFamily="Ebrima"/>-->                            
+                        </StackLayout>
                     </Grid>
 
                     <!--<Grid Grid.Row="1">
@@ -78,9 +97,9 @@
                         <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                         <Label LineBreakMode="TailTruncation"  Text="{Binding WorkOrderType}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" />
                         <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
-                            <Label Text="(" Style="{StaticResource ItemDescriptionStyle}" />
-                            <Label  LineBreakMode="TailTruncation"  Text="{Binding PriorityName}" Style="{StaticResource ItemDescriptionStyle}" />
-                            <Label Text=")" Style="{StaticResource ItemDescriptionStyle}"/>
+                            <Label Text="(" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}"/>
+                            <Label  LineBreakMode="TailTruncation"  Text="{Binding PriorityName}" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}" />
+                            <Label Text=")" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}"/>
                         </StackLayout>
                     </Grid>
 
