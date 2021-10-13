@@ -112,6 +112,7 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string RequesterPhone { get; set; }
         public string TargetName { get; set; }
         public string PriorityName { get; set; }
+
         public string WorkOrderStatusName { get; set; }
         public string WorkTypeName { get; set; }
         public string ShiftName { get; set; }
@@ -202,13 +203,68 @@ namespace ProteusMMX.Model.WorkOrderModel
 
         public int? WorkOrderAttachmentCount { get; set; }
 
-
+       
         public string WorkOrderApproved { get; set; }
         public bool WorkOrderApprovedFlag
         {
             get
             {
-                if (this.WorkOrderApproved =="true")
+                if (this.WorkOrderApproved == "true")
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public bool AssetNameFlag
+        {
+            get
+            {
+                if (this.AssetName != null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public bool AssetSystemNameFlag
+        {
+            get
+            {
+                if (this.AssetSystemName != null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+        public bool AssetSystemFlag
+        {
+            get
+            {
+                if (this.AssetSystemName != null)
+                {
+                    return true;
+                }
+                else if (this.AssetName != null)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public bool PriorityNameIsVisible
+        {
+            get
+            {
+                if (this.PriorityName != null)
                 {
                     return true;
                 }

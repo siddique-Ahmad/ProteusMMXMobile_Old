@@ -3708,6 +3708,25 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+
+        bool _jobNumberFlag = false;
+        public bool JobNumberFlag
+        {
+            get
+            {
+                return _jobNumberFlag;
+            }
+
+            set
+            {
+                if (value != _jobNumberFlag)
+                {
+                    _jobNumberFlag = value;
+                    OnPropertyChanged(nameof(JobNumberFlag));
+                }
+            }
+        }
+
         //Approval Level
         string _approvalLevel;
         public string ApprovalLevel
@@ -11421,7 +11440,13 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
 
                 this.WorkorderNumberText = workorder.WorkOrderNumber;
+
                 this.JobNumberText = workorder.JobNumber;
+                if (!string.IsNullOrWhiteSpace(this.JobNumberText))
+                {
+                    this.JobNumberFlag = true;
+                }
+
                 if (workorder.TotalTime != null)
                 {
                     this.TotalTimeText = workorder.TotalTime;

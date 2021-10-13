@@ -76,7 +76,7 @@
             </ToolbarItem.Icon>
         </ToolbarItem>
         <ToolbarItem Name="MenuItem3" Text=":" Icon="dots.png"   Command="{Binding ToolbarCommand}" >
-            <ToolbarItem.Icon>
+            <ToolbarItem.Icon >
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
                         <FileImageSource File="dots.png"/>
@@ -126,7 +126,7 @@
                                 </Image.GestureRecognizers>
                             </Image>
 
-                            <StackLayout IsVisible="{Binding TotalRecordForPhone}" VerticalOptions="Center" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
+                            <StackLayout IsVisible="{Binding TotalRecordForPhone}"  VerticalOptions="Center" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}"/>
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text=":" Grid.Column="3"/>
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordCount}"/>

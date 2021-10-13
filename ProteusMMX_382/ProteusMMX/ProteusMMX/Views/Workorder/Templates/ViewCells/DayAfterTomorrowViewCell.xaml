@@ -33,20 +33,35 @@
                                 Grid.Column="1"
                                 Orientation="Horizontal"/>
 
-                        <!--Text="{Binding Source={x:Reference timePicker},Path=Time.TotalSeconds,StringFormat='{0} total seconds'}"-->
-                        <!--<Label Text="{Binding Source={x:Reference PastViewCell}, Path=  }"  />-->
-
-                        <!--<Label x:Name="WorkorderNumberLabel"  Style="{StaticResource ItemDescriptionStyle}"/>
-                        <Label Text=":" Grid.Column="1"  Style="{StaticResource ItemDescriptionStyle}" />-->
-                        <Label TextColor="#006de0"  FontAttributes="Bold" FontSize="18.72" FontFamily="Ebrima">
-                            <Label.FormattedText>
-                                <FormattedString>
-                                    <Span Text="{Binding FacilityName}"/>
-                                    <Span Text=">" />
-                                    <Span Text="{Binding LocationName}" />
-                                </FormattedString>
-                            </Label.FormattedText>
-                        </Label>                       
+                        <StackLayout>
+                            <Label TextColor="#006de0" FontAttributes="Bold" FontSize="16" FontFamily="Ebrima">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding FacilityName}"/>
+                                        <Span Text=">" />
+                                        <Span Text="{Binding LocationName}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" IsVisible="{Binding AssetNameFlag}">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding AssetName}"/>
+                                        <Span Text=" (Asset Name)" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <Label TextColor="#006de0" IsVisible="{Binding AssetSystemNameFlag}" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding AssetSystemName}"/>
+                                        <Span Text=" (Asset System Name)" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                            <!--<Label Text="{Binding AssetName}" IsVisible="{Binding AssetNameFlag}" TextColor="#006de0" FontAttributes="Bold" FontSize="18.72" FontFamily="Ebrima"/>
+                            <Label Text="{Binding AssetSystemName}" IsVisible="{Binding AssetSystemNameFlag}" TextColor="#006de0" FontAttributes="Bold" FontSize="18.72" FontFamily="Ebrima"/>-->
+                        </StackLayout>
                     </Grid>
 
 

@@ -44,6 +44,13 @@
 
     </Style>
 
+    <Style x:Key="LabelStyleNew" TargetType="Label">
+    <Setter Property="TextColor" Value="{DynamicResource BlackColor}" />
+    <Setter Property="FontFamily" Value="MS Reference Sans Serif"/>
+    <Setter Property="MinimumHeightRequest" Value="40"/>
+
+    </Style>
+
     <!--  Common style for entries  -->
     <Style x:Key="EntryStyle" TargetType="control:BorderlessEntry">
         <!--<Setter Property="PlaceholderColor" Value="{StaticResource EntryPlaceholderColor}" />-->
@@ -103,7 +110,6 @@
         <Setter Property="TextColor" Value="Black"/>
         <Setter Property="ImageAlignment" Value="End"></Setter>
         <Setter Property="ShowIcon" Value="True"></Setter>
-        <Setter Property="WidthRequest" Value="40"></Setter>
         <Setter Property="ImageSource" Value="unnamed.png"></Setter>
     </Style>
     <!--  Common style for gradient view  -->

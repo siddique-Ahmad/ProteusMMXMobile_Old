@@ -437,7 +437,7 @@
     <AndroidResource Include="Resources\drawable\greencheck.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\menuicon.png" />
+    <AndroidResource Include="Resources\drawable\dots.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\unnamed.png" />

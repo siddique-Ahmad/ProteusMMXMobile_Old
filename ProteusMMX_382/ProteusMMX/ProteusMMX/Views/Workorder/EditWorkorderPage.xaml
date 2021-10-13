@@ -23,17 +23,17 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem   Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":"  Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem   Name="MenuItem2" Order="Primary" Icon="Dots.png" Text=":"  Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="Dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/Dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/Dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -55,7 +55,9 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <Grid
+                       
+
+                        <Grid Grid.Row="0"
                 Padding="10,10,10,10"
                 RowSpacing="5"
                 VerticalOptions="Fill" >
@@ -82,32 +84,48 @@
                                 <ColumnDefinition  Width="*" />
                                 <ColumnDefinition  Width="*" />
                             </Grid.ColumnDefinitions>
-
-                            <StackLayout Orientation="Vertical" IsVisible="{Binding WorkorderNumberIsVisible}" >
-                                <Label Text="{Binding WorkorderNumbeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <Label Text="{Binding WorkorderNumberText}"/>
+                            <StackLayout Grid.Row="0" Grid.ColumnSpan="2">
+                                <StackLayout Orientation="Vertical" Grid.Row="0"  IsVisible="{Binding WorkorderNumberIsVisible}" >
+                                    <Label TextColor="#006de0" FontAttributes="Bold" FontSize="16" FontFamily="Ebrima">
+                                        <Label.FontAttributes>
+                                            <OnPlatform x:TypeArguments="FontAttributes">
+                                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                                            </OnPlatform>
+                                        </Label.FontAttributes>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <!--<Span Text="{Binding WorkorderNumberTitle}"/>-->
+                                                <Span Text="Workorder Number"></Span>
+                                                <Span Text=":"/>
+                                                <Span Text="{Binding WorkorderNumberText}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
+                                
+                                <StackLayout Orientation="Vertical" Grid.Row="1" IsVisible="{Binding JobNumberFlag}">
+                                    <Label IsVisible="{Binding JobNumberFlag}" TextColor="#006de0" FontAttributes="Bold" FontSize="16" FontFamily="Ebrima">
+                                        <Label.FontAttributes>
+                                            <OnPlatform x:TypeArguments="FontAttributes">
+                                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                                            </OnPlatform>
+                                        </Label.FontAttributes>
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="{Binding JobNumberTitle}"/>
+                                                <Span Text="{Binding JobNumberText}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                </StackLayout>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="1" IsVisible="{Binding JobNumberIsVisible}">
-                                <Label Text="{Binding JobNumberTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <Label Text="{Binding JobNumberText}"/>
-                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="1" HeightRequest="100" Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">
+                               
 
-                            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">
+
                                 <Label Text="{Binding DescriptionTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -123,17 +141,20 @@
                                         IsEnabled="{Binding DescriptionIsEnable}" />
                                 </border:SfBorder>-->
                                 <border:SfBorder Grid.Row="2" Style="{StaticResource SfBorderStyle}">
+                                    <StackLayout Grid.Row="2">
                                     <control1:CustomEntry  x:Name="Description" Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"
                             TextColor="{DynamicResource Gray-900}" />
-                                </border:SfBorder>
-
-                                <Label HorizontalOptions="End" Grid.Column="1" TextColor="#006de0" Text="{Binding MoreText}"  FontAttributes="Bold" >
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer
+                                        <Label HorizontalOptions="End" Grid.Column="1" TextColor="#006de0" Text="{Binding MoreText}"  FontAttributes="Bold" >
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
                                         Command="{Binding TapCommand1}"
                                          NumberOfTapsRequired="1" />
-                                    </Label.GestureRecognizers>
-                                </Label>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                </border:SfBorder>
+
+                               
 
                             </StackLayout>
 
@@ -141,11 +162,11 @@
                                 <Label Text="{Binding TargetTitle}" TextColor="Black" FontAttributes="Bold" Style="{StaticResource LabelStyle}">
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <Label Text="{Binding TargetName}" />
+                                    <Label Text="{Binding TargetName}" Margin="2,10,0,10" Style="{StaticResource LabelStyleNew}" />
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" IsVisible="{Binding RequiredDateIsVisible}">                                    
+                            <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" IsVisible="{Binding RequiredDateIsVisible}">
                                 <Label Text="{Binding RequiredDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -158,7 +179,7 @@
                                     <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}"  IsEnabled="{Binding RequiredDateIsEnable}"  />
                                 </border:SfBorder>
                             </StackLayout>
-                           
+
                             <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1" IsVisible="{Binding WorkStartedDateIsVisible}">
                                 <Label Text="{Binding WorkStartedDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
@@ -172,7 +193,7 @@
                                     <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding WorkStartedDate1}" MinimumDate="{Binding MinimumWorkStartedDate}" MaximumDate="{Binding MaximumWorkStartedDate}" IsEnabled="{Binding WorkStartedDateIsEnable}" />
                                 </border:SfBorder>
                                 <Label Text="{Binding WorkStartedDateWarningText}" IsVisible="{Binding WorkStartedDateWarningTextIsVisible}" TextColor="Red"></Label>
-                               
+
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="0" IsVisible="{Binding WorkorderCompletionDateIsVisible}">
@@ -200,7 +221,7 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <Entry Margin="0,8,0,0" Text="{Binding ActivationDateText}" IsEnabled="False" ></Entry>
+                                    <control1:CustomEntry Text="{Binding ActivationDateText}" IsEnabled="False" ></control1:CustomEntry>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -214,9 +235,7 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                        <Entry Text="{Binding RequestedDate}" Margin="0,8,0,0" IsEnabled="False" ></Entry>
-                                </border:SfBorder>
+                                    <control1:CustomEntry Text="{Binding RequestedDate}" IsEnabled="False" ></control1:CustomEntry>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -231,7 +250,7 @@
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
                                     <buttons:SfButton Text="{Binding FacilityName}"  Command="{Binding FacilityCommand}" Style="{StaticResource SfButtonStyles}" IsEnabled="{Binding AssetIsEnable}" >
-                                    </buttons:SfButton>                                    
+                                    </buttons:SfButton>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -251,7 +270,6 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-
                             <StackLayout Orientation="Vertical" Grid.Row="6" Grid.Column="0" IsVisible="{Binding AssetIsVisible}">
                                 <Label Text="{Binding AssetsTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
@@ -269,11 +287,9 @@
 
                             </StackLayout>
 
-
                             <StackLayout Orientation="Vertical" Grid.Row="6" Grid.Column="1" IsVisible="{Binding AssetIsVisible}">
 
                                 <StackLayout Orientation="Horizontal">
-
                                     <Label Text="{Binding AssetSystemTitle}" IsVisible="{Binding AssetSystemIsVisibleForLicensing}" TextColor="Black">
                                         <Label.FontAttributes>
                                             <OnPlatform x:TypeArguments="FontAttributes">
@@ -282,8 +298,7 @@
                                             </OnPlatform>
                                         </Label.FontAttributes>
                                     </Label>
-
-
+                                    
                                     <Label FontAttributes="Italic"   Text="{Binding AssociatedAssets}" IsVisible="{Binding ShowAssociatedAssets}" TextColor="Blue"  BackgroundColor="Transparent">
 
                                         <Label.GestureRecognizers>
@@ -294,8 +309,9 @@
 
                                     </Label>
                                 </StackLayout>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <buttons:SfButton Text="{Binding AssetSystemName}"  Command="{Binding AssetSystemCommand}" Style="{StaticResource SfButtonStyles}" IsEnabled="{Binding AssetIsEnable}" IsVisible="{Binding AssetSystemIsVisibleForLicensing}" >
+
+                                <border:SfBorder HeightRequest="50" Style="{StaticResource SfBorderStyle}">
+                                    <buttons:SfButton  Text="{Binding AssetSystemName}"  Command="{Binding AssetSystemCommand}" Style="{StaticResource SfButtonStyles}" IsEnabled="{Binding AssetIsEnable}" IsVisible="{Binding AssetSystemIsVisibleForLicensing}" >
                                     </buttons:SfButton>
                                 </border:SfBorder>
                                 <!--<Button Text="{Binding AssetSystemName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding AssetSystemCommand}" IsVisible="{Binding AssetSystemIsVisibleForLicensing}" IsEnabled="{Binding AssetIsEnable}" />-->
@@ -318,20 +334,22 @@
                                 <!--<Button Text="{Binding AssignToEmployeeName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding AssignToCommand}" IsEnabled="{Binding AssignToEmployeeIsEnable}" />-->
 
                             </StackLayout>
-                           
+
                             <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="8">
                                 <StackLayout Orientation="Horizontal">
                                     <dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
                                     </dependencyinterface:LoginSwitch>
-                                    <Label     FontAttributes="Bold"  Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
+                                    <!--<buttons:SfSwitch   IsEnabled="{Binding IsCostLayoutIsEnable}" IsOn="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
+                                    </buttons:SfSwitch>-->
+                                    <Label  FontAttributes="Bold"  Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
 
                                     </Label>
                                 </StackLayout>
                                 <StackLayout Grid.Column="2" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}" >
-                                    <buttons:SfRadioButton IsVisible="{Binding IsCostLayoutIsVisibleForChild}"  IsChecked="{Binding ChildCostDistributed}" Margin="10,10,10,10" Text="{Binding ChargeCostsOnlyToChildAssets}" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
+                                    <buttons:SfRadioButton IsVisible="{Binding IsCostLayoutIsVisibleForChild}" CheckedColor="Blue"  IsChecked="{Binding ChildCostDistributed}" Margin="10,10,10,10" Text="{Binding ChargeCostsOnlyToChildAssets}" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}">
-                                    <buttons:SfRadioButton IsVisible="{Binding IsCostLayoutIsVisibleForParent}" IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}" Margin="10,10,10,10" Text="{Binding ParentCostsOnly}" StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
+                                    <buttons:SfRadioButton IsVisible="{Binding IsCostLayoutIsVisibleForParent}"  CheckedColor="Blue" IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}" Margin="10,10,10,10" Text="{Binding ParentCostsOnly}" StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
 
                                 </StackLayout>
 
@@ -339,7 +357,7 @@
 
                             <StackLayout IsVisible="{Binding IsCostLayoutIsVisibleForPhone}" Grid.Row="8" Grid.ColumnSpan="2" >
                                 <StackLayout Orientation="Horizontal">
-                                    <dependencyinterface:LoginSwitch   IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" x:Uid="MySwitch" >
+                                    <dependencyinterface:LoginSwitch OnColor="Blue"   IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" x:Uid="MySwitch" >
                                     </dependencyinterface:LoginSwitch>
 
                                     <Label FontAttributes="Bold"  Text="{Binding DistributeCostforAssetsystem}" FontSize="Small" TextColor="Black" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
@@ -347,10 +365,10 @@
                                 </StackLayout>
 
                                 <StackLayout Orientation="Horizontal" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}" >
-                                    <buttons:SfRadioButton x:Name="RadioButton" IsChecked="{Binding ChildCostDistributed}" Text="{Binding ChargeCostsOnlyToChildAssets}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
+                                    <buttons:SfRadioButton x:Name="RadioButton" CheckedColor="Blue" IsChecked="{Binding ChildCostDistributed}" Text="{Binding ChargeCostsOnlyToChildAssets}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}">
-                                    <buttons:SfRadioButton x:Name="Button1" IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}"  Text="{Binding ParentCostsOnly}" HorizontalOptions="StartAndExpand" VerticalOptions='StartAndExpand' StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
+                                    <buttons:SfRadioButton x:Name="Button1" CheckedColor="Blue"  IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}"  Text="{Binding ParentCostsOnly}" HorizontalOptions="StartAndExpand" VerticalOptions='StartAndExpand' StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
                                 </StackLayout>
 
                             </StackLayout>
@@ -599,7 +617,7 @@
 
 
                             </StackLayout>
-                            
+
                             <StackLayout Orientation="Vertical" Grid.Row="15" Grid.Column="1" IsVisible="{Binding CurrentRuntimeIsVisible}">
                                 <Label Text="{Binding CurrentRuntimeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
@@ -646,15 +664,18 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                                    <control1:UnderLineEditor   Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" />
-                                </border:SfBorder>
-                                <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer
+                                    <StackLayout >
+                                        <control1:UnderLineEditor HeightRequest="120"  Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" />
+                                        <Label HorizontalOptions="End" HeightRequest="30" Grid.Column="1" VerticalOptions="End" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
                                         Command="{Binding TapCommand2}"
                                          NumberOfTapsRequired="1" />
-                                    </Label.GestureRecognizers>
-                                </Label>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                </border:SfBorder>
+                               
                             </StackLayout>
 
 
@@ -682,7 +703,6 @@
                                 <ColumnDefinition Width="1500*" ></ColumnDefinition>
                                 <ColumnDefinition Width="40*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-
                             <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
                                 <Label Text="{Binding InternalNotesTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
@@ -693,15 +713,20 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                                    <control1:UnderLineEditor  Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
-                                </border:SfBorder>
-                                <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer
+                                    <StackLayout>                                       
+                                            <control1:UnderLineEditor HeightRequest="120" Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
+
+
+                                        <Label HorizontalOptions="End" HeightRequest="30" Grid.Column="1" VerticalOptions="End" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
                                         Command="{Binding TapCommand3}"
                                          NumberOfTapsRequired="1" />
-                                    </Label.GestureRecognizers>
-                                </Label>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                </border:SfBorder>
+                                
                             </StackLayout>
 
                         </Grid>
@@ -722,15 +747,18 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
-                                    <control1:UnderLineEditor  Text="{Binding SignatureText}" IsEnabled="False"  />
-                                </border:SfBorder>
-                                <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer
+                                    <StackLayout>
+                                        <control1:UnderLineEditor HeightRequest="120" Text="{Binding SignatureText}" IsEnabled="False"  />
+                                        <Label HorizontalOptions="End" HeightRequest="30" Grid.Column="1" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
                                         Command="{Binding TapCommandSignature}"
                                          NumberOfTapsRequired="1" />
-                                    </Label.GestureRecognizers>
-                                </Label>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                </border:SfBorder>
+                                
                             </StackLayout>
 
                         </Grid>
