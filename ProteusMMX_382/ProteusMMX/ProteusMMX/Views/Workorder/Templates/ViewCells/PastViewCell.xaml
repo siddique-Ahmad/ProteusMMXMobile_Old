@@ -8,12 +8,12 @@
 
 
     <ViewCell.View>
-        <StackLayout x:Name="TopLayout" Padding="2" >
+        <StackLayout x:Name="TopLayout" Padding="4,1,4,1" >
             <StackLayout.Resources>
                 <ResourceDictionary Source="Styles.xaml" />
             </StackLayout.Resources>
             <Frame BackgroundColor="White"  BorderColor="DarkGray"    CornerRadius="5">
-                <Grid RowSpacing="2" Padding="0,-15,-20,-15">
+                <Grid RowSpacing="0" Padding="-15,-15,-20,-15">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />

@@ -17,18 +17,18 @@
     </ContentPage.Resources>-->
     
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="1" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="1" Command="{Binding ToolbarCommand}" >
 
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -41,16 +41,16 @@
             <Grid>
                 <Grid  >
                     <Grid.RowDefinitions>
-                        <RowDefinition  Height="80*"></RowDefinition>
+                        <RowDefinition  Height="40*"></RowDefinition>
                     </Grid.RowDefinitions>
                 </Grid>
-                <border:SfBorder HeightRequest="87" BorderColor="#006de0" CornerRadius="0,0,25,25" BackgroundColor="#006de0"  >
-                    <Label  VerticalOptions="Center" FontSize="Medium" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,50" HorizontalOptions="Center" Text="{Binding WelcomeTextTitle}"></Label>
+                <border:SfBorder HeightRequest="40" BorderColor="#006de0" CornerRadius="0,0,20,20" BackgroundColor="#006de0"  >
+                    <Label  VerticalOptions="Center" FontSize="Medium" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" HorizontalOptions="Center" Text="{Binding WelcomeTextTitle}"></Label>
                 </border:SfBorder>
             </Grid>
         
         <ScrollView>
-            <Grid Padding="30"  Margin="0,-39,0,0">
+            <Grid Padding="25"  Margin="0,-39,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="120" />
                     <RowDefinition Height="120" />
@@ -93,7 +93,6 @@
                             <RowDefinition  Height="30*"></RowDefinition>
                         </Grid.RowDefinitions>
                     </Grid>
-
                     <Grid Grid.Row="0">
                         <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
@@ -119,8 +118,6 @@
                         <Label Text="{Binding WorkorderTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
                     HorizontalOptions="Center"></Label>
                     </Grid>
-
-
                 </StackLayout>
                 <StackLayout Grid.Row="1" Grid.Column="0" IsVisible="{Binding ClosedWorkorderBorderVisibility}">
                     <Grid RowSpacing="10">
@@ -128,7 +125,7 @@
                             <RowDefinition  Height="30*"></RowDefinition>
                         </Grid.RowDefinitions>
                     </Grid>
-
+                    
                     <Grid Grid.Row="0">
                         <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
@@ -154,8 +151,6 @@
                         <Label Text="{Binding CloseWorkorderTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
                     HorizontalOptions="Center"></Label>
                     </Grid>
-
-
                 </StackLayout>
                 <StackLayout Grid.Row="1" Grid.Column="2" IsVisible="{Binding InventoryTransactionVisibility}">
                     <Grid RowSpacing="10">
@@ -189,8 +184,6 @@
                         <Label Text="{Binding InventoryTransactionTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
                     HorizontalOptions="Center"></Label>
                     </Grid>
-
-
                 </StackLayout>
                 <StackLayout Grid.Row="2" Grid.Column="0" IsVisible="{Binding ServiceRequestBorderVisibility}">
                     <Grid RowSpacing="10" IsVisible="{Binding ServiceRequestVisibility}">
@@ -224,8 +217,6 @@
                         <Label Text="{Binding ServiceRequestTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima"  TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
                     HorizontalOptions="Center"></Label>
                     </Grid>
-
-
                 </StackLayout>                
                 <StackLayout Grid.Row="2" Grid.Column="2" IsVisible="{Binding AssetBorderVisibility}">
                     <Grid RowSpacing="10" IsVisible="{Binding AssetVisibility}">
@@ -260,7 +251,6 @@
                     HorizontalOptions="Center"></Label>
                     </Grid>
 
-
                 </StackLayout>
                 <StackLayout Grid.Row="3" Grid.Column="0" IsVisible="{Binding BarcodeBorderVisibility}" >
                     <Grid RowSpacing="10" IsVisible="{Binding BarcodeVisibility}">
@@ -294,7 +284,6 @@
                         <Label Text="{Binding BarcodeTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
                     HorizontalOptions="Center"></Label>
                     </Grid>
-
 
                 </StackLayout>
                 <StackLayout Grid.Row="3" Grid.Column="2" IsVisible="{Binding ReceivingBorderVisibility}">
