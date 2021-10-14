@@ -94,11 +94,11 @@
 
     <ContentPage.Content>
         <Grid BackgroundColor="#fefefe" >           
-            <StackLayout HeightRequest="100">
-                <border:SfBorder HeightRequest="100" Grid.Row="0"  BorderColor="#006de0" CornerRadius="0,0,25,25"                      
+            <StackLayout HeightRequest="80">
+                <border:SfBorder HeightRequest="80" Grid.Row="0"  BorderColor="#006de0" CornerRadius="0,0,8,8"                      
                        BackgroundColor="#006de0"  >
                     <StackLayout>
-                        <Grid Padding="8">
+                        <Grid Padding="25,0,25,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="40"/>
@@ -113,7 +113,7 @@
                                 <!--<controls:CustomEntry HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="Black" Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />-->
                                 
                             </border:SfBorder>
-                            <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,10,0,0">
+                            <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0">
                                 <Image.Source>
                                     <OnPlatform x:TypeArguments="ImageSource" >
                                         <OnPlatform.Android>searchicon.png</OnPlatform.Android>
@@ -139,7 +139,7 @@
                     </StackLayout>
                 </border:SfBorder>
             </StackLayout>
-            <Grid   Margin="0,95,0,0">
+            <Grid   Margin="0,78,0,0">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -194,9 +194,8 @@
                     </Grid>
                 </Grid>-->
 
-                <StackLayout Spacing="0"  Orientation="Horizontal" Padding="4" Grid.Column="0"  >
+                <StackLayout Spacing="0"  Orientation="Horizontal" Padding="3" Grid.Column="0"  >
                     <ListView HorizontalOptions="FillAndExpand" 
-
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="None"
