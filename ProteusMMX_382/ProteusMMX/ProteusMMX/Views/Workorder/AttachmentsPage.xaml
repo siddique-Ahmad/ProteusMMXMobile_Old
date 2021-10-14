@@ -3,9 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.AttachmentsPage"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
-             Title="{Binding PageTitle}"
-             
-             BackgroundColor="{StaticResource BackgroundColor}" >
+               >
 
     <ContentPage.Resources>
         <ResourceDictionary>

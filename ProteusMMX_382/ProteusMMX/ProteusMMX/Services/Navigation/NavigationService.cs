@@ -187,7 +187,7 @@ namespace ProteusMMX.Services.Navigation
                 /// Add children page in it.
                 var tabbedPage = page as TabbedPage;
                 workOrders WorkOrders = parameter as workOrders;
-                tabbedPage.Title = WebControlTitle.GetTargetNameByTitleName("WorkOrder") + " " + WebControlTitle.GetTargetNameByTitleName("Details") + " - " + WorkOrders.WorkOrderNumber;
+                //tabbedPage.Title = WebControlTitle.GetTargetNameByTitleName("WorkOrder") + " " + WebControlTitle.GetTargetNameByTitleName("Details") + " - " + WorkOrders.WorkOrderNumber;
                 #region Edit Workorder Page
                 Page editWorkorderPage = CreateAndBindPage(typeof(EditWorkorderPageViewModel), parameter);
                 var PageParameter = new PageParameters { Page = editWorkorderPage, Parameter = parameter };
