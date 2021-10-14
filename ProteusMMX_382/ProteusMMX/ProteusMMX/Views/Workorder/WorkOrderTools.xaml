@@ -3,9 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.WorkOrderTools"
              xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
-             Title="{Binding PageTitle}"
-             Icon="tools.png"
-             BackgroundColor="{StaticResource BackgroundColor}">
+             Icon="tools.png">
 
     <ContentPage.Resources>
         <ResourceDictionary>

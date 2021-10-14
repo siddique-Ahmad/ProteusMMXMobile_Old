@@ -262,9 +262,9 @@ namespace ProteusMMX.Views.Workorder
 
             InitializeComponent();
 
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
-            this.Title = WebControlTitle.GetTargetNameByTitleName("Inspection");
+           
             if (Application.Current.Properties.ContainsKey("AssociateInspection"))
             {
                 var AssociateInspectionRightsExpression = Application.Current.Properties["AssociateInspection"].ToString();

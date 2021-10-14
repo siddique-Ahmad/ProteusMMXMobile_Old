@@ -4,9 +4,9 @@
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              xmlns:control1="clr-namespace:ProteusMMX.Controls"
              x:Class="ProteusMMX.Views.Workorder.TaskAndLabourPage"
-             Title="{Binding PageTitle}"
+           
              Icon="tasksandlabors.png"
-             BackgroundColor="{StaticResource BackgroundColor}" >
+              >
 
     <ContentPage.Resources>
         <ResourceDictionary>
