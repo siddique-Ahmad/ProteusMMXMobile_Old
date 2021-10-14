@@ -9,9 +9,7 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.SfCalendar.XForms;assembly=Syncfusion.SfCalendar.XForms"
              xmlns:controls1="clr-namespace:Windows.UI.Xaml.Controls;assembly=Windows.Foundation.UniversalApiContract"
              x:Class="ProteusMMX.Views.Workorder.EditWorkorderPage"
-            
-             Icon="details.png"
-            >
+             Icon="details.png">
 
     <ContentPage.Resources>
         <ResourceDictionary>
