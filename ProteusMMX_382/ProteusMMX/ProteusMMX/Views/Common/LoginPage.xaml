@@ -147,7 +147,20 @@
 
 
                             
-                            <Image  Grid.Row="8" WidthRequest="50" HeightRequest="50" Source="submitbtn.png" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">
+                            <Image  Grid.Row="8" WidthRequest="50" HeightRequest="50" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">                               
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="FileImageSource">
+                                            <OnPlatform.iOS>
+                                            <FileImageSource File="submitbtn.png"/>
+                                            </OnPlatform.iOS>
+                                            <OnPlatform.Android>
+                                            <FileImageSource File="submitbtn.png" />
+                                            </OnPlatform.Android>
+                                            <OnPlatform.WinPhone>
+                                            <FileImageSource File="Assets/submitbtn.png"/>
+                                            </OnPlatform.WinPhone>
+                                        </OnPlatform>
+                                    </Image.Source>                                
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer
                                          Command="{Binding OnLoginTapCommand}"
