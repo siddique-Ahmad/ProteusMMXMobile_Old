@@ -126,29 +126,90 @@
   <ItemGroup>
     <Content Include="Assets\ArrowLeft.png" />
     <Content Include="Assets\ArrowRight.png" />
+    <Content Include="Assets\AscendingIcon.png" />
     <Content Include="Assets\Asset.jpg" />
+    <Content Include="Assets\assets.png" />
+    <Content Include="Assets\Attachements.png" />
+    <Content Include="Assets\BackgroundImage.jpg" />
+    <Content Include="Assets\Backgroundlogin.png" />
     <Content Include="Assets\Barcode.png" />
     <Content Include="Assets\BarcodeAsset.png" />
+    <Content Include="Assets\bottomimg.png" />
     <Content Include="Assets\Calander.png" />
     <Content Include="Assets\Camera.png" />
     <Content Include="Assets\Checked.png" />
+    <Content Include="Assets\clear.png" />
     <Content Include="Assets\ClosedWorkorder.png" />
+    <Content Include="Assets\complateicon.png" />
+    <Content Include="Assets\cwoicon.png" />
+    <Content Include="Assets\delicon.png" />
+    <Content Include="Assets\Descendingicon.png" />
+    <Content Include="Assets\details.png" />
     <Content Include="Assets\Dot.png" />
+    <Content Include="Assets\dots.png" />
+    <Content Include="Assets\eyicon.png" />
     <Content Include="Assets\filter.png" />
+    <Content Include="Assets\filtericon.png" />
+    <Content Include="Assets\greencheck.png" />
+    <Content Include="Assets\GreenTickMark.png" />
+    <Content Include="Assets\icon.png" />
+    <Content Include="Assets\Inspection.png" />
     <Content Include="Assets\InventoryParts.png" />
+    <Content Include="Assets\iticon.png" />
+    <Content Include="Assets\KPIIcon.png" />
+    <Content Include="Assets\leftrightarrow.png" />
+    <Content Include="Assets\Login.png" />
+    <Content Include="Assets\LoginPageBackgroundImage.png" />
     <Content Include="Assets\mic.png" />
+    <Content Include="Assets\Morefilter.png" />
+    <Content Include="Assets\parts.png" />
+    <Content Include="Assets\passicon.png" />
     <Content Include="Assets\pdfword.png" />
+    <Content Include="Assets\Priority.png" />
     <Content Include="Assets\ProteusCMMS.png" />
+    <Content Include="Assets\ReadMore.png" />
     <Content Include="Assets\Receiving.jpg" />
+    <Content Include="Assets\recicon.png" />
     <Content Include="Assets\Remove.png" />
     <Content Include="Assets\Requester.png" />
+    <Content Include="Assets\RoundedEntry.xml" />
+    <Content Include="Assets\save.png" />
+    <Content Include="Assets\saveicon.png" />
+    <Content Include="Assets\search.png" />
+    <Content Include="Assets\searchicon.png" />
+    <Content Include="Assets\shfiltericon.png" />
+    <Content Include="Assets\SortIcon.png" />
+    <Content Include="Assets\splash_logo.png" />
+    <Content Include="Assets\splash_screen.xml" />
+    <Content Include="Assets\sricon.png" />
+    <Content Include="Assets\ssbicon.png" />
+    <Content Include="Assets\starticon.png" />
+    <Content Include="Assets\stopicon.png" />
+    <Content Include="Assets\submitbtn.png" />
+    <Content Include="Assets\tasksandlabors.png" />
+    <Content Include="Assets\tel1.png" />
+    <Content Include="Assets\tel2.png" />
+    <Content Include="Assets\tel3.png" />
+    <Content Include="Assets\tel4.png" />
+    <Content Include="Assets\tel5.png" />
+    <Content Include="Assets\tel6.png" />
+    <Content Include="Assets\tel7.png" />
+    <Content Include="Assets\tel8.png" />
     <Content Include="Assets\ThumbsUp.png" />
+    <Content Include="Assets\tools.png" />
     <Content Include="Assets\Unchecked.png" />
+    <Content Include="Assets\unnamed - Copy.png" />
+    <Content Include="Assets\unnamed.png" />
+    <Content Include="Assets\urlicon.png" />
+    <Content Include="Assets\usericon.png" />
+    <Content Include="Assets\woattachment.png" />
+    <Content Include="Assets\woicon.png" />
     <Content Include="Assets\workorder location.png" />
     <Content Include="Assets\Workorder.png" />
     <Content Include="Assets\workorderassest.jpg" />
     <None Include="Package.xml" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\workorderlocation.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-100.png" />
     <Content Include="Assets\LockScreenLogo.scale-125.png" />
@@ -219,28 +280,31 @@
       <Version>1.4.118</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Licensing">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.GridCommon">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfCalendar">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView">
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugin.Connectivity">
       <Version>3.1.1</Version>
@@ -254,7 +318,7 @@
     <PackageReference Include="Xamarin.Controls.SignaturePad.Forms">
       <Version>3.0.0</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="3.6.0.709228" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.8" />
     <PackageReference Include="ZXing.Net.Mobile">
       <Version>2.4.1</Version>
@@ -273,4 +337,9 @@
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties XamarinHotReloadXFormsNugetUpgradeInfoBarProteusMMXUWPHideInfoBar="True" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
