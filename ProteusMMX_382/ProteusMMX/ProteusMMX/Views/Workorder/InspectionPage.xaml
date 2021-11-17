@@ -304,9 +304,8 @@
                     </StackLayout>
                 </StackLayout>
             </Grid>-->
-
-
-        <ScrollView  >
+        <!--#region Old Code  -->
+        <!--<ScrollView  >
 
             <StackLayout Orientation="Vertical">
                 <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}"/>
@@ -320,8 +319,25 @@
             </StackLayout>
 
 
-        </ScrollView>
+        </ScrollView>-->
+        <!--#endregion-->
+        <Grid x:Name="MasterMainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0" Padding="5" x:Name="ParentLayout">
 
+            </StackLayout>
+            <StackLayout x:Name="MainBoxView" HeightRequest="1" Grid.Row="1">
+                
+            </StackLayout>
+            <!--<BoxView BackgroundColor="Black" HeightRequest="2" Grid.Row="1"/>-->
+            <StackLayout Grid.Row="2" Padding="7" x:Name="MainLayout">
+
+            </StackLayout>
+        </Grid>
         <!--<Button Text="Add Inspections" Grid.Row="1" BackgroundColor="#87CEFA" TextColor="White" Clicked="AddInspectionClicked" Margin="20,0,20,10" IsVisible ="true"></Button>-->
 
 

@@ -7,15 +7,7 @@
              x:Class="ProteusMMX.Views.Common.DashboardPage"
              Title="{Binding PageTitle}"
              BackgroundColor="White" >
-    
-    <!--<ContentPage.Resources>
-        <ResourceDictionary>          
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Style.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </ContentPage.Resources>-->
-    
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="1" Command="{Binding ToolbarCommand}" >
 
@@ -38,25 +30,29 @@
     
     <Grid BackgroundColor="#fefefe">
         <StackLayout VerticalOptions="Start">
+            
             <Grid>
                 <Grid  >
                     <Grid.RowDefinitions>
-                        <RowDefinition  Height="40*"></RowDefinition>
+                        <RowDefinition  Height="40"></RowDefinition>
+                        <RowDefinition  Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
                 </Grid>
-                <border:SfBorder HeightRequest="40" BorderColor="#006de0" CornerRadius="0,0,20,20" BackgroundColor="#006de0"  >
+                <border:SfBorder HeightRequest="40" BorderColor="#006de0" CornerRadius="0,0,10,10" BackgroundColor="#006de0"  >
                     <Label  VerticalOptions="Center" FontSize="Medium" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" HorizontalOptions="Center" Text="{Binding WelcomeTextTitle}"></Label>
                 </border:SfBorder>
             </Grid>
-        
-        <ScrollView>
-            <Grid Padding="25"  Margin="0,-39,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="120" />
-                    <RowDefinition Height="120" />
-                    <RowDefinition Height="120" />
-                    <RowDefinition Height="120" />
-                    <RowDefinition Height="120" />
+            <StackLayout HeightRequest="1"></StackLayout>
+                <ScrollView>
+                    
+                
+            <Grid Padding="10"  Margin="0,-20,0,0">
+                <Grid.RowDefinitions> 
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
@@ -325,7 +321,9 @@
                     <Label  Text="{Binding SupportLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
                 </StackLayout>
             </Grid>
-        </ScrollView>
+                    
+                </ScrollView>
+               
         </StackLayout>
     </Grid>
 </ContentPage>  

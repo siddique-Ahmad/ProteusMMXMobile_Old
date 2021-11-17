@@ -23,6 +23,10 @@ using ProteusMMX.Views.Common;
 using ProteusMMX.Views.SelectionListPages.Workorder.TaskAndLabour;
 using Rg.Plugins.Popup.Extensions;
 using SignaturePad.Forms;
+using Syncfusion.XForms.Border;
+using Syncfusion.XForms.Buttons;
+using Syncfusion.XForms.Expander;
+using Syncfusion.XForms.TabView;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -43,14 +47,15 @@ namespace ProteusMMX.Views.Workorder
         string EmployeecontrcatorRights;
         string InspectionRights;
         StackLayout layoutdelete = new StackLayout();
-        StackLayout layout1 = new StackLayout();
+        //StackLayout layout1 = new StackLayout();
         StackLayout FinalLayout = new StackLayout();
         private readonly IRequestService _requestService;
         Label TotalInspectionTimeHours;
         Label TotalInspectionTimeMinutes;
         TimeSpan total;
         Label TotalInspectionTime;
-        Button btnCreateWorkorder;
+        // Button btnCreateWorkorder;
+        StackLayout CreateWorkorderButtonSL;
         double totalTime;
         Button btnAddInspection;
         Button btnAddEmployee;
@@ -264,7 +269,7 @@ namespace ProteusMMX.Views.Workorder
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
-           
+
             if (Application.Current.Properties.ContainsKey("AssociateInspection"))
             {
                 var AssociateInspectionRightsExpression = Application.Current.Properties["AssociateInspection"].ToString();
@@ -287,6 +292,8 @@ namespace ProteusMMX.Views.Workorder
         }
 
         InspectionPageViewModel ViewModel => this.BindingContext as InspectionPageViewModel;
+
+
         protected override async void OnAppearing()
         {
             UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
@@ -329,399 +336,561 @@ namespace ProteusMMX.Views.Workorder
 
             ///Rights for Add Inspection
             ///
+            //InspectionButtonSL.Children.Clear();
+            //TotalInspectionSL.Children.Clear();
+            //masterGrid.Children.Clear();
+            #region **** Main Grid ****
+
+            // InitializeComponent();
+            Grid masterGrid = new Grid();
+            masterGrid.BackgroundColor = Color.White;
+            masterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            masterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+            masterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
+            //masterGrid.RowDefinitions.Add(new RowDefinition { Height = 5 });
+            //masterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
+            //masterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            #region ******TotalInspection******
+            StackLayout TotalInspectionSL = new StackLayout();
+            TotalInspectionSL.Padding = new Thickness(5, 2, 0, 0);
+            masterGrid.Children.Add(TotalInspectionSL, 0, 0);
 
 
-            if (InspectionRights == "E")
+            TotalInspectionTime = new Label();
+            TotalInspectionTimeHours = new Label();
+            TotalInspectionTimeMinutes = new Label();
+
+            #endregion
+
+            #region ****** InspectionButton ******
+
+            StackLayout InspectionButtonSL = new StackLayout();
+            masterGrid.Children.Add(InspectionButtonSL, 0, 1);
+            Grid InspectionButtonGrid = new Grid();
+            InspectionButtonGrid.RowDefinitions.Add(new RowDefinition { Height = 35 });
+            InspectionButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            InspectionButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            InspectionButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            InspectionButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            
+            InspectionButtonSL.Children.Add(InspectionButtonGrid);
+
+            #region ****** AddInspectionButton ******
+
+            StackLayout AddInspectionButtonSL = new StackLayout();
+            AddInspectionButtonSL.IsVisible = false;
+            InspectionButtonGrid.Children.Add(AddInspectionButtonSL, 0, 0);
+
+            if (InspectionRights == "E" || InspectionRights == "V")
             {
 
-                btnAddInspection = new Button
-                {
-                    Text = WebControlTitle.GetTargetNameByTitleName("AddInspection"),
-                    BackgroundColor = Color.FromHex("#87CEFA"),
-                    BorderColor = Color.Black,
-                    IsVisible = true,
-                    CornerRadius = 5,
-                    TextColor = Color.White
-
-                };
-            }
-            else if (InspectionRights == "V")
-            {
-                btnAddInspection = new Button
-                {
-                    Text = WebControlTitle.GetTargetNameByTitleName("AddInspection"),
-                    BackgroundColor = Color.FromHex("#87CEFA"),
-                    BorderColor = Color.Black,
-                    IsEnabled = false,
-                    CornerRadius = 5,
-                    TextColor = Color.White
-
-                };
-            }
-            else
-            {
-                btnAddInspection = new Button
-                {
-                    Text = WebControlTitle.GetTargetNameByTitleName("AddInspection"),
-                    BackgroundColor = Color.FromHex("#87CEFA"),
-                    BorderColor = Color.Black,
-                    IsVisible = false,
-                    CornerRadius = 5,
-                    TextColor = Color.White
-
-                };
-            }
-
-            ///Rights for Employee and Contractor
-            if (EmployeecontrcatorRights == "E")
-            {
-                btnAddEmployee = new Button
-                {
-                    Text = WebControlTitle.GetTargetNameByTitleName("AddEmployee"),
-                    BackgroundColor = Color.FromHex("#87CEFA"),
-                    IsEnabled = false,
-                    BorderColor = Color.Black,
-                    CornerRadius = 5,
-                    TextColor = Color.White
-                };
-
-                btnAddContractor = new Button
-                {
-                    Text = WebControlTitle.GetTargetNameByTitleName("AddContractor"),
-                    BackgroundColor = Color.FromHex("#87CEFA"),
-                    IsEnabled = false,
-                    CornerRadius = 5,
-                    BorderColor = Color.Black,
-                    TextColor = Color.White
-                };
-            }
-            else if (EmployeecontrcatorRights == "V")
-            {
-                btnAddEmployee = new Button
-                {
-                    Text = WebControlTitle.GetTargetNameByTitleName("AddEmployee"),
-                    BackgroundColor = Color.FromHex("#87CEFA"),
-                    IsEnabled = false,
-                    CornerRadius = 5,
-                    BorderColor = Color.Black,
-                    TextColor = Color.White
-                };
-
-                btnAddContractor = new Button
-                {
-                    Text = WebControlTitle.GetTargetNameByTitleName("AddContractor"),
-                    BackgroundColor = Color.FromHex("#87CEFA"),
-                    IsEnabled = false,
-                    CornerRadius = 5,
-                    BorderColor = Color.Black,
-                    TextColor = Color.White
-                };
-            }
-            else
-            {
-                btnAddEmployee = new Button
-                {
-                    Text = WebControlTitle.GetTargetNameByTitleName("AddEmployee"),
-                    BackgroundColor = Color.FromHex("#87CEFA"),
-                    IsVisible = false,
-                    CornerRadius = 5,
-                    BorderColor = Color.Black,
-                    TextColor = Color.White
-                };
-
-                btnAddContractor = new Button
-                {
-                    Text = WebControlTitle.GetTargetNameByTitleName("AddContractor"),
-                    BackgroundColor = Color.FromHex("#87CEFA"),
-                    IsVisible = false,
-                    CornerRadius = 5,
-                    BorderColor = Color.Black,
-                    TextColor = Color.White
-                };
-            }
-            if (Device.Idiom == TargetIdiom.Phone)
-            {
-                btnAddInspection.WidthRequest = 90;
-                btnAddInspection.HeightRequest = 50;
-                btnAddInspection.FontSize = 9;
-
-                btnAddEmployee.WidthRequest = 90;
-                btnAddEmployee.HeightRequest = 50;
-                btnAddEmployee.FontSize = 9;
-
-                btnAddContractor.WidthRequest = 90;
-                btnAddContractor.HeightRequest = 50;
-                btnAddContractor.FontSize = 9;
-
+                AddInspectionButtonSL.IsVisible = true;
             }
 
-
-            btnAddInspection.Clicked += (sender, e) =>
+            Image InspectionButtonImage = new Image
             {
+                Source = "Inspection1.png",
+                HeightRequest = 25
+            };
+
+            Label InspectionButtonLal = new Label
+            {
+                Text = WebControlTitle.GetTargetNameByTitleName("AddInspection"),
+                FontSize = 14.75,
+                FontAttributes = FontAttributes.Bold,
+                TextColor = Color.Black,
+                HorizontalOptions = LayoutOptions.Center,
+                Margin = new Thickness(0, -7, 0, 0)
+            };
+            AddInspectionButtonSL.Children.Add(InspectionButtonImage);
+            AddInspectionButtonSL.Children.Add(InspectionButtonLal);
+
+            var btnAddInspection = new TapGestureRecognizer();
+            AddInspectionButtonSL.GestureRecognizers.Add(btnAddInspection);
+            btnAddInspection.Tapped += (sender, e) =>
+            {
+                InspectionButtonLal.TextColor = Color.FromHex("#000cfe");
+                InspectionButtonImage.Source = "Inspection12.png";
                 var page = new AddInspectionData(WorkorderID);
                 Navigation.PushAsync(page);
 
             };
-            TotalInspectionTime = new Label();
-            TotalInspectionTimeHours = new Label();
-            TotalInspectionTimeMinutes = new Label();
-            btnAddEmployee.Clicked += (sender, e) =>
+            #endregion
+
+            #region ****** AddEmployeeButton ******
+
+            StackLayout AddEmployeeButtonSL = new StackLayout();
+            AddEmployeeButtonSL.IsVisible = false;
+            InspectionButtonGrid.Children.Add(AddEmployeeButtonSL, 1, 0);
+
+            Image EmployeeButtonImage = new Image
             {
+                Source = "Inspection2.png",
+                HeightRequest = 25
+            };
+
+            Label EmployeeButtonLal = new Label
+            {
+                Text = WebControlTitle.GetTargetNameByTitleName("AddEmployee"),
+                FontSize = 14.75,
+                FontAttributes = FontAttributes.Bold,
+                TextColor = Color.Black,
+                HorizontalOptions = LayoutOptions.Center,
+                Margin = new Thickness(0, -7, 0, 0)
+            };
+            AddEmployeeButtonSL.Children.Add(EmployeeButtonImage);
+            AddEmployeeButtonSL.Children.Add(EmployeeButtonLal);
+
+            var btnAddEmployee = new TapGestureRecognizer();
+            AddEmployeeButtonSL.GestureRecognizers.Add(btnAddEmployee);
+            btnAddEmployee.Tapped += (sender, e) =>
+            {
+                EmployeeButtonLal.TextColor = Color.FromHex("#000cfe");
+                EmployeeButtonImage.Source = "Inspection22.png";
                 TargetNavigationData tnobj = new TargetNavigationData();
                 tnobj.WORKORDERID = this.WorkorderID;
                 tnobj.Type = "Inspection";
                 ViewModel._navigationService.NavigateToAsync<EmployeeListSelectionPageViewModel>(tnobj);
 
             };
-            btnAddContractor.Clicked += (sender, e) =>
+            #endregion
+
+            #region ****** AddContractorButton ******
+
+            StackLayout AddContractorButtonSL = new StackLayout();
+            AddContractorButtonSL.IsVisible = false;
+            InspectionButtonGrid.Children.Add(AddContractorButtonSL, 2, 0);
+            Image ContractorButtonImage = new Image
             {
+                Source = "Inspection3.png",
+                HeightRequest = 25
+            };
+
+            Label ContractorButtonLal = new Label
+            {
+                Text = WebControlTitle.GetTargetNameByTitleName("AddContractor"),
+                FontSize = 14.75,
+                FontAttributes = FontAttributes.Bold,
+                HorizontalOptions = LayoutOptions.Center,
+                TextColor = Color.Black,
+                Margin = new Thickness(0, -7, 0, 0)
+            };
+            AddContractorButtonSL.Children.Add(ContractorButtonImage);
+            AddContractorButtonSL.Children.Add(ContractorButtonLal);
+
+            if (EmployeecontrcatorRights == "E" || EmployeecontrcatorRights == "V")
+            {
+                AddContractorButtonSL.IsVisible = true;
+                AddEmployeeButtonSL.IsVisible = true;
+            }
+
+            var btnAddContractor = new TapGestureRecognizer();
+            AddContractorButtonSL.GestureRecognizers.Add(btnAddContractor);
+            btnAddContractor.Tapped += (sender, e) =>
+            {
+                ContractorButtonLal.TextColor = Color.FromHex("#000cfe");
+                ContractorButtonImage.Source = "Inspection32.png";
                 TargetNavigationData tnobj = new TargetNavigationData();
                 tnobj.WORKORDERID = this.WorkorderID;
                 tnobj.Type = "Inspection";
                 ViewModel._navigationService.NavigateToAsync<ContractorListSelectionPageViewModel>(tnobj);
 
             };
-            btnCreateWorkorder = new Button();
+            #endregion
 
-            if (this.btnCreateWorkorder.IsVisible)
+            #region ****** CreateWorkorderButton ******
+
+            CreateWorkorderButtonSL = new StackLayout();          
+            CreateWorkorderButtonSL.IsVisible = false;
+            InspectionButtonGrid.Children.Add(CreateWorkorderButtonSL, 3, 0);
+            Image WorkorderButtonImage = new Image
             {
-                if (Device.Idiom == TargetIdiom.Phone)
+                Source = "workorder1.png",
+                HeightRequest = 25
+            };
+
+            Label WorkorderButtonLal = new Label
+            {
+                Text = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder"),
+                FontSize = 14.75,
+                FontAttributes = FontAttributes.Bold,
+                HorizontalOptions = LayoutOptions.Center,
+                TextColor = Color.Black,
+                Margin = new Thickness(0, -7, 0, 0)
+            };
+            CreateWorkorderButtonSL.Children.Add(WorkorderButtonImage);
+            CreateWorkorderButtonSL.Children.Add(WorkorderButtonLal);
+
+            if (CreateWorkorderButtonSL.IsVisible == true)
+            {
+                CreateWorkorderButtonSL.IsVisible = true;
+            }
+
+            var btnCreateWorkorder = new TapGestureRecognizer();
+            CreateWorkorderButtonSL.GestureRecognizers.Add(btnCreateWorkorder);
+            btnCreateWorkorder.Tapped += (sender, e) =>
+            {
+                WorkorderButtonLal.TextColor = Color.FromHex("#000cfe");
+                WorkorderButtonImage.Source = "workorder2.png";
+                var page = new CreateWorkorderFromInspectionPageContent(WorkorderID, AnswerText);
+                Navigation.PushAsync(page);
+            };
+            #endregion
+
+            CreateWorkorderButtonSL.IsVisible = false;
+
+            //layout1.Children.Clear();
+            FinalLayout.Children.Clear();
+            MainLayout.Children.Clear();
+            ParentLayout.Children.Clear();
+            ParentLayout.Children.Remove(FinalLayout);
+
+            await RetriveAllWorkorderInspectionsAsync();
+            StackLayout FrameSL = new StackLayout
+            {
+                Padding = new Thickness(3, 25, 3, 0)
+            };
+
+            masterGrid.Children.Add(FrameSL, 0, 2);
+            ScrollView FrameSV = new ScrollView();
+            FrameSL.Children.Add(FrameSV);
+            StackLayout FramesSL = new StackLayout();
+            FrameSV.Content = FramesSL;
+            #endregion
+            int CCCount = CC.workOrderEmployee.Count + CC.workorderContractor.Count;
+
+            if (CCCount > 1)
+            {
+                MasterMainGrid.RowDefinitions[0].Height = GridLength.Star;
+            }
+            foreach (var item in CC.workOrderEmployee)
+            {
+                #region **** Frame content *********
+
+                // FramesSL.Children.Add(AssociateLal);
+
+                Frame Associateframe = new Frame
                 {
+                    CornerRadius = 5,
+                    BorderColor = Color.Black
+                };
+                FramesSL.Children.Add(Associateframe);
 
-                    btnCreateWorkorder = new Button
+                StackLayout AssociateSL = new StackLayout
+                {
+                    Margin = new Thickness(-15, -10, -15, -10)
+                };
+                Associateframe.Content = AssociateSL;
+                #region **** Start Stop Hrs Min Delete Icon *****
+
+                StackLayout StartButoonSL = new StackLayout();
+                AssociateSL.Children.Add(StartButoonSL);
+
+                Grid StartStopBtnGrid = new Grid();
+                StartStopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                StartStopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                StartStopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                StartStopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                StartStopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 50 });
+                StartStopBtnGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                StartStopBtnGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                StartStopBtnGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                StartButoonSL.Children.Add(StartStopBtnGrid);
+
+                StackLayout AssociateLayout = new StackLayout
+                {
+                    Margin = new Thickness(0, 0, 0, 0)
+                };
+                Grid AssociateGrid = new Grid();
+                AssociateGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                AssociateGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                AssociateLayout.Children.Add(AssociateGrid);
+                Label AssociateLal = new Label
+                {
+                    Text = WebControlTitle.GetTargetNameByTitleName("EmployeeName") + ": " + item.EmployeeName + "   ",
+                    FontSize = 14,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Color.FromHex("#006de0"),
+                    Margin = new Thickness(0, 0, 0, 0),
+                    StyleId = item.EmployeeLaborCraftID.ToString() + ":" + "EmployeeLaborCraft"
+                };
+                Label LaborCraft = new Label { Text = item.EmployeeLaborCraftID.ToString() + ":" + "EmployeeLaborCraft", IsVisible = false, BackgroundColor = Color.FromHex("#87CEFA"), };
+
+                AssociateGrid.Children.Add(AssociateLal, 0, 0);
+                AssociateGrid.Children.Add(LaborCraft, 0, 1);
+                StartStopBtnGrid.Children.Add(AssociateLayout, 0, 0);
+
+                Grid.SetColumnSpan(AssociateLayout, 5);
+
+                #region **** Start button ****
+
+                StackLayout StartBtnStackLayout = new StackLayout
+                {
+                    Margin = new Thickness(0, 0, 0, 0)
+                };
+                StartStopBtnGrid.Children.Add(StartBtnStackLayout, 0, 1);
+
+                Grid StartBtnGrid = new Grid();
+
+                StartBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                StartBtnStackLayout.Children.Add(StartBtnGrid);
+                SfButton startButton = new SfButton
+                {
+                    FontSize = 12,
+                    BorderWidth = 2,
+                    WidthRequest = 85,
+                    Text = WebControlTitle.GetTargetNameByTitleName("Start"),
+                    FontAttributes = FontAttributes.Bold,
+                    ShowIcon = true,
+                    BackgroundColor = Color.Transparent,
+                    TextColor = Color.Black,
+                    CommandParameter = item,
+                    ImageSource = "starticon.png",
+                };
+                StartBtnGrid.Children.Add(startButton, 0, 0);
+
+                #endregion
+                #region **** Stop button ****
+
+                StackLayout StopBtnStackLayout = new StackLayout
+                {
+                    Margin = new Thickness(-10, 0, 0, 0)
+                };
+                StartStopBtnGrid.Children.Add(StopBtnStackLayout, 1, 1);
+
+                Grid StopBtnGrid = new Grid();
+                StopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                StopBtnStackLayout.Children.Add(StopBtnGrid);
+                SfButton stopButton = new SfButton
+                {
+                    FontSize = 12,
+                    BorderWidth = 2,
+                    WidthRequest = 85,
+                    Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
+                    FontAttributes = FontAttributes.Bold,
+                    ShowIcon = true,
+                    BackgroundColor = Color.White,
+                    TextColor = Color.Black,
+                    ImageSource = "stopicon.png",
+                    CommandParameter = item,
+                };
+                StopBtnGrid.Children.Add(stopButton);
+
+                #endregion
+                #region **** Hrs ****
+
+                StackLayout HrsStackLayout = new StackLayout
+                {
+                    Margin = new Thickness(-10, 0, 0, 0)
+                };
+                StartStopBtnGrid.Children.Add(HrsStackLayout, 2, 1);
+
+                Grid HrsGrid = new Grid();
+                HrsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                HrsStackLayout.Children.Add(HrsGrid);
+                SfBorder HrsBorder = new SfBorder
+                {
+                    HeightRequest = 35,
+                    WidthRequest = 50,
+                    BorderColor = Color.Black,
+                    CornerRadius = 10
+                };
+                HrsGrid.Children.Add(HrsBorder);
+                Entry hoursEntry = new Entry
+                {
+                    HeightRequest = 35,
+                    Placeholder = "Hrs",
+                    FontSize = 12
+                };
+                HrsBorder.Content = hoursEntry;
+                #endregion
+                #region **** Min ****
+
+                StackLayout MinStackLayout = new StackLayout
+                {
+                    Margin = new Thickness(0, 0, 0, 0)
+                };
+                StartStopBtnGrid.Children.Add(MinStackLayout, 3, 1);
+
+                Grid MinGrid = new Grid();
+                MinGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                MinStackLayout.Children.Add(MinGrid);
+                SfBorder MinBorder = new SfBorder
+                {
+                    HeightRequest = 35,
+                    WidthRequest = 50,
+                    BorderColor = Color.Black,
+                    CornerRadius = 10
+                };
+                MinGrid.Children.Add(MinBorder);
+                Entry minuteEntry = new Entry
+                {
+                    HeightRequest = 35,
+                    Placeholder = "Min",
+                    FontSize = 12
+                };
+                MinBorder.Content = minuteEntry;
+
+                hoursEntry.TextChanged += OnTextChanged1;
+                minuteEntry.TextChanged += HoursTextChanged1;
+                #endregion
+
+                #region **** Delete Icon ****
+
+                StackLayout DeleteStackLayout = new StackLayout
+                {
+                    Margin = new Thickness(-10, 0, 0, 0)
+                };
+                StartStopBtnGrid.Children.Add(DeleteStackLayout, 4, 1);
+
+                Grid DeleteGrid = new Grid();
+                MinGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                DeleteStackLayout.Children.Add(DeleteGrid);
+                SfButton btnDelete = new SfButton
+                {
+                    Margin = new Thickness(0, 0, 0, 0),
+                    WidthRequest = 25,
+                    ShowIcon = true,
+                    BackgroundColor = Color.White,
+                    StyleId = item.EmployeeLaborCraftID.ToString(),
+                    ImageSource = "delicon.png"
+                };
+                DeleteGrid.Children.Add(btnDelete);
+                btnDelete.Clicked += BtnEmployeeDelete_Clicked;
+
+                #endregion
+
+                #endregion
+
+                #region ***** Date from And complate *****
+
+                StackLayout DateButoonSL = new StackLayout();
+                AssociateSL.Children.Add(DateButoonSL);
+                Grid dateFromCompGrid = new Grid();
+                dateFromCompGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                dateFromCompGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                DateButoonSL.Children.Add(dateFromCompGrid);
+
+                StackLayout FromDateSL = new StackLayout();
+                dateFromCompGrid.Children.Add(FromDateSL, 0, 0);
+                Label FromDateLbl = new Label
+                {
+                    Text = "From Date",
+                    FontSize = 13,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Color.FromHex("#333333")
+                };
+                FromDateSL.Children.Add(FromDateLbl);
+                SfBorder dateFromBo = new SfBorder
+                {
+                    HeightRequest = 35,
+                    BorderColor = Color.Black,
+                    CornerRadius = 10
+                };
+                FromDateSL.Children.Add(dateFromBo);
+                CustomDatePicker startDate;
+                if (item.StartDate != null)
+                {
+                    startDate = new CustomDatePicker
                     {
-                        Text = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder"),
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                        BorderColor = Color.Black,
-                        WidthRequest = 90,
-                        HeightRequest = 50,
-                        CornerRadius = 5,
-                        FontSize = 9,
-                        TextColor = Color.White
-
+                        Margin = new Thickness(0, 5, 0, 0),
+                        SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
+                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        HeightRequest = 2
                     };
-
-
+                    dateFromBo.Content = startDate;
                 }
                 else
                 {
-                    btnCreateWorkorder = new Button
+                    startDate = new CustomDatePicker
                     {
-                        Text = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder"),
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                        BorderColor = Color.Black,
-                        CornerRadius = 5,
-                        TextColor = Color.White
-
+                        Margin = new Thickness(0, 5, 0, 0),
+                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        HeightRequest = 2,
+                        HorizontalOptions = LayoutOptions.Start
                     };
+                    dateFromBo.Content = startDate;
                 }
 
-            }
-
-
-            btnCreateWorkorder.Clicked += (sender, e) =>
-            {
-                var page = new CreateWorkorderFromInspectionPageContent(WorkorderID, AnswerText);
-                Navigation.PushAsync(page);
-
-
-            };
-
-            try
-            {
-
-
-                AnswerText.Clear();
-
-
-                this.btnCreateWorkorder.IsVisible = false;
-                layout1.Children.Clear();
-                FinalLayout.Children.Clear();
-                MainLayout.Children.Clear();
-                ParentLayout.Children.Clear();
-                ParentLayout.Children.Remove(FinalLayout);
-
-                await RetriveAllWorkorderInspectionsAsync();
-
-
-                //// UI for Multiple Employeee/////////////////////
-                ///
-                foreach (var item in CC.workOrderEmployee)
+                StackLayout CompDateSL = new StackLayout();
+                dateFromCompGrid.Children.Add(CompDateSL, 1, 0);
+                Label CompDateLbl = new Label
                 {
-                    string FinalEmployeeName = string.Empty;
-                    Label taskNumberLabel = new Label { TextColor = Color.Black };
-
-                    taskNumberLabel.Text = WebControlTitle.GetTargetNameByTitleName("EmployeeName") + ": " + item.EmployeeName + "   ";
-                    Button startButton = new Button();
-                    Button stopButton = new Button();
-                    if (Device.Idiom == TargetIdiom.Phone || Device.Idiom == TargetIdiom.Tablet)
+                    Text = "Completion Date",
+                    FontSize = 13,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Color.FromHex("#333333")
+                };
+                CompDateSL.Children.Add(CompDateLbl);
+                SfBorder dateCompBo = new SfBorder
+                {
+                    HeightRequest = 35,
+                    BorderColor = Color.Black,
+                    CornerRadius = 10
+                };
+                CompDateSL.Children.Add(dateCompBo);
+                CustomDatePicker CompletionDate;
+                if (item.CompletionDate != null)
+                {
+                    CompletionDate = new CustomDatePicker
                     {
-                        startButton = new Button
-                        {
-                            Text = WebControlTitle.GetTargetNameByTitleName("Start"),
-                            BackgroundColor = Color.FromHex("#87CEFA"),
-                            CommandParameter = item,
-                            WidthRequest = 60,
-                            HeightRequest = 20,
-                            CornerRadius = 5,
-                            FontSize = 9,
-                            BorderColor = Color.Black,
-                            TextColor = Color.White
-                        };
-                    }
-                    else
+                        SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
+                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        HeightRequest = 2,
+                        HorizontalOptions = LayoutOptions.Start,
+                        Margin = new Thickness(0, 5, 0, 0),
+                    };
+                    dateCompBo.Content = CompletionDate;
+                }
+
+                else
+                {
+                    CompletionDate = new CustomDatePicker
                     {
-                        startButton = new Button
-                        {
-                            Text = WebControlTitle.GetTargetNameByTitleName("Start"),
-                            BackgroundColor = Color.FromHex("#87CEFA"),
-                            CommandParameter = item,
-                            CornerRadius = 5,
-                            BorderColor = Color.Black,
-                            TextColor = Color.White
+                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        HeightRequest = 2,
+                        HorizontalOptions = LayoutOptions.Start,
+                        Margin = new Thickness(0, 5, 0, 0),
+                    };
+                    dateCompBo.Content = CompletionDate;
+                }
+                #endregion
 
-                        };
-                    }
+                #region GlobalTimer Logic
+                WorkOrderEmployee savedemployeelocal = null;
 
-                    if (Device.Idiom == TargetIdiom.Phone || Device.Idiom == TargetIdiom.Tablet)
-                    {
-
-                        stopButton = new Button
-                        {
-                            Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
-                            BackgroundColor = Color.FromHex("#87CEFA"),
-                            CommandParameter = item,
-                            WidthRequest = 60,
-                            HeightRequest = 20,
-                            FontSize = 9,
-                            CornerRadius = 5,
-                            BorderColor = Color.Black,
-                            TextColor = Color.White
-                        };
-                    }
-                    else
-                    {
-                        stopButton = new Button
-                        {
-                            Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
-                            BackgroundColor = Color.FromHex("#87CEFA"),
-                            CommandParameter = item,
-                            CornerRadius = 5,
-                            BorderColor = Color.Black,
-                            TextColor = Color.White
-                        };
-                    }
-                    CustomDatePicker startDate;
-                    if (item.StartDate != null)
-                    {
-                        startDate = new CustomDatePicker
-                        {
-                            SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
-                            MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                            HeightRequest = 2,
-
-                            HorizontalOptions = LayoutOptions.Start
-
-                        };
-                    }
-                    else
-                    {
-                        startDate = new CustomDatePicker
-                        {
-                            // SelectedDate = Convert.ToDateTime(item.StartDate),
-                            //  BackgroundColor = Color.FromHex("#87CEFA"),
-                            MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                            HeightRequest = 2,
-                           // CornerRadius = 5,
-                            HorizontalOptions = LayoutOptions.Start
-
-                        };
-                    }
-                    CustomDatePicker CompletionDate;
-                    if (item.CompletionDate != null)
-                    {
-                        CompletionDate = new CustomDatePicker
-                        {
-                            SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
-                            MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                            HeightRequest = 2,
-                            //CornerRadius = 5,
-                            HorizontalOptions = LayoutOptions.Start
-
-                        };
-                    }
-                    else
-                    {
-                        CompletionDate = new CustomDatePicker
-                        {
-                            //  SelectedDate = Convert.ToDateTime(item.CompletionDate),
-                            MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                            HeightRequest = 2,
-                          //  CornerRadius = 5,
-                            HorizontalOptions = LayoutOptions.Start
-
-                        };
-
-                    }
+                try
+                {
 
 
-                    //if (this.btnCreateWorkorder.IsVisible)
-                    //{
-                    //    if (Device.Idiom == TargetIdiom.Phone)
-                    //    {
-
-                    //        btnCreateWorkorder = new Button
-                    //        {
-                    //            Text = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder"),
-                    //            BackgroundColor = Color.FromHex("#87CEFA"),
-                    //            BorderColor = Color.Black,
-                    //            WidthRequest = 90,
-                    //            HeightRequest = 50,
-                    //            FontSize = 9,
-                    //            TextColor = Color.White
-
-                    //        };
+                    string k1 = "WorkOrderEmployee:" + item.WorkOrderInspectionTimeID;
+                    savedemployeelocal = JsonConvert.DeserializeObject<WorkOrderEmployee>(WorkorderInspectionStorge.Storage.Get(k1));
 
 
-                    //    }
-                    //    else
-                    //    {
-                    //        btnCreateWorkorder = new Button
-                    //        {
-                    //            Text = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder"),
-                    //            BackgroundColor = Color.FromHex("#87CEFA"),
-                    //            BorderColor = Color.Black,
-                    //            TextColor = Color.White
 
-                    //        };
-                    //    }
+                }
+                catch (Exception ex)
+                {
 
-                    //}
+                }
 
-
-                    //btnCreateWorkorder.Clicked += (sender, e) =>
-                    //{
-                    //    var page = new CreateWorkorderFromInspectionPageContent(WorkorderID, AnswerText);
-                    //    Navigation.PushAsync(page);
-
-
-                    //};
-
-
-                    Entry hoursEntry = new MyEntry { TextColor = Color.Black, Placeholder = "hh" };
-                    Entry minuteEntry = new MyEntry { TextColor = Color.Black, Placeholder = "mm", };
-                    hoursEntry.TextChanged += OnTextChanged1;
-                    minuteEntry.TextChanged += HoursTextChanged1;
-
-                    #region GlobalTimer Logic
-                    WorkOrderEmployee savedemployeelocal = null;
-
+                if (savedemployeelocal != null)
+                {
                     try
                     {
+                        //set in buttons commands
 
+                        startButton.CommandParameter = savedemployeelocal;
+                        stopButton.CommandParameter = savedemployeelocal;
 
-                        string k1 = "WorkOrderEmployee:" + item.WorkOrderInspectionTimeID;
-                        savedemployeelocal = JsonConvert.DeserializeObject<WorkOrderEmployee>(WorkorderInspectionStorge.Storage.Get(k1));
+                        startButton.TextColor = Color.Green;
+                        startButton.ImageSource = "starticon1.png";
+
+                        var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(savedemployeelocal.InspectionTime));
+                        var timeString = (int)timeInspection.Hours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
+
+                        hoursEntry.Text = timeInspection.Hours.ToString();
+                        minuteEntry.Text = timeInspection.Minutes.ToString();
 
 
 
@@ -731,878 +900,641 @@ namespace ProteusMMX.Views.Workorder
 
                     }
 
-                    if (savedemployeelocal != null)
-                    {
-                        try
-                        {
-                            //set in buttons commands
-
-                            startButton.CommandParameter = savedemployeelocal;
-                            stopButton.CommandParameter = savedemployeelocal;
-
-                            startButton.BackgroundColor = Color.Green;
-                            //startButtonforRate2.BackgroundColor = Color.Green;
-
-                            var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(savedemployeelocal.InspectionTime));
-                            var timeString = (int)timeInspection.Hours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
-
-                            hoursEntry.Text = timeInspection.Hours.ToString();
-                            minuteEntry.Text = timeInspection.Minutes.ToString();
-
-
-
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
-
-                    }
-
-
-                    #endregion
-
-                    startButton.Clicked += (sender, e) =>
-                    {
-                        //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
-                        var buttonStart = sender as Button;
-                        WorkOrderEmployee workorderemployee = buttonStart.CommandParameter as WorkOrderEmployee;
-
-                        workorderemployee.StartTimeOfTimer = DateTime.Now;
-                        startButton.CommandParameter = workorderemployee; //reassign to commandParameter.
-
-
-                        var parent = buttonStart.Parent;
-                        Grid parentGrid = parent as Grid;
-                        //  parentGrid.StyleId = item.HoursAtRate1.ToString();
-                        Button btnStopLocal = parentGrid.Children[1] as Button;//Find the stopbutton from parent
-                        btnStopLocal.CommandParameter = workorderemployee; //reassign to commandParameter to stopbutton
-
-
-
-                        //Save in Local
-                        string key = "WorkOrderEmployee:" + workorderemployee.WorkOrderInspectionTimeID;
-                        // workorderempcontrcator.Description = "";
-                        //if (Device.RuntimePlatform == Device.Android)
-                        //{
-                        //    WorkOrderLaborStorge.Storage.Set(key, JsonConvert.SerializeObject(workorderemployee));
-
-                        //}
-                        //else
-                        //{
-                        WorkorderInspectionStorge.Storage.Set(key, JsonConvert.SerializeObject(workorderemployee));
-                        // }
-
-
-                        //StartTime = DateTime.Now;
-
-                        startButton.BackgroundColor = Color.Green;
-                        stopButton.IsEnabled = true;
-                        stopButton.BackgroundColor = Color.FromHex("#87CEFA");
-
-
-
-
-                    };
-
-
-
-                    stopButton.Clicked += (sender, e) =>
-                    {
-                        var StopTime = DateTime.Now;
-
-                        var x1 = sender as Button;
-                        WorkOrderEmployee workOrderemp = x1.CommandParameter as WorkOrderEmployee;
-                        workOrderInspectionTimeID.Add(workOrderemp.WorkOrderInspectionTimeID);
-
-
-                        if (workOrderemp.StartTimeOfTimer == DateTime.Parse("1/1/0001 12:00:00 AM"))
-                        {
-                            return;
-                        }
-
-                        TimeSpan elapsed = StopTime.Subtract(workOrderemp.StartTimeOfTimer);
-
-                        int mn = elapsed.Minutes;
-                        if (String.IsNullOrWhiteSpace(minuteEntry.Text))
-                        {
-                            minuteEntry.Text = "0";
-                        }
-                        if (String.IsNullOrWhiteSpace(hoursEntry.Text))
-                        {
-                            hoursEntry.Text = "0";
-                        }
-                        int mn1 = Convert.ToInt32(minuteEntry.Text);
-                        if (mn + mn1 > 59)
-                        {
-
-
-                            TimeSpan span = TimeSpan.FromMinutes(mn + mn1);
-                            string elapsedTime1 = String.Format("{0:00}:{1:00}",
-                                                          span.Hours, span.Minutes);
-                            int hrs = span.Hours;
-                            int hrs1 = Convert.ToInt32(hoursEntry.Text);
-                            hoursEntry.Text = (hrs + hrs1).ToString();
-
-                            int hrs2 = span.Minutes;
-                            minuteEntry.Text = hrs2.ToString();
-                        }
-                        else
-                        {
-
-                            int hrs = elapsed.Hours;
-                            int hrs1 = Convert.ToInt32(hoursEntry.Text);
-                            hoursEntry.Text = (hrs + hrs1).ToString();
-
-                            int hrs2 = elapsed.Minutes;
-                            int hrs21 = Convert.ToInt32(minuteEntry.Text);
-                            minuteEntry.Text = (hrs2 + hrs21).ToString();
-                        }
-                        //startDate.SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                        //CompletionDate.SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                        // startDate.SelectedDate = Convert.ToDateTime(DateTime.Now.ToString());
-                        //CompletionDate.SelectedDate = Convert.ToDateTime(DateTime.Now.ToString());
-                        startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
-                        CompletionDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
-
-                        stopButton.BackgroundColor = BackgroundColor = Color.FromHex("#708090");
-                        stopButton.IsEnabled = false;
-                        startButton.BackgroundColor = BackgroundColor = Color.FromHex("#708090");
-                        startButton.IsEnabled = false;
-                        this.BackgroundColor = Color.White;
-
-
-                    };
-
-
-                    if (ParentLayout.Children.Count > 4)
-                    {
-                        break;
-                    }
-
-
-                    if (!string.IsNullOrWhiteSpace(item.InspectionTime))
-                    {
-                        var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(item.InspectionTime));
-                        var timeString = (int)timeInspection.TotalHours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
-
-
-                        string FinalHours1 = Convert.ToDecimal(string.Format("{0:F2}", timeInspection.TotalHours)).ToString();
-                        var FinalHrs2 = FinalHours1.Split('.');
-                        hoursEntry.Text = FinalHrs2[0];
-                        //hoursEntry.Text = timeInspection.Hours.ToString();
-                        minuteEntry.Text = timeInspection.Minutes.ToString();
-
-
-                        total = total.Add(new TimeSpan(int.Parse(hoursEntry.Text), int.Parse(minuteEntry.Text), 0));
-                        string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", total.TotalHours)).ToString();
-                        var FinalHrs1 = FinalHours.Split('.');
-                        string DisplayHours = FinalHrs1[0];
-
-                        TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
-
-
-                    }
-
-
-                    if (Device.Idiom == TargetIdiom.Phone)
-                    {
-                        var startStopButtonGridforPhone1 = new Grid();
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-
-                        startStopButtonGridforPhone1.Children.Add(startButton, 1, 0);
-                        startStopButtonGridforPhone1.Children.Add(stopButton, 2, 0);
-                        startStopButtonGridforPhone1.Children.Add(new Label { FontSize = 10, Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
-                        startStopButtonGridforPhone1.Children.Add(hoursEntry, 4, 0);
-                        startStopButtonGridforPhone1.Children.Add(new Label { FontSize = 10, Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
-                        startStopButtonGridforPhone1.Children.Add(minuteEntry, 6, 0);
-                        var btnDelete = new Button() { CornerRadius = 5, WidthRequest = 30, HeightRequest = 20, FontSize = 10, StyleId = item.EmployeeLaborCraftID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black, };
-                        btnDelete.Clicked += BtnEmployeeDelete_Clicked;
-                        startStopButtonGridforPhone1.Children.Add(btnDelete, 7, 0);
-
-
-                        var startStopButtonGridforPhone2 = new Grid();
-                        startStopButtonGridforPhone2.HeightRequest = 120;
-                        startDate.HeightRequest = 3;
-                        CompletionDate.HeightRequest = 3;
-                        startStopButtonGridforPhone2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-
-                        startStopButtonGridforPhone2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate"), VerticalOptions = LayoutOptions.Center }, 0, 1);
-                        startStopButtonGridforPhone2.Children.Add(startDate, 1, 1);
-                        startStopButtonGridforPhone2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 0, 2);
-                        startStopButtonGridforPhone2.Children.Add(CompletionDate, 1, 2);
-                        startStopButtonGridforPhone2.Children.Add(new Label { Text = item.EmployeeLaborCraftID.ToString() + ":" + "EmployeeLaborCraft", IsVisible = false, BackgroundColor = Color.FromHex("#87CEFA"), }, 0, 3);
-
-
-                        layout1 = new StackLayout
-                        {
-                            Orientation = StackOrientation.Vertical,
-                            Spacing = 10,
-                            HorizontalOptions = LayoutOptions.StartAndExpand,
-                            Children =
-                                {
-                                 new Label{ Text=taskNumberLabel.Text,FontAttributes=FontAttributes.Bold},startStopButtonGridforPhone1,startStopButtonGridforPhone2
-                                }
-                        };
-
-                    }
-                    else
-                    {
-                        var startStopButtonGrid = new Grid();
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        if (Device.Idiom == TargetIdiom.Tablet)
-                        {
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-
-                        }
-                        else
-                        {
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        }
-
-
-                        if (Device.Idiom == TargetIdiom.Tablet)
-                        {
-                            //var btnDelete = new Button() { FontSize=9, HeightRequest = 20, WidthRequest = 60, StyleId = item.EmployeeLaborCraftID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black, };
-                            //btnDelete.Clicked += BtnEmployeeDelete_Clicked;
-
-                            //startStopButtonGrid.Children.Add(startButton, 1, 0);
-                            //startStopButtonGrid.Children.Add(stopButton, 2, 0);
-
-                            //startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
-                            //startStopButtonGrid.Children.Add(hoursEntry, 4, 0);
-                            //startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
-                            //startStopButtonGrid.Children.Add(minuteEntry, 6, 0);
-                            //startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate") }, 7, 0);
-                            //startStopButtonGrid.Children.Add(startDate, 8, 0);
-                            //startStopButtonGrid.Children.Add(new Label {Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate")}, 9, 0);
-                            //startStopButtonGrid.Children.Add(CompletionDate, 10, 0);
-                            //startStopButtonGrid.Children.Add(btnDelete, 11, 0);
-                            var btnDelete = new Button() { CornerRadius = 5, FontSize = 9, HeightRequest = 10, WidthRequest = 70, StyleId = item.EmployeeLaborCraftID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black, };
-                            btnDelete.Clicked += BtnEmployeeDelete_Clicked;
-
-
-                            startStopButtonGrid.Children.Add(startButton, 0, 1);
-                            startStopButtonGrid.Children.Add(stopButton, 1, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
-                            startStopButtonGrid.Children.Add(hoursEntry, 3, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
-                            startStopButtonGrid.Children.Add(minuteEntry, 5, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate"), VerticalOptions = LayoutOptions.Center }, 6, 0);
-                            startStopButtonGrid.Children.Add(startDate, 6, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 7, 0);
-                            startStopButtonGrid.Children.Add(CompletionDate, 7, 1);
-                            startStopButtonGrid.Children.Add(btnDelete, 9, 1);
-
-                        }
-                        else
-                        {
-                            var btnDelete = new Button() { CornerRadius = 5, StyleId = item.EmployeeLaborCraftID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black, };
-                            btnDelete.Clicked += BtnEmployeeDelete_Clicked;
-
-                            startStopButtonGrid.Children.Add(startButton, 1, 0);
-                            startStopButtonGrid.Children.Add(stopButton, 2, 0);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
-                            startStopButtonGrid.Children.Add(hoursEntry, 4, 0);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
-                            startStopButtonGrid.Children.Add(minuteEntry, 6, 0);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate"), VerticalOptions = LayoutOptions.Center }, 7, 0);
-                            startStopButtonGrid.Children.Add(startDate, 8, 0);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 9, 0);
-                            startStopButtonGrid.Children.Add(CompletionDate, 10, 0);
-                            startStopButtonGrid.Children.Add(new Label { Text = item.EmployeeLaborCraftID.ToString() + ":" + "EmployeeLaborCraft", IsVisible = false, BackgroundColor = Color.FromHex("#87CEFA"), }, 11, 0);
-                            startStopButtonGrid.Children.Add(btnDelete, 12, 0);
-
-
-
-                        }
-
-
-                        layout1 = new StackLayout
-                        {
-                            Orientation = StackOrientation.Vertical,
-                            Spacing = 10,
-
-                            HorizontalOptions = LayoutOptions.StartAndExpand,
-                            Children =
-                                {
-                                 new Label{StyleId=item.EmployeeLaborCraftID.ToString() + ":" + "EmployeeLaborCraft", Text=taskNumberLabel.Text,FontAttributes=FontAttributes.Bold},startStopButtonGrid
-                                }
-                        };
-
-                    }
-
-                    ParentLayout.Children.Add(layout1);
-
                 }
-                foreach (var item in CC.workorderContractor)
+
+
+                #endregion
+                startButton.Clicked += (sender, e) =>
                 {
+                    //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
+                    var buttonStart = sender as SfButton;
+                    WorkOrderEmployee workorderemployee = buttonStart.CommandParameter as WorkOrderEmployee;
 
-                    string FinalContractorName = string.Empty;
+                    workorderemployee.StartTimeOfTimer = DateTime.Now;
+                    startButton.CommandParameter = workorderemployee; //reassign to commandParameter.
 
-                    Label taskNumberLabel = new Label { TextColor = Color.Black };
 
-                    taskNumberLabel.Text = WebControlTitle.GetTargetNameByTitleName("ContractorName") + ": " + item.ContractorName + "   ";
-                    Button startButton = new Button();
-                    Button stopButton = new Button();
-                    if (Device.Idiom == TargetIdiom.Phone || Device.Idiom == TargetIdiom.Tablet)
-                    {
-                        startButton = new Button
-                        {
-                            Text = WebControlTitle.GetTargetNameByTitleName("Start"),
-                            BackgroundColor = Color.FromHex("#87CEFA"),
-                            CommandParameter = item,
-                            WidthRequest = 60,
-                            HeightRequest = 20,
-                            FontSize = 9,
-                            CornerRadius = 5,
-                            BorderColor = Color.Black,
-                            TextColor = Color.White
-                        };
-                    }
-                    else
-                    {
-                        startButton = new Button
-                        {
-                            Text = WebControlTitle.GetTargetNameByTitleName("Start"),
-                            BackgroundColor = Color.FromHex("#87CEFA"),
-                            CommandParameter = item,
-                            CornerRadius = 5,
-                            BorderColor = Color.Black,
-                            TextColor = Color.White
+                    var parent = buttonStart.Parent.Parent.Parent;
+                    Grid parentGrid = parent as Grid;
+                    StackLayout StopBtnSL = parentGrid.Children[2] as StackLayout;
+                    Grid StopBtnGrid1 = StopBtnSL.Children[0] as Grid;
 
-                        };
-                    }
-
-                    if (Device.Idiom == TargetIdiom.Phone || Device.Idiom == TargetIdiom.Tablet)
-                    {
-
-                        stopButton = new Button
-                        {
-                            Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
-                            BackgroundColor = Color.FromHex("#87CEFA"),
-                            CommandParameter = item,
-                            WidthRequest = 60,
-                            CornerRadius = 5,
-                            HeightRequest = 20,
-                            FontSize = 9,
-                            BorderColor = Color.Black,
-                            TextColor = Color.White
-                        };
-                    }
-                    else
-                    {
-                        stopButton = new Button
-                        {
-                            Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
-                            BackgroundColor = Color.FromHex("#87CEFA"),
-                            CommandParameter = item,
-                            CornerRadius = 5,
-                            BorderColor = Color.Black,
-                            TextColor = Color.White
-                        };
-                    }
-
-                    CustomDatePicker startDate;
-                    if (item.StartDate != null)
-                    {
-                        startDate = new CustomDatePicker
-                        {
-
-                            SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
-                            MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                            HeightRequest = 2,
-                            //CornerRadius = 5,
-                            HorizontalOptions = LayoutOptions.Start
-
-                        };
-                    }
-                    else
-                    {
-                        startDate = new CustomDatePicker
-                        {
-                            MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                            HeightRequest = 2,
-                           // CornerRadius = 5,
-                            HorizontalOptions = LayoutOptions.Start
-
-                        };
-                    }
-                    CustomDatePicker CompletionDate;
-                    if (item.CompletionDate != null)
-                    {
-                        CompletionDate = new CustomDatePicker
-                        {
-                            SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
-                            MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                            HeightRequest = 2,
-                           // CornerRadius = 5,
-                            HorizontalOptions = LayoutOptions.Start
-
-                        };
-                    }
-                    else
-                    {
-                        CompletionDate = new CustomDatePicker
-                        {
-                            //SelectedDate = Convert.ToDateTime(item.CompletionDate),
-                            MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                            HeightRequest = 2,
-                           // CornerRadius = 5,
-                            HorizontalOptions = LayoutOptions.Start
-
-                        };
-                    }
+                    //  parentGrid.StyleId = item.HoursAtRate1.ToString();
+                    SfButton btnStopLocal = StopBtnGrid1.Children[0] as SfButton;//Find the stopbutton from parent
+                    btnStopLocal.CommandParameter = workorderemployee; //reassign to commandParameter to stopbutton
 
 
 
-                    //if (this.btnCreateWorkorder.IsVisible)
+                    //Save in Local
+                    string key = "WorkOrderEmployee:" + workorderemployee.WorkOrderInspectionTimeID;
+                    // workorderempcontrcator.Description = "";
+                    //if (Device.RuntimePlatform == Device.Android)
                     //{
-                    //    if (Device.Idiom == TargetIdiom.Phone)
-                    //    {
+                    //    WorkOrderLaborStorge.Storage.Set(key, JsonConvert.SerializeObject(workorderemployee));
 
-                    //        btnCreateWorkorder = new Button
-                    //        {
-                    //            Text = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder"),
-                    //            BackgroundColor = Color.FromHex("#87CEFA"),
-                    //            BorderColor = Color.Black,
-                    //            WidthRequest = 90,
-                    //            HeightRequest = 50,
-                    //            FontSize = 9,
-                    //            TextColor = Color.White
-
-                    //        };
-
-
-                    //    }
-                    //    else
-                    //    {
-                    //        btnCreateWorkorder = new Button
-                    //        {
-                    //            Text = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder"),
-                    //            BackgroundColor = Color.FromHex("#87CEFA"),
-                    //            BorderColor = Color.Black,
-                    //            TextColor = Color.White
-
-                    //        };
-                    //    }
                     //}
-
-                    //btnCreateWorkorder.Clicked += (sender, e) =>
+                    //else
                     //{
-                    //    var page = new CreateWorkorderFromInspectionPageContent(WorkorderID, AnswerText);
-                    //    Navigation.PushAsync(page);
+                    WorkorderInspectionStorge.Storage.Set(key, JsonConvert.SerializeObject(workorderemployee));
+                    // }
 
 
-                    //};
-                    Entry hoursEntry = new MyEntry { TextColor = Color.Black, Placeholder = "hh" };
-                    Entry minuteEntry = new MyEntry { TextColor = Color.Black, Placeholder = "mm", };
-                    hoursEntry.TextChanged += OnTextChanged1;
-                    minuteEntry.TextChanged += HoursTextChanged1;
+                    //StartTime = DateTime.Now;
 
-                    #region GlobalTimer Logic
-                    WorkorderContractor savedContractorlocal = null;
+                    //startButton.BackgroundColor = Color.Green;
+                    //stopButton.IsEnabled = true;
+                    //stopButton.BackgroundColor = Color.FromHex("#87CEFA");
 
-                    try
+                    startButton.TextColor = Color.Green;
+                    startButton.ImageSource = "starticon1.png";
+                    stopButton.IsEnabled = true;
+                    stopButton.TextColor = Color.FromHex("#87CEFA");
+                    stopButton.ImageSource = "stoppending.png";
+
+                };
+
+                stopButton.Clicked += (sender, e) =>
+                {
+                    var StopTime = DateTime.Now;
+
+                    var x1 = sender as SfButton;
+                    WorkOrderEmployee workOrderemp = x1.CommandParameter as WorkOrderEmployee;
+                    workOrderInspectionTimeID.Add(workOrderemp.WorkOrderInspectionTimeID);
+
+
+                    if (workOrderemp.StartTimeOfTimer == DateTime.Parse("1/1/0001 12:00:00 AM"))
                     {
-
-                        string k1 = "WorkorderContracator:" + item.WorkOrderInspectionTimeID;
-                        savedContractorlocal = JsonConvert.DeserializeObject<WorkorderContractor>(WorkorderInspectionStorge.Storage.Get(k1));
-
-
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-
-                    if (savedContractorlocal != null)
-                    {
-                        try
-                        {
-                            //set in buttons commands
-
-                            startButton.CommandParameter = savedContractorlocal;
-                            stopButton.CommandParameter = savedContractorlocal;
-
-                            startButton.BackgroundColor = Color.Green;
-                            //startButtonforRate2.BackgroundColor = Color.Green;
-
-                            var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(savedContractorlocal.InspectionTime));
-                            var timeString = (int)timeInspection.Hours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
-
-                            hoursEntry.Text = timeInspection.Hours.ToString();
-                            minuteEntry.Text = timeInspection.Minutes.ToString();
-
-
-
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
-
+                        return;
                     }
 
+                    TimeSpan elapsed = StopTime.Subtract(workOrderemp.StartTimeOfTimer);
 
-                    #endregion
-
-                    startButton.Clicked += (sender, e) =>
+                    int mn = elapsed.Minutes;
+                    if (String.IsNullOrWhiteSpace(minuteEntry.Text))
                     {
-                        //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
-                        var buttonStart = sender as Button;
-                        WorkorderContractor workordercontrcator = buttonStart.CommandParameter as WorkorderContractor;
-
-                        workordercontrcator.StartTimeOfTimer = DateTime.Now;
-                        startButton.CommandParameter = workordercontrcator; //reassign to commandParameter.
-
-
-                        var parent = buttonStart.Parent;
-                        Grid parentGrid = parent as Grid;
-                        //  parentGrid.StyleId = item.HoursAtRate1.ToString();
-                        Button btnStopLocal = parentGrid.Children[1] as Button;//Find the stopbutton from parent
-                        btnStopLocal.CommandParameter = workordercontrcator; //reassign to commandParameter to stopbutton
-
-
-
-                        //Save in Local
-                        string key = "WorkorderContracator:" + workordercontrcator.WorkOrderInspectionTimeID;
-                        // workorderempcontrcator.Description = "";
-                        WorkorderInspectionStorge.Storage.Set(key, JsonConvert.SerializeObject(workordercontrcator));
-
-
-                        //StartTime = DateTime.Now;
-
-                        startButton.BackgroundColor = Color.Green;
-                        stopButton.IsEnabled = true;
-                        stopButton.BackgroundColor = Color.FromHex("#87CEFA");
-
-
-
-
-                    };
-
-
-
-                    stopButton.Clicked += (sender, e) =>
-                    {
-                        var StopTime = DateTime.Now;
-
-                        var x1 = sender as Button;
-                        WorkorderContractor workOrdercontrcator = x1.CommandParameter as WorkorderContractor;
-                        workOrderInspectionTimeID.Add(workOrdercontrcator.WorkOrderInspectionTimeID);
-
-                        if (workOrdercontrcator.StartTimeOfTimer == DateTime.Parse("1/1/0001 12:00:00 AM"))
-                        {
-                            return;
-                        }
-
-                        TimeSpan elapsed = StopTime.Subtract(workOrdercontrcator.StartTimeOfTimer);
-
-                        int mn = elapsed.Minutes;
-                        if (String.IsNullOrWhiteSpace(minuteEntry.Text))
-                        {
-                            minuteEntry.Text = "0";
-                        }
-                        if (String.IsNullOrWhiteSpace(hoursEntry.Text))
-                        {
-                            hoursEntry.Text = "0";
-                        }
-                        int mn1 = Convert.ToInt32(minuteEntry.Text);
-                        if (mn + mn1 > 59)
-                        {
-
-
-                            TimeSpan span = TimeSpan.FromMinutes(mn + mn1);
-                            string elapsedTime1 = String.Format("{0:00}:{1:00}",
-                                                          span.Hours, span.Minutes);
-                            int hrs = span.Hours;
-                            int hrs1 = Convert.ToInt32(hoursEntry.Text);
-                            hoursEntry.Text = (hrs + hrs1).ToString();
-
-                            int hrs2 = span.Minutes;
-                            minuteEntry.Text = hrs2.ToString();
-                        }
-                        else
-                        {
-
-                            int hrs = elapsed.Hours;
-                            int hrs1 = Convert.ToInt32(hoursEntry.Text);
-                            hoursEntry.Text = (hrs + hrs1).ToString();
-
-                            int hrs2 = elapsed.Minutes;
-                            int hrs21 = Convert.ToInt32(minuteEntry.Text);
-                            minuteEntry.Text = (hrs2 + hrs21).ToString();
-                        }
-
-                        //startDate.SelectedDate = Convert.ToDateTime(DateTime.Now.ToString());
-                        //CompletionDate.SelectedDate = Convert.ToDateTime(DateTime.Now.ToString());
-
-
-                        startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
-                        CompletionDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
-
-
-                        //  startDate.SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                        // CompletionDate.SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                        stopButton.BackgroundColor = BackgroundColor = Color.FromHex("#708090");
-                        stopButton.IsEnabled = false;
-                        startButton.BackgroundColor = BackgroundColor = Color.FromHex("#708090");
-                        startButton.IsEnabled = false;
-                        this.BackgroundColor = Color.White;
-
-
-                    };
-                    if (ParentLayout.Children.Count > 4)
-                    {
-                        break;
+                        minuteEntry.Text = "0";
                     }
-                    if (!string.IsNullOrWhiteSpace(item.InspectionTime))
+                    if (String.IsNullOrWhiteSpace(hoursEntry.Text))
                     {
-                        var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(item.InspectionTime));
-                        var timeString = (int)timeInspection.Hours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
-
-                        string FinalHours1 = Convert.ToDecimal(string.Format("{0:F2}", timeInspection.TotalHours)).ToString();
-                        var FinalHrs2 = FinalHours1.Split('.');
-                        hoursEntry.Text = FinalHrs2[0];
-                        minuteEntry.Text = timeInspection.Minutes.ToString();
-                        total = total.Add(new TimeSpan(int.Parse(hoursEntry.Text), int.Parse(minuteEntry.Text), 0));
-
-                        string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", total.TotalHours)).ToString();
-                        var FinalHrs1 = FinalHours.Split('.');
-                        string DisplayHours = FinalHrs1[0];
-
-                        TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
+                        hoursEntry.Text = "0";
                     }
-
-
-                    if (Device.Idiom == TargetIdiom.Phone)
+                    int mn1 = Convert.ToInt32(minuteEntry.Text);
+                    if (mn + mn1 > 59)
                     {
-                        var startStopButtonGridforPhone1 = new Grid();
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone1.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-
-                        startStopButtonGridforPhone1.Children.Add(startButton, 1, 0);
-                        startStopButtonGridforPhone1.Children.Add(stopButton, 2, 0);
-                        startStopButtonGridforPhone1.Children.Add(new Label { FontSize = 10, Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
-                        startStopButtonGridforPhone1.Children.Add(hoursEntry, 4, 0);
-                        startStopButtonGridforPhone1.Children.Add(new Label { FontSize = 10, Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
-                        startStopButtonGridforPhone1.Children.Add(minuteEntry, 6, 0);
-                        var btnDelete = new Button() { CornerRadius = 5, WidthRequest = 30, HeightRequest = 20, FontSize = 10, StyleId = item.ContractorLaborCraftID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black, };
-                        btnDelete.Clicked += BtnContractorDelete_Clicked;
-                        startStopButtonGridforPhone1.Children.Add(btnDelete, 7, 0);
 
 
-                        var startStopButtonGridforPhone2 = new Grid();
-                        startStopButtonGridforPhone2.HeightRequest = 120;
-                        startDate.HeightRequest = 3;
-                        CompletionDate.HeightRequest = 3;
-                        startStopButtonGridforPhone2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGridforPhone2.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
+                        TimeSpan span = TimeSpan.FromMinutes(mn + mn1);
+                        string elapsedTime1 = String.Format("{0:00}:{1:00}",
+                                                      span.Hours, span.Minutes);
+                        int hrs = span.Hours;
+                        int hrs1 = Convert.ToInt32(hoursEntry.Text);
+                        hoursEntry.Text = (hrs + hrs1).ToString();
 
-
-                        startStopButtonGridforPhone2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate"), VerticalOptions = LayoutOptions.Center }, 0, 1);
-                        startStopButtonGridforPhone2.Children.Add(startDate, 1, 1);
-                        startStopButtonGridforPhone2.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 0, 2);
-                        startStopButtonGridforPhone2.Children.Add(CompletionDate, 1, 2);
-                        startStopButtonGridforPhone2.Children.Add(new Label { Text = item.ContractorLaborCraftID.ToString() + ":" + "ContractorLaborCraft", IsVisible = false, BackgroundColor = Color.FromHex("#87CEFA"), }, 0, 3);
-
-
-                        layout1 = new StackLayout
-                        {
-                            Orientation = StackOrientation.Vertical,
-                            Spacing = 10,
-                            HorizontalOptions = LayoutOptions.StartAndExpand,
-                            Children =
-                                {
-                                 new Label{ Text=taskNumberLabel.Text,FontAttributes=FontAttributes.Bold},startStopButtonGridforPhone1,startStopButtonGridforPhone2
-                                }
-                        };
-
+                        int hrs2 = span.Minutes;
+                        minuteEntry.Text = hrs2.ToString();
                     }
                     else
                     {
-                        var startStopButtonGrid = new Grid();
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        if (Device.Idiom == TargetIdiom.Tablet)
-                        {
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
 
-                        }
-                        else
-                        {
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(100) });
-                            startStopButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) });
-                        }
+                        int hrs = elapsed.Hours;
+                        int hrs1 = Convert.ToInt32(hoursEntry.Text);
+                        hoursEntry.Text = (hrs + hrs1).ToString();
 
-
-
-                        if (Device.Idiom == TargetIdiom.Tablet)
-                        {
-
-
-                            //var btnDelete = new Button() { FontSize = 9, HeightRequest = 20, WidthRequest = 60, StyleId = item.ContractorLaborCraftID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black, };
-                            //btnDelete.Clicked += BtnContractorDelete_Clicked;
-
-                            //startStopButtonGrid.Children.Add(startButton, 1, 0);
-                            //startStopButtonGrid.Children.Add(stopButton, 2, 0);
-
-                            //startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
-                            //startStopButtonGrid.Children.Add(hoursEntry, 4, 0);
-                            //startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
-                            //startStopButtonGrid.Children.Add(minuteEntry, 6, 0);
-                            //startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate")}, 7, 0);
-                            //startStopButtonGrid.Children.Add(startDate, 8, 0);
-                            //startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate")}, 9, 0);
-                            //startStopButtonGrid.Children.Add(CompletionDate, 10, 0);
-                            //startStopButtonGrid.Children.Add(btnDelete, 11, 0);
-                            var btnDelete = new Button() { CornerRadius = 5, FontSize = 9, HeightRequest = 10, WidthRequest = 70, StyleId = item.ContractorLaborCraftID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black, };
-                            btnDelete.Clicked += BtnContractorDelete_Clicked;
-
-
-                            startStopButtonGrid.Children.Add(startButton, 0, 1);
-                            startStopButtonGrid.Children.Add(stopButton, 1, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
-                            startStopButtonGrid.Children.Add(hoursEntry, 3, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
-                            startStopButtonGrid.Children.Add(minuteEntry, 5, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate"), VerticalOptions = LayoutOptions.Center }, 6, 0);
-                            startStopButtonGrid.Children.Add(startDate, 6, 1);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 7, 0);
-                            startStopButtonGrid.Children.Add(CompletionDate, 7, 1);
-                            startStopButtonGrid.Children.Add(btnDelete, 9, 1);
-
-
-                        }
-                        else
-                        {
-                            var btnDelete = new Button() { CornerRadius = 5, StyleId = item.ContractorLaborCraftID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black, };
-                            btnDelete.Clicked += BtnContractorDelete_Clicked;
-
-                            startStopButtonGrid.Children.Add(startButton, 1, 0);
-                            startStopButtonGrid.Children.Add(stopButton, 2, 0);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("hrs"), VerticalOptions = LayoutOptions.Center }, 3, 0);
-                            startStopButtonGrid.Children.Add(hoursEntry, 4, 0);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("Min"), VerticalOptions = LayoutOptions.Center }, 5, 0);
-                            startStopButtonGrid.Children.Add(minuteEntry, 6, 0);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("StartDate"), VerticalOptions = LayoutOptions.Center }, 7, 0);
-                            startStopButtonGrid.Children.Add(startDate, 8, 0);
-                            startStopButtonGrid.Children.Add(new Label { Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"), VerticalOptions = LayoutOptions.Center }, 9, 0);
-                            startStopButtonGrid.Children.Add(CompletionDate, 10, 0);
-                            startStopButtonGrid.Children.Add(new Label { Text = item.ContractorLaborCraftID.ToString() + ":" + "ContractorLaborCraft", IsVisible = false, BackgroundColor = Color.FromHex("#87CEFA"), }, 11, 0);
-                            startStopButtonGrid.Children.Add(btnDelete, 12, 0);
-
-
-
-                        }
-
-
-                        layout1 = new StackLayout
-                        {
-                            Orientation = StackOrientation.Vertical,
-                            Spacing = 10,
-                            HorizontalOptions = LayoutOptions.StartAndExpand,
-                            Children =
-                                {
-                                 new Label{StyleId=item.ContractorLaborCraftID.ToString() + ":" + "ContractorLaborCraft", Text=taskNumberLabel.Text,FontAttributes=FontAttributes.Bold},startStopButtonGrid
-                                }
-                        };
-
+                        int hrs2 = elapsed.Minutes;
+                        int hrs21 = Convert.ToInt32(minuteEntry.Text);
+                        minuteEntry.Text = (hrs2 + hrs21).ToString();
                     }
+                    startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                    CompletionDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+
+                    stopButton.TextColor = Color.Red;
+                    stopButton.ImageSource = "stopicon1.png";
+                    stopButton.IsEnabled = false;
+                    startButton.TextColor = Color.Red;
+                    startButton.ImageSource = "startred.png";
+                    startButton.IsEnabled = false;
+                    //this.BackgroundColor = Color.White;
+                };
+                #endregion
+
+                if (!string.IsNullOrWhiteSpace(item.InspectionTime))
+                {
+                    var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(item.InspectionTime));
+                    var timeString = (int)timeInspection.TotalHours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
 
 
-                    ParentLayout.Children.Add(layout1);
+                    string FinalHours1 = Convert.ToDecimal(string.Format("{0:F2}", timeInspection.TotalHours)).ToString();
+                    var FinalHrs2 = FinalHours1.Split('.');
+                    hoursEntry.Text = FinalHrs2[0];
+                    //hoursEntry.Text = timeInspection.Hours.ToString();
+                    minuteEntry.Text = timeInspection.Minutes.ToString();
+
+
+                    total = total.Add(new TimeSpan(int.Parse(hoursEntry.Text), int.Parse(minuteEntry.Text), 0));
+                    string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", total.TotalHours)).ToString();
+                    var FinalHrs1 = FinalHours.Split('.');
+                    string DisplayHours = FinalHrs1[0];
+
+                    TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
 
                 }
+            }
 
+            foreach (var item in CC.workorderContractor)
+            {
+                #region **** Frame content *********
 
+                // FramesSL.Children.Add(AssociateLal);
 
-
-                var layout12 = new StackLayout
+                Frame Associateframe = new Frame
                 {
-                    Orientation = StackOrientation.Horizontal,
+                    CornerRadius = 5,
+                    BorderColor = Color.Black
+                };
+                FramesSL.Children.Add(Associateframe);
 
-                    Spacing = 2,
-                    HorizontalOptions = LayoutOptions.Start,
-                    Children =
-                                {
-                                  btnAddInspection,btnAddEmployee,btnAddContractor,btnCreateWorkorder,
-                                }
+                StackLayout AssociateSL = new StackLayout
+                {
+                    Margin = new Thickness(-15, -10, -15, -10)
+                };
+                Associateframe.Content = AssociateSL;
+                #region **** Start Stop Hrs Min Delete Icon *****
+
+                StackLayout StartButoonSL = new StackLayout();
+                AssociateSL.Children.Add(StartButoonSL);
+
+                Grid StartStopBtnGrid = new Grid();
+                StartStopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                StartStopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                StartStopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                StartStopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                StartStopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 50 });
+                StartStopBtnGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                StartStopBtnGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                StartStopBtnGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                StartButoonSL.Children.Add(StartStopBtnGrid);
+
+
+                StackLayout AssociateLayout = new StackLayout
+                {
+                    Margin = new Thickness(0, 0, 0, 0)
+                };
+                Grid AssociateGrid = new Grid();
+                AssociateGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                AssociateGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                AssociateLayout.Children.Add(AssociateGrid);
+                Label AssociateLal = new Label
+                {
+                    Text = WebControlTitle.GetTargetNameByTitleName("ContractorName") + ": " + item.ContractorName + "   ",
+                    FontSize = 14,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Color.FromHex("#006de0"),
+                    Margin = new Thickness(0, 0, 0, 0)
                 };
 
+                Label LaborCraft = new Label { Text = item.ContractorLaborCraftID.ToString() + ":" + "ContractorLaborCraft", IsVisible = false, BackgroundColor = Color.FromHex("#87CEFA"), };
 
-                var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest = 2, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
-                FinalLayout = new StackLayout
+                AssociateGrid.Children.Add(AssociateLal, 0, 0);
+                AssociateGrid.Children.Add(LaborCraft, 0, 1);
+                StartStopBtnGrid.Children.Add(AssociateLayout, 0, 0);
+
+                Grid.SetColumnSpan(AssociateLayout, 5);
+
+                #region **** Start button ****
+
+                StackLayout StartBtnStackLayout = new StackLayout
                 {
-                    Orientation = StackOrientation.Vertical,
-                    Spacing = 10,
-                    Children =
-                                {
-                                   new Label{FontAttributes=FontAttributes.Bold, Text=WebControlTitle.GetTargetNameByTitleName("TotalInspectionTime")+"(HH:MM) " +":  "+TotalInspectionTime.Text ,TextColor=Color.Black},layout12, oneBox
-
-                                }
+                    Margin = new Thickness(0, 0, 0, 0)
                 };
-                ParentLayout.Children.Add(FinalLayout);
-                total = total.Subtract(total);
+                StartStopBtnGrid.Children.Add(StartBtnStackLayout, 0, 1);
 
-                if (this.btnCreateWorkorder.IsVisible)
+                Grid StartBtnGrid = new Grid();
+
+                StartBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                StartBtnStackLayout.Children.Add(StartBtnGrid);
+                SfButton startButton = new SfButton
                 {
-                    CC = await ViewModel._inspectionService.GetFailedWorkorderInspection(this.WorkorderID.ToString(), "1");
+                    FontSize = 12,
+                    BorderWidth = 2,
+                    WidthRequest = 85,
+                    Text = WebControlTitle.GetTargetNameByTitleName("Start"),
+                    FontAttributes = FontAttributes.Bold,
+                    ShowIcon = true,
+                    BackgroundColor = Color.Transparent,
+                    TextColor = Color.Black,
+                    CommandParameter = item,
+                    ImageSource = "starticon.png",
+                };
+                StartBtnGrid.Children.Add(startButton, 0, 0);
 
+                #endregion
+                #region **** Stop button ****
+
+                StackLayout StopBtnStackLayout = new StackLayout
+                {
+                    Margin = new Thickness(-10, 0, 0, 0)
+                };
+                StartStopBtnGrid.Children.Add(StopBtnStackLayout, 1, 1);
+
+                Grid StopBtnGrid = new Grid();
+                StopBtnGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                StopBtnStackLayout.Children.Add(StopBtnGrid);
+                SfButton stopButton = new SfButton
+                {
+                    FontSize = 12,
+                    BorderWidth = 2,
+                    WidthRequest = 85,
+                    Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
+                    FontAttributes = FontAttributes.Bold,
+                    ShowIcon = true,
+                    BackgroundColor = Color.White,
+                    TextColor = Color.Black,
+                    CommandParameter = item,
+                    ImageSource = "stopicon.png",
+                };
+                StopBtnGrid.Children.Add(stopButton);
+
+                #endregion
+                #region **** Hrs ****
+
+                StackLayout HrsStackLayout = new StackLayout
+                {
+                    Margin = new Thickness(-10, 0, 0, 0)
+                };
+                StartStopBtnGrid.Children.Add(HrsStackLayout, 2, 1);
+
+                Grid HrsGrid = new Grid();
+                HrsGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                HrsStackLayout.Children.Add(HrsGrid);
+                SfBorder HrsBorder = new SfBorder
+                {
+                    HeightRequest = 35,
+                    WidthRequest = 50,
+                    BorderColor = Color.Black,
+                    CornerRadius = 10
+                };
+                HrsGrid.Children.Add(HrsBorder);
+                Entry hoursEntry = new Entry
+                {
+                    HeightRequest = 35,
+                    Placeholder = "Hrs",
+                    FontSize = 12
+                };
+                HrsBorder.Content = hoursEntry;
+                #endregion
+                #region **** Min ****
+
+                StackLayout MinStackLayout = new StackLayout
+                {
+                    Margin = new Thickness(0, 0, 0, 0)
+                };
+                StartStopBtnGrid.Children.Add(MinStackLayout, 3, 1);
+
+                Grid MinGrid = new Grid();
+                MinGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                MinStackLayout.Children.Add(MinGrid);
+                SfBorder MinBorder = new SfBorder
+                {
+                    HeightRequest = 35,
+                    WidthRequest = 50,
+                    BorderColor = Color.Black,
+                    CornerRadius = 10
+                };
+                MinGrid.Children.Add(MinBorder);
+                Entry minuteEntry = new Entry
+                {
+                    HeightRequest = 35,
+                    Placeholder = "Min",
+                    FontSize = 12
+                };
+                MinBorder.Content = minuteEntry;
+
+                hoursEntry.TextChanged += OnTextChanged1;
+                minuteEntry.TextChanged += HoursTextChanged1;
+                #endregion
+
+                #region **** Delete Icon ****
+
+                StackLayout DeleteStackLayout = new StackLayout
+                {
+                    Margin = new Thickness(-10, 0, 0, 0)
+                };
+                StartStopBtnGrid.Children.Add(DeleteStackLayout, 4, 1);
+
+                Grid DeleteGrid = new Grid();
+                MinGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                DeleteStackLayout.Children.Add(DeleteGrid);
+                SfButton btnDelete = new SfButton
+                {
+                    Margin = new Thickness(0, 0, 0, 0),
+                    WidthRequest = 25,
+                    ShowIcon = true,
+                    BackgroundColor = Color.White,
+                    ImageSource = "delicon.png",
+                    StyleId = item.ContractorLaborCraftID.ToString(),
+                };
+                DeleteGrid.Children.Add(btnDelete);
+                btnDelete.Clicked += BtnContractorDelete_Clicked;
+                #endregion
+
+                #endregion
+
+                #region ***** Date from And complate *****
+
+                StackLayout DateButoonSL = new StackLayout();
+                AssociateSL.Children.Add(DateButoonSL);
+                Grid dateFromCompGrid = new Grid();
+                dateFromCompGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                dateFromCompGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                DateButoonSL.Children.Add(dateFromCompGrid);
+
+                StackLayout FromDateSL = new StackLayout();
+                dateFromCompGrid.Children.Add(FromDateSL, 0, 0);
+                Label FromDateLbl = new Label
+                {
+                    Text = "From Date",
+                    FontSize = 13,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Color.FromHex("#333333")
+                };
+                FromDateSL.Children.Add(FromDateLbl);
+                SfBorder dateFromBo = new SfBorder
+                {
+                    HeightRequest = 35,
+                    BorderColor = Color.Black,
+                    CornerRadius = 10
+                };
+                FromDateSL.Children.Add(dateFromBo);
+                CustomDatePicker startDate;
+                if (item.StartDate != null)
+                {
+                    startDate = new CustomDatePicker
+                    {
+                        Margin = new Thickness(0, 5, 0, 0),
+                        SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
+                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        HeightRequest = 2
+                    };
+                    dateFromBo.Content = startDate;
                 }
                 else
                 {
-                    CC = await ViewModel._inspectionService.GetFailedWorkorderInspection(this.WorkorderID.ToString(), "0");
+                    startDate = new CustomDatePicker
+                    {
+                        Margin = new Thickness(0, 5, 0, 0),
+                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        HeightRequest = 2,
+                        HorizontalOptions = LayoutOptions.Start
+                    };
+                    dateFromBo.Content = startDate;
                 }
-            }
-            catch (Exception ex)
-            {
 
-                Debug.WriteLine(ex.Message + "<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>" + ex.StackTrace);
+                StackLayout CompDateSL = new StackLayout();
+                dateFromCompGrid.Children.Add(CompDateSL, 1, 0);
+                Label CompDateLbl = new Label
+                {
+                    Text = "Completion Date",
+                    FontSize = 13,
+                    FontAttributes = FontAttributes.Bold,
+                    TextColor = Color.FromHex("#333333")
+                };
+                CompDateSL.Children.Add(CompDateLbl);
+                SfBorder dateCompBo = new SfBorder
+                {
+                    HeightRequest = 35,
+                    BorderColor = Color.Black,
+                    CornerRadius = 10
+                };
+                CompDateSL.Children.Add(dateCompBo);
+                CustomDatePicker CompletionDate;
+                if (item.CompletionDate != null)
+                {
+                    CompletionDate = new CustomDatePicker
+                    {
+                        SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
+                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        HeightRequest = 2,
+                        HorizontalOptions = LayoutOptions.Start,
+                        Margin = new Thickness(0, 5, 0, 0),
+                    };
+                    dateCompBo.Content = CompletionDate;
+                }
+
+                else
+                {
+                    CompletionDate = new CustomDatePicker
+                    {
+                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        HeightRequest = 2,
+                        HorizontalOptions = LayoutOptions.Start,
+                        Margin = new Thickness(0, 5, 0, 0),
+                    };
+                    dateCompBo.Content = CompletionDate;
+                }
+                #endregion
+
+                #region GlobalTimer Logic
+                WorkorderContractor savedContractorlocal = null;
+
+                try
+                {
+
+                    string k1 = "WorkorderContracator:" + item.WorkOrderInspectionTimeID;
+                    savedContractorlocal = JsonConvert.DeserializeObject<WorkorderContractor>(WorkorderInspectionStorge.Storage.Get(k1));
+
+
+                }
+                catch (Exception)
+                {
+
+                }
+
+                if (savedContractorlocal != null)
+                {
+                    try
+                    {
+                        //set in buttons commands
+
+                        startButton.CommandParameter = savedContractorlocal;
+                        stopButton.CommandParameter = savedContractorlocal;
+
+                        startButton.TextColor = Color.Green;
+                        startButton.ImageSource = "starticon1.png";
+
+                        var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(savedContractorlocal.InspectionTime));
+                        var timeString = (int)timeInspection.Hours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
+
+                        hoursEntry.Text = timeInspection.Hours.ToString();
+                        minuteEntry.Text = timeInspection.Minutes.ToString();
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
+
+                }
+
+
+                #endregion
+                startButton.Clicked += (sender, e) =>
+                {
+                    //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
+                    var buttonStart = sender as SfButton;
+                    WorkorderContractor workordercontrcator = buttonStart.CommandParameter as WorkorderContractor;
+
+                    workordercontrcator.StartTimeOfTimer = DateTime.Now;
+                    startButton.CommandParameter = workordercontrcator; //reassign to commandParameter.
+
+
+                    var parent = buttonStart.Parent.Parent.Parent;
+                    Grid parentGrid = parent as Grid;
+                    StackLayout StopBtnSL = parentGrid.Children[2] as StackLayout;
+                    Grid StopBtnGrid1 = StopBtnSL.Children[0] as Grid;
+
+                    //  parentGrid.StyleId = item.HoursAtRate1.ToString();
+                    SfButton btnStopLocal = StopBtnGrid1.Children[0] as SfButton;//Find the stopbutton from parent
+                    btnStopLocal.CommandParameter = workordercontrcator; //reassign to commandParameter to stopbutton
+
+
+
+                    //Save in Local
+                    string key = "WorkorderContracator:" + workordercontrcator.WorkOrderInspectionTimeID;
+                    // workorderempcontrcator.Description = "";
+                    WorkorderInspectionStorge.Storage.Set(key, JsonConvert.SerializeObject(workordercontrcator));
+
+
+                    //StartTime = DateTime.Now;
+
+                    startButton.TextColor = Color.Green;
+                    startButton.ImageSource = "starticon1.png";
+                    stopButton.IsEnabled = true;
+                    stopButton.TextColor = Color.FromHex("#87CEFA");
+                    stopButton.ImageSource = "stoppending.png";
+                };
+
+                stopButton.Clicked += (sender, e) =>
+                {
+                    var StopTime = DateTime.Now;
+
+                    var x1 = sender as SfButton;
+                    WorkorderContractor workOrdercontrcator = x1.CommandParameter as WorkorderContractor;
+                    workOrderInspectionTimeID.Add(workOrdercontrcator.WorkOrderInspectionTimeID);
+
+                    if (workOrdercontrcator.StartTimeOfTimer == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                    {
+                        return;
+                    }
+
+                    TimeSpan elapsed = StopTime.Subtract(workOrdercontrcator.StartTimeOfTimer);
+
+                    int mn = elapsed.Minutes;
+                    if (String.IsNullOrWhiteSpace(minuteEntry.Text))
+                    {
+                        minuteEntry.Text = "0";
+                    }
+                    if (String.IsNullOrWhiteSpace(hoursEntry.Text))
+                    {
+                        hoursEntry.Text = "0";
+                    }
+                    int mn1 = Convert.ToInt32(minuteEntry.Text);
+                    if (mn + mn1 > 59)
+                    {
+
+
+                        TimeSpan span = TimeSpan.FromMinutes(mn + mn1);
+                        string elapsedTime1 = String.Format("{0:00}:{1:00}",
+                                                      span.Hours, span.Minutes);
+                        int hrs = span.Hours;
+                        int hrs1 = Convert.ToInt32(hoursEntry.Text);
+                        hoursEntry.Text = (hrs + hrs1).ToString();
+
+                        int hrs2 = span.Minutes;
+                        minuteEntry.Text = hrs2.ToString();
+                    }
+                    else
+                    {
+
+                        int hrs = elapsed.Hours;
+                        int hrs1 = Convert.ToInt32(hoursEntry.Text);
+                        hoursEntry.Text = (hrs + hrs1).ToString();
+
+                        int hrs2 = elapsed.Minutes;
+                        int hrs21 = Convert.ToInt32(minuteEntry.Text);
+                        minuteEntry.Text = (hrs2 + hrs21).ToString();
+                    }
+
+                    //startDate.SelectedDate = Convert.ToDateTime(DateTime.Now.ToString());
+                    //CompletionDate.SelectedDate = Convert.ToDateTime(DateTime.Now.ToString());
+
+
+                    startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                    CompletionDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+
+
+                    //  startDate.SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    // CompletionDate.SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    stopButton.TextColor = Color.FromHex("#708090");
+                    stopButton.ImageSource = "stopicon1.png";
+                    stopButton.IsEnabled = false;
+                    startButton.TextColor = Color.FromHex("#708090");
+                    startButton.ImageSource = "startred.png";
+                    startButton.IsEnabled = false;
+                    // this.BackgroundColor = Color.White;
+
+                };
+
+                #endregion
+
+
+                if (!string.IsNullOrWhiteSpace(item.InspectionTime))
+                {
+                    var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(item.InspectionTime));
+                    var timeString = (int)timeInspection.Hours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
+
+                    string FinalHours1 = Convert.ToDecimal(string.Format("{0:F2}", timeInspection.TotalHours)).ToString();
+                    var FinalHrs2 = FinalHours1.Split('.');
+                    hoursEntry.Text = FinalHrs2[0];
+                    minuteEntry.Text = timeInspection.Minutes.ToString();
+                    total = total.Add(new TimeSpan(int.Parse(hoursEntry.Text), int.Parse(minuteEntry.Text), 0));
+
+                    string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", total.TotalHours)).ToString();
+                    var FinalHrs1 = FinalHours.Split('.');
+                    string DisplayHours = FinalHrs1[0];
+
+                    TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
+                }
+
             }
+
+            //BoxView boxView = new BoxView
+            //{
+            //    BackgroundColor = Color.Black,
+            //};
+            //masterGrid.Children.Add(boxView, 0, 3);
+
+            Label TotalInspectionLal = new Label
+            {
+                Text = WebControlTitle.GetTargetNameByTitleName("TotalInspectionTime") + "(HH:MM) " + ":  " + TotalInspectionTime.Text,
+                FontSize = 14.75,
+                FontAttributes = FontAttributes.Bold,
+                TextColor = Color.Black
+            };
+            TotalInspectionSL.Children.Add(TotalInspectionLal);
+
+            ParentLayout.Children.Add(masterGrid);
+            MainBoxView.Children.Clear();
+            BoxView LineBoxView = new BoxView();
+            LineBoxView.BackgroundColor = Color.Black;
+            LineBoxView.HeightRequest = 2;
+            LineBoxView.Margin = new Thickness(0, 0, 0, 0);
+
+            MainBoxView.Children.Add(LineBoxView);
+            #endregion
+
             UserDialogs.Instance.HideLoading();
 
         }
-
 
         protected async Task OnAppearingOld()
         {
@@ -1624,106 +1556,96 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
-
-
-
-
-
-
         private async Task RetriveAllWorkorderInspectionsAsync()
         {
-
-           
-
             CC = await ViewModel._inspectionService.GetWorkorderInspection(this.WorkorderID.ToString(), AppSettings.User.UserID.ToString());
-            if (CC.listInspection == null || CC.listInspection.Count > 0)
-            {
-                if (EmployeecontrcatorRights == "E")
-                {
-                    this.btnAddEmployee.IsEnabled = true;
-                    this.btnAddContractor.IsEnabled = true;
-                }
+            //if (CC.listInspection == null || CC.listInspection.Count > 0)
+            //{
+            //    if (EmployeecontrcatorRights == "E")
+            //    {
+            //        this.btnAddEmployee.IsEnabled = true;
+            //        this.btnAddContractor.IsEnabled = true;
+            //    }
 
-            }
+            //}
 
-            if (CC.listInspection.Count == 0 && (CC.workOrderEmployee.Count > 0 || CC.workorderContractor.Count > 0))
-            {
+            //if (CC.listInspection.Count == 0 && (CC.workOrderEmployee.Count > 0 || CC.workorderContractor.Count > 0))
+            //{
 
-                foreach (var item in CC.workOrderEmployee)
-                {
-                    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/DeleteEmployeeAndContrator");
+            //    foreach (var item in CC.workOrderEmployee)
+            //    {
+            //        Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/DeleteEmployeeAndContrator");
 
-                    var payload = new Dictionary<string, string>
-             {
-              {"EmployeeLaborCraftID", item.EmployeeLaborCraftID.ToString()},
-              {"WorkorderID", WorkorderID.ToString()},
-               {"ContractorLaborCraftID", "0"},
+            //        var payload = new Dictionary<string, string>
+            // {
+            //  {"EmployeeLaborCraftID", item.EmployeeLaborCraftID.ToString()},
+            //  {"WorkorderID", WorkorderID.ToString()},
+            //   {"ContractorLaborCraftID", "0"},
 
-            };
+            //};
 
-                    string strPayload = JsonConvert.SerializeObject(payload);
-                    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                    var t = Task.Run(() => SendURI(posturi, c));
-
-
-                }
-                foreach (var item in CC.workorderContractor)
-                {
-                    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/DeleteEmployeeAndContrator");
-
-                    var payload = new Dictionary<string, string>
-            {
-              {"EmployeeLaborCraftID", "0"},
-              {"WorkorderID", WorkorderID.ToString()},
-               {"ContractorLaborCraftID", item.ContractorLaborCraftID.ToString()},
-
-            };
-
-                    string strPayload = JsonConvert.SerializeObject(payload);
-                    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                    var t = Task.Run(() => SendURI(posturi, c));
-
-                }
-
-                OnAppearing();
+            //        string strPayload = JsonConvert.SerializeObject(payload);
+            //        HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            //        var t = Task.Run(() => SendURI(posturi, c));
 
 
+            //    }
+            //    foreach (var item in CC.workorderContractor)
+            //    {
+            //        Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/DeleteEmployeeAndContrator");
 
-            }
-            if (CC.listInspection.Count > 0 && CC.workOrderEmployee.Count == 0)
-            {
-                ServiceOutput taskResponse = null;
+            //        var payload = new Dictionary<string, string>
+            //{
+            //  {"EmployeeLaborCraftID", "0"},
+            //  {"WorkorderID", WorkorderID.ToString()},
+            //   {"ContractorLaborCraftID", item.ContractorLaborCraftID.ToString()},
 
-                taskResponse = await ViewModel._taskService.GetEmployee(UserID, "0", "0", AppSettings.User.EmployeeName, "Inspection", this.WorkorderID);
+            //};
 
-                if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
-                {
-                    var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
-                    if (assingedToEmployees != null)
-                    {
-                        this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
-                        this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName) + "(" + assingedToEmployees.First().LaborCraftCode + ")";
-                    }
+            //        string strPayload = JsonConvert.SerializeObject(payload);
+            //        HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            //        var t = Task.Run(() => SendURI(posturi, c));
 
-                }
-                Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/AssociateEmployeeAndContractorLaborCraftToWorkOrder");
+            //    }
 
-                var payload = new Dictionary<string, string>
-            {
-              {"EmployeeLaborCraftID", this.EmployeeID.ToString()},
-              {"WorkorderID", WorkorderID.ToString()},
-               {"ContractorLaborCraftID","0"}
-            };
+            //    OnAppearing();
 
-                string strPayload = JsonConvert.SerializeObject(payload);
-                HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                var t = Task.Run(() => SendURI(posturi, c));
 
-                OnAppearing();
-            }
+
+            //}
+            //if (CC.listInspection.Count > 0 && CC.workOrderEmployee.Count == 0)
+            //{
+            //    ServiceOutput taskResponse = null;
+
+            //    taskResponse = await ViewModel._taskService.GetEmployee(UserID, "0", "0", AppSettings.User.EmployeeName, "Inspection", this.WorkorderID);
+
+            //    if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
+            //    {
+            //        var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
+            //        if (assingedToEmployees != null)
+            //        {
+            //            this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
+            //            this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName) + "(" + assingedToEmployees.First().LaborCraftCode + ")";
+            //        }
+
+            //    }
+            //    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/AssociateEmployeeAndContractorLaborCraftToWorkOrder");
+
+            //    var payload = new Dictionary<string, string>
+            //{
+            //  {"EmployeeLaborCraftID", this.EmployeeID.ToString()},
+            //  {"WorkorderID", WorkorderID.ToString()},
+            //   {"ContractorLaborCraftID","0"}
+            //};
+
+            //    string strPayload = JsonConvert.SerializeObject(payload);
+            //    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            //    var t = Task.Run(() => SendURI(posturi, c));
+
+            //    OnAppearing();
+            //}
 
             BindLayout(CC.listInspection);
-
 
         }
 
@@ -1828,13 +1750,6 @@ namespace ProteusMMX.Views.Workorder
                     this.InspectionCompletionDate = context.InspectionStopTime.GetValueOrDefault().Date;
                 }
 
-
-
-
-
-
-
-
                 #endregion
 
 
@@ -1899,448 +1814,377 @@ namespace ProteusMMX.Views.Workorder
         {
             // List<ExistingInspections> listInspection
             List<ExistingInspections> distinctList = listInspection.OrderByDescending(x => x.SectionID == 0).ToList();
+            #region ***** Next *****
+
+            StackLayout TabViewSL = new StackLayout();
+            // masterGrid.Children.Add(TabViewSL, 0, 4);
+            #region **** MiscellaneousGrid ****
+
+            Grid MiscellaneousGrid = new Grid { BackgroundColor = Color.White, MinimumWidthRequest = 550, Padding = 0 };
+            MiscellaneousGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
+            StackLayout MiscelMasterSL = new StackLayout();
+            MiscellaneousGrid.Children.Add(MiscelMasterSL, 0, 0);
+            ScrollView MiscelSV = new ScrollView();
+            MiscelMasterSL.Children.Add(MiscelSV);
+            // StackLayout layout2;
+            StackLayout layout2Test = new StackLayout();
+            MiscelSV.Content = layout2Test;
+            #endregion
+
+            #region **** GroupSection ***
+
+            Grid GroupSectionsGrid = new Grid { BackgroundColor = Color.White, HeightRequest = 500, Padding = 2 };
+            GroupSectionsGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
+            StackLayout GroupSecSl = new StackLayout();
+            GroupSectionsGrid.Children.Add(GroupSecSl);
+
+            ScrollView GroupSecSV = new ScrollView();
+            GroupSecSl.Children.Add(GroupSecSV);
+            StackLayout GroupSecSlCase1 = new StackLayout();
+            StackLayout GroupSecSlCaseTest1 = new StackLayout();
+            GroupSecSlCaseTest1.Children.Add(GroupSecSlCase1);
+            GroupSecSV.Content = GroupSecSlCaseTest1;
+
+            #endregion
+
+            SfExpander GroupSecExpCase1;
+
+
+            #endregion
+            int Misce = 0;
+            int GroupSec = 0;
+
             foreach (var item in distinctList)
             {
+                StackLayout layout2 = new StackLayout();
                 if (item.SectionID == 0 || item.SectionID == null)
                 {
-                    var layout2 = new StackLayout
-                    {
-                        Orientation = StackOrientation.Vertical,
-                        HorizontalOptions = LayoutOptions.StartAndExpand,
-                        Spacing = 20,
-                        Children = { }
-
-                    };
-                    //var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest = 3, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
-
-                    var mainLayoutGroupSingle = new StackLayout
-                    {
-                        Orientation = StackOrientation.Vertical,
-                        HorizontalOptions = LayoutOptions.StartAndExpand,
-                        Children = { layout2 }
-
-                    };
-                    //mainLayoutGroup.Children.Add(oneBox);
-
-
-                    //var frame = new Frame
-                    //{
-                    //    Padding = new Thickness(10, 10, 10, 10),
-                    //    OutlineColor = Color.Accent,
-                    //    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    //    Content = mainLayoutGroup,
-                    //};
-
-
+                    #region ****** Miscellaneous *******
+                    Misce = Misce + 1;
                     View Question;
                     View Label;
-                    //View LabelHours;
+                    ////View LabelHours;
                     View Layout;
 
-                    Grid sta;
+                    //Grid sta;
                     switch (item.ResponseTypeName)
                     {
-                        case "Pass/Fail":
+                        #region ***** Pass/Fail ****
 
+                        case "Pass/Fail":
+                            StackLayout PassFailSl = new StackLayout();
+                            //StackLayout PassFailSlLavel = new StackLayout();
+                            StackLayout PassFailSlButton = new StackLayout();
+
+                            var PassFailgrid = new Grid() { HorizontalOptions = LayoutOptions.End, BindingContext = item };
+                            PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                            PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                            PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                            PassFailSlButton.Children.Add(PassFailgrid);
+
+                            // PassFailSl.Children.Add(PassFailSlLavel);
+                            PassFailSl.Children.Add(PassFailSlButton);
 
                             Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, };
-                            if (Device.Idiom == TargetIdiom.Phone)
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
-                            else
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
-
-                            //LabelHours = new Label { Text = item.EstimatedHours.ToString(), Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-
+                            Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, };
                             GenerateAnswerText(item);
 
-                            var gridPF = new Grid() { HorizontalOptions = LayoutOptions.End };
-                            gridPF.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
-                            gridPF.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                            gridPF.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-                            if (Device.Idiom == TargetIdiom.Phone)
+                            var btnTruePF = new SfButton()
                             {
-                                var btnTruePF = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
-                                var btnFalsePF = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
-                                btnTruePF.Clicked += BtnTrue_Clicked;
-                                btnFalsePF.Clicked += BtnFalse_Clicked;
-
-                                gridPF.Children.Add(btnTruePF, 0, 0);
-                                gridPF.Children.Add(btnFalsePF, 1, 0);
-                                Layout = gridPF;
-                                switch (item.AnswerDescription)
-                                {
-                                    case "":
-                                        break;
-                                    case "Pass":
-                                        BtnTrue_Clicked(btnTruePF, null);
-                                        break;
-                                    case "Fail":
-                                        this.btnCreateWorkorder.IsVisible = true;
-                                        BtnFalse_Clicked(btnFalsePF, null);
-                                        break;
-
-                                }
-                            }
-                            else
+                                Text = "Pass",
+                                TextColor = Color.Black,
+                                FontSize = 11,
+                                BackgroundColor = Color.LightGray,
+                                FontAttributes = FontAttributes.Bold,
+                                CornerRadius = 70,
+                                HeightRequest = 36
+                            };
+                            var btnFalsePF = new SfButton()
                             {
-                                var btnTruePF = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
-                                var btnFalsePF = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
-                                btnTruePF.Clicked += BtnTrue_Clicked;
-                                btnFalsePF.Clicked += BtnFalse_Clicked;
+                                Text = "Fail",
+                                TextColor = Color.Black,
+                                FontSize = 11,
+                                BackgroundColor = Color.LightGray,
+                                FontAttributes = FontAttributes.Bold,
+                                CornerRadius = 70,
+                                HeightRequest = 36
+                            };
+                            btnTruePF.Clicked += BtnTrue_Clicked;
+                            btnFalsePF.Clicked += BtnFalse_Clicked;
+                            PassFailgrid.Children.Add(Question, 0, 0);
+                            PassFailgrid.Children.Add(Label, 0, 0);
+                            PassFailgrid.Children.Add(btnTruePF, 1, 0);
+                            PassFailgrid.Children.Add(btnFalsePF, 2, 0);
 
-                                gridPF.Children.Add(btnTruePF, 0, 0);
-                                gridPF.Children.Add(btnFalsePF, 1, 0);
-                                Layout = gridPF;
-                                switch (item.AnswerDescription)
-                                {
-                                    case "":
-                                        break;
-                                    case "Pass":
-                                        BtnTrue_Clicked(btnTruePF, null);
-                                        break;
-                                    case "Fail":
-                                        this.btnCreateWorkorder.IsVisible = true;
-
-                                        BtnFalse_Clicked(btnFalsePF, null);
-                                        break;
-
-                                }
-                            }
-
-
-
-
-
-                            sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
-                            sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                            sta.Children.Add(Question, 0, 0);
-                            sta.Children.Add(Label, 0, 0);
-
-                            if (Device.Idiom == TargetIdiom.Phone)
+                            layout2.Children.Add(PassFailSl);
+                            switch (item.AnswerDescription)
                             {
-                                sta.Children.Add(Layout, 0, 1);
-                            }
-                            else
-                            {
-                                sta.Children.Add(Layout, 1, 0);
-                            }
-                            layout2.Children.Add(sta);
+                                case "":
+                                    break;
+                                case "Pass":
+                                    BtnTrue_Clicked(btnTruePF, null);
+                                    break;
+                                case "Fail":
+                                    this.CreateWorkorderButtonSL.IsVisible = true;
 
+                                    BtnFalse_Clicked(btnFalsePF, null);
+                                    break;
+                            }
                             break;
+                        #endregion
 
-                        case "Standard Range":
-                            //LabelHours = new Label { Text = item.EstimatedHours.ToString(), Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
-                            if (Device.Idiom == TargetIdiom.Phone)
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
-                            else
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
-
-                            Layout = new MyEntry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Start, };
-
-                            GenerateAnswerText(item);
-
-                            (Layout as MyEntry).BindingContext = new Range() { MaxRange = item.MaxRange, MinRange = item.MinRange };
-                            (Layout as MyEntry).TextChanged += StandardRange_TextChanged;
-                            (Layout as MyEntry).Text = item.AnswerDescription;
-
-                            sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
-                            sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                            sta.Children.Add(Question, 0, 0);
-                            sta.Children.Add(Label, 0, 0);
-                            sta.Children.Add(Layout, 1, 0);
-                            // sta.Children.Add(LabelHours, 2, 0);
-                            layout2.Children.Add(sta);
-
-
-                            break;
+                        #region ******* Yes/No/N/A ******
 
                         case "Yes/No/N/A":
-                            //LabelHours = new Label { Text = item.EstimatedHours.ToString(), Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
-                            if (Device.Idiom == TargetIdiom.Phone)
+                            StackLayout YesNoSl = new StackLayout();
+                            //StackLayout YesNoSlLavel = new StackLayout();
+                            StackLayout YesNoSlButton = new StackLayout();
+
+                            Grid YesNogrid = new Grid() { BindingContext = item };
+                            YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                            YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                            YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 38 });
+                            YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 38 });
+                            YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 38 });
+                            YesNoSlButton.Children.Add(YesNogrid);
+
+                            //YesNoSl.Children.Add(YesNoSlLavel);
+                            YesNoSl.Children.Add(YesNoSlButton);
+                            Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, };
+                            Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black };
+
+                            var btnTrue = new SfButton()
                             {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
+                                Text = "Yes",
+                                TextColor = Color.Black,
+                                FontSize = 11,
+                                BackgroundColor = Color.LightGray,
+                                FontAttributes = FontAttributes.Bold,
+                                CornerRadius = 70,
+                                HeightRequest = 36
+                            };
+                            var btnFalse = new SfButton()
+                            {
+                                Text = "No",
+                                TextColor = Color.Black,
+                                FontSize = 11,
+                                BackgroundColor = Color.LightGray,
+                                FontAttributes = FontAttributes.Bold,
+                                CornerRadius = 70,
+                                HeightRequest = 36
+                            };
+                            var btnNA = new SfButton()
+                            {
+                                Text = "NA",
+                                TextColor = Color.Black,
+                                FontSize = 11,
+                                BackgroundColor = Color.LightGray,
+                                FontAttributes = FontAttributes.Bold,
+                                CornerRadius = 70,
+                                HeightRequest = 36
+                            };
+
+                            //Bind the ResponseSubType in Buttons
+                            btnTrue.BindingContext = item.ResponseSubType;
+                            btnFalse.BindingContext = item.ResponseSubType;
+                            btnNA.BindingContext = item.ResponseSubType;
+                            // TODO: Add the NA button over here
+                            btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
+                            btnFalse.Clicked += BtnNo_Clicked;
+                            btnNA.Clicked += BtnNA_Clicked;
+                            YesNogrid.Children.Add(Question, 0, 0);
+                            YesNogrid.Children.Add(Label, 0, 0);
+                            Grid.SetColumnSpan(Label, 3);
+                            YesNogrid.Children.Add(btnTrue, 2, 0);
+                            YesNogrid.Children.Add(btnFalse, 3, 0);
+                            YesNogrid.Children.Add(btnNA, 4, 0);
+
+                            layout2.Children.Add(YesNoSl);
+                            switch (item.AnswerDescription)
+                            {
+                                case "":
+                                    break;
+                                case "NA":
+                                    BtnNA_Clicked(btnNA, null);
+                                    break;
+                                case "Yes":
+                                    BtnYes_Clicked(btnTrue, null);
+                                    break;
+                                case "No":
+                                    //this.btnCreateWorkorder.IsVisible = true;
+                                    BtnNo_Clicked(btnFalse, null);
+                                    break;
+
                             }
-                            else
+
+                            #region Negative response create workorder btnshow
+                            if (item.ResponseSubType == null || item.ResponseSubType == false)
                             {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
-
-
-
-                            GenerateAnswerText(item);
-
-                            var grid = new Grid() { HorizontalOptions = LayoutOptions.End };
-                            grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
-                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-                            if (Device.Idiom == TargetIdiom.Phone)
-                            {
-                                var btnTrue = new Button() { HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                var btnFalse = new Button() { HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                var btnNA = new Button() { HeightRequest = 36, FontSize = 10, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
-                                //Bind the ResponseSubType in Buttons
-                                btnTrue.BindingContext = item.ResponseSubType;
-                                btnFalse.BindingContext = item.ResponseSubType;
-                                btnNA.BindingContext = item.ResponseSubType;
-
-
-                                //TODO: Add the NA button over here
-                                btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
-                                btnFalse.Clicked += BtnNo_Clicked;
-                                btnNA.Clicked += BtnNA_Clicked;
-
-                                grid.Children.Add(btnTrue, 0, 0);
-                                grid.Children.Add(btnFalse, 1, 0);
-                                grid.Children.Add(btnNA, 2, 0);
-                                //TODO: Add the NA button in grid
-
-
-
-                                //TODO: Set the retriving answer accordingly
                                 switch (item.AnswerDescription)
                                 {
                                     case "":
                                         break;
                                     case "NA":
-                                        BtnNA_Clicked(btnNA, null);
                                         break;
                                     case "Yes":
-                                        BtnYes_Clicked(btnTrue, null);
+                                        CreateWorkorderButtonSL.IsVisible = true;
                                         break;
                                     case "No":
-                                        BtnNo_Clicked(btnFalse, null);
                                         break;
 
                                 }
-
-                                #region Negative response create workorder btnshow
-                                if (item.ResponseSubType == null || item.ResponseSubType == false)
-                                {
-                                    switch (item.AnswerDescription)
-                                    {
-                                        case "":
-                                            break;
-                                        case "NA":
-                                            break;
-                                        case "Yes":
-                                            btnCreateWorkorder.IsVisible = true;
-                                            break;
-                                        case "No":
-                                            break;
-
-                                    }
-                                }
-                                else
-                                {
-                                    switch (item.AnswerDescription)
-                                    {
-                                        case "":
-                                            break;
-                                        case "NA":
-                                            break;
-                                        case "Yes":
-                                            break;
-                                        case "No":
-                                            btnCreateWorkorder.IsVisible = true;
-                                            break;
-
-                                    }
-                                }
-                                #endregion
-
                             }
                             else
                             {
-                                var btnTrue = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                var btnFalse = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                var btnNA = new Button() { CornerRadius = 5, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
-                                //Bind the ResponseSubType in Buttons
-                                btnTrue.BindingContext = item.ResponseSubType;
-                                btnFalse.BindingContext = item.ResponseSubType;
-                                btnNA.BindingContext = item.ResponseSubType;
-
-
-                                //TODO: Add the NA button over here
-                                btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
-                                btnFalse.Clicked += BtnNo_Clicked;
-                                btnNA.Clicked += BtnNA_Clicked;
-
-                                grid.Children.Add(btnTrue, 0, 0);
-                                grid.Children.Add(btnFalse, 1, 0);
-                                grid.Children.Add(btnNA, 2, 0);
-                                //TODO: Add the NA button in grid
-
-
-
-                                //TODO: Set the retriving answer accordingly
                                 switch (item.AnswerDescription)
                                 {
                                     case "":
                                         break;
                                     case "NA":
-                                        BtnNA_Clicked(btnNA, null);
                                         break;
                                     case "Yes":
-                                        BtnYes_Clicked(btnTrue, null);
                                         break;
                                     case "No":
-                                        BtnNo_Clicked(btnFalse, null);
+                                        CreateWorkorderButtonSL.IsVisible = true;
+                                        var MGrid = this.CreateWorkorderButtonSL.Parent as Grid;
+                                        MGrid.Children[3].IsVisible = true;
                                         break;
 
                                 }
-
-                                #region Negative response create workorder btnshow
-                                if (item.ResponseSubType == null || item.ResponseSubType == false)
-                                {
-                                    switch (item.AnswerDescription)
-                                    {
-                                        case "":
-                                            break;
-                                        case "NA":
-                                            break;
-                                        case "Yes":
-                                            btnCreateWorkorder.IsVisible = true;
-                                            break;
-                                        case "No":
-                                            break;
-
-                                    }
-                                }
-                                else
-                                {
-                                    switch (item.AnswerDescription)
-                                    {
-                                        case "":
-                                            break;
-                                        case "NA":
-                                            break;
-                                        case "Yes":
-                                            break;
-                                        case "No":
-                                            btnCreateWorkorder.IsVisible = true;
-                                            break;
-
-                                    }
-                                }
-                                #endregion
                             }
-                            Layout = grid;
-                            sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
-                            sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                            sta.Children.Add(Question, 0, 0);
-                            sta.Children.Add(Label, 0, 0);
-                            if (Device.Idiom == TargetIdiom.Phone)
-                            {
-                                sta.Children.Add(Layout, 0, 1);
-                            }
-                            else
-                            {
-                                sta.Children.Add(Layout, 1, 0);
-                            }
-                            layout2.Children.Add(sta);
+                            #endregion
 
                             break;
+                        #endregion
 
-                        case "Count":
-                            //LabelHours = new Label { Text = item.EstimatedHours.ToString(), Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
+                        #region ***** Standard Range ***
+                        case "Standard Range":
+                            StackLayout SRangeSl = new StackLayout();
+                            StackLayout SRangeSlLavel = new StackLayout();
+                            var SRangegrid = new Grid() { BindingContext = item };
+                            SRangegrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                            SRangegrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                            SRangeSlLavel.Children.Add(SRangegrid);
+                            // StackLayout SRangeSlButton = new StackLayout();
+
                             Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
 
-                            if (Device.Idiom == TargetIdiom.Phone)
+                            Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
+
+                            Layout = new Entry() { Keyboard = Keyboard.Numeric };
+                            SRangeSl.Children.Add(SRangeSlLavel);
+                            GenerateAnswerText(item);
+                            SfBorder RangeBor = new SfBorder() { CornerRadius = 5 };
+
+                            (Layout as Entry).BindingContext = new Range() { MaxRange = item.MaxRange, MinRange = item.MinRange };
+                            RangeBor.Content = Layout;
+                            SRangegrid.Children.Add(Question, 0, 0);
+                            SRangegrid.Children.Add(Label, 0, 0);
+                            SRangegrid.Children.Add(RangeBor, 1, 0);
+                            (Layout as Entry).TextChanged += StandardRange_TextChanged;
+                            (Layout as Entry).Text = item.AnswerDescription;
+                            layout2.Children.Add(SRangeSl);
+                            if (!string.IsNullOrWhiteSpace(item.AnswerDescription))
                             {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
+                                if (Convert.ToDecimal(item.AnswerDescription) >= item.MinRange && Convert.ToDecimal(item.AnswerDescription) <= item.MaxRange)
+                                {
+                                    this.CreateWorkorderButtonSL.IsVisible = false;
+                                }
+                                else
+                                {
+                                    this.CreateWorkorderButtonSL.IsVisible = true;
+                                }
                             }
-                            else
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
+                            break;
+                        #endregion
+
+                        #region ****** Count *****
+                        case "Count":
+                            StackLayout CountSl = new StackLayout();
+                            StackLayout CountSlLavel = new StackLayout();
+                            Grid CountGrid = new Grid() { BindingContext = item };
+
+                            CountGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                            CountGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 100 });
+                            CountSlLavel.Children.Add(CountGrid);
+                            Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+
+                            Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap };
                             GenerateAnswerText(item);
 
                             Layout = new MyEntry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Start };
                             (Layout as MyEntry).Text = item.AnswerDescription;
                             (Layout as MyEntry).TextChanged += OnlyNumeric_TextChanged;
 
-                            sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
-                            sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                            sta.Children.Add(Question, 0, 0);
-                            sta.Children.Add(Label, 0, 0);
-                            sta.Children.Add(Layout, 1, 0);
-                            //sta.Children.Add(LabelHours, 2, 0);
-                            layout2.Children.Add(sta);
-
+                            CountGrid.Children.Add(Question, 0, 0);
+                            CountGrid.Children.Add(Label, 0, 0);
+                            CountGrid.Children.Add(Layout, 1, 0);
+                            CountSl.Children.Add(CountSlLavel);
+                            layout2.Children.Add(CountSl);
 
                             break;
+                        #endregion
+
+                        #region **** Text ****
                         case "Text":
+                            StackLayout TextSl = new StackLayout();
+                            StackLayout TextSlLavel = new StackLayout();
+                            var Textgrid = new Grid() { BindingContext = item };
+                            Textgrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                            Textgrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                            TextSlLavel.Children.Add(Textgrid);
 
                             Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
 
-                            if (Device.Idiom == TargetIdiom.Phone)
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
-                            else
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
+
+                            Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap };
+
                             GenerateAnswerText(item);
 
                             Layout = new CustomEditor() { HorizontalOptions = LayoutOptions.FillAndExpand, HeightRequest = 60 };
                             (Layout as CustomEditor).Text = item.AnswerDescription;
+                            SfBorder TextSfBorder = new SfBorder
+                            {
+                                BorderColor = Color.Black,
+                                BorderWidth = 1,
+                                CornerRadius = 5
+                            };
+                            TextSfBorder.Content = Layout;
+                            Textgrid.Children.Add(Question, 0, 0);
+                            Textgrid.Children.Add(Label, 0, 0);
+                            Textgrid.Children.Add(TextSfBorder, 0, 1);
 
-                            sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
-                            sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
-                            sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                            sta.Children.Add(Question, 0, 0);
-                            sta.Children.Add(Label, 0, 0);
-                            sta.Children.Add(Layout, 0, 1);
-                            //sta.Children.Add(LabelHours, 2, 0);
-                            layout2.Children.Add(sta);
+                            TextSl.Children.Add(TextSlLavel);
 
-
+                            layout2.Children.Add(TextSl);
                             break;
+                        #endregion
 
+                        #region ****** Multiple Choice******
                         case "Multiple Choice":
+                            StackLayout MChoiceSl = new StackLayout();
+                            StackLayout MChoiceSlLavel = new StackLayout();
+
+                            MChoiceSl.Children.Add(MChoiceSlLavel);
+                            Grid MChoiceGrid = new Grid() { BindingContext = item };
+                            MChoiceGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                            MChoiceGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                            MChoiceSlLavel.Children.Add(MChoiceGrid);
+
                             Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
 
-                            if (Device.Idiom == TargetIdiom.Phone)
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
-                            else
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
+                            Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
+
                             GenerateAnswerText(item);
 
-
+                            MChoiceSlLavel.Children.Add(Label);
                             if (Device.RuntimePlatform == Device.UWP)
                             {
-                                Layout = new MyPicker() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                                Layout = new MyPicker() { WidthRequest = 60, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
                             }
                             else
                             {
-                                Layout = new MyPicker() { WidthRequest = 300, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                                Layout = new MyPicker() { WidthRequest = 60, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
                             }
 
                             if (!string.IsNullOrWhiteSpace(item.Option1))
@@ -2367,112 +2211,114 @@ namespace ProteusMMX.Views.Workorder
                             var index = (Layout as MyPicker).Items.IndexOf(item.AnswerDescription);
                             (Layout as MyPicker).SelectedIndex = index;
 
-                            sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
-                            sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                            sta.Children.Add(Question, 0, 0);
-                            sta.Children.Add(Label, 0, 0);
-                            sta.Children.Add(Layout, 1, 0);
-                            //sta.Children.Add(LabelHours, 2, 0);
-                            layout2.Children.Add(sta);
+                            MChoiceGrid.Children.Add(Question, 0, 0);
+                            MChoiceGrid.Children.Add(Label, 0, 0);
+                            MChoiceGrid.Children.Add(Layout, 1, 0);
+
+                            MChoiceSlLavel.Children.Add(MChoiceGrid);
+                            MChoiceSl.Children.Add(MChoiceSlLavel);
+                            layout2.Children.Add(MChoiceSl);
 
 
                             break;
+                        #endregion
 
+                        #region ***** None *****
                         case "None":
+                            StackLayout NoneSl = new StackLayout();
+                            StackLayout NoneSlLavel = new StackLayout();
+                            NoneSl.Children.Add(NoneSlLavel);
+                            var Nonegrid = new Grid() { BindingContext = item };
+                            Nonegrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                            NoneSlLavel.Children.Add(Nonegrid);
 
-                            Question = new Label { Text = "", Font = Font.SystemFontOfSize(16, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+                            Question = new Label { Text = "", Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
 
-                            if (Device.Idiom == TargetIdiom.Phone)
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.Bold), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
-                            else
-                            {
-                                Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.Bold), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                            }
+                            Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.Bold), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
+
                             GenerateAnswerText(item);
-
-
-                            // Layout = new Entry() { HorizontalOptions = LayoutOptions.FillAndExpand };
-                            //(Layout as Entry).Text = item.AnswerDescription;
-                            sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
-                            sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                            sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                            sta.Children.Add(Question, 0, 0);
-                            sta.Children.Add(Label, 0, 0);
-                            //sta.Children.Add(Layout, 1, 0);
-                            layout2.Children.Add(sta);
-
+                            Nonegrid.Children.Add(Question, 0, 0);
+                            Nonegrid.Children.Add(Label, 0, 0);
+                            layout2.Children.Add(NoneSl);
 
                             break;
+                            #endregion
                     }
+                    #region ***** Buttons ***
 
-                    var btnsave = new Button() { CornerRadius = 5, WidthRequest = 300, HeightRequest = 40, Text = WebControlTitle.GetTargetNameByTitleName("Save"), HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnsave = new Button() { BackgroundColor = Color.White, ImageSource = "saveicon1.png" };
                     btnsave.Clicked += Btnsave_Clicked;
 
-                    var btnDelete = new Button() { CornerRadius = 5, WidthRequest = 300, HeightRequest = 40, StyleId = item.InspectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnDelete = new SfButton() { BackgroundColor = Color.White, ShowIcon = true, ImageSource = "delIcon1.png", StyleId = item.InspectionID.ToString() };
                     btnDelete.Clicked += BtnDelete_Clicked;
+
+                    StackLayout Case1SL = new StackLayout();
+                    layout2.Children.Add(Case1SL);
+                    Grid Case1Grid = new Grid();
+                    Case1Grid.Padding = new Thickness(0, 0, 0, -12);
+                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                    Case1Grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                    Case1Grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                    Case1SL.Children.Add(Case1Grid);
+
 
                     #region Add Signature image
                     if (item.SignatureRequired.GetValueOrDefault())
                     {
                         //var imageView = new CustomImage() { ImageBase64String = ImageBase64 };
-                        var imageView = new CustomImage() { ImageBase64String = item.SignatureString, HeightRequest = 150 };
+                        var imageView = new CustomImage() { ImageBase64String = item.SignatureString, HeightRequest = 0 };
                         byte[] byteImg = Convert.FromBase64String(item.SignatureString);
-
-                        // byte[] byteImageCompr = DependencyService.Get<IResizeImage>().ResizeImageAndroid(byteImg, 350, 350);
                         imageView.Source = ImageSource.FromStream(() => new MemoryStream(byteImg));
-                        layout2.Children.Add(imageView);
+                        Case1Grid.Children.Add(imageView, 0, 0);
+                        Grid.SetColumnSpan(imageView, 4);
+                        if (byteImg.Length > 0)
+                        {
+                            imageView.HeightRequest = 150;
+                        }
 
-                        var addSignatureButton = new Button() {CornerRadius=5, Text = WebControlTitle.GetTargetNameByTitleName("AddSignature"), BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                        //var addSignatureButton = new Button() { CornerRadius = 5, Text = WebControlTitle.GetTargetNameByTitleName("AddSignature"), BackgroundColor = Color.FromHex("#87CEFA"), HeightRequest = 35, FontSize = 12, TextColor = Color.White, BorderColor = Color.Black };
+                        var addSignatureButton = new SfButton() { BackgroundColor = Color.White, ShowIcon = true, ImageSource = "signature.png" };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
-                        layout2.Children.Add(addSignatureButton);
-
+                        // layout2.Children.Add(addSignatureButton);
+                        Case1Grid.Children.Add(btnsave, 2, 1);
+                        Case1Grid.Children.Add(btnDelete, 3, 1);
+                        Case1Grid.Children.Add(addSignatureButton, 4, 1);
                         var s = item.SignaturePath;
-                    }
-                    #endregion
-
-                    layout2.Children.Add(btnsave);
-                    layout2.Children.Add(btnDelete);
-
-                    #region Estimated Hour Region
-                    if (Device.Idiom == TargetIdiom.Phone)
-                    {
-                        var estimatedHourStackLayout = new StackLayout() { Orientation = StackOrientation.Horizontal };
-                        var estimatedHourTitleLabel = new Label() { FontSize = 12, TextColor = Color.Black, Text = WebControlTitle.GetTargetNameByTitleName("EstimatedHours") };
-                        var estimatedHourLabel = new Label() { FontSize = 12, TextColor = Color.Black };
-                        estimatedHourLabel.Text = item.EstimatedHours.ToString();
-                        estimatedHourStackLayout.Children.Add(estimatedHourTitleLabel);
-                        estimatedHourStackLayout.Children.Add(estimatedHourLabel);
-                        mainLayoutGroupSingle.Children.Add(estimatedHourStackLayout);
                     }
                     else
                     {
-                        var estimatedHourStackLayout = new StackLayout() { Orientation = StackOrientation.Horizontal };
-                        var estimatedHourTitleLabel = new Label() { TextColor = Color.Black, Text = WebControlTitle.GetTargetNameByTitleName("EstimatedHours") };
-                        var estimatedHourLabel = new Label() { TextColor = Color.Black };
-                        estimatedHourLabel.Text = item.EstimatedHours.ToString();
-                        estimatedHourStackLayout.Children.Add(estimatedHourTitleLabel);
-                        estimatedHourStackLayout.Children.Add(estimatedHourLabel);
-                        mainLayoutGroupSingle.Children.Add(estimatedHourStackLayout);
+                        Case1Grid.Children.Add(btnsave, 3, 1);
+                        Case1Grid.Children.Add(btnDelete, 4, 1);
                     }
-
-
-
                     #endregion
-                    var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest = 2, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
-                    mainLayoutGroupSingle.Children.Add(oneBox);
 
-                    MainLayout.Children.Add(mainLayoutGroupSingle);
+                    var estimatedHourTitleLabel = WebControlTitle.GetTargetNameByTitleName("EstimatedHours");
+                    var estimatedHourLabel = item.EstimatedHours.ToString();
 
-                    this.AnswerText.Append(System.Environment.NewLine);
-
-
+                    Label Case1lbl = new Label
+                    {
+                        Text = estimatedHourTitleLabel + ": " + estimatedHourLabel,
+                        TextColor = Color.FromHex("#006de0"),
+                        VerticalTextAlignment = TextAlignment.Center,
+                        VerticalOptions = LayoutOptions.Center,
+                        Margin = new Thickness(0, 0, 0, 0)
+                    };
+                    Case1Grid.Children.Add(Case1lbl, 0, 1);
+                    Grid.SetColumnSpan(Case1lbl, 3);
+                    BoxView lineBox = new BoxView
+                    {
+                        HeightRequest = 1,
+                        BackgroundColor = Color.Black,
+                    };
+                    layout2.Children.Add(lineBox);
+                    #endregion
+                    #endregion
+                    layout2Test.Children.Add(layout2);
                 }
-
                 else
                 {
                     List<ExistingInspections> commonSections = new List<ExistingInspections>();
@@ -2489,598 +2335,540 @@ namespace ProteusMMX.Views.Workorder
                         }
                     }
 
-
                     if (commonSections.Count == 0)
                     {
                         continue;
                     }
-
-                    var layout1 = new StackLayout
+                    GroupSec = GroupSec + 1;
+                    GroupSecExpCase1 = new SfExpander();
+                    GroupSecExpCase1.Header = new Label
                     {
-                        Orientation = StackOrientation.Vertical,
-                        HorizontalOptions = LayoutOptions.StartAndExpand,
-                        Spacing = 20,
-                        Children = { }
-
+                        HorizontalOptions = LayoutOptions.Center,
+                        FontAttributes = FontAttributes.Bold,
+                        TextColor = Color.FromHex("#006de0"),
+                        BackgroundColor = Color.WhiteSmoke,
+                        HeightRequest = 40,
+                        Text = commonSections[0].SectionName,
+                        VerticalTextAlignment = TextAlignment.Center
                     };
-                    //var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest = 3, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
-
-                    var mainLayoutGroup = new StackLayout
-                    {
-                        Orientation = StackOrientation.Vertical,
-                        HorizontalOptions = LayoutOptions.StartAndExpand,
-                        Children = { layout1 }
-
-                    };
-                    //mainLayoutGroup.Children.Add(oneBox);
-
-                    //var frame = new Frame
-                    //{
-                    //    Padding = new Thickness(10, 10, 10, 10),
-                    //    OutlineColor = Color.Accent,
-                    //    HorizontalOptions = LayoutOptions.FillAndExpand,
-                    //    Content = mainLayoutGroup,
-                    //};
-
-
-                    string sectionName = "" + commonSections[0].SectionName;
-                    layout1.Children.Add(new Label() { Text = sectionName, Font = Font.SystemFontOfSize(20, FontAttributes.Bold), HorizontalTextAlignment = TextAlignment.Center });
-
-                    this.AnswerText.Append("Group Name: ");
-                    this.AnswerText.Append(sectionName);
-                    this.AnswerText.Append(System.Environment.NewLine);
-
-
-
+                    StackLayout ItemListCase1Sl = new StackLayout();
+                    GroupSecExpCase1.Content = ItemListCase1Sl;
+                    //StackLayout ItemsCase1Sl = new StackLayout();
+                    //ItemListCase1Sl.Children.Add(ItemsCase1Sl);
                     foreach (var item1 in commonSections)
                     {
-                        View Question;
-                        View Label1;
-                        View Layout;
+                        //View Question="";
+                        //View Label1 = "";
+                        //View Layout = "";
 
                         //StackLayout sta;
-                        Grid sta;
-
+                        //Grid sta;
                         switch (item1.ResponseTypeName)
                         {
                             case "Pass/Fail":
+                                StackLayout PassFailSl = new StackLayout();
+                                StackLayout PassFailSlButton = new StackLayout();
+                                PassFailSl.Children.Add(PassFailSlButton);
 
-                                Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+                                Grid PassFailgrid = new Grid() { BindingContext = item };
+                                PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                                PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                                PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                                PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                                PassFailSlButton.Children.Add(PassFailgrid);
+                                var Questions1 = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
 
+                                var Label1 = new Label { Text = item1.InspectionDescription, HorizontalTextAlignment = TextAlignment.Start, Font = Font.SystemFontOfSize(14, FontAttributes.None), BindingContext = item1, TextColor = Color.Black, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, };
 
-                                if (Device.Idiom == TargetIdiom.Phone)
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
-                                else
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
                                 GenerateAnswerText(item1);
-
-                                var gridPF = new Grid() { HorizontalOptions = LayoutOptions.End };
-                                gridPF.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                                gridPF.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                gridPF.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                if (Device.Idiom == TargetIdiom.Phone)
+                                var btnTruePF = new SfButton()
                                 {
-                                    var btnTruePF = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
-                                    var btnFalsePF = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
-                                    btnTruePF.Clicked += BtnTrue_Clicked;
-                                    btnFalsePF.Clicked += BtnFalse_Clicked;
-
-                                    gridPF.Children.Add(btnTruePF, 0, 0);
-                                    gridPF.Children.Add(btnFalsePF, 1, 0);
-
-
-                                    switch (item1.AnswerDescription)
-                                    {
-                                        case "":
-                                            break;
-                                        case "Pass":
-                                            BtnTrue_Clicked(btnTruePF, null);
-                                            break;
-                                        case "Fail":
-                                            this.btnCreateWorkorder.IsVisible = true;
-                                            BtnFalse_Clicked(btnFalsePF, null);
-                                            break;
-
-                                    }
-                                }
-                                else
+                                    Text = "Pass",
+                                    TextColor = Color.Black,
+                                    FontSize = 11,
+                                    BackgroundColor = Color.LightGray,
+                                    FontAttributes = FontAttributes.Bold,
+                                    CornerRadius = 70,
+                                    HeightRequest = 36
+                                };
+                                var btnFalsePF = new SfButton()
                                 {
-                                    var btnTruePF = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "Pass", BackgroundColor = Color.Gray };
-                                    var btnFalsePF = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "Fail", BackgroundColor = Color.Gray };
-                                    btnTruePF.Clicked += BtnTrue_Clicked;
-                                    btnFalsePF.Clicked += BtnFalse_Clicked;
+                                    Text = "Fail",
+                                    TextColor = Color.Black,
+                                    FontSize = 11,
+                                    BackgroundColor = Color.LightGray,
+                                    FontAttributes = FontAttributes.Bold,
+                                    CornerRadius = 70,
+                                    HeightRequest = 36
+                                };
 
-                                    gridPF.Children.Add(btnTruePF, 0, 0);
-                                    gridPF.Children.Add(btnFalsePF, 1, 0);
 
-
-                                    switch (item1.AnswerDescription)
-                                    {
-                                        case "":
-                                            break;
-                                        case "Pass":
-                                            BtnTrue_Clicked(btnTruePF, null);
-                                            break;
-                                        case "Fail":
-                                            this.btnCreateWorkorder.IsVisible = true;
-                                            BtnFalse_Clicked(btnFalsePF, null);
-                                            break;
-
-                                    }
-                                }
-                                Layout = gridPF;
-                                sta = new Grid() { };
-                                sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                sta.Children.Add(Question, 0, 0);
-                                sta.Children.Add(Label1, 0, 0);
-                                if (Device.Idiom == TargetIdiom.Phone)
+                                btnTruePF.Clicked += BtnTrue_Clicked;
+                                btnFalsePF.Clicked += BtnFalse_Clicked;
+                                PassFailgrid.Children.Add(Questions1, 0, 0);
+                                PassFailgrid.Children.Add(Label1, 0, 0);
+                                Grid.SetColumnSpan(Label1, 2);
+                                PassFailgrid.Children.Add(btnTruePF, 2, 0);
+                                PassFailgrid.Children.Add(btnFalsePF, 3, 0);
+                                ItemListCase1Sl.Children.Add(PassFailSl);
+                                switch (item1.AnswerDescription)
                                 {
-                                    sta.Children.Add(Layout, 0, 1);
-                                }
-                                else
-                                {
-                                    sta.Children.Add(Layout, 1, 0);
-                                }
-                                //sta.Children.Add(new StackLayout() { HorizontalOptions = LayoutOptions.FillAndExpand, Children = { new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(0, 0, 0, 20) } } }, 0, 0);
-                                layout1.Children.Add(sta);
+                                    case "":
+                                        break;
+                                    case "Pass":
+                                        BtnTrue_Clicked(btnTruePF, null);
+                                        break;
+                                    case "Fail":
+                                        this.CreateWorkorderButtonSL.IsVisible = true;
+                                        BtnFalse_Clicked(btnFalsePF, null);
+                                        break;
 
+                                }
                                 break;
 
                             case "Standard Range":
-                                Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+                                StackLayout SRangeSl = new StackLayout();
+                                StackLayout SRangeSlButton = new StackLayout();
+                                SRangeSl.Children.Add(SRangeSlButton);
+                                Grid sta = new Grid() { BindingContext = item };
+                                sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
+                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                                SRangeSlButton.Children.Add(sta);
 
-                                if (Device.Idiom == TargetIdiom.Phone)
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
-                                else
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
+                                var Questions = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+
+                                var Label1s = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
+
                                 GenerateAnswerText(item1);
 
-                                Layout = new MyEntry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
+                                SfBorder RangeBor = new SfBorder() {CornerRadius=5 };
 
-                                (Layout as MyEntry).BindingContext = new Range() { MaxRange = item1.MaxRange, MinRange = item1.MinRange };
-                                (Layout as MyEntry).TextChanged += StandardRange_TextChanged;
-                                (Layout as MyEntry).Text = item1.AnswerDescription;
+                                Entry Layouts = new Entry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
 
-
-                                sta = new Grid() { };
-                                sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                sta.Children.Add(Question, 0, 0);
-                                sta.Children.Add(Label1, 0, 0);
-                                sta.Children.Add(Layout, 1, 0);
-                                // sta.Children.Add(new StackLayout() { HorizontalOptions = LayoutOptions.FillAndExpand, Children = { new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(0, 0, 0, 20) } } }, 0, 0);
-                                layout1.Children.Add(sta);
-
+                                Layouts.BindingContext = new Range() { MaxRange = item1.MaxRange, MinRange = item1.MinRange };
+                                RangeBor.Content = Layouts;
+                                sta.Children.Add(Questions, 0, 0);
+                                sta.Children.Add(Label1s, 0, 0);
+                                sta.Children.Add(RangeBor, 1, 0);
+                                Layouts.TextChanged += StandardRange_TextChanged;
+                                Layouts.Text = item1.AnswerDescription;
+                                ItemListCase1Sl.Children.Add(SRangeSl);
+                                if (!string.IsNullOrWhiteSpace(item1.AnswerDescription))
+                                {
+                                    if (Convert.ToDecimal(item1.AnswerDescription) >= item1.MinRange && Convert.ToDecimal(item1.AnswerDescription) <= item1.MaxRange)
+                                    {
+                                        this.CreateWorkorderButtonSL.IsVisible = false;
+                                    }
+                                    else
+                                    {
+                                        this.CreateWorkorderButtonSL.IsVisible = true;
+                                    }
+                                }
+                               
                                 break;
 
                             case "Yes/No/N/A":
+                                StackLayout YesNoSl = new StackLayout();
+                                // StackLayout YesNoSlLavel = new StackLayout();
+                                StackLayout YesNoSlButton = new StackLayout();
+                                Grid YesNogrid = new Grid() { BindingContext = item };
+                                YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                                YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                                YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                                YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                                YesNoSlButton.Children.Add(YesNogrid);
 
-                                Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+                                // YesNoSl.Children.Add(YesNoSlLavel);
+                                YesNoSl.Children.Add(YesNoSlButton);
+                                var Questions1y = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
 
-                                if (Device.Idiom == TargetIdiom.Phone)
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
-                                else
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
+                                var Label1y = new Label { Text = item1.InspectionDescription, HorizontalTextAlignment = TextAlignment.Start, Font = Font.SystemFontOfSize(14, FontAttributes.None), BindingContext = item1, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, TextColor = Color.Black };
+                                // YesNoSlLavel.Children.Add(Label1);
+
                                 GenerateAnswerText(item1);
 
-
-                                var grid = new Grid() { HorizontalOptions = LayoutOptions.End };
-                                grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                if (Device.Idiom == TargetIdiom.Phone)
+                                var btnTrue = new SfButton()
                                 {
-                                    var btnTrue = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                    var btnFalse = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                    var btnNA = new Button() { CornerRadius = 5, HeightRequest = 36, FontSize = 10, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
-                                    //Bind the ResponseSubType in Buttons
-                                    btnTrue.BindingContext = item1.ResponseSubType;
-                                    btnFalse.BindingContext = item1.ResponseSubType;
-                                    btnNA.BindingContext = item1.ResponseSubType;
+                                    Text = "Yes",
+                                    TextColor = Color.Black,
+                                    FontSize = 11,
+                                    BackgroundColor = Color.LightGray,
+                                    FontAttributes = FontAttributes.Bold,
+                                    CornerRadius = 70,
+                                    HeightRequest = 36
+                                };
+                                var btnFalse = new SfButton()
+                                {
+                                    Text = "No",
+                                    TextColor = Color.Black,
+                                    FontSize = 11,
+                                    BackgroundColor = Color.LightGray,
+                                    FontAttributes = FontAttributes.Bold,
+                                    CornerRadius = 70,
+                                    HeightRequest = 36
+                                };
+                                var btnNA = new SfButton()
+                                {
+                                    Text = "NA",
+                                    TextColor = Color.Black,
+                                    FontSize = 11,
+                                    BackgroundColor = Color.LightGray,
+                                    FontAttributes = FontAttributes.Bold,
+                                    CornerRadius = 70,
+                                    HeightRequest = 36
+                                };
 
-                                    //TODO: Add the NA button over here
-                                    btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
-                                    btnFalse.Clicked += BtnNo_Clicked;
-                                    btnNA.Clicked += BtnNA_Clicked;
-
-                                    grid.Children.Add(btnTrue, 0, 0);
-                                    grid.Children.Add(btnFalse, 1, 0);
-                                    grid.Children.Add(btnNA, 2, 0);
-                                    //TODO: Add the NA button in grid
 
 
+                                //Bind the ResponseSubType in Buttons
+                                btnTrue.BindingContext = item1.ResponseSubType;
+                                btnFalse.BindingContext = item1.ResponseSubType;
+                                btnNA.BindingContext = item1.ResponseSubType;
 
+                                //TODO: Add the NA button over here
+                                btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
+                                btnFalse.Clicked += BtnNo_Clicked;
+                                btnNA.Clicked += BtnNA_Clicked;
+                                YesNogrid.Children.Add(Questions1y, 0, 0);
+                                YesNogrid.Children.Add(Label1y, 0, 0);
+                                //Grid.SetColumnSpan(Label1y, 2);
+                                YesNogrid.Children.Add(btnTrue, 1, 0);
+                                YesNogrid.Children.Add(btnFalse, 2, 0);
+                                YesNogrid.Children.Add(btnNA, 3, 0);
+                                //TODO: Add the NA button in grid
+
+                                switch (item1.AnswerDescription)
+                                {
+                                    case "":
+                                        break;
+                                    case "NA":
+                                        BtnNA_Clicked(btnNA, null);
+                                        break;
+                                    case "Yes":
+                                        BtnYes_Clicked(btnTrue, null);
+                                        break;
+                                    case "No":
+                                        //this.btnCreateWorkorder.IsVisible = true;
+                                        BtnNo_Clicked(btnFalse, null);
+                                        break;
+
+                                }
+
+                                #region Negative response create workorder btnshow
+                                if (item1.ResponseSubType == null || item1.ResponseSubType == false)
+                                {
                                     switch (item1.AnswerDescription)
                                     {
                                         case "":
                                             break;
                                         case "NA":
-                                            BtnNA_Clicked(btnNA, null);
                                             break;
                                         case "Yes":
-                                            BtnYes_Clicked(btnTrue, null);
+                                            CreateWorkorderButtonSL.IsVisible = true;
                                             break;
                                         case "No":
-                                            //this.btnCreateWorkorder.IsVisible = true;
-                                            BtnNo_Clicked(btnFalse, null);
                                             break;
 
                                     }
-
-
-                                    #region Negative response create workorder btnshow
-                                    if (item1.ResponseSubType == null || item1.ResponseSubType == false)
-                                    {
-                                        switch (item1.AnswerDescription)
-                                        {
-                                            case "":
-                                                break;
-                                            case "NA":
-                                                break;
-                                            case "Yes":
-                                                btnCreateWorkorder.IsVisible = true;
-                                                break;
-                                            case "No":
-                                                break;
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        switch (item1.AnswerDescription)
-                                        {
-                                            case "":
-                                                break;
-                                            case "NA":
-                                                break;
-                                            case "Yes":
-                                                break;
-                                            case "No":
-                                                btnCreateWorkorder.IsVisible = true;
-                                                break;
-
-                                        }
-                                    }
-                                    #endregion
                                 }
                                 else
                                 {
-                                    var btnTrue = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "Yes", BackgroundColor = Color.Gray };
-                                    var btnFalse = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "No", BackgroundColor = Color.Gray };
-                                    var btnNA = new Button() { CornerRadius = 5, HorizontalOptions = LayoutOptions.End, Text = "NA", BackgroundColor = Color.Gray };
-                                    //Bind the ResponseSubType in Buttons
-                                    btnTrue.BindingContext = item1.ResponseSubType;
-                                    btnFalse.BindingContext = item1.ResponseSubType;
-                                    btnNA.BindingContext = item1.ResponseSubType;
-
-                                    //TODO: Add the NA button over here
-                                    btnTrue.Clicked += BtnYes_Clicked; //Create New handler for YES/NO otherwise it will affact the functionality of Pass/Fail
-                                    btnFalse.Clicked += BtnNo_Clicked;
-                                    btnNA.Clicked += BtnNA_Clicked;
-
-                                    grid.Children.Add(btnTrue, 0, 0);
-                                    grid.Children.Add(btnFalse, 1, 0);
-                                    grid.Children.Add(btnNA, 2, 0);
-                                    //TODO: Add the NA button in grid
-
-
-
                                     switch (item1.AnswerDescription)
                                     {
                                         case "":
                                             break;
                                         case "NA":
-                                            BtnNA_Clicked(btnNA, null);
                                             break;
                                         case "Yes":
-                                            BtnYes_Clicked(btnTrue, null);
                                             break;
                                         case "No":
-                                            //this.btnCreateWorkorder.IsVisible = true;
-                                            BtnNo_Clicked(btnFalse, null);
+                                            CreateWorkorderButtonSL.IsVisible = true;
+                                            var MGrid = this.CreateWorkorderButtonSL.Parent as Grid;
+                                            MGrid.Children[3].IsVisible = true;
                                             break;
 
                                     }
-
-
-                                    #region Negative response create workorder btnshow
-                                    if (item1.ResponseSubType == null || item1.ResponseSubType == false)
-                                    {
-                                        switch (item1.AnswerDescription)
-                                        {
-                                            case "":
-                                                break;
-                                            case "NA":
-                                                break;
-                                            case "Yes":
-                                                btnCreateWorkorder.IsVisible = true;
-                                                break;
-                                            case "No":
-                                                break;
-
-                                        }
-                                    }
-                                    else
-                                    {
-                                        switch (item1.AnswerDescription)
-                                        {
-                                            case "":
-                                                break;
-                                            case "NA":
-                                                break;
-                                            case "Yes":
-                                                break;
-                                            case "No":
-                                                btnCreateWorkorder.IsVisible = true;
-                                                break;
-
-                                        }
-                                    }
-                                    #endregion
                                 }
-                                Layout = grid;
-                                sta = new Grid() { };
-                                sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                sta.Children.Add(Question, 0, 0);
-                                sta.Children.Add(Label1, 0, 0);
-                                if (Device.Idiom == TargetIdiom.Phone)
-                                {
-                                    sta.Children.Add(Layout, 0, 1);
-                                }
-                                else
-                                {
-                                    sta.Children.Add(Layout, 1, 0);
-                                }
-                                layout1.Children.Add(sta);
+                                #endregion
+
+
+                                ItemListCase1Sl.Children.Add(YesNoSl);
 
                                 break;
 
                             case "Count":
-                                Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+                                StackLayout CountSl = new StackLayout();
+                                StackLayout CountSlLavel = new StackLayout();
+                                CountSl.Children.Add(CountSlLavel);
+                                Grid CountGrid = new Grid() { BindingContext = item };
 
-                                if (Device.Idiom == TargetIdiom.Phone)
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
-                                else
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
+                                CountGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                                CountGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                                CountSlLavel.Children.Add(CountGrid);
+
+                                var Questionc = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+                                var Label1c = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, BindingContext = item1, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap };
+
 
                                 GenerateAnswerText(item1);
 
-                                Layout = new MyEntry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
-                                (Layout as MyEntry).Text = item1.AnswerDescription;
-                                (Layout as MyEntry).TextChanged += OnlyNumeric_TextChanged;
+                                var Layoutc = new MyEntry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
+                                (Layoutc as MyEntry).Text = item1.AnswerDescription;
+                                (Layoutc as MyEntry).TextChanged += OnlyNumeric_TextChanged;
 
+                                CountGrid.Children.Add(Questionc, 0, 0);
+                                CountGrid.Children.Add(Label1c, 0, 0);
+                                CountGrid.Children.Add(Layoutc, 1, 0);
 
-                                sta = new Grid() { };
-                                sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                sta.Children.Add(Question, 0, 0);
-                                sta.Children.Add(Label1, 0, 0);
-                                sta.Children.Add(Layout, 1, 0);
-                                // sta.Children.Add(new StackLayout() { HorizontalOptions = LayoutOptions.FillAndExpand, Children = { new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(0, 0, 0, 20) } } }, 0, 0);
-                                layout1.Children.Add(sta);
+                                ItemListCase1Sl.Children.Add(CountSl);
 
                                 break;
                             case "Text":
+                                StackLayout TextSl = new StackLayout();
+                                StackLayout TextSlLavel = new StackLayout();
+                                TextSl.Children.Add(TextSlLavel);
 
-                                Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+                                var Textgrid = new Grid() { BindingContext = item };
+                                Textgrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                                Textgrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                                TextSlLavel.Children.Add(Textgrid);
 
+                                var Questiont = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
 
-                                if (Device.Idiom == TargetIdiom.Phone)
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
-                                else
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
+                                var Label1t = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, BindingContext = item1, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap };
                                 GenerateAnswerText(item1);
 
-                                Layout = new CustomEditor() { HorizontalOptions = LayoutOptions.FillAndExpand, HeightRequest = 60 };
-                                (Layout as CustomEditor).Text = item1.AnswerDescription;
+                                var Layoutt = new CustomEditor() { HorizontalOptions = LayoutOptions.FillAndExpand, HeightRequest = 60 };
+                                (Layoutt as CustomEditor).Text = item1.AnswerDescription;
 
+                                SfBorder TextSfBorder = new SfBorder
+                                {
+                                    BorderColor = Color.Black,
+                                    BorderWidth = 1,
+                                    CornerRadius = 5
+                                };
+                                TextSfBorder.Content = Layoutt;
+                                Textgrid.Children.Add(Questiont, 0, 0);
+                                Textgrid.Children.Add(Label1t, 0, 0);
+                                Textgrid.Children.Add(TextSfBorder, 0, 1);
 
-
-                                sta = new Grid() { };
-                                sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                                sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                sta.Children.Add(Question, 0, 0);
-                                sta.Children.Add(Label1, 0, 0);
-                                sta.Children.Add(Layout, 0, 1);
-                                // sta.Children.Add(new StackLayout() { HorizontalOptions = LayoutOptions.FillAndExpand, Children = { new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(0, 0, 0, 20) } } }, 0, 0);
-                                layout1.Children.Add(sta);
+                                ItemListCase1Sl.Children.Add(TextSl);
 
                                 break;
 
-                             case "Multiple Choice":
-                                Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+                            case "Multiple Choice":
 
-                                if (Device.Idiom == TargetIdiom.Phone)
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
-                                else
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
+                                StackLayout MChoiceSl = new StackLayout();
+                                StackLayout MChoiceSlLavel = new StackLayout();
+                                MChoiceSl.Children.Add(MChoiceSlLavel);
+                                Grid MChoiceGrid = new Grid() { BindingContext = item };
+                                MChoiceGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                                MChoiceGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                                MChoiceSlLavel.Children.Add(MChoiceGrid);
+
+                                var Questionm = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+                                var Label1m = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, BindingContext = item1, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
+
                                 GenerateAnswerText(item1);
 
-                                if (Device.RuntimePlatform == Device.UWP)
-                                {
-                                    Layout = new MyPicker() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
-                                }
-                                else
-                                {
-                                    Layout = new MyPicker() {WidthRequest=300,VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
-                                }
+                                var Layoutm = new MyPicker() { WidthRequest = 60, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
 
                                 if (!string.IsNullOrWhiteSpace(item1.Option1))
-                                    (Layout as MyPicker).Items.Add(item1.Option1);
+                                    (Layoutm as MyPicker).Items.Add(item1.Option1);
                                 if (!string.IsNullOrWhiteSpace(item1.Option2))
-                                    (Layout as MyPicker).Items.Add(item1.Option2);
+                                    (Layoutm as MyPicker).Items.Add(item1.Option2);
                                 if (!string.IsNullOrWhiteSpace(item1.Option3))
-                                    (Layout as MyPicker).Items.Add(item1.Option3);
+                                    (Layoutm as MyPicker).Items.Add(item1.Option3);
                                 if (!string.IsNullOrWhiteSpace(item1.Option4))
-                                    (Layout as MyPicker).Items.Add(item1.Option4);
+                                    (Layoutm as MyPicker).Items.Add(item1.Option4);
                                 if (!string.IsNullOrWhiteSpace(item1.Option5))
-                                    (Layout as MyPicker).Items.Add(item1.Option5);
+                                    (Layoutm as MyPicker).Items.Add(item1.Option5);
                                 if (!string.IsNullOrWhiteSpace(item1.Option6))
-                                    (Layout as MyPicker).Items.Add(item1.Option6);
+                                    (Layoutm as MyPicker).Items.Add(item1.Option6);
                                 if (!string.IsNullOrWhiteSpace(item1.Option7))
-                                    (Layout as MyPicker).Items.Add(item1.Option7);
+                                    (Layoutm as MyPicker).Items.Add(item1.Option7);
                                 if (!string.IsNullOrWhiteSpace(item1.Option8))
-                                    (Layout as MyPicker).Items.Add(item1.Option8);
+                                    (Layoutm as MyPicker).Items.Add(item1.Option8);
                                 if (!string.IsNullOrWhiteSpace(item1.Option9))
-                                    (Layout as MyPicker).Items.Add(item1.Option9);
+                                    (Layoutm as MyPicker).Items.Add(item1.Option9);
                                 if (!string.IsNullOrWhiteSpace(item1.Option10))
-                                    (Layout as MyPicker).Items.Add(item1.Option10);
+                                    (Layoutm as MyPicker).Items.Add(item1.Option10);
 
 
-                                var index = (Layout as MyPicker).Items.IndexOf(item1.AnswerDescription);
-                                (Layout as MyPicker).SelectedIndex = index;
+                                var index = (Layoutm as MyPicker).Items.IndexOf(item1.AnswerDescription);
+                                (Layoutm as MyPicker).SelectedIndex = index;
 
-                                sta = new Grid() { };
-                                sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                sta.Children.Add(Question, 0, 0);
-                                sta.Children.Add(Label1, 0, 0);
-                                sta.Children.Add(Layout, 1, 0);
-                                // sta.Children.Add(new StackLayout() { HorizontalOptions = LayoutOptions.FillAndExpand, Children = { new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(0, 0, 0, 20) } } }, 0, 0);
-                                layout1.Children.Add(sta);
+
+                                MChoiceGrid.Children.Add(Questionm, 0, 0);
+                                MChoiceGrid.Children.Add(Label1m, 0, 0);
+                                MChoiceGrid.Children.Add(Layoutm, 1, 0);
+                                ItemListCase1Sl.Children.Add(MChoiceSl);
 
                                 break;
 
                             case "None":
+                                StackLayout NoneSl = new StackLayout();
+                                StackLayout NoneSlLavel = new StackLayout();
+                                NoneSl.Children.Add(NoneSlLavel);
+                                var Nonegrid = new Grid() { BindingContext = item };
+                                Nonegrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                                NoneSlLavel.Children.Add(Nonegrid);
 
-                                Question = new Label { Text = "", Font = Font.SystemFontOfSize(16, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
+                                var Questionn = new Label { Text = "", Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
 
-                                if (Device.Idiom == TargetIdiom.Phone)
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(12, FontAttributes.Bold), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
-                                else
-                                {
-                                    Label1 = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.Bold), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-                                }
+                                var Label1n = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.Bold), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand, BindingContext = item1, };
+
                                 GenerateAnswerText(item1);
-
-                                sta = new Grid() { };
-                                sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(3, GridUnitType.Star) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-                                sta.Children.Add(Question, 0, 0);
-                                sta.Children.Add(Label1, 0, 0);
-                                // sta.Children.Add(new StackLayout() { HorizontalOptions = LayoutOptions.FillAndExpand, Children = { new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(18, FontAttributes.Bold), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand, Margin = new Thickness(0, 0, 0, 20) } } }, 0, 0);
-                                //sta.Children.Add(Layout, 1, 0);
-                                layout1.Children.Add(sta);
+                                Nonegrid.Children.Add(Questionn, 0, 0);
+                                Nonegrid.Children.Add(Label1n, 0, 0);
+                                ItemListCase1Sl.Children.Add(NoneSl);
 
                                 break;
                         }
-
+                        GroupSecSlCase1.Children.Add(GroupSecExpCase1);
                     }
 
-                    var btnSaveSection = new Button() { CornerRadius = 5, WidthRequest = 300, Text = WebControlTitle.GetTargetNameByTitleName("Save"), CommandParameter = commonSections, HeightRequest = 40, BackgroundColor = Color.FromHex("#87CEFA"), HorizontalOptions = LayoutOptions.Center, TextColor = Color.White, BorderColor = Color.Black };
-                    btnSaveSection.Clicked += BtnSaveSection_Clicked;
+                    var btnsave = new Button() { BackgroundColor = Color.White, HeightRequest = 40, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = "saveicon1.png" };
+                    btnsave.Clicked += BtnSaveSection_Clicked;
 
-                    var btnDelete = new Button() { CornerRadius = 5, WidthRequest = 300, StyleId = item.SectionID.ToString(), Text = WebControlTitle.GetTargetNameByTitleName("Delete"), HeightRequest = 40, HorizontalOptions = LayoutOptions.Center, BackgroundColor = Color.FromHex("#87CEFA"), TextColor = Color.White, BorderColor = Color.Black };
+                    var btnDelete = new SfButton() { BackgroundColor = Color.White, VerticalOptions = LayoutOptions.FillAndExpand, ShowIcon = true, ImageSource = "delIcon1.png", StyleId = item.SectionID.ToString() };
                     btnDelete.Clicked += BtnSectionDelete_Clicked;
 
-
-
+                    StackLayout Case1SL = new StackLayout();
+                    layout2.Children.Add(Case1SL);
+                    Grid Case1Grid = new Grid();
+                    Case1Grid.Padding = new Thickness(0, 1, 0, -10);
+                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 45 });
+                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 45 });
+                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = 45 });
+                    Case1Grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                    Case1Grid.RowDefinitions.Add(new RowDefinition { Height = 45 });
+                    Case1SL.Children.Add(Case1Grid);
                     #region Add Signature image
                     if (item.SignatureRequired.GetValueOrDefault())
                     {
                         //var imageView = new CustomImage() { ImageBase64String = ImageBase64 };
-                        var imageView = new CustomImage() { ImageBase64String = item.SignatureString, HeightRequest = 150 };
+                        var imageView = new CustomImage() { ImageBase64String = item.SignatureString, HeightRequest = 0 };
                         byte[] byteImg = Convert.FromBase64String(item.SignatureString);
-
-                        // byte[] byteImageCompr = DependencyService.Get<IResizeImage>().ResizeImageAndroid(byteImg, 350, 350);
                         imageView.Source = ImageSource.FromStream(() => new MemoryStream(byteImg));
-                        layout1.Children.Add(imageView);
+                        Case1Grid.Children.Add(imageView, 0, 0);
+                        Grid.SetColumnSpan(imageView, 4);
+                        if (byteImg.Length > 0)
+                        {
+                            imageView.HeightRequest = 150;
+                        }
 
-                        var addSignatureButton = new Button() { CornerRadius = 5, WidthRequest = 300, Text = WebControlTitle.GetTargetNameByTitleName("AddSignature"), HeightRequest = 40, BackgroundColor = Color.FromHex("#87CEFA"), HorizontalOptions = LayoutOptions.Center, TextColor = Color.White, BorderColor = Color.Black };
+                        //var addSignatureButton = new SfButton() {  BackgroundColor = Color.LightGray, ShowIcon = true, ImageSource = "signature.png"};
+                        var addSignatureButton = new SfButton() { BackgroundColor = Color.White, ShowIcon = true, ImageSource = "signature.png" };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
-                        layout1.Children.Add(addSignatureButton);
+                        // layout2.Children.Add(addSignatureButton);
+                        Case1Grid.Children.Add(btnsave, 2, 1);
+                        Case1Grid.Children.Add(btnDelete, 3, 1);
+                        Case1Grid.Children.Add(addSignatureButton, 4, 1);
 
-                    }
-                    #endregion
-
-                    layout1.Children.Add(btnSaveSection);
-                    layout1.Children.Add(btnDelete);
-
-                    #region Estimated Hour Region
-                    if (Device.Idiom == TargetIdiom.Phone)
-                    {
-                        var estimatedHourStackLayout = new StackLayout() { Orientation = StackOrientation.Horizontal };
-                        var estimatedHourTitleLabel = new Label() { FontSize = 12, TextColor = Color.Black, Text = WebControlTitle.GetTargetNameByTitleName("EstimatedHours") };
-                        var estimatedHourLabel = new Label() { FontSize = 12, TextColor = Color.Black };
-                        estimatedHourLabel.Text = item.EstimatedHours.ToString();
-                        estimatedHourStackLayout.Children.Add(estimatedHourTitleLabel);
-                        estimatedHourStackLayout.Children.Add(estimatedHourLabel);
-                        mainLayoutGroup.Children.Add(estimatedHourStackLayout);
-
+                        var s = item.SignaturePath;
                     }
                     else
                     {
-                        var estimatedHourStackLayout = new StackLayout() { Orientation = StackOrientation.Horizontal };
-                        var estimatedHourTitleLabel = new Label() { TextColor = Color.Black, Text = WebControlTitle.GetTargetNameByTitleName("EstimatedHours") };
-                        var estimatedHourLabel = new Label() { TextColor = Color.Black };
-                        estimatedHourLabel.Text = item.EstimatedHours.ToString();
-                        estimatedHourStackLayout.Children.Add(estimatedHourTitleLabel);
-                        estimatedHourStackLayout.Children.Add(estimatedHourLabel);
-                        mainLayoutGroup.Children.Add(estimatedHourStackLayout);
+                        Case1Grid.Children.Add(btnsave, 3, 1);
+                        Case1Grid.Children.Add(btnDelete, 4, 1);
                     }
                     #endregion
-                    var oneBox = new BoxView { BackgroundColor = Color.Black, HeightRequest = 2, VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
 
-                    mainLayoutGroup.Children.Add(oneBox);
+                    var estimatedHourTitleLabel = WebControlTitle.GetTargetNameByTitleName("EstimatedHours");
+                    var estimatedHourLabel = item.EstimatedHours.ToString();
 
-                    MainLayout.Children.Add(mainLayoutGroup);
-
-                    this.AnswerText.Append(System.Environment.NewLine);
-                    this.AnswerText.Append(System.Environment.NewLine);
+                    Label Case1lbl = new Label
+                    {
+                        Text = estimatedHourTitleLabel + ": " + estimatedHourLabel,
+                        TextColor = Color.FromHex("#006de0"),
+                        Margin = new Thickness(0, 0, 0, 0),
+                        VerticalTextAlignment = TextAlignment.Center,
+                        VerticalOptions = LayoutOptions.Center,
+                    };
+                    Case1Grid.Children.Add(Case1lbl, 0, 1);
+                    Grid.SetColumnSpan(Case1lbl, 3);
+                    ItemListCase1Sl.Children.Add(Case1Grid);
 
                 }
-
             }
 
+            #region *****Expanded Collapsed****
+
+            VisualStateGroupList visualStateGroupList = new VisualStateGroupList();
+            VisualStateGroup commonStateGroup = new VisualStateGroup();
+
+            VisualState expanded = new VisualState
+            {
+                Name = "Expanded"
+            };
+            VisualState collapsed = new VisualState
+            {
+                Name = "Collapsed"
+            };
+            commonStateGroup.States.Add(expanded);
+            commonStateGroup.States.Add(collapsed);
+
+            visualStateGroupList.Add(commonStateGroup);
+            // VisualStateManager.SetVisualStateGroups(GroupSecExpCase1, visualStateGroupList);
+
+            #endregion
 
 
+            SfTabView tabView = new SfTabView
+            {
+                TabWidthMode = TabWidthMode.BasedOnText,
+                BackgroundColor = Color.WhiteSmoke,
+                DisplayMode = TabDisplayMode.Text,
+                Margin = new Thickness(0, -5, 0, 0)
+            };
 
+            TabViewSL.Children.Add(tabView);
+            var tabItems = new TabItemCollection
+            {
+                new SfTabItem()
+                {
+                    Title = "Miscellaneous Question ("+Misce+")",
+                    Content = MiscellaneousGrid
+                },
+                new SfTabItem()
+                {
+                    Title = "Group Sections ("+GroupSec+")",
+                    Content = GroupSectionsGrid
+                }
+            };
+
+            tabView.Items = tabItems;
+            MainLayout.Children.Add(tabView);
         }
-
         private async void AddSignatureButton_Clicked(object sender, EventArgs e)
         {
-            var parentView = ((sender as Button).Parent as StackLayout);
-            var image = parentView.Children[parentView.Children.Count - 4] as CustomImage;
+            var data = (sender as SfButton).Parent;
+            var parentView = ((sender as SfButton).Parent as Grid);
+            // var image1 = parentView.Children[parentView.Children.Count - 4] as CustomImage;
+
+            var image = parentView.Children[0] as CustomImage;
+            image.HeightRequest = 150;
             var signaturePad = new SignaturePage(image);
             signaturePad.OnSignatureDrawn += SignaturePad_OnSignatureDrawn;
             await Navigation.PushPopupAsync(signaturePad);
         }
+
+        //private async void AddSignatureButton_Clicked(object sender, EventArgs e)
+        //{
+        //    var data = (sender as SfButton).Parent;
+        //    var parentView = ((sender as SfButton).Parent as Grid);
+        //    // var image1 = parentView.Children[parentView.Children.Count - 4] as CustomImage;
+
+        //    var image = parentView.Children[1] as CustomImage;
+        //    image.HeightRequest = 150;
+        //    var signaturePad = new SignaturePage(image);
+        //    signaturePad.OnSignatureDrawn += SignaturePad_OnSignatureDrawn;
+        //    await Navigation.PushPopupAsync(signaturePad);
+        //}
 
         private void SignaturePad_OnSignatureDrawn(object sender, SignaturePageModel e)
         {
@@ -3098,8 +2886,6 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-
-
         private async void CreateWorkorder_Clicked(object sender, EventArgs e)
         {
 
@@ -3108,8 +2894,6 @@ namespace ProteusMMX.Views.Workorder
             await Navigation.PushAsync(page);
 
         }
-
-
 
         private void GenerateAnswerText(ExistingInspections item)
         {
@@ -3121,112 +2905,110 @@ namespace ProteusMMX.Views.Workorder
 
         private void BtnTrue_Clicked(object sender, EventArgs e)
         {
-            var btn = sender as Button;
+            var btn = sender as SfButton;
 
             //TODO: Get the button color from the btn object.
-            btn.BackgroundColor = Color.Green;
-
-            var grid = (sender as Button).Parent as Grid;
-            var btnFalse = grid.Children[1] as Button;
+            btn.BackgroundColor = Color.FromHex("#00cc66");
+            var grid = (sender as SfButton).Parent as Grid;
+            var btnFalse = grid.Children[3] as SfButton;
 
             //TODO: Get the button color from the btn object set the inverse color over here.
-            btnFalse.BackgroundColor = Color.Gray;
+            btnFalse.BackgroundColor = Color.LightGray;
 
         }
 
         private void BtnFalse_Clicked(object sender, EventArgs e)
         {
-            var btn = sender as Button;
+            var btn = sender as SfButton;
 
             //TODO: Get the button color from the btn object.
-            btn.BackgroundColor = Color.Red;
+            btn.BackgroundColor = Color.FromHex("#ff5050");
 
-            var grid = (sender as Button).Parent as Grid;
-            var btnFalse = grid.Children[0] as Button;
+            var grid = (sender as SfButton).Parent as Grid;
+            var btnFalse = grid.Children[2] as SfButton;
 
             //TODO: Get the button color from the btn object set the inverse color over here.
-            btnFalse.BackgroundColor = Color.Gray;
+            btnFalse.BackgroundColor = Color.LightGray;
 
         }
 
-
         private void BtnYes_Clicked(object sender, EventArgs e)
         {
-            var btn = sender as Button;
-
-            var grid = (sender as Button).Parent as Grid;
+            var btn = sender as SfButton;
+            var btn1 = btn.Parent;
+            var grid = (sender as SfButton).Parent as Grid;
             var responseSubType = Convert.ToBoolean(btn.BindingContext);
 
-            var btnFalse = grid.Children[1] as Button;
-            var btnNA = grid.Children[2] as Button;
+            var btnFalse = grid.Children[3] as SfButton;
+            var btnNA = grid.Children[4] as SfButton;
             //TODO: Get the button color from the btn object set the inverse color over here.
             if (responseSubType)
             {
-                btn.BackgroundColor = Color.Green;
+                btn.BackgroundColor = Color.FromHex("#00cc66");
 
             }
             else
             {
-                btn.BackgroundColor = Color.Red;
+                btn.BackgroundColor = Color.FromHex("#ff5050");
 
             }
 
-            btnFalse.BackgroundColor = Color.Gray;
-            btnNA.BackgroundColor = Color.Gray;
+            btnFalse.BackgroundColor = Color.LightGray;
+            btnNA.BackgroundColor = Color.LightGray;
 
         }
 
         private void BtnNo_Clicked(object sender, EventArgs e)
         {
-            var btn = sender as Button;
+            var btn = sender as SfButton;
 
             //TODO: Get the button color from the btn object.
-            btn.BackgroundColor = Color.Red;
+            btn.BackgroundColor = Color.FromHex("#ff5050");
 
-            var grid = (sender as Button).Parent as Grid;
+            var grid = (sender as SfButton).Parent as Grid;
             var responseSubType = Convert.ToBoolean(btn.BindingContext);
 
-            var btnYes = grid.Children[0] as Button;
-            var btnNA = grid.Children[2] as Button;
+            var btnYes = grid.Children[2] as SfButton;
+            var btnNA = grid.Children[4] as SfButton;
             //TODO: Get the button color from the btn object set the inverse color over here.
             if (!responseSubType)
             {
-                btn.BackgroundColor = Color.Green;
+                btn.BackgroundColor = Color.FromHex("#00cc66");
 
             }
             else
             {
-                btn.BackgroundColor = Color.Red;
+                btn.BackgroundColor = Color.FromHex("#ff5050");
 
             }
 
-            btnYes.BackgroundColor = Color.Gray;
-            btnNA.BackgroundColor = Color.Gray;
+            btnYes.BackgroundColor = Color.LightGray;
+            btnNA.BackgroundColor = Color.LightGray;
 
         }
 
         private void BtnNA_Clicked(object sender, EventArgs e)
         {
-            var btn = sender as Button;
+            var btn = sender as SfButton;
 
             //TODO: Get the button color from the btn object.
-            btn.BackgroundColor = Color.FromHex("#d3d3d3");
+            btn.BackgroundColor = Color.FromHex("#ffcc66");
 
-            var grid = (sender as Button).Parent as Grid;
+            var grid = (sender as SfButton).Parent as Grid;
             var responseSubType = Convert.ToBoolean(btn.BindingContext);
 
-            var btnTrue = grid.Children[0] as Button;
-            var btnFalse = grid.Children[1] as Button;
+            var btnTrue = grid.Children[2] as SfButton;
+            var btnFalse = grid.Children[3] as SfButton;
 
             //TODO: Get the button color from the btn object set the inverse color over here.
-            btnTrue.BackgroundColor = Color.Gray;
-            btnFalse.BackgroundColor = Color.Gray;
+            btnTrue.BackgroundColor = Color.LightGray;
+            btnFalse.BackgroundColor = Color.LightGray;
 
         }
 
         private void PassFail_Clicked(object sender, EventArgs e)
         {
-            var btn = sender as Button;
+            var btn = sender as SfButton;
 
             if (btn.Text == "Pass")
             {
@@ -3243,18 +3025,18 @@ namespace ProteusMMX.Views.Workorder
 
         private void YesNo_Clicked(object sender, EventArgs e)
         {
-            var btn = sender as Button;
+            var btn = sender as SfButton;
 
             if (btn.Text == "Yes")
             {
                 btn.Text = "No";
-                btn.BackgroundColor = Color.Red;
+                btn.BackgroundColor = Color.FromHex("#ff5050");
             }
 
             else
             {
                 btn.Text = "Yes";
-                btn.BackgroundColor = Color.Green;
+                btn.BackgroundColor = Color.FromHex("#00cc66");
             }
         }
 
@@ -3262,7 +3044,7 @@ namespace ProteusMMX.Views.Workorder
         {
             Entry e1 = sender as Entry;
             String val = e1.Text; //Get Current Text
-
+            var data = (sender as Entry).Parent as Grid;
             if (val.Contains(" "))//If it is more than your character restriction
             {
                 val = val.Remove(val.Length - 1);// Remove Last character 
@@ -3290,15 +3072,11 @@ namespace ProteusMMX.Views.Workorder
                     if (decimal.Parse(e1.Text) >= range.MinRange && decimal.Parse(e1.Text) <= range.MaxRange)
                     {
                         e1.BackgroundColor = Color.White;
-                        // CreateWorkorderButtonColor = false;
                     }
 
                     else
                     {
-                        this.btnCreateWorkorder.IsVisible = true;
-                        //this.btnCreateWorkorder.BackgroundColor = Color.White;
-                        e1.BackgroundColor = Color.Red;
-                        // CreateWorkorderButtonColor = true;
+                        e1.BackgroundColor = Color.FromHex("#ff5050"); 
                     }
                 }
             }
@@ -3345,48 +3123,29 @@ namespace ProteusMMX.Views.Workorder
 
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                 await Task.Delay(1000);
-
-                var stacklayout = (sender as Button).Parent as StackLayout;
+                var test = (sender as Button).Parent.Parent;
+                var stacklayout = (sender as Button).Parent.Parent as StackLayout;
 
                 //var context = (sender as Button).CommandParameter as List<ExistingInspections>;
 
                 List<InspectionAnswer> listAnswer = new List<InspectionAnswer>();
                 int viewCount = 0;
 
-                try
-                {
-                    // var signatureImage = stacklayout.Children[stacklayout.Children.Count - 3] as CustomImage;
-                    foreach (View i in (stacklayout).Children.Where(x => x.GetType() == typeof(CustomImage)))
-                    {
 
-                        var signatureImage = i;
-                        //CustomImage signatureImage = stacklayout.Children.Where(x => x.GetType() == typeof(CustomImage)) as CustomImage;
-                        if (signatureImage == null)
-                        {
-                            viewCount = 1;
-                        }
-                        else
-                        {
-                            viewCount = 3;
-                        }
-
-                    }
-
-                }
-                catch (Exception) { }
-
-                for (int i = 1; i < stacklayout.Children.Count - viewCount; i++) // run it only for grid
+                for (int i = 0; i < stacklayout.Children.Count - 1; i++) // run it only for grid
                 {
                     try
                     {
-                        var stacklayout1 = stacklayout.Children[i] as Grid;
+                        var stacklayout1 = stacklayout.Children[i] as StackLayout;
                         if (stacklayout1 == null)
                         {
 
                         }
                         else
                         {
-                            var context = (stacklayout1.Children[1] as Label).BindingContext as ExistingInspections;
+                            var LalGrid = stacklayout1.Children[0] as StackLayout;
+                            var LalGrid1 = LalGrid.Children[0] as Grid;
+                            var context = (LalGrid1.Children[1] as Label).BindingContext as ExistingInspections;
 
                             var value = ExtractValueFormSection(stacklayout1);
 
@@ -3408,10 +3167,7 @@ namespace ProteusMMX.Views.Workorder
                     }
                     catch (Exception ex)
                     {
-
-
                     }
-
                 }
 
 
@@ -3427,16 +3183,11 @@ namespace ProteusMMX.Views.Workorder
 
                 CustomImage signatureImageView = null;
                 InspectionToAnswer answer = null;
+               
                 try
                 {
-                    var count = ((sender as Button).Parent as StackLayout).Children.Count;
 
-                    foreach (View i in (stacklayout).Children.Where(x => x.GetType() == typeof(CustomImage)))
-                    {
-
-                        signatureImageView = i as CustomImage;
-                    }
-
+                    signatureImageView = ((sender as Button).Parent as Grid).Children[0] as CustomImage;
                 }
                 catch (Exception) { }
 
@@ -3448,10 +3199,6 @@ namespace ProteusMMX.Views.Workorder
                 {
                     answer = yourobject;
                 }
-
-
-                //GlobalMethod objglobal = new GlobalMethod();
-                //var serviceStatus = await objglobal.ServiceCallWebClient(BaseURL + "/Inspection/service/AnswerInspection", "POST", null, answer);
 
 
                 var serviceStatus = await ViewModel._inspectionService.AnswerInspection(answer);
@@ -3467,66 +3214,64 @@ namespace ProteusMMX.Views.Workorder
 
                 #region Save Inspection Time to server
 
-
-
-
                 // 1st Employee/Contractor Layout//
 
                 Label employeecontrcatorids = new Label();
-                string EmpLaborCraftID = "0";
-                string ContLaborCraftID = "0";
+
                 try
                 {
-                    var Stacklayout = ParentLayout.Children[0] as StackLayout;
-                    var gridlayout = Stacklayout.Children[1] as Grid;
+                    var grid = ParentLayout.Children[0] as Grid;
+                    var stacklayoutg1 = grid.Children[2] as StackLayout;
+                    var SVLayout = stacklayoutg1.Children[0] as ScrollView;
+                    var stacklayout1 = SVLayout.Children[0] as StackLayout;
 
-
-                    var HoursEntryValue = gridlayout.Children[3] as Entry;
-                    var MinuteEntryValue = gridlayout.Children[5] as Entry;
-                    if (Device.Idiom == TargetIdiom.Phone)
+                    for (int i = 0; i < stacklayout1.Children.Count; i++)
                     {
-                        var gridlayout2 = Stacklayout.Children[2] as Grid;
-                        var StartdateValue = gridlayout2.Children[1] as CustomDatePicker;
-                        var CompletionDateValue = gridlayout2.Children[3] as CustomDatePicker;
+                        string EmpLaborCraftID = "0";
+                        string ContLaborCraftID = "0";
+                        var FrameLayout = stacklayout1.Children[i] as Frame;
+                        var Fstacklayout = FrameLayout.Children[0] as StackLayout;
+                        var Fstacklayout1 = Fstacklayout.Children[0] as StackLayout;
+
+                        var Fstacklayout2 = Fstacklayout1.Children[0] as Grid;
+
+                        var Hrsstacklayout3 = Fstacklayout2.Children[3] as StackLayout;
+                        var HrsGrid = Hrsstacklayout3.Children[0] as Grid;
+                        var Hrsgridlayout = HrsGrid.Children[0] as SfBorder;
+                        var HoursEntryValue = Hrsgridlayout.Children[0] as Entry;
+                        var HoursEntryValue1 = HoursEntryValue.Text;
+
+                        var Mistacklayout3 = Fstacklayout2.Children[4] as StackLayout;
+                        var MiGrid = Mistacklayout3.Children[0] as Grid;
+                        var Migridlayout = MiGrid.Children[0] as SfBorder;
+                        var MinuteEntryValue = Migridlayout.Children[0] as Entry;
+                        var MinuteEntryValue1 = MinuteEntryValue.Text;
+
+                        var Datelayout1 = Fstacklayout.Children[1] as StackLayout;
+                        var DateGrid1 = Datelayout1.Children[0] as Grid;
+                        var DateSLt1 = DateGrid1.Children[0] as StackLayout;
+                        var DateBodder1 = DateSLt1.Children[1] as SfBorder;
+                        var StartdateValue = DateBodder1.Children[0] as CustomDatePicker;
+                        var StartdateValue1 = DateTime.Parse(StartdateValue.SelectedDate.ToString());
+
+                        var DateSLt2 = DateGrid1.Children[1] as StackLayout;
+                        var DateBodder2 = DateSLt2.Children[1] as SfBorder;
+                        var CompletionDateValue = DateBodder2.Children[0] as CustomDatePicker;
+                        var CompletionDateValue1 = DateTime.Parse(CompletionDateValue.SelectedDate.ToString());
+
                         this.InspectionStartDate = StartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(StartdateValue.SelectedDate.ToString()) : (DateTime?)null;
                         this.InspectionCompletionDate = CompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(CompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        employeecontrcatorids = gridlayout2.Children[4] as Label;
 
 
-                    }
-                    else
-                    {
-                        employeecontrcatorids = gridlayout.Children[10] as Label;
-                        var StartdateValue = gridlayout.Children[7] as CustomDatePicker;
-                        var CompletionDateValue = gridlayout.Children[9] as CustomDatePicker;
+                        var Lablestacklayout = Fstacklayout2.Children[0] as StackLayout;
+                        var employeeGrid = Lablestacklayout.Children[0] as Grid;
 
-                        this.InspectionStartDate = StartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(StartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        this.InspectionCompletionDate = CompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(CompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+                        //var employeecontrcatorids1 = employeeGrid.Children[0] as Label;
+                        // var employeecontrcatoridssubstring = employeecontrcatorids.StyleId.Split(':');
+                        // string EmpCntID = Int32.Parse(employeecontrcatoridssubstring[0]).ToString();
+                        // string EmpCntValue = employeecontrcatoridssubstring[1];
 
-
-
-
-                    }
-
-                    if (Device.Idiom == TargetIdiom.Tablet)
-                    {
-                        var employeecontrcatoridsforTablet = Stacklayout.Children[0] as Label;
-                        var employeecontrcatoridsforTabletsubstring = employeecontrcatoridsforTablet.StyleId.Split(':');
-                        string EmpCntID = Int32.Parse(employeecontrcatoridsforTabletsubstring[0]).ToString();
-                        string EmpCntValue = employeecontrcatoridsforTabletsubstring[1];
-
-                        if (EmpCntValue == "EmployeeLaborCraft")
-                        {
-                            EmpLaborCraftID = EmpCntID;
-                        }
-                        if (EmpCntValue == "ContractorLaborCraft")
-                        {
-                            ContLaborCraftID = EmpCntID;
-                        }
-
-                    }
-                    else
-                    {
+                        employeecontrcatorids = employeeGrid.Children[1] as Label;
                         var employeecontrcatoridssubstring = employeecontrcatorids.Text.Split(':');
                         string EmpCntID = Int32.Parse(employeecontrcatoridssubstring[0]).ToString();
                         string EmpCntValue = employeecontrcatoridssubstring[1];
@@ -3539,187 +3284,34 @@ namespace ProteusMMX.Views.Workorder
                         {
                             ContLaborCraftID = EmpCntID;
                         }
-                    }
 
-                    int hours = 0;
-                    int minutes = 0;
-
-
-                    if (string.IsNullOrWhiteSpace(HoursEntryValue.Text))
-                    {
-
-                    }
-                    else
-                    {
-                        hours = Int32.Parse(HoursEntryValue.Text);
-                    }
-
-                    if (string.IsNullOrWhiteSpace(MinuteEntryValue.Text))
-                    {
-
-                    }
-                    else
-                    {
-                        minutes = Int32.Parse(MinuteEntryValue.Text);
-                    }
-
-                    var result = new TimeSpan(hours, minutes, 0);
-                    totalTime = result.TotalSeconds;
+                        int hours = 0;
+                        int minutes = 0;
 
 
-
-                    #region Local Validation
-
-                    {
-                        if (!String.IsNullOrWhiteSpace(this.InspectionStartDate.ToString()) && !String.IsNullOrWhiteSpace(this.InspectionCompletionDate.ToString()))
-                        {
-                            if (this.InspectionStartDate.GetValueOrDefault().Date > this.InspectionCompletionDate.GetValueOrDefault().Date)
-                            {
-                                //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, "Inspection", formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                //await DisplayAlert("Alert", WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), "OK");
-                                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), TimeSpan.FromSeconds(2));
-                                UserDialogs.Instance.HideLoading();
-                                return;
-                            }
-                        }
-                    }
-
-
-
-
-                    #endregion
-                    listtoAnswer.Add(new InspectionTOAnswers()
-                    {
-                        WorkOrderID = WorkorderID,
-                        InspectionTime = ((int)totalTime).ToString(),
-                        StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                        CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                        EmployeeLaborCraftid = EmpLaborCraftID,
-                        ContractorLaborCraftId = ContLaborCraftID,
-                        ModifiedUserName = AppSettings.UserName
-                    });
-                    liststartAnswer.Add(new InspectionTOAnswers()
-                    {
-
-                        StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                    });
-                    listcompletionAnswer.Add(new InspectionTOAnswers()
-                    {
-
-                        CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                    });
-
-                }
-                catch (Exception ex)
-                {
-
-
-                }
-
-
-
-
-                // 2nd Employee/Contractor Layout///
-                Label employeecontrcatorids2 = new Label();
-                string EmpLaborCraftID2 = "0";
-                string ContLaborCraftID2 = "0";
-                try
-                {
-                    var SecondStacklayout = ParentLayout.Children[1] as StackLayout;
-                    var Secondgridlayout = SecondStacklayout.Children[1] as Grid;
-                    if (Secondgridlayout == null)
-                    {
-                    }
-                    else
-                    {
-                        var SecondHoursEntryValue = Secondgridlayout.Children[3] as Entry;
-                        var SecondMinuteEntryValue = Secondgridlayout.Children[5] as Entry;
-                        if (Device.Idiom == TargetIdiom.Phone)
-                        {
-                            var Secondgridlayout2 = SecondStacklayout.Children[2] as Grid;
-
-                            var SecondStartdateValue = Secondgridlayout2.Children[1] as CustomDatePicker;
-                            var SecondCompletionDateValue = Secondgridlayout2.Children[3] as CustomDatePicker;
-                            this.InspectionStartDate = SecondStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            this.InspectionCompletionDate = SecondCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            employeecontrcatorids2 = Secondgridlayout2.Children[4] as Label;
-
-                        }
-                        else
-                        {
-                            var SecondStartdateValue = Secondgridlayout.Children[7] as CustomDatePicker;
-                            var SecondCompletionDateValue = Secondgridlayout.Children[9] as CustomDatePicker;
-                            employeecontrcatorids2 = Secondgridlayout.Children[10] as Label;
-                            this.InspectionStartDate = SecondStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            this.InspectionCompletionDate = SecondCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        }
-
-
-                        if (Device.Idiom == TargetIdiom.Tablet)
-                        {
-                            var employeecontrcatoridsforTablet = SecondStacklayout.Children[0] as Label;
-                            var employeecontrcatoridsforTabletsubstring = employeecontrcatoridsforTablet.StyleId.Split(':');
-                            string EmpCntID2 = Int32.Parse(employeecontrcatoridsforTabletsubstring[0]).ToString();
-                            string EmpCntValue2 = employeecontrcatoridsforTabletsubstring[1];
-
-                            if (EmpCntValue2 == "EmployeeLaborCraft")
-                            {
-                                EmpLaborCraftID2 = EmpCntID2;
-                            }
-                            if (EmpCntValue2 == "ContractorLaborCraft")
-                            {
-                                ContLaborCraftID2 = EmpCntID2;
-                            }
-
-                        }
-                        else
-                        {
-                            var employeecontrcatoridssubstring2 = employeecontrcatorids2.Text.Split(':');
-                            string EmpCntID2 = Int32.Parse(employeecontrcatoridssubstring2[0]).ToString();
-                            string EmpCntValue2 = employeecontrcatoridssubstring2[1];
-
-                            if (EmpCntValue2 == "EmployeeLaborCraft")
-                            {
-                                EmpLaborCraftID2 = EmpCntID2;
-                            }
-                            if (EmpCntValue2 == "ContractorLaborCraft")
-                            {
-
-                                ContLaborCraftID2 = EmpCntID2;
-                            }
-
-                        }
-
-                        int Secondhours = 0;
-                        int Secondminutes = 0;
-
-                        if (string.IsNullOrWhiteSpace(SecondHoursEntryValue.Text))
+                        if (string.IsNullOrWhiteSpace(HoursEntryValue.Text))
                         {
 
                         }
                         else
                         {
-                            Secondhours = Int32.Parse(SecondHoursEntryValue.Text);
+                            hours = Int32.Parse(HoursEntryValue.Text);
                         }
 
-                        if (string.IsNullOrWhiteSpace(SecondMinuteEntryValue.Text))
+                        if (string.IsNullOrWhiteSpace(MinuteEntryValue.Text))
                         {
 
                         }
                         else
                         {
-                            Secondminutes = Int32.Parse(SecondMinuteEntryValue.Text);
+                            minutes = Int32.Parse(MinuteEntryValue.Text);
                         }
 
-                        var Secondresult = new TimeSpan(Secondhours, Secondminutes, 0);
-                        totalTime = Secondresult.TotalSeconds;
-                        //this.InspectionStartDate = SecondStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        //this.InspectionCompletionDate = SecondCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+                        var result = new TimeSpan(hours, minutes, 0);
+                        totalTime = result.TotalSeconds;
 
-                        // this.InspectionStartDate = Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString());
-                        // this.InspectionCompletionDate = Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString());
+
+
                         #region Local Validation
 
                         {
@@ -3746,8 +3338,8 @@ namespace ProteusMMX.Views.Workorder
                             InspectionTime = ((int)totalTime).ToString(),
                             StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
                             CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                            EmployeeLaborCraftid = EmpLaborCraftID2,
-                            ContractorLaborCraftId = ContLaborCraftID2,
+                            EmployeeLaborCraftid = EmpLaborCraftID,
+                            ContractorLaborCraftId = ContLaborCraftID,
                             ModifiedUserName = AppSettings.UserName
                         });
                         liststartAnswer.Add(new InspectionTOAnswers()
@@ -3770,481 +3362,6 @@ namespace ProteusMMX.Views.Workorder
 
 
                 }
-
-
-
-                // 3rd Employee/Contractor Layout///
-                Label employeecontrcatorids3 = new Label();
-                string EmpLaborCraftID3 = "0";
-                string ContLaborCraftID3 = "0";
-                try
-                {
-                    var ThirdStacklayout = ParentLayout.Children[2] as StackLayout;
-                    var Thirdgridlayout = ThirdStacklayout.Children[1] as Grid;
-                    if (Thirdgridlayout == null)
-                    {
-                    }
-                    else
-                    {
-                        var ThirdHoursEntryValue = Thirdgridlayout.Children[3] as Entry;
-                        var ThirdMinuteEntryValue = Thirdgridlayout.Children[5] as Entry;
-                        if (Device.Idiom == TargetIdiom.Phone)
-                        {
-                            var Thirdgridlayout2 = ThirdStacklayout.Children[2] as Grid;
-
-                            var ThirdStartdateValue = Thirdgridlayout2.Children[1] as CustomDatePicker;
-                            var ThirdCompletionDateValue = Thirdgridlayout2.Children[3] as CustomDatePicker;
-                            this.InspectionStartDate = ThirdStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            this.InspectionCompletionDate = ThirdCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            employeecontrcatorids3 = Thirdgridlayout2.Children[4] as Label;
-
-                        }
-                        else
-                        {
-                            var ThirdStartdateValue = Thirdgridlayout.Children[7] as CustomDatePicker;
-                            var ThirdCompletionDateValue = Thirdgridlayout.Children[9] as CustomDatePicker;
-                            employeecontrcatorids3 = Thirdgridlayout.Children[10] as Label;
-
-                            this.InspectionStartDate = ThirdStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            this.InspectionCompletionDate = ThirdCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        }
-
-
-                        if (Device.Idiom == TargetIdiom.Tablet)
-                        {
-                            var employeecontrcatoridsforTablet3 = ThirdStacklayout.Children[0] as Label;
-                            var employeecontrcatoridsforTabletsubstring3 = employeecontrcatoridsforTablet3.StyleId.Split(':');
-                            string EmpCntID3 = Int32.Parse(employeecontrcatoridsforTabletsubstring3[0]).ToString();
-                            string EmpCntValue3 = employeecontrcatoridsforTabletsubstring3[1];
-
-                            if (EmpCntValue3 == "EmployeeLaborCraft")
-                            {
-                                EmpLaborCraftID3 = EmpCntID3;
-                            }
-                            if (EmpCntValue3 == "ContractorLaborCraft")
-                            {
-                                ContLaborCraftID3 = EmpCntID3;
-                            }
-
-                        }
-                        else
-                        {
-                            var employeecontrcatoridssubstring3 = employeecontrcatorids3.Text.Split(':');
-                            string EmpCntID3 = Int32.Parse(employeecontrcatoridssubstring3[0]).ToString();
-                            string EmpCntValue3 = employeecontrcatoridssubstring3[1];
-
-                            if (EmpCntValue3 == "EmployeeLaborCraft")
-                            {
-                                EmpLaborCraftID3 = EmpCntID3;
-                            }
-                            if (EmpCntValue3 == "ContractorLaborCraft")
-                            {
-                                ContLaborCraftID3 = EmpCntID3;
-                            }
-
-
-                        }
-
-                        int Thirdminutes = 0;
-                        int Thirdhours = 0;
-                        if (string.IsNullOrWhiteSpace(ThirdHoursEntryValue.Text))
-                        {
-
-                        }
-                        else
-                        {
-                            Thirdhours = Int32.Parse(ThirdHoursEntryValue.Text);
-                        }
-
-                        if (string.IsNullOrWhiteSpace(ThirdMinuteEntryValue.Text))
-                        {
-
-                        }
-                        else
-                        {
-                            Thirdminutes = Int32.Parse(ThirdMinuteEntryValue.Text);
-                        }
-
-
-                        var Thirdresult = new TimeSpan(Thirdhours, Thirdminutes, 0);
-                        totalTime = Thirdresult.TotalSeconds;
-                        //this.InspectionStartDate = ThirdStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        //this.InspectionCompletionDate = ThirdCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-
-                        // this.InspectionStartDate = Convert.ToDateTime(ThirdStartdateValue.Date.ToString());
-                        // this.InspectionCompletionDate = Convert.ToDateTime(ThirdCompletionDateValue.Date.ToString());
-                        #region Local Validation
-
-                        {
-                            if (!String.IsNullOrWhiteSpace(this.InspectionStartDate.ToString()) && !String.IsNullOrWhiteSpace(this.InspectionCompletionDate.ToString()))
-                            {
-                                if (this.InspectionStartDate.GetValueOrDefault().Date > this.InspectionCompletionDate.GetValueOrDefault().Date)
-                                {
-                                    //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, "Inspection", formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                    //await DisplayAlert("Alert", WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), "OK");
-                                    UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), TimeSpan.FromSeconds(2));
-                                    UserDialogs.Instance.HideLoading();
-                                    return;
-                                }
-                            }
-                        }
-
-
-
-
-                        #endregion
-                        listtoAnswer.Add(new InspectionTOAnswers()
-                        {
-                            WorkOrderID = WorkorderID,
-                            InspectionTime = ((int)totalTime).ToString(),
-                            StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                            CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                            EmployeeLaborCraftid = EmpLaborCraftID3,
-                            ContractorLaborCraftId = ContLaborCraftID3,
-                            ModifiedUserName = AppSettings.UserName
-                        });
-                        liststartAnswer.Add(new InspectionTOAnswers()
-                        {
-
-                            StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                        });
-                        listcompletionAnswer.Add(new InspectionTOAnswers()
-                        {
-
-                            CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                        });
-                    }
-
-                }
-                catch (Exception ex)
-                {
-
-
-                }
-
-
-
-                // 4th Employee/Contractor Layout///
-                Label employeecontrcatorids4 = new Label();
-                string EmpLaborCraftID4 = "0";
-                string ContLaborCraftID4 = "0";
-                try
-                {
-                    var FourthStacklayout = ParentLayout.Children[3] as StackLayout;
-                    var Fourthgridlayout = FourthStacklayout.Children[1] as Grid;
-                    if (Fourthgridlayout == null)
-                    {
-                    }
-                    else
-                    {
-
-
-                        var FourthHoursEntryValue = Fourthgridlayout.Children[3] as Entry;
-                        var FourthMinuteEntryValue = Fourthgridlayout.Children[5] as Entry;
-                        if (Device.Idiom == TargetIdiom.Phone)
-                        {
-                            var Fourthgridlayout2 = FourthStacklayout.Children[2] as Grid;
-
-                            var FourthStartdateValue = Fourthgridlayout2.Children[1] as CustomDatePicker;
-                            var FourthCompletionDateValue = Fourthgridlayout2.Children[3] as CustomDatePicker;
-                            this.InspectionStartDate = FourthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            this.InspectionCompletionDate = FourthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            employeecontrcatorids4 = Fourthgridlayout2.Children[4] as Label;
-
-                        }
-                        else
-                        {
-                            var FourthStartdateValue = Fourthgridlayout.Children[7] as CustomDatePicker;
-                            var FourthCompletionDateValue = Fourthgridlayout.Children[9] as CustomDatePicker;
-                            employeecontrcatorids4 = Fourthgridlayout.Children[10] as Label;
-
-
-                            this.InspectionStartDate = FourthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            this.InspectionCompletionDate = FourthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        }
-
-
-
-                        if (Device.Idiom == TargetIdiom.Tablet)
-                        {
-                            var employeecontrcatoridsforTablet = FourthStacklayout.Children[0] as Label;
-                            var employeecontrcatoridsforTabletsubstring = employeecontrcatoridsforTablet.StyleId.Split(':');
-                            string EmpCntID4 = Int32.Parse(employeecontrcatoridsforTabletsubstring[0]).ToString();
-                            string EmpCntValue4 = employeecontrcatoridsforTabletsubstring[1];
-
-                            if (EmpCntValue4 == "EmployeeLaborCraft")
-                            {
-                                EmpLaborCraftID4 = EmpCntID4;
-                            }
-                            if (EmpCntValue4 == "ContractorLaborCraft")
-                            {
-                                ContLaborCraftID4 = EmpCntID4;
-                            }
-
-                        }
-                        else
-                        {
-                            var employeecontrcatoridssubstring4 = employeecontrcatorids4.Text.Split(':');
-                            string EmpCntID4 = Int32.Parse(employeecontrcatoridssubstring4[0]).ToString();
-                            string EmpCntValue4 = employeecontrcatoridssubstring4[1];
-
-                            if (EmpCntValue4 == "EmployeeLaborCraft")
-                            {
-                                EmpLaborCraftID4 = EmpCntID4;
-                            }
-                            if (EmpCntValue4 == "ContractorLaborCraft")
-                            {
-                                ContLaborCraftID4 = EmpCntID4;
-                            }
-
-
-                        }
-
-
-                        int Fourthhours = 0;
-                        int Fourthminutes = 0;
-
-                        if (string.IsNullOrWhiteSpace(FourthHoursEntryValue.Text))
-                        {
-
-                        }
-                        else
-                        {
-                            Fourthhours = Int32.Parse(FourthHoursEntryValue.Text);
-                        }
-
-                        if (string.IsNullOrWhiteSpace(FourthMinuteEntryValue.Text))
-                        {
-
-                        }
-                        else
-                        {
-                            Fourthminutes = Int32.Parse(FourthMinuteEntryValue.Text);
-                        }
-
-
-
-                        var Fourthresult = new TimeSpan(Fourthhours, Fourthminutes, 0);
-                        totalTime = Fourthresult.TotalSeconds;
-                        //this.InspectionStartDate = FourthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        //this.InspectionCompletionDate = FourthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        //this.InspectionStartDate = Convert.ToDateTime(FourthStartdateValue.Date.ToString());
-                        //this.InspectionCompletionDate = Convert.ToDateTime(FourthCompletionDateValue.Date.ToString());
-                        #region Local Validation
-
-                        {
-                            if (!String.IsNullOrWhiteSpace(this.InspectionStartDate.ToString()) && !String.IsNullOrWhiteSpace(this.InspectionCompletionDate.ToString()))
-                            {
-                                if (this.InspectionStartDate.GetValueOrDefault().Date > this.InspectionCompletionDate.GetValueOrDefault().Date)
-                                {
-                                    //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, "Inspection", formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                    //await DisplayAlert("Alert", WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), "OK");
-                                    UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), TimeSpan.FromSeconds(2));
-                                    UserDialogs.Instance.HideLoading();
-                                    return;
-                                }
-                            }
-                        }
-
-
-
-
-                        #endregion
-                        listtoAnswer.Add(new InspectionTOAnswers()
-                        {
-                            WorkOrderID = WorkorderID,
-                            InspectionTime = ((int)totalTime).ToString(),
-                            StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                            CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                            EmployeeLaborCraftid = EmpLaborCraftID4,
-                            ContractorLaborCraftId = ContLaborCraftID4,
-                            ModifiedUserName = AppSettings.UserName
-                        });
-                        liststartAnswer.Add(new InspectionTOAnswers()
-                        {
-
-                            StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                        });
-                        listcompletionAnswer.Add(new InspectionTOAnswers()
-                        {
-
-                            CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                        });
-                    }
-
-                }
-                catch (Exception ex)
-                {
-
-
-                }
-
-
-
-                // 5th Employee/Contractor Layout///
-                Label employeecontrcatorids5 = new Label();
-                string EmpLaborCraftID5 = "0";
-                string ContLaborCraftID5 = "0";
-                try
-                {
-                    var FifthStacklayout = ParentLayout.Children[4] as StackLayout;
-                    var Fifthgridlayout = FifthStacklayout.Children[1] as Grid;
-                    if (Fifthgridlayout == null)
-                    {
-                    }
-                    else
-                    {
-                        var FifthHoursEntryValue = Fifthgridlayout.Children[3] as Entry;
-                        var FifthMinuteEntryValue = Fifthgridlayout.Children[5] as Entry;
-                        if (Device.Idiom == TargetIdiom.Phone)
-                        {
-                            var Fifthgridlayout2 = FifthStacklayout.Children[2] as Grid;
-
-                            var FifthStartdateValue = Fifthgridlayout2.Children[1] as CustomDatePicker;
-                            var FifthCompletionDateValue = Fifthgridlayout2.Children[3] as CustomDatePicker;
-                            this.InspectionStartDate = FifthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            this.InspectionCompletionDate = FifthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            employeecontrcatorids5 = Fifthgridlayout2.Children[4] as Label;
-
-                        }
-                        else
-                        {
-                            var FifthStartdateValue = Fifthgridlayout.Children[7] as CustomDatePicker;
-                            var FifthCompletionDateValue = Fifthgridlayout.Children[9] as CustomDatePicker;
-                            employeecontrcatorids5 = Fifthgridlayout.Children[10] as Label;
-
-
-
-                            this.InspectionStartDate = FifthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                            this.InspectionCompletionDate = FifthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        }
-
-
-
-                        if (Device.Idiom == TargetIdiom.Tablet)
-                        {
-                            var employeecontrcatoridsforTablet = FifthStacklayout.Children[0] as Label;
-                            var employeecontrcatoridsforTabletsubstring = employeecontrcatoridsforTablet.StyleId.Split(':');
-                            string EmpCntID5 = Int32.Parse(employeecontrcatoridsforTabletsubstring[0]).ToString();
-                            string EmpCntValue5 = employeecontrcatoridsforTabletsubstring[1];
-
-                            if (EmpCntValue5 == "EmployeeLaborCraft")
-                            {
-                                EmpLaborCraftID5 = EmpCntID5;
-                            }
-                            if (EmpCntValue5 == "ContractorLaborCraft")
-                            {
-                                ContLaborCraftID5 = EmpCntID5;
-                            }
-
-                        }
-                        else
-                        {
-                            var employeecontrcatoridssubstring5 = employeecontrcatorids5.Text.Split(':');
-                            string EmpCntID5 = Int32.Parse(employeecontrcatoridssubstring5[0]).ToString();
-                            string EmpCntValue5 = employeecontrcatoridssubstring5[1];
-
-                            if (EmpCntValue5 == "EmployeeLaborCraft")
-                            {
-                                EmpLaborCraftID5 = EmpCntID5;
-                            }
-                            if (EmpCntValue5 == "ContractorLaborCraft")
-                            {
-                                ContLaborCraftID5 = EmpCntID5;
-                            }
-
-
-                        }
-
-
-                        int Fifthhours = 0;
-                        int Fifthminutes = 0;
-
-                        if (string.IsNullOrWhiteSpace(FifthHoursEntryValue.Text))
-                        {
-
-                        }
-                        else
-                        {
-                            Fifthhours = Int32.Parse(FifthHoursEntryValue.Text);
-                        }
-
-                        if (string.IsNullOrWhiteSpace(FifthMinuteEntryValue.Text))
-                        {
-
-                        }
-                        else
-                        {
-                            Fifthminutes = Int32.Parse(FifthMinuteEntryValue.Text);
-                        }
-
-
-
-                        var Fifthresult = new TimeSpan(Fifthhours, Fifthminutes, 0);
-                        totalTime = Fifthresult.TotalSeconds;
-                        //this.InspectionStartDate = FifthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        //this.InspectionCompletionDate = FifthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-
-                        //this.InspectionStartDate = Convert.ToDateTime(FifthStartdateValue.Date.ToString());
-                        //this.InspectionCompletionDate = Convert.ToDateTime(FifthCompletionDateValue.Date.ToString());
-                        #region Local Validation
-
-                        {
-                            if (!String.IsNullOrWhiteSpace(this.InspectionStartDate.ToString()) && !String.IsNullOrWhiteSpace(this.InspectionCompletionDate.ToString()))
-                            {
-                                if (this.InspectionStartDate.GetValueOrDefault().Date > this.InspectionCompletionDate.GetValueOrDefault().Date)
-                                {
-                                    //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, "Inspection", formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                    //await DisplayAlert("Alert", WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), "OK");
-                                    UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), TimeSpan.FromSeconds(2));
-                                    UserDialogs.Instance.HideLoading();
-                                    return;
-                                }
-                            }
-                        }
-
-
-
-
-                        #endregion
-                        listtoAnswer.Add(new InspectionTOAnswers()
-                        {
-                            WorkOrderID = WorkorderID,
-                            InspectionTime = ((int)totalTime).ToString(),
-                            StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                            CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                            EmployeeLaborCraftid = EmpLaborCraftID5,
-                            ContractorLaborCraftId = ContLaborCraftID5,
-                            ModifiedUserName = AppSettings.UserName
-                        });
-                        liststartAnswer.Add(new InspectionTOAnswers()
-                        {
-
-                            StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                        });
-                        listcompletionAnswer.Add(new InspectionTOAnswers()
-                        {
-
-                            CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                        });
-                    }
-                }
-                catch (Exception ex)
-                {
-
-
-                }
-
-
-
-
-
 
                 #endregion
 
@@ -4418,16 +3535,15 @@ namespace ProteusMMX.Views.Workorder
             List<InspectionTOAnswers> liststartAnswer = new List<InspectionTOAnswers>();
             List<InspectionTOAnswers> listcompletionAnswer = new List<InspectionTOAnswers>();
 
-
+            InspectionTOAnswers listtoAnswerModel;
 
             UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
             await Task.Delay(1000);
-            var ssdv = (sender as Button).Parent as StackLayout;
+            var test = (sender as Button).Parent.Parent.Parent.Parent;
+            var ssdv = (sender as Button).Parent.Parent.Parent as StackLayout;
 
-
-
-
-            var kfm = ssdv.Children[0] as Grid;
+            var kfm1 = ssdv.Children[0] as StackLayout;
+            var kfm = kfm1.Children[0] as StackLayout;
 
             //  var kfm1 = ParentLayout.Children[0] as StackLayout;
 
@@ -4435,49 +3551,51 @@ namespace ProteusMMX.Views.Workorder
             {
                 return;
             }
+            var gridPF = kfm.Children[0] as Grid;
+            var context = gridPF.BindingContext as ExistingInspections;
 
-            var context = kfm.BindingContext as ExistingInspections;
+            //var context = kfm.BindingContext as ExistingInspections;
             string value = null;
 
             switch (context.ResponseTypeName)
             {
 
                 case "Pass/Fail":
-                    var gridPF = kfm.Children[2] as Grid;
-                    var btn1PF = gridPF.Children[0] as Button;
-                    var btn2PF = gridPF.Children[1] as Button;
+                    var btn1PF = gridPF.Children[2] as SfButton;
+                    var btn2PF = gridPF.Children[3] as SfButton;
                     value = "";
-                    if (btn1PF.BackgroundColor != Color.Gray)
+                    if (btn1PF.BackgroundColor != Color.LightGray)
                     {
                         value = btn1PF.Text;
                     }
-                    if (btn2PF.BackgroundColor != Color.Gray)
+                    if (btn2PF.BackgroundColor != Color.LightGray)
                     {
                         value = btn2PF.Text;
                     }
                     break;
 
                 case "Standard Range":
-                    value = (kfm.Children[2] as Entry).Text;
+                    var SRangeBorder = gridPF.Children[2] as SfBorder;
+                    var dataTextRange = SRangeBorder.Content as Entry;
+                    value = dataTextRange.Text;
                     break;
 
                 case "Yes/No/N/A":
-                    var grid = kfm.Children[2] as Grid;
-                    var btn1 = grid.Children[0] as Button;
-                    var btn2 = grid.Children[1] as Button;
-                    var btn3 = grid.Children[2] as Button;
+                    var btn1 = gridPF.Children[2] as SfButton;
+                    var btn2 = gridPF.Children[3] as SfButton;
+                    var btn3 = gridPF.Children[4] as SfButton;
                     value = "";
-                    if (btn1.BackgroundColor != Color.Gray)
+                    if (btn1.BackgroundColor != Color.LightGray)
                     {
                         value = btn1.Text;
                     }
-                    if (btn2.BackgroundColor != Color.Gray)
+                    if (btn2.BackgroundColor != Color.LightGray)
                     {
                         value = btn2.Text;
                     }
 
                     //TODO: add the btn3 which is NA button and add the value.
-                    if (btn3.BackgroundColor != Color.Gray)
+                    if (btn3.BackgroundColor != Color.LightGray)
                     {
                         value = btn3.Text;
                     }
@@ -4486,21 +3604,24 @@ namespace ProteusMMX.Views.Workorder
 
 
                 case "Count":
-                    value = (kfm.Children[2] as Entry).Text;
+                    var data = (gridPF.Children[2] as MyEntry) as Entry;
+                    value = data.Text;
                     break;
                 case "Text":
-                    value = (kfm.Children[2] as Editor).Text;
+                    var textEntity = gridPF.Children[2] as SfBorder;
+                    var dataText = textEntity.Content as Editor;
+                    value = dataText.Text;
                     break;
 
                 case "Multiple Choice":
-                    var index3 = (kfm.Children[2] as Picker).SelectedIndex;
+                    var index3 = (gridPF.Children[2] as Picker).SelectedIndex;
                     if (index3 == -1)
                     {
                         value = null;
                     }
                     else
                     {
-                        value = (kfm.Children[2] as Picker).Items[index3];
+                        value = (gridPF.Children[2] as Picker).Items[index3];
                     }
 
                     break;
@@ -4529,7 +3650,9 @@ namespace ProteusMMX.Views.Workorder
             InspectionToAnswer answer = null;
             try
             {
-                signatureImageView = ((sender as Button).Parent as StackLayout).Children[1] as CustomImage;
+                var data = (sender as Button).Parent;
+                signatureImageView = ((sender as Button).Parent as Grid).Children[0] as CustomImage;
+                //signatureImageView = ((sender as SfButton).Parent as Grid).Children[2] as CustomImage;
             }
             catch (Exception) { }
 
@@ -4553,70 +3676,68 @@ namespace ProteusMMX.Views.Workorder
             //    Timer_Clicked(btnStartTimer, null);
             //}
 
-
-
             #region Save Inspection Time to server
-
-
-
 
             // 1st Employee/Contractor Layout//
 
             Label employeecontrcatorids = new Label();
-            string EmpLaborCraftID = "0";
-            string ContLaborCraftID = "0";
+
+            var grid = ParentLayout.Children[0] as Grid;
+            var stacklayout = grid.Children[2] as StackLayout;
+            var SVLayout = stacklayout.Children[0] as ScrollView;
+            var stacklayout1 = SVLayout.Children[0] as StackLayout;
+
+
             try
             {
-                var Stacklayout = ParentLayout.Children[0] as StackLayout;
-                var gridlayout = Stacklayout.Children[1] as Grid;
-
-
-                var HoursEntryValue = gridlayout.Children[3] as Entry;
-                var MinuteEntryValue = gridlayout.Children[5] as Entry;
-                if (Device.Idiom == TargetIdiom.Phone)
+                for (int i = 0; i < stacklayout1.Children.Count; i++)
                 {
-                    var gridlayout2 = Stacklayout.Children[2] as Grid;
-                    var StartdateValue = gridlayout2.Children[1] as CustomDatePicker;
-                    var CompletionDateValue = gridlayout2.Children[3] as CustomDatePicker;
+                    string EmpLaborCraftID = "0";
+                    string ContLaborCraftID = "0";
+                    listtoAnswerModel = new InspectionTOAnswers();
+                    var FrameLayout = stacklayout1.Children[i] as Frame;
+                    var Fstacklayout = FrameLayout.Children[0] as StackLayout;
+                    var Fstacklayout1 = Fstacklayout.Children[0] as StackLayout;
+
+                    var Fstacklayout2 = Fstacklayout1.Children[0] as Grid;
+
+                    var Hrsstacklayout3 = Fstacklayout2.Children[3] as StackLayout;
+                    var HrsGrid = Hrsstacklayout3.Children[0] as Grid;
+                    var Hrsgridlayout = HrsGrid.Children[0] as SfBorder;
+                    var HoursEntryValue = Hrsgridlayout.Children[0] as Entry;
+                    var HoursEntryValue1 = HoursEntryValue.Text;
+
+                    var Mistacklayout3 = Fstacklayout2.Children[4] as StackLayout;
+                    var MiGrid = Mistacklayout3.Children[0] as Grid;
+                    var Migridlayout = MiGrid.Children[0] as SfBorder;
+                    var MinuteEntryValue = Migridlayout.Children[0] as Entry;
+                    var MinuteEntryValue1 = MinuteEntryValue.Text;
+
+                    var Datelayout1 = Fstacklayout.Children[1] as StackLayout;
+                    var DateGrid1 = Datelayout1.Children[0] as Grid;
+                    var DateSLt1 = DateGrid1.Children[0] as StackLayout;
+                    var DateBodder1 = DateSLt1.Children[1] as SfBorder;
+                    var StartdateValue = DateBodder1.Children[0] as CustomDatePicker;
+                    var StartdateValue1 = DateTime.Parse(StartdateValue.SelectedDate.ToString());
+
+                    var DateSLt2 = DateGrid1.Children[1] as StackLayout;
+                    var DateBodder2 = DateSLt2.Children[1] as SfBorder;
+                    var CompletionDateValue = DateBodder2.Children[0] as CustomDatePicker;
+                    var CompletionDateValue1 = DateTime.Parse(CompletionDateValue.SelectedDate.ToString());
+
                     this.InspectionStartDate = StartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(StartdateValue.SelectedDate.ToString()) : (DateTime?)null;
                     this.InspectionCompletionDate = CompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(CompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    employeecontrcatorids = gridlayout2.Children[4] as Label;
 
 
-                }
-                else
-                {
-                    employeecontrcatorids = gridlayout.Children[10] as Label;
-                    var StartdateValue = gridlayout.Children[7] as CustomDatePicker;
-                    var CompletionDateValue = gridlayout.Children[9] as CustomDatePicker;
+                    var Lablestacklayout = Fstacklayout2.Children[0] as StackLayout;
+                    var employeeGrid = Lablestacklayout.Children[0] as Grid;
 
-                    this.InspectionStartDate = StartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(StartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    this.InspectionCompletionDate = CompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(CompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+                    //var employeecontrcatorids1 = employeeGrid.Children[0] as Label;
+                    // var employeecontrcatoridssubstring = employeecontrcatorids.StyleId.Split(':');
+                    // string EmpCntID = Int32.Parse(employeecontrcatoridssubstring[0]).ToString();
+                    // string EmpCntValue = employeecontrcatoridssubstring[1];
 
-
-
-
-                }
-
-                if (Device.Idiom == TargetIdiom.Tablet)
-                {
-                    var employeecontrcatoridsforTablet = Stacklayout.Children[0] as Label;
-                    var employeecontrcatoridsforTabletsubstring = employeecontrcatoridsforTablet.StyleId.Split(':');
-                    string EmpCntID = Int32.Parse(employeecontrcatoridsforTabletsubstring[0]).ToString();
-                    string EmpCntValue = employeecontrcatoridsforTabletsubstring[1];
-
-                    if (EmpCntValue == "EmployeeLaborCraft")
-                    {
-                        EmpLaborCraftID = EmpCntID;
-                    }
-                    if (EmpCntValue == "ContractorLaborCraft")
-                    {
-                        ContLaborCraftID = EmpCntID;
-                    }
-
-                }
-                else
-                {
+                    employeecontrcatorids = employeeGrid.Children[1] as Label;
                     var employeecontrcatoridssubstring = employeecontrcatorids.Text.Split(':');
                     string EmpCntID = Int32.Parse(employeecontrcatoridssubstring[0]).ToString();
                     string EmpCntValue = employeecontrcatoridssubstring[1];
@@ -4629,187 +3750,34 @@ namespace ProteusMMX.Views.Workorder
                     {
                         ContLaborCraftID = EmpCntID;
                     }
-                }
 
-                int hours = 0;
-                int minutes = 0;
-
-
-                if (string.IsNullOrWhiteSpace(HoursEntryValue.Text))
-                {
-
-                }
-                else
-                {
-                    hours = Int32.Parse(HoursEntryValue.Text);
-                }
-
-                if (string.IsNullOrWhiteSpace(MinuteEntryValue.Text))
-                {
-
-                }
-                else
-                {
-                    minutes = Int32.Parse(MinuteEntryValue.Text);
-                }
-
-                var result = new TimeSpan(hours, minutes, 0);
-                totalTime = result.TotalSeconds;
+                    int hours = 0;
+                    int minutes = 0;
 
 
-
-                #region Local Validation
-
-                {
-                    if (!String.IsNullOrWhiteSpace(this.InspectionStartDate.ToString()) && !String.IsNullOrWhiteSpace(this.InspectionCompletionDate.ToString()))
-                    {
-                        if (this.InspectionStartDate.GetValueOrDefault().Date > this.InspectionCompletionDate.GetValueOrDefault().Date)
-                        {
-                            //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, "Inspection", formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                            //await DisplayAlert("Alert", WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), "OK");
-                            UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), TimeSpan.FromSeconds(2));
-                            UserDialogs.Instance.HideLoading();
-                            return;
-                        }
-                    }
-                }
-
-
-
-
-                #endregion
-                listtoAnswer.Add(new InspectionTOAnswers()
-                {
-                    WorkOrderID = WorkorderID,
-                    InspectionTime = ((int)totalTime).ToString(),
-                    StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                    CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                    EmployeeLaborCraftid = EmpLaborCraftID,
-                    ContractorLaborCraftId = ContLaborCraftID,
-                    ModifiedUserName = AppSettings.UserName
-                });
-                liststartAnswer.Add(new InspectionTOAnswers()
-                {
-
-                    StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                });
-                listcompletionAnswer.Add(new InspectionTOAnswers()
-                {
-
-                    CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                });
-
-            }
-            catch (Exception ex)
-            {
-
-
-            }
-
-
-
-
-            // 2nd Employee/Contractor Layout///
-            Label employeecontrcatorids2 = new Label();
-            string EmpLaborCraftID2 = "0";
-            string ContLaborCraftID2 = "0";
-            try
-            {
-                var SecondStacklayout = ParentLayout.Children[1] as StackLayout;
-                var Secondgridlayout = SecondStacklayout.Children[1] as Grid;
-                if (Secondgridlayout == null)
-                {
-                }
-                else
-                {
-                    var SecondHoursEntryValue = Secondgridlayout.Children[3] as Entry;
-                    var SecondMinuteEntryValue = Secondgridlayout.Children[5] as Entry;
-                    if (Device.Idiom == TargetIdiom.Phone)
-                    {
-                        var Secondgridlayout2 = SecondStacklayout.Children[2] as Grid;
-
-                        var SecondStartdateValue = Secondgridlayout2.Children[1] as CustomDatePicker;
-                        var SecondCompletionDateValue = Secondgridlayout2.Children[3] as CustomDatePicker;
-                        this.InspectionStartDate = SecondStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        this.InspectionCompletionDate = SecondCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        employeecontrcatorids2 = Secondgridlayout2.Children[4] as Label;
-
-                    }
-                    else
-                    {
-                        var SecondStartdateValue = Secondgridlayout.Children[7] as CustomDatePicker;
-                        var SecondCompletionDateValue = Secondgridlayout.Children[9] as CustomDatePicker;
-                        employeecontrcatorids2 = Secondgridlayout.Children[10] as Label;
-                        this.InspectionStartDate = SecondStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        this.InspectionCompletionDate = SecondCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    }
-
-
-                    if (Device.Idiom == TargetIdiom.Tablet)
-                    {
-                        var employeecontrcatoridsforTablet = SecondStacklayout.Children[0] as Label;
-                        var employeecontrcatoridsforTabletsubstring = employeecontrcatoridsforTablet.StyleId.Split(':');
-                        string EmpCntID2 = Int32.Parse(employeecontrcatoridsforTabletsubstring[0]).ToString();
-                        string EmpCntValue2 = employeecontrcatoridsforTabletsubstring[1];
-
-                        if (EmpCntValue2 == "EmployeeLaborCraft")
-                        {
-                            EmpLaborCraftID2 = EmpCntID2;
-                        }
-                        if (EmpCntValue2 == "ContractorLaborCraft")
-                        {
-                            ContLaborCraftID2 = EmpCntID2;
-                        }
-
-                    }
-                    else
-                    {
-                        var employeecontrcatoridssubstring2 = employeecontrcatorids2.Text.Split(':');
-                        string EmpCntID2 = Int32.Parse(employeecontrcatoridssubstring2[0]).ToString();
-                        string EmpCntValue2 = employeecontrcatoridssubstring2[1];
-
-                        if (EmpCntValue2 == "EmployeeLaborCraft")
-                        {
-                            EmpLaborCraftID2 = EmpCntID2;
-                        }
-                        if (EmpCntValue2 == "ContractorLaborCraft")
-                        {
-
-                            ContLaborCraftID2 = EmpCntID2;
-                        }
-
-                    }
-
-                    int Secondhours = 0;
-                    int Secondminutes = 0;
-
-                    if (string.IsNullOrWhiteSpace(SecondHoursEntryValue.Text))
+                    if (string.IsNullOrWhiteSpace(HoursEntryValue.Text))
                     {
 
                     }
                     else
                     {
-                        Secondhours = Int32.Parse(SecondHoursEntryValue.Text);
+                        hours = Int32.Parse(HoursEntryValue.Text);
                     }
 
-                    if (string.IsNullOrWhiteSpace(SecondMinuteEntryValue.Text))
+                    if (string.IsNullOrWhiteSpace(MinuteEntryValue.Text))
                     {
 
                     }
                     else
                     {
-                        Secondminutes = Int32.Parse(SecondMinuteEntryValue.Text);
+                        minutes = Int32.Parse(MinuteEntryValue.Text);
                     }
 
-                    var Secondresult = new TimeSpan(Secondhours, Secondminutes, 0);
-                    totalTime = Secondresult.TotalSeconds;
-                    //this.InspectionStartDate = SecondStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    //this.InspectionCompletionDate = SecondCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
+                    var result = new TimeSpan(hours, minutes, 0);
+                    totalTime = result.TotalSeconds;
 
-                    // this.InspectionStartDate = Convert.ToDateTime(SecondStartdateValue.SelectedDate.ToString());
-                    // this.InspectionCompletionDate = Convert.ToDateTime(SecondCompletionDateValue.SelectedDate.ToString());
+
+
                     #region Local Validation
 
                     {
@@ -4830,16 +3798,27 @@ namespace ProteusMMX.Views.Workorder
 
 
                     #endregion
+                    // Foe Frame
+                    //listtoAnswerModel.WorkOrderID = WorkorderID;
+                    //    listtoAnswerModel.InspectionTime = ((int)totalTime).ToString();
+                    //listtoAnswerModel.StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null;
+                    //listtoAnswerModel.CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null;
+                    //listtoAnswerModel.EmployeeLaborCraftid = EmpLaborCraftID;
+                    //listtoAnswerModel.ContractorLaborCraftId = ContLaborCraftID;
+                    //listtoAnswerModel.ModifiedUserName = AppSettings.UserName;
+                    //listtoAnswer.Add(listtoAnswerModel);
+
                     listtoAnswer.Add(new InspectionTOAnswers()
                     {
                         WorkOrderID = WorkorderID,
                         InspectionTime = ((int)totalTime).ToString(),
                         StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
                         CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                        EmployeeLaborCraftid = EmpLaborCraftID2,
-                        ContractorLaborCraftId = ContLaborCraftID2,
+                        EmployeeLaborCraftid = EmpLaborCraftID,
+                        ContractorLaborCraftId = ContLaborCraftID,
                         ModifiedUserName = AppSettings.UserName
                     });
+
                     liststartAnswer.Add(new InspectionTOAnswers()
                     {
 
@@ -4852,489 +3831,12 @@ namespace ProteusMMX.Views.Workorder
                         CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
 
                     });
-                }
 
-            }
-            catch (Exception ex)
-            {
-
-
-            }
-
-
-
-            // 3rd Employee/Contractor Layout///
-            Label employeecontrcatorids3 = new Label();
-            string EmpLaborCraftID3 = "0";
-            string ContLaborCraftID3 = "0";
-            try
-            {
-                var ThirdStacklayout = ParentLayout.Children[2] as StackLayout;
-                var Thirdgridlayout = ThirdStacklayout.Children[1] as Grid;
-                if (Thirdgridlayout == null)
-                {
-                }
-                else
-                {
-                    var ThirdHoursEntryValue = Thirdgridlayout.Children[3] as Entry;
-                    var ThirdMinuteEntryValue = Thirdgridlayout.Children[5] as Entry;
-                    if (Device.Idiom == TargetIdiom.Phone)
-                    {
-                        var Thirdgridlayout2 = ThirdStacklayout.Children[2] as Grid;
-
-                        var ThirdStartdateValue = Thirdgridlayout2.Children[1] as CustomDatePicker;
-                        var ThirdCompletionDateValue = Thirdgridlayout2.Children[3] as CustomDatePicker;
-                        this.InspectionStartDate = ThirdStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        this.InspectionCompletionDate = ThirdCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        employeecontrcatorids3 = Thirdgridlayout2.Children[4] as Label;
-
-                    }
-                    else
-                    {
-                        var ThirdStartdateValue = Thirdgridlayout.Children[7] as CustomDatePicker;
-                        var ThirdCompletionDateValue = Thirdgridlayout.Children[9] as CustomDatePicker;
-                        employeecontrcatorids3 = Thirdgridlayout.Children[10] as Label;
-
-                        this.InspectionStartDate = ThirdStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        this.InspectionCompletionDate = ThirdCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    }
-
-
-                    if (Device.Idiom == TargetIdiom.Tablet)
-                    {
-                        var employeecontrcatoridsforTablet3 = ThirdStacklayout.Children[0] as Label;
-                        var employeecontrcatoridsforTabletsubstring3 = employeecontrcatoridsforTablet3.StyleId.Split(':');
-                        string EmpCntID3 = Int32.Parse(employeecontrcatoridsforTabletsubstring3[0]).ToString();
-                        string EmpCntValue3 = employeecontrcatoridsforTabletsubstring3[1];
-
-                        if (EmpCntValue3 == "EmployeeLaborCraft")
-                        {
-                            EmpLaborCraftID3 = EmpCntID3;
-                        }
-                        if (EmpCntValue3 == "ContractorLaborCraft")
-                        {
-                            ContLaborCraftID3 = EmpCntID3;
-                        }
-
-                    }
-                    else
-                    {
-                        var employeecontrcatoridssubstring3 = employeecontrcatorids3.Text.Split(':');
-                        string EmpCntID3 = Int32.Parse(employeecontrcatoridssubstring3[0]).ToString();
-                        string EmpCntValue3 = employeecontrcatoridssubstring3[1];
-
-                        if (EmpCntValue3 == "EmployeeLaborCraft")
-                        {
-                            EmpLaborCraftID3 = EmpCntID3;
-                        }
-                        if (EmpCntValue3 == "ContractorLaborCraft")
-                        {
-                            ContLaborCraftID3 = EmpCntID3;
-                        }
-
-
-                    }
-
-                    int Thirdminutes = 0;
-                    int Thirdhours = 0;
-                    if (string.IsNullOrWhiteSpace(ThirdHoursEntryValue.Text))
-                    {
-
-                    }
-                    else
-                    {
-                        Thirdhours = Int32.Parse(ThirdHoursEntryValue.Text);
-                    }
-
-                    if (string.IsNullOrWhiteSpace(ThirdMinuteEntryValue.Text))
-                    {
-
-                    }
-                    else
-                    {
-                        Thirdminutes = Int32.Parse(ThirdMinuteEntryValue.Text);
-                    }
-
-
-                    var Thirdresult = new TimeSpan(Thirdhours, Thirdminutes, 0);
-                    totalTime = Thirdresult.TotalSeconds;
-                    //this.InspectionStartDate = ThirdStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    //this.InspectionCompletionDate = ThirdCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(ThirdCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-
-                    // this.InspectionStartDate = Convert.ToDateTime(ThirdStartdateValue.Date.ToString());
-                    // this.InspectionCompletionDate = Convert.ToDateTime(ThirdCompletionDateValue.Date.ToString());
-                    #region Local Validation
-
-                    {
-                        if (!String.IsNullOrWhiteSpace(this.InspectionStartDate.ToString()) && !String.IsNullOrWhiteSpace(this.InspectionCompletionDate.ToString()))
-                        {
-                            if (this.InspectionStartDate.GetValueOrDefault().Date > this.InspectionCompletionDate.GetValueOrDefault().Date)
-                            {
-                                //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, "Inspection", formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                //await DisplayAlert("Alert", WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), "OK");
-                                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), TimeSpan.FromSeconds(2));
-                                UserDialogs.Instance.HideLoading();
-                                return;
-                            }
-                        }
-                    }
-
-
-
-
-                    #endregion
-                    listtoAnswer.Add(new InspectionTOAnswers()
-                    {
-                        WorkOrderID = WorkorderID,
-                        InspectionTime = ((int)totalTime).ToString(),
-                        StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                        CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                        EmployeeLaborCraftid = EmpLaborCraftID3,
-                        ContractorLaborCraftId = ContLaborCraftID3,
-                        ModifiedUserName = AppSettings.UserName
-                    });
-                    liststartAnswer.Add(new InspectionTOAnswers()
-                    {
-
-                        StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                    });
-                    listcompletionAnswer.Add(new InspectionTOAnswers()
-                    {
-
-                        CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                    });
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-
-            }
-
-
-
-            // 4th Employee/Contractor Layout///
-            Label employeecontrcatorids4 = new Label();
-            string EmpLaborCraftID4 = "0";
-            string ContLaborCraftID4 = "0";
-            try
-            {
-                var FourthStacklayout = ParentLayout.Children[3] as StackLayout;
-                var Fourthgridlayout = FourthStacklayout.Children[1] as Grid;
-                if (Fourthgridlayout == null)
-                {
-                }
-                else
-                {
-
-
-                    var FourthHoursEntryValue = Fourthgridlayout.Children[3] as Entry;
-                    var FourthMinuteEntryValue = Fourthgridlayout.Children[5] as Entry;
-                    if (Device.Idiom == TargetIdiom.Phone)
-                    {
-                        var Fourthgridlayout2 = FourthStacklayout.Children[2] as Grid;
-
-                        var FourthStartdateValue = Fourthgridlayout2.Children[1] as CustomDatePicker;
-                        var FourthCompletionDateValue = Fourthgridlayout2.Children[3] as CustomDatePicker;
-                        this.InspectionStartDate = FourthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        this.InspectionCompletionDate = FourthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        employeecontrcatorids4 = Fourthgridlayout2.Children[4] as Label;
-
-                    }
-                    else
-                    {
-                        var FourthStartdateValue = Fourthgridlayout.Children[7] as CustomDatePicker;
-                        var FourthCompletionDateValue = Fourthgridlayout.Children[9] as CustomDatePicker;
-                        employeecontrcatorids4 = Fourthgridlayout.Children[10] as Label;
-
-
-                        this.InspectionStartDate = FourthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        this.InspectionCompletionDate = FourthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    }
-
-
-
-                    if (Device.Idiom == TargetIdiom.Tablet)
-                    {
-                        var employeecontrcatoridsforTablet = FourthStacklayout.Children[0] as Label;
-                        var employeecontrcatoridsforTabletsubstring = employeecontrcatoridsforTablet.StyleId.Split(':');
-                        string EmpCntID4 = Int32.Parse(employeecontrcatoridsforTabletsubstring[0]).ToString();
-                        string EmpCntValue4 = employeecontrcatoridsforTabletsubstring[1];
-
-                        if (EmpCntValue4 == "EmployeeLaborCraft")
-                        {
-                            EmpLaborCraftID4 = EmpCntID4;
-                        }
-                        if (EmpCntValue4 == "ContractorLaborCraft")
-                        {
-                            ContLaborCraftID4 = EmpCntID4;
-                        }
-
-                    }
-                    else
-                    {
-                        var employeecontrcatoridssubstring4 = employeecontrcatorids4.Text.Split(':');
-                        string EmpCntID4 = Int32.Parse(employeecontrcatoridssubstring4[0]).ToString();
-                        string EmpCntValue4 = employeecontrcatoridssubstring4[1];
-
-                        if (EmpCntValue4 == "EmployeeLaborCraft")
-                        {
-                            EmpLaborCraftID4 = EmpCntID4;
-                        }
-                        if (EmpCntValue4 == "ContractorLaborCraft")
-                        {
-                            ContLaborCraftID4 = EmpCntID4;
-                        }
-
-
-                    }
-
-
-                    int Fourthhours = 0;
-                    int Fourthminutes = 0;
-
-                    if (string.IsNullOrWhiteSpace(FourthHoursEntryValue.Text))
-                    {
-
-                    }
-                    else
-                    {
-                        Fourthhours = Int32.Parse(FourthHoursEntryValue.Text);
-                    }
-
-                    if (string.IsNullOrWhiteSpace(FourthMinuteEntryValue.Text))
-                    {
-
-                    }
-                    else
-                    {
-                        Fourthminutes = Int32.Parse(FourthMinuteEntryValue.Text);
-                    }
-
-
-
-                    var Fourthresult = new TimeSpan(Fourthhours, Fourthminutes, 0);
-                    totalTime = Fourthresult.TotalSeconds;
-                    //this.InspectionStartDate = FourthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    //this.InspectionCompletionDate = FourthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FourthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    //this.InspectionStartDate = Convert.ToDateTime(FourthStartdateValue.Date.ToString());
-                    //this.InspectionCompletionDate = Convert.ToDateTime(FourthCompletionDateValue.Date.ToString());
-                    #region Local Validation
-
-                    {
-                        if (!String.IsNullOrWhiteSpace(this.InspectionStartDate.ToString()) && !String.IsNullOrWhiteSpace(this.InspectionCompletionDate.ToString()))
-                        {
-                            if (this.InspectionStartDate.GetValueOrDefault().Date > this.InspectionCompletionDate.GetValueOrDefault().Date)
-                            {
-                                //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, "Inspection", formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                //await DisplayAlert("Alert", WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), "OK");
-                                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), TimeSpan.FromSeconds(2));
-                                UserDialogs.Instance.HideLoading();
-                                return;
-                            }
-                        }
-                    }
-
-
-
-
-                    #endregion
-                    listtoAnswer.Add(new InspectionTOAnswers()
-                    {
-                        WorkOrderID = WorkorderID,
-                        InspectionTime = ((int)totalTime).ToString(),
-                        StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                        CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                        EmployeeLaborCraftid = EmpLaborCraftID4,
-                        ContractorLaborCraftId = ContLaborCraftID4,
-                        ModifiedUserName = AppSettings.UserName
-                    });
-                    liststartAnswer.Add(new InspectionTOAnswers()
-                    {
-
-                        StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                    });
-                    listcompletionAnswer.Add(new InspectionTOAnswers()
-                    {
-
-                        CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                    });
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-
-            }
-
-
-
-            // 5th Employee/Contractor Layout///
-            Label employeecontrcatorids5 = new Label();
-            string EmpLaborCraftID5 = "0";
-            string ContLaborCraftID5 = "0";
-            try
-            {
-                var FifthStacklayout = ParentLayout.Children[4] as StackLayout;
-                var Fifthgridlayout = FifthStacklayout.Children[1] as Grid;
-                if (Fifthgridlayout == null)
-                {
-                }
-                else
-                {
-                    var FifthHoursEntryValue = Fifthgridlayout.Children[3] as Entry;
-                    var FifthMinuteEntryValue = Fifthgridlayout.Children[5] as Entry;
-                    if (Device.Idiom == TargetIdiom.Phone)
-                    {
-                        var Fifthgridlayout2 = FifthStacklayout.Children[2] as Grid;
-
-                        var FifthStartdateValue = Fifthgridlayout2.Children[1] as CustomDatePicker;
-                        var FifthCompletionDateValue = Fifthgridlayout2.Children[3] as CustomDatePicker;
-                        this.InspectionStartDate = FifthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        this.InspectionCompletionDate = FifthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        employeecontrcatorids5 = Fifthgridlayout2.Children[4] as Label;
-
-                    }
-                    else
-                    {
-                        var FifthStartdateValue = Fifthgridlayout.Children[7] as CustomDatePicker;
-                        var FifthCompletionDateValue = Fifthgridlayout.Children[9] as CustomDatePicker;
-                        employeecontrcatorids5 = Fifthgridlayout.Children[10] as Label;
-
-
-
-                        this.InspectionStartDate = FifthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                        this.InspectionCompletionDate = FifthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    }
-
-
-
-                    if (Device.Idiom == TargetIdiom.Tablet)
-                    {
-                        var employeecontrcatoridsforTablet = FifthStacklayout.Children[0] as Label;
-                        var employeecontrcatoridsforTabletsubstring = employeecontrcatoridsforTablet.StyleId.Split(':');
-                        string EmpCntID5 = Int32.Parse(employeecontrcatoridsforTabletsubstring[0]).ToString();
-                        string EmpCntValue5 = employeecontrcatoridsforTabletsubstring[1];
-
-                        if (EmpCntValue5 == "EmployeeLaborCraft")
-                        {
-                            EmpLaborCraftID5 = EmpCntID5;
-                        }
-                        if (EmpCntValue5 == "ContractorLaborCraft")
-                        {
-                            ContLaborCraftID5 = EmpCntID5;
-                        }
-
-                    }
-                    else
-                    {
-                        var employeecontrcatoridssubstring5 = employeecontrcatorids5.Text.Split(':');
-                        string EmpCntID5 = Int32.Parse(employeecontrcatoridssubstring5[0]).ToString();
-                        string EmpCntValue5 = employeecontrcatoridssubstring5[1];
-
-                        if (EmpCntValue5 == "EmployeeLaborCraft")
-                        {
-                            EmpLaborCraftID5 = EmpCntID5;
-                        }
-                        if (EmpCntValue5 == "ContractorLaborCraft")
-                        {
-                            ContLaborCraftID5 = EmpCntID5;
-                        }
-
-
-                    }
-
-
-                    int Fifthhours = 0;
-                    int Fifthminutes = 0;
-
-                    if (string.IsNullOrWhiteSpace(FifthHoursEntryValue.Text))
-                    {
-
-                    }
-                    else
-                    {
-                        Fifthhours = Int32.Parse(FifthHoursEntryValue.Text);
-                    }
-
-                    if (string.IsNullOrWhiteSpace(FifthMinuteEntryValue.Text))
-                    {
-
-                    }
-                    else
-                    {
-                        Fifthminutes = Int32.Parse(FifthMinuteEntryValue.Text);
-                    }
-
-
-
-                    var Fifthresult = new TimeSpan(Fifthhours, Fifthminutes, 0);
-                    totalTime = Fifthresult.TotalSeconds;
-                    //this.InspectionStartDate = FifthStartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthStartdateValue.SelectedDate.ToString()) : (DateTime?)null;
-                    //this.InspectionCompletionDate = FifthCompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(FifthCompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
-
-                    //this.InspectionStartDate = Convert.ToDateTime(FifthStartdateValue.Date.ToString());
-                    //this.InspectionCompletionDate = Convert.ToDateTime(FifthCompletionDateValue.Date.ToString());
-                    #region Local Validation
-
-                    {
-                        if (!String.IsNullOrWhiteSpace(this.InspectionStartDate.ToString()) && !String.IsNullOrWhiteSpace(this.InspectionCompletionDate.ToString()))
-                        {
-                            if (this.InspectionStartDate.GetValueOrDefault().Date > this.InspectionCompletionDate.GetValueOrDefault().Date)
-                            {
-                                //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, "Inspection", formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                //await DisplayAlert("Alert", WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), "OK");
-                                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), TimeSpan.FromSeconds(2));
-                                UserDialogs.Instance.HideLoading();
-                                return;
-                            }
-                        }
-                    }
-
-
-
-
-                    #endregion
-                    listtoAnswer.Add(new InspectionTOAnswers()
-                    {
-                        WorkOrderID = WorkorderID,
-                        InspectionTime = ((int)totalTime).ToString(),
-                        StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                        CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                        EmployeeLaborCraftid = EmpLaborCraftID5,
-                        ContractorLaborCraftId = ContLaborCraftID5,
-                        ModifiedUserName = AppSettings.UserName
-                    });
-                    liststartAnswer.Add(new InspectionTOAnswers()
-                    {
-
-                        StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                    });
-                    listcompletionAnswer.Add(new InspectionTOAnswers()
-                    {
-
-                        CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-
-                    });
                 }
             }
             catch (Exception ex)
             {
-
-
             }
-
-
-
-
-
 
             #endregion
 
@@ -5484,7 +3986,6 @@ namespace ProteusMMX.Views.Workorder
                 }
                 workOrderInspectionTimeID.Clear();
 
-
             }
 
             // DeleteSavedTimer();
@@ -5506,12 +4007,18 @@ namespace ProteusMMX.Views.Workorder
 
         private async void BtnDelete_Clicked(object sender, EventArgs e)
         {
-            var ssdv = (sender as Button).Parent as StackLayout;
+            
+            var ssdv = (sender as SfButton).Parent as Grid;
 
-
-
-
-            var kfm = ssdv.Children.Last() as Button;
+            SfButton kfm;
+            if (ssdv.Children.Count == 4)
+            {
+                kfm = ssdv.Children[2] as SfButton;
+            }
+            else
+            {
+                kfm = ssdv.Children[1] as SfButton;
+            }
 
             //  var kfm1 = ParentLayout.Children[0] as StackLayout;
 
@@ -5543,12 +4050,16 @@ namespace ProteusMMX.Views.Workorder
         private async void BtnSectionDelete_Clicked(object sender, EventArgs e)
         {
 
-            var ssdv = (sender as Button).Parent as StackLayout;
-
-
-
-
-            var kfm = ssdv.Children.Last() as Button;
+            var ssdv = (sender as SfButton).Parent as Grid;
+            SfButton kfm ; 
+            if (ssdv.Children.Count==4)
+            {
+                 kfm = ssdv.Children[2] as SfButton;
+            }
+            else
+            {
+                 kfm = ssdv.Children[1] as SfButton;
+            }
 
             //  var kfm1 = ParentLayout.Children[0] as StackLayout;
 
@@ -5579,7 +4090,7 @@ namespace ProteusMMX.Views.Workorder
         private async void BtnEmployeeDelete_Clicked(object sender, EventArgs e)
         {
 
-            var EmployeeID = (sender as Button);
+            var EmployeeID = (sender as SfButton);
 
 
             string FinalEmployeeID = EmployeeID.StyleId;
@@ -5608,7 +4119,7 @@ namespace ProteusMMX.Views.Workorder
         private async void BtnContractorDelete_Clicked(object sender, EventArgs e)
         {
 
-            var ContrcatorID = (sender as Button);
+            var ContrcatorID = (sender as SfButton);
 
 
             string FinalContID = ContrcatorID.StyleId;
@@ -5683,9 +4194,11 @@ namespace ProteusMMX.Views.Workorder
             string key = "WorkOrderInspection:" + WorkorderID;
             WorkorderInspectionStorge.Storage.Delete(key);
         }
-        private string ExtractValueFormSection(Grid kfm)
+        private string ExtractValueFormSection(StackLayout kfm)
         {
-            var context = (kfm.Children[1] as Label).BindingContext as ExistingInspections;
+            var LalGrid = kfm.Children[0] as StackLayout;
+            var LalGrid1 = LalGrid.Children[0] as Grid;
+            var context = (LalGrid1.Children[1] as Label).BindingContext as ExistingInspections;
 
             string value = null;
 
@@ -5693,15 +4206,15 @@ namespace ProteusMMX.Views.Workorder
             {
                 case "Pass/Fail":
 
-                    var gridPF = kfm.Children[2] as Grid;
-                    var btn1PF = gridPF.Children[0] as Button;
-                    var btn2PF = gridPF.Children[1] as Button;
+                    var gridPF = LalGrid.Children[0] as Grid;
+                    var btn1PF = gridPF.Children[2] as SfButton;
+                    var btn2PF = gridPF.Children[3] as SfButton;
                     value = "";
-                    if (btn1PF.BackgroundColor != Color.Gray)
+                    if (btn1PF.BackgroundColor != Color.LightGray)
                     {
                         value = btn1PF.Text;
                     }
-                    if (btn2PF.BackgroundColor != Color.Gray)
+                    if (btn2PF.BackgroundColor != Color.LightGray)
                     {
                         value = btn2PF.Text;
                     }
@@ -5710,28 +4223,32 @@ namespace ProteusMMX.Views.Workorder
                 //break;
 
                 case "Standard Range":
-                    value = (kfm.Children[2] as Entry).Text;
+                   
+                    var gridSRange = LalGrid.Children[0] as Grid;
+                    var SRangeBorder = gridSRange.Children[2] as SfBorder;
+                    var dataTextRange = SRangeBorder.Content as Entry;
+                    value = dataTextRange.Text;                    
                     break;
 
                 case "Yes/No/N/A":
                     //value = (kfm.Children[2] as Button).Text;
 
-                    var grid = kfm.Children[2] as Grid;
-                    var btn1 = grid.Children[0] as Button;
-                    var btn2 = grid.Children[1] as Button;
-                    var btn3 = grid.Children[2] as Button;
+                    var grid = LalGrid.Children[0] as Grid;
+                    var btn1 = grid.Children[2] as SfButton;
+                    var btn2 = grid.Children[3] as SfButton;
+                    var btn3 = grid.Children[4] as SfButton;
                     value = "";
-                    if (btn1.BackgroundColor != Color.Gray)
+                    if (btn1.BackgroundColor != Color.LightGray)
                     {
                         value = btn1.Text;
                     }
-                    if (btn2.BackgroundColor != Color.Gray)
+                    if (btn2.BackgroundColor != Color.LightGray)
                     {
                         value = btn2.Text;
                     }
 
                     //TODO: add the btn3 which is NA button and add the value.
-                    if (btn3.BackgroundColor != Color.Gray)
+                    if (btn3.BackgroundColor != Color.LightGray)
                     {
                         value = btn3.Text;
                     }
@@ -5740,21 +4257,27 @@ namespace ProteusMMX.Views.Workorder
 
 
                 case "Count":
-                    value = (kfm.Children[2] as Entry).Text;
+                    var gridCount = LalGrid.Children[0] as Grid;
+                    var data = (gridCount.Children[2] as MyEntry) as Entry;
+                    value = data.Text;
                     break;
                 case "Text":
-                    value = (kfm.Children[2] as Editor).Text;
+                    var gridText = LalGrid.Children[0] as Grid;
+                    var textEntity = gridText.Children[2] as SfBorder;
+                    var dataText = textEntity.Content as Editor;
+                    value = dataText.Text;
                     break;
 
                 case "Multiple Choice":
-                    var index3 = (kfm.Children[2] as Picker).SelectedIndex;
+                    var gridMChoice = LalGrid.Children[0] as Grid;
+                    var index3 = (gridMChoice.Children[2] as Picker).SelectedIndex;
                     if (index3 == -1)
                     {
                         value = null;
                     }
                     else
                     {
-                        value = (kfm.Children[2] as Picker).Items[index3];
+                        value = (gridMChoice.Children[2] as Picker).Items[index3];
                     }
 
                     break;
@@ -5798,6 +4321,7 @@ namespace ProteusMMX.Views.Workorder
             //}
 
         }
+
         //private void ClearStartDate_Clicked(object sender, EventArgs e)
         //{
         //    if(Device.Idiom==TargetIdiom.Phone)
