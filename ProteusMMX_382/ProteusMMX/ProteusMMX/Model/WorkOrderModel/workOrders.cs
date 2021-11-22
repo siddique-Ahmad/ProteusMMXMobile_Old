@@ -120,6 +120,8 @@ namespace ProteusMMX.Model.WorkOrderModel
 
         public string MaintenanceCodeName { get; set; }
         public string AssetName { get; set; }
+
+        public string AssetNumber { get; set; }
         public string AssetSystemName { get; set; }
 
         public string AssetSystemNumber { get; set; }

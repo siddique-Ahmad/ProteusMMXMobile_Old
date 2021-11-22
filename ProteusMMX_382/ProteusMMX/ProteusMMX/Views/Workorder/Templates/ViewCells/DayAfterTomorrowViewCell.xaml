@@ -47,7 +47,9 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="{Binding AssetName}"/>
-                                        <Span Text=" (Asset Name)" />
+                                        <Span Text=":"/>
+                                        <Span Text="{Binding AssetNumber}"/>
+                                        <Span Text=" (Asset)" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -55,7 +57,9 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="{Binding AssetSystemName}"/>
-                                        <Span Text=" (Asset System Name)" />
+                                        <Span Text=":"/>
+                                        <Span Text="{Binding AssetSystemNumber}"/>
+                                        <Span Text=" (Asset System)" />
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>

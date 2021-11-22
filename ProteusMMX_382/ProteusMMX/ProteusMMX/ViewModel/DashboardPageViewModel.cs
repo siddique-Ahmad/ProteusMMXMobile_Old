@@ -16,6 +16,7 @@ using ProteusMMX.ViewModel.Asset;
 using ProteusMMX.ViewModel.Barcode;
 using ProteusMMX.ViewModel.ClosedWorkorder;
 using ProteusMMX.ViewModel.Inventory;
+using ProteusMMX.ViewModel.KPIDashboard;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.PurchaseOrder;
 using ProteusMMX.ViewModel.SelectionListPagesViewModels;
@@ -643,6 +644,8 @@ namespace ProteusMMX.ViewModel
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
         public ICommand WorkordersCommand => new AsyncCommand(ShowWorkorders);
+
+        public ICommand KPICommand => new AsyncCommand(ShowKPIDashboard);
         public ICommand CloseWorkordersCommand => new AsyncCommand(ShowCloseWorkorders);
         public ICommand InventoryCommand => new AsyncCommand(ShowInventory);
         public ICommand ServiceRequestCommand => new AsyncCommand(ShowServiceRequest);
@@ -901,7 +904,33 @@ namespace ProteusMMX.ViewModel
 
         }
 
+        
 
+        public async Task ShowKPIDashboard()
+        {
+
+            try
+            {
+
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                //OperationInProgress = true;
+                await NavigationService.NavigateToAsync<KPIDashboardViewModel>();
+
+
+
+            }
+            catch (Exception ex)
+            {
+                // OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                //OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+            }
+        }
         public async Task ShowWorkorders()
         {
 
@@ -910,7 +939,7 @@ namespace ProteusMMX.ViewModel
                
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                 //OperationInProgress = true;
-                await GetWorkorderControlRights();
+               
                 await NavigationService.NavigateToAsync<WorkorderListingPageViewModel>();
 
 

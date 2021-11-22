@@ -27,6 +27,7 @@ using ProteusMMX.ViewModel.Workorder;
 using ProteusMMX.Services.Workorder.Attachments;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using ProteusMMX.DependencyInterface;
 
 namespace ProteusMMX.Views.Workorder
 {
@@ -253,6 +254,27 @@ namespace ProteusMMX.Views.Workorder
             return responseContent;
         }
 
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            //var a =sender as BindingContext
+            //switch (Device.RuntimePlatform)
+            //{
+            //    case Device.iOS:
+            //        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action);
+            //        break;
+            //    case Device.Android:
+            //        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action);
+
+            //        //var pdfurl = AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action;
+            //        //Device.OpenUri(new Uri(pdfurl));
+            //        break;
+            //    case Device.UWP:
+            //        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action);
+            //        break;
+            //    default:
+            //        break;
+            //}
+        }
     }
 
 

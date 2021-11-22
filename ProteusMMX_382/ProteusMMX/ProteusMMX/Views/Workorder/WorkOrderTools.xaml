@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.WorkOrderTools"
-             xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
+             xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX" xmlns:controls="clr-namespace:ProteusMMX.Controls" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              Icon="tools.png">
 
     <ContentPage.Resources>
@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ContentPage.ToolbarItems>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -35,17 +35,7 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
-    <!--<ContentPage.Resources>
-        <ResourceDictionary>
-
-            <templates:ToolsListingTemplateSelector x:Key="DateTemplateSelector">
-            </templates:ToolsListingTemplateSelector>
-
-
-
-        </ResourceDictionary>
-    </ContentPage.Resources>-->
-
+   
 
     <ContentPage.Content>
         <Grid Padding="10,20,10,10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
@@ -65,7 +55,93 @@
             </ListView>
 
 
-            <!--<ActivityIndicator Grid.Row="2" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
+            --><!--<ActivityIndicator Grid.Row="2" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>--><!--
+
+        </Grid>
+
+
+    </ContentPage.Content>-->
+
+    <ContentPage.ToolbarItems>
+
+
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="Dot.png"   Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="Dot.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/Dot.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+
+
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
+
+            <Grid Grid.Row="1"  Padding="5,5,5,5">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <border:SfBorder Padding="5,5,5,5" CornerRadius="5">
+                    <controls:CustomEntry  Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                </border:SfBorder>
+                <!--<Button Grid.Column="1" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />-->
+                <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,0,0,0">
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource" >
+                            <OnPlatform.Android>searchiconblack.png</OnPlatform.Android>
+                        </OnPlatform>
+                    </Image.Source>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                                         Command="{Binding ScanCommand}"
+                                         NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <StackLayout VerticalOptions="Center" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label TextColor="Black" FontFamily="Ebrima" FontAttributes="Bold"  Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}"/>
+                    <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,0" HorizontalOptions="Center" Text=":" Grid.Column="3"/>
+                    <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="Black" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordCount}"/>
+                </StackLayout>
+
+
+                <StackLayout Spacing="0" Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HeightRequest="40">
+                    <ListView  Grid.Row="1" Grid.ColumnSpan="2"
+                         ItemTemplate="{StaticResource DateTemplateSelector}"
+                          HasUnevenRows="True"
+                          SeparatorVisibility="Default"
+                          CachingStrategy="RecycleElement"
+                           ItemsSource="{Binding ToolsCollection}">
+
+
+                    </ListView>
+                </StackLayout>
+            </Grid>
+
+            <ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
 
         </Grid>
 

@@ -15,6 +15,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using ZXing.Mobile;
+using ZXing.Net.Mobile.Forms;
 
 namespace ProteusMMX.ViewModel.Workorder
 {
@@ -45,6 +47,25 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _formControlsAndRights = value;
                     OnPropertyChanged(nameof(FormControlsAndRights));
+                }
+            }
+        }
+
+        string _searchText;
+        public string SearchText
+        {
+            get
+            {
+                return _searchText;
+            }
+
+            set
+            {
+                if (value != _searchText)
+                {
+                    _searchText = value;
+                    OnPropertyChanged("SearchText");
+                   
                 }
             }
         }
@@ -80,6 +101,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _userID = value;
                     OnPropertyChanged("UserID");
+                }
+            }
+        }
+
+        string _searchPlaceholder;
+        public string SearchPlaceholder
+        {
+            get
+            {
+                return _searchPlaceholder;
+            }
+
+            set
+            {
+                if (value != _searchPlaceholder)
+                {
+                    _searchPlaceholder = value;
+                    OnPropertyChanged("SearchPlaceholder");
                 }
             }
         }
@@ -278,7 +317,28 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-        string _addTool="";
+
+        string _totalRecordTitle;
+        public string TotalRecordTitle
+        {
+            get
+            {
+                return _totalRecordTitle;
+            }
+
+            set
+            {
+                if (value != _totalRecordTitle)
+                {
+                    _totalRecordTitle = value;
+                    OnPropertyChanged("TotalRecordTitle");
+                }
+            }
+        }
+
+
+        
+        string _addTool ="";
         public string AddTool
         {
             get
@@ -372,6 +432,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
+
+        public ICommand ScanCommand => new AsyncCommand(ScanTools);
 
         #endregion
 
@@ -505,10 +567,102 @@ namespace ProteusMMX.ViewModel.Workorder
                 ToolSize = WebControlTitle.GetTargetNameByTitleName("ToolSize");
                 Remove = WebControlTitle.GetTargetNameByTitleName("RemoveTool");
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+                 TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName("TotalRecords");
+            SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("Search")+ WebControlTitle.GetTargetNameByTitleName("Tools");
+            // TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName(titles, "TotalRecords");
 
-                // TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName(titles, "TotalRecords");
 
-          
+        }
+        public async Task ScanTools()
+        {
+
+            try
+            {
+                OperationInProgress = true;
+
+
+                #region Barcode Section and Search Section
+
+                if (String.IsNullOrWhiteSpace(this.SearchText))
+                {
+                    var options = new MobileBarcodeScanningOptions()
+                    {
+                        AutoRotate = false,
+                        TryHarder = true,
+
+                    };
+
+                    ZXingScannerPage _scanner = new ZXingScannerPage(options)
+                    {
+                        DefaultOverlayTopText = "Align the barcode within the frame",
+                        DefaultOverlayBottomText = string.Empty,
+                        DefaultOverlayShowFlashButton = true
+                    };
+
+                    _scanner.OnScanResult += _scanner_OnScanResult;
+                    var navPage = App.Current.MainPage as NavigationPage;
+                    await navPage.PushAsync(_scanner);
+                }
+
+                else
+                {
+                    //reset pageno. and start search again.
+                    await RefillToolsCollection();
+
+                }
+
+                #endregion
+
+                //await NavigationService.NavigateToAsync<WorkorderListingPageViewModel>();
+            }
+            catch (Exception ex)
+            {
+                OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                OperationInProgress = false;
+
+            }
+        }
+        private async void _scanner_OnScanResult(ZXing.Result result)
+        {
+            //Set the text property
+            this.SearchText = result.Text;
+
+            ///Pop the scanner page
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                var navPage = App.Current.MainPage as NavigationPage;
+                await navPage.PopAsync();
+
+
+                //reset pageno. and start search again.
+                await RefillToolsCollection();
+
+
+            });
+
+        }
+        private async Task RemoveAllToolsFromCollection()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                ToolsCollection.Clear();
+                OnPropertyChanged(nameof(ToolsCollection));
+            });
+
+
+
+        }
+        private async Task RefillToolsCollection()
+        {
+
+            PageNumber = 1;
+            await RemoveAllToolsFromCollection();
+            await GetWorkorderToolsFromSearchBar();
         }
         public async Task ShowActions()
         {
@@ -597,18 +751,47 @@ namespace ProteusMMX.ViewModel.Workorder
            // PageNumber++;
             await GetWorkorderTools();
         }
-        async Task GetWorkorderTools()
+
+        async Task GetWorkorderToolsFromSearchBar()
         {
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorderTools(WorkorderID.ToString());
+                var workordersResponse = await _workorderService.GetWorkorderTools(WorkorderID.ToString(), this.SearchText);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.tools != null && workordersResponse.workOrderWrapper.tools.Count > 0)
                 {
 
                     var workordertools = workordersResponse.workOrderWrapper.tools;
                     await AddWorkorderToolsInWorkorderCollection(workordertools);
+                    TotalRecordCount = workordersResponse.workOrderWrapper.tools.Count;
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                OperationInProgress = false;
+            }
+
+            finally
+            {
+                OperationInProgress = false;
+            }
+        }
+        async Task GetWorkorderTools()
+        {
+            try
+            {
+                OperationInProgress = true;
+                var workordersResponse = await _workorderService.GetWorkorderTools(WorkorderID.ToString(),null);
+                if (workordersResponse != null && workordersResponse.workOrderWrapper != null
+                    && workordersResponse.workOrderWrapper.tools != null && workordersResponse.workOrderWrapper.tools.Count > 0)
+                {
+
+                    var workordertools = workordersResponse.workOrderWrapper.tools;
+                    await AddWorkorderToolsInWorkorderCollection(workordertools);
+                    TotalRecordCount = workordersResponse.workOrderWrapper.tools.Count;
 
                 }
             }
@@ -713,7 +896,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
-
+            this.SearchText = "";
         }
 
 

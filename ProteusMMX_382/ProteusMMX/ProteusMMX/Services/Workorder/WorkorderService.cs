@@ -38,8 +38,79 @@ namespace ProteusMMX.Services.Workorder
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }
+
+        public Task<ServiceOutput> GetWorkOrderKPIDetails(int EmpID, int? PriorityID)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.GetKPIRecord);
+            builder.AppendToPath(EmpID.ToString());
+            if (PriorityID == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(PriorityID.ToString());
+           
+
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.GetAsync(uri);
+        }
+
         
 
+       public Task<ServiceOutput> GetWorkordersfromKPI(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate,string KPIType)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.GetWorkordersKPIType);
+            builder.AppendToPath(UserID);
+            builder.AppendToPath(PageNumber);
+            builder.AppendToPath(RowCount);
+
+            if (WorkorderNumber == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(WorkorderNumber);
+
+
+
+            if (WorkorderType == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(WorkorderType);
+
+            if (ActivationDateSortingType == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(ActivationDateSortingType);
+
+            if (LocationSearch == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(LocationSearch);
+
+            if (ShiftSearch == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(ShiftSearch);
+
+            if (PrioritySearch == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(PrioritySearch);
+
+            if (SortByDueDate == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(SortByDueDate);
+
+            if (KPIType == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(KPIType);
+
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.GetAsync(uri);
+        }
         public Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
@@ -193,11 +264,19 @@ namespace ProteusMMX.Services.Workorder
 
 
 
-        public Task<ServiceOutput> GetWorkorderTools(string Workorderid)
+        public Task<ServiceOutput> GetWorkorderTools(string Workorderid,string SearchText)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetWorkorderTools);
             builder.AppendToPath(Workorderid);
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                builder.AppendToPath("null");
+            }
+            else
+            {
+                builder.AppendToPath(SearchText);
+            }
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }

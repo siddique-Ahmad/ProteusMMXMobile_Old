@@ -3,83 +3,89 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.Templates.ViewCells.ToolsViewCell" BindingContextChanged="OnBindingContextChanged">
     <ViewCell.View>
-        <Grid RowSpacing="5">
+        <StackLayout x:Name="TopLayout" Padding="4,1,4,1" >
+            <StackLayout.Resources>
+                <ResourceDictionary Source="Styles.xaml" />
+            </StackLayout.Resources>
+            <Frame BackgroundColor="White"  BorderColor="DarkGray"    CornerRadius="5">
+                <Grid RowSpacing="3">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                       
+                    </Grid.RowDefinitions>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                           
+                        </Grid.ColumnDefinitions>
 
-                <Label x:Name="ToolName" />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding ToolName}" Grid.Column="2" />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima"  x:Name="ToolNumber" />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text=":" Grid.Column="1"  />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text="{Binding ToolNumber}" Grid.Column="2" />
 
-            </Grid>
+                    </Grid>
 
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                          
+                        </Grid.ColumnDefinitions>
 
-                <Label x:Name="ToolNumber"  />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding ToolNumber}" Grid.Column="2" />
-
-
-            </Grid>
-
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Label x:Name="ToolCribName"  />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding ToolCribName}" Grid.Column="2"  />
+                        <Label x:Name="ToolName"  />
+                        <Label Text=":" Grid.Column="1"  />
+                        <Label Text="{Binding ToolName}" Grid.Column="2" />
 
 
-            </Grid>
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                           
+                        </Grid.ColumnDefinitions>
+
+                        <Label x:Name="ToolCribName"  />
+                        <Label Text=":" Grid.Column="1"  />
+                        <Label Text="{Binding ToolCribName}" Grid.Column="2"  />
 
 
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Label x:Name="ToolSize"  />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding ToolSize}" Grid.Column="2"  />
+                    </Grid>
 
 
-            </Grid>
+                    <Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                           
+                        </Grid.ColumnDefinitions>
+
+                        <Label x:Name="ToolSize"  />
+                        <Label Text=":" Grid.Column="1"  />
+                        <Label Text="{Binding ToolSize}" Grid.Column="2"  />
 
 
+                    </Grid>
+                    <Label x:Name="ShowMore" TextColor="#006de0" Text="RemoveTool" HorizontalOptions="End"  Grid.Row="4">
+                    </Label>
 
-            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
+                </Grid>
+            </Frame>
+        </StackLayout>
 
-
-        </Grid>
+      
     </ViewCell.View>
 
     <ViewCell.ContextActions>

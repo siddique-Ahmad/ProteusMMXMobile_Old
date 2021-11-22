@@ -95,7 +95,7 @@
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <!--<Span Text="{Binding WorkorderNumberTitle}"/>-->
-                                                <Span Text="Workorder Number"></Span>
+                                                <Span Text="Work Order Number"></Span>
                                                 <Span Text=":"/>
                                                 <Span Text="{Binding WorkorderNumberText}"/>
                                             </FormattedString>
@@ -309,7 +309,7 @@
                                     </Label>
                                 </StackLayout>
 
-                                <border:SfBorder HeightRequest="50" Style="{StaticResource SfBorderStyle}">
+                                <border:SfBorder HeightRequest="40" Style="{StaticResource SfBorderStyle}">
                                     <buttons:SfButton  Text="{Binding AssetSystemName}"  Command="{Binding AssetSystemCommand}" Style="{StaticResource SfButtonStyles}" IsEnabled="{Binding AssetIsEnable}" IsVisible="{Binding AssetSystemIsVisibleForLicensing}" >
                                     </buttons:SfButton>
                                 </border:SfBorder>
@@ -647,7 +647,7 @@
 
                         </Grid>
 
-                        <Grid Margin="10,0,20,0" Grid.Row="2" x:Name="Grid_column" IsVisible="{Binding AdditionalDetailsIsVisible}" >
+                        <Grid Margin="10,0,0,0" Grid.Row="2" x:Name="Grid_column" IsVisible="{Binding AdditionalDetailsIsVisible}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1500*" ></ColumnDefinition>
                                 <ColumnDefinition Width="40*"></ColumnDefinition>
@@ -697,7 +697,7 @@
 
 
 
-                        <Grid Margin="10,0,20,0"  Grid.Row="3" x:Name="Grid_column1" IsVisible="{Binding InternalNotesIsVisible}" >
+                        <Grid Margin="10,0,0,0"  Grid.Row="3" x:Name="Grid_column1" IsVisible="{Binding InternalNotesIsVisible}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1500*" ></ColumnDefinition>
                                 <ColumnDefinition Width="40*"></ColumnDefinition>
@@ -730,7 +730,7 @@
 
                         </Grid>
 
-                        <Grid Margin="10,0,20,0"  Grid.Row="4" x:Name="Grid_column2" IsVisible="{Binding SignaturesIsVisible}" >
+                        <Grid Margin="10,0,0,0"  Grid.Row="4" x:Name="Grid_column2" IsVisible="{Binding SignaturesIsVisible}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1500*" ></ColumnDefinition>
                                 <ColumnDefinition Width="40*"></ColumnDefinition>
@@ -762,7 +762,7 @@
 
                         </Grid>
 
-                        <Button x:Name="SaveButton" Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="5" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>
+                        <Button x:Name="SaveButton"  Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="5" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>
 
                     </Grid>
                 </ScrollView>
