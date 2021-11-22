@@ -37,6 +37,7 @@ using ProteusMMX.ViewModel.Asset;
 using ProteusMMX.ViewModel.Barcode;
 using ProteusMMX.ViewModel.ClosedWorkorder;
 using ProteusMMX.ViewModel.Inventory;
+using ProteusMMX.ViewModel.KPIDashboard;
 using ProteusMMX.ViewModel.PurchaseOrder;
 using ProteusMMX.ViewModel.SelectionListPagesViewModels;
 using ProteusMMX.ViewModel.SelectionListPagesViewModels.Asset;
@@ -94,6 +95,7 @@ namespace ProteusMMX.ViewModel
             _containerBuilder.RegisterType<ExtendedSplashViewModel>();
             _containerBuilder.RegisterType<LoginPageViewModel>();
             _containerBuilder.RegisterType<DashboardPageViewModel>();
+            _containerBuilder.RegisterType<KPIDashboardViewModel>();
             _containerBuilder.RegisterType<WorkorderListingPageViewModel>();
             _containerBuilder.RegisterType<CreateWorkorderPageViewModel>();
             _containerBuilder.RegisterType<WorkorderTabbedPageViewModel>();

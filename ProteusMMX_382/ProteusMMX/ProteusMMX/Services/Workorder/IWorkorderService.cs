@@ -10,10 +10,16 @@ namespace ProteusMMX.Services.Workorder
     {
         Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber , string RowCount , string WorkorderNumber , string WorkorderType , string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate);
 
+        Task<ServiceOutput> GetWorkordersfromKPI(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate,string KPIType);
+
+        
+
         Task<ServiceOutput> GetWorkordersFromAsset(string AssetNumber, string UserID, int PageNumber, int RowCount);
 
         Task<ServiceOutput> GetWorkorderControlRights(string UserID, string PARENTCONTROL, string CHILDCONTROL);
         Task<ServiceOutput> GetWorkorderDDRecord(string UserID);
+
+        Task<ServiceOutput> GetWorkOrderKPIDetails(int EmpId,int? PriorityID);
 
         Task<ServiceOutput> GetWorkorderByWorkorderID(string UserID, string WorkorderID);
         Task<ServiceOutput> GetWorkorderLabour(string UserID, string WorkorderID);
@@ -30,7 +36,7 @@ namespace ProteusMMX.Services.Workorder
 
         Task<ServiceOutput> RemoveTool(object workorder);
 
-        Task<ServiceOutput> GetWorkorderTools(string Workorderid);
+        Task<ServiceOutput> GetWorkorderTools(string Workorderid,string SearchText);
 
         Task<ServiceOutput> GetWorkorderNonStockroomParts(int Workorderid);
 

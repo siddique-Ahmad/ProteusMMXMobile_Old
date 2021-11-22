@@ -424,6 +424,9 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand DeleteCommand => new AsyncCommand(DeleteAttachment);
         public ICommand SaveCommand => new AsyncCommand(SaveAttachment);
 
+        public ICommand AttachmentTapCommand => new AsyncCommand(AttachmentClicked);
+        
+
         public bool IsAutoAnimationRunning { get; set; }
 
         public bool IsUserInteractionRunning { get; set; }
@@ -828,12 +831,26 @@ namespace ProteusMMX.ViewModel.Workorder
                 OperationInProgress = false;
             }
         }
+        
 
+        public async Task AttachmentClicked()
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
         public async Task OpenMedia()
         {
             try
             {
-                List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery") };
+                List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery"),"PDF/Word/Excel" };
                 var selected = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("ChooseFile"), SelectTitle, CancelTitle, choice.ToArray());
                 if (selected != null && !selected.Equals(WebControlTitle.GetTargetNameByTitleName("Cancel")))
                 {
@@ -1349,15 +1366,29 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
 
                                 if (file.attachmentFileExtension != null &&
-                                    (file.attachmentFileExtension.Contains(".pdf") ||
-                                    file.attachmentFileExtension.Contains(".doc") ||
-                                    file.attachmentFileExtension.Contains(".docx") ||
-                                    file.attachmentFileExtension.Contains(".xls") ||
-                                    file.attachmentFileExtension.Contains(".xlsx") ||
-                                    file.attachmentFileExtension.Contains(".txt")))
+                                    (file.attachmentFileExtension.ToLower().Contains(".pdf") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".doc") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".docx") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".xls") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".xlsx") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".txt")))
                                 {
 
-                                    DocumentAttachments.Add(file.attachmentFileExtension);
+                                    //DocumentAttachments.Add(file.attachmentFileExtension);
+
+                                    Attachments.Add(new WorkorderAttachment
+                                    {
+                                        IsSynced = true,
+                                        attachmentFileExtension = file.attachmentFileExtension,
+                                        //ImageBytes = imgUser, //byteImage,
+                                        WorkOrderAttachmentID = file.WorkOrderAttachmentID,
+                                        AttachmentImageSource = ImageSource.FromResource("pdf.png")
+
+                                    });
+
+
+
+
                                 }
                                 else
                                 {
@@ -1379,10 +1410,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                                 //ImageBytes = imgUser, //byteImage,
                                                 WorkOrderAttachmentID = file.WorkOrderAttachmentID,
                                                 AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage)))),
-                                                //  AttachmentImageSource = ImageSource.FromStream(() => new MemoryStream(imgUser))
-                                                // DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action);
-
-                                                //AttachmentImageSource = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Inspection/Service/AttachmentItem.ashx?Id="+file.WorkOrderAttachmentID+"&&Module=workorder"))
+                                               
                                             }
                                             );
                                             //}

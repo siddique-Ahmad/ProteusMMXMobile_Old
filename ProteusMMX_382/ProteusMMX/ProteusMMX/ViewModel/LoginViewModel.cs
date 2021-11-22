@@ -633,13 +633,23 @@ namespace ProteusMMX.ViewModel
                     await DialogService.ShowAlertAsync("Please enter Site Url", "Alert", "OK");
                     return;
                 }
+                apiVersion = await _authenticationService.GetAPIVersion(SiteUrl);
 
+
+                if (apiVersion == null)
+                {
+                    UserDialogs.Instance.HideLoading();
+
+                    await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
+                    return;
+
+                }
 
                 AppSettings.BaseURL = SiteUrl;
 
 
                 var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName, Password);
-                AppSettings.APIVersion = user.mmxUser.blackhawkLicValidator.APIVersion;
+                
                 if (user == null || user.mmxUser == null || Convert.ToBoolean(user.servicestatus) == false)
                 {
                     UserDialogs.Instance.HideLoading();
@@ -657,7 +667,7 @@ namespace ProteusMMX.ViewModel
                     return;
                 }
                 /// Save the MMXUser Properties the so we can reuse that.
-
+                AppSettings.APIVersion = user.mmxUser.blackhawkLicValidator.APIVersion;
                 AppSettings.User = user.mmxUser;
                 AppSettings.UserName = UserName;
                 AppSettings.Password = Password;

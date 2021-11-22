@@ -27,7 +27,7 @@ namespace ProteusMMX
 
         public static string APPVersion
         {
-            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.14.3");
+            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.15");
         }
         public static string UserName
         {
@@ -266,6 +266,26 @@ namespace ProteusMMX
 
         #region Workorder Module
 
+        
+
+       private static string _getWorkordersKPIType = "Inspection/service/GetWorkOrderDetails";
+        public static string GetWorkordersKPIType
+        {
+            get
+            {
+                return _getWorkordersKPIType;
+            }
+
+            set
+            {
+                if (value != _getWorkordersKPIType)
+                {
+                    _getWorkordersKPIType = value;
+                }
+            }
+
+        }
+
         #region Workorder
         private static string _getWorkorders = "Inspection/service/WorkOrders";
         public static string GetWorkorders
@@ -320,7 +340,27 @@ namespace ProteusMMX
             }
 
         }
+
+        private static string _getKPIRecord = "Inspection/service/GetWorkOrderTime";
+        public static string GetKPIRecord
+        {
+            get
+            {
+                return _getKPIRecord;
+            }
+
+            set
+            {
+                if (value != _getKPIRecord)
+                {
+                    _getKPIRecord = value;
+                }
+            }
+
+        }
+
         
+
         private static string _getWorkorderLabour = "Inspection/service/WorkOrderLabors";
         public static string GetWorkorderLabour
         {

@@ -1,5 +1,5 @@
-﻿using ProteusMMX.ViewModel.Miscellaneous;
-using ProteusMMX.ViewModel.Workorder;
+﻿using ProteusMMX.ViewModel.KPIDashboard;
+using ProteusMMX.ViewModel.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +9,22 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace ProteusMMX.Views.Workorder
+namespace ProteusMMX.Views.KPI
 {
-	 [XamlCompilation(XamlCompilationOptions.Skip)]
-    public partial class AddNewTool : ContentPage
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class KPIDashboard : ContentPage
     {
-        public AddNewTool()
+        public KPIDashboard()
         {
             InitializeComponent();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
         }
-
-        public AddNewToolViewModel ViewModel
+        public KPIDashboardViewModel ViewModel
         {
             get
             {
-                return this.BindingContext as AddNewToolViewModel;
+                return this.BindingContext as KPIDashboardViewModel;
             }
         }
         protected override async void OnAppearing()

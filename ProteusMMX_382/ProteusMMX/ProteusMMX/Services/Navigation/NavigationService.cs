@@ -48,6 +48,8 @@ using Xamarin.Forms;
 using ProteusMMX.Model.PurchaseOrderModel;
 using ProteusMMX.Model.ClosedWorkOrderModel;
 using ProteusMMX.Services.Workorder;
+using ProteusMMX.Views.KPI;
+using ProteusMMX.ViewModel.KPIDashboard;
 
 namespace ProteusMMX.Services.Navigation
 {
@@ -693,6 +695,7 @@ namespace ProteusMMX.Services.Navigation
             _mappings.Add(typeof(ExtendedSplashViewModel), typeof(ExtendedSplashPage));
             _mappings.Add(typeof(LoginPageViewModel), typeof(LoginPage));
             _mappings.Add(typeof(DashboardPageViewModel), typeof(DashboardPage));
+            _mappings.Add(typeof(KPIDashboardViewModel), typeof(KPIDashboard));
             _mappings.Add(typeof(WorkorderListingPageViewModel), typeof(WorkorderListingPage));
             _mappings.Add(typeof(CreateWorkorderPageViewModel), typeof(CreateWorkorderPage));
             _mappings.Add(typeof(WorkorderTabbedPageViewModel), typeof(WorkorderTabbedPage));

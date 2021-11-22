@@ -547,7 +547,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-
+        string KPIDashboardType = string.Empty;
         string _searchText;
         public string SearchText
         {
@@ -1322,10 +1322,13 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     var navigationParams = navigationData as TargetNavigationData;
                     this.SearchText = navigationParams.SearchText;
+
                     IsLocationCallFrombarcodePage = navigationParams.IsLocationCallFrombarcodePage;
                     IsAssetCallFrombarcodePage = navigationParams.IsAssetCallFrombarcodePage;
-                }
 
+                    //this.KPIDashboardType = navigationParams.Type;
+                }
+                await GetWorkorderControlRights();
                 OperationInProgress = true;
                 Application.Current.Properties["gridrowindex"] = 1;
                 //await GetWorkorderControlRights();
@@ -1401,10 +1404,11 @@ namespace ProteusMMX.ViewModel.Workorder
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
                 SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 CreateWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder");
-                //SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName(titles, "SelectOptionsTitles"); 
-                PreventiveMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("PreventiveMaintenance");
-                DemandMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("DemandMaintenance");
-                EmergencyMaintenanceTitle = WebControlTitle.GetTargetNameByTitleName("EmergencyMaintenance");
+
+            PreventiveMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("PreventiveMaintenance");
+            DemandMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("DemandMaintenance");
+
+            EmergencyMaintenanceTitle = WebControlTitle.GetTargetNameByTitleName("EmergencyMaintenance");
 
                 SortByActivationdateTitle = WebControlTitle.GetTargetNameByTitleName("SortByActivationdate");
                 NoneTitle = WebControlTitle.GetTargetNameByTitleName("None");
@@ -1459,7 +1463,20 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                
             }
-                WorkorderTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("SortByWorkOrderType");
+            if (PreventiveMaintenenceTitle == null)
+            {
+                PickerTitles.Remove(PreventiveMaintenenceTitle);
+            }
+            if (DemandMaintenenceTitle == null)
+            {
+                PickerTitles.Remove(DemandMaintenenceTitle);
+            }
+            if (EmergencyMaintenanceTitle == null)
+            {
+                PickerTitles.Remove(EmergencyMaintenanceTitle);
+            }
+
+            WorkorderTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("SortByWorkOrderType");
                 SortByLocationLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Location");
                 SortByShiftLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Shift");
                 SortByDuedateTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Due") + " " + WebControlTitle.GetTargetNameByTitleName("Date");
@@ -1552,7 +1569,8 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, new ObservableCollection<string>() { DemandMaintenenceTitle, PreventiveMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle });
+                
+                var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, PickerTitles);
                 if (response == CancelTitle)
                 {
                     this.SelectedSortingText = null;
@@ -1651,7 +1669,34 @@ namespace ProteusMMX.ViewModel.Workorder
 
             PageNumber = 1;
             await RemoveAllWorkorderFromCollection();
-            await GetWorkorders();
+            if (Application.Current.Properties.ContainsKey("PriorityID"))
+            {
+                var priorityfilter = Application.Current.Properties["PriorityID"].ToString();
+                this.PriorityNameFilterText = priorityfilter;
+            }
+            if (Application.Current.Properties.ContainsKey("overdue"))
+            {
+                var overdue = Application.Current.Properties["overdue"].ToString();
+                this.KPIDashboardType = overdue;
+            }
+            if (Application.Current.Properties.ContainsKey("today"))
+            {
+                var Today = Application.Current.Properties["today"].ToString();
+                this.KPIDashboardType = Today;
+            }
+            if (Application.Current.Properties.ContainsKey("weekly"))
+            {
+                var Weekly = Application.Current.Properties["weekly"].ToString();
+                this.KPIDashboardType = Weekly;
+            }
+            if (!String.IsNullOrWhiteSpace(this.KPIDashboardType))
+            {
+                await GetWorkordersFromKPIDashboard();
+            }
+            else
+            {
+                await GetWorkorders();
+            }
 
 
         }
@@ -1823,11 +1868,50 @@ namespace ProteusMMX.ViewModel.Workorder
             if (string.IsNullOrWhiteSpace(SearchText))
             {
                 PageNumber++;
-                await GetWorkorders();
+                if (!String.IsNullOrWhiteSpace(this.KPIDashboardType))
+                {
+
+                }
+                else
+                {
+                    await GetWorkorders();
+                }
             }
 
 
 
+        }
+
+        
+        async Task GetWorkordersFromKPIDashboard()
+        {
+
+            try
+            {
+                OperationInProgress = true;
+                var workordersResponse = await _workorderService.GetWorkordersfromKPI(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate,KPIDashboardType);
+                if (workordersResponse != null && workordersResponse.workOrderWrapper != null
+                    && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
+                {
+
+                    var workorders = workordersResponse.workOrderWrapper.workOrders;
+
+                    await AddWorkordersInWorkorderCollection(workorders);
+
+                }
+                TotalRecordCount = workordersResponse.workOrderWrapper.WorkOrderCount;
+
+            }
+            catch (Exception ex)
+            {
+
+                OperationInProgress = false;
+            }
+
+            finally
+            {
+                OperationInProgress = false;
+            }
         }
         async Task GetWorkorders()
         {
@@ -2626,6 +2710,24 @@ namespace ProteusMMX.ViewModel.Workorder
 
             this.SearchText = null;
 
+            if (Application.Current.Properties.ContainsKey("overdue"))
+            {
+                Application.Current.Properties.Remove("overdue");
+            }
+            if (Application.Current.Properties.ContainsKey("weekly"))
+            {
+                Application.Current.Properties.Remove("weekly");
+            }
+            if (Application.Current.Properties.ContainsKey("today"))
+            {
+                Application.Current.Properties.Remove("today");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityID"))
+            {
+                Application.Current.Properties.Remove("PriorityID");
+            }
+
+
             if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
             {
                 Application.Current.Properties.Remove("LocationFilterkey");
@@ -2673,8 +2775,223 @@ namespace ProteusMMX.ViewModel.Workorder
                
             }
 
+        public async Task GetWorkorderControlRights()
+        {
+            try
+            {
+                ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Details");
+                ServiceOutput FormControlsAndRightsForTask = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tasks");
+                ServiceOutput FormControlsAndRightsForInspection = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Inspections");
+                ServiceOutput FormControlsAndRightsForTools = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tools");
+                ServiceOutput FormControlsAndRightsForParts = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Parts");
+                ServiceOutput FormControlsAndRightsForAttachments = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Attachments");
+                if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
+                {
+                    var WorkOrderModule = FormControlsAndRightsForDetails.lstModules[0];
+                    if (WorkOrderModule.ModuleName == "Details") //ModuleName can't be  changed in service 
+                    {
+                        if (WorkOrderModule.lstSubModules != null && WorkOrderModule.lstSubModules.Count > 0)
+                        {
+                            var WorkOrderSubModule = WorkOrderModule.lstSubModules[0];
+                            if (WorkOrderSubModule.listControls != null && WorkOrderSubModule.listControls.Count > 0)
+                            {
+                                try
+                                {
+                                    Application.Current.Properties["CreateWorkorderRights"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
+                                    Application.Current.Properties["EditRights"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+                                    Application.Current.Properties["CloseWorkorderRightsKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompleteAndClose").Expression;
+
+                                    ///Set workOrderListing Page Rights
+                                    Application.Current.Properties["WorkOrderStartedDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkStartedDate").Expression;
+                                    Application.Current.Properties["WorkOrderCompletionDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression;
+                                    Application.Current.Properties["WorkOrderRequestedDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "RequestedDate").Expression;
+                                    Application.Current.Properties["WorkOrderTypeKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkTypeID").Expression;
+                                    Application.Current.Properties["DescriptionKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
+                                    Application.Current.Properties["PriorityKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
+
+                                    ///Set workOrderEdit Page Rights
+
+
+                                    Application.Current.Properties["WorkorderAdditionalDetailsKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
+                                    Application.Current.Properties["WorkOrderInternalNoteKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "InternalNote").Expression;
+                                    Application.Current.Properties["WorkorderCauseKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes").Expression;
+                                    Application.Current.Properties["WorkorderTargetKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression;
+                                    Application.Current.Properties["WorkorderDetailsControls"] = WorkOrderSubModule;
+                                    Application.Current.Properties["DistributeCost"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression;
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+
+                            }
+
+
+
+                        }
+                    }
+                }
+                if (FormControlsAndRightsForTask != null && FormControlsAndRightsForTask.lstModules != null && FormControlsAndRightsForTask.lstModules.Count > 0)
+                {
+                    var WorkOrderTaskModule = FormControlsAndRightsForTask.lstModules[0];
+                    if (WorkOrderTaskModule.ModuleName == "TasksandLabor") //ModuleName can't be  changed in service 
+                    {
+                        if (WorkOrderTaskModule.lstSubModules != null && WorkOrderTaskModule.lstSubModules.Count > 0)
+                        {
+                            var WorkOrderTaskSubModule = WorkOrderTaskModule.lstSubModules[0];
+                            if (WorkOrderTaskSubModule.listControls != null && WorkOrderTaskSubModule.listControls.Count > 0)
+                            {
+
+                                try
+                                {
+                                    Application.Current.Properties["TaskandLabourTabKey"] = WorkOrderTaskModule.Expression;
+                                    Application.Current.Properties["CreateTask"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                    Application.Current.Properties["LabourEstimatedHours"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "EstimatedHours").Expression;
+                                    Application.Current.Properties["WOLabourTime"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkOrderLaborTime").Expression;
+                                    Application.Current.Properties["TaskTabDetails"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "TaskID").Expression;
+                                    Application.Current.Properties["HourAtRate1"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "HoursAtRate1").Expression;
+                                    Application.Current.Properties["EmployeeTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "EmployeeLaborCraftID").Expression;
+                                    Application.Current.Properties["ContractorTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "ContractorLaborCraftID").Expression;
+                                    Application.Current.Properties["StartdateTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "StartDate").Expression;
+                                    Application.Current.Properties["CompletionDateTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression;
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+
+                            }
+
+
+
+                        }
+                    }
+                }
+                if (FormControlsAndRightsForInspection != null && FormControlsAndRightsForInspection.lstModules != null && FormControlsAndRightsForInspection.lstModules.Count > 0)
+                {
+                    var WorkOrderInspectionModule = FormControlsAndRightsForInspection.lstModules[0];
+                    if (WorkOrderInspectionModule.ModuleName == "WorkOrderInspections") //ModuleName can't be  changed in service 
+                    {
+
+                        Application.Current.Properties["InspectionTabKey"] = WorkOrderInspectionModule.Expression;
+
+                    }
+                    if (WorkOrderInspectionModule.lstSubModules != null && WorkOrderInspectionModule.lstSubModules.Count > 0)
+                    {
+                        var WorkOrderInspectionSubModule = WorkOrderInspectionModule.lstSubModules[0];
+                        if (WorkOrderInspectionSubModule.listControls != null && WorkOrderInspectionSubModule.listControls.Count > 0)
+                        {
+
+                            try
+                            {
+                                Application.Current.Properties["AssociateEmployeeContr"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateEmployeeContr").Expression;
+                                Application.Current.Properties["AssociateInspection"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateInspection").Expression;
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
+                        }
+                    }
+                }
+                if (FormControlsAndRightsForTools != null && FormControlsAndRightsForTools.lstModules != null && FormControlsAndRightsForTools.lstModules.Count > 0)
+                {
+                    var WorkOrderToolsModule = FormControlsAndRightsForTools.lstModules[0];
+                    if (WorkOrderToolsModule.ModuleName == "Tools") //ModuleName can't be  changed in service 
+                    {
+
+                        Application.Current.Properties["ToolsTabKey"] = WorkOrderToolsModule.Expression;
+                        var WorkOrderToolsSubModule = WorkOrderToolsModule.lstSubModules[0];
+                        if (WorkOrderToolsSubModule.listControls != null && WorkOrderToolsSubModule.listControls.Count > 0)
+                        {
+
+                            try
+                            {
+                                Application.Current.Properties["CreateTool"] = WorkOrderToolsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                Application.Current.Properties["DeleteTool"] = WorkOrderToolsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
+
+                        }
+                    }
+                }
+                if (FormControlsAndRightsForParts != null && FormControlsAndRightsForParts.lstModules != null && FormControlsAndRightsForParts.lstModules.Count > 0)
+                {
+                    var WorkOrderPartsModule = FormControlsAndRightsForParts.lstModules[0];
+                    if (WorkOrderPartsModule.ModuleName == "Parts") //ModuleName can't be  changed in service 
+                    {
+
+                        Application.Current.Properties["PartsTabKey"] = WorkOrderPartsModule.Expression;
+                        var WorkOrderPartsSubModule = WorkOrderPartsModule.lstSubModules[0];
+                        if (WorkOrderPartsSubModule.listControls != null && WorkOrderPartsSubModule.listControls.Count > 0)
+                        {
+
+                            try
+                            {
+                                Application.Current.Properties["AddParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                Application.Current.Properties["EditParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+                                Application.Current.Properties["RemoveParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
+
+                        }
+                    }
+                }
+                if (FormControlsAndRightsForAttachments != null && FormControlsAndRightsForAttachments.lstModules != null && FormControlsAndRightsForAttachments.lstModules.Count > 0)
+                {
+                    var WorkOrderAttachmentModule = FormControlsAndRightsForAttachments.lstModules[0];
+                    if (WorkOrderAttachmentModule.ModuleName == "Attachments") //ModuleName can't be  changed in service 
+                    {
+
+                        Application.Current.Properties["AttachmentTabKey"] = WorkOrderAttachmentModule.Expression;
+                        var WorkOrderAttachmentSubModule = WorkOrderAttachmentModule.lstSubModules[0];
+                        if (WorkOrderAttachmentSubModule.listControls != null && WorkOrderAttachmentSubModule.listControls.Count > 0)
+                        {
+                            try
+                            {
+                                Application.Current.Properties["CreateAttachment"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                Application.Current.Properties["DeleteAttachments"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
+
+
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+
+            }
+
+        }
         #endregion
-      
+
 
     }
 }
