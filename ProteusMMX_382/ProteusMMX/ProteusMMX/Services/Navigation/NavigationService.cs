@@ -241,37 +241,48 @@ namespace ProteusMMX.Services.Navigation
                 }
                 #endregion
                 #region WorkOrderStockroomParts Page
-                Page workOrderStockroomParts;
-                if (Device.RuntimePlatform == Device.iOS)
-                {
-                    workOrderStockroomParts = CreateAndBindPage(typeof(WorkOrderStockroomPartsListingPageViewModelForIOS), parameter);
-                    var workOrderStockroomPartsPageParameter = new PageParameters { Page = workOrderStockroomParts, Parameter = parameter };
-                    (workOrderStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderStockroomPartsPageParameter);
-                }
-                else
-                {
-                    workOrderStockroomParts = CreateAndBindPage(typeof(WorkOrderStockroomPartsListingPageViewModel), parameter);
-                    var workOrderStockroomPartsPageParameter = new PageParameters { Page = workOrderStockroomParts, Parameter = parameter };
-                    (workOrderStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderStockroomPartsPageParameter);
-                }
-                if (Application.Current.Properties.ContainsKey("PartsTabKey"))
-                {
-                    var PartsTab = Application.Current.Properties["PartsTabKey"].ToString();
 
-                    if (PartsTab == "E" || PartsTab == "V")
+                
+                    Page workOrderStockroomParts;
+                  
+                var StockroomPartstabbedPage = page as TabbedPage;
+                    WorkOrderStockroomParts stockroomPart = parameter as WorkOrderStockroomParts;
+                    if (Device.RuntimePlatform == Device.iOS)
                     {
-                        if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
-                        {
-
-
-                        }
-                        else
-                        {
-                            tabbedPage.Children.Add(workOrderStockroomParts);
-                        }
-
+                        workOrderStockroomParts = CreateAndBindPage(typeof(WorkOrderStockroomPartsListingPageViewModelForIOS), parameter);
+                        var workOrderStockroomPartsPageParameter = new PageParameters { Page = workOrderStockroomParts, Parameter = parameter };
+                        (workOrderStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderStockroomPartsPageParameter);
                     }
+                    else
+                    {
+                        workOrderStockroomParts = CreateAndBindPage(typeof(WorkorderStockroomPartsTabbedPageViewModel), parameter);
+                        var workOrderStockroomPartsPageParameter = new PageParameters { Page = workOrderStockroomParts, Parameter = parameter };
+                        (workOrderStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderStockroomPartsPageParameter);
+                    }
+                    if (Application.Current.Properties.ContainsKey("PartsTabKey"))
+                    {
+                        var PartsTab = Application.Current.Properties["PartsTabKey"].ToString();
+
+                        if (PartsTab == "E" || PartsTab == "V")
+                        {
+                            if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                            {
+
+
+                            }
+                            else
+                            {
+                               StockroomPartstabbedPage.Children.Add(workOrderStockroomParts);
+                            }
+
+                        }
+
+                    //workOrderNonStockroomParts = CreateAndBindPage(typeof(WorkOrderNonStockroomPartsListingPageViewModel), parameter);
+                    //var workOrderNonStockroomPartsPageParameter = new PageParameters { Page = workOrderNonStockroomParts, Parameter = parameter };
+                    //(workOrderNonStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderNonStockroomPartsPageParameter);
+                    //StockroomPartstabbedPage.Children.Add(workOrderNonStockroomParts);
                 }
+                
                 #endregion
                 #region WorkOrderTools Page
 
@@ -694,6 +705,8 @@ namespace ProteusMMX.Services.Navigation
         {
             _mappings.Add(typeof(ExtendedSplashViewModel), typeof(ExtendedSplashPage));
             _mappings.Add(typeof(LoginPageViewModel), typeof(LoginPage));
+            _mappings.Add(typeof(WorkorderStockroomPartsTabbedPageViewModel), typeof(WorkorderStockroomPartsTabbedPage));
+            
             _mappings.Add(typeof(DashboardPageViewModel), typeof(DashboardPage));
             _mappings.Add(typeof(KPIDashboardViewModel), typeof(KPIDashboard));
             _mappings.Add(typeof(WorkorderListingPageViewModel), typeof(WorkorderListingPage));

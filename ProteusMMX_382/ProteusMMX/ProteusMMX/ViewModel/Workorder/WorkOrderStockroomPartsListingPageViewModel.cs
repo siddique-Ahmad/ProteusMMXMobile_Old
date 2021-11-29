@@ -30,7 +30,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         protected readonly IFormLoadInputService _formLoadInputService;
 
-        protected readonly IWorkorderService _workorderService;
+        protected  IWorkorderService _workorderService;
 
 
         #endregion
@@ -640,6 +640,14 @@ namespace ProteusMMX.ViewModel.Workorder
            
         }
 
+        public WorkOrderStockroomPartsListingPageViewModel()
+        {
+
+            
+
+        }
+        
+
         public async Task SetTitlesPropertiesForPage()
         {
 
@@ -749,6 +757,26 @@ namespace ProteusMMX.ViewModel.Workorder
         //}
         async Task GetWorkorderStockRoomParts()
         {
+
+            if (Application.Current.Properties.ContainsKey("WorkorderIDafterCreation"))
+            {
+                var workorderid = Application.Current.Properties["WorkorderIDafterCreation"].ToString();
+                if (workorderid != null)
+                {
+                    WorkorderID = Convert.ToInt32(workorderid);
+
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("WorkorderService"))
+            {
+               IWorkorderService WorkorderService = Application.Current.Properties["WorkorderService"] as IWorkorderService;
+                if (WorkorderService != null)
+                {
+                    _workorderService = WorkorderService;
+
+                }
+            }
+
             try
             {
                 OperationInProgress = true;
@@ -975,6 +1003,32 @@ namespace ProteusMMX.ViewModel.Workorder
         }
         public async Task OnViewAppearingAsync(VisualElement view)
         {
+            await SetTitlesPropertiesForPage();
+            if (Application.Current.Properties.ContainsKey("AddParts"))
+            {
+                AddParts = Application.Current.Properties["AddParts"].ToString();
+                if (AddParts == "E")
+                {
+                    this.StockroomPartIsVisible = true;
+                }
+                else if (AddParts == "V")
+                {
+                    this.StockroomPartIsEnabled = false;
+                }
+                else
+                {
+                    this.StockroomPartIsVisible = false;
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("EditParts"))
+            {
+                EditParts = Application.Current.Properties["EditParts"].ToString();
+            }
+            if (Application.Current.Properties.ContainsKey("RemoveParts"))
+            {
+                Remove = Application.Current.Properties["RemoveParts"].ToString();
+            }
+
             if (string.IsNullOrWhiteSpace(SearchText))
             {
                 await RemoveAllPartsFromCollection();

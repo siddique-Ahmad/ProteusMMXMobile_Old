@@ -94,6 +94,8 @@ namespace ProteusMMX.ViewModel
             _containerBuilder.RegisterType<ViewModelBase>();
             _containerBuilder.RegisterType<ExtendedSplashViewModel>();
             _containerBuilder.RegisterType<LoginPageViewModel>();
+               _containerBuilder.RegisterType<WorkorderStockroomPartsTabbedPageViewModel>();
+            
             _containerBuilder.RegisterType<DashboardPageViewModel>();
             _containerBuilder.RegisterType<KPIDashboardViewModel>();
             _containerBuilder.RegisterType<WorkorderListingPageViewModel>();
