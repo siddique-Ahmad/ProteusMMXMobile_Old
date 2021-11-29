@@ -7,7 +7,7 @@
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              xmlns:control1="clr-namespace:ProteusMMX.Controls"
            
-             Icon="parts.png"
+            
             >
 
     <ContentPage.Resources>
@@ -75,22 +75,9 @@
                 </border:SfBorder>
                 <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
 
-                <Grid Grid.Row="1" Grid.ColumnSpan="2" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+             
 
-                    <Button  Text="{Binding AddStockroompartTitle}" IsVisible="{Binding StockroomPartIsVisible}" IsEnabled="{Binding StockroomPartIsEnabled}" Style="{StaticResource LoginButtonStyle}" Command="{Binding AddPartCommand}" />
-
-
-
-                    <Button Grid.Column="1"  Text="{Binding NonStockPartsTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding GetNonStockroomPartCommand}" />
-
-
-                </Grid>
-
-                <ListView  Grid.Row="2" Grid.ColumnSpan="2"
+                <ListView  Grid.Row="1" Grid.ColumnSpan="2"
                          ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"

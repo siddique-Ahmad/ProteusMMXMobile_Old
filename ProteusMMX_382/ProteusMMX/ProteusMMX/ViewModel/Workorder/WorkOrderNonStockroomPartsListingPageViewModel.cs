@@ -26,7 +26,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         protected readonly IFormLoadInputService _formLoadInputService;
 
-        protected readonly IWorkorderService _workorderService;
+        protected  IWorkorderService _workorderService;
 
 
         #endregion
@@ -412,7 +412,12 @@ namespace ProteusMMX.ViewModel.Workorder
             _formLoadInputService = formLoadInputService;
             _workorderService = workorderService;
         }
+        public WorkOrderNonStockroomPartsListingPageViewModel()
+        {
 
+
+
+        }
         public async Task SetTitlesPropertiesForPage()
         {
 
@@ -474,8 +479,26 @@ namespace ProteusMMX.ViewModel.Workorder
         //    // PageNumber++;
         //    await GetWorkorderTools();
         //}
-        async Task GetWorkorderNonStockRoomParts()
+        public async Task GetWorkorderNonStockRoomParts()
         {
+            if (Application.Current.Properties.ContainsKey("WorkorderIDafterCreation"))
+            {
+                var workorderid = Application.Current.Properties["WorkorderIDafterCreation"].ToString();
+                if (workorderid != null)
+                {
+                    WorkorderID = Convert.ToInt32(workorderid);
+
+                }
+            }
+            if (Application.Current.Properties.ContainsKey("WorkorderService"))
+            {
+                IWorkorderService WorkorderService = Application.Current.Properties["WorkorderService"] as IWorkorderService;
+                if (WorkorderService != null)
+                {
+                    _workorderService = WorkorderService;
+
+                }
+            }
             try
             {
                 OperationInProgress = true;
