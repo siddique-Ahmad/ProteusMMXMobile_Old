@@ -164,7 +164,65 @@ namespace ProteusMMX.ViewModel.KPIDashboard
                 }
             }
         }
+
+        string _todayPlannedHours;
+        public string TodayPlannedHours
+        {
+            get
+            {
+                return _todayPlannedHours;
+            }
+
+            set
+            {
+                if (value != _todayPlannedHours)
+                {
+                    _todayPlannedHours = value;
+                    OnPropertyChanged("TodayPlannedHours");
+                }
+            }
+        }
+
+        string _weeklyPlannedHours;
+        public string WeeklyPlannedHours
+        {
+            get
+            {
+                return _weeklyPlannedHours;
+            }
+
+            set
+            {
+                if (value != _weeklyPlannedHours)
+                {
+                    _weeklyPlannedHours = value;
+                    OnPropertyChanged("WeeklyPlannedHours");
+                }
+            }
+        }
+
+        string _monthlyPlannedHours;
+        public string MonthlyPlannedHours
+        {
+            get
+            {
+                return _monthlyPlannedHours;
+            }
+
+            set
+            {
+                if (value != _monthlyPlannedHours)
+                {
+                    _monthlyPlannedHours = value;
+                    OnPropertyChanged("MonthlyPlannedHours");
+                }
+            }
+        }
+
         
+
+
+
         public ICommand PriorityCommand => new AsyncCommand(ShowPriority);
         
         public ICommand TodayTapCommand => new AsyncCommand(TodayTap);
@@ -343,6 +401,12 @@ namespace ProteusMMX.ViewModel.KPIDashboard
                     TodayHours = String.IsNullOrEmpty(KPIResponse.KPIWorkorderWrapper.TodayHours) ? "0" : KPIResponse.KPIWorkorderWrapper.TodayHours;
                     ThisWeekHours = String.IsNullOrEmpty(KPIResponse.KPIWorkorderWrapper.WeeklyHours) ? "0" : KPIResponse.KPIWorkorderWrapper.WeeklyHours;
                     ThisMonthHours = String.IsNullOrEmpty(KPIResponse.KPIWorkorderWrapper.MonthlyHours) ? "0" : KPIResponse.KPIWorkorderWrapper.MonthlyHours;
+
+                    TodayPlannedHours = String.IsNullOrEmpty(KPIResponse.KPIWorkorderWrapper.TodayPlannedHours) ? "0" : KPIResponse.KPIWorkorderWrapper.TodayPlannedHours;
+
+                    WeeklyPlannedHours = String.IsNullOrEmpty(KPIResponse.KPIWorkorderWrapper.WeeklyPlannedHours) ? "0" : KPIResponse.KPIWorkorderWrapper.WeeklyPlannedHours;
+
+                    MonthlyPlannedHours = String.IsNullOrEmpty(KPIResponse.KPIWorkorderWrapper.MonthlyPlannedHours) ? "0" : KPIResponse.KPIWorkorderWrapper.MonthlyPlannedHours;
 
                 }
             }

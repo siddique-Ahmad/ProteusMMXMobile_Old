@@ -119,31 +119,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        //private void Next_Clicked(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //       // this.CarouselView.Position += 1;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine(ex.Message);
-        //    }
-        //}
-
-        //private void Previous_Clicked(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //       // this.CarouselView.Position -= 1;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine(ex.Message);
-        //    }
-        //}
-
-      
+        
         public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
         {
             ServiceOutput responseContent = new ServiceOutput();
@@ -256,24 +232,34 @@ namespace ProteusMMX.Views.Workorder
 
         private void ImageButton_Clicked(object sender, EventArgs e)
         {
-            //var a =sender as BindingContext
-            //switch (Device.RuntimePlatform)
-            //{
-            //    case Device.iOS:
-            //        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action);
-            //        break;
-            //    case Device.Android:
-            //        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action);
+            ImageButton button = (ImageButton)sender;
+            var a = button.BindingContext as ProteusMMX.ViewModel.Workorder.WorkorderAttachment;
+            var fileextension = a.attachmentFileExtension;
 
-            //        //var pdfurl = AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action;
-            //        //Device.OpenUri(new Uri(pdfurl));
-            //        break;
-            //    case Device.UWP:
-            //        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action);
-            //        break;
-            //    default:
-            //        break;
-            //}
+            if (fileextension != null &&
+                                   (fileextension.ToLower().Contains(".pdf") ||
+                                   fileextension.ToLower().Contains(".doc") ||
+                                   fileextension.ToLower().Contains(".docx") ||
+                                   fileextension.ToLower().Contains(".xls") ||
+                                   fileextension.ToLower().Contains(".xlsx") ||
+                                   fileextension.ToLower().Contains(".txt")))
+            {
+                switch (Device.RuntimePlatform)
+                {
+                    case Device.iOS:
+                        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + fileextension);
+                        break;
+                    case Device.Android:
+                        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + fileextension);
+
+                        break;
+                    case Device.UWP:
+                        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + fileextension);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 
