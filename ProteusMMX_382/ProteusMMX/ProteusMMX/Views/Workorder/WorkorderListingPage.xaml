@@ -44,7 +44,7 @@
     </ContentPage.Resources>
 
 
-    <ContentPage.ToolbarItems>
+    <ContentPage.ToolbarItems>       
         <ToolbarItem Name="MenuItem2"  Text=":" Icon="filtericon.png"  Command="{Binding SortByCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -93,6 +93,7 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
+        <StackLayout>
         <Grid BackgroundColor="#fefefe" >           
             <StackLayout HeightRequest="80">
                 <border:SfBorder HeightRequest="80" Grid.Row="0"  BorderColor="#006de0" CornerRadius="0,0,8,8"                      
@@ -107,14 +108,9 @@
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <border:SfBorder BackgroundColor="White" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" CornerRadius="10" >
-                                <!--<SearchBar x:Name="filterText" HeightRequest="40" FontSize="14" Opacity="5"
-           HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="Black" Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}"
-            Grid.Row="0"/>-->
-                                <SearchBar x:Name="filterText" HeightRequest="40"
-           Placeholder="Search here to filter"
-           Grid.Row="0"/>
-                                <!--<controls:CustomEntry HorizontalOptions="FillAndExpand" BackgroundColor="White" TextColor="Black" Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />-->
-                                
+                               
+                                <SearchBar x:Name="filterText" HeightRequest="40" TextChanged="filterText_TextChanged" Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0"/>
+                               
                             </border:SfBorder>
                             <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0">
                                 <Image.Source>
@@ -133,6 +129,30 @@
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}"/>
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text=":" Grid.Column="3"/>
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordCount}"/>
+                                <Image HorizontalOptions="End" Margin="20,0,0,5">
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="ImageSource" >
+                                            <OnPlatform.Android>sortinganswers.png</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Image.Source>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                        Tapped="Button_Clicked"
+                                            NumberOfTapsRequired="1"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Image HorizontalOptions="End" Margin="20,0,0,5">
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="ImageSource" >
+                                                <OnPlatform.Android>sortclosing.png</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Image.Source>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                        Tapped="TapGestureRecognizer_Tapped"
+                                            NumberOfTapsRequired="1"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
                             </StackLayout>
 
                             <!--<Label VerticalOptions="Center" Grid.Row="1" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,30" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}" IsVisible="{Binding TotalRecordForTab}"></Label>
@@ -145,57 +165,11 @@
             <Grid   Margin="0,78,0,0">
 
                 <Grid.RowDefinitions>
-                    <!--<RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />-->
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/> 
                 </Grid.ColumnDefinitions>
-
-                <!--<border:SfBorder CornerRadius="5">
-                    <controls:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
-                </border:SfBorder>
-                <Button Grid.Column="1" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />-->
-
-                <!--<Grid Grid.Row="1" Grid.ColumnSpan="2"  >
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="4.4*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Text="{Binding WorkorderTypeLabelTitle}" Grid.Row="0" />
-                        <border:SfBorder CornerRadius="5" Grid.Column="1" Grid.Row="0">
-                            <Picker ItemsSource="{Binding PickerTitles}" SelectedItem="{Binding SelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding SelectedIndexPicker , Mode=TwoWay}" />
-                        </border:SfBorder>
-                       
-
-                        <Label Text="{Binding TotalRecordTitle}"  Grid.Column="3" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
-                        <Label Text=":" Grid.Column="4" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
-                        <Label Text="{Binding TotalRecordCount}" Grid.Column="5" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
-                        
-
-
-                        <StackLayout IsVisible="{Binding TotalRecordForPhone}" Grid.Row="1" Orientation="Horizontal" >
-                            <Label Text="{Binding TotalRecordTitle}"/>
-                            <Label Text=":" Grid.Column="3"/>
-                            <Label Text="{Binding TotalRecordCount}"/>
-                        </StackLayout>
-
-                        </Grid>
-
-                    </Grid>
-                </Grid>-->
 
                 <StackLayout Spacing="0"  Orientation="Horizontal" Padding="3" Grid.Column="0"  >
                     <ListView HorizontalOptions="FillAndExpand" 
@@ -212,7 +186,23 @@
                 
             </Grid>
             <ActivityIndicator  IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
-           
-        </Grid>
+               
+            </Grid>
+
+            <!--<StackLayout BackgroundColor="#006de0" HeightRequest="45" VerticalOptions="EndAndExpand">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="shfiltericon.png" HeightRequest="20"  Grid.Column="0"/>
+                    <Image Source="filtericon.png" HeightRequest="20" Grid.Column="1"/>
+                    <Image Source="sortinganswers.png" Grid.Column="2"/>
+                    <Image Source="clearsymbol.png" Grid.Column="3"/>
+                </Grid>
+            </StackLayout>-->
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

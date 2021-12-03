@@ -160,6 +160,7 @@
     <Compile Include="DependencyService\CustomEditorRenderer.cs" />
     <Compile Include="DependencyService\CustomEntryRendere.cs" />
     <Compile Include="DependencyService\CustomEntryRenderer.cs" />
+    <Compile Include="DependencyService\CustomPickerIconRenderer.cs" />
     <Compile Include="DependencyService\CustomPickerRenderer.cs" />
     <Compile Include="DependencyService\CustomSwitchRenderer.cs" />
     <Compile Include="DependencyService\ImageEntryRenderer.cs" />
@@ -548,6 +549,24 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\pdf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\sorting1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\addbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\addinsp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\sortinganswers.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\sortclosing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\clearsymbol.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

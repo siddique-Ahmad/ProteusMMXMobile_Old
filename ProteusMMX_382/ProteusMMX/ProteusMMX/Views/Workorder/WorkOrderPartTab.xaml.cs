@@ -1,6 +1,5 @@
 ﻿using ProteusMMX.Helpers;
 using ProteusMMX.ViewModel.Miscellaneous;
-using ProteusMMX.ViewModel.Workorder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +11,10 @@ using Xamarin.Forms.Xaml;
 
 namespace ProteusMMX.Views.Workorder
 {
-     [XamlCompilation(XamlCompilationOptions.Skip)]
-    public partial class WorkorderTabbedPage : TabbedPage
+    [XamlCompilation(XamlCompilationOptions.Skip)]
+    public partial class WorkOrderPartTab : TabbedPage
     {
-        public WorkorderTabbedPage ()
+        public WorkOrderPartTab()
         {
             InitializeComponent();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
@@ -24,37 +23,23 @@ namespace ProteusMMX.Views.Workorder
                 var index = this.Children.IndexOf(this.CurrentPage);
                 var CurrentPage = this.Children.ElementAt(index);
                 string Selectedpage = CurrentPage.ToString();
-                if(Selectedpage.Contains("EditWorkorderPage"))
+                if (Selectedpage.Contains("WorkOrderStockRoomPartsListing"))
                 {
-                  this.Title= WebControlTitle.GetTargetNameByTitleName("Details");
+                    //this.Title = WebControlTitle.GetTargetNameByTitleName("Details");
                 }
-                else if(Selectedpage.Contains("TaskAndLabourPage"))
+                else if (Selectedpage.Contains("WorkOrderNonStockRoomPartsListing"))
                 {
-                    this.Title = WebControlTitle.GetTargetNameByTitleName("TasksandLabor");
+                    //this.Title = WebControlTitle.GetTargetNameByTitleName("TasksandLabor");
                 }
-                else if (Selectedpage.Contains("InspectionPage"))
-                {
-                    this.Title = WebControlTitle.GetTargetNameByTitleName("Inspection");
-                }
-                else if (Selectedpage.Contains("WorkOrderPartTab"))
-                {
-                    this.Title = WebControlTitle.GetTargetNameByTitleName("Parts");
-                }
-                else if (Selectedpage.Contains("WorkOrderTools"))
-                {
-                    this.Title = WebControlTitle.GetTargetNameByTitleName("Tools");
-                }
-                else if (Selectedpage.Contains("AttachmentsPage"))
-                {
-                    this.Title = WebControlTitle.GetTargetNameByTitleName("Attachments");
-                }
+                
                 else
                 {
 
                 }
-              
+
             };
         }
+
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -76,6 +61,5 @@ namespace ProteusMMX.Views.Workorder
                 await viewAware.OnViewDisappearingAsync(this);
             }
         }
-
     }
 }

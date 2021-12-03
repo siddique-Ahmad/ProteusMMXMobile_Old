@@ -92,13 +92,13 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 _dueDate = value;
                 OnPropertyChanged("DueDate");
-               // RefillDueDateFromPicker();
+                // RefillDueDateFromPicker();
 
             }
         }
 
-       
-        
+
+
         #endregion
 
         #region Title Properties
@@ -194,11 +194,11 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _sortByDateText = value;
                     OnPropertyChanged("SortByDateText");
-                   // RefillDueDateFromPicker();
+                    // RefillDueDateFromPicker();
                 }
             }
         }
-        
+
 
         string _sortByShiftLabelTitle;
         public string SortByShiftLabelTitle
@@ -581,7 +581,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _isLocationCallFrombarcodePage = value;
                     OnPropertyChanged("IsLocationCallFrombarcodePage");
-                   
+
                 }
             }
         }
@@ -701,7 +701,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        string _selectOptionsTitle ;
+        string _selectOptionsTitle;
         public string SelectOptionsTitle
         {
             get
@@ -748,7 +748,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         ObservableCollection<string> _sortByLocationpickerTitles = new ObservableCollection<string>();
 
-       // Picker LocationPickerITEM = new Picker();
+        // Picker LocationPickerITEM = new Picker();
 
 
         public ObservableCollection<string> SortByLocationpickerTitles
@@ -793,7 +793,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         }
 
-      
+
         Dictionary<int?, string> sortByPrioritypickerTitlesitems = new Dictionary<int?, string>();
 
         ObservableCollection<string> _sortByPriorityPickerTitles = new ObservableCollection<string>();
@@ -835,7 +835,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        
+
 
         string _locationSelectedPickerText;
         public string LocationSelectedPickerText
@@ -890,7 +890,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-        
+
 
         string _workorderTypeFilterText;
         public string WorkorderTypeFilterText
@@ -982,7 +982,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        
+
 
         string _preventiveMaintenenceTitle;
         public string PreventiveMaintenenceTitle
@@ -1068,7 +1068,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 _locationSelectedIndexPicker = value;
                 OnPropertyChanged("LocationSelectedIndexPicker");
-              
+
             }
         }
 
@@ -1085,7 +1085,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 _shiftSelectedIndexPicker = value;
                 OnPropertyChanged("ShiftSelectedIndexPicker");
                 //RefillShiftFromPicker();
-               
+
             }
         }
 
@@ -1102,7 +1102,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 _prioritySelectedIndexPicker = value;
                 OnPropertyChanged("PrioritySelectedIndexPicker");
                 //RefillPriorityFromPicker();
-               
+
             }
         }
 
@@ -1306,7 +1306,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public ICommand ShowDateCommand => new AsyncCommand(ShowdatePicker);
         public ICommand DateCommand => new AsyncCommand(Cleardate);
-        
+
         public ICommand WorkorderSelectedCommand => new Command<workOrders>(OnSelectWorkorderAsync);
 
         #endregion
@@ -1368,9 +1368,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     this.TotalRecordForTab = true;
                 }
-               
+
                 OperationInProgress = false;
-               
+
 
 
             }
@@ -1396,26 +1396,26 @@ namespace ProteusMMX.ViewModel.Workorder
         public async Task SetTitlesPropertiesForPage()
         {
 
-           
-                FailedInspectionTitle = WebControlTitle.GetTargetNameByTitleName("FailedInspection");
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrders");
-                WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
-                LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
-                CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
-                SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-                CreateWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder");
+
+            FailedInspectionTitle = WebControlTitle.GetTargetNameByTitleName("FailedInspection");
+            PageTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrders");
+            WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
+            LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
+            CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
+            SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+            CreateWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder");
 
             PreventiveMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("PreventiveMaintenance");
             DemandMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("DemandMaintenance");
 
             EmergencyMaintenanceTitle = WebControlTitle.GetTargetNameByTitleName("EmergencyMaintenance");
 
-                SortByActivationdateTitle = WebControlTitle.GetTargetNameByTitleName("SortByActivationdate");
-                NoneTitle = WebControlTitle.GetTargetNameByTitleName("None");
-                AscendingTitle = WebControlTitle.GetTargetNameByTitleName("Ascending");
-                DescendingTitle = WebControlTitle.GetTargetNameByTitleName("Descending");
-                SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-                await AddTitlesToPicker();
+            SortByActivationdateTitle = WebControlTitle.GetTargetNameByTitleName("SortByActivationdate");
+            NoneTitle = WebControlTitle.GetTargetNameByTitleName("None");
+            AscendingTitle = WebControlTitle.GetTargetNameByTitleName("Ascending");
+            DescendingTitle = WebControlTitle.GetTargetNameByTitleName("Descending");
+            SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+            await AddTitlesToPicker();
 
             if (AppSettings.User.ULFeatures)
             {
@@ -1459,9 +1459,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else
                 {
-                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle,FailedInspectionTitle };
+                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
                 }
-               
+
             }
             if (PreventiveMaintenenceTitle == null)
             {
@@ -1477,34 +1477,34 @@ namespace ProteusMMX.ViewModel.Workorder
             }
 
             WorkorderTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("SortByWorkOrderType");
-                SortByLocationLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Location");
-                SortByShiftLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Shift");
-                SortByDuedateTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Due") + " " + WebControlTitle.GetTargetNameByTitleName("Date");
-                SortByPriorityLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Priority");
-                WorkOrderNumberTitle = WebControlTitle.GetTargetNameByTitleName("WorkorderNumber");
-                DescriptionTitle = WebControlTitle.GetTargetNameByTitleName("Description");
-                WorkOrderTypeTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
-                TargetNameTitle = WebControlTitle.GetTargetNameByTitleName("Target") + " " + WebControlTitle.GetTargetNameByTitleName("Name");
-                RequiredDateTitle = WebControlTitle.GetTargetNameByTitleName("RequiredDate");
-                ActivationDateTitle = WebControlTitle.GetTargetNameByTitleName("ActivationDate");
+            SortByLocationLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Location");
+            SortByShiftLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Shift");
+            SortByDuedateTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Due") + " " + WebControlTitle.GetTargetNameByTitleName("Date");
+            SortByPriorityLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Priority");
+            WorkOrderNumberTitle = WebControlTitle.GetTargetNameByTitleName("WorkorderNumber");
+            DescriptionTitle = WebControlTitle.GetTargetNameByTitleName("Description");
+            WorkOrderTypeTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
+            TargetNameTitle = WebControlTitle.GetTargetNameByTitleName("Target") + " " + WebControlTitle.GetTargetNameByTitleName("Name");
+            RequiredDateTitle = WebControlTitle.GetTargetNameByTitleName("RequiredDate");
+            ActivationDateTitle = WebControlTitle.GetTargetNameByTitleName("ActivationDate");
 
-                TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName("TotalRecords");
-   
-                SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchOrScanWorkOrder");
-                GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
-                ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
-                SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
-                WorkStartedDateTitle = WebControlTitle.GetTargetNameByTitleName("WorkStartedDate");
-                WorkCompletionDateTitle = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
-                WorkRequestedDateTitle = WebControlTitle.GetTargetNameByTitleName("RequestedDate");
+            TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName("TotalRecords");
 
-          
+            SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchOrScanWorkOrder");
+            GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
+            ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
+            SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
+            WorkStartedDateTitle = WebControlTitle.GetTargetNameByTitleName("WorkStartedDate");
+            WorkCompletionDateTitle = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
+            WorkRequestedDateTitle = WebControlTitle.GetTargetNameByTitleName("RequestedDate");
+
+
         }
         public async Task ShowActions()
         {
             try
             {
-               
+
                 if (CreateWorkorderRights == "E")
                 {
                     var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
@@ -1519,7 +1519,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     if (response == CreateWorkorderTitle)
                     {
                         await NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>();
-                      // NavigationPage.BackBarButtonItem.TintColor = UIColor.Red;
+                        // NavigationPage.BackBarButtonItem.TintColor = UIColor.Red;
                     }
                 }
                 else if (CreateWorkorderRights == "V")
@@ -1535,12 +1535,12 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     if (response == CreateWorkorderTitle)
                     {
-                       
+
                     }
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1549,7 +1549,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                    
+
                 }
 
 
@@ -1569,7 +1569,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                
+
                 var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, PickerTitles);
                 if (response == CancelTitle)
                 {
@@ -1577,7 +1577,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
 
-              
+
                 if (response == PreventiveMaintenenceTitle)
                 {
                     WorkorderTypeFilterText = "PreventiveMaintenance";
@@ -1664,7 +1664,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        private async Task RefillWorkorderCollection()
+        public async Task RefillWorkorderCollection()
         {
 
             PageNumber = 1;
@@ -1700,21 +1700,21 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         }
-        
+
         public async Task Cleardate()
         {
 
             SortByDateText = null;
-           
+
         }
         public async Task ShowdatePicker()
         {
-           
+
             UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result), IsCancellable = true });
         }
         public async Task SearchWorkorder()
         {
-          
+
             try
             {
                 OperationInProgress = true;
@@ -1726,7 +1726,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     try
                     {
-                        
+
                         var options = new MobileBarcodeScanningOptions()
                         {
                             AutoRotate = false,
@@ -1764,7 +1764,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         //SmtpServer.Send(mail);
                     }
-                   
+
                 }
 
                 else
@@ -1847,7 +1847,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 SortByShiftpickerTitles.Add(SelectTitle);
                 SortByPriorityPickerTitles.Add(SelectTitle);
 
-               
+
             }
             catch (Exception ex)
             {
@@ -1882,14 +1882,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
         }
 
-        
+
         async Task GetWorkordersFromKPIDashboard()
         {
 
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkordersfromKPI(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate,KPIDashboardType);
+                var workordersResponse = await _workorderService.GetWorkordersfromKPI(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate, KPIDashboardType);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
@@ -1915,11 +1915,11 @@ namespace ProteusMMX.ViewModel.Workorder
         }
         async Task GetWorkorders()
         {
-           
+
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText,SortByDueDate);
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
@@ -1927,10 +1927,10 @@ namespace ProteusMMX.ViewModel.Workorder
                     var workorders = workordersResponse.workOrderWrapper.workOrders;
 
                     await AddWorkordersInWorkorderCollection(workorders);
-                   
+
                 }
                 TotalRecordCount = workordersResponse.workOrderWrapper.WorkOrderCount;
-               
+
             }
             catch (Exception ex)
             {
@@ -1949,17 +1949,17 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0","0","null","null","null","null","null","null","null");
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", "null", "null", "null", "null", "null", "null", "null");
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
-                    var workorders = workordersResponse.workOrderWrapper.workOrders.Where(x=> Convert.ToDateTime(x.RequiredDate).Date.ToString("dd MMM yyyy") == SortByDueDate);
+                    var workorders = workordersResponse.workOrderWrapper.workOrders.Where(x => Convert.ToDateTime(x.RequiredDate).Date.ToString("dd MMM yyyy") == SortByDueDate);
                     await RemoveAllWorkorderFromCollection();
                     await AddWorkordersInWorkorderCollection(workorders.ToList());
                     TotalRecordCount = workorders.Count();
                     IsGetWorkorderCallFromRequiredDate = true;
                 }
-                
+
 
 
             }
@@ -1975,13 +1975,13 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-      
+
         async Task GetWorkordersFromSearchBar()
         {
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, "null", "null","null", "null", "null","null");
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, "null", "null", "null", "null", "null", "null");
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
@@ -1990,7 +1990,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     await RemoveAllWorkorderFromCollection();
                     await AddWorkordersInWorkorderCollection(workorders);
                     TotalRecordCount = workordersResponse.workOrderWrapper.workOrders.Count;
-                    
+
 
 
                 }
@@ -2014,7 +2014,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         private async Task AddWorkordersInWorkorderCollection(List<workOrders> workorders)
         {
-         
+
             if (workorders != null && workorders.Count > 0)
             {
                 foreach (var item in workorders)
@@ -2027,11 +2027,11 @@ namespace ProteusMMX.ViewModel.Workorder
                     });
 
                 }
-               
+
 
             }
         }
-      
+
 
         private async Task RemoveAllWorkorderFromCollection()
         {
@@ -2041,13 +2041,13 @@ namespace ProteusMMX.ViewModel.Workorder
                 OnPropertyChanged(nameof(WorkordersCollection));
             });
 
-             
+
 
         }
 
         private async Task RefillLocationFromPicker(string Locationfilter)
         {
-            
+
             if (string.IsNullOrWhiteSpace(Locationfilter))
             {
                 LocationNameFilterText = null;
@@ -2064,7 +2064,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         private async Task RefillShiftFromPicker(string Shiftfilter)
         {
-           
+
             if (string.IsNullOrWhiteSpace(Shiftfilter))
             {
                 ShiftNameFilterText = null;
@@ -2073,7 +2073,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             else
             {
-          
+
                 ShiftNameFilterText = Shiftfilter.ToString();
                 await RefillWorkorderCollection();
             }
@@ -2085,18 +2085,18 @@ namespace ProteusMMX.ViewModel.Workorder
         }
         private async Task RefillDueDateFromPicker(string SortByDateText)
         {
-           
-            if(!string.IsNullOrWhiteSpace(SortByDateText))
+
+            if (!string.IsNullOrWhiteSpace(SortByDateText))
             {
-                SortByDueDate =Convert.ToDateTime(SortByDateText).Date.ToString("dd MMM yyyy");
-                
+                SortByDueDate = Convert.ToDateTime(SortByDateText).Date.ToString("dd MMM yyyy");
+
             }
             else
             {
                 SortByDueDate = "null";
             }
             await RefillWorkorderCollection();
-           
+
         }
         private async Task RefillPriorityFromPicker(string Priorityfilter)
         {
@@ -2123,47 +2123,47 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 return;
             }
-          
-                var SelectedPickerText = PickerTitles[SelectedIndexPicker];
 
-                if (SelectedPickerText == SelectTitle)
-                {
-                    WorkorderTypeFilterText = null;
-                    await RefillWorkorderCollection();
-                }
+            var SelectedPickerText = PickerTitles[SelectedIndexPicker];
 
-                else if (SelectedPickerText == PreventiveMaintenenceTitle)
-                {
-                    WorkorderTypeFilterText = "PreventiveMaintenance";
-                    await RefillWorkorderCollection();
-                }
+            if (SelectedPickerText == SelectTitle)
+            {
+                WorkorderTypeFilterText = null;
+                await RefillWorkorderCollection();
+            }
 
-                else if (SelectedPickerText == DemandMaintenenceTitle)
-                {
-                    WorkorderTypeFilterText = "DemandMaintenance";
-                    await RefillWorkorderCollection();
+            else if (SelectedPickerText == PreventiveMaintenenceTitle)
+            {
+                WorkorderTypeFilterText = "PreventiveMaintenance";
+                await RefillWorkorderCollection();
+            }
 
-                }
+            else if (SelectedPickerText == DemandMaintenenceTitle)
+            {
+                WorkorderTypeFilterText = "DemandMaintenance";
+                await RefillWorkorderCollection();
 
-                else if (SelectedPickerText == EmergencyMaintenanceTitle)
-                {
-                    WorkorderTypeFilterText = "EmergencyMaintenance";
-                    await RefillWorkorderCollection();
+            }
 
-                }
-                else if (SelectedPickerText == FailedInspectionTitle)
-                {
-                     WorkorderTypeFilterText = "FailedInspection";
-                      await RefillWorkorderCollection();
-                }
-                else
-                {
-                    WorkorderTypeFilterText = null;
-                    await RefillWorkorderCollection();
-                }
+            else if (SelectedPickerText == EmergencyMaintenanceTitle)
+            {
+                WorkorderTypeFilterText = "EmergencyMaintenance";
+                await RefillWorkorderCollection();
+
+            }
+            else if (SelectedPickerText == FailedInspectionTitle)
+            {
+                WorkorderTypeFilterText = "FailedInspection";
+                await RefillWorkorderCollection();
+            }
+            else
+            {
+                WorkorderTypeFilterText = null;
+                await RefillWorkorderCollection();
+            }
 
 
-            
+
 
         }
 
@@ -2171,16 +2171,16 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                if(item.WorkOrderApproved=="true" && item.CompletionDate!=null)
+                if (item.WorkOrderApproved == "true" && item.CompletionDate != null)
                 {
                     return;
                 }
                 if (EditRights == "E" || EditRights == "V")
                 {
-                    
+
                     if (AppSettings.User.blackhawkLicValidator.RiskAssasment.Equals(true))
                     {
-                        
+
 
                         if (item != null)
                         {
@@ -2227,8 +2227,8 @@ namespace ProteusMMX.ViewModel.Workorder
             catch (Exception ex)
             {
 
-             // DialogService.ShowToast(ex.InnerException.Message, 10000);
-               UserDialogs.Instance.HideLoading();
+                // DialogService.ShowToast(ex.InnerException.Message, 10000);
+                UserDialogs.Instance.HideLoading();
 
             }
             finally
@@ -2249,7 +2249,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
 
-               
+
 
 
 
@@ -2266,7 +2266,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 ///TODO: Get Inspection 
-                var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(),UserID);
+                var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(), UserID);
 
 
                 ///TODO: Get Inspection Time 
@@ -2294,16 +2294,16 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 if (listtoAnswer != null && listtoAnswer.Count > 0)
                 {
-                   
+
                     MaxInspectionCompDate = listtoAnswer.Max(i => i.CompletionDate).ToString();
-                   
+
 
                 }
                 else
                 {
-                   
+
                     MaxInspectionCompDate = string.Empty;
-                   
+
                 }
 
                 #region check if all answers of a sections are required
@@ -2533,7 +2533,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             CultureName = AppSettings.UserCultureName,
                             UserId = Convert.ToInt32(UserID),
                             ClientIANATimeZone = AppSettings.ClientIANATimeZone,
-                            DistributeCost= workorderWrapper.workOrderWrapper.workOrder.DistributeCost,
+                            DistributeCost = workorderWrapper.workOrderWrapper.workOrder.DistributeCost,
                             workOrder = new workOrders
                             {
                                 IsSignatureValidated = false,
@@ -2603,21 +2603,21 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
             catch (Exception ex)
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
             }
 
             finally
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
             }
         }
         public async Task OnViewAppearingAsync(VisualElement view)
@@ -2688,81 +2688,85 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
-            ////Clear priority///
-            sortByPrioritypickerTitlesitems.Clear();
-            SortByPriorityPickerTitles.Clear();
-            PriorityNameFilterText = null;
-
-            ////Clear Shift///
-            sortByShiftpickerTitlesitems.Clear();
-            SortByShiftpickerTitles.Clear();
-            ShiftNameFilterText = null;
-
-
-            ////Clear Location///
-            sortByLocationpickerTitlesitems.Clear();
-            SortByLocationpickerTitles.Clear();
-            LocationNameFilterText = null;
-
-            ///Clear RequiredDate////
-            SortByDateText = null;
-            SortByDueDate = null;
-
-            this.SearchText = null;
-
-            if (Application.Current.Properties.ContainsKey("overdue"))
+            if (view==null)
             {
-                Application.Current.Properties.Remove("overdue");
+                this.SearchText = null;
             }
-            if (Application.Current.Properties.ContainsKey("weekly"))
+            else
             {
-                Application.Current.Properties.Remove("weekly");
-            }
-            if (Application.Current.Properties.ContainsKey("today"))
-            {
-                Application.Current.Properties.Remove("today");
-            }
-            if (Application.Current.Properties.ContainsKey("PriorityID"))
-            {
-                Application.Current.Properties.Remove("PriorityID");
-            }
+                ////Clear priority///
+                sortByPrioritypickerTitlesitems.Clear();
+                SortByPriorityPickerTitles.Clear();
+                PriorityNameFilterText = null;
+                WorkorderTypeFilterText = null;
+                ////Clear Shift///
+                sortByShiftpickerTitlesitems.Clear();
+                SortByShiftpickerTitles.Clear();
+                ShiftNameFilterText = null;
 
 
-            if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
-            {
-                Application.Current.Properties.Remove("LocationFilterkey");
+                ////Clear Location///
+                sortByLocationpickerTitlesitems.Clear();
+                SortByLocationpickerTitles.Clear();
+                LocationNameFilterText = null;
+
+                ///Clear RequiredDate////
+                SortByDateText = null;
+                SortByDueDate = null;
+
+                this.SearchText = null;
+
+                if (Application.Current.Properties.ContainsKey("overdue"))
+                {
+                    Application.Current.Properties.Remove("overdue");
+                }
+                if (Application.Current.Properties.ContainsKey("weekly"))
+                {
+                    Application.Current.Properties.Remove("weekly");
+                }
+                if (Application.Current.Properties.ContainsKey("today"))
+                {
+                    Application.Current.Properties.Remove("today");
+                }
+                if (Application.Current.Properties.ContainsKey("PriorityID"))
+                {
+                    Application.Current.Properties.Remove("PriorityID");
+                }
+
+
+                if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
+                {
+                    Application.Current.Properties.Remove("LocationFilterkey");
+                }
+                if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
+                {
+                    Application.Current.Properties.Remove("ShiftFilterkey");
+                }
+                if (Application.Current.Properties.ContainsKey("ShiftFilterkeyText"))
+                {
+                    Application.Current.Properties.Remove("ShiftFilterkeyText");
+                }
+                if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
+                {
+                    Application.Current.Properties.Remove("PriorityFilterkey");
+                }
+                if (Application.Current.Properties.ContainsKey("PriorityFilterkeyText"))
+                {
+                    Application.Current.Properties.Remove("PriorityFilterkeyText");
+                }
+                if (Application.Current.Properties.ContainsKey("DateFilterkey"))
+                {
+                    Application.Current.Properties.Remove("DateFilterkey");
+                }
             }
-            if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
-            {
-                Application.Current.Properties.Remove("ShiftFilterkey");
-            }
-            if (Application.Current.Properties.ContainsKey("ShiftFilterkeyText"))
-            {
-                Application.Current.Properties.Remove("ShiftFilterkeyText");
-            }
-            if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
-            {
-                Application.Current.Properties.Remove("PriorityFilterkey");
-            }
-            if (Application.Current.Properties.ContainsKey("PriorityFilterkeyText"))
-            {
-                Application.Current.Properties.Remove("PriorityFilterkeyText");
-            }
-            if (Application.Current.Properties.ContainsKey("DateFilterkey"))
-            {
-                Application.Current.Properties.Remove("DateFilterkey");
-            }
-          
-         
-           
-            
+
         }
 
         private void SetCompletionDateResult(DatePromptResult result)
         {
             if (result.Ok)
             {
-              
+
                 if (result.Value.Date == DateTime.Parse("1/1/0001 12:00:00 AM"))
                 {
                     SortByDateText = string.Empty;
@@ -2772,8 +2776,8 @@ namespace ProteusMMX.ViewModel.Workorder
                     SortByDateText = result.SelectedDate.Date.ToString("dd MMM yyyy");
                 }
             }
-               
-            }
+
+        }
 
         public async Task GetWorkorderControlRights()
         {

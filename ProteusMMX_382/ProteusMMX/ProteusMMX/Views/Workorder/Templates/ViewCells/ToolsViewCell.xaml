@@ -2,12 +2,13 @@
 <ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.Templates.ViewCells.ToolsViewCell" BindingContextChanged="OnBindingContextChanged">
-    <ViewCell.View>
-        <StackLayout x:Name="TopLayout" Padding="4,1,4,1" >
-            <StackLayout.Resources>
+    <ViewCell.View >
+       
+            <StackLayout  x:Name="TopLayout" Padding="0,1,0,1" >
+             <!--<StackLayout.Resources>
                 <ResourceDictionary Source="Styles.xaml" />
-            </StackLayout.Resources>
-            <Frame BackgroundColor="White"  BorderColor="DarkGray"    CornerRadius="5">
+            </StackLayout.Resources>-->
+            <Frame Padding="5,5,5,5" BackgroundColor="White"  BorderColor="DarkGray"    CornerRadius="5">
                 <Grid RowSpacing="3">
 
                     <Grid.RowDefinitions>
@@ -15,11 +16,10 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
                        
                     </Grid.RowDefinitions>
 
-                    <Grid>
+                    <Grid Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -63,7 +63,6 @@
 
                     </Grid>
 
-
                     <Grid Grid.Row="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -78,16 +77,13 @@
 
 
                     </Grid>
-                    <Label x:Name="ShowMore" TextColor="#006de0" Text="RemoveTool" HorizontalOptions="End"  Grid.Row="4">
-                    </Label>
-
+                    <Image Source="delIcon1.png" x:Name="ShowMore"  HorizontalOptions="End" Grid.Row="3"/>
+                    <!--<Label x:Name="ShowMore" TextColor="#006de0" Text="RemoveTool" HorizontalOptions="End"  Grid.Row="3">
+                    </Label>-->
                 </Grid>
             </Frame>
         </StackLayout>
-
-      
     </ViewCell.View>
-
     <ViewCell.ContextActions>
         <MenuItem x:Name="ToolsMenuItem" IsDestructive="{Binding RemoveToolVisibility}" Clicked="RemoveTool"  CommandParameter="{Binding .}"  Text="RemoveTool" />
     </ViewCell.ContextActions>

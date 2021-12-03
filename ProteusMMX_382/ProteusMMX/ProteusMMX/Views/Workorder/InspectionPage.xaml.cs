@@ -268,7 +268,7 @@ namespace ProteusMMX.Views.Workorder
             InitializeComponent();
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
 
             if (Application.Current.Properties.ContainsKey("AssociateInspection"))
             {
@@ -296,6 +296,11 @@ namespace ProteusMMX.Views.Workorder
 
         protected override async void OnAppearing()
         {
+            // for disscoson 
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            AnswerText.Clear();
+
             UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
             await Task.Delay(3000);
             base.OnAppearing();
@@ -367,7 +372,7 @@ namespace ProteusMMX.Views.Workorder
             StackLayout InspectionButtonSL = new StackLayout();
             masterGrid.Children.Add(InspectionButtonSL, 0, 1);
             Grid InspectionButtonGrid = new Grid();
-            InspectionButtonGrid.RowDefinitions.Add(new RowDefinition { Height = 35 });
+            InspectionButtonGrid.RowDefinitions.Add(new RowDefinition { Height = 20 });
             InspectionButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
             InspectionButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
             InspectionButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
@@ -1820,7 +1825,7 @@ namespace ProteusMMX.Views.Workorder
             // masterGrid.Children.Add(TabViewSL, 0, 4);
             #region **** MiscellaneousGrid ****
 
-            Grid MiscellaneousGrid = new Grid { BackgroundColor = Color.White, MinimumWidthRequest = 550, Padding = 0 };
+            Grid MiscellaneousGrid = new Grid { BackgroundColor = Color.White, MinimumWidthRequest = 550, Padding = 2 };
             MiscellaneousGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
             StackLayout MiscelMasterSL = new StackLayout();
             MiscellaneousGrid.Children.Add(MiscelMasterSL, 0, 0);
@@ -1833,7 +1838,7 @@ namespace ProteusMMX.Views.Workorder
 
             #region **** GroupSection ***
 
-            Grid GroupSectionsGrid = new Grid { BackgroundColor = Color.White, HeightRequest = 500, Padding = 2 };
+            Grid GroupSectionsGrid = new Grid { BackgroundColor = Color.White, HeightRequest = 550, Padding = 2 };
             GroupSectionsGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
             StackLayout GroupSecSl = new StackLayout();
             GroupSectionsGrid.Children.Add(GroupSecSl);
@@ -2178,38 +2183,31 @@ namespace ProteusMMX.Views.Workorder
                             GenerateAnswerText(item);
 
                             MChoiceSlLavel.Children.Add(Label);
-                            if (Device.RuntimePlatform == Device.UWP)
-                            {
-                                Layout = new MyPicker() { WidthRequest = 60, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
-                            }
-                            else
-                            {
-                                Layout = new MyPicker() { WidthRequest = 60, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
-                            }
-
+                                Layout = new CustomPicker() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image= "unnamed" };
+                           
                             if (!string.IsNullOrWhiteSpace(item.Option1))
-                                (Layout as MyPicker).Items.Add(item.Option1);
+                                (Layout as CustomPicker).Items.Add(item.Option1);
                             if (!string.IsNullOrWhiteSpace(item.Option2))
-                                (Layout as MyPicker).Items.Add(item.Option2);
+                                (Layout as CustomPicker).Items.Add(item.Option2);
                             if (!string.IsNullOrWhiteSpace(item.Option3))
-                                (Layout as MyPicker).Items.Add(item.Option3);
+                                (Layout as CustomPicker).Items.Add(item.Option3);
                             if (!string.IsNullOrWhiteSpace(item.Option4))
-                                (Layout as MyPicker).Items.Add(item.Option4);
+                                (Layout as CustomPicker).Items.Add(item.Option4);
                             if (!string.IsNullOrWhiteSpace(item.Option5))
-                                (Layout as MyPicker).Items.Add(item.Option5);
+                                (Layout as CustomPicker).Items.Add(item.Option5);
                             if (!string.IsNullOrWhiteSpace(item.Option6))
-                                (Layout as MyPicker).Items.Add(item.Option6);
+                                (Layout as CustomPicker).Items.Add(item.Option6);
                             if (!string.IsNullOrWhiteSpace(item.Option7))
-                                (Layout as MyPicker).Items.Add(item.Option7);
+                                (Layout as CustomPicker).Items.Add(item.Option7);
                             if (!string.IsNullOrWhiteSpace(item.Option8))
-                                (Layout as MyPicker).Items.Add(item.Option8);
+                                (Layout as CustomPicker).Items.Add(item.Option8);
                             if (!string.IsNullOrWhiteSpace(item.Option9))
-                                (Layout as MyPicker).Items.Add(item.Option9);
+                                (Layout as CustomPicker).Items.Add(item.Option9);
                             if (!string.IsNullOrWhiteSpace(item.Option10))
-                                (Layout as MyPicker).Items.Add(item.Option10);
+                                (Layout as CustomPicker).Items.Add(item.Option10);
 
-                            var index = (Layout as MyPicker).Items.IndexOf(item.AnswerDescription);
-                            (Layout as MyPicker).SelectedIndex = index;
+                            var index = (Layout as CustomPicker).Items.IndexOf(item.AnswerDescription);
+                            (Layout as CustomPicker).SelectedIndex = index;
 
                             MChoiceGrid.Children.Add(Question, 0, 0);
                             MChoiceGrid.Children.Add(Label, 0, 0);
@@ -2249,7 +2247,7 @@ namespace ProteusMMX.Views.Workorder
                     var btnsave = new Button() { BackgroundColor = Color.White, ImageSource = "saveicon1.png" };
                     btnsave.Clicked += Btnsave_Clicked;
 
-                    var btnDelete = new SfButton() { BackgroundColor = Color.White, ShowIcon = true, ImageSource = "delIcon1.png", StyleId = item.InspectionID.ToString() };
+                    var btnDelete = new Button() { BackgroundColor = Color.White, ImageSource = "delIcon1.png", StyleId = item.InspectionID.ToString() };
                     btnDelete.Clicked += BtnDelete_Clicked;
 
                     StackLayout Case1SL = new StackLayout();
@@ -2281,7 +2279,7 @@ namespace ProteusMMX.Views.Workorder
                         }
 
                         //var addSignatureButton = new Button() { CornerRadius = 5, Text = WebControlTitle.GetTargetNameByTitleName("AddSignature"), BackgroundColor = Color.FromHex("#87CEFA"), HeightRequest = 35, FontSize = 12, TextColor = Color.White, BorderColor = Color.Black };
-                        var addSignatureButton = new SfButton() { BackgroundColor = Color.White, ShowIcon = true, ImageSource = "signature.png" };
+                        var addSignatureButton = new Button() { BackgroundColor = Color.White,  ImageSource = "signature.png" };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
                         // layout2.Children.Add(addSignatureButton);
                         Case1Grid.Children.Add(btnsave, 2, 1);
@@ -2672,32 +2670,32 @@ namespace ProteusMMX.Views.Workorder
 
                                 GenerateAnswerText(item1);
 
-                                var Layoutm = new MyPicker() { WidthRequest = 60, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End };
+                                var Layoutm = new CustomPicker() { WidthRequest = 100,  VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image= "unnamed" };
 
                                 if (!string.IsNullOrWhiteSpace(item1.Option1))
-                                    (Layoutm as MyPicker).Items.Add(item1.Option1);
+                                    (Layoutm as CustomPicker).Items.Add(item1.Option1);
                                 if (!string.IsNullOrWhiteSpace(item1.Option2))
-                                    (Layoutm as MyPicker).Items.Add(item1.Option2);
+                                    (Layoutm as CustomPicker).Items.Add(item1.Option2);
                                 if (!string.IsNullOrWhiteSpace(item1.Option3))
-                                    (Layoutm as MyPicker).Items.Add(item1.Option3);
+                                    (Layoutm as CustomPicker).Items.Add(item1.Option3);
                                 if (!string.IsNullOrWhiteSpace(item1.Option4))
-                                    (Layoutm as MyPicker).Items.Add(item1.Option4);
+                                    (Layoutm as CustomPicker).Items.Add(item1.Option4);
                                 if (!string.IsNullOrWhiteSpace(item1.Option5))
-                                    (Layoutm as MyPicker).Items.Add(item1.Option5);
+                                    (Layoutm as CustomPicker).Items.Add(item1.Option5);
                                 if (!string.IsNullOrWhiteSpace(item1.Option6))
-                                    (Layoutm as MyPicker).Items.Add(item1.Option6);
+                                    (Layoutm as CustomPicker).Items.Add(item1.Option6);
                                 if (!string.IsNullOrWhiteSpace(item1.Option7))
-                                    (Layoutm as MyPicker).Items.Add(item1.Option7);
+                                    (Layoutm as CustomPicker).Items.Add(item1.Option7);
                                 if (!string.IsNullOrWhiteSpace(item1.Option8))
-                                    (Layoutm as MyPicker).Items.Add(item1.Option8);
+                                    (Layoutm as CustomPicker).Items.Add(item1.Option8);
                                 if (!string.IsNullOrWhiteSpace(item1.Option9))
-                                    (Layoutm as MyPicker).Items.Add(item1.Option9);
+                                    (Layoutm as CustomPicker).Items.Add(item1.Option9);
                                 if (!string.IsNullOrWhiteSpace(item1.Option10))
-                                    (Layoutm as MyPicker).Items.Add(item1.Option10);
+                                    (Layoutm as CustomPicker).Items.Add(item1.Option10);
 
 
-                                var index = (Layoutm as MyPicker).Items.IndexOf(item1.AnswerDescription);
-                                (Layoutm as MyPicker).SelectedIndex = index;
+                                var index = (Layoutm as CustomPicker).Items.IndexOf(item1.AnswerDescription);
+                                (Layoutm as CustomPicker).SelectedIndex = index;
 
 
                                 MChoiceGrid.Children.Add(Questionm, 0, 0);
@@ -2731,8 +2729,8 @@ namespace ProteusMMX.Views.Workorder
 
                     var btnsave = new Button() { BackgroundColor = Color.White, HeightRequest = 40, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = "saveicon1.png" };
                     btnsave.Clicked += BtnSaveSection_Clicked;
-
-                    var btnDelete = new SfButton() { BackgroundColor = Color.White, VerticalOptions = LayoutOptions.FillAndExpand, ShowIcon = true, ImageSource = "delIcon1.png", StyleId = item.SectionID.ToString() };
+                    string Sid = item.SectionID.ToString();
+                    var btnDelete = new Button() { BackgroundColor = Color.White, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = "delIcon1.png", StyleId = Sid };
                     btnDelete.Clicked += BtnSectionDelete_Clicked;
 
                     StackLayout Case1SL = new StackLayout();
@@ -2762,7 +2760,7 @@ namespace ProteusMMX.Views.Workorder
                         }
 
                         //var addSignatureButton = new SfButton() {  BackgroundColor = Color.LightGray, ShowIcon = true, ImageSource = "signature.png"};
-                        var addSignatureButton = new SfButton() { BackgroundColor = Color.White, ShowIcon = true, ImageSource = "signature.png" };
+                        var addSignatureButton = new Button() { BackgroundColor = Color.White,  ImageSource = "signature.png" };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
                         // layout2.Children.Add(addSignatureButton);
                         Case1Grid.Children.Add(btnsave, 2, 1);
@@ -2841,13 +2839,19 @@ namespace ProteusMMX.Views.Workorder
                 }
             };
 
+            var MiscellGrid = MiscellaneousGrid.Height;
+            layout2Test.HeightRequest = MinimumHeightRequest=500; 
+
+            var GroupSGrid = MiscellaneousGrid.Height;
+            GroupSecSlCaseTest1.HeightRequest=1200;
+
             tabView.Items = tabItems;
             MainLayout.Children.Add(tabView);
         }
         private async void AddSignatureButton_Clicked(object sender, EventArgs e)
         {
-            var data = (sender as SfButton).Parent;
-            var parentView = ((sender as SfButton).Parent as Grid);
+            var data = (sender as Button).Parent;
+            var parentView = ((sender as Button).Parent as Grid);
             // var image1 = parentView.Children[parentView.Children.Count - 4] as CustomImage;
 
             var image = parentView.Children[0] as CustomImage;
@@ -3519,7 +3523,6 @@ namespace ProteusMMX.Views.Workorder
 
             }
 
-
         }
         private async void Btnsave_Clicked(object sender, EventArgs e)
         {
@@ -3718,12 +3721,12 @@ namespace ProteusMMX.Views.Workorder
                     var DateSLt1 = DateGrid1.Children[0] as StackLayout;
                     var DateBodder1 = DateSLt1.Children[1] as SfBorder;
                     var StartdateValue = DateBodder1.Children[0] as CustomDatePicker;
-                    var StartdateValue1 = DateTime.Parse(StartdateValue.SelectedDate.ToString());
+                    //var StartdateValue1 = DateTime.Parse(StartdateValue.SelectedDate.ToString());
 
                     var DateSLt2 = DateGrid1.Children[1] as StackLayout;
                     var DateBodder2 = DateSLt2.Children[1] as SfBorder;
                     var CompletionDateValue = DateBodder2.Children[0] as CustomDatePicker;
-                    var CompletionDateValue1 = DateTime.Parse(CompletionDateValue.SelectedDate.ToString());
+                   // var CompletionDateValue1 = DateTime.Parse(CompletionDateValue.SelectedDate.ToString());
 
                     this.InspectionStartDate = StartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(StartdateValue.SelectedDate.ToString()) : (DateTime?)null;
                     this.InspectionCompletionDate = CompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(CompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;
@@ -4008,16 +4011,16 @@ namespace ProteusMMX.Views.Workorder
         private async void BtnDelete_Clicked(object sender, EventArgs e)
         {
             
-            var ssdv = (sender as SfButton).Parent as Grid;
+            var ssdv = (sender as Button).Parent as Grid;
 
-            SfButton kfm;
-            if (ssdv.Children.Count == 4)
+            Button kfm;
+            if (ssdv.Children.Count == 5)
             {
-                kfm = ssdv.Children[2] as SfButton;
+                kfm = ssdv.Children[2] as Button;
             }
             else
             {
-                kfm = ssdv.Children[1] as SfButton;
+                kfm = ssdv.Children[1] as Button;
             }
 
             //  var kfm1 = ParentLayout.Children[0] as StackLayout;
@@ -4050,15 +4053,15 @@ namespace ProteusMMX.Views.Workorder
         private async void BtnSectionDelete_Clicked(object sender, EventArgs e)
         {
 
-            var ssdv = (sender as SfButton).Parent as Grid;
-            SfButton kfm ; 
-            if (ssdv.Children.Count==4)
+            var ssdv = (sender as Button).Parent as Grid;
+            Button kfm ; 
+            if (ssdv.Children.Count==5)
             {
-                 kfm = ssdv.Children[2] as SfButton;
+                 kfm = ssdv.Children[2] as Button;
             }
             else
             {
-                 kfm = ssdv.Children[1] as SfButton;
+                 kfm = ssdv.Children[1] as Button;
             }
 
             //  var kfm1 = ParentLayout.Children[0] as StackLayout;

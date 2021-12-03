@@ -298,9 +298,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         #endregion
 
-
-
-
+        string AddParts;
+        string EditParts;
 
         #region ListView Properties
 
@@ -372,8 +371,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (navigationData != null)
                 {
 
-                    //var navigationParams = navigationData as PageParameters;
-                    //this.Page = navigationParams.Page;
+                    var navigationParams = navigationData as PageParameters;
+                    this.Page = navigationParams.Page;
 
                     //var workorder = navigationParams.Parameter as workOrders;
                     this.WorkorderID = Convert.ToInt32(navigationData);
@@ -384,6 +383,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 OperationInProgress = true;
                 await SetTitlesPropertiesForPage();
+                
                 if (Device.RuntimePlatform == Device.UWP)
                 {
                   
@@ -451,14 +451,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 if (response == CreateNonStockroomParts)
                 {
-                   
                     await NavigationService.NavigateToAsync<CreateNonStockroomPartsPageViewModel>(this.WorkorderID);
-
                 }
-
-
-
-
             }
             catch (Exception ex)
             {
@@ -562,9 +556,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task OnViewAppearingAsync(VisualElement view)
         {
-            NonStockroomPartsCollection.Clear();
-          
-            await GetWorkorderNonStockRoomParts();
+            await SetTitlesPropertiesForPage();
+           
+                NonStockroomPartsCollection.Clear();
+
+                await GetWorkorderNonStockRoomParts();
         }
 
         public async Task OnViewDisappearingAsync(VisualElement view)

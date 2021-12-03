@@ -147,7 +147,6 @@ namespace ProteusMMX.Services.Navigation
             //} 
             #endregion
 
-
         }
 
         public virtual Task RemoveLastFromBackStackAsync()

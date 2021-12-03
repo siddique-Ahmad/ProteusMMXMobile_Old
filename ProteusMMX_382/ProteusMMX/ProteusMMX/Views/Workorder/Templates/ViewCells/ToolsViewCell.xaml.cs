@@ -100,5 +100,7 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
                 (bindable as ToolsViewCell).ParentContext = newValue;
             }
         }
+
+       
     }
 }

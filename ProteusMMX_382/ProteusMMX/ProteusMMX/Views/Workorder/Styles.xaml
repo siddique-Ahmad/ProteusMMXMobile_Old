@@ -102,7 +102,7 @@
         <Setter Property="BorderColor" Value="Black" />
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="BorderWidth" Value="1" />
-        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="HeightRequest" Value="50" />
     </Style>
     <!--  Common style for borders  -->
     <Style x:Key="SfButtonStyles" TargetType="buttons:SfButton">

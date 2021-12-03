@@ -17,6 +17,8 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
         public WorkorderstockroompartsViewCell(ref object ParentContext)
         {
             InitializeComponent();
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
             this.PartName.Text = WebControlTitle.GetTargetNameByTitleName("PartName");
             this.PartNumber.Text = WebControlTitle.GetTargetNameByTitleName("PartNumber");
             this.QuantityRequired.Text = WebControlTitle.GetTargetNameByTitleName("QuantityRequired");
