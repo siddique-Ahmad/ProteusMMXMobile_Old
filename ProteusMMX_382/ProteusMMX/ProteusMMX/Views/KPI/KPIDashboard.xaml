@@ -93,7 +93,7 @@
                     </StackLayout>
 
                     <StackLayout Spacing="20" Grid.Row="4">
-                        <Label  Text="Hours" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                        <Label  Text="Actual Hours" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -117,6 +117,36 @@
                                 <Label Text="This Month" FontSize="14" HorizontalOptions="Center" TextColor="#006de0" FontAttributes="Bold"></Label>
 
                                 <Label Text="{Binding ThisMonthHours}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" TextColor="Black"></Label>
+                                <BoxView BackgroundColor="Black" HorizontalOptions="Center"  WidthRequest="60" HeightRequest="2"/>
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+
+                    <StackLayout Spacing="30" Grid.Row="5">
+                        <Label  Text="Planned Hours" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackLayout Grid.Column="0">
+                                <Label Text="Today" FontSize="14" HorizontalOptions="Center" TextColor="#006de0" FontAttributes="Bold"></Label>
+
+                                <Label Text="{Binding TodayPlannedHours}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" TextColor="Black"></Label>
+                                <BoxView BackgroundColor="Black" HorizontalOptions="Center"  WidthRequest="60" HeightRequest="2"/>
+                            </StackLayout>
+                            <StackLayout Grid.Column="1">
+                                <Label Text="Weekly" FontSize="14" HorizontalOptions="Center" TextColor="#006de0" FontAttributes="Bold"></Label>
+
+                                <Label Text="{Binding WeeklyPlannedHours}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" TextColor="Black"></Label>
+                                <BoxView BackgroundColor="Black" HorizontalOptions="Center"  WidthRequest="60" HeightRequest="2"/>
+                            </StackLayout>
+                            <StackLayout Grid.Column="2">
+                                <Label Text="Monthly" FontSize="14" HorizontalOptions="Center" TextColor="#006de0" FontAttributes="Bold"></Label>
+
+                                <Label Text="{Binding MonthlyPlannedHours}" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" TextColor="Black"></Label>
                                 <BoxView BackgroundColor="Black" HorizontalOptions="Center"  WidthRequest="60" HeightRequest="2"/>
                             </StackLayout>
                         </Grid>
