@@ -88,5 +88,21 @@ namespace ProteusMMX.Views.Workorder
         {
 
         }
+
+        private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                await ViewModel.OnViewDisappearingAsync(null);
+                await ViewModel.RefillWorkorderCollection();
+            }
+        }
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            await ViewModel.OnViewDisappearingAsync(this);
+            await ViewModel.RefillWorkorderCollection();
+        }
     }
 }

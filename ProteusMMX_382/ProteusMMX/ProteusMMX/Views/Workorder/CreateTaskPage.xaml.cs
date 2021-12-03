@@ -17,7 +17,7 @@ namespace ProteusMMX.Views.Workorder
 		{
 			InitializeComponent ();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
 
         protected override async void OnAppearing()
@@ -27,7 +27,7 @@ namespace ProteusMMX.Views.Workorder
             if (BindingContext is IHandleViewAppearing viewAware)
             {
                 ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
-                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
                 await viewAware.OnViewAppearingAsync(this);
             }
         }

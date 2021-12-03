@@ -5,22 +5,22 @@
                 xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX"
              xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
-             xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
+             xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -45,10 +45,37 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid Grid.Row="1"  Padding="5,5,5,5">
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                
+                <border:SfBorder CornerRadius="5">
+                    <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0" Grid.Column="0"/>
+                
+                </border:SfBorder>
+                <Image Grid.Column="1" Grid.Row="0" HeightRequest="40">
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource" >
+                            <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                        </OnPlatform>
+                    </Image.Source>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                                         Command="{Binding ScanCommand}"
+                                         NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+                <!--<Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />-->
 
-
-            <ListView Grid.Row="1" Grid.ColumnSpan="2"
+                <ListView Grid.Row="1" Grid.ColumnSpan="2"
                          ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"
@@ -57,9 +84,10 @@
                           
                           behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding WorkorderNonStockroomPartSelectedCommand}">
 
-            </ListView>
+                </ListView>
 
-
+            </Grid>
+            <ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
 
         </Grid>
 

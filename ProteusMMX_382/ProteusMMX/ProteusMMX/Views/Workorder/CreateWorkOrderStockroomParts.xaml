@@ -18,17 +18,17 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -36,136 +36,156 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <Grid  Padding="10,10,10,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2">
-                <Label Text="{Binding StockRoomNametitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                    <Label.FontAttributes>
-                        <OnPlatform x:TypeArguments="FontAttributes">
-                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                        </OnPlatform>
-                    </Label.FontAttributes>
-                </Label>
-                <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
-                <Button Text="{Binding StockroomNameText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding StockroomNameCommand}"/>
-                <!--</border:SfBorder>-->
-            </StackLayout>
+        <ScrollView>
+            <Grid  Padding="10,10,10,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <StackLayout Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2">
+                    <Label Text="{Binding StockRoomNametitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                        <Label.FontAttributes>
+                            <OnPlatform x:TypeArguments="FontAttributes">
+                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                            </OnPlatform>
+                        </Label.FontAttributes>
+                    </Label>
+                    <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                        <buttons:SfButton Text="{Binding StockroomNameText}" Style="{StaticResource SfButtonStyles}" Command="{Binding StockroomNameCommand}"/>
+                    </border:SfBorder>
+                </StackLayout>
+
+                <StackLayout Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2">
+                    <Label Text="{Binding PartNumberTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                        <Label.FontAttributes>
+                            <OnPlatform x:TypeArguments="FontAttributes">
+                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                            </OnPlatform>
+                        </Label.FontAttributes>
+                    </Label>
+
+                    <Grid Grid.Row="1" >
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3.5*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <border:SfBorder Style="{StaticResource SfBorderStyle}" >
+                            <buttons:SfButton Grid.Column="0" Text="{Binding PartNumberText}" Style="{StaticResource SfButtonStyles}" Command="{Binding PartNumberCommand}"  />
+
+                        </border:SfBorder>
+
+                        <!--<border:SfBorder Style="{StaticResource SfBorderStyle}" >-->
+                        <Image Grid.Column="1" HeightRequest="40" >
+                            <Image.Source>
+                                <OnPlatform x:TypeArguments="ImageSource" >
+                                    <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                                </OnPlatform>
+                            </Image.Source>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                         Command="{Binding ScanCommand}"
+                                         NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <!--<Button  Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />-->
+                        <!--</border:SfBorder>-->
+                    </Grid>
 
 
-            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2">
-                <Label Text="{Binding PartNumberTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                    <Label.FontAttributes>
-                        <OnPlatform x:TypeArguments="FontAttributes">
-                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                        </OnPlatform>
-                    </Label.FontAttributes>
-                </Label>
+                </StackLayout>
 
-                <Grid Grid.Row="1" >
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3.5*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!--<border:SfBorder Style="{StaticResource SfBorderStyle}" >-->
-                    <Button Grid.Column="0" Text="{Binding PartNumberText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding PartNumberCommand}"  />
-
+                <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0">
+                    <Label Text="{Binding ShelfBintitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                        <Label.FontAttributes>
+                            <OnPlatform x:TypeArguments="FontAttributes">
+                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                            </OnPlatform>
+                        </Label.FontAttributes>
+                    </Label>
+                    <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
+                    <border:SfBorder CornerRadius="5">
+                        <Button Text="{Binding ShelfBinText}" Style="{StaticResource TargetButtonStyle}" BackgroundColor="LightGray" TextColor="Black" IsEnabled="False" />
+                    </border:SfBorder>
                     <!--</border:SfBorder>-->
+                </StackLayout>
 
-                    <!--<border:SfBorder Style="{StaticResource SfBorderStyle}" >-->
-
-                    <Button  Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />
-                    <!--</border:SfBorder>-->
-                </Grid>
-
-
-            </StackLayout>
-
-            <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0">
-                <Label Text="{Binding ShelfBintitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                    <Label.FontAttributes>
-                        <OnPlatform x:TypeArguments="FontAttributes">
-                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                        </OnPlatform>
-                    </Label.FontAttributes>
-                </Label>
-                <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
-                <border:SfBorder CornerRadius="5">
-                    <Button Text="{Binding ShelfBinText}" Style="{StaticResource TargetButtonStyle}" BackgroundColor="LightGray" TextColor="Black" IsEnabled="False" />
-                </border:SfBorder>
-                <!--</border:SfBorder>-->
-            </StackLayout>
-
-            <StackLayout  Orientation="Vertical" Grid.Row="2" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="QRequired"   Text="{Binding QuantityRequiredtitle}" HorizontalOptions="FillAndExpand" TextColor="Black" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
-                    <Label.FontAttributes>
-                        <OnPlatform x:TypeArguments="FontAttributes">
-                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                        </OnPlatform>
-                    </Label.FontAttributes>
-                </Label>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:CustomEntry
+                <StackLayout  Orientation="Vertical" Grid.Row="2" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                    <Label x:Name="QRequired"   Text="{Binding QuantityRequiredtitle}" HorizontalOptions="FillAndExpand" TextColor="Black" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
+                        <Label.FontAttributes>
+                            <OnPlatform x:TypeArguments="FontAttributes">
+                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                            </OnPlatform>
+                        </Label.FontAttributes>
+                    </Label>
+                    <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                        <control1:CustomEntry
                       x:Name="QuantityRequired" Text="{Binding QuantityRequiredText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextChanged="QuantityRequired_TextChanged" />
-                </border:SfBorder>
-            </StackLayout>
+                    </border:SfBorder>
+                </StackLayout>
 
-            <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="QAllocated"  Text="{Binding QuantityAllocatedtitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                    <Label.FontAttributes>
-                        <OnPlatform x:TypeArguments="FontAttributes">
-                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                        </OnPlatform>
-                    </Label.FontAttributes>
-                </Label>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:CustomEntry
+                <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                    <Label x:Name="QAllocated"  Text="{Binding QuantityAllocatedtitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                        <Label.FontAttributes>
+                            <OnPlatform x:TypeArguments="FontAttributes">
+                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                            </OnPlatform>
+                        </Label.FontAttributes>
+                    </Label>
+                    <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                        <control1:CustomEntry
                        x:Name="QuantityAllocated" Text="{Binding QuantityAllocatedText}" TextChanged="QuantityAllocated_TextChanged"/>
-                </border:SfBorder>
-            </StackLayout>
+                    </border:SfBorder>
+                </StackLayout>
 
-            <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1">
-                <Label x:Name="UCost"   Text="{Binding UnitCosttitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                    <Label.FontAttributes>
-                        <OnPlatform x:TypeArguments="FontAttributes">
-                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                        </OnPlatform>
-                    </Label.FontAttributes>
-                </Label>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:CustomEntry
+                <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1">
+                    <Label x:Name="UCost"   Text="{Binding UnitCosttitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                        <Label.FontAttributes>
+                            <OnPlatform x:TypeArguments="FontAttributes">
+                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                            </OnPlatform>
+                        </Label.FontAttributes>
+                    </Label>
+                    <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                        <control1:CustomEntry
                          x:Name="UnitCost" Text="{Binding UnitCostText}" TextChanged="UnitCost_TextChanged"/>
-                </border:SfBorder>
+                    </border:SfBorder>
 
-            </StackLayout>
+                </StackLayout>
 
-            <StackLayout Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="2">
-                <Button     
+                <StackLayout Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="2">
+                    <Button     
                     
                     CornerRadius="5"
                        VerticalOptions="StartAndExpand"
                        Command="{Binding SaveStockroomPartsCommand}"
                        Style="{StaticResource LoginButtonStyle}"                      
                        Text="{Binding SaveTitle}" >
-                </Button>
-            </StackLayout>
+                    </Button>
+                </StackLayout>
 
-
-        </Grid>
+            </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

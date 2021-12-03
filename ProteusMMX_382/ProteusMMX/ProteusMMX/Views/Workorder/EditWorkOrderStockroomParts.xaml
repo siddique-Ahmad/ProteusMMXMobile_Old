@@ -17,17 +17,17 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -39,8 +39,14 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <StackLayout  Orientation="Vertical" Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
-                <Label x:Name="StkName"   Text="{Binding StockRoomNametitle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextColor="Black" Style="{StaticResource LabelStyle}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackLayout  Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <Label x:Name="StkName" Grid.Row="0"  Text="{Binding StockRoomNametitle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextColor="Black" Style="{StaticResource LabelStyle}">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -52,7 +58,6 @@
                     <control1:CustomEntry x:Name="StockroomName"  IsEnabled="False" Text="{Binding StockroomNameText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></control1:CustomEntry>
                 </border:SfBorder>
             </StackLayout>
-
 
             <StackLayout  Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                 <Label x:Name="PName"  TextColor="Black" Text="{Binding PartNumberTitle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
@@ -129,12 +134,6 @@
             </StackLayout>
 
             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="2" IsVisible="{Binding StockroomPartIsVisible}">
-
-                <!--<buttons:SfButton Style="{StaticResource SfButtonStyle}">
-                   
-                    <Button Text="{Binding SaveTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding SaveEditStockroomPartsCommand}" IsEnabled="{Binding StockroomPartIsEnabled}" />
-                </buttons:SfButton>-->
-
                 <Button
                         Grid.Row="4"
                      CornerRadius="5"
