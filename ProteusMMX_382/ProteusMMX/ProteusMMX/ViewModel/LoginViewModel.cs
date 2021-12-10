@@ -623,7 +623,7 @@ namespace ProteusMMX.ViewModel
         {
             try
             {
-
+               // Crashes.GenerateTestCrash();
                 ServiceOutput apiVersion = new ServiceOutput();
                 UserDialogs.Instance.ShowLoading("Please wait..loading all data");
 
@@ -708,7 +708,7 @@ namespace ProteusMMX.ViewModel
                 UserDialogs.Instance.HideLoading();
                 OperationInProgress = false;
                 Crashes.TrackError(ex);
-
+               
             }
 
             finally

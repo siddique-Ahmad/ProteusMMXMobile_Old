@@ -14,6 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using ZXing.Mobile;
+using ZXing.Net.Mobile.Forms;
 
 namespace ProteusMMX.ViewModel.Workorder
 {
@@ -35,6 +37,26 @@ namespace ProteusMMX.ViewModel.Workorder
 
         #region Page Properties
 
+        string _searchText;
+        public string SearchText
+        {
+            get
+            {
+                return _searchText;
+            }
+
+            set
+            {
+                if (value != _searchText)
+                {
+                    _searchText = value;
+                    OnPropertyChanged("SearchText");
+                    SearchText_TextChanged();
+                }
+            }
+        }
+
+
         string _pageTitle = "";
         public string PageTitle
         {
@@ -49,6 +71,57 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _pageTitle = value;
                     OnPropertyChanged("PageTitle");
+                }
+            }
+        }
+        string _scanTitle;
+        public string ScanTitle
+        {
+            get
+            {
+                return _scanTitle;
+            }
+
+            set
+            {
+                if (value != _scanTitle)
+                {
+                    _scanTitle = value;
+                    OnPropertyChanged("ScanTitle");
+                }
+            }
+        }
+        string _goTitle;
+        public string GoTitle
+        {
+            get
+            {
+                return _goTitle;
+            }
+
+            set
+            {
+                if (value != _goTitle)
+                {
+                    _goTitle = value;
+                    OnPropertyChanged("GoTitle");
+                }
+            }
+        }
+        string _searchButtonTitle;
+        public string SearchButtonTitle
+        {
+            get
+            {
+                return _searchButtonTitle;
+            }
+
+            set
+            {
+                if (value != _searchButtonTitle)
+                {
+                    _searchButtonTitle = value;
+                    OnPropertyChanged("SearchButtonTitle");
                 }
             }
         }
@@ -357,6 +430,7 @@ namespace ProteusMMX.ViewModel.Workorder
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
 
+        public ICommand ScanCommand => new AsyncCommand(ScanNonStockParts);
         public ICommand WorkorderNonStockroomPartSelectedCommand => new Command<WorkOrderNonStockroomParts>(OnSelectWorkorderNonStockroomPartAsync);
 
         #endregion
@@ -432,7 +506,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 QuantityRequired = WebControlTitle.GetTargetNameByTitleName("QuantityRequired");
                 CreateNonStockroomParts= WebControlTitle.GetTargetNameByTitleName("CreateNonStockroomParts");
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-
+            ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
+            SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
 
 
         }
@@ -466,13 +541,113 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
+        public async Task ScanNonStockParts()
+        {
+
+            try
+            {
+                OperationInProgress = true;
 
 
-        //public async Task GetWorkorderToolsAuto()
-        //{
-        //    // PageNumber++;
-        //    await GetWorkorderTools();
-        //}
+                #region Barcode Section and Search Section
+
+                if (SearchButtonTitle == ScanTitle)
+                {
+                    var options = new MobileBarcodeScanningOptions()
+                    {
+                        AutoRotate = false,
+                        TryHarder = true,
+
+                    };
+
+                    ZXingScannerPage _scanner = new ZXingScannerPage(options)
+                    {
+                        DefaultOverlayTopText = "Align the barcode within the frame",
+                        DefaultOverlayBottomText = string.Empty,
+                        DefaultOverlayShowFlashButton = true
+                    };
+
+                    _scanner.OnScanResult += _scanner_OnScanResult;
+                    var navPage = App.Current.MainPage as NavigationPage;
+                    await navPage.PushAsync(_scanner);
+                }
+
+                else
+                {
+                    //reset pageno. and start search again.
+                    await RefillNonStockPartsCollection();
+
+                }
+
+                #endregion
+
+                //await NavigationService.NavigateToAsync<WorkorderListingPageViewModel>();
+            }
+            catch (Exception ex)
+            {
+                OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                OperationInProgress = false;
+
+            }
+        }
+        public async Task RefillNonStockPartsCollection()
+        {
+
+            PageNumber = 1;
+            await RemoveAllNonStockPartsFromCollection();
+            await GetWorkorderNonStockRoomPartsFromSearchBar();
+        }
+
+        async Task GetWorkorderNonStockRoomPartsFromSearchBar()
+        {
+            try
+            {
+                OperationInProgress = true;
+                var workordersResponse = await _workorderService.GetWorkorderNonStockroomParts(WorkorderID, this.SearchText);
+                if (workordersResponse != null && workordersResponse.workOrderWrapper != null
+                   && workordersResponse.workOrderWrapper.workOrderNonStockroomParts != null && workordersResponse.workOrderWrapper.workOrderNonStockroomParts.Count > 0)
+                {
+
+                    var workordernonstkparts = workordersResponse.workOrderWrapper.workOrderNonStockroomParts;
+                    await AddWorkorderNonStockroomPartsInWorkorderCollection(workordernonstkparts);
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                OperationInProgress = false;
+            }
+
+            finally
+            {
+                OperationInProgress = false;
+            }
+        }
+        private async void _scanner_OnScanResult(ZXing.Result result)
+        {
+            //Set the text property
+            this.SearchText = result.Text;
+
+            ///Pop the scanner page
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                var navPage = App.Current.MainPage as NavigationPage;
+                await navPage.PopAsync();
+
+
+                //reset pageno. and start search again.
+                await RefillNonStockPartsCollection();
+
+
+            });
+
+        }
         public async Task GetWorkorderNonStockRoomParts()
         {
             if (Application.Current.Properties.ContainsKey("WorkorderIDafterCreation"))
@@ -496,7 +671,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorderNonStockroomParts(this.WorkorderID);
+                var workordersResponse = await _workorderService.GetWorkorderNonStockroomParts(this.WorkorderID,this.SearchText);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrderNonStockroomParts != null && workordersResponse.workOrderWrapper.workOrderNonStockroomParts.Count > 0)
                 {
@@ -518,6 +693,17 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        private async Task RemoveAllNonStockPartsFromCollection()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                NonStockroomPartsCollection.Clear();
+                OnPropertyChanged(nameof(NonStockroomPartsCollection));
+            });
+
+
+
+        }
         private async Task AddWorkorderNonStockroomPartsInWorkorderCollection(List<WorkOrderNonStockroomParts> nonstkparts)
         {
             if (nonstkparts != null && nonstkparts.Count > 0)
@@ -536,7 +722,27 @@ namespace ProteusMMX.ViewModel.Workorder
 
             }
         }
+        private void SearchText_TextChanged()
+        {
 
+            try
+            {
+                if (SearchText == null || SearchText.Length == 0)
+                {
+                    SearchButtonTitle = ScanTitle;
+                }
+
+                else if (SearchText.Length > 0)
+                {
+                    SearchButtonTitle = GoTitle;
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+        }
         private async void OnSelectWorkorderNonStockroomPartAsync(WorkOrderNonStockroomParts item)
         {
             if (item != null)

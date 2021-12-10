@@ -435,6 +435,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public ICommand ScanCommand => new AsyncCommand(ScanTools);
 
+       
+        
+
         #endregion
 
 
@@ -657,7 +660,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         }
-        private async Task RefillToolsCollection()
+        public async Task RefillToolsCollection()
         {
 
             PageNumber = 1;
@@ -839,11 +842,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
         }
 
-        public async Task RemoveTool(WorkOrderTool tool)
+        public async Task RemoveTool(int? toolID)
         {
             try
             {
-                var workordertoolID = tool.WorkOrderToolID;
+                var workordertoolID = toolID;
 
                 OperationInProgress = true;
 
@@ -890,8 +893,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task OnViewAppearingAsync(VisualElement view)
         {
-          await RemoveAllWorkorderToolsFromCollection();
-          await GetWorkorderTools();
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                await RemoveAllWorkorderToolsFromCollection();
+                await GetWorkorderTools();
+            }
         }
 
         public async Task OnViewDisappearingAsync(VisualElement view)

@@ -45,49 +45,8 @@ namespace ProteusMMX.Views.Workorder
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
-
-            if (Application.Current.Properties.ContainsKey("WorkorderIDafterCreation"))
-            {
-                var workorderid = Application.Current.Properties["WorkorderIDafterCreation"].ToString();
-                if (workorderid != null)
-                {
-                    this.WorkorderID = Convert.ToInt32(workorderid);
-
-                }
-            }
-
-
-            Dictionary<string, string> urlseg = new Dictionary<string, string>();
-            urlseg.Add("WORKORDERID", this.WorkorderID.ToString());
-            urlseg.Add("USERID", AppSettings.User.UserID.ToString());
-            var attachment = ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/Service/WorkOrderAttachmentscount", "GET", urlseg, null);
-
-            if (attachment.Result.workOrderWrapper != null && attachment.Result.workOrderWrapper.attachments != null)
-            {
-                foreach(var item in attachment.Result.workOrderWrapper.attachments)
-                {
-                    if(item.attachmentcount>0)
-                    {
-                        this.Icon = "Attachements.png";
-                        Application.Current.Properties["WorkorderattchmentCount"] = "1";
-                    }
-                    else
-                    {
-                        Application.Current.Properties["WorkorderattchmentCount"] = "0";
-                    }
-                }
-            }
-            else
-            {
-                Application.Current.Properties["WorkorderattchmentCount"] = "0";
-            }
-
-
-
-
-
-
-
+            this.IconImageSource = "Attachements.png";
+          
 
 
         }

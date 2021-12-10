@@ -248,7 +248,23 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
 
         #region Attachment Page Properties
+        string _pDFImageText;
+        public string PDFImageText
+        {
+            get
+            {
+                return _pDFImageText;
+            }
 
+            set
+            {
+                if (value != _pDFImageText)
+                {
+                    _pDFImageText = value;
+                    OnPropertyChanged(nameof(PDFImageText));
+                }
+            }
+        }
         string _imageText;
         public string ImageText
         {
@@ -474,6 +490,21 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     return;
                 }
                 SelectedIndexItem = index;
+                var Selecteditemname = Attachments[SelectedIndexItem];
+                if (Selecteditemname.attachmentFileExtension != null &&
+                                  (Selecteditemname.attachmentFileExtension.ToLower().Contains(".pdf") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".doc") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".docx") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".xls") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".xlsx") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".txt")))
+                {
+                    PDFImageText = Selecteditemname.attachmentFileExtension;
+                }
+                else
+                {
+                    PDFImageText = "";
+                }
             });
         }
 
@@ -797,24 +828,37 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
                         if (attachment.clWorkOrderWrapper.clattachments.Count > 0)
                         {
+                            var FirstattachmentName = attachment.clWorkOrderWrapper.clattachments.First();
+                            PDFImageText = FirstattachmentName.attachmentFileExtension;
                             ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.clWorkOrderWrapper.clattachments.Count;
                             foreach (var file in attachment.clWorkOrderWrapper.clattachments)
                             {
 
                                 if (file.attachmentFileExtension != null &&
-                                    (file.attachmentFileExtension.Contains(".pdf") ||
-                                    file.attachmentFileExtension.Contains(".doc") ||
-                                    file.attachmentFileExtension.Contains(".docx") ||
-                                    file.attachmentFileExtension.Contains(".xls") ||
-                                    file.attachmentFileExtension.Contains(".xlsx") ||
-                                    file.attachmentFileExtension.Contains(".txt")))
+                                    (file.attachmentFileExtension.ToLower().Contains(".pdf") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".doc") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".docx") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".xls") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".xlsx") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".txt")))
                                 {
 
                                     DocumentAttachments.Add(file.attachmentFileExtension);
+
+                                    byte[] imgUser = StreamToBase64.StringToByte(ShortString.shortenBase64(""));
+                                    Attachments.Add(new WorkorderAttachment
+                                    {
+                                        IsSynced = true,
+                                        attachmentFileExtension = file.attachmentFileExtension,
+                                        //ImageBytes = imgUser, //byteImage,
+                                        WorkOrderAttachmentID = file.ClosedWorkOrderAttachmentID,
+                                        AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser)))),
+
+                                    }
+                                       );
                                 }
                                 else
                                 {
-
                                     if (Device.RuntimePlatform == Device.UWP)
                                     {
                                         byte[] imgUser = StreamToBase64.StringToByte(file.attachmentFile);
@@ -830,12 +874,13 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                                             {
                                                 IsSynced = true,
                                                 attachmentFileExtension = file.attachmentFileExtension,
-                                              
+                                                //ImageBytes = imgUser, //byteImage,
+                                                WorkOrderAttachmentID = file.ClosedWorkOrderAttachmentID,
                                                 AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage)))),
-                                               
+
                                             }
                                             );
-                                           
+                                            //}
 
 
                                         }
@@ -853,7 +898,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                                                 IsSynced = true,
                                                 attachmentFileExtension = file.attachmentFileExtension,
                                                 //ImageBytes = imgUser, //byteImage,
-                                              //  WorkOrderAttachmentID = file.WorkOrderAttachmentID,
+                                                WorkOrderAttachmentID = file.ClosedWorkOrderAttachmentID,
                                                 AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser)))),
 
                                             }
@@ -864,28 +909,28 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                                     else
                                     {
 
-                                        
+
                                         Attachments.Add(new WorkorderAttachment
                                         {
                                             IsSynced = true,
                                             attachmentFileExtension = file.attachmentFileExtension,
-                                           
-                                            AttachmentImageSource = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Inspection/Service/AttachmentItem.ashx?Id=" + file.ClosedWorkOrderAttachmentID + "&&Module=closeworkorder"))
+                                            //ImageBytes = imgUser, //byteImage,
+                                            WorkOrderAttachmentID = file.ClosedWorkOrderAttachmentID,
+                                            AttachmentImageSource = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Inspection/Service/AttachmentItem.ashx?Id=" + file.ClosedWorkOrderAttachmentID + "&&Module=workorder"))
 
                                         }
-                                     );
+                                        );
+
+
                                     }
-
-
                                 }
-
-
                             }
-
                         }
-
                     }
-
+                    else
+                    {
+                        ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + 0;
+                    }
                 }
                 catch (Exception ex)
                 {

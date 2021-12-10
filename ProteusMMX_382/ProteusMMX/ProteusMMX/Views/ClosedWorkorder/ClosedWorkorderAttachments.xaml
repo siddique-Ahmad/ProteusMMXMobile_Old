@@ -27,6 +27,91 @@
 
     <ContentPage.Content>
         <Grid  Padding="10,10,10,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackLayout>
+                    <ScrollView Grid.Row="0">
+                        <StackLayout 
+                        Padding="10,10,10,10"
+                        VerticalOptions="Fill">
+                            <Label  Text="{Binding ImageText}"  FontAttributes="Bold" TextColor="Black" HorizontalOptions= "Center" Grid.Row="0">
+                                <Label.FontAttributes>
+                                    <OnPlatform x:TypeArguments="FontAttributes">
+                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                        <OnPlatform.Android>Bold</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Label.FontAttributes>
+                            </Label>
+                            <Frame BackgroundColor="White"  BorderColor="Black"  CornerRadius="5">
+                                <StackLayout HeightRequest="350" WidthRequest="350">
+                                    <cards:CarouselView  VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}">
+                                        <cards:CarouselView.ItemTemplate>
+                                            <DataTemplate >
+                                                <StackLayout  HeightRequest="450" WidthRequest="450">
+                                                    <ImageButton
+                                                     BackgroundColor="White" Clicked="ImageButton_Clicked"  Grid.RowSpan="2" Source="{Binding AttachmentImageSource}">
+
+                                                    </ImageButton>
+
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </cards:CarouselView.ItemTemplate>
+                                    </cards:CarouselView>
+                                    <Label HorizontalOptions="Center" FontAttributes="Bold" FontSize="Medium" Text="{Binding PDFImageText}" IsVisible="{Binding PDFImageTextIsVisible}">
+
+                                    </Label>
+                                    <StackLayout Orientation="Horizontal" Grid.RowSpan="2" Grid.Row="2" HorizontalOptions="CenterAndExpand">
+                                        <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="False" BackgroundColor="White"   TextColor="Black" BorderColor="#696969" >
+                                            <Button.Image>
+                                                <OnPlatform x:TypeArguments="FileImageSource">
+                                                    <OnPlatform.iOS>
+                                                        <FileImageSource File="ArrowLeft.png"/>
+                                                    </OnPlatform.iOS>
+                                                    <OnPlatform.Android>
+                                                        <FileImageSource File="ArrowLeft.png"/>
+                                                    </OnPlatform.Android>
+                                                    <OnPlatform.WinPhone>
+                                                        <FileImageSource File="Assets/ArrowLeft.png"/>
+                                                    </OnPlatform.WinPhone>
+                                                </OnPlatform>
+                                            </Button.Image>
+                                        </Button>
+                                        <Button Command="{Binding PanPositionChangedCommand}" BackgroundColor="White" CommandParameter="True"   TextColor="Black" BorderColor="#696969"  >
+                                            <Button.Image>
+                                                <OnPlatform x:TypeArguments="FileImageSource">
+                                                    <OnPlatform.iOS>
+                                                        <FileImageSource File="ArrowRight.png"/>
+                                                    </OnPlatform.iOS>
+                                                    <OnPlatform.Android>
+                                                        <FileImageSource File="ArrowRight.png"/>
+                                                    </OnPlatform.Android>
+                                                    <OnPlatform.WinPhone>
+                                                        <FileImageSource File="Assets/ArrowRight.png"/>
+                                                    </OnPlatform.WinPhone>
+                                                </OnPlatform>
+                                            </Button.Image>
+                                        </Button>
+                                    </StackLayout>
+                                </StackLayout>
+
+
+                            </Frame>
+
+
+
+
+
+                        </StackLayout>
+                    </ScrollView>
+                </StackLayout>
+            </Grid>
+
+            <ActivityIndicator IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+
+        </Grid>
+        <!--<Grid  Padding="10,10,10,10">
             <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -129,7 +214,7 @@
 
             <ActivityIndicator IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
 
-        </Grid>
+        </Grid>-->
 
 
     </ContentPage.Content>

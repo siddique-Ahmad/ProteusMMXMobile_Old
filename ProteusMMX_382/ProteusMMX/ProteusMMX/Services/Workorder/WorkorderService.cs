@@ -281,11 +281,19 @@ namespace ProteusMMX.Services.Workorder
             return _requestService.GetAsync(uri);
         }
 
-        public Task<ServiceOutput> GetWorkorderNonStockroomParts(int Workorderid)
+        public Task<ServiceOutput> GetWorkorderNonStockroomParts(int Workorderid,string SearchText)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetWorkorderNonStockroomParts);
             builder.AppendToPath(Workorderid.ToString());
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                builder.AppendToPath("null");
+            }
+            else
+            {
+                builder.AppendToPath(SearchText);
+            }
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }
