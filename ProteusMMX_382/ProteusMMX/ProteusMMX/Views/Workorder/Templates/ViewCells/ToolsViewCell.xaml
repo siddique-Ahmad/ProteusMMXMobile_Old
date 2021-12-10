@@ -77,9 +77,15 @@
 
 
                     </Grid>
-                    <Image Source="delIcon1.png" x:Name="ShowMore"  HorizontalOptions="End" Grid.Row="3"/>
-                    <!--<Label x:Name="ShowMore" TextColor="#006de0" Text="RemoveTool" HorizontalOptions="End"  Grid.Row="3">
-                    </Label>-->
+                    <Image Source="delIcon1.png"  HorizontalOptions="End" Grid.Row="3">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                Tapped="TapGestureRecognizer_Tapped"
+                                        
+                                         NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+
+                    </Image>
                 </Grid>
             </Frame>
         </StackLayout>

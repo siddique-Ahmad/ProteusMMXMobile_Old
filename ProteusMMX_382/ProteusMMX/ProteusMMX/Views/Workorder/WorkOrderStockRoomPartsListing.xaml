@@ -71,7 +71,7 @@
                     <ColumnDefinition Width="50"/>
                 </Grid.ColumnDefinitions>
                 <border:SfBorder CornerRadius="5">
-                    <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0" Grid.Column="0"/>
+                    <SearchBar x:Name="filterText" HeightRequest="40" TextChanged="filterText_TextChanged" Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0" Grid.Column="0"/>
                     <!--<control1:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />-->
                 </border:SfBorder>
                 <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" >

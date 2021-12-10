@@ -58,7 +58,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <border:SfBorder CornerRadius="5">
-                    <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0" Grid.Column="0"/>
+                    <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" TextChanged="filterText_TextChanged" Grid.Row="0" Grid.Column="0"/>
                 
                 </border:SfBorder>
                 <Image Grid.Column="1" Grid.Row="0" HeightRequest="40">

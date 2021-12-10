@@ -38,7 +38,7 @@ namespace ProteusMMX.Services.Workorder
 
         Task<ServiceOutput> GetWorkorderTools(string Workorderid,string SearchText);
 
-        Task<ServiceOutput> GetWorkorderNonStockroomParts(int Workorderid);
+        Task<ServiceOutput> GetWorkorderNonStockroomParts(int Workorderid, string SearchText);
 
         Task<ServiceOutput> CreateWorkorderNonStockroomParts(object workorder);
 

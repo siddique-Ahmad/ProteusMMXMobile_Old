@@ -958,7 +958,7 @@ namespace ProteusMMX.ViewModel.Workorder
             });
 
         }
-        private async Task RefillPartsCollection()
+        public async Task RefillPartsCollection()
         {
 
             PageNumber = 1;

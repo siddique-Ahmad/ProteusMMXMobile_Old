@@ -73,5 +73,15 @@ namespace ProteusMMX.Views.Workorder
                 await viewAware.OnViewDisappearingAsync(this);
             }
         }
+
+        private void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                 ViewModel.OnViewDisappearingAsync(null);
+                 ViewModel.RefillToolsCollection();
+            }
+        }
     }
 }

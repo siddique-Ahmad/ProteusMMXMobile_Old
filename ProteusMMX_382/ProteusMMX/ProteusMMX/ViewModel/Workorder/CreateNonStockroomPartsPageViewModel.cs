@@ -531,7 +531,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 
 
                 //Check Mandatory fields and other Validations////
-                var partresponse = await _workorderService.GetWorkorderNonStockroomParts(this.WorkorderID);
+                var partresponse = await _workorderService.GetWorkorderNonStockroomParts(this.WorkorderID,null);
 
                 if (String.IsNullOrEmpty(PartNameText))
                 {
