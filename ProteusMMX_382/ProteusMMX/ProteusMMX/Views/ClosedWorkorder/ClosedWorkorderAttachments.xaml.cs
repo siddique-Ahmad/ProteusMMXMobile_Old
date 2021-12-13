@@ -80,7 +80,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
         private void ImageButton_Clicked(object sender, EventArgs e)
         {
             ImageButton button = (ImageButton)sender;
-            var a = button.BindingContext as ProteusMMX.ViewModel.Workorder.WorkorderAttachment;
+            var a = button.BindingContext as ProteusMMX.ViewModel.ClosedWorkorder.WorkorderAttachment;
             var fileextension = a.attachmentFileExtension;
 
             if (fileextension != null &&
