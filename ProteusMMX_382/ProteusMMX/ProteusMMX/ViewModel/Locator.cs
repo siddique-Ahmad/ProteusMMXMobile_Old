@@ -145,6 +145,7 @@ namespace ProteusMMX.ViewModel
             _containerBuilder.RegisterType<ClosedWorkorderNonStockroomPartsViewModel>();
             _containerBuilder.RegisterType<ClosedWorkorderAttachmentsViewModel>();
             _containerBuilder.RegisterType<ClosedWorkorderInspectionViewModel>();
+            _containerBuilder.RegisterType<CloseWorkorderStockroomPartsTabbedPageViewModel>();
 
             //Service Request///
             _containerBuilder.RegisterType<ServiceRequestTabbedPageViewModel>();

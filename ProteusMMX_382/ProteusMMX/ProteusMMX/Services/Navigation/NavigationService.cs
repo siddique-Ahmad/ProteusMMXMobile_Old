@@ -365,19 +365,19 @@ namespace ProteusMMX.Services.Navigation
                 #endregion
 
                 #region ClosedWorkorderStockroomPartsPage
-                Page stockroomParts;
+                Page ClosedWorkorderTabbed;
                 if (Device.RuntimePlatform == Device.iOS)
                 {
-                    stockroomParts = CreateAndBindPage(typeof(ClosedWorkorderStockroomPartsViewModelForIOS), parameter);
-                    var stockroomPartsParameter = new PageParameters { Page = stockroomParts, Parameter = parameter };
-                    (stockroomParts.BindingContext as ViewModelBase).InitializeAsync(stockroomPartsParameter);
+                    ClosedWorkorderTabbed = CreateAndBindPage(typeof(ClosedWorkorderStockroomPartsViewModelForIOS), parameter);
+                    var stockroomPartsParameter = new PageParameters { Page = ClosedWorkorderTabbed, Parameter = parameter };
+                    (ClosedWorkorderTabbed.BindingContext as ViewModelBase).InitializeAsync(stockroomPartsParameter);
                 }
                 else
                 {
 
-                    stockroomParts = CreateAndBindPage(typeof(ClosedWorkorderStockroomPartsViewModel), parameter);
-                    var stockroomPartsParameter = new PageParameters { Page = stockroomParts, Parameter = parameter };
-                    (stockroomParts.BindingContext as ViewModelBase).InitializeAsync(stockroomPartsParameter);
+                    ClosedWorkorderTabbed = CreateAndBindPage(typeof(CloseWorkorderStockroomPartsTabbedPageViewModel), parameter);
+                    var ClosedWorkorderTabbedParameter = new PageParameters { Page = ClosedWorkorderTabbed, Parameter = parameter };
+                    (ClosedWorkorderTabbed.BindingContext as ViewModelBase).InitializeAsync(ClosedWorkorderTabbedParameter);
                 }
                 #endregion
 
@@ -434,7 +434,7 @@ namespace ProteusMMX.Services.Navigation
                                     }
                                     else
                                     {
-                                        tabbedPage.Children.Add(stockroomParts);
+                                        tabbedPage.Children.Add(ClosedWorkorderTabbed);
                                     }
 
                                 }
@@ -757,6 +757,7 @@ namespace ProteusMMX.Services.Navigation
             _mappings.Add(typeof(ClosedWorkorderNonStockroomPartsViewModel), typeof(ClosedWorkorderNonStockroomParts));
             _mappings.Add(typeof(ClosedWorkorderAttachmentsViewModel), typeof(ClosedWorkorderAttachments));
             _mappings.Add(typeof(ClosedWorkorderInspectionViewModel), typeof(ClosedWorkorderInspection));
+            _mappings.Add(typeof(CloseWorkorderStockroomPartsTabbedPageViewModel), typeof(CloseWorkorderStockroomPartsTabbedPage));
 
 
             _mappings.Add(typeof(ServiceRequestTabbedPageViewModel), typeof(ServiceRequestTabbedPage));

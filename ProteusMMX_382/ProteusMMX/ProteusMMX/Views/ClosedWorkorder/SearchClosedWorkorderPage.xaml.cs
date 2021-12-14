@@ -15,8 +15,16 @@ namespace ProteusMMX.Views.ClosedWorkorder
 		public SearchClosedWorkorderPage ()
 		{
 			InitializeComponent ();
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
-        }
+			((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+			((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+		}
+
+		protected override async void OnAppearing()
+		{
+			base.OnAppearing();
+
+			((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+			((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+		}
 	}
 }

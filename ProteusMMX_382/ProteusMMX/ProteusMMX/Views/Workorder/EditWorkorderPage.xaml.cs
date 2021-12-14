@@ -22,7 +22,7 @@ namespace ProteusMMX.Views.Workorder
 			InitializeComponent ();
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
             if (AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation)
             {
                 if (AppSettings.User.RequireSignaturesForValidation == "True")

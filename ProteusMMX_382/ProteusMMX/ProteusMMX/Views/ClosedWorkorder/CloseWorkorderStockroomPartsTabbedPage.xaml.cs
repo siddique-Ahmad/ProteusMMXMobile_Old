@@ -11,26 +11,28 @@ using Xamarin.Forms.Xaml;
 
 namespace ProteusMMX.Views.ClosedWorkorder
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ClosedWorkorderToolsPage : ContentPage
-	{
-		public ClosedWorkorderToolsPage ()
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class CloseWorkorderStockroomPartsTabbedPage : TabbedPage
+    {
+        public CloseWorkorderStockroomPartsTabbedPage()
+        {
+            InitializeComponent();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
-        public ClosedWorkorderToolsPageViewModel ViewModel
+
+        public CloseWorkorderStockroomPartsTabbedPageViewModel ViewModel
         {
             get
             {
-                return this.BindingContext as ClosedWorkorderToolsPageViewModel;
+                return this.BindingContext as CloseWorkorderStockroomPartsTabbedPageViewModel;
             }
         }
-
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            
+            Application.Current.Properties["CloseWorkorderService"] = ViewModel._closeWorkorderService;
 
             if (BindingContext is IHandleViewAppearing viewAware)
             {

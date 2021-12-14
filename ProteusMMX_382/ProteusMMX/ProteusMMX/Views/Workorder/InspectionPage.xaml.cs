@@ -1492,7 +1492,7 @@ namespace ProteusMMX.Views.Workorder
                 #endregion
 
 
-                if (!string.IsNullOrWhiteSpace(item.InspectionTime))
+                 if (!string.IsNullOrWhiteSpace(item.InspectionTime))
                 {
                     var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(item.InspectionTime));
                     var timeString = (int)timeInspection.Hours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
@@ -1564,92 +1564,7 @@ namespace ProteusMMX.Views.Workorder
         private async Task RetriveAllWorkorderInspectionsAsync()
         {
             CC = await ViewModel._inspectionService.GetWorkorderInspection(this.WorkorderID.ToString(), AppSettings.User.UserID.ToString());
-            //if (CC.listInspection == null || CC.listInspection.Count > 0)
-            //{
-            //    if (EmployeecontrcatorRights == "E")
-            //    {
-            //        this.btnAddEmployee.IsEnabled = true;
-            //        this.btnAddContractor.IsEnabled = true;
-            //    }
-
-            //}
-
-            //if (CC.listInspection.Count == 0 && (CC.workOrderEmployee.Count > 0 || CC.workorderContractor.Count > 0))
-            //{
-
-            //    foreach (var item in CC.workOrderEmployee)
-            //    {
-            //        Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/DeleteEmployeeAndContrator");
-
-            //        var payload = new Dictionary<string, string>
-            // {
-            //  {"EmployeeLaborCraftID", item.EmployeeLaborCraftID.ToString()},
-            //  {"WorkorderID", WorkorderID.ToString()},
-            //   {"ContractorLaborCraftID", "0"},
-
-            //};
-
-            //        string strPayload = JsonConvert.SerializeObject(payload);
-            //        HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-            //        var t = Task.Run(() => SendURI(posturi, c));
-
-
-            //    }
-            //    foreach (var item in CC.workorderContractor)
-            //    {
-            //        Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/DeleteEmployeeAndContrator");
-
-            //        var payload = new Dictionary<string, string>
-            //{
-            //  {"EmployeeLaborCraftID", "0"},
-            //  {"WorkorderID", WorkorderID.ToString()},
-            //   {"ContractorLaborCraftID", item.ContractorLaborCraftID.ToString()},
-
-            //};
-
-            //        string strPayload = JsonConvert.SerializeObject(payload);
-            //        HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-            //        var t = Task.Run(() => SendURI(posturi, c));
-
-            //    }
-
-            //    OnAppearing();
-
-
-
-            //}
-            //if (CC.listInspection.Count > 0 && CC.workOrderEmployee.Count == 0)
-            //{
-            //    ServiceOutput taskResponse = null;
-
-            //    taskResponse = await ViewModel._taskService.GetEmployee(UserID, "0", "0", AppSettings.User.EmployeeName, "Inspection", this.WorkorderID);
-
-            //    if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
-            //    {
-            //        var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
-            //        if (assingedToEmployees != null)
-            //        {
-            //            this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
-            //            this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName) + "(" + assingedToEmployees.First().LaborCraftCode + ")";
-            //        }
-
-            //    }
-            //    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/AssociateEmployeeAndContractorLaborCraftToWorkOrder");
-
-            //    var payload = new Dictionary<string, string>
-            //{
-            //  {"EmployeeLaborCraftID", this.EmployeeID.ToString()},
-            //  {"WorkorderID", WorkorderID.ToString()},
-            //   {"ContractorLaborCraftID","0"}
-            //};
-
-            //    string strPayload = JsonConvert.SerializeObject(payload);
-            //    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-            //    var t = Task.Run(() => SendURI(posturi, c));
-
-            //    OnAppearing();
-            //}
-
+            
             BindLayout(CC.listInspection);
 
         }

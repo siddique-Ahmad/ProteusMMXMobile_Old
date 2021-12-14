@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.ClosedWorkorder.ClosedWorkorderTabbedPage"
               xmlns:pages ="clr-namespace:ProteusMMX.Views.ClosedWorkorder;assembly=ProteusMMX"
+             BarBackgroundColor="#006de0"
+             BarTextColor="White"
              Title="{Binding PageTitle}">
 
 </TabbedPage>
