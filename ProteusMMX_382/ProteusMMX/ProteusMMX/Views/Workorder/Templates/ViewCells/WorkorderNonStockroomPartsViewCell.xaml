@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.Templates.ViewCells.WorkorderNonStockroomPartsViewCell">
     <ViewCell.View>
-        <StackLayout>
+      
             <Frame Padding="5,5,5,5" BackgroundColor="White"   BorderColor="Gray"  CornerRadius="5">
             <Grid RowSpacing="3">
 
@@ -58,8 +58,7 @@
                 </Grid>
             </Grid>
         </Frame>
-            <BoxView HeightRequest="1" Color="Transparent" BackgroundColor="Transparent"/>
-        </StackLayout>
+           
     </ViewCell.View>
     
 </ViewCell>

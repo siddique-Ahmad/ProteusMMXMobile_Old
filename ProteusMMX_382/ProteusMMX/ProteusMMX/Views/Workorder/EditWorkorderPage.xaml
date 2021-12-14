@@ -143,7 +143,7 @@
                                     <StackLayout Grid.Row="2">
                                     <control1:CustomEntry  x:Name="Description" Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"
                             TextColor="{DynamicResource Gray-900}" />
-                                        <Label HorizontalOptions="End" Grid.Column="1" TextColor="#006de0" Text="{Binding MoreText}"  FontAttributes="Bold" >
+                                        <Label HorizontalOptions="EndAndExpand" Grid.Column="1" TextColor="#006de0" Text="{Binding MoreText}"  FontAttributes="Bold" >
                                             <Label.GestureRecognizers>
                                                 <TapGestureRecognizer
                                         Command="{Binding TapCommand1}"

@@ -10,17 +10,17 @@
              BackgroundColor="{StaticResource BackgroundColor}" >
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -39,13 +39,6 @@
         <ScrollView>
             <Grid Padding ="10,10,10,10">
 
-                <!--<Grid HorizontalOptions="StartAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="25.00*" />
-                    <ColumnDefinition Width="25.00*" />
-                    <ColumnDefinition Width="25.00*" />
-                    <ColumnDefinition Width="25.00*" />
-                </Grid.ColumnDefinitions>-->
                 <StackLayout Margin="10,0,10,0">
                 <StackLayout x:Name="Tablet" Orientation="Horizontal" Padding="10,10,10,10" Spacing="80">
                     <StackLayout Orientation="Vertical"  Grid.Row="0" Grid.Column="1" IsVisible="{Binding PartNameIsVisible}">
@@ -103,11 +96,6 @@
                         <Image  WidthRequest="100" HeightRequest="60"   Source="{Binding AttachmentImageSource}"/>
                     </StackLayout>
                 </StackLayout>
-
-                <!--</Grid>-->
-
-
-
                 
                 <StackLayout Orientation="Horizontal" Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding UpdateLastPhysicalDateVisible}">
 
@@ -119,7 +107,7 @@
                 </StackLayout>
 
                 
-                    <StackLayout Orientation="Vertical" Grid.Row="2" IsVisible="{Binding TransactionTypeIsVisible}">
+                <StackLayout Orientation="Vertical" Grid.Row="2" IsVisible="{Binding TransactionTypeIsVisible}">
                     <Label Text="{Binding TransactionTypetitle}" TextColor="Black">
                         <Label.FontAttributes>
                             <OnPlatform x:TypeArguments="FontAttributes">
@@ -170,18 +158,6 @@
                     </Label>
                     <Button Text="{Binding CostCenterText}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding CostCenterCommand}" IsEnabled="{Binding CostcenterIsEnabled}"  />
                 </StackLayout>
-
-                <!--<StackLayout Orientation="Vertical" Grid.Row="5">
-                    <Label Text="{Binding ShelfBintitle}" TextColor="Black">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <Button Text="{Binding ShelfBinText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ShelfBinCommand}"  />
-                </StackLayout>-->
 
                 <StackLayout Orientation="Vertical" Grid.Row="6" IsVisible="{Binding TrasnactorIsVisible}">
                     <Label Text="{Binding PerformBytitle}" TextColor="Black">
@@ -297,8 +273,6 @@
                             <control1:CustomEntry x:Name="Userfield4" Text="{Binding UserField4}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild4IsEnabled}" VerticalOptions="Center"></control1:CustomEntry>
                     </border:SfBorder>
                 </StackLayout>
-
-
 
                 <StackLayout Orientation="Vertical" Grid.Row="15" IsVisible="{Binding Perform_TransactionIsVisible}">
                     <Button Text="{Binding SaveTitle}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding PerformInventoryCommand}" IsEnabled="{Binding Perform_TransactionIsEnabled}" />

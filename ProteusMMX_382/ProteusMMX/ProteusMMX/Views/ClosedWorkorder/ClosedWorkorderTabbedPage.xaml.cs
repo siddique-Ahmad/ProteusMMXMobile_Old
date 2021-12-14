@@ -1,4 +1,5 @@
-﻿using ProteusMMX.ViewModel.Miscellaneous;
+﻿using ProteusMMX.Helpers;
+using ProteusMMX.ViewModel.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,66 @@ namespace ProteusMMX.Views.ClosedWorkorder
 		public ClosedWorkorderTabbedPage ()
 		{
 			InitializeComponent ();
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+
+            this.CurrentPageChanged += (object sender, EventArgs e) => {
+                var index = this.Children.IndexOf(this.CurrentPage);
+                var CurrentPage = this.Children.ElementAt(index);
+                string Selectedpage = CurrentPage.ToString();
+                if (Selectedpage.Contains("ClosedWorkorderDetailsPage"))
+                {
+                    this.Title = WebControlTitle.GetTargetNameByTitleName("Details");
+                }
+                else if (Selectedpage.Contains("ClosedWorkorderTaskAndLabourPage"))
+                {
+                    this.Title = WebControlTitle.GetTargetNameByTitleName("TasksandLabor");
+                }
+                else if (Selectedpage.Contains("ClosedWorkorderInspection"))
+                {
+                    this.Title = WebControlTitle.GetTargetNameByTitleName("Inspection");
+                }
+                else if (Selectedpage.Contains("WorkorderStockroomPartsTabbedPage"))
+                {
+                    this.Title = WebControlTitle.GetTargetNameByTitleName("Parts");
+                }
+                else if (Selectedpage.Contains("ClosedWorkorderToolsPage"))
+                {
+                    this.Title = WebControlTitle.GetTargetNameByTitleName("Tools");
+                }
+                else if (Selectedpage.Contains("ClosedWorkorderAttachments"))
+                {
+                    this.Title = WebControlTitle.GetTargetNameByTitleName("Attachments");
+                }
+                else
+                {
+
+                }
+
+            };
         }
 
-      
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (BindingContext is IHandleViewAppearing viewAware)
+            {
+                ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+                await viewAware.OnViewAppearingAsync(this);
+            }
+        }
+
+        protected override async void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            if (BindingContext is IHandleViewDisappearing viewAware)
+            {
+                await viewAware.OnViewDisappearingAsync(this);
+            }
+        }
+
     }
 }

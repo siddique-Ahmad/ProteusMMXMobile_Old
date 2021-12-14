@@ -2247,15 +2247,6 @@ namespace ProteusMMX.ViewModel.Workorder
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                 // OperationInProgress = true;
 
-
-
-
-
-
-
-
-
-
                 ///TODO: Get Workorder Labour data 
                 var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
 

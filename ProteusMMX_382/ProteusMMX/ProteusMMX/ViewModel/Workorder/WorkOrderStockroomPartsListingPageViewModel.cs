@@ -761,6 +761,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             if (Application.Current.Properties.ContainsKey("WorkorderIDafterCreation"))
             {
+
                 var workorderid = Application.Current.Properties["WorkorderIDafterCreation"].ToString();
                 if (workorderid != null)
                 {

@@ -6,21 +6,21 @@
              xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:viewCells="clr-namespace:ProteusMMX.Views.ClosedWorkorder.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-             Title="{Binding PageTitle}" 
+            
               Icon="tools.png"
              BackgroundColor="{StaticResource BackgroundColor}">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -40,19 +40,17 @@
 
 
     <ContentPage.Content>
-        <Grid Padding="10,20,10,10" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid Padding="0,0,0,0" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <ListView Grid.Row="1" Grid.ColumnSpan="2"
+            <ListView Grid.Row="0" Margin="5,2,5,0"
                          ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"
                           CachingStrategy="RecycleElement"
                           ItemsSource="{Binding ToolsCollection}">
-
             </ListView>
 
 

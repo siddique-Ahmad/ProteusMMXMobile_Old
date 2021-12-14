@@ -3,32 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Inventory.Templates.ViewCells.StockroomViewCell">
     <ViewCell.View>
-        <Grid RowSpacing="5">
+        <Frame Padding="5,5,5,5" BackgroundColor="White"  BorderColor="Gray"  CornerRadius="5">
+        <Grid RowSpacing="0">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-
-            <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-
-                <Label x:Name="StockroomName" />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding StockroomName}" Grid.Column="2" />
-
+                <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima"  x:Name="StockroomName" />
+                <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text=":" Grid.Column="1"  />
+                <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text="{Binding StockroomName}" Grid.Column="2" />
+               
             </Grid>
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -43,7 +43,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="2">
+                <Grid Grid.Row="2" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -58,7 +58,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="3">
+                <Grid Grid.Row="3" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -74,10 +74,8 @@
             </Grid>
 
 
-            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
-
-
 
         </Grid>
+        </Frame>
     </ViewCell.View>
 </ViewCell>

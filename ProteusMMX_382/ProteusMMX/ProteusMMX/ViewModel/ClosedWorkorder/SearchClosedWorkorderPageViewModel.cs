@@ -701,13 +701,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
         #endregion
 
-
-
-
-
-
-
-
         #region Methods
         public override async Task InitializeAsync(object navigationData)
         {
@@ -954,9 +947,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
             #endregion
         }
-
-
-        
 
         private async void ScannerResultCloseWorkorderByAssetNumber(ZXing.Result result)
         {

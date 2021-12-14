@@ -3,109 +3,109 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Inventory.Templates.ViewCells.PartViewcell">
     <ViewCell.View>
-        <Grid RowSpacing="5">
+        <Frame Padding="5,5,5,5" BackgroundColor="White"  BorderColor="Gray"  CornerRadius="5">
+            <Grid RowSpacing="5">
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <Grid Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima"  x:Name="PartName" />
+                    <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text=":" Grid.Column="1"  />
+                    <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text="{Binding PartName}" Grid.Column="2" />
 
-                <Label x:Name="PartName" />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding PartName}" Grid.Column="2" />
+
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="PartNumber"  />
+                    <Label Text=":" Grid.Column="1"  />
+                    <Label Text="{Binding PartNumber}" Grid.Column="2" />
+
+
+                </Grid>
+
+
+                <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="SerialNumber"  />
+                    <Label Text=":" Grid.Column="1"  />
+                    <Label Text="{Binding SerialNumber}" Grid.Column="2"  />
+
+
+                </Grid>
+                <Grid x:Name="ShelfBinColon" Grid.Row="3" Grid.ColumnSpan="2" IsVisible="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="ShelfBin"  />
+                    <Label Text=":" Grid.Column="1"  />
+                    <Label Text="{Binding ShelfBin}" Grid.Column="2"  />
+
+
+                </Grid>
+
+                <Grid Grid.Row="4" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="QuantityOnHand"  />
+                    <Label Text=":" Grid.Column="1"  />
+                    <Label Text="{Binding QuantityOnHand}" Grid.Column="2"  />
+
+
+                </Grid>
+
+                <Grid Grid.Row="4" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="QuantityAllocated"  />
+                    <Label Text=":" Grid.Column="1"  />
+                    <Label Text="{Binding QuantityAllocated}" Grid.Column="2"  />
+                </Grid>
 
             </Grid>
-
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Label x:Name="PartNumber"  />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding PartNumber}" Grid.Column="2" />
-
-
-            </Grid>
-
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Label x:Name="QuantityOnHand"  />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding QuantityOnHand}" Grid.Column="2"  />
-
-
-            </Grid>
-
-            <Grid Grid.Row="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Label x:Name="QuantityAllocated"  />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding QuantityAllocated}" Grid.Column="2"  />
-
-
-            </Grid>
-
-            <Grid Grid.Row="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Label x:Name="SerialNumber"  />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding SerialNumber}" Grid.Column="2"  />
-
-
-            </Grid>
-            <Grid x:Name="ShelfBinColon" Grid.Row="5" IsVisible="False">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <Label x:Name="ShelfBin"  />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding ShelfBin}" Grid.Column="2"  />
-
-
-            </Grid>
-
-
-            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
-
-
-        </Grid>
+        </Frame>
     </ViewCell.View>
 </ViewCell>

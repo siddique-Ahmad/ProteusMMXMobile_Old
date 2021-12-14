@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:Pages="clr-namespace:ProteusMMX.Views.ClosedWorkorder" xmlns:viewModels="clr-namespace:ProteusMMX.ViewModel.ClosedWorkorder"
+            x:Class="ProteusMMX.Views.ClosedWorkorder.CloseWorkorderStockroomPartsTabbedPage" Icon="parts.png">
+  <!--Pages can be added as references or inline-->
+    <TabbedPage.Children>
+        <Pages:ClosedWorkorderStockroomParts Title="StockroomParts">
+            <Pages:ClosedWorkorderStockroomParts.BindingContext>
+                <viewModels:ClosedWorkorderStockroomPartsViewModel/>
+            </Pages:ClosedWorkorderStockroomParts.BindingContext>
+        </Pages:ClosedWorkorderStockroomParts>
+
+
+        <Pages:ClosedWorkorderNonStockroomParts Title="NonStockroomParts">
+            <Pages:ClosedWorkorderNonStockroomParts.BindingContext>
+                <viewModels:ClosedWorkorderNonStockroomPartsViewModel/>
+            </Pages:ClosedWorkorderNonStockroomParts.BindingContext>
+        </Pages:ClosedWorkorderNonStockroomParts>
+    </TabbedPage.Children>
+</TabbedPage>
