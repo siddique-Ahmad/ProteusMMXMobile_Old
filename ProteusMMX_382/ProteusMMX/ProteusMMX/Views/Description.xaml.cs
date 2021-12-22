@@ -21,8 +21,8 @@ namespace ProteusMMX.Views
 			InitializeComponent ();
             // BindingContext = new DescriptionViewModel();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
-        
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+
         }
 
         public DescriptionViewModel ViewModel

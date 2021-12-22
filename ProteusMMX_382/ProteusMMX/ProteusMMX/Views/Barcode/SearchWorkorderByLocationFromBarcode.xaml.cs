@@ -18,8 +18,8 @@ namespace ProteusMMX.Views.Barcode
 		public SearchWorkorderByLocationFromBarcode ()
 		{
 			InitializeComponent ();
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
 
         public SearchWorkorderByLocationFromBarcodeViewModel ViewModel
@@ -45,13 +45,7 @@ namespace ProteusMMX.Views.Barcode
                 //Add More items to collection
 
                 await ViewModel.GetWorkordersAuto();
-
             }
-
-
-
-
-
         }
 
 

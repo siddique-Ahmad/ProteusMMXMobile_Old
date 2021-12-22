@@ -17,19 +17,19 @@ namespace ProteusMMX.Views.Inventory
 		public InventoryTransactionPage ()
 		{
 			InitializeComponent ();
-            if(Device.Idiom==TargetIdiom.Phone)
-            {
-                Phone.IsVisible = true;
-                Tablet.IsVisible = false;
-            }
-            else
-            {
-                Phone.IsVisible = false;
-                Tablet.IsVisible = true;
-            }
+            //if(Device.Idiom==TargetIdiom.Phone)
+            //{
+            //    Phone.IsVisible = true;
+            //    //Tablet.IsVisible = false;
+            //}
+            //else
+            //{
+            //    Phone.IsVisible = false;
+            //    //Tablet.IsVisible = true;
+            //}
             LoginSwitch1.IsToggled = false;
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
         public InventoryTransactionPageViewModel ViewModel
         {
@@ -44,6 +44,8 @@ namespace ProteusMMX.Views.Inventory
 
             if (BindingContext is IHandleViewAppearing viewAware)
             {
+                ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
                 await viewAware.OnViewAppearingAsync(this);
             }
         }

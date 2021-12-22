@@ -22,6 +22,7 @@ using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.SelectionListPagesViewModels;
 using ProteusMMX.ViewModel.SelectionListPagesViewModels.Asset;
 using ProteusMMX.ViewModel.Workorder;
+using Syncfusion.XForms.Border;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -4207,7 +4208,9 @@ namespace ProteusMMX.ViewModel.Asset
             //{
             //    control = new CustomDatePicker();
             //}
-            control = new CustomDatePicker();
+            var Boder = new SfBorder { CornerRadius = 5, BorderColor = Color.Black };
+            Boder.Content= new CustomDatePicker { Padding=new Thickness(0,3,0,0) };
+            control = Boder;
             SetControlBindingAccordingToControlType(control, formControl);
             //new CustomDatePicker(); //new DatePicker();
 

@@ -3,31 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.PurchaseOrder.Templates.ViewCells.PurchaseorderViewCell">
     <ViewCell.View>
-        <Grid RowSpacing="5">
+        <Frame BorderColor="Gray">
+            <StackLayout >
+                <Grid RowSpacing="5">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                
             </Grid.RowDefinitions>
 
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
                 <Label x:Name="PurchaseOrderNumber" />
                 <Label Text=":" Grid.Column="1"  />
                 <Label Text="{Binding PurchaseOrderNumber}" Grid.Column="2" />
 
             </Grid>
-            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
+            <!--<BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />-->
         </Grid>
+            </StackLayout>
+        </Frame>
     </ViewCell.View>
 </ViewCell>

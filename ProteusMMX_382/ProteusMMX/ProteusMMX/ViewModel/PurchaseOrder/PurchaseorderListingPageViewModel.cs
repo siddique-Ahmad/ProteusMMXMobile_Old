@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using ProteusMMX.Helpers;
+using ProteusMMX.Model;
 using ProteusMMX.Model.AssetModel;
 using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.InventoryModel;
@@ -16,6 +17,7 @@ using ProteusMMX.ViewModel.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -35,7 +37,7 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
 
         protected readonly IPurchaseOrderService _purchaseOrderService;
 
-
+        protected readonly IWorkorderService _workorderService;
         #endregion
 
         #region Properties
@@ -137,6 +139,20 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
 
 
         #endregion
+
+        ServiceOutput _formControlsAndRights;
+        public ServiceOutput FormControlsAndRights
+        {
+            get { return _formControlsAndRights; }
+            set
+            {
+                if (value != _formControlsAndRights)
+                {
+                    _formControlsAndRights = value;
+                    OnPropertyChanged(nameof(FormControlsAndRights));
+                }
+            }
+        }
 
         bool _TotalRecordForPhone = false;
         public bool TotalRecordForPhone
@@ -483,7 +499,8 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
 
                 OperationInProgress = true;
                 await SetTitlesPropertiesForPage();
-                await GetPurchaseOrders();
+                await GetPurchaseOrderControlRights();
+                await GetPurchaseOrders();                
                 if (Device.Idiom == TargetIdiom.Phone)
                 {
                     this.TotalRecordForPhone = true;
@@ -506,11 +523,104 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
             }
         }
 
-        public PurchaseorderListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IPurchaseOrderService purchaseOrderService)
+        public PurchaseorderListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IPurchaseOrderService purchaseOrderService, IWorkorderService workorderService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _purchaseOrderService = purchaseOrderService;
+            _workorderService = workorderService;
+        }
+
+        public async Task GetPurchaseOrderControlRights()
+        {
+
+            ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "Purchaseorder", "Details");
+
+
+            if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
+            {
+                var POModule = FormControlsAndRightsForDetails.lstModules[0];
+                if (POModule.ModuleName == "PurchaseOrders") //ModuleName can't be  changed in service
+                {
+
+                    if (POModule.lstSubModules != null && POModule.lstSubModules.Count > 0)
+                    {
+                        var POSubModule = POModule.lstSubModules[0];
+                        if (POSubModule.listControls != null && POSubModule.listControls.Count > 0)
+                        {
+                            try
+                            {
+                                Application.Current.Properties["NonStockroomParts"] = POSubModule.listControls.FirstOrDefault(i => i.ControlName == "NonStockroomParts").Expression;
+                                Application.Current.Properties["Parts"] = POSubModule.listControls.FirstOrDefault(i => i.ControlName == "Parts").Expression;
+                                Application.Current.Properties["Assets"] = POSubModule.listControls.FirstOrDefault(i => i.ControlName == "Assets").Expression;
+
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
+
+
+
+                        }
+
+
+
+                    }
+                }
+            }
+            FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(AppSettings.User.UserID.ToString(), AppSettings.ReceivingModuleName);
+            if (FormControlsAndRights != null && FormControlsAndRights.lstModules != null && FormControlsAndRights.lstModules.Count > 0)
+            {
+                var PurchaseOrderModule = FormControlsAndRights.lstModules[0];
+                if (PurchaseOrderModule.ModuleName == "Purchasing") //ModuleName can't be  changed in service
+                {
+                    if (PurchaseOrderModule.lstSubModules != null && PurchaseOrderModule.lstSubModules.Count > 0)
+                    {
+
+                        var PurchaseOrderSubModule = PurchaseOrderModule.lstSubModules.FirstOrDefault(i => i.SubModuleName == "PurchaseOrders");
+
+                        if (PurchaseOrderSubModule != null)
+                        {
+                            if (PurchaseOrderSubModule.Button != null && PurchaseOrderSubModule.Button.Count > 0)
+                            {
+                                //  CloseWorkorderRights = workorderSubModule.Button.FirstOrDefault(i => i.Name == "Close");
+
+                            }
+
+                            if (PurchaseOrderSubModule.listDialoges != null && PurchaseOrderSubModule.listDialoges.Count > 0)
+                            {
+                                var PurchaseOrderDialog = PurchaseOrderSubModule.listDialoges.FirstOrDefault(i => i.DialogName == "Receiving");
+                                if (PurchaseOrderDialog != null && PurchaseOrderDialog.listTab != null && PurchaseOrderDialog.listTab.Count > 0)
+                                {
+                                    try
+                                    {
+                                        var PONonStockPartsTab = PurchaseOrderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "NonStockroomParts");
+                                        var POAssetsTab = PurchaseOrderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Assets");
+                                        var POPartsTab = PurchaseOrderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Parts");
+                                        var POPartsRecieveButton = POPartsTab.ButtonControls.FirstOrDefault(i => i.Name == "ReceiveParts");
+                                        var PONonStockPartsRecieveButton = PONonStockPartsTab.ButtonControls.FirstOrDefault(i => i.Name == "ReceiveNonStockroomParts");
+                                        var POAssetsRecieveButton = POAssetsTab.ButtonControls.FirstOrDefault(i => i.Name == "ReceiveAssets");
+
+                                        Application.Current.Properties["ReceiveParts"] = POPartsRecieveButton.Expression;
+                                        Application.Current.Properties["ReceiveNonStockroomParts"] = PONonStockPartsRecieveButton.Expression;
+                                        Application.Current.Properties["ReceiveAssets"] = POAssetsRecieveButton.Expression;
+                                    }
+                                    catch (Exception ex)
+                                    {
+
+
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
         }
 
         public async Task SetTitlesPropertiesForPage()

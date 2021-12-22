@@ -13,9 +13,9 @@
     <ContentPage.Resources>
         <ResourceDictionary>
 
-            <!--<ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style.xaml" />
-            </ResourceDictionary.MergedDictionaries>-->
+            </ResourceDictionary.MergedDictionaries>
 
 
             <templates:StockroomListingPageTemplateSelector x:Key="DateTemplateSelector">

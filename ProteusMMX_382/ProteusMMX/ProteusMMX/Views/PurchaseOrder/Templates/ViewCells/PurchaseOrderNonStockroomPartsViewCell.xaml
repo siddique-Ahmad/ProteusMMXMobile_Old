@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.PurchaseOrder.Templates.ViewCells.PurchaseOrderNonStockroomPartsViewCell">
     <ViewCell.View>
-        <Grid RowSpacing="5">
+        <Frame BorderColor="Gray">
+            <StackLayout >
+                <Grid RowSpacing="3" Padding="-15,-18,-18,-18">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -14,7 +16,12 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -22,13 +29,14 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Label x:Name="PartName" />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding PartName}" Grid.Column="2" />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima"  x:Name="PartName" />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text=":" Grid.Column="1"  />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text="{Binding PartName}" Grid.Column="2" />
 
-            </Grid>
 
-            <Grid Grid.Row="1">
+                    </Grid>
+
+                    <Grid Grid.Row="1"  Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -43,7 +51,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="2">
+                <Grid Grid.Row="1" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -58,7 +66,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="3">
+                    <Grid Grid.Row="2" Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -72,7 +80,8 @@
 
 
             </Grid>
-            <Grid Grid.Row="4">
+
+                    <Grid Grid.Row="2"  Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -86,7 +95,8 @@
 
 
             </Grid>
-            <Grid Grid.Row="5">
+                    
+            <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -101,24 +111,22 @@
 
             </Grid>
 
-            <Grid Grid.Row="6">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+                    <Grid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                <Label x:Name="ReceiverName"  />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding ReceiverName}" Grid.Column="2"  />
-
-
-            </Grid>
-
-            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
+                        <Label x:Name="ReceiverName"  />
+                        <Label Text=":" Grid.Column="1"  />
+                        <Label Text="{Binding ReceiverName}" Grid.Column="2"  />
 
 
-        </Grid>
+                    </Grid>
+                </Grid>
+            </StackLayout>
+        </Frame>
     </ViewCell.View>
 </ViewCell>
