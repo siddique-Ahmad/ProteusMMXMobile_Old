@@ -53,16 +53,41 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3.5*"/>
+                   
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:CustomEntry
-                        Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
-                </border:SfBorder>
-                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />
+                <border:SfBorder CornerRadius="5">
+                    <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0" Grid.Column="0"/>
 
+                </border:SfBorder>
+                <!--<Image Grid.Column="1" Grid.Row="0" HeightRequest="40" >
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource" >
+                            <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                        </OnPlatform>
+                    </Image.Source>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                                         Command="{Binding ScanCommand}"
+                                         NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>-->
+
+                <StackLayout HorizontalOptions="CenterAndExpand" WidthRequest="170" HeightRequest="170"  Padding="0,30,0,0" Grid.Row="1">
+                    <Image>
+                        <Image.Source>
+                            <OnPlatform x:TypeArguments="ImageSource" >
+                                <OnPlatform.Android>barcerch.png</OnPlatform.Android>
+                            </OnPlatform>
+                        </Image.Source>
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer
+                                         Command="{Binding ScanCommand}"
+                                         NumberOfTapsRequired="1" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </StackLayout>
 
             </Grid>
 
