@@ -4,7 +4,7 @@
                xmlns:DependencyInterface="clr-namespace:ProteusMMX.DependencyInterface;assembly=ProteusMMX" 
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              x:Class="ProteusMMX.Views.Inventory.InventoryTransactionPage"
                Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
@@ -37,249 +37,254 @@
 
     <ContentPage.Content>
         <ScrollView>
-            <Grid Padding ="10,10,10,10">
-
-                <StackLayout Margin="10,0,10,0">
-                <StackLayout x:Name="Tablet" Orientation="Horizontal" Padding="10,10,10,10" Spacing="80">
-                    <StackLayout Orientation="Vertical"  Grid.Row="0" Grid.Column="1" IsVisible="{Binding PartNameIsVisible}">
-                        <Label Text="{Binding PartNameTitle}" TextColor="Black"  FontAttributes="Bold"/>
-                        <Label Text="{Binding PartNameText}"/>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="2" IsVisible="{Binding PartNumberIsVisible}">
-                        <Label Text="{Binding PartNumberTitle}" TextColor="Black" FontAttributes="Bold"/>
-                        <Label Text="{Binding PartNumberText}"/>
-                    </StackLayout>
-
-
-                    <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="3" IsVisible="{Binding QuantityOnHandIsVisible}">
-                        <Label Text="{Binding QuantityOnHandTitle}" TextColor="Black" FontAttributes="Bold"/>
-                        <Label Text="{Binding QuantityOnHandText}"/>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="4">
-                        <Label Text="{Binding QuantityAllocatedTitle}"  TextColor="Black" FontAttributes="Bold"/>
-                        <Label Text="{Binding QuantityAllocatedText}"/>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="5">
-                        <Image  WidthRequest="120" HeightRequest="80"   Source="{Binding AttachmentImageSource}"/>
-                    </StackLayout>
-
-                </StackLayout>
-                <StackLayout x:Name="Phone" Orientation="Vertical" >
-                    <StackLayout Orientation="Horizontal" Spacing="10">
-                        <StackLayout Orientation="Vertical"  Grid.Row="0" Grid.Column="1" IsVisible="{Binding PartNameIsVisible}">
-                            <Label Text="{Binding PartNameTitle}" TextColor="Black"  FontAttributes="Bold"/>
-                            <Label Text="{Binding PartNameText}"/>
-                        </StackLayout>
-
-                        <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="2" IsVisible="{Binding PartNumberIsVisible}">
-                            <Label Text="{Binding PartNumberTitle}" TextColor="Black" FontAttributes="Bold"/>
-                            <Label Text="{Binding PartNumberText}"/>
-                        </StackLayout>
-                    </StackLayout>
-
-                    <StackLayout  Orientation="Horizontal" Spacing="10">
-                        <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="3" IsVisible="{Binding QuantityOnHandIsVisible}">
-                            <Label Text="{Binding QuantityOnHandTitle}" TextColor="Black" FontAttributes="Bold"/>
-                            <Label Text="{Binding QuantityOnHandText}"/>
-                        </StackLayout>
-
-                        <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="4">
-                            <Label Text="{Binding QuantityAllocatedTitle}" TextColor="Black" FontAttributes="Bold"/>
-                            <Label Text="{Binding QuantityAllocatedText}"/>
-                        </StackLayout>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="5">
-                        <Image  WidthRequest="100" HeightRequest="60"   Source="{Binding AttachmentImageSource}"/>
-                    </StackLayout>
-                </StackLayout>
+            <StackLayout>
+            <Grid Padding ="10,0,10,0">
                 
-                <StackLayout Orientation="Horizontal" Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding UpdateLastPhysicalDateVisible}">
-
-                    <DependencyInterface:LoginSwitch x:Name="LoginSwitch1" IsEnabled="{Binding UpdateLastPhysicalDateEnabled}" IsToggled="{Binding PhysicalDateSwitch, Mode=TwoWay}"  Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="6"></DependencyInterface:LoginSwitch>
-
-                    <Label  x:Name="LabelSwitch1"  Grid.Column="1" Grid.Row="6" IsEnabled="{Binding UpdateLastPhysicalDateEnabled}" FontAttributes="Bold" Text="{Binding LastPhysicalInventorytitle}" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" >
-
-                    </Label>
-                </StackLayout>
-
+                    <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
                 
-                <StackLayout Orientation="Vertical" Grid.Row="2" IsVisible="{Binding TransactionTypeIsVisible}">
-                    <Label Text="{Binding TransactionTypetitle}" TextColor="Black">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <Button Text="{Binding TransactionTypeText}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding TransactionTypeCommand}" IsEnabled="{Binding TransactionTypeIsEnabled}"   />
-                </StackLayout>
+                    <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                    <!--<Frame CornerRadius="5" Margin="0,5,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                        <StackLayout >
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                            
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>-->
+                            <StackLayout   Grid.Row="0" Grid.Column="0" IsVisible="{Binding PartNameIsVisible}">
+                        <Label  Text="{Binding PartNameTitle}" TextColor="Black"  FontAttributes="Bold"/>
+                        <Label  Text="{Binding PartNameText}"/>
+                    </StackLayout>
 
+                    <StackLayout  Grid.Row="0" Grid.Column="1" IsVisible="{Binding PartNumberIsVisible}">
+                        <Label  Text="{Binding PartNumberTitle}" TextColor="Black" FontAttributes="Bold"/>
+                        <Label  Text="{Binding PartNumberText}"/>
+                    </StackLayout>
 
-                <StackLayout Orientation="Vertical" Grid.Row="3" HorizontalOptions="FillAndExpand" VerticalOptions="Start" IsVisible="{Binding AdjustmentQuantityIsVisible}">
-                    <Label x:Name="AQuantity"  TextColor="Black" Text="{Binding Adjustmentquantitytitle}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <border:SfBorder CornerRadius="5">
+                    <StackLayout  Grid.Row="1" Grid.Column="0" IsVisible="{Binding QuantityOnHandIsVisible}">
+                        <Label  Text="{Binding QuantityOnHandTitle}" TextColor="Black" FontAttributes="Bold"/>
+                        <Label  Text="{Binding QuantityOnHandText}"/>
+                    </StackLayout>
+
+                    <StackLayout  Grid.Row="1" Grid.Column="1">
+                        <Label  Text="{Binding QuantityAllocatedTitle}"  TextColor="Black" FontAttributes="Bold"/>
+                        <Label  Text="{Binding QuantityAllocatedText}"/>
+                    </StackLayout>
+
+                    
+                            <!--</Grid>
+                        </StackLayout>
+                    </Frame>-->
+                    <StackLayout HorizontalOptions="CenterAndExpand" Spacing="3" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Image   Source="{Binding AttachmentImageSource}"/>
+                    </StackLayout>
+
+                    <StackLayout  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding UpdateLastPhysicalDateVisible}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <DependencyInterface:LoginSwitch x:Name="LoginSwitch1" IsEnabled="{Binding UpdateLastPhysicalDateEnabled}" IsToggled="{Binding PhysicalDateSwitch, Mode=TwoWay}"  Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" x:Uid="MySwitch" ></DependencyInterface:LoginSwitch>
+
+                            <Label  x:Name="LabelSwitch1"  Grid.Column="1"  IsEnabled="{Binding UpdateLastPhysicalDateEnabled}" FontAttributes="Bold" Text="{Binding LastPhysicalInventorytitle}" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" >
+
+                            </Label>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical" Grid.Row="5" Grid.Column="0" IsVisible="{Binding TransactionTypeIsVisible}">
+                        <Label Text="{Binding TransactionTypetitle}" TextColor="Black">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                        </Label>
+                        <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <buttons:SfButton Text="{Binding TransactionTypeText}"   Command="{Binding TransactionTypeCommand}" Style="{StaticResource SfButtonStyles}" IsEnabled="{Binding TransactionTypeIsEnabled}" >
+                        </buttons:SfButton>
+                        </border:SfBorder>
+                        <!--<Button Text="{Binding TransactionTypeText}"  CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding TransactionTypeCommand}" IsEnabled="{Binding TransactionTypeIsEnabled}"   />-->
+                    </StackLayout>
+                    
+                    <StackLayout Orientation="Vertical" Grid.Row="5" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start" IsVisible="{Binding AdjustmentQuantityIsVisible}">
+                        <Label x:Name="AQuantity"  TextColor="Black" Text="{Binding Adjustmentquantitytitle}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                        </Label>
+                        <border:SfBorder CornerRadius="5">
                             <control1:CustomEntry x:Name="AdjustmentQuantity" Text="{Binding AdjustmentQuantityText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" IsEnabled="{Binding AdjustmentQuantityIsEnabled}" TextChanged="AdjustmentQuantity_TextChanged"></control1:CustomEntry>
-                    </border:SfBorder>
-                </StackLayout>
+                        </border:SfBorder>
+                    </StackLayout>
 
-                <StackLayout Orientation="Vertical" Grid.Row="4" IsVisible="{Binding TransactionReasonIsVisible}">
-                    <Label Text="{Binding TransactionReasontitle}" TextColor="Black">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <Button Text="{Binding TransactionReasonText}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding TransactionReasonCommand}"  IsEnabled="{Binding TransactionReasonIsEnabled}" />
-                </StackLayout>
+                    <StackLayout Orientation="Vertical" Grid.Row="6" Grid.Column="0" IsVisible="{Binding TransactionReasonIsVisible}">
+                        <Label Text="{Binding TransactionReasontitle}" TextColor="Black">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                        </Label>
+                        <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <buttons:SfButton Text="{Binding TransactionReasonText}"   Command="{Binding TransactionReasonCommand}" Style="{StaticResource SfButtonStyles}" IsEnabled="{Binding TransactionReasonIsEnabled}" >
+                            </buttons:SfButton>
+                        </border:SfBorder>
+                        
+                    </StackLayout>
 
-                <StackLayout Orientation="Vertical" Grid.Row="5" IsVisible="{Binding CostcenterIsVisibile}">
-                    <Label Text="{Binding Costcentertitle}" TextColor="Black">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
+                    <StackLayout Orientation="Vertical" Grid.Column="1" Grid.Row="6" IsVisible="{Binding CostcenterIsVisibile}">
+                        <Label Text="{Binding Costcentertitle}" TextColor="Black">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
 
-                    </Label>
-                    <Button Text="{Binding CostCenterText}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding CostCenterCommand}" IsEnabled="{Binding CostcenterIsEnabled}"  />
-                </StackLayout>
+                        </Label>
+                        <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <buttons:SfButton Text="{Binding CostCenterText}"   Command="{Binding CostCenterCommand}" Style="{StaticResource SfButtonStyles}" IsEnabled="{Binding CostcenterIsEnabled}" >
+                            </buttons:SfButton>
+                        </border:SfBorder>                       
+                    </StackLayout>
 
-                <StackLayout Orientation="Vertical" Grid.Row="6" IsVisible="{Binding TrasnactorIsVisible}">
-                    <Label Text="{Binding PerformBytitle}" TextColor="Black">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <Button Text="{Binding PerformByText}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding PerformByCommand}" IsEnabled="{Binding TrasnactorIsEnabled}" />
-                </StackLayout>
+                    <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="0" IsVisible="{Binding TrasnactorIsVisible}">
+                        <Label Text="{Binding PerformBytitle}" TextColor="Black">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                        </Label>
+                        <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <buttons:SfButton Text="{Binding PerformByText}"   Command="{Binding PerformByCommand}" Style="{StaticResource SfButtonStyles}" IsEnabled="{Binding TrasnactorIsEnabled}" >
+                            </buttons:SfButton>
+                        </border:SfBorder>
+                       
+                    </StackLayout>
 
-                <StackLayout Orientation="Vertical" Grid.Row="7" IsVisible="{Binding CheckOutIsVisible}">
-                    <Label Text="{Binding CheckOutTitle}" TextColor="Black">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <Button Text="{Binding CheckOutText}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding CheckOutCommand}" IsEnabled="{Binding CheckOutIsEnabled}" />
-                </StackLayout>
+                    <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1" IsVisible="{Binding CheckOutIsVisible}">
+                        <Label Text="{Binding CheckOutTitle}" TextColor="Black">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                        </Label>
+                        <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <buttons:SfButton Text="{Binding CheckOutText}"   Command="{Binding CheckOutCommand}" Style="{StaticResource SfButtonStyles}" IsEnabled="{Binding CheckOutIsEnabled}" >
+                            </buttons:SfButton>
+                        </border:SfBorder>                       
+                    </StackLayout>
 
-                <StackLayout Orientation="Vertical"  Grid.Row="8" IsVisible="{Binding SelfBinIsVisible}">
-                    <Label Text="{Binding ShelfBintitle}" TextColor="Black"  FontAttributes="Bold"/>
-                    <Label Text="{Binding ShelfBinName}" IsEnabled="{Binding SelfBinIsEnable}"/>
-                </StackLayout>
+                    <StackLayout Orientation="Vertical"  Grid.Row="8" Grid.Column="0" IsVisible="{Binding SelfBinIsVisible}">
+                        <Label Text="{Binding ShelfBintitle}" TextColor="Black"  FontAttributes="Bold"/>
+                        <border:SfBorder CornerRadius="5" >
+                        <Label Text="{Binding ShelfBinName}" HeightRequest="45" IsEnabled="{Binding SelfBinIsEnable}"/>
+                        </border:SfBorder>
+                    </StackLayout>
 
-                <StackLayout Orientation="Vertical" Grid.Row="9" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding UnitCostIsVisible}">
-                    <Label x:Name="UCost" TextColor="Black"   Text="{Binding UnitCosttitle}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <border:SfBorder CornerRadius="5">
-                            <control1:CustomEntry x:Name="UnitCost" Text="{Binding UnitCostText}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding UnitCostIsEnabled}" VerticalOptions="Center" TextChanged="UnitCost_TextChanged"></control1:CustomEntry>
-                    </border:SfBorder>
-                </StackLayout>
-
-
-                <StackLayout Orientation="Vertical" Grid.Row="10" HorizontalOptions="FillAndExpand"  IsVisible="{Binding DescriptionIsVisible}" VerticalOptions="Start">
-                    <Label x:Name="Desc"  TextColor="Black" Text="{Binding Descriptiontitle}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <!--<Editor x:Name="Description" Text="{Binding DescriptionText}" HorizontalOptions="FillAndExpand"  IsEnabled="{Binding DescriptionIsEnabled}" VerticalOptions="Center"></Editor>-->
-                    <border:SfBorder CornerRadius="5">
-                        <control1:UnderLineEditor x:Name="Description" Text="{Binding DescriptionText}" HorizontalOptions="FillAndExpand"  IsEnabled="{Binding DescriptionIsEnabled}" VerticalOptions="Center"></control1:UnderLineEditor>
-                    </border:SfBorder>
-                </StackLayout>
-
-                <StackLayout Orientation="Vertical" Grid.Row="11" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding Userfeild1IsVisible}">
-                    <Label x:Name="UF1"  TextColor="Black"  Text="{Binding UserField1Title}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <border:SfBorder CornerRadius="5">
+                    <StackLayout Orientation="Vertical" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand"  IsVisible="{Binding DescriptionIsVisible}" VerticalOptions="Start">
+                        <Label x:Name="Desc"  TextColor="Black" Text="{Binding Descriptiontitle}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                        </Label>
+                        <!--<Editor x:Name="Description" Text="{Binding DescriptionText}" HorizontalOptions="FillAndExpand"  IsEnabled="{Binding DescriptionIsEnabled}" VerticalOptions="Center"></Editor>-->
+                        <border:SfBorder CornerRadius="5">
+                            <control1:UnderLineEditor x:Name="Description" Text="{Binding DescriptionText}" HorizontalOptions="FillAndExpand"  IsEnabled="{Binding DescriptionIsEnabled}" VerticalOptions="Center"></control1:UnderLineEditor>
+                        </border:SfBorder>
+                    </StackLayout>
+                    
+                    <StackLayout Orientation="Vertical" Grid.Row="10" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding Userfeild1IsVisible}">
+                        <Label x:Name="UF1"  TextColor="Black"  Text="{Binding UserField1Title}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                        </Label>
+                        <border:SfBorder CornerRadius="5">
                             <control1:CustomEntry x:Name="Userfield1" Text="{Binding UserField1}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild1IsEnabled}" VerticalOptions="Center"></control1:CustomEntry>
-                    </border:SfBorder>
-                </StackLayout>
-
-                <StackLayout Orientation="Vertical" Grid.Row="12" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding Userfeild2IsVisible}">
-                    <Label x:Name="UF2" TextColor="Black"  Text="{Binding UserField2Title}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <border:SfBorder CornerRadius="5">
+                        </border:SfBorder>
+                    </StackLayout>
+                   
+                    <StackLayout Orientation="Vertical" Grid.Row="10" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding Userfeild2IsVisible}">
+                        <Label x:Name="UF2" TextColor="Black"  Text="{Binding UserField2Title}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                        </Label>
+                        <border:SfBorder CornerRadius="5">
                             <control1:CustomEntry x:Name="Userfield2" Text="{Binding UserField2}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild2IsEnabled}" VerticalOptions="Center"></control1:CustomEntry>
-                    </border:SfBorder>
-                </StackLayout>
+                        </border:SfBorder>
+                    </StackLayout>
 
-                <StackLayout Orientation="Vertical" Grid.Row="13" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding Userfeild3IsVisible}">
-                    <Label x:Name="UF3" TextColor="Black"  Text="{Binding UserField3Title}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <border:SfBorder CornerRadius="5">
+                    <StackLayout Orientation="Vertical" Grid.Row="11" Grid.Column="0" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding Userfeild3IsVisible}">
+                        <Label x:Name="UF3" TextColor="Black"  Text="{Binding UserField3Title}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                        </Label>
+                        <border:SfBorder CornerRadius="5">
                             <control1:CustomEntry x:Name="Userfield3" Text="{Binding UserField3}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild3IsEnabled}" VerticalOptions="Center"></control1:CustomEntry>
-                    </border:SfBorder>
-                </StackLayout>
+                        </border:SfBorder>
+                    </StackLayout>
 
-                <StackLayout Orientation="Vertical" Grid.Row="14" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding Userfeild4IsVisible}">
-                    <Label x:Name="UF4" TextColor="Black"  Text="{Binding UserField4Title}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                        <Label.FontAttributes>
-                            <OnPlatform x:TypeArguments="FontAttributes">
-                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                <OnPlatform.Android>Bold</OnPlatform.Android>
-                            </OnPlatform>
-                        </Label.FontAttributes>
-                    </Label>
-                    <border:SfBorder CornerRadius="5">
+                    <StackLayout Orientation="Vertical" Grid.Row="11" Grid.Column="1" HorizontalOptions="FillAndExpand" VerticalOptions="Start"  IsVisible="{Binding Userfeild4IsVisible}">
+                        <Label x:Name="UF4" TextColor="Black"  Text="{Binding UserField4Title}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                            <Label.FontAttributes>
+                                <OnPlatform x:TypeArguments="FontAttributes">
+                                    <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                    <OnPlatform.Android>Bold</OnPlatform.Android>
+                                </OnPlatform>
+                            </Label.FontAttributes>
+                        </Label>
+                        <border:SfBorder CornerRadius="5">
                             <control1:CustomEntry x:Name="Userfield4" Text="{Binding UserField4}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Userfeild4IsEnabled}" VerticalOptions="Center"></control1:CustomEntry>
-                    </border:SfBorder>
-                </StackLayout>
-
-                <StackLayout Orientation="Vertical" Grid.Row="15" IsVisible="{Binding Perform_TransactionIsVisible}">
-                    <Button Text="{Binding SaveTitle}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding PerformInventoryCommand}" IsEnabled="{Binding Perform_TransactionIsEnabled}" />
-                </StackLayout>
-                </StackLayout>
-
-            </Grid>
+                        </border:SfBorder>
+                    </StackLayout>
+                   
+                    <StackLayout Orientation="Vertical" Grid.Row="12" Grid.Column="1" IsVisible="{Binding Perform_TransactionIsVisible}">
+                        <Button Text="{Binding SaveTitle}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding PerformInventoryCommand}" IsEnabled="{Binding Perform_TransactionIsEnabled}" />
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

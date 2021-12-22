@@ -4,15 +4,14 @@
              x:Class="ProteusMMX.Views.Service_Request.Templates.ViewCells.ServiceRequestViewCell"
           BindingContextChanged="OnBindingContextChanged">
     <ViewCell.View>
-        <Grid RowSpacing="5">
+        <Frame BorderColor="Gray">
+            <StackLayout >
+                <Grid RowSpacing="3" Padding="-15,-15,-15,-15">
 
-            <Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                
             </Grid.RowDefinitions>
 
             <Grid>
@@ -22,11 +21,10 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-
-                <Label x:Name="RequestNumber" />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding RequestNumber}" Grid.Column="2" />
-
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima"  x:Name="RequestNumber" />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text=":" Grid.Column="1"  />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" MinimumWidthRequest="15" LineBreakMode="TailTruncation" Text="{Binding RequestNumber}" Grid.Column="2" />
+                        
             </Grid>
 
             <Grid Grid.Row="1">
@@ -61,12 +59,10 @@
 
 
 
-            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
-
-
         </Grid>
 
-
+            </StackLayout>
+        </Frame>
     </ViewCell.View>
     <!--<ViewCell.ContextActions>
         <MenuItem x:Name="ServiceRequestAcceptMenuItem" Clicked="ServiceRequestMenuItems"  CommandParameter="{Binding .}"  Text="Accept" />

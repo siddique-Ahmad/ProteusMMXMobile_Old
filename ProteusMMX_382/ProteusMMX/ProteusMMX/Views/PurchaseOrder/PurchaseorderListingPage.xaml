@@ -28,17 +28,17 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -51,12 +51,55 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <StackLayout HeightRequest="80">
+                <border:SfBorder HeightRequest="80" Grid.Row="0"  BorderColor="#006de0" CornerRadius="0,0,8,8"                      
+                       BackgroundColor="#006de0"  >
+                    <StackLayout>
+                        <Grid Padding="10,0,10,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                            </Grid.RowDefinitions>
+                            <border:SfBorder BackgroundColor="White" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" CornerRadius="10" >
 
+                                <SearchBar x:Name="filterText" HeightRequest="40" TextChanged="filterText_TextChanged" Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0"/>
+
+                            </border:SfBorder>
+                            <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource" >
+                                        <OnPlatform.Android>searchicon.png</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Image.Source>
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding ScanCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+
+                            <StackLayout IsVisible="{Binding TotalRecordForPhone}"  VerticalOptions="Center" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}"/>
+                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text=":" Grid.Column="3"/>
+                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordCount}"/>
+                                
+                            </StackLayout>
+
+                            <!--<Label VerticalOptions="Center" Grid.Row="1" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,30" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}" IsVisible="{Binding TotalRecordForTab}"></Label>
+                            <Label Text=":"  IsVisible="{Binding TotalRecordForTab}" Grid.Row="1"/>
+                            <Label Text="{Binding TotalRecordCount}"  IsVisible="{Binding TotalRecordForTab}" Grid.Row="1"/>-->
+                        </Grid>
+                    </StackLayout>
+                </border:SfBorder>
+            </StackLayout>
             <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
 
-            <Grid Grid.Row="1"  Padding="10,10,10,10">
+            <Grid Grid.Row="1"  Padding="10,0,10,0">
 
-                <Grid.RowDefinitions>
+                <!--<Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
@@ -81,9 +124,9 @@
                     <Label Text="{Binding TotalRecordTitle}"/>
                     <Label Text=":" Grid.Column="3"/>
                     <Label Text="{Binding TotalRecordCount}"/>
-                </StackLayout>
+                </StackLayout>-->
 
-                <ListView Grid.Row="2" Grid.ColumnSpan="5"
+                <ListView
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"

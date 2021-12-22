@@ -22,222 +22,221 @@
 
     <ContentPage.ToolbarItems>
 
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
 
+    <Grid BackgroundColor="#fefefe">
+        <StackLayout VerticalOptions="Start">
+            <Grid>
+                <Grid  >
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="40*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                </Grid>
+                <border:SfBorder HeightRequest="40" BorderColor="#006de0" CornerRadius="0,0,20,20" BackgroundColor="#006de0"  >
+                    <Label  VerticalOptions="Center" FontSize="Medium" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" HorizontalOptions="Center" Text="Search Types"></Label>
+                </border:SfBorder>
+            </Grid>
+            <ScrollView>
+                <Grid Padding="25"  Margin="0,-35,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="120" />
+                        <RowDefinition Height="120" />
+                        <RowDefinition Height="120" />
+                        <RowDefinition Height="120" />
+                        <RowDefinition Height="120" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Row="0" Grid.Column="0" IsVisible="{Binding SearchAssetVisibility}">
+                        <Grid RowSpacing="10" IsVisible="{Binding WorkorderVisibility}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="searchBor1.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding SearchAssetCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="search1.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding WorkordersCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding SearchAssetTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
+                    </StackLayout>
 
-    <ContentPage.Content>
-        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+                    <StackLayout Grid.Row="0" Grid.Column="2" IsVisible="{Binding SearchWoBYAssetVisibility}">
+                        <Grid RowSpacing="10" IsVisible="{Binding SearchWoBYAssetVisibility}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="searchBor2.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding SearchWorkorderByAssetCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="search2.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding SearchWorkorderByAssetCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding SearchWorkorderByAssetTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
+                    </StackLayout>
 
-            <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
+                    <StackLayout Grid.Row="1" Grid.Column="0" IsVisible="{Binding SearchWOByLocationVisibility}">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
 
-            <ScrollView Grid.Row="1">
-                <Grid>
-                    <Grid
-                Padding="10,10,10,10"
-                RowSpacing="5"
-                VerticalOptions="Fill">
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="searchBor3.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding SearchWorkorderByLocationCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="search3.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding SearchWorkorderByLocationCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding SearchWorkorderByLocationTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
+                    </StackLayout>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                    <StackLayout Grid.Row="1" Grid.Column="2" IsVisible="{Binding SearchBillOfMaterialVisibility}">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
 
-                        </Grid.RowDefinitions>
-                        <StackLayout>
-                            <border:SfBorder Style="{StaticResource SfBorderStyle1}" HeightRequest="60">
-                                <Grid Grid.Row="0" BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding SearchAssetVisibility}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="searchBor4.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding SearchAssetForBillOfMaterialCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="search4.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding SearchAssetForBillOfMaterialCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding SearchAssetForBillOfMaterialTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
+                    </StackLayout>
 
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SearchAssetCommand}"   NumberOfTapsRequired="1" />
-                                    </Grid.GestureRecognizers>
+                    <StackLayout Grid.Row="2" Grid.Column="0" IsVisible="{Binding SearchAssetForAttachmentVisibility}">
+                        <Grid RowSpacing="10" IsVisible="{Binding SearchAssetForAttachmentVisibility}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
 
-                                    <Image Source="tapped.jpg">
-                                        <Image.Source>
-                                            <OnPlatform x:TypeArguments="FileImageSource">
-                                                <OnPlatform.iOS>
-                                                    <FileImageSource File="BarcodeAsset.png"/>
-                                                </OnPlatform.iOS>
-                                                <OnPlatform.Android>
-                                                    <FileImageSource File="BarcodeAsset.png"/>
-                                                </OnPlatform.Android>
-                                                <OnPlatform.WinPhone>
-                                                    <FileImageSource File="Assets/BarcodeAsset.png"/>
-                                                </OnPlatform.WinPhone>
-                                            </OnPlatform>
-                                        </Image.Source>
-                                    </Image>
-                                    <Label Grid.Column="1" Text="{Binding SearchAssetTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-                                </Grid>
-                            </border:SfBorder>
-
-                            <border:SfBorder Style="{StaticResource SfBorderStyle1}" HeightRequest="60">
-
-                                <Grid Grid.Row="1" BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding SearchWoBYAssetVisibility}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SearchWorkorderByAssetCommand}"  NumberOfTapsRequired="1" />
-                                    </Grid.GestureRecognizers>
-
-                                    <Image Source="tapped.jpg">
-                                        <Image.Source>
-                                            <OnPlatform x:TypeArguments="FileImageSource">
-                                                <OnPlatform.iOS>
-                                                    <FileImageSource File="workorderassest.jpg"/>
-                                                </OnPlatform.iOS>
-                                                <OnPlatform.Android>
-                                                    <FileImageSource File="workorderassest.jpg"/>
-                                                </OnPlatform.Android>
-                                                <OnPlatform.WinPhone>
-                                                    <FileImageSource File="Assets/workorderassest.jpg"/>
-                                                </OnPlatform.WinPhone>
-                                            </OnPlatform>
-                                        </Image.Source>
-                                    </Image>
-                                    <Label Grid.Column="1" Text="{Binding SearchWorkorderByAssetTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-                                </Grid>
-                            </border:SfBorder>
-
-                            <border:SfBorder Style="{StaticResource SfBorderStyle1}" HeightRequest="60">
-                                <Grid Grid.Row="2" BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding SearchWOByLocationVisibility}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SearchWorkorderByLocationCommand}"  NumberOfTapsRequired="1" />
-                                    </Grid.GestureRecognizers>
-
-
-                                    <Image Source="tapped.jpg">
-                                        <Image.Source>
-                                            <OnPlatform x:TypeArguments="FileImageSource">
-                                                <OnPlatform.iOS>
-                                                    <FileImageSource File="workorder location.png"/>
-                                                </OnPlatform.iOS>
-                                                <OnPlatform.Android>
-                                                    <FileImageSource File="workorderlocation.png"/>
-                                                </OnPlatform.Android>
-                                                <OnPlatform.WinPhone>
-                                                    <FileImageSource File="Assets/workorder location.png"/>
-                                                </OnPlatform.WinPhone>
-                                            </OnPlatform>
-                                        </Image.Source>
-                                    </Image>
-                                    <Label Grid.Column="1" Text="{Binding SearchWorkorderByLocationTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-                                </Grid>
-                            </border:SfBorder>
-
-                            <border:SfBorder Style="{StaticResource SfBorderStyle1}" HeightRequest="60">
-                                <Grid Grid.Row="3" BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding SearchBillOfMaterialVisibility}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SearchAssetForBillOfMaterialCommand}"   NumberOfTapsRequired="1" />
-                                    </Grid.GestureRecognizers>
-
-
-                                    <Image Source="tapped.jpg">
-                                        <Image.Source>
-                                            <OnPlatform x:TypeArguments="FileImageSource">
-                                                <OnPlatform.iOS>
-                                                    <FileImageSource File="BarcodeAsset.png"/>
-                                                </OnPlatform.iOS>
-                                                <OnPlatform.Android>
-                                                    <FileImageSource File="BarcodeAsset.png"/>
-                                                </OnPlatform.Android>
-                                                <OnPlatform.WinPhone>
-                                                    <FileImageSource File="Assets/BarcodeAsset.png"/>
-                                                </OnPlatform.WinPhone>
-                                            </OnPlatform>
-                                        </Image.Source>
-                                    </Image>
-                                    <Label Grid.Column="1" Text="{Binding SearchAssetForBillOfMaterialTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-                                </Grid>
-                            </border:SfBorder>
-
-                            <border:SfBorder Style="{StaticResource SfBorderStyle1}" HeightRequest="60">
-                                <Grid Grid.Row="4" BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding SearchAssetForAttachmentVisibility}">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding SearchAssetForAttachmentCommand}"   NumberOfTapsRequired="1" />
-                                    </Grid.GestureRecognizers>
-
-
-                                    <Image Source="tapped.jpg">
-                                        <Image.Source>
-                                            <OnPlatform x:TypeArguments="FileImageSource">
-                                                <OnPlatform.iOS>
-                                                    <FileImageSource File="BarcodeAsset.png"/>
-                                                </OnPlatform.iOS>
-                                                <OnPlatform.Android>
-                                                    <FileImageSource File="BarcodeAsset.png"/>
-                                                </OnPlatform.Android>
-                                                <OnPlatform.WinPhone>
-                                                    <FileImageSource File="Assets/BarcodeAsset.png"/>
-                                                </OnPlatform.WinPhone>
-                                            </OnPlatform>
-                                        </Image.Source>
-                                    </Image>
-                                    <Label Grid.Column="1" Text="{Binding SearchAssetForAttachmentTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-                                </Grid>
-
-                            </border:SfBorder>
-                        </StackLayout>
-
-                    </Grid>
-
-                    <ActivityIndicator Grid.Row="0" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
-
-
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="searchBor5.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding SearchAssetForAttachmentCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="search5.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding SearchAssetForAttachmentCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding SearchAssetForAttachmentTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima"  TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
+                    </StackLayout>
                 </Grid>
             </ScrollView>
+        </StackLayout>
+        <ActivityIndicator Grid.Row="0" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
 
-        </Grid>
+    </Grid>
 
-
-    </ContentPage.Content>
 </ContentPage>
