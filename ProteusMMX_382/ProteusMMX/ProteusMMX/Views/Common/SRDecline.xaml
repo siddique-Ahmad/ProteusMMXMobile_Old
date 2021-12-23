@@ -21,19 +21,26 @@
 
     <StackLayout  Margin="50,50,50,50" Padding="20,20,20,20" Spacing="10" WidthRequest="370" HeightRequest="250" VerticalOptions="Center"  BackgroundColor="White"  >
 
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
         <Label Grid.Row="0" x:Name="HeaderLabel" FontSize="Medium"  HorizontalOptions="Center" Text="Notes" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
 
-        <!--<Label Grid.Row="1" x:Name="Username" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-            <Entry Grid.Row="2" x:Name="UserLabel"  TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
 
-            <Label Grid.Row="3" x:Name="Pass" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />-->
-
-        <border:SfBorder CornerRadius="5">
-            <Control1:UnderLineEditor Grid.Row="1" x:Name="Reason" TextColor="{StaticResource ColorLabel}"  Grid.ColumnSpan="2"/>
+            <border:SfBorder CornerRadius="5" Grid.Row="1" Grid.ColumnSpan="2">
+            <Control1:UnderLineEditor  x:Name="Reason" HeightRequest="150" TextColor="{StaticResource ColorLabel}"  />
         </border:SfBorder>
-        <Button  x:Name="ok" Clicked="OK_Clicked" Text="OK" HeightRequest="50" Grid.Row="2" Grid.Column="0" CornerRadius="5"/>
-        <Button x:Name="cancel" Clicked= "CANCEL_Clicked" Text="Cancel" HeightRequest="50" Grid.Row="2" Grid.Column="1" CornerRadius="5"/>
-
+        <Button  x:Name="ok" Clicked="OK_Clicked" WidthRequest="150" TextColor="Blue" Text="OK" HeightRequest="50" Grid.Row="2" Grid.Column="0" CornerRadius="5"/>
+            <Button x:Name="cancel" Clicked= "CANCEL_Clicked" WidthRequest="150" TextColor="Red" Text="Cancel" HeightRequest="50" Grid.Row="2" Grid.Column="1" CornerRadius="5"/>
+        </Grid>
     </StackLayout>
 
 </pages:PopupPage>

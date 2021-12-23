@@ -9,8 +9,6 @@
              Title="{Binding PageTitle}"
              BackgroundColor="{StaticResource BackgroundColor}" >
 
-
-
     <ContentPage.Resources>
         <ResourceDictionary>
 
@@ -29,6 +27,7 @@
                                                         PastCurrentDayTemplate="{StaticResource  PastViewTemplate}"
                                                         TomorrowDayTemplate="{StaticResource  TomorrowViewTemplate}">
             </templates:WorkorderListingTemplateSelector>-->
+            
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -94,8 +93,6 @@
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-
-
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
@@ -138,9 +135,9 @@
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}" />
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text=":" Grid.Column="3" />
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordCount}"/>
-                                <border:SfBorder CornerRadius="5" Grid.Column="1">
+                                <!--<border:SfBorder CornerRadius="5" Grid.Column="1">
                                     <Picker  ItemsSource="{Binding PickerTitles}" SelectedItem="{Binding SelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding SelectedIndexPicker , Mode=TwoWay}"/>
-                                </border:SfBorder>
+                                </border:SfBorder>-->
                             </StackLayout>
                         </Grid>
                     </StackLayout>
@@ -149,7 +146,6 @@
             <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
 
             <Grid Grid.Row="1"  Padding="5,0,5,0">
-
                 <ListView 
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"

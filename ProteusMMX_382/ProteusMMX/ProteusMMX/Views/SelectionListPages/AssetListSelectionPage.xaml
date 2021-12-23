@@ -6,7 +6,7 @@
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              xmlns:control1="clr-namespace:ProteusMMX.Controls"
              Title="{Binding PageTitle}" 
-             BackgroundColor="{StaticResource BackgroundColor}">
+             BackgroundColor="{StaticResource BackgroundColor}" NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -38,11 +38,31 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <border:SfBorder CornerRadius="5">
-                    <control1:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
+                <border:SfBorder BackgroundColor="White" Margin="0,0,0,0" CornerRadius="10" >
+
+                    <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0"/>
+
                 </border:SfBorder>
-                <Button CornerRadius="5" Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
-                <Button  CornerRadius="5" Grid.Row="2"  Grid.ColumnSpan="2" Text="{Binding SelectTitle}" Command="{Binding SelectNullCommand}" BackgroundColor="White" />
+                <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0">
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource" >
+                            <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                        </OnPlatform>
+                    </Image.Source>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
+                                         Command="{Binding ScanCommand}"
+                                         NumberOfTapsRequired="1" />
+                    </Image.GestureRecognizers>
+                </Image>
+
+
+
+                <Label Grid.Row="2"  Grid.ColumnSpan="2" Text="{Binding SelectTitle}" TextColor="Black" FontAttributes="Bold" Padding="20,0,0,0" BackgroundColor="White" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SelectNullCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
                 <ListView Grid.Row="3" Grid.ColumnSpan="2"
                           HasUnevenRows="True"
                           ItemsSource="{Binding PickerItemCollection}"
