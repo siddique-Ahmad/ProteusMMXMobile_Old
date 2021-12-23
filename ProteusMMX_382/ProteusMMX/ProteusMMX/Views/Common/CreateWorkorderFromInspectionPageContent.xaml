@@ -9,33 +9,28 @@
              BackgroundColor="{StaticResource BackgroundColor}" >
 
 
-    <StackLayout VerticalOptions="Center"  BackgroundColor="White" HorizontalOptions="FillAndExpand">
+    <StackLayout   BackgroundColor="White" HorizontalOptions="FillAndExpand">
 
-        <Grid Padding="20">
+        <Grid Padding="10,0,10,0">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-
-            <Label x:Name="DescriptionLabel"  Grid.Row="0" Grid.Column="0" Font="18"  Text="Description"  />
-            <!--<Editor x:Name="Description" Grid.Row="0" Grid.Column="1" HeightRequest="100" />-->
-            <border:SfBorder CornerRadius="5" Grid.Row="0" Grid.Column="1" >
-            <control:UnderLineEditor x:Name="Description" Grid.Row="0" Grid.Column="1" HeightRequest="100"></control:UnderLineEditor>
+           
+            <Label x:Name="DescriptionLabel"  Grid.Row="0"  Font="18"  Text="Description"  />
+            
+            <border:SfBorder CornerRadius="5" Grid.Row="1"  >
+            <control:UnderLineEditor x:Name="Description"  HeightRequest="70"></control:UnderLineEditor>
+            </border:SfBorder> 
+            <Label x:Name="AdditionalDetailsLabel" Grid.Row="2" Font="18" Text="Additional Details/Note"  />
+            
+            <border:SfBorder CornerRadius="5" Grid.Row="3" >
+            <control:UnderLineEditor x:Name="AdditionalDetails" HeightRequest="120"></control:UnderLineEditor>
             </border:SfBorder>
-            <Label x:Name="AdditionalDetailsLabel" Grid.Row="1" Grid.Column="0" Font="18" Text="Additional Details/Note"  />
-            <!--<Editor x:Name="AdditionalDetails" Grid.Row="1" Grid.Column="1"  HeightRequest="250"  />-->
-            <border:SfBorder CornerRadius="5" Grid.Row="1" Grid.Column="1">
-            <control:UnderLineEditor x:Name="AdditionalDetails" Grid.Row="1" Grid.Column="1"  HeightRequest="250"></control:UnderLineEditor>
-            </border:SfBorder>
-            <Button x:Name="CreateWo" Text="Create Work Order" CornerRadius="5"  Grid.Row="2" Grid.Column="1" BackgroundColor="#87CEFA" TextColor="White" IsVisible ="true" View.HorizontalOptions="Start" HeightRequest="40" Clicked="CreateWorkorder_Clicked"></Button>
+            <Button x:Name="CreateWo" Text="Create Work Order"  CornerRadius="5"  Grid.Row="4"  BackgroundColor="#87CEFA" TextColor="White" IsVisible ="true" View.HorizontalOptions="CenterAndExpand" HeightRequest="40" Clicked="CreateWorkorder_Clicked"></Button>
 
 
         </Grid>

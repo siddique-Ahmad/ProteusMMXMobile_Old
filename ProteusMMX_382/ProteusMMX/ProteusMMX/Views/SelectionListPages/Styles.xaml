@@ -8,7 +8,7 @@
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:graphics="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms">
 
-    <Color x:Key="TappedBackgroundColor">#eaeaea</Color>
+    <Color x:Key="TappedBackgroundColor">#006de0</Color>
     <Color x:Key="Transparent">Transparent</Color>
     <Color x:Key="LightGreen">#35c659</Color>
     <Color x:Key="OrangeyYellow">#fcbc0f</Color>

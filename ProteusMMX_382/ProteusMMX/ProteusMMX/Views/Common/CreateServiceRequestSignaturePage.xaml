@@ -14,27 +14,38 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        </ResourceDictionary> 
     </ContentPage.Resources>
 
     <Frame CornerRadius="10" Margin="40,40,40,40"   VerticalOptions="Center"  BackgroundColor="White" HorizontalOptions="FillAndExpand" >
-        <StackLayout Margin="40,40,40,40" Padding="20,20,20,20" Spacing="10" VerticalOptions="Center"  BackgroundColor="White" HorizontalOptions="FillAndExpand" >
 
-            <Label Grid.Row="0" x:Name="HeaderLabel" FontSize="Medium"  HorizontalOptions="Center" Text="Header" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-
-            <Label Grid.Row="1" x:Name="Username" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-            <border:SfBorder CornerRadius="5">
-                <control1:CustomEntry Grid.Row="2" x:Name="UserLabel"  TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
-            </border:SfBorder>
-            <Label Grid.Row="3" x:Name="Pass" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-            <border:SfBorder CornerRadius="5">
-                <control1:CustomEntry Grid.Row="4" x:Name="PassLabel" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>
-            </border:SfBorder>
-            <Button BackgroundColor="LightSkyBlue" x:Name="ok" CornerRadius="5" Clicked="OK_Clicked" />
+        <ScrollView>
+            <Grid>
 
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
+                <Label Grid.Row="0" x:Name="HeaderLabel" FontSize="Medium"  HorizontalOptions="Center" Text="Header" Style="{StaticResource BoldLabelStyle}"  />
 
-        </StackLayout>
+                <Label Grid.Row="1" Grid.Column="0" x:Name="Username" Style="{StaticResource BoldLabelStyle}"  />
+                <border:SfBorder CornerRadius="5"  Grid.Column="0" Grid.Row="2">
+                    <controls:CustomEntry  x:Name="UserLabel"  TextColor="{StaticResource ColorLabel}"  />
+                </border:SfBorder>
+                <Label Grid.Row="3"  Grid.Column="0" x:Name="Pass" Style="{StaticResource BoldLabelStyle}" />
+                <border:SfBorder CornerRadius="5" Grid.Row="4"  Grid.Column="0">
+                    <controls:CustomEntry  x:Name="PassLabel" TextColor="{StaticResource ColorLabel}" IsPassword="True" />
+                </border:SfBorder>
+                <Button Grid.Row="5" WidthRequest="150" HorizontalOptions="CenterAndExpand" Grid.Column="0" BackgroundColor="LightSkyBlue" x:Name="ok" CornerRadius="5" Clicked="OK_Clicked" />
+
+            </Grid>
+        </ScrollView>
+
     </Frame>
 </pages:PopupPage>
