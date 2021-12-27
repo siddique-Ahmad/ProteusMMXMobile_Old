@@ -41,163 +41,118 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <Grid  Padding="10,10,10,10">
-            <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
+
+            <Grid Grid.Row="1"  Padding="10,10,10,10">
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0"  Padding="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3.5*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <border:SfBorder CornerRadius="5">
+                    <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0" Grid.Column="0"/>
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3.5*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <border:SfBorder CornerRadius="5">
-                        <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0" Grid.Column="0"/>
-                        
-                    </border:SfBorder>
-                    <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" >
-                        <Image.Source>
-                            <OnPlatform x:TypeArguments="ImageSource" >
-                                <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
-                            </OnPlatform>
-                        </Image.Source>
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer
+                </border:SfBorder>
+                <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" >
+                    <Image.Source>
+                        <OnPlatform x:TypeArguments="ImageSource" >
+                            <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                        </OnPlatform>
+                    </Image.Source>
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer
                                          Command="{Binding ScanCommand}"
                                          NumberOfTapsRequired="1" />
-                        </Image.GestureRecognizers>
-                    </Image>
+                    </Image.GestureRecognizers>
+                </Image>
 
-                    <!--<StackLayout HorizontalOptions="CenterAndExpand" WidthRequest="170" HeightRequest="170" Grid.ColumnSpan="2" Padding="0,30,0,0" Grid.Row="2">-->
-                        <!--<Image>
-                            <Image.Source>
-                                <OnPlatform x:TypeArguments="ImageSource" >
-                                    <OnPlatform.Android>barcerch.png</OnPlatform.Android>
-                                </OnPlatform>
-                            </Image.Source>
-                            <Image.GestureRecognizers>
-                                <TapGestureRecognizer
-                                         Command="{Binding ScanCommand}"
-                                         NumberOfTapsRequired="1" />
-                            </Image.GestureRecognizers>
-                        </Image>
-                    </StackLayout>-->
 
-                </Grid>
                 <ScrollView Grid.Row="1">
-                    <StackLayout  
+                    <StackLayout 
+                            
                         Padding="10,10,10,10"
                         VerticalOptions="Fill">
-                        <StackLayout HeightRequest="350" WidthRequest="350">
-                            <cards:CarouselView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"   ItemsSource="{Binding Attachments}" x:Name="CarouselView" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}" BackgroundColor="White">
-                                <cards:CarouselView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-                                            <StackLayout HeightRequest="450" WidthRequest='450'>
-                                                <Image Grid.RowSpan="2"   Aspect="AspectFit"  Source="{Binding AttachmentImageSource}"/>
+
+                        <Frame BackgroundColor="White"  BorderColor="Black"  CornerRadius="5">
+                            <StackLayout HeightRequest="350" WidthRequest="350">
+                                <cards:CarouselView  VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}">
+                                    <cards:CarouselView.ItemTemplate>
+                                        <DataTemplate >
+                                            <StackLayout  HeightRequest="450" WidthRequest="450">
+                                                <ImageButton
+                                                     BackgroundColor="White" Clicked="ImageButton_Clicked"  Grid.RowSpan="2" Source="{Binding AttachmentImageSource}">
+
+                                                </ImageButton>
+
                                             </StackLayout>
-                                        </Grid>
-                                    </DataTemplate>
-                                </cards:CarouselView.ItemTemplate>
-                            </cards:CarouselView>
-                        </StackLayout>
-                        <Grid>
-                            <Label   Text="{Binding ImageText}" TextColor="Black" HorizontalOptions= "Center" Grid.Row="0">
-                                <Label.FontAttributes>
-                                    <OnPlatform x:TypeArguments="FontAttributes">
-                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                        <OnPlatform.Android>Bold</OnPlatform.Android>
-                                    </OnPlatform>
-                                </Label.FontAttributes>
-                            </Label>
-                            
-                            <Label   Text="{Binding SwipeText}" TextColor="Black" HorizontalOptions= "Center" Grid.Row="1">
-                                <Label.FontAttributes>
-                                    <OnPlatform x:TypeArguments="FontAttributes">
-                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                        <OnPlatform.Android>Bold</OnPlatform.Android>
-                                    </OnPlatform>
-                                </Label.FontAttributes>
-                            </Label>
+                                        </DataTemplate>
+                                    </cards:CarouselView.ItemTemplate>
+                                </cards:CarouselView>
+                                <Label HorizontalOptions="Center" FontAttributes="Bold" FontSize="Medium" Text="{Binding PDFImageText}" IsVisible="{Binding PDFImageTextIsVisible}">
+
+                                </Label>
+                                <StackLayout Orientation="Horizontal" Grid.RowSpan="2" Grid.Row="2" HorizontalOptions="CenterAndExpand">
+                                    <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="False" BackgroundColor="White"   TextColor="Black" BorderColor="#696969" >
+                                        <Button.Image>
+                                            <OnPlatform x:TypeArguments="FileImageSource">
+                                                <OnPlatform.iOS>
+                                                    <FileImageSource File="ArrowLeft.png"/>
+                                                </OnPlatform.iOS>
+                                                <OnPlatform.Android>
+                                                    <FileImageSource File="ArrowLeft.png"/>
+                                                </OnPlatform.Android>
+                                                <OnPlatform.WinPhone>
+                                                    <FileImageSource File="Assets/ArrowLeft.png"/>
+                                                </OnPlatform.WinPhone>
+                                            </OnPlatform>
+                                        </Button.Image>
+                                    </Button>
+                                    <Button Command="{Binding PanPositionChangedCommand}" BackgroundColor="White" CommandParameter="True"   TextColor="Black" BorderColor="#696969"  >
+                                        <Button.Image>
+                                            <OnPlatform x:TypeArguments="FileImageSource">
+                                                <OnPlatform.iOS>
+                                                    <FileImageSource File="ArrowRight.png"/>
+                                                </OnPlatform.iOS>
+                                                <OnPlatform.Android>
+                                                    <FileImageSource File="ArrowRight.png"/>
+                                                </OnPlatform.Android>
+                                                <OnPlatform.WinPhone>
+                                                    <FileImageSource File="Assets/ArrowRight.png"/>
+                                                </OnPlatform.WinPhone>
+                                            </OnPlatform>
+                                        </Button.Image>
+                                    </Button>
+                                </StackLayout>
+                            </StackLayout>
 
 
-                        </Grid>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
-
-                            <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="False"  BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969" >
-                                <Button.Image>
-                                    <OnPlatform x:TypeArguments="FileImageSource">
-                                        <OnPlatform.iOS>
-                                            <FileImageSource File="ArrowLeft.png"/>
-                                        </OnPlatform.iOS>
-                                        <OnPlatform.Android>
-                                            <FileImageSource File="ArrowLeft.png"/>
-                                        </OnPlatform.Android>
-                                        <OnPlatform.WinPhone>
-                                            <FileImageSource File="Assets/ArrowLeft.png"/>
-                                        </OnPlatform.WinPhone>
-                                    </OnPlatform>
-                                </Button.Image>
-                            </Button>
-                            <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="True"  BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969"  >
-                                <Button.Image>
-                                    <OnPlatform x:TypeArguments="FileImageSource">
-                                        <OnPlatform.iOS>
-                                            <FileImageSource File="ArrowRight.png"/>
-                                        </OnPlatform.iOS>
-                                        <OnPlatform.Android>
-                                            <FileImageSource File="ArrowRight.png"/>
-                                        </OnPlatform.Android>
-                                        <OnPlatform.WinPhone>
-                                            <FileImageSource File="Assets/ArrowRight.png"/>
-                                        </OnPlatform.WinPhone>
-                                    </OnPlatform>
-                                </Button.Image>
-                            </Button>
-                        </StackLayout>
-                        <Grid>
-
-                            <Button x:Name="PDFGrid" Text="" HorizontalOptions="End" IsVisible = "true" WidthRequest = "60" HeightRequest = "60" Margin = "0,0,160,0" BackgroundColor="White" Command="{Binding DocCommand}" CornerRadius="5" BorderColor="Black">
-                                <Button.Image>
-                                    <OnPlatform x:TypeArguments="FileImageSource">
-                                        <OnPlatform.iOS>
-                                            <FileImageSource File="pdfword.png"/>
-                                        </OnPlatform.iOS>
-                                        <OnPlatform.Android>
-                                            <FileImageSource File="pdfword.png"/>
-                                        </OnPlatform.Android>
-                                        <OnPlatform.WinPhone>
-                                            <FileImageSource File="Assets/pdfword.png"/>
-                                        </OnPlatform.WinPhone>
-                                    </OnPlatform>
-                                </Button.Image>
-                            </Button>
+                        </Frame>
 
 
 
 
-                        </Grid>
+
+
 
                     </StackLayout>
                 </ScrollView>
-
             </Grid>
 
-            <ActivityIndicator IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+            <ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
 
         </Grid>
 
-
+        
     </ContentPage.Content>
 </ContentPage>

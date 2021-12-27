@@ -327,8 +327,9 @@
                 <RowDefinition Height="1"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}"/>
             <StackLayout Grid.Row="0" Padding="5" x:Name="ParentLayout">
-
+                
             </StackLayout>
             <StackLayout x:Name="MainBoxView" HeightRequest="1" Grid.Row="1">
                 

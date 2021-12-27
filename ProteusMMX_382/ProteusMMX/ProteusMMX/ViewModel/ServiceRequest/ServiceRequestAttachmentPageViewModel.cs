@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Plugin.FilePicker;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using ProteusMMX.DependencyInterface;
@@ -279,7 +280,23 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
             }
         }
+        string _pDFImageText;
+        public string PDFImageText
+        {
+            get
+            {
+                return _pDFImageText;
+            }
 
+            set
+            {
+                if (value != _pDFImageText)
+                {
+                    _pDFImageText = value;
+                    OnPropertyChanged(nameof(PDFImageText));
+                }
+            }
+        }
         Page _page;
         public Page Page
         {
@@ -629,6 +646,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             };
             PanPositionChangedCommand = new Command(v =>
             {
+
                 if (IsAutoAnimationRunning || IsUserInteractionRunning)
                 {
                     return;
@@ -640,6 +658,23 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     return;
                 }
                 SelectedIndexItem = index;
+                var Selecteditemname = Attachments[SelectedIndexItem];
+                if (Selecteditemname.attachmentFileExtension != null &&
+                                  (Selecteditemname.attachmentFileExtension.ToLower().Contains(".pdf") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".doc") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".docx") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".xls") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".xlsx") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".txt")))
+                {
+                    PDFImageText = Selecteditemname.attachmentFileExtension;
+                }
+                else
+                {
+                    PDFImageText = "";
+                }
+
+
             });
 
         }
@@ -649,53 +684,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             try
             {
 
-
-                {
-                    //if (Device.RuntimePlatform == Device.UWP)
-                    //{
-
-                    //    //Dictionary<string, string> urlseg = new Dictionary<string, string>();
-                    //    //urlseg.Add("WORKORDERID", this.WorkorderID.ToString());
-                    //    //urlseg.Add("USERID", AppSettings.User.UserID.ToString());
-                    //    //Task<ServiceOutput> attachment = ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/Service/WorkOrderAttachmentscount", "GET", urlseg, null);
-
-                    //    //if (attachment.Result.workOrderWrapper != null && attachment.Result.workOrderWrapper.attachment != null)
-                    //    //{
-
-                    //    //    if (attachment.Result.workOrderWrapper.attachment.attachmentcount > 0)
-                    //    //    {
-                    //    //        PageTitle = "**" + WebControlTitle.GetTargetNameByTitleName("Attachments");
-
-                    //    //    }
-
-                    //    //}
-                    //    //else
-                    //    //{
-                    //    //    PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
-                    //    //}
-                    //    if (Application.Current.Properties.ContainsKey("WorkorderattchmentCount"))
-                    //    {
-                    //        var workorderattachmentCount = Application.Current.Properties["WorkorderattchmentCount"].ToString();
-                    //        if (workorderattachmentCount != null && workorderattachmentCount == "1")
-                    //        {
-                    //            PageTitle = "**" + WebControlTitle.GetTargetNameByTitleName("Attachments");
-
-                    //        }
-                    //        else
-                    //        {
-                    //            PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
-                    //}
-                    PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
+                  PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
                     WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                     LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
                     CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
@@ -713,7 +702,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
 
-                }
             }
             catch (Exception ex)
             {
@@ -799,7 +787,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         {
             try
             {
-                List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery") };
+                List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery"), "File" };
                 var selected = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("ChooseFile"), SelectTitle, CancelTitle, choice.ToArray());
                 if (selected != null && !selected.Equals(WebControlTitle.GetTargetNameByTitleName("Cancel")))
                 {
@@ -809,10 +797,16 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         IsDataRequested = true;
                         await TakePhoto();
                     }
-                    else
+                   
+                    else if (selected.Equals(WebControlTitle.GetTargetNameByTitleName("Gallery")))
                     {
                         IsDataRequested = true;
                         await PickPhoto();
+                    }
+                    else
+                    {
+                        IsDataRequested = true;
+                        await PickFile();
                     }
                 }
             }
@@ -962,7 +956,68 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
 
         }
+        public async Task PickFile()
+        {
+            try
+            {
 
+
+                OperationInProgress = true;
+                int count = 0;
+                foreach (var item in Attachments)
+                {
+
+                    if (item.IsSynced == false)
+                    {
+                        count++;
+                    }
+
+
+                }
+
+                var file = await CrossFilePicker.Current.PickFile();
+
+
+                if (file == null)
+                {
+
+                    return;
+                }
+
+
+                string filepath = file.FilePath;
+                string base64String = Convert.ToBase64String(file.DataArray);
+
+               ServiceRequestWrapper SRWrapper = new ServiceRequestWrapper();
+                SRWrapper.attachments = new List<ServiceRequestAttachment>();
+             ServiceRequestAttachment SRattachment = new ServiceRequestAttachment();
+                SRattachment.ServiceRequestID = ServiceRequestID;
+                SRattachment.attachmentFile = base64String;
+                SRattachment.attachmentFileExtension = file.FileName;
+                SRWrapper.attachments.Add(SRattachment);
+                var status = await _attachmentService.CreateServiceRequestAttachment(UserID, SRWrapper);
+
+                if (Boolean.Parse(status.servicestatus))
+                {
+
+                    IsDataRequested = false;
+                    await this.OnViewAppearingAsync(null);
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("AttachmentSuccessfullySaved"), 2000);
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+                OperationInProgress = false;
+            }
+
+            finally
+            {
+
+                OperationInProgress = false;
+            }
+        }
         public async Task PickPhoto()
         {
             try
@@ -1310,21 +1365,34 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                         if (attachment.serviceRequestWrapper.attachments.Count > 0)
                         {
+                            var FirstattachmentName = attachment.serviceRequestWrapper.attachments.First();
+                            PDFImageText = FirstattachmentName.attachmentFileExtension;
                             ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.serviceRequestWrapper.attachments.Count;
-
                             foreach (var file in attachment.serviceRequestWrapper.attachments)
                             {
 
                                 if (file.attachmentFileExtension != null &&
-                                    (file.attachmentFileExtension.Contains(".pdf") ||
-                                    file.attachmentFileExtension.Contains(".doc") ||
-                                    file.attachmentFileExtension.Contains(".docx") ||
-                                    file.attachmentFileExtension.Contains(".xls") ||
-                                    file.attachmentFileExtension.Contains(".xlsx") ||
-                                    file.attachmentFileExtension.Contains(".txt")))
+                                    (file.attachmentFileExtension.ToLower().Contains(".pdf") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".doc") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".docx") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".xls") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".xlsx") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".txt")))
                                 {
 
                                     DocumentAttachments.Add(file.attachmentFileExtension);
+
+                                    byte[] imgUser = StreamToBase64.StringToByte(ShortString.shortenBase64(""));
+                                    Attachments.Add(new ServicerequestAttachment
+                                    {
+                                        IsSynced = true,
+                                        attachmentFileExtension = file.attachmentFileExtension,
+                                        //ImageBytes = imgUser, //byteImage,
+                                        ServiceRequestAttachmentID = file.ServiceRequestAttachmentID,
+                                        AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser)))),
+
+                                    }
+                                       );
                                 }
                                 else
                                 {
@@ -1346,10 +1414,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                                 //ImageBytes = imgUser, //byteImage,
                                                 ServiceRequestAttachmentID = file.ServiceRequestAttachmentID,
                                                 AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage)))),
-                                                //  AttachmentImageSource = ImageSource.FromStream(() => new MemoryStream(imgUser))
-                                                // DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action);
 
-                                                //AttachmentImageSource = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Inspection/Service/AttachmentItem.ashx?Id="+file.WorkOrderAttachmentID+"&&Module=workorder"))
                                             }
                                             );
                                             //}

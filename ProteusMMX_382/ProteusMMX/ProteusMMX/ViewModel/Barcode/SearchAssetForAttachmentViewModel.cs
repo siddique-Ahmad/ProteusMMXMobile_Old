@@ -62,6 +62,24 @@ namespace ProteusMMX.ViewModel.Barcode
         }
         #region Page Properties
 
+        string _pDFImageText;
+        public string PDFImageText
+        {
+            get
+            {
+                return _pDFImageText;
+            }
+
+            set
+            {
+                if (value != _pDFImageText)
+                {
+                    _pDFImageText = value;
+                    OnPropertyChanged(nameof(PDFImageText));
+                }
+            }
+        }
+
         string _pageTitle = "";
         public string PageTitle
         {
@@ -558,6 +576,7 @@ namespace ProteusMMX.ViewModel.Barcode
             };
             PanPositionChangedCommand = new Command(v =>
             {
+
                 if (IsAutoAnimationRunning || IsUserInteractionRunning)
                 {
                     return;
@@ -569,6 +588,23 @@ namespace ProteusMMX.ViewModel.Barcode
                     return;
                 }
                 SelectedIndexItem = index;
+                var Selecteditemname = Attachments[SelectedIndexItem];
+                if (Selecteditemname.attachmentFileExtension != null &&
+                                  (Selecteditemname.attachmentFileExtension.ToLower().Contains(".pdf") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".doc") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".docx") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".xls") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".xlsx") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".txt")))
+                {
+                    PDFImageText = Selecteditemname.attachmentFileExtension;
+                }
+                else
+                {
+                    PDFImageText = "";
+                }
+
+
             });
         }
 
@@ -992,50 +1028,103 @@ namespace ProteusMMX.ViewModel.Barcode
 
                         if (attachment.assetWrapper.attachments.Count > 0)
                         {
+                            var FirstattachmentName = attachment.assetWrapper.attachments.First();
+                            PDFImageText = FirstattachmentName.AttachmentNameWithExtension;
                             ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.assetWrapper.attachments.Count;
                             foreach (var file in attachment.assetWrapper.attachments)
                             {
 
                                 if (file.AttachmentNameWithExtension != null &&
-                                    (file.AttachmentNameWithExtension.Contains(".pdf") ||
-                                    file.AttachmentNameWithExtension.Contains(".doc") ||
-                                    file.AttachmentNameWithExtension.Contains(".docx") ||
-                                    file.AttachmentNameWithExtension.Contains(".xls") ||
-                                    file.AttachmentNameWithExtension.Contains(".xlsx") ||
-                                    file.AttachmentNameWithExtension.Contains(".txt")))
+                                    (file.AttachmentNameWithExtension.ToLower().Contains(".pdf") ||
+                                    file.AttachmentNameWithExtension.ToLower().Contains(".doc") ||
+                                    file.AttachmentNameWithExtension.ToLower().Contains(".docx") ||
+                                    file.AttachmentNameWithExtension.ToLower().Contains(".xls") ||
+                                    file.AttachmentNameWithExtension.ToLower().Contains(".xlsx") ||
+                                    file.AttachmentNameWithExtension.ToLower().Contains(".txt")))
                                 {
 
                                     DocumentAttachments.Add(file.AttachmentNameWithExtension);
+
+                                    byte[] imgUser = StreamToBase64.StringToByte(ShortString.shortenBase64(""));
+                                    Attachments.Add(new WorkorderAttachment
+                                    {
+                                        IsSynced = true,
+                                        attachmentFileExtension = file.AttachmentNameWithExtension,
+                                        //ImageBytes = imgUser, //byteImage,
+                                        WorkOrderAttachmentID = file.AssetAttachmentID,
+                                        AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser)))),
+
+                                    }
+                                       );
                                 }
                                 else
                                 {
-                                    byte[] imgUser = StreamToBase64.StringToByte(file.Attachment);
-                                    MemoryStream stream = new MemoryStream(imgUser);
-                                    bool isimage = Extension.IsImage(stream);
-                                    if (isimage == true)
+                                    if (Device.RuntimePlatform == Device.UWP)
                                     {
+                                        byte[] imgUser = StreamToBase64.StringToByte(file.Attachment);
+                                        MemoryStream stream = new MemoryStream(imgUser);
+                                        bool isimage = Extension.IsImage(stream);
+                                        if (isimage == true)
+                                        {
 
-                                        //byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 350, 350);
+                                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 350, 350);
+
+
+                                            Attachments.Add(new WorkorderAttachment
+                                            {
+                                                IsSynced = true,
+                                                attachmentFileExtension = file.AttachmentNameWithExtension,
+                                                //ImageBytes = imgUser, //byteImage,
+                                                WorkOrderAttachmentID = file.AssetAttachmentID,
+                                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage)))),
+
+                                            }
+                                            );
+                                            //}
+
+
+                                        }
+                                    }
+                                    else if (Device.RuntimePlatform == Device.Android)
+                                    {
+                                        byte[] imgUser = StreamToBase64.StringToByte(file.Attachment);
+                                        MemoryStream stream = new MemoryStream(imgUser);
+                                        bool isimage = Extension.IsImage(stream);
+                                        if (isimage == true)
+                                        {
+
+                                            Attachments.Add(new WorkorderAttachment
+                                            {
+                                                IsSynced = true,
+                                                attachmentFileExtension = file.AttachmentNameWithExtension,
+                                                //ImageBytes = imgUser, //byteImage,
+                                                WorkOrderAttachmentID = file.AssetAttachmentID,
+                                                AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser)))),
+
+                                            }
+                                            );
+
+                                        }
+                                    }
+                                    else
+                                    {
 
 
                                         Attachments.Add(new WorkorderAttachment
                                         {
                                             IsSynced = true,
                                             attachmentFileExtension = file.AttachmentNameWithExtension,
-                                            ImageBytes = imgUser, //byteImage,
-                                                                  // WorkOrderAttachmentID = file.WorkOrderAttachmentID,
-                                                                  // AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage)))),
-                                            AttachmentImageSource = ImageSource.FromStream(() => new MemoryStream(imgUser))
+                                            //ImageBytes = imgUser, //byteImage,
+                                            WorkOrderAttachmentID = file.AssetAttachmentID,
+                                            AttachmentImageSource = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Inspection/Service/AttachmentItem.ashx?Id=" + file.AssetAttachmentID + "&&Module=workorder"))
+
                                         }
                                         );
+
+
                                     }
-
-
                                 }
-
-
                             }
-
                         }
 
                     }

@@ -1231,7 +1231,21 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
+        public async Task OnViewAppearingAsync(VisualElement view)
+        {
+            if (string.IsNullOrWhiteSpace(this.SearchText))
+            {
+                await RefillClosedWorkorderCollection();
 
+            }
+        }
+
+         
+
+
+
+
+        
 
         private async void OnSelectClosedWokrorderAssetsync(ClosedWorkOrder item)
         {
