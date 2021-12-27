@@ -27,6 +27,7 @@ using ProteusMMX.ViewModel.Workorder;
 using ProteusMMX.Services.Workorder.Attachments;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using ProteusMMX.DependencyInterface;
 
 namespace ProteusMMX.Views.Workorder
 {
@@ -41,52 +42,11 @@ namespace ProteusMMX.Views.Workorder
         public AttachmentsPage()
         {
             InitializeComponent();
-            
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
 
-            if (Application.Current.Properties.ContainsKey("WorkorderIDafterCreation"))
-            {
-                var workorderid = Application.Current.Properties["WorkorderIDafterCreation"].ToString();
-                if (workorderid != null)
-                {
-                    this.WorkorderID = Convert.ToInt32(workorderid);
-
-                }
-            }
-
-
-            Dictionary<string, string> urlseg = new Dictionary<string, string>();
-            urlseg.Add("WORKORDERID", this.WorkorderID.ToString());
-            urlseg.Add("USERID", AppSettings.User.UserID.ToString());
-            var attachment = ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/Service/WorkOrderAttachmentscount", "GET", urlseg, null);
-
-            if (attachment.Result.workOrderWrapper != null && attachment.Result.workOrderWrapper.attachments != null)
-            {
-                foreach(var item in attachment.Result.workOrderWrapper.attachments)
-                {
-                    if(item.attachmentcount>0)
-                    {
-                        this.Icon = "Attachements.png";
-                        Application.Current.Properties["WorkorderattchmentCount"] = "1";
-                    }
-                    else
-                    {
-                        Application.Current.Properties["WorkorderattchmentCount"] = "0";
-                    }
-                }
-            }
-            else
-            {
-                Application.Current.Properties["WorkorderattchmentCount"] = "0";
-            }
-
-
-
-
-
-
-
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            this.IconImageSource = "Attachements.png";
+          
 
 
         }
@@ -118,31 +78,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        //private void Next_Clicked(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //       // this.CarouselView.Position += 1;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine(ex.Message);
-        //    }
-        //}
-
-        //private void Previous_Clicked(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //       // this.CarouselView.Position -= 1;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine(ex.Message);
-        //    }
-        //}
-
-      
+        
         public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
         {
             ServiceOutput responseContent = new ServiceOutput();
@@ -253,6 +189,37 @@ namespace ProteusMMX.Views.Workorder
             return responseContent;
         }
 
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            ImageButton button = (ImageButton)sender;
+            var a = button.BindingContext as ProteusMMX.ViewModel.Workorder.WorkorderAttachment;
+            var fileextension = a.attachmentFileExtension;
+
+            if (fileextension != null &&
+                                   (fileextension.ToLower().Contains(".pdf") ||
+                                   fileextension.ToLower().Contains(".doc") ||
+                                   fileextension.ToLower().Contains(".docx") ||
+                                   fileextension.ToLower().Contains(".xls") ||
+                                   fileextension.ToLower().Contains(".xlsx") ||
+                                   fileextension.ToLower().Contains(".txt")))
+            {
+                switch (Device.RuntimePlatform)
+                {
+                    case Device.iOS:
+                        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + fileextension);
+                        break;
+                    case Device.Android:
+                        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + fileextension);
+
+                        break;
+                    case Device.UWP:
+                        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + fileextension);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
 

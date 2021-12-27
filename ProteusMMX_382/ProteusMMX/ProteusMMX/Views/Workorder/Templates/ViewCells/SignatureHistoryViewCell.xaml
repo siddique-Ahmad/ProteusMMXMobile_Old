@@ -54,15 +54,15 @@
             <Label Text="{Binding SignatureIntent}" Grid.Column="2" />
         </Grid>-->
 
-        <Grid ColumnSpacing="8" HorizontalOptions="FillAndExpand">
+        <Grid ColumnSpacing="0" HorizontalOptions="FillAndExpand">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20.00*" />
-                <ColumnDefinition Width="20.00*" />
-                <ColumnDefinition Width="60.00*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Label Text="{Binding Signature}" Grid.Column="0" HorizontalOptions="FillAndExpand" />
-            <Label Text="{Binding SignatureTimestamp}" Grid.Column="1" HorizontalOptions="FillAndExpand" />
-            <Label Text="{Binding SignatureIntent}" Grid.Column="2" HorizontalOptions="FillAndExpand" />
+            <Label Text="{Binding Signature}" Grid.Row="0" Grid.Column="0" HorizontalOptions="FillAndExpand" />
+            <Label Text="{Binding SignatureTimestamp}"  Grid.Row="0" Grid.Column="1" HorizontalOptions="FillAndExpand" />
+            <Label Text="{Binding SignatureIntent}" Grid.Row="1"  Grid.Column="0" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand" />
         </Grid>
     </ViewCell.View>
 

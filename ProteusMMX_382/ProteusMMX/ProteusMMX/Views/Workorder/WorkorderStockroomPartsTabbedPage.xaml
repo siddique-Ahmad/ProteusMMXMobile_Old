@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:Pages="clr-namespace:ProteusMMX.Views.Workorder" xmlns:viewModels="clr-namespace:ProteusMMX.ViewModel.Workorder"
+            x:Class="ProteusMMX.Views.Workorder.WorkorderStockroomPartsTabbedPage"
+             Icon="parts.png">
+  <!--Pages can be added as references or inline-->
+    <!--<TabbedPage.Children>
+        <Pages:WorkOrderStockRoomPartsListing BindingContext="{Binding WorkOrderStockroomPartsListingPageViewModel}" />
+
+        <tabPages:WorkOrderNonStockRoomPartsListing Title="NonStockRoom"  BindingContext="{Binding WorkOrderNonStockroomPartsListingPageViewModel}" />
+    </TabbedPage.Children>-->
+
+    <TabbedPage.Children>
+        <Pages:WorkOrderStockRoomPartsListing Title="StockroomParts">
+            <Pages:WorkOrderStockRoomPartsListing.BindingContext>
+                <viewModels:WorkOrderStockroomPartsListingPageViewModel/>
+            </Pages:WorkOrderStockRoomPartsListing.BindingContext>
+        </Pages:WorkOrderStockRoomPartsListing>
+        
+        
+        <Pages:WorkOrderNonStockRoomPartsListing Title="NonStockroomParts">
+            <Pages:WorkOrderNonStockRoomPartsListing.BindingContext>
+                <viewModels:WorkOrderNonStockroomPartsListingPageViewModel/>
+            </Pages:WorkOrderNonStockRoomPartsListing.BindingContext>
+        </Pages:WorkOrderNonStockRoomPartsListing>
+    </TabbedPage.Children>
+</TabbedPage>

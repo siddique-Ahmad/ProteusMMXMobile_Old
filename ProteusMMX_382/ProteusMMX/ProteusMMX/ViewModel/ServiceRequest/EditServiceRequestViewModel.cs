@@ -4708,7 +4708,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         private void GenerateComboBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new MyPicker();
+            var control = new CustomPicker();
+            control.Image = "unnamed";
+            control.HeightRequest = 45;
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;
@@ -4815,7 +4817,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                             var x = control as Picker;
                             x.ClassId = formControl.ControlName;
-
+                          
                             var source = x.ItemsSource as List<ComboDD>;
                             ComboDD item = null;
                             try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(Administrator)); }
@@ -4835,7 +4837,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(Entry.TextProperty, nameof(this.Administrator));
                         }
 
-                        else if (control is DatePicker)
+                        else if (control is Picker)
                         {
                             // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
                             Administrator = DateTime.Now.ToString();
@@ -6084,8 +6086,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 case "UserField21":
                     {
                         if (control is Picker)
-                        {
+                        {                            
                             var x = control as Picker;
+                            //x.Image = "unnamed";
                             x.ClassId = formControl.ControlName;
 
                             var source = x.ItemsSource as List<ComboDD>;

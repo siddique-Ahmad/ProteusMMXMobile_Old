@@ -48,33 +48,48 @@
 
 
     <ContentPage.ToolbarItems>
-
-        <ToolbarItem Name="MenuItem2"  Text=":" Icon="filter.png"  Command="{Binding SortByCommand}" >
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="filtericon.png"  Command="{Binding SortByCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="filter.png"/>
+                        <FileImageSource File="filtericon.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/filter.png"/>
+                        <FileImageSource File="Assets/filtericon.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/filter.png"/>
+                        <FileImageSource File="Assets/filtericon.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Name="MenuItem2"  Text=":" Icon="Dot.png"   Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="shfiltericon.png"   Command="{Binding SortByFilterCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="shfiltericon.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/shfiltericon.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/shfiltericon.png"/>
+                    </OnPlatform.WinPhone>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="dots.png"   Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <OnPlatform.iOS>
+                        <FileImageSource File="dots.png"/>
+                    </OnPlatform.iOS>
+                    <OnPlatform.Android>
+                        <FileImageSource File="Assets/dots.png"/>
+                    </OnPlatform.Android>
+                    <OnPlatform.WinPhone>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -90,57 +105,53 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
-
-            <Grid Grid.Row="1"  Padding="10,10,10,10">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3.5*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:CustomEntry
-                       Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}"/>
-                </border:SfBorder>
-                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />
-
-                <Grid Grid.Row="1" Grid.ColumnSpan="2" >
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="4.4*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Label Text="{Binding WorkorderTypeLabelTitle}" Style="{StaticResource LabelStyle}"/>
-                        <border:SfBorder CornerRadius="5" Grid.Column="1">
-                            <Picker  ItemsSource="{Binding PickerTitles}" SelectedItem="{Binding SelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding SelectedIndexPicker , Mode=TwoWay}"/>
-                        </border:SfBorder>
-
-                        <!--<Grid Grid.Column="2" ColumnSpacing="0">-->
-                        <!--
+              <StackLayout HeightRequest="80">
+                <border:SfBorder HeightRequest="80" Grid.Row="0"  BorderColor="#006de0" CornerRadius="0,0,8,8"                      
+                       BackgroundColor="#006de0"  >
+                    <StackLayout>
+                        <Grid Padding="10,0,10,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>-->
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                            </Grid.RowDefinitions>
+                            <border:SfBorder BackgroundColor="White" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" CornerRadius="10" >
 
-                        <Label Text="{Binding TotalRecordTitle}"  Grid.Column="2" Style="{StaticResource LabelStyle}"/>
-                        <Label Text=":" Grid.Column="3" Style="{StaticResource LabelStyle}"/>
-                        <Label Text="{Binding TotalRecordCount}" Grid.Column="4" Style="{StaticResource LabelStyle}"/>
-                        <!--</Grid>-->
+                                <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0"/>
 
-                    </Grid>
-                </Grid>
+                            </border:SfBorder>
+                            <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource" >
+                                        <OnPlatform.Android>searchicon.png</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Image.Source>
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding ScanCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
 
-                <ListView Grid.Row="2" Grid.ColumnSpan="2"
+                            <StackLayout   VerticalOptions="Center" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
+                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}" />
+                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text=":" Grid.Column="3" />
+                                <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordCount}"/>
+                                <!--<border:SfBorder CornerRadius="5" Grid.Column="1">
+                                    <Picker  ItemsSource="{Binding PickerTitles}" SelectedItem="{Binding SelectedPickerText, Mode=TwoWay}" SelectedIndex="{Binding SelectedIndexPicker , Mode=TwoWay}"/>
+                                </border:SfBorder>-->
+                            </StackLayout>
+                        </Grid>
+                    </StackLayout>
+                </border:SfBorder>
+            </StackLayout>
+            <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
+
+            <Grid Grid.Row="1"  Padding="5,0,5,0">
+
+                <ListView 
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"

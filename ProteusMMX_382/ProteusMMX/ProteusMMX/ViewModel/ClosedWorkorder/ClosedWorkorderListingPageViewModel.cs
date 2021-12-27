@@ -989,7 +989,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 OperationInProgress = false;
             }
         }
-         private async Task ListingClosedWorkorderCollection()
+         public async Task ListingClosedWorkorderCollection()
         {
             try
             {
@@ -1039,7 +1039,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         }
 
 
-        private async Task RemoveAllClosedWorkorderFromCollection()
+        public async Task RemoveAllClosedWorkorderFromCollection()
         {
             Device.BeginInvokeOnMainThread(() =>
             {
@@ -1180,7 +1180,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             });
 
         }
-        private async Task RefillClosedWorkorderCollection()
+        public async Task RefillClosedWorkorderCollection()
         {
             PageNumber = 1;
             await RemoveAllClosedWorkorderFromCollection();
@@ -1231,7 +1231,21 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
+        public async Task OnViewAppearingAsync(VisualElement view)
+        {
+            if (string.IsNullOrWhiteSpace(this.SearchText))
+            {
+                await RefillClosedWorkorderCollection();
 
+            }
+        }
+
+         
+
+
+
+
+        
 
         private async void OnSelectClosedWokrorderAssetsync(ClosedWorkOrder item)
         {
@@ -1242,6 +1256,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 //OperationInProgress = true;
                 TargetNavigationData tnobj = new TargetNavigationData();
                 tnobj.ClosedWorkorderID = item.ClosedWorkOrderID;
+                Application.Current.Properties["ClosedWorkorderID"] = tnobj.ClosedWorkorderID;
                 await NavigationService.NavigateToAsync<ClosedWorkorderTabbedPageViewModel>(item);
                 //await NavigationService.NavigateToAsync<ClosedWorkorderTaskAndLabourPageViewModel>(tnobj);
                 UserDialogs.Instance.HideLoading();

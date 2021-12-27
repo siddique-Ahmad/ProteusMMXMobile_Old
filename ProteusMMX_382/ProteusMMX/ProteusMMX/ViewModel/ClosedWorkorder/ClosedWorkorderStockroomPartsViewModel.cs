@@ -20,7 +20,7 @@ using ZXing.Net.Mobile.Forms;
 
 namespace ProteusMMX.ViewModel.ClosedWorkorder
 {
-    public class ClosedWorkorderStockroomPartsViewModel:ViewModelBase
+    public class ClosedWorkorderStockroomPartsViewModel : ViewModelBase, IHandleViewAppearing
     {
         #region Fields
 
@@ -28,7 +28,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
         protected readonly IFormLoadInputService _formLoadInputService;
 
-        protected readonly ICloseWorkorderService _closeWorkorderService;
+        protected  ICloseWorkorderService _closeWorkorderService;
 
 
         #endregion
@@ -67,7 +67,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 {
                     _searchText = value;
                     OnPropertyChanged("SearchText");
-                   
+
                 }
             }
         }
@@ -521,11 +521,11 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
 
-       
 
-     
 
-     
+
+
+
         #endregion
         #region Methods
         public override async Task InitializeAsync(object navigationData)
@@ -553,8 +553,8 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
 
                 OperationInProgress = true;
-                await SetTitlesPropertiesForPage();
-                await GetWorkorderStockRoomParts();
+                //await SetTitlesPropertiesForPage();
+                //await GetWorkorderStockRoomParts();
 
             }
             catch (Exception ex)
@@ -576,26 +576,31 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             _closeWorkorderService = closeWorkorderService;
         }
 
+        public ClosedWorkorderStockroomPartsViewModel()
+        {
+
+        }
+
         public async Task SetTitlesPropertiesForPage()
         {
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("Parts");
-                WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
-                LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
-                CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
-                SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-                PartName = WebControlTitle.GetTargetNameByTitleName("PartName");
-                PartNumber = WebControlTitle.GetTargetNameByTitleName("PartNumber");
-                QuantityRequired = WebControlTitle.GetTargetNameByTitleName("QuantityRequired");
-                QuantityAllocated = WebControlTitle.GetTargetNameByTitleName("QuantityAllocated");
-                AddStockroompartTitle = WebControlTitle.GetTargetNameByTitleName("Addstockroompart");
-                SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchOrScanpartsNo");
-                NonStockPartsTitle = WebControlTitle.GetTargetNameByTitleName("NonStockParts");
-                GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
-                ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
-                SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
-                GetNonStockroomParts = WebControlTitle.GetTargetNameByTitleName("NonStockParts");
-                SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-       
+            PageTitle = WebControlTitle.GetTargetNameByTitleName("Parts");
+            WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
+            LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
+            CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
+            SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+            PartName = WebControlTitle.GetTargetNameByTitleName("PartName");
+            PartNumber = WebControlTitle.GetTargetNameByTitleName("PartNumber");
+            QuantityRequired = WebControlTitle.GetTargetNameByTitleName("QuantityRequired");
+            QuantityAllocated = WebControlTitle.GetTargetNameByTitleName("QuantityAllocated");
+            AddStockroompartTitle = WebControlTitle.GetTargetNameByTitleName("Addstockroompart");
+            SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchOrScanpartsNo");
+            NonStockPartsTitle = WebControlTitle.GetTargetNameByTitleName("NonStockParts");
+            GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
+            ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
+            SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
+            GetNonStockroomParts = WebControlTitle.GetTargetNameByTitleName("NonStockParts");
+            SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+
         }
         public async Task ShowActions()
         {
@@ -634,7 +639,29 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
             try
             {
+                if (Application.Current.Properties.ContainsKey("ClosedWorkorderID"))
+                {
+
+                    var ClosedWorkorderid = Application.Current.Properties["ClosedWorkorderID"].ToString();
+                    if (ClosedWorkorderid != null)
+                    {
+                        this.ClosedWorkorderID = Convert.ToInt32(ClosedWorkorderid);
+
+                    }
+                }
+
+                if (Application.Current.Properties.ContainsKey("CloseWorkorderService"))
+                {
+                    ICloseWorkorderService CloseWorkorderService = Application.Current.Properties["CloseWorkorderService"] as ICloseWorkorderService;
+                    if (CloseWorkorderService != null)
+                    {
+                        _closeWorkorderService = CloseWorkorderService;
+
+                    }
+                }
+
                 OperationInProgress = true;
+                
                 var workordersResponse = await _closeWorkorderService.GetClosedWorkOrdersStockroomPartsByClosedWorkorderID(this.ClosedWorkorderID.ToString());
                 if (workordersResponse != null && workordersResponse.clWorkOrderWrapper != null
                     && workordersResponse.clWorkOrderWrapper.clworkOrderStockroomParts != null && workordersResponse.clWorkOrderWrapper.clworkOrderStockroomParts.Count > 0)
@@ -657,8 +684,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
-
-
         private async Task AddWorkorderStockroomPartsInWorkorderCollection(List<ClosedWorkOrderStockroomPart> stkparts)
         {
             if (stkparts != null && stkparts.Count > 0)
@@ -678,21 +703,13 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
-    
 
-
-     
-
-
-      
         private async Task RefillPartsCollection()
         {
             PageNumber = 1;
             await RemoveAllPartsFromCollection();
             await GetWorkorderStockRoomParts();
         }
-
-      
 
         private async Task RemoveAllPartsFromCollection()
         {
@@ -704,6 +721,14 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
 
 
+        }
+
+        public async Task OnViewAppearingAsync(VisualElement view)
+        {
+
+            await SetTitlesPropertiesForPage();
+             StockroomPartsCollection.Clear();
+            await GetWorkorderStockRoomParts();
         }
 
 

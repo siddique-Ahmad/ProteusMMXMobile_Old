@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              x:Class="ProteusMMX.Views.Workorder.AddNewTool"
              Title="{Binding PageTitle}"
              BackgroundColor="{StaticResource BackgroundColor}">
@@ -16,17 +16,17 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -69,9 +69,9 @@
                                 </Label.FontAttributes>
                             </Label>
 
-                            <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
-                            <Button Text="{Binding ToolCribText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ToolCribCommand}"  />
-                            <!--</border:SfBorder>-->
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <buttons:SfButton Text="{Binding ToolCribText}" Style="{StaticResource SfButtonStyles}" Command="{Binding ToolCribCommand}"  />
+                            </border:SfBorder>
 
                         </StackLayout>
                         <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
@@ -97,12 +97,24 @@
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <!--<border:SfBorder Style="{StaticResource SfBorderStyle}" Grid.Column="0">-->
-                                <Button Grid.Column="0" Text="{Binding ToolNumberText}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ToolNumberCommand}"  />
-                                <!--</border:SfBorder>-->
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" Grid.Column="0">
+                                    <buttons:SfButton Grid.Column="0" Text="{Binding ToolNumberText}" Style="{StaticResource SfButtonStyles}" Command="{Binding ToolNumberCommand}"  />
+                                </border:SfBorder>
 
                                 <!--<border:SfBorder Style="{StaticResource SfBorderStyle}" Grid.Column="1">-->
-                                <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />
+                                <Image Grid.Column="1"  HeightRequest="40" >
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="ImageSource" >
+                                            <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Image.Source>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                         Command="{Binding ScanCommand}"
+                                         NumberOfTapsRequired="1" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <!--<Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />-->
                                 <!--</border:SfBorder>-->
                             </Grid>
 

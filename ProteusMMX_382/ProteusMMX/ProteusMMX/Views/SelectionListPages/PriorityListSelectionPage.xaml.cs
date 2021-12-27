@@ -16,7 +16,7 @@ namespace ProteusMMX.Views.SelectionListPages
         public PriorityListSelectionPage()
         {
             InitializeComponent();
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
         }
 

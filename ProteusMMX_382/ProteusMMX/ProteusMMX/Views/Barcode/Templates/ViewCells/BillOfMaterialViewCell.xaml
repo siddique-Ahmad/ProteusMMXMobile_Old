@@ -3,9 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Barcode.Templates.ViewCells.BillOfMaterialViewCell">
     <ViewCell.View>
-        <Grid RowSpacing="5">
+        <Frame BorderColor="Gray">
+            <StackLayout >
+                <Grid RowSpacing="3" Padding="-15,-15,-15,-15">
 
-            <Grid.RowDefinitions>
+                    <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -14,17 +16,17 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Grid>
+            <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima"  x:Name="PartName" />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text=":" Grid.Column="1"  />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" MinimumWidthRequest="15" LineBreakMode="TailTruncation" Text="{Binding PartName}" Grid.Column="2" />
 
-                <Label x:Name="PartName" />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding PartName}" Grid.Column="2" />
 
             </Grid>
 
@@ -39,8 +41,6 @@
                 <Label x:Name="PartNumber"  />
                 <Label Text=":" Grid.Column="1"  />
                 <Label Text="{Binding PartNumber}" Grid.Column="2" />
-
-
             </Grid>
 
             <Grid Grid.Row="2">
@@ -69,17 +69,9 @@
                 <Label x:Name="PartSize"  />
                 <Label Text=":" Grid.Column="1"  />
                 <Label Text="{Binding PartSize}" Grid.Column="2"  />
-
-
             </Grid>
-
-         
-
-
-
-
-
-
         </Grid>
+            </StackLayout>
+        </Frame>
     </ViewCell.View>
 </ViewCell>

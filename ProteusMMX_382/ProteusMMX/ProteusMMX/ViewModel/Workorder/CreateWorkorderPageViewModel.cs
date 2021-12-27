@@ -5738,10 +5738,9 @@ namespace ProteusMMX.ViewModel.Workorder
         private void GenerateComboBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new MyPicker();
-
-
-
+            var control = new CustomPicker();
+            control.Image = "unnamed";
+            control.HeightRequest = 45;
 
             Frame frame = new Frame { BorderColor = Color.Orange, CornerRadius = 10, HasShadow = true, Content = control };
 

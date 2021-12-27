@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.ClosedWorkorder.Templates.ViewCells.ClosedWorkorderViewCell">
     <ViewCell.View>
-        <Grid RowSpacing="5">
+       
+            <Frame BorderColor="Gray">
+                <StackLayout >
+                <Grid RowSpacing="3" Padding="-15,-18,-18,-18">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -21,11 +24,9 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-
-                <Label x:Name="WorkOrderNumberTitle" />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding WorkOrderNumber}" Grid.Column="2" MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
-
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima"  x:Name="WorkOrderNumberTitle" />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text=":" Grid.Column="1"  />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" MinimumWidthRequest="15" LineBreakMode="TailTruncation" Text="{Binding WorkOrderNumber}" Grid.Column="2" />
             </Grid>
 
             <Grid Grid.Row="1">
@@ -36,7 +37,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Label x:Name="TargetNameTitle"  />
+                        <Label x:Name="TargetNameTitle"  TextColor="Black"/>
                 <Label Text=":" Grid.Column="1"  />
                 <Label Text="{Binding TargetName}" Grid.Column="2" MinimumWidthRequest="15" LineBreakMode="TailTruncation"  />
 
@@ -51,7 +52,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Label x:Name="DescriptionTitle"  />
+                        <Label x:Name="DescriptionTitle" TextColor="Black" />
                 <Label Text=":" Grid.Column="1"  />
                 <Label Text="{Binding Description}" Grid.Column="2" MinimumWidthRequest="15" LineBreakMode="TailTruncation"  />
 
@@ -66,7 +67,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Label x:Name="WorkOrderTypeTitle"  />
+                        <Label x:Name="WorkOrderTypeTitle" TextColor="Black" />
                 <Label Text=":" Grid.Column="1"  />
                 <Label Text="{Binding WorkOrderType}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
                 <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
@@ -76,12 +77,13 @@
                 </StackLayout>
 
             </Grid>
+                </Grid>
+                </StackLayout>
+            </Frame>
+            <!--<BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />-->
 
 
-            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
 
-
-
-        </Grid>
+        
     </ViewCell.View>
 </ViewCell>

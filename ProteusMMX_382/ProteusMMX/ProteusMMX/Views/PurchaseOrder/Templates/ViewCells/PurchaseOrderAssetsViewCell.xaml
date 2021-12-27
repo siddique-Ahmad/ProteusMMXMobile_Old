@@ -3,9 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.PurchaseOrder.Templates.ViewCells.PurchaseOrderAssetsViewCell">
     <ViewCell.View>
-        <Grid RowSpacing="5">
-
-            <Grid.RowDefinitions>
+        <Frame BorderColor="Gray">
+            <StackLayout >
+                <Grid RowSpacing="3" Padding="-15,-18,-18,-18">
+                    <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -22,9 +23,10 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Label x:Name="AssetName" />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding AssetName}" Grid.Column="2" />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima"  x:Name="AssetName" />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text=":" Grid.Column="1"  />
+                        <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text="{Binding AssetName}" Grid.Column="2" />
+
 
             </Grid>
 
@@ -74,12 +76,8 @@
 
 
             </Grid>
-
-
-            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
-
-
-
-        </Grid>
+                </Grid>
+            </StackLayout>
+        </Frame>
     </ViewCell.View>
 </ViewCell>

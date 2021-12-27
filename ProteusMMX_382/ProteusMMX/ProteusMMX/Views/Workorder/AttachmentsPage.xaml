@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.AttachmentsPage"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
-             Title="{Binding PageTitle}"
-             
-             BackgroundColor="{StaticResource BackgroundColor}" >
+            
+               >
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -19,17 +18,17 @@
 
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -48,111 +47,121 @@
                     <StackLayout 
                         Padding="10,10,10,10"
                         VerticalOptions="Fill">
-                            <StackLayout HeightRequest="350" WidthRequest="350">
-                        <cards:CarouselView VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}">
-                            <cards:CarouselView.ItemTemplate>
-                                    <DataTemplate>
-                                            <StackLayout HeightRequest="450" WidthRequest="450">
-                                        <Image Grid.RowSpan="2" Source="{Binding AttachmentImageSource}"/>
-                                            </StackLayout>
-                                        </DataTemplate>
-                            </cards:CarouselView.ItemTemplate>
-                        </cards:CarouselView>
-                            </StackLayout>
-
-                            <Grid Grid.Row="1">
-
-                                <Label   Text="{Binding ImageText}"  FontAttributes="Bold" TextColor="Black" HorizontalOptions= "Center" Grid.Row="0">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
+                            <Label  Text="{Binding ImageText}"  FontAttributes="Bold" TextColor="Black" HorizontalOptions= "Center" Grid.Row="0">
+                                <Label.FontAttributes>
+                                    <OnPlatform x:TypeArguments="FontAttributes">
+                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                        <OnPlatform.Android>Bold</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Label.FontAttributes>
+                            </Label>
+                            <Frame BackgroundColor="White"  BorderColor="Black"  CornerRadius="5">
+                                <StackLayout HeightRequest="350" WidthRequest="350">
+                                    <cards:CarouselView  VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}">
+                                        <cards:CarouselView.ItemTemplate>
+                                            <DataTemplate >
+                                                <StackLayout  HeightRequest="450" WidthRequest="450">
+                                                    <ImageButton
+                                                     BackgroundColor="White" Clicked="ImageButton_Clicked"  Grid.RowSpan="2" Source="{Binding AttachmentImageSource}">
+                                                       
+                                                    </ImageButton>
+                                                    
+                                                </StackLayout>
+                                            </DataTemplate>
+                                        </cards:CarouselView.ItemTemplate>
+                                    </cards:CarouselView>
+                                    <Label HorizontalOptions="Center" FontAttributes="Bold" FontSize="Medium" Text="{Binding PDFImageText}" IsVisible="{Binding PDFImageTextIsVisible}">
+                                        
+                                    </Label>
+                                    <StackLayout Orientation="Horizontal" Grid.RowSpan="2" Grid.Row="2" HorizontalOptions="CenterAndExpand">
+                                        <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="False" BackgroundColor="White"   TextColor="Black" BorderColor="#696969" >
+                                            <Button.Image>
+                                                <OnPlatform x:TypeArguments="FileImageSource">
+                                                    <OnPlatform.iOS>
+                                                        <FileImageSource File="ArrowLeft.png"/>
+                                                    </OnPlatform.iOS>
+                                                    <OnPlatform.Android>
+                                                        <FileImageSource File="ArrowLeft.png"/>
+                                                    </OnPlatform.Android>
+                                                    <OnPlatform.WinPhone>
+                                                        <FileImageSource File="Assets/ArrowLeft.png"/>
+                                                    </OnPlatform.WinPhone>
+                                                </OnPlatform>
+                                            </Button.Image>
+                                        </Button>
+                                        <Button Command="{Binding PanPositionChangedCommand}" BackgroundColor="White" CommandParameter="True"   TextColor="Black" BorderColor="#696969"  >
+                                            <Button.Image>
+                                                <OnPlatform x:TypeArguments="FileImageSource">
+                                                    <OnPlatform.iOS>
+                                                        <FileImageSource File="ArrowRight.png"/>
+                                                    </OnPlatform.iOS>
+                                                    <OnPlatform.Android>
+                                                        <FileImageSource File="ArrowRight.png"/>
+                                                    </OnPlatform.Android>
+                                                    <OnPlatform.WinPhone>
+                                                        <FileImageSource File="Assets/ArrowRight.png"/>
+                                                    </OnPlatform.WinPhone>
+                                                </OnPlatform>
+                                            </Button.Image>
+                                        </Button>
+                                    </StackLayout>
+                                </StackLayout>
                                 
-                                <Label   Text="{Binding SwipeText}"  FontAttributes="Bold" TextColor="Black" HorizontalOptions= "Center" Grid.Row="1">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                            <StackLayout Orientation="Horizontal" Grid.RowSpan="2" Grid.Row="2" HorizontalOptions="CenterAndExpand">
+                               
+                            </Frame>
 
-                                <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="False"  BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969" >
-                                    <Button.Image>
+                         
+
+                            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                                <Image IsVisible="{Binding AttachmentCameraButtonIsVisible}" IsEnabled="{Binding AttachmentCameraButtonIsEnabled}" x:Name="CameraButton"  >
+                                    <Image.Source>
                                         <OnPlatform x:TypeArguments="FileImageSource">
                                             <OnPlatform.iOS>
-                                                <FileImageSource File="ArrowLeft.png"/>
+                                                <FileImageSource File="Browse.png"/>
                                             </OnPlatform.iOS>
                                             <OnPlatform.Android>
-                                                <FileImageSource File="ArrowLeft.png"/>
+                                                <FileImageSource File="Browse.png"/>
                                             </OnPlatform.Android>
                                             <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/ArrowLeft.png"/>
+                                                <FileImageSource File="Assets/Browse.png"/>
                                             </OnPlatform.WinPhone>
                                         </OnPlatform>
-                                    </Button.Image>
-                                </Button>
-                                <Button Command="{Binding PanPositionChangedCommand}" CommandParameter="True"  BackgroundColor="#DCDCDC" TextColor="Black" BorderColor="#696969"  >
-                                    <Button.Image>
+                                    </Image.Source>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                       Command="{Binding CameraCommand}" 
+                                         NumberOfTapsRequired="1" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                                <Image IsVisible="{Binding AttachmentDeleteButtonIsVisible}" IsEnabled="{Binding AttachmentDeleteButtonIsEnabled}" x:Name="DeleteButton" Source="Deletebtn.png">
+                                    <Image.Source>
                                         <OnPlatform x:TypeArguments="FileImageSource">
                                             <OnPlatform.iOS>
-                                                <FileImageSource File="ArrowRight.png"/>
+                                                <FileImageSource File="Deletebtn.png"/>
                                             </OnPlatform.iOS>
                                             <OnPlatform.Android>
-                                                <FileImageSource File="ArrowRight.png"/>
+                                                <FileImageSource File="Deletebtn.png"/>
                                             </OnPlatform.Android>
                                             <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/ArrowRight.png"/>
+                                                <FileImageSource File="Assets/Deletebtn.png"/>
                                             </OnPlatform.WinPhone>
                                         </OnPlatform>
-                                    </Button.Image>
-                                </Button>
+                                    </Image.Source>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            
+                                         Command="{Binding DeleteCommand}" 
+                                         NumberOfTapsRequired="1" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+
                             </StackLayout>
+                         
+                           
 
-                            </Grid>
-                        
-                            <Grid>
 
-                            <Button x:Name="PDFGrid" Text="" HorizontalOptions="End" IsVisible = "true" WidthRequest = "60" HeightRequest = "60" Margin = "0,0,180,0" BackgroundColor="White" Command="{Binding DocCommand}" BorderColor="Black" CornerRadius="5">
-                                <Button.Image>
-                                    <OnPlatform x:TypeArguments="FileImageSource">
-                                        <OnPlatform.iOS>
-                                            <FileImageSource File="pdfword.png"/>
-                                        </OnPlatform.iOS>
-                                        <OnPlatform.Android>
-                                            <FileImageSource File="pdfword.png"/>
-                                        </OnPlatform.Android>
-                                        <OnPlatform.WinPhone>
-                                            <FileImageSource File="Assets/pdfword.png"/>
-                                        </OnPlatform.WinPhone>
-                                    </OnPlatform>
-                                </Button.Image>
-                            </Button>
-
-                            <Button x:Name="CameraButton" IsVisible="{Binding AttachmentCameraButtonIsVisible}" IsEnabled="{Binding AttachmentCameraButtonIsEnabled}" HorizontalOptions="End" WidthRequest = "60" Margin = "0,0,100,0" BackgroundColor="White" Command="{Binding CameraCommand}" BorderColor="Black" CornerRadius="5">
-                                <Button.Image>
-                                    <OnPlatform x:TypeArguments="FileImageSource">
-                                        <OnPlatform.iOS>
-                                            <FileImageSource File="Camera.png"/>
-                                        </OnPlatform.iOS>
-                                        <OnPlatform.Android>
-                                            <FileImageSource File="Camera.png"/>
-                                        </OnPlatform.Android>
-                                        <OnPlatform.WinPhone>
-                                            <FileImageSource File="Assets/Camera.png"/>
-                                        </OnPlatform.WinPhone>
-                                    </OnPlatform>
-                                </Button.Image>
-                            </Button>
-
-                            <Button x:Name="DeleteButton" IsVisible="{Binding AttachmentDeleteButtonIsVisible}" IsEnabled="{Binding AttachmentDeleteButtonIsEnabled}" Text="{Binding DeleteTitle}" HorizontalOptions="End"   BorderColor = "Black" BackgroundColor="#87CEFA" TextColor = "White" WidthRequest = "80" HeightRequest="50" Margin="0,10,0,10" Command="{Binding DeleteCommand}" CornerRadius="5"></Button>
-                        </Grid>
-                        <Button x:Name="SaveButton" IsVisible="False" IsEnabled="{Binding AttachmentSaveButtonIsEnabled}" Text="{Binding SaveTitle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" BorderColor = "Black" BackgroundColor="#87CEFA" TextColor = "White" Command="{Binding SaveCommand}" CornerRadius="5"></Button>
-                    </StackLayout>
+                        </StackLayout>
                 </ScrollView>
 </StackLayout>
             </Grid>

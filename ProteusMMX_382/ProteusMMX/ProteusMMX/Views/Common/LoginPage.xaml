@@ -2,10 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              xmlns:DependencyInterface="clr-namespace:ProteusMMX.DependencyInterface;assembly=ProteusMMX"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls" xmlns:local="clr-namespace:ProteusMMX.Behaviors"
              x:Class="ProteusMMX.Views.Common.LoginPage"
+             NavigationPage.HasNavigationBar="False"
+            BackgroundColor="Transparent"
              Title="{Binding PageTitle}"
              Padding="0">
 
@@ -20,30 +22,24 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
-        <Grid>
-            <Image Grid.Column="0" Grid.Row="0" Source="BackgroundImage.jpg" Aspect="AspectFill">
+        <Grid HorizontalOptions="Center">
+            <Image Grid.Column="0" Grid.Row="0" Source="Backgroundlogin.png" Aspect="AspectFill">
                 <Image.Source>
                     <OnPlatform x:TypeArguments="FileImageSource">
                         <OnPlatform.iOS>
-                            <FileImageSource File="BackgroundImage.jpg"/>
+                            <FileImageSource File="Backgroundlogin.png"/>
                         </OnPlatform.iOS>
                         <OnPlatform.Android>
-                            <FileImageSource File="BackgroundImage.jpg" />
+                            <FileImageSource File="Backgroundlogin.png" />
                         </OnPlatform.Android>
                         <OnPlatform.WinPhone>
-                            <FileImageSource File="Assets/BackgroundImage.jpg"/>
+                            <FileImageSource File="Assets/Backgroundlogin.png"/>
                         </OnPlatform.WinPhone>
                     </OnPlatform>
                 </Image.Source>
             </Image>
-
-          
-            <StackLayout>
-        <ScrollView>
-            <Grid>
-
-                <Grid
-                VerticalOptions="Center" HorizontalOptions="Center" ColumnSpacing="5">
+            <ScrollView>
+                <Grid>
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -52,7 +48,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
 
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -60,14 +56,10 @@
                         <ColumnDefinition Width="Auto"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
+                        <StackLayout Padding="10,10,10,10" BackgroundColor="Transparent"  HorizontalOptions="Center" VerticalOptions="Center">
 
-
-
-                    <border:SfBorder HorizontalOptions="Center" VerticalOptions="Center" Margin="10,10,10,10" BorderColor="LightGray" BorderWidth="1" CornerRadius="5">
-                        <StackLayout Padding="10,10,10,10" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
-
-                            <StackLayout x:Name="Tablet" Orientation="Horizontal">
-                                <StackLayout  Grid.Row="1" Orientation="Horizontal" Spacing="250" >
+                            <!--<StackLayout x:Name="Tablet" Orientation="Horizontal">
+                                <StackLayout  Grid.Row="1"  Orientation="Horizontal" Spacing="250" >
                                     <Image Source="tapped.jpg">
                                         <Image.Source>
                                             <OnPlatform x:TypeArguments="FileImageSource">
@@ -84,223 +76,130 @@
                                         </Image.Source>
                                     </Image>
 
-                                    <Image WidthRequest="160" HeightRequest="100"  Source="{Binding AttachmentImageSource}" Grid.Row="2" Grid.Column="0">
+                                    <Image Margin="0,25,0,0" WidthRequest="260" HeightRequest="130"  Source="{Binding AttachmentImageSource}" Grid.Row="2" Grid.Column="1">
 
                                     </Image>
                                 </StackLayout>
-                            </StackLayout>
+                            </StackLayout>-->
 
-                            <StackLayout x:Name="Phone" Orientation="Horizontal" Padding="5,5,5,5">
-                                    <StackLayout Grid.RowSpan="1" Grid.Row="1" Orientation="Horizontal" Spacing="150"  >
-                                        <Image HeightRequest="160" WidthRequest="100" Source="tapped.jpg">
-                                            <Image.Source>
-                                                <OnPlatform x:TypeArguments="FileImageSource">
-                                                    <OnPlatform.iOS>
-                                                    <FileImageSource File="ProteusCMMS.png"/>
-                                                    </OnPlatform.iOS>
-                                                    <OnPlatform.Android>
-                                                    <FileImageSource File="ProteusCMMS.png"/>
-                                                    </OnPlatform.Android>
-                                                    <OnPlatform.WinPhone>
-                                                    <FileImageSource File="Assets/ProteusCMMS.png"/>
-                                                    </OnPlatform.WinPhone>
-                                                </OnPlatform>
-                                            </Image.Source>
-                                        </Image>
+                            <!--<StackLayout x:Name="Phone"  HorizontalOptions="Center" Orientation="Horizontal" Padding="5,5,5,5">-->
+                            <!--<StackLayout  HorizontalOptions="Center" Orientation="Horizontal" Spacing="150"  >-->
+                            <Image x:Name="Phone" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" WidthRequest="150"  Source="tapped.jpg">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="FileImageSource">
+                                        <OnPlatform.iOS>
+                                            <FileImageSource File="ProteusCMMS.png" />
+                                        </OnPlatform.iOS>
+                                        <OnPlatform.Android>
+                                            <FileImageSource File="ProteusCMMS.png"/>
+                                        </OnPlatform.Android>
+                                        <OnPlatform.WinPhone>
+                                            <FileImageSource File="Assets/ProteusCMMS.png"/>
+                                        </OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Image.Source>
+                            </Image>
 
-                                        <Image HeightRequest="160" WidthRequest="100" Source="{Binding AttachmentImageSource}" Grid.Row="2" Grid.Column="0">
+                            <Image HeightRequest="100" WidthRequest="150" Source="{Binding AttachmentImageSource}" Grid.Row="2" Grid.Column="0">
 
-                                        </Image>
-                                    </StackLayout>
-                                </StackLayout>
-                                <Label IsVisible="{Binding SiteUrlLabelVisibility}" Grid.Row="2" Text="{Binding SiteUrlLabel}" Style="{StaticResource BoldLabelStyle}"  />
-                                <!--<Entry    />-->
-                            <border:SfBorder Style="{StaticResource SfBorderStyle}" CornerRadius="5">
-                                    <control1:CustomEntry x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" Grid.Row="3" Text="{Binding SiteUrl, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}">
-                                        
-                                    </control1:CustomEntry>
-                                </border:SfBorder>
+                            </Image>
+                            <!--</StackLayout>-->
+                            <!-- </StackLayout>-->
+                            <!--<Label IsVisible="{Binding SiteUrlLabelVisibility}" Grid.Row="2" Text="{Binding SiteUrlLabel}" TextColor="Black" Style="{StaticResource BoldLabelStyle}"  />-->
+                            <!--<Entry    />-->
+                            <Label>
+                                <Label.Text>
+                                    &#10;
+                                </Label.Text>
+                            </Label>
+                            <border:SfBorder HeightRequest="43" Style="{StaticResource LoginFormBorderlessEntryBorderStyle}" CornerRadius="15">
+                                <control1:ImageEntry BackgroundColor="#3177b5" FontSize="Small" x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" TextColor="White" PlaceholderColor="White" Image="urlicon" Text="{Binding SiteUrl, Mode=TwoWay}" Placeholder="Url" Grid.Row="2" 
+                        HorizontalOptions="FillAndExpand"/>
 
-                                <Label Grid.Row="4" Text="{Binding UserNameLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}" CornerRadius="5">
-                                    <control1:CustomEntry Grid.Row="5" Text="{Binding UserName, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />
-                                </border:SfBorder>
-                                <Label Grid.Row="6" Text="{Binding PasswordLabel}" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-                            <border:SfBorder Style="{StaticResource SfBorderStyle}" CornerRadius="5">
-                                    <control1:CustomEntry Grid.Row="7" Text="{Binding Password, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>
-                                </border:SfBorder>
-                                <!--<controls:CustomCheckBox IsVisible="{Binding RememberMeVisibility}" Grid.Row="6" IsChecked="{Binding RememberMe, Mode=TwoWay}" x:Name="CheckBox_RememberMe" />-->
+                            </border:SfBorder>
 
-                                <StackLayout Orientation="Horizontal">
-                                    <DependencyInterface:LoginSwitch x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}"  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="6"></DependencyInterface:LoginSwitch>
-                                    <Label x:Name="LabelSwitch1" IsVisible="{Binding LabelSwitch, Mode=TwoWay}" Grid.Column="1" Grid.Row="6" FontAttributes="Bold" Text="Remember Me" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" >
-                                        <!--<Label.IsVisible>
-                       
-                            <OnPlatform x:TypeArguments="x:Boolean">
-                                <On Platform="iOS">true</On>
-                                <On Platform="Android">true</On>
-                                <On Platform="WinPhone">false</On>
-                            </OnPlatform>
-                        </Label.IsVisible>-->
-                                    </Label>
-                                </StackLayout>
+                            <border:SfBorder  HeightRequest="43" Style="{StaticResource LoginFormBorderlessEntryBorderStyle}"   CornerRadius="15">
+                                <control1:ImageEntry Placeholder="User Name" FontSize="Small" BackgroundColor="#3177b5" Image="usericon" Grid.Row="3" Text="{Binding UserName, Mode=TwoWay}" TextColor="White" Grid.ColumnSpan="2" />
+                            </border:SfBorder>
 
 
-                                <!--<androidWidget1:Switch  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Row="6" HorizontalOptions="Start" VerticalOptions="StartAndExpand"/>-->
-                                    <Button Grid.Row="9" Text="{Binding LoginButtonLabel}" Style="{StaticResource LoginButtonStyle}" BorderColor="LightGray" ContentLayout="Left,5" Image="Button.png" Command="{Binding LoginCommand}" Grid.ColumnSpan="2" />
+                            <border:SfBorder   HeightRequest="43" Style="{StaticResource LoginFormBorderlessEntryBorderStyle}"  CornerRadius="15">
+                                <control1:ImageEntry Placeholder="{Binding PasswordLabel}" FontSize="Small" BackgroundColor="#3177b5" Image="passicon" Grid.Row="4" Text="{Binding Password, Mode=TwoWay}" TextColor="White" IsPassword="True" Grid.ColumnSpan="2"/>
 
-                                <Label IsVisible="{Binding CopyrightLabelVisibility}" Grid.Row="10" Text="{Binding CopyrightLabel}" HorizontalOptions="Center" Style="{StaticResource BoldLabelStyle}" Grid.ColumnSpan="2" />
-                                <Label IsVisible="{Binding SupportLabelVisibility}" Grid.Row="11" Text="{Binding SupportLabel}" HorizontalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" FontSize="Micro" Grid.ColumnSpan="2" />
+                            </border:SfBorder>
                             
-                            <!--<controls:CustomDatePicker Grid.Row="10" SelectedDate="{Binding PresentDate}" MinimumDate="{Binding PastDate}" MaximumDate="{Binding FutureDate}" />-->
+                            <StackLayout Orientation="Horizontal">
+                                <!--<control1:CustomSwitchColor  x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}" Toggled="LoginSwitch1_Toggled" IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand"   SwitchOnColor="Blue" SwitchOffColor="WhiteSmoke" SwitchThumbImage=""  SwitchThumbColor="Blue" x:Uid="MySwitch" Grid.Row="5">
+                                    
+                                </control1:CustomSwitchColor>-->
+                                <buttons:SfSwitch  x:Name="LoginSwitch1" StateChanged="SfSwitch_StateChanged" >
+                                    
+                                </buttons:SfSwitch>
+                                <Label x:Name="LabelSwitch1" IsVisible="{Binding LabelSwitch, Mode=TwoWay}" Grid.Column="1" Grid.Row="5" FontAttributes="Bold"  Text="Remember Me" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" >
+
+                                </Label>
+                            </StackLayout>
+                            <Label Text="" Grid.Row="7"></Label>
+
+
+                            
+                            <Image  Grid.Row="8" WidthRequest="50" HeightRequest="50" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand">                               
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="FileImageSource">
+                                            <OnPlatform.iOS>
+                                            <FileImageSource File="submitbtn.png"/>
+                                            </OnPlatform.iOS>
+                                            <OnPlatform.Android>
+                                            <FileImageSource File="submitbtn.png" />
+                                            </OnPlatform.Android>
+                                            <OnPlatform.WinPhone>
+                                            <FileImageSource File="Assets/submitbtn.png"/>
+                                            </OnPlatform.WinPhone>
+                                        </OnPlatform>
+                                    </Image.Source>                                
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding OnLoginTapCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            
+                            <Label Text="" Grid.Row="9"></Label>
+                            <Label Text="" Grid.Row="12"></Label>
+                            <Label IsVisible="{Binding SupportLabelVisibility}" Grid.Row="10" Text="{Binding SupportLabel}" HorizontalOptions="Center"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black"  Grid.ColumnSpan="2" />
+
+                          
                         </StackLayout>
-                    </border:SfBorder>
+                    
+                    <ActivityIndicator Grid.Row="0" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+
+                    <StackLayout  Grid.RowSpan="13" HorizontalOptions="Fill" VerticalOptions="End">
+                        <Grid RowSpacing="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="80*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Image  Grid.Row="0" HeightRequest="75" Aspect="AspectFill" Source="bottomimg.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="FileImageSource">
+                                        <OnPlatform.iOS>
+                                            <FileImageSource File="bottomimg.png"/>
+                                        </OnPlatform.iOS>
+                                        <OnPlatform.Android>
+                                            <FileImageSource File="bottomimg.png" />
+                                        </OnPlatform.Android>
+                                        <OnPlatform.WinPhone>
+                                            <FileImageSource File="Assets/bottomimg.png"/>
+                                        </OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Image.Source>
+                            </Image>
+                            <Label IsVisible="{Binding CopyrightLabelVisibility}" Grid.Row="0" Grid.Column="0" Text="{Binding CopyrightLabel}" HorizontalOptions="Center"  VerticalTextAlignment="End" TextColor="White" Style="{StaticResource BoldLabelStyle}" />
+                        </Grid>
+                    </StackLayout>
+
                 </Grid>
+            </ScrollView>
 
-
-
-                <ActivityIndicator Grid.Row="0" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
-
-            </Grid>
-        </ScrollView>
-        </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
-<!--<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:DependencyInterface="clr-namespace:ProteusMMX.DependencyInterface;assembly=ProteusMMX"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
-             x:Class="ProteusMMX.Views.Common.LoginPage"
-             Title="{Binding PageTitle}"
-             BackgroundColor="{StaticResource White}">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            --><!--<converter:BooleanToColorConverter x:Key="ColorConverter" />--><!--
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Style.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
-    <ContentPage.Content>
-        <ScrollView>
-            <Grid>
-                <Grid        
-                Padding="10,10,10,10"
-                RowSpacing="5"
-                VerticalOptions="Fill" ColumnSpacing="0"/>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-
-                <border:SfBorder Margin="30,30,30,30"
-                                 
-                                 BorderColor="Black"
-                                 BorderWidth="2"
-                                 CornerRadius="5">
-
-                    <StackLayout Padding="20,20,20,20" Orientation="Vertical" Grid.Row="1" Grid.Column="1" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" BackgroundColor="White">
-
-                        <Label IsVisible="{Binding SiteUrlLabelVisibility}" Grid.Row="1" Text="{Binding SiteUrlLabel}" Style="{StaticResource LabelStyle}" Grid.ColumnSpan="2"/>
-                        --><!--<Entry x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" Grid.Row="1" Text="{Binding SiteUrl, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />--><!--
-
-                        <border:SfBorder
-                       Grid.Row="2"
-                        HeightRequest="35"
-                        BackgroundColor="{DynamicResource Gray-White}"
-                        Style="{StaticResource SfBorderStyle}">
-                            <control1:BorderlessEntry
-                            x:Name="SiteURLEvent"
-                            
-                            IsVisible="{Binding SiteUrlEntryVisibility}"
-                            Text="{Binding SiteUrl, Mode=TwoWay}"
-                            TextColor="{DynamicResource Gray-900}"/>
-                        </border:SfBorder>
-
-                        <Label Grid.Row="3" Text="{Binding UserNameLabel}" Style="{StaticResource LabelStyle}" Grid.ColumnSpan="2" />
-                        --><!--<Entry Grid.Row="3" Text="{Binding UserName, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" Grid.ColumnSpan="2" />--><!--
-
-                        <border:SfBorder
-                        Grid.Row="4"
-                            CornerRadius="5"
-                        HeightRequest="35"
-                        BackgroundColor="{DynamicResource Gray-White}"
-                        Style="{StaticResource SfBorderStyle}">
-                            <control1:BorderlessEntry
-                             Placeholder="UserName"
-                            Text="{Binding UserName, Mode=TwoWay}"
-                            TextColor="{DynamicResource Gray-900}" />
-                        </border:SfBorder>
-
-
-                        <Label Grid.Row="5" Text="{Binding PasswordLabel}" Style="{StaticResource LabelStyle}" Grid.ColumnSpan="2" />
-                        --><!--<Entry Grid.Row="5" Text="{Binding Password, Mode=TwoWay}" TextColor="{StaticResource ColorLabel}" IsPassword="True" Grid.ColumnSpan="2"/>--><!--
-
-                        <border:SfBorder
-                        Grid.Row="6"
-                        HeightRequest="35"
-                        BackgroundColor="{DynamicResource Gray-White}"
-                        Style="{StaticResource SfBorderStyle}">
-                            <control1:BorderlessEntry
-                            
-                            IsPassword="True"
-                            Placeholder="Password"
-                            Text="{Binding Password, Mode=TwoWay}"
-                            TextColor="{DynamicResource Gray-900}"/>
-                        </border:SfBorder>
-
-                        <StackLayout Orientation="Horizontal">
-                            <DependencyInterface:LoginSwitch x:Name="LoginSwitch1" IsVisible="{Binding LoginSwitch, Mode=TwoWay}"  IsToggled="{Binding RememberMeSwitch, Mode=TwoWay}" Grid.Column="0" HorizontalOptions="Start" VerticalOptions="StartAndExpand" x:Uid="MySwitch" Grid.Row="6"></DependencyInterface:LoginSwitch>
-                            <Label x:Name="LabelSwitch1" IsVisible="{Binding LabelSwitch, Mode=TwoWay}" Grid.Column="1" Grid.Row="6" Style="{StaticResource LabelStyle}" Text="Remember Me" HorizontalOptions="Start" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black" />
-
-                        </StackLayout>
-                      
-                       
-                        --><!--<buttons:SfButton
-                        Grid.Row="8"
-                        Margin="0,10"
-                        
-                        Command="{Binding LoginCommand}"
-                        Style="{StaticResource SfButtonStyle}"
-                        Text="{Binding LoginButtonLabel}" />--><!--
-
-                        <buttons:SfButton
-                       Grid.Row="8"
-                       BackgroundColor="LightSkyBlue"
-                      CornerRadius="5"
-                       Command="{Binding LoginCommand}"
-                     
-                       Text="{Binding LoginButtonLabel}"/>
-
-                        <Label IsVisible="{Binding CopyrightLabelVisibility}"  Grid.Row="9" Text="{Binding CopyrightLabel}" HorizontalOptions="Center" Style="{StaticResource LabelStyle}" Grid.ColumnSpan="2" />
-                        <Label Margin="40,0,0,0" IsVisible="{Binding SupportLabelVisibility}" Grid.Row="10" Text="{Binding SupportLabel}" HorizontalOptions="Center" Style="{StaticResource LabelStyle}"  TextColor="{StaticResource RedColor}" Grid.ColumnSpan="2" />
-
-                        <ActivityIndicator  IsVisible="{Binding OperationInProgress}" Grid.Row="0" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
-
-                    </StackLayout>
-                </border:SfBorder>
-            </Grid>
-        </ScrollView>
-    </ContentPage.Content>
-</ContentPage>-->

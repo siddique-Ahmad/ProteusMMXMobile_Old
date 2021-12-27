@@ -1,4 +1,5 @@
-﻿using ProteusMMX.ViewModel.Miscellaneous;
+﻿using ProteusMMX.DependencyInterface;
+using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.ServiceRequest;
 using System;
 using System.Collections.Generic;
@@ -18,8 +19,8 @@ namespace ProteusMMX.Views.ServiceRequest
 		public ServiceRequestAttachmentPage ()
 		{
 			InitializeComponent ();
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
         public ServiceRequestAttachmentPageViewModel ViewModel
         {
@@ -89,6 +90,38 @@ namespace ProteusMMX.Views.ServiceRequest
             }
             catch (Exception)
             {
+            }
+        }
+
+        private void ImageButton_Clicked(object sender, EventArgs e)
+        {
+            ImageButton button = (ImageButton)sender;
+            var a = button.BindingContext as ProteusMMX.ViewModel.ServiceRequest.ServicerequestAttachment;
+            var fileextension = a.attachmentFileExtension;
+
+            if (fileextension != null &&
+                                   (fileextension.ToLower().Contains(".pdf") ||
+                                   fileextension.ToLower().Contains(".doc") ||
+                                   fileextension.ToLower().Contains(".docx") ||
+                                   fileextension.ToLower().Contains(".xls") ||
+                                   fileextension.ToLower().Contains(".xlsx") ||
+                                   fileextension.ToLower().Contains(".txt")))
+            {
+                switch (Device.RuntimePlatform)
+                {
+                    case Device.iOS:
+                        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + fileextension);
+                        break;
+                    case Device.Android:
+                        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + fileextension);
+
+                        break;
+                    case Device.UWP:
+                        DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + fileextension);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }

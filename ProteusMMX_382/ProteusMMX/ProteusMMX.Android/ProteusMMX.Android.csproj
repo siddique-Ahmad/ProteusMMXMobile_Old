@@ -41,6 +41,7 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <MandroidI18n />
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
+    <AndroidDexTool>d8</AndroidDexTool>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>false</DebugSymbols>
@@ -62,10 +63,11 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
-    <AndroidDexTool>dx</AndroidDexTool>
-    <AndroidLinkTool>proguard</AndroidLinkTool>
+    <AndroidDexTool>d8</AndroidDexTool>
+    <AndroidLinkTool>r8</AndroidLinkTool>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <MandroidI18n />
+    <AndroidEnableMultiDex>false</AndroidEnableMultiDex>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
@@ -75,6 +77,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Xamarin.Android.Support.Compat">
+      <Version>26.1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Core.UI">
+      <Version>26.1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Core.Utils">
+      <Version>26.1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Fragment">
+      <Version>26.1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Media.Compat">
+      <Version>26.1.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Acr.UserDialogs">
       <Version>7.0.1</Version>
     </PackageReference>
@@ -97,31 +114,34 @@
       <Version>1.4.118</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Licensing">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Expander">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.GridCommon">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfCalendar">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
-      <Version>18.1.0.55</Version>
+      <Version>19.3.0.48</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView">
+      <Version>19.3.0.48</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugin.Connectivity">
       <Version>3.1.1</Version>
@@ -132,29 +152,20 @@
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Android.Support.Compat">
-      <Version>28.0.0.1</Version>
+    <PackageReference Include="Xamarin.AndroidX.MediaRouter">
+      <Version>1.2.0</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Android.Support.Design">
-      <Version>28.0.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Android.Support.v4">
-      <Version>28.0.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat">
-      <Version>28.0.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Android.Support.v7.CardView">
-      <Version>28.0.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter">
-      <Version>28.0.0.1</Version>
+    <PackageReference Include="Xamarin.AndroidX.Palette">
+      <Version>1.0.0.5</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Controls.SignaturePad.Forms">
       <Version>3.0.0</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms">
-      <Version>3.6.0.709228</Version>
+      <Version>5.0.0.2196</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Plugin.FilePicker">
+      <Version>2.1.41</Version>
     </PackageReference>
     <PackageReference Include="ZXing.Net.Mobile">
       <Version>2.4.1</Version>
@@ -167,13 +178,16 @@
     <Compile Include="DependencyService\CustomEditorRenderer.cs" />
     <Compile Include="DependencyService\CustomEntryRendere.cs" />
     <Compile Include="DependencyService\CustomEntryRenderer.cs" />
+    <Compile Include="DependencyService\CustomPickerIconRenderer.cs" />
     <Compile Include="DependencyService\CustomPickerRenderer.cs" />
     <Compile Include="DependencyService\CustomSwitchRenderer.cs" />
+    <Compile Include="DependencyService\ImageEntryRenderer.cs" />
     <Compile Include="DependencyService\LoginSwitchRenderer.cs" />
     <Compile Include="DependencyService\MyEntryRenderer.cs" />
     <Compile Include="DependencyService\PDFViewer.cs" />
     <Compile Include="DependencyService\ResizeImage.cs" />
     <Compile Include="DependencyService\SimpleStorage.cs" />
+    <Compile Include="Effects\DroidBackgroundEntryEffect.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="MainApplication.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
@@ -291,12 +305,6 @@
     <AndroidResource Include="Resources\drawable\Inspection.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Dot.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\filter.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\ThumbsUp.png" />
   </ItemGroup>
   <ItemGroup>
@@ -328,6 +336,297 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\BackgroundImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Backgroundlogin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\bottomimg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\passicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\submitbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\urlicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\usericon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Dot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\eyicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\KPIIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Login.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Morefilter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ReadMore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\SortIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\AscendingIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Descendingicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\assets.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\cwoicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\iticon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\recicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\sricon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ssbicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tel1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tel2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tel3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tel4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tel5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tel6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tel7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tel8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\woicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\searchicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\filtericon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\shfiltericon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\greencheck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\dots.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\unnamed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\complateicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\saveicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\starticon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\stopicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\delicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\stopicon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\stoppending.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\complet1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\startcomplte.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\starticon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\startred.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\stopcomplate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Inspection1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Inspection12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Inspection2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Inspection22.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Inspection3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Inspection32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Browse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\delbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Deletebtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\delIcon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\fail1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\failbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\failredbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\na.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\no.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Pass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\passbluebtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\passbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\savebtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\saveicon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\searchiconblack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\signature.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\workorder1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\workorder2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\yes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\pdf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\sorting1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\addbtn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\addinsp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\sortinganswers.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\sortclosing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\clearsymbol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Cstart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Cstop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Viewicon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\search3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\search4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\search5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\searchBor1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\searchBor2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\searchBor3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\searchBor4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\searchBor5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\search1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\search2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\barcerch.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

@@ -22,6 +22,7 @@ using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.SelectionListPagesViewModels;
 using ProteusMMX.ViewModel.SelectionListPagesViewModels.Asset;
 using ProteusMMX.ViewModel.Workorder;
+using Syncfusion.XForms.Border;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -4136,7 +4137,9 @@ namespace ProteusMMX.ViewModel.Asset
         private void GenerateComboBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new MyPicker();
+            var control = new CustomPicker();
+            control.Image = "unnamed";
+            control.HeightRequest = 45;
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;
@@ -4207,7 +4210,9 @@ namespace ProteusMMX.ViewModel.Asset
             //{
             //    control = new CustomDatePicker();
             //}
-            control = new CustomDatePicker();
+            var Boder = new SfBorder { CornerRadius = 5, BorderColor = Color.Black };
+            Boder.Content= new CustomDatePicker { Padding=new Thickness(0,3,0,0) };
+            control = Boder;
             SetControlBindingAccordingToControlType(control, formControl);
             //new CustomDatePicker(); //new DatePicker();
 
@@ -4564,6 +4569,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "InstallationDate":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -5072,6 +5083,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "WarrantyDate":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -6262,9 +6279,6 @@ namespace ProteusMMX.ViewModel.Asset
 
 
                 #endregion
-
-
-
 
 
 

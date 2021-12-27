@@ -17,8 +17,8 @@ namespace ProteusMMX.Views.Workorder
         public WorkOrderStockRoomPartsListing()
         {
             InitializeComponent();
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
         public WorkOrderStockroomPartsListingPageViewModel ViewModel
         {
@@ -30,7 +30,7 @@ namespace ProteusMMX.Views.Workorder
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-
+            
             if (BindingContext is IHandleViewAppearing viewAware)
             {
                 await viewAware.OnViewAppearingAsync(this);
@@ -43,7 +43,19 @@ namespace ProteusMMX.Views.Workorder
 
             if (BindingContext is IHandleViewDisappearing viewAware)
             {
+                ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
                 await viewAware.OnViewDisappearingAsync(this);
+            }
+        }
+
+        private void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                ViewModel.OnViewDisappearingAsync(null);
+                ViewModel.RefillPartsCollection();
             }
         }
     }

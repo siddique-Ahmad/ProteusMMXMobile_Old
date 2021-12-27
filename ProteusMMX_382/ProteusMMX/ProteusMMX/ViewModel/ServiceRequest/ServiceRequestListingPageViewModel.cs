@@ -32,7 +32,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
     public class ServiceRequestListingPageViewModel : ViewModelBase, IHandleViewAppearing, IHandleViewDisappearing
     {
 
-       
+
         #region Fields
 
         protected readonly IAuthenticationService _authenticationService;
@@ -41,6 +41,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
         protected readonly IServiceRequestModuleService _serviceRequestService;
 
+        protected readonly IWorkorderService _workorderService;
 
         #endregion
 
@@ -553,7 +554,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
 
 
-               
+
 
                 if (navigationData != null)
                 {
@@ -565,6 +566,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                 OperationInProgress = true;
                 await SetTitlesPropertiesForPage();
+                await GetServiceRequestControlRights();
                 if (Application.Current.Properties.ContainsKey("CreateServiceRequestKey"))
                 {
                     var CreateRights = Application.Current.Properties["CreateServiceRequestKey"].ToString();
@@ -610,7 +612,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 {
                     this.TotalRecordForTab = true;
                 }
-            
+
 
             }
             catch (Exception ex)
@@ -624,33 +626,239 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 OperationInProgress = false;
             }
         }
-        public ServiceRequestListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IServiceRequestModuleService _serviceReqService)
+        public ServiceRequestListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IServiceRequestModuleService serviceReqService, IWorkorderService workorderService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
-            _serviceRequestService = _serviceReqService;
+            _serviceRequestService = serviceReqService;
+            _workorderService = workorderService;
+        }
+
+        public async Task GetServiceRequestControlRights()
+        {
+            try
+            {
+                ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "Details");
+                ServiceOutput FormControlsAndRightsForButton = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "ServiceRequest");
+                ServiceOutput FormControlsAndRightsForOperatorTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "OperatorTag");
+                ServiceOutput FormControlsAndRightsForMaintenanceTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "MaintenanceTag");
+                ServiceOutput FormControlsAndRightsForSHETag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "SHETag");
+
+                if (FormControlsAndRightsForButton != null && FormControlsAndRightsForButton.lstModules != null && FormControlsAndRightsForButton.lstModules.Count > 0)
+                {
+                    var ServiceRequestModule = FormControlsAndRightsForButton.lstModules[0];
+                    if (ServiceRequestModule.ModuleName == "ServiceRequests") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModule.lstSubModules != null && ServiceRequestModule.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModule = ServiceRequestModule.lstSubModules[0];
+                            if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                            {
+
+                                try
+                                {
+                                    Application.Current.Properties["AcceptKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Accept").Expression;
+                                    Application.Current.Properties["DEclineKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Decline").Expression;
+                                    Application.Current.Properties["CreateServiceRequestKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
+                                    Application.Current.Properties["EditServiceRequestKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+
+
+
+                            }
+
+
+
+                        }
+                    }
+                    var ServiceRequestModuleAttachment = FormControlsAndRightsForButton.lstModules[2];
+                    if (ServiceRequestModuleAttachment.ModuleName == "Attachments") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModuleAttachment.lstSubModules != null && ServiceRequestModuleAttachment.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModule = ServiceRequestModuleAttachment.lstSubModules[0];
+                            if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                            {
+                                try
+                                {
+                                    Application.Current.Properties["CreateSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                    Application.Current.Properties["RemoveSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+                                    Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestModuleAttachment.Expression;
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
+                {
+                    var ServiceRequestModule = FormControlsAndRightsForDetails.lstModules[0];
+                    if (ServiceRequestModule.ModuleName == "Details") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModule.lstSubModules != null && ServiceRequestModule.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModule = ServiceRequestModule.lstSubModules[0];
+                            if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                            {
+
+
+                                try
+                                {
+                                    Application.Current.Properties["PriorityTabKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
+                                    Application.Current.Properties["ServiceRequestAdditionalDetailsKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
+                                    Application.Current.Properties["ServiceRequestDetailsControls"] = ServiceRequestSubModule;
+                                    Application.Current.Properties["ServiceRequestTarget"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression; ;
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+                            }
+
+
+
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForSHETag != null && FormControlsAndRightsForSHETag.lstModules != null && FormControlsAndRightsForSHETag.lstModules.Count > 0)
+                {
+                    var ServiceRequestModuleSHETAg = FormControlsAndRightsForSHETag.lstModules[0];
+                    if (ServiceRequestModuleSHETAg.ModuleName == "SHETagDetail") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                            if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                            {
+
+
+                                try
+                                {
+                                    Application.Current.Properties["SHETagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+                            }
+
+
+
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForMaintenanceTag != null && FormControlsAndRightsForMaintenanceTag.lstModules != null && FormControlsAndRightsForMaintenanceTag.lstModules.Count > 0)
+                {
+                    var ServiceRequestModuleSHETAg = FormControlsAndRightsForMaintenanceTag.lstModules[0];
+                    if (ServiceRequestModuleSHETAg.ModuleName == "MaintenanceTagDetail") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                            if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                            {
+
+
+                                try
+                                {
+                                    Application.Current.Properties["MaintenanceTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+                            }
+
+
+
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForOperatorTag != null && FormControlsAndRightsForOperatorTag.lstModules != null && FormControlsAndRightsForOperatorTag.lstModules.Count > 0)
+                {
+                    var ServiceRequestModuleSHETAg = FormControlsAndRightsForOperatorTag.lstModules[0];
+                    if (ServiceRequestModuleSHETAg.ModuleName == "OperatorTagDetail") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                            if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                            {
+
+                                try
+                                {
+                                    Application.Current.Properties["OperatorTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+
+                            }
+
+
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
 
         }
 
         public async Task SetTitlesPropertiesForPage()
         {
 
-           
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("ServiceRequest");
-                WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
-                LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
-                CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
-                SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-                RequestNumber = WebControlTitle.GetTargetNameByTitleName("RequestNumber");
-                Priority = WebControlTitle.GetTargetNameByTitleName("Priority");
-                Description = WebControlTitle.GetTargetNameByTitleName("Description");
-                CreateServiceRequest = WebControlTitle.GetTargetNameByTitleName("CreateServiceRequest");
-                SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchOrScanServiceRequest");
-                GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
-                ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
-                SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
-                TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName("TotalRecords");
-                SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+
+            PageTitle = WebControlTitle.GetTargetNameByTitleName("ServiceRequest");
+            WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
+            LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
+            CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
+            SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+            RequestNumber = WebControlTitle.GetTargetNameByTitleName("RequestNumber");
+            Priority = WebControlTitle.GetTargetNameByTitleName("Priority");
+            Description = WebControlTitle.GetTargetNameByTitleName("Description");
+            CreateServiceRequest = WebControlTitle.GetTargetNameByTitleName("CreateServiceRequest");
+            SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchOrScanServiceRequest");
+            GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
+            ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
+            SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
+            TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName("TotalRecords");
+            SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
 
 
 
@@ -661,7 +869,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         {
             try
             {
-                if(Create=="E")
+                if (Create == "E")
                 {
                     var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateServiceRequest, LogoutTitle });
 
@@ -693,11 +901,11 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                   
+
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -709,7 +917,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
 
-                }
+            }
             catch (Exception ex)
             {
                 OperationInProgress = false;
@@ -748,7 +956,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 {
                     TotalRecordCount = ServiceRequestResponse.serviceRequestWrapper.serviceRequests.Count; ;
                 }
-               
+
 
             }
             catch (Exception ex)
@@ -769,8 +977,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             try
             {
                 OperationInProgress = true;
-                var ServiceRequestResponse = await _serviceRequestService.ServiceRequestByServiceRequestNumber(UserID,this.SearchText);
-                if(ServiceRequestResponse.serviceRequestWrapper.serviceRequests == null || ServiceRequestResponse.serviceRequestWrapper.serviceRequests.Count == 0)
+                var ServiceRequestResponse = await _serviceRequestService.ServiceRequestByServiceRequestNumber(UserID, this.SearchText);
+                if (ServiceRequestResponse.serviceRequestWrapper.serviceRequests == null || ServiceRequestResponse.serviceRequestWrapper.serviceRequests.Count == 0)
                 {
                     TotalRecordCount = 0;
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("ThisServiceRequestdoesnotexist"), 2000);
@@ -783,7 +991,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     await AddSRinServiceRequestCollection(servicerequest);
                     TotalRecordCount = ServiceRequestResponse.serviceRequestWrapper.serviceRequests.Count;
                 }
-               
+
 
             }
             catch (Exception ex)
@@ -837,7 +1045,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 OperationInProgress = true;
 
 
-             //   CrossBleAdapter.Current.SetAdapterState(true);
+                //   CrossBleAdapter.Current.SetAdapterState(true);
                 //var state = ble.State;
                 //ble.StateChanged += (s, e) =>
                 //{
@@ -994,10 +1202,10 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
 
-               
+
 
                 //Check if Service Request Has Target///////////////
-                var ServiceRequestResponse = await _serviceRequestService.GetServiceRequestDetailByServiceRequestID(ServiceRequestID.ToString(),AppSettings.User.UserID.ToString());
+                var ServiceRequestResponse = await _serviceRequestService.GetServiceRequestDetailByServiceRequestID(ServiceRequestID.ToString(), AppSettings.User.UserID.ToString());
                 if (ServiceRequestResponse.serviceRequestWrapper != null && ServiceRequestResponse.serviceRequestWrapper.serviceRequest != null)
                 {
 
@@ -1086,7 +1294,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
                 UserDialogs.Instance.HideLoading();
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
             catch (Exception ex)
@@ -1158,18 +1366,18 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             catch (Exception ex)
             {
                 UserDialogs.Instance.HideLoading();
-               // OperationInProgress = false;
+                // OperationInProgress = false;
             }
 
             finally
             {
                 UserDialogs.Instance.HideLoading();
-               // OperationInProgress = false;
+                // OperationInProgress = false;
             }
         }
         public async Task OnViewAppearingAsync(VisualElement view)
         {
-          
+
 
             if (string.IsNullOrWhiteSpace(SearchText))
             {

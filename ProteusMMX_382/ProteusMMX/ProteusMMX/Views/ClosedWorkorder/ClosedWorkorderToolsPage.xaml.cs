@@ -17,8 +17,8 @@ namespace ProteusMMX.Views.ClosedWorkorder
 		public ClosedWorkorderToolsPage ()
 		{
 			InitializeComponent ();
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
         public ClosedWorkorderToolsPageViewModel ViewModel
         {
@@ -34,6 +34,8 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
             if (BindingContext is IHandleViewAppearing viewAware)
             {
+                ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
                 await viewAware.OnViewAppearingAsync(this);
             }
         }

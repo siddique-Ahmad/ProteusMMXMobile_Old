@@ -31,5 +31,12 @@ namespace ProteusMMX.Model
 
         public bool IsFDASignatureValidation { get; set; }
 
+        public string Signvalue { get; set; }
+        public bool FDAEnable { get; set; }
+
+        public string AcknowledgementURLProtocol { get; set; }
+        public string CompanyProfileLogo { get; set; }
+        public string APIVersion { get; set; }
+
     }
 }

@@ -17,17 +17,17 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -75,7 +75,7 @@
 
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
                     <!--<control1:BorderlessEntry-->
-                    <control1:CustomEntry  x:Name="PartNumber" Text="{Binding PartNumberText}" IsEnabled="False" />
+                    <control1:CustomEntry  x:Name="PartNumber"  Text="{Binding PartNumberText}" IsEnabled="False" />
                     <!--Style="{StaticResource EntryStyle}"/>-->
                 </border:SfBorder>
             </StackLayout>
@@ -93,12 +93,12 @@
                 </Label>
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
                     <control1:CustomEntry
-                                 x:Name="QuantityRequired" Text="{Binding QuantityRequiredText}" TextChanged="QuantityRequired_TextChanged" />
+                                 x:Name="QuantityRequired" Keyboard="Numeric" Text="{Binding QuantityRequiredText}" TextChanged="QuantityRequired_TextChanged" />
                 </border:SfBorder>
             </StackLayout>
 
             <StackLayout   Grid.Row="1" Grid.Column="1" >
-                <Label x:Name="UCost"  Text="{Binding UnitCosttitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                <Label x:Name="UCost"  Text="{Binding UnitCosttitle}"  TextColor="Black" Style="{StaticResource LabelStyle}">
                     <Label.FontAttributes>
                         <OnPlatform x:TypeArguments="FontAttributes">
                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -109,7 +109,7 @@
 
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
                     <control1:CustomEntry
-                                 x:Name="UnitCost" Text="{Binding UnitCostText}" TextChanged="UnitCost_TextChanged"/>
+                                 x:Name="UnitCost" Keyboard="Numeric" Text="{Binding UnitCostText}" TextChanged="UnitCost_TextChanged"/>
                 </border:SfBorder>
             </StackLayout>
 

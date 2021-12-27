@@ -3708,6 +3708,25 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+
+        bool _jobNumberFlag = false;
+        public bool JobNumberFlag
+        {
+            get
+            {
+                return _jobNumberFlag;
+            }
+
+            set
+            {
+                if (value != _jobNumberFlag)
+                {
+                    _jobNumberFlag = value;
+                    OnPropertyChanged(nameof(JobNumberFlag));
+                }
+            }
+        }
+
         //Approval Level
         string _approvalLevel;
         public string ApprovalLevel
@@ -6385,7 +6404,9 @@ namespace ProteusMMX.ViewModel.Workorder
         private void GenerateComboBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new MyPicker();
+            var control = new CustomPicker();
+            control.Image = "unnamed";
+            control.HeightRequest = 45;
 
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
@@ -11421,7 +11442,13 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
 
                 this.WorkorderNumberText = workorder.WorkOrderNumber;
+
                 this.JobNumberText = workorder.JobNumber;
+                if (!string.IsNullOrWhiteSpace(this.JobNumberText))
+                {
+                    this.JobNumberFlag = true;
+                }
+
                 if (workorder.TotalTime != null)
                 {
                     this.TotalTimeText = workorder.TotalTime;

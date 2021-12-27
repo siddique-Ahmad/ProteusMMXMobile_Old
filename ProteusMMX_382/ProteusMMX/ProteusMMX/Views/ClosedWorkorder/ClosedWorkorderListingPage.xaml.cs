@@ -17,8 +17,8 @@ namespace ProteusMMX.Views.ClosedWorkorder
 		public ClosedWorkorderListingPage ()
 		{
 			InitializeComponent ();
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
         public ClosedWorkorderListingPageViewModel ViewModel
         {
@@ -44,6 +44,17 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
             }
 
+        }
+
+        private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                await ViewModel.RemoveAllClosedWorkorderFromCollection();
+                await ViewModel.ListingClosedWorkorderCollection();
+                //await ViewModel.RefillClosedWorkorderCollection();
+            }
         }
     }
 }

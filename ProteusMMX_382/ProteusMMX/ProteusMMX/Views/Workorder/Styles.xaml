@@ -44,6 +44,13 @@
 
     </Style>
 
+    <Style x:Key="LabelStyleNew" TargetType="Label">
+    <Setter Property="TextColor" Value="{DynamicResource BlackColor}" />
+    <Setter Property="FontFamily" Value="MS Reference Sans Serif"/>
+    <Setter Property="MinimumHeightRequest" Value="40"/>
+
+    </Style>
+
     <!--  Common style for entries  -->
     <Style x:Key="EntryStyle" TargetType="control:BorderlessEntry">
         <!--<Setter Property="PlaceholderColor" Value="{StaticResource EntryPlaceholderColor}" />-->
@@ -95,9 +102,16 @@
         <Setter Property="BorderColor" Value="Black" />
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="BorderWidth" Value="1" />
-
+        <Setter Property="HeightRequest" Value="50" />
     </Style>
-
+    <!--  Common style for borders  -->
+    <Style x:Key="SfButtonStyles" TargetType="buttons:SfButton">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="TextColor" Value="Black"/>
+        <Setter Property="ImageAlignment" Value="End"></Setter>
+        <Setter Property="ShowIcon" Value="True"></Setter>
+        <Setter Property="ImageSource" Value="unnamed.png"></Setter>
+    </Style>
     <!--  Common style for gradient view  -->
     <Style x:Key="SfGradientViewStyle" TargetType="graphics:SfGradientView">
         <Setter Property="Opacity" Value="0.82" />

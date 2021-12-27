@@ -123,6 +123,24 @@ namespace ProteusMMX.ViewModel.Barcode
             }
         }
 
+        string _FailedInspectionTitle;
+        public string FailedInspectionTitle
+        {
+            get
+            {
+                return _FailedInspectionTitle;
+            }
+
+            set
+            {
+                if (value != _FailedInspectionTitle)
+                {
+                    _FailedInspectionTitle = value;
+                    OnPropertyChanged("FailedInspectionTitle");
+                }
+            }
+        }
+
 
         string _workorderTypeLabelTitle;
         public string WorkorderTypeLabelTitle
@@ -861,6 +879,8 @@ namespace ProteusMMX.ViewModel.Barcode
         public ICommand SortByCommand => new AsyncCommand(SortByAction);
         public ICommand ScanCommand => new AsyncCommand(SearchWorkorder);
 
+        public ICommand SortByFilterCommand => new AsyncCommand(SortByFilterAction);
+
         public ICommand WorkorderSelectedCommand => new Command<workOrders>(OnSelectWorkorderAsync);
 
         #endregion
@@ -941,6 +961,7 @@ namespace ProteusMMX.ViewModel.Barcode
             //var titles = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
             //if (titles != null && titles.CFLI.Count > 0 && titles.listWebControlTitles.Count > 0)
             {
+                FailedInspectionTitle = WebControlTitle.GetTargetNameByTitleName("FailedInspection");
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrders");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
@@ -972,12 +993,31 @@ namespace ProteusMMX.ViewModel.Barcode
                 {
                     if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic") || AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Professional"))
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
-
+                        if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
+                        {
+                            PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                        }
+                        else
+                        {
+                            PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
+                        }
                     }
+
+
+
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle };
+
+
+                        if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
+                        {
+                            PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle };
+                        }
+                        else
+                        {
+                            PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle };
+                        }
+
                     }
 
                 }
@@ -1057,6 +1097,61 @@ namespace ProteusMMX.ViewModel.Barcode
                 }
 
 
+
+            }
+            catch (Exception ex)
+            {
+                OperationInProgress = false;
+            }
+
+            finally
+            {
+                OperationInProgress = false;
+            }
+        }
+
+        public async Task SortByFilterAction()
+        {
+            try
+            {
+
+                var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, PickerTitles);
+                if (response == CancelTitle)
+                {
+                    this.SelectedSortingText = null;
+
+                }
+
+
+                if (response == PreventiveMaintenenceTitle)
+                {
+                    WorkorderTypeFilterText = "PreventiveMaintenance";
+                    await RefillWorkorderCollection();
+                }
+
+                else if (response == DemandMaintenenceTitle)
+                {
+                    WorkorderTypeFilterText = "DemandMaintenance";
+                    await RefillWorkorderCollection();
+
+                }
+
+                else if (response == EmergencyMaintenanceTitle)
+                {
+                    WorkorderTypeFilterText = "EmergencyMaintenance";
+                    await RefillWorkorderCollection();
+
+                }
+                else if (response == FailedInspectionTitle)
+                {
+                    WorkorderTypeFilterText = "FailedInspection";
+                    await RefillWorkorderCollection();
+                }
+                else
+                {
+                    WorkorderTypeFilterText = null;
+                    await RefillWorkorderCollection();
+                }
 
             }
             catch (Exception ex)

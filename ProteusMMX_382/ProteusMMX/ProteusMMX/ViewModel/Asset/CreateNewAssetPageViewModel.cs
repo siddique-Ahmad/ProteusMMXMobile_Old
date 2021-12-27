@@ -31,6 +31,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using ProteusMMX.Services.SelectionListPageServices;
+using Syncfusion.XForms.Border;
 
 namespace ProteusMMX.ViewModel.Asset
 {
@@ -4022,7 +4023,9 @@ namespace ProteusMMX.ViewModel.Asset
         {
             var title = new Label();
             //var control = new Picker();
-            var control = new MyPicker();
+            var control = new CustomPicker();
+            control.Image = "unnamed";
+            control.HeightRequest = 45;
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;
@@ -4078,8 +4081,10 @@ namespace ProteusMMX.ViewModel.Asset
             }
             title.TextColor = Color.Black;
             View control;
-            control = new CustomDatePicker();
-
+            var Boder = new SfBorder { CornerRadius = 5, BorderColor = Color.Black };
+            Boder.Content = new CustomDatePicker { Padding = new Thickness(0, 3, 0, 0) };
+            control = Boder;
+            
             //if (formControl.IsRequired ?? false)
             //{
             //    control = new DatePicker();

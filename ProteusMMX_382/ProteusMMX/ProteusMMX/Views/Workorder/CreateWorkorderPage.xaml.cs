@@ -19,8 +19,8 @@ namespace ProteusMMX.Views.Workorder
 		public CreateWorkorderPage ()
 		{
 			InitializeComponent ();
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
         public CreateWorkorderPageViewModel ViewModel
         {
@@ -35,6 +35,8 @@ namespace ProteusMMX.Views.Workorder
 
             if (BindingContext is IHandleViewAppearing viewAware)
             {
+                ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
                 await viewAware.OnViewAppearingAsync(this);
             }
         }
@@ -45,6 +47,8 @@ namespace ProteusMMX.Views.Workorder
 
             if (BindingContext is IHandleViewDisappearing viewAware)
             {
+                ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
                 await viewAware.OnViewDisappearingAsync(this);
             }
         }

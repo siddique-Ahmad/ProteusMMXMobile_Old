@@ -1,6 +1,8 @@
 ﻿using Acr.UserDialogs;
 using Newtonsoft.Json;
 using PanCardView.Extensions;
+using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using ProteusMMX.DependencyInterface;
@@ -169,7 +171,25 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+        
 
+        string _pDFImageText;
+        public string PDFImageText
+        {
+            get
+            {
+                return _pDFImageText;
+            }
+
+            set
+            {
+                if (value != _pDFImageText)
+                {
+                    _pDFImageText = value;
+                    OnPropertyChanged(nameof(PDFImageText));
+                }
+            }
+        }
         string _imageText;
         public string ImageText
         {
@@ -424,6 +444,9 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand DeleteCommand => new AsyncCommand(DeleteAttachment);
         public ICommand SaveCommand => new AsyncCommand(SaveAttachment);
 
+        public ICommand AttachmentTapCommand => new AsyncCommand(AttachmentClicked);
+        
+
         public bool IsAutoAnimationRunning { get; set; }
 
         public bool IsUserInteractionRunning { get; set; }
@@ -507,6 +530,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _attachmentDeleteButtonIsVisible = value;
                     OnPropertyChanged(nameof(AttachmentDeleteButtonIsVisible));
+                }
+            }
+        }
+        
+        bool _pDFImageTextIsVisible = true;
+        public bool PDFImageTextIsVisible
+        {
+            get
+            {
+                return _pDFImageTextIsVisible;
+            }
+
+            set
+            {
+                if (value != _pDFImageTextIsVisible)
+                {
+                    _pDFImageTextIsVisible = value;
+                    OnPropertyChanged(nameof(PDFImageTextIsVisible));
                 }
             }
         }
@@ -646,6 +687,7 @@ namespace ProteusMMX.ViewModel.Workorder
             };
             PanPositionChangedCommand = new Command(v =>
             {
+
                 if (IsAutoAnimationRunning || IsUserInteractionRunning)
                 {
                     return;
@@ -657,6 +699,22 @@ namespace ProteusMMX.ViewModel.Workorder
                     return;
                 }
                 SelectedIndexItem = index;
+                var Selecteditemname = Attachments[SelectedIndexItem];
+                if (Selecteditemname.attachmentFileExtension != null &&
+                                  (Selecteditemname.attachmentFileExtension.ToLower().Contains(".pdf") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".doc") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".docx") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".xls") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".xlsx") ||
+                                  Selecteditemname.attachmentFileExtension.ToLower().Contains(".txt")))
+                {
+                    PDFImageText = Selecteditemname.attachmentFileExtension;
+                }
+                else
+                {
+                    PDFImageText = "";
+                }
+              
                
             });
 
@@ -670,50 +728,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 
                 {
-                    if (Device.RuntimePlatform == Device.UWP)
-                    {
-
-                        //Dictionary<string, string> urlseg = new Dictionary<string, string>();
-                        //urlseg.Add("WORKORDERID", this.WorkorderID.ToString());
-                        //urlseg.Add("USERID", AppSettings.User.UserID.ToString());
-                        //Task<ServiceOutput> attachment = ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/Service/WorkOrderAttachmentscount", "GET", urlseg, null);
-
-                        //if (attachment.Result.workOrderWrapper != null && attachment.Result.workOrderWrapper.attachment != null)
-                        //{
-
-                        //    if (attachment.Result.workOrderWrapper.attachment.attachmentcount > 0)
-                        //    {
-                        //        PageTitle = "**" + WebControlTitle.GetTargetNameByTitleName("Attachments");
-
-                        //    }
-
-                        //}
-                        //else
-                        //{
-                        //    PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
-                        //}
-                        if (Application.Current.Properties.ContainsKey("WorkorderattchmentCount"))
-                        {
-                            var workorderattachmentCount = Application.Current.Properties["WorkorderattchmentCount"].ToString();
-                            if (workorderattachmentCount != null && workorderattachmentCount=="1")
-                            {
-                                PageTitle = "**" + WebControlTitle.GetTargetNameByTitleName("Attachments");
-
-                            }
-                            else
-                            {
-                                PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
-                            }
-                        }
-                        else
-                        {
-                            PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
-                        }
-                    }
-                    else
-                    {
+                   
                         PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
-                    }
+                    
                     
                     WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                     LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
@@ -828,12 +845,26 @@ namespace ProteusMMX.ViewModel.Workorder
                 OperationInProgress = false;
             }
         }
+        
 
+        public async Task AttachmentClicked()
+        {
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
         public async Task OpenMedia()
         {
             try
             {
-                List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery") };
+                List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery"),"File" };
                 var selected = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("ChooseFile"), SelectTitle, CancelTitle, choice.ToArray());
                 if (selected != null && !selected.Equals(WebControlTitle.GetTargetNameByTitleName("Cancel")))
                 {
@@ -843,10 +874,20 @@ namespace ProteusMMX.ViewModel.Workorder
                         IsDataRequested = true;
                         await TakePhoto();
                     }
-                    else
+                    //else
+                    //{
+                    //    IsDataRequested = true;
+                    //    await PickPhoto();
+                    //}
+                    else if (selected.Equals(WebControlTitle.GetTargetNameByTitleName("Gallery")))
                     {
                         IsDataRequested = true;
                         await PickPhoto();
+                    }
+                    else
+                    {
+                        IsDataRequested = true;
+                        await PickFile();
                     }
                 }
             }
@@ -996,7 +1037,68 @@ namespace ProteusMMX.ViewModel.Workorder
             }
 
         }
+        public async Task PickFile()
+        {
+            try
+            {
 
+
+                OperationInProgress = true;
+                int count = 0;
+                foreach (var item in Attachments)
+                {
+
+                    if (item.IsSynced == false)
+                    {
+                        count++;
+                    }
+
+                   
+                }
+               
+                var file = await CrossFilePicker.Current.PickFile();
+
+               
+                if (file == null)
+                {
+
+                    return;
+                }
+
+
+                string filepath = file.FilePath;
+                string base64String = Convert.ToBase64String(file.DataArray);
+
+                workOrderWrapper workorderWrapper = new workOrderWrapper();
+                workorderWrapper.attachments = new List<WorkOrderAttachment>();
+                WorkOrderAttachment woattachment = new WorkOrderAttachment();
+                woattachment.WorkOrderID = WorkorderID;
+                woattachment.attachmentFile = base64String;
+                woattachment.attachmentFileExtension = file.FileName;
+                workorderWrapper.attachments.Add(woattachment);
+                var status = await _attachmentService.CreateWorkorderAttachment(UserID, workorderWrapper);
+
+                if (Boolean.Parse(status.servicestatus))
+                {
+
+                    IsDataRequested = false;
+                    await this.OnViewAppearingAsync(null);
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("AttachmentSuccessfullySaved"), 2000);
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+                OperationInProgress = false;
+            }
+
+            finally
+            {
+
+                OperationInProgress = false;
+            }
+        }
         public async Task PickPhoto()
         {
             try
@@ -1026,7 +1128,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     DialogService.ShowToast("No camera available.", 2000);
                     return;
                 }
-
+                //var file1 = await CrossFilePicker.Current.PickFile();
                 var file = await Plugin.Media.CrossMedia.Current.PickPhotoAsync(new Plugin.Media.Abstractions.PickMediaOptions
                 {
                     PhotoSize = Plugin.Media.Abstractions.PhotoSize.Medium,
@@ -1122,9 +1224,23 @@ namespace ProteusMMX.ViewModel.Workorder
                 OperationInProgress = false;
             }
         }
+      
 
-
-
+        static List<String> GetBase64Strings(String path)
+        {
+            List<String> base64Strings = new List<String>();
+            var files = Directory.GetFiles(path);
+            if (files.Length != 0)
+            {
+                foreach (var filePath in files)
+                {
+                    Byte[] bytes = File.ReadAllBytes(filePath);
+                    String base64String = Convert.ToBase64String(bytes);
+                    base64Strings.Add(base64String);
+                }
+            }
+            return base64Strings;
+        }
         public async Task DeleteAttachment()
         {
 
@@ -1302,13 +1418,6 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 OperationInProgress = true;
 
-
-                //if (IsDataRequested)
-                //{
-                //    IsDataRequested = false;
-                //    return;
-                //}
-
                 try
                 {
 
@@ -1344,20 +1453,34 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         if (attachment.workOrderWrapper.attachments.Count > 0)
                         {
+                            var FirstattachmentName = attachment.workOrderWrapper.attachments.First();
+                            PDFImageText = FirstattachmentName.attachmentFileExtension;
                             ImageText = WebControlTitle.GetTargetNameByTitleName("Total")+ " " + WebControlTitle.GetTargetNameByTitleName("Image")+ " : " + attachment.workOrderWrapper.attachments.Count;
                             foreach (var file in attachment.workOrderWrapper.attachments)
                             {
 
                                 if (file.attachmentFileExtension != null &&
-                                    (file.attachmentFileExtension.Contains(".pdf") ||
-                                    file.attachmentFileExtension.Contains(".doc") ||
-                                    file.attachmentFileExtension.Contains(".docx") ||
-                                    file.attachmentFileExtension.Contains(".xls") ||
-                                    file.attachmentFileExtension.Contains(".xlsx") ||
-                                    file.attachmentFileExtension.Contains(".txt")))
+                                    (file.attachmentFileExtension.ToLower().Contains(".pdf") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".doc") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".docx") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".xls") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".xlsx") ||
+                                    file.attachmentFileExtension.ToLower().Contains(".txt")))
                                 {
 
                                     DocumentAttachments.Add(file.attachmentFileExtension);
+                                  
+                                    byte[] imgUser = StreamToBase64.StringToByte(ShortString.shortenBase64(""));
+                                    Attachments.Add(new WorkorderAttachment
+                                    {
+                                        IsSynced = true,
+                                        attachmentFileExtension = file.attachmentFileExtension,
+                                        //ImageBytes = imgUser, //byteImage,
+                                        WorkOrderAttachmentID = file.WorkOrderAttachmentID,
+                                        AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser)))),
+
+                                    }
+                                       );
                                 }
                                 else
                                 {
@@ -1371,7 +1494,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                                             byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 350,350 );
 
-
+                                          
                                             Attachments.Add(new WorkorderAttachment
                                             {
                                                 IsSynced = true,
@@ -1379,10 +1502,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                                 //ImageBytes = imgUser, //byteImage,
                                                 WorkOrderAttachmentID = file.WorkOrderAttachmentID,
                                                 AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage)))),
-                                                //  AttachmentImageSource = ImageSource.FromStream(() => new MemoryStream(imgUser))
-                                                // DependencyService.Get<IPDFViewer>().OpenPDF(AppSettings.BaseURL + "/Inspection/Service/attachmentdisplay.ashx?filename=" + action);
-
-                                                //AttachmentImageSource = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Inspection/Service/AttachmentItem.ashx?Id="+file.WorkOrderAttachmentID+"&&Module=workorder"))
+                                               
                                             }
                                             );
                                             //}
@@ -1397,7 +1517,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                         bool isimage = Extension.IsImage(stream);
                                         if (isimage == true)
                                         {
-
+                                           
                                             Attachments.Add(new WorkorderAttachment
                                             {
                                                 IsSynced = true,
@@ -1414,7 +1534,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     else
                                     {
 
-
+                                       
                                         Attachments.Add(new WorkorderAttachment
                                         {
                                             IsSynced = true,
@@ -1459,6 +1579,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
         public Task OnViewDisappearingAsync(VisualElement view)
         {
+            PDFImageText = "";
             return Task.FromResult(true);
         }
 

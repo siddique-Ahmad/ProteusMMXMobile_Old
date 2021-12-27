@@ -35,17 +35,17 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
         }
         public async void RemoveTool(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
 
-                var menuItem = sender as MenuItem;
-                await (ParentContext as WorkorderToolListingPageViewModel).RemoveTool(menuItem.CommandParameter as WorkOrderTool);
-            }
-            catch (Exception ex)
-            {
+            //    var menuItem = sender as MenuItem;
+            //    await (ParentContext as WorkorderToolListingPageViewModel).RemoveTool(menuItem.CommandParameter as WorkOrderTool);
+            //}
+            //catch (Exception ex)
+            //{
 
 
-            }
+            //}
         }
         private void OnBindingContextChanged(object sender, EventArgs e)
         {
@@ -99,6 +99,13 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             {
                 (bindable as ToolsViewCell).ParentContext = newValue;
             }
+        }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            var imageSender = (Image)sender;
+            var a = imageSender.BindingContext as ProteusMMX.Model.WorkOrderModel.WorkOrderTool;
+            (ParentContext as WorkorderToolListingPageViewModel).RemoveTool(a.WorkOrderToolID);
         }
     }
 }

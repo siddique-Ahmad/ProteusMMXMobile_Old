@@ -20,9 +20,8 @@ namespace ProteusMMX.Views.Workorder
         public WorkorderListingPage()
         {
             InitializeComponent();
-            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
-            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
-
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
 
         public WorkorderListingPageViewModel ViewModel
@@ -50,11 +49,6 @@ namespace ProteusMMX.Views.Workorder
                 await ViewModel.GetWorkordersAuto();
 
             }
-
-           
-
-
-
         }
 
 
@@ -64,6 +58,8 @@ namespace ProteusMMX.Views.Workorder
 
             if (BindingContext is IHandleViewAppearing viewAware)
             {
+                ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+                ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
                 await viewAware.OnViewAppearingAsync(this);
             }
         }
@@ -91,6 +87,22 @@ namespace ProteusMMX.Views.Workorder
         private void Picker_Focused(object sender, FocusEventArgs e)
         {
 
+        }
+
+        private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                await ViewModel.OnViewDisappearingAsync(null);
+                await ViewModel.RefillWorkorderCollection();
+            }
+        }
+
+        private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            await ViewModel.OnViewDisappearingAsync(this);
+            await ViewModel.RefillWorkorderCollection();
         }
     }
 }

@@ -660,7 +660,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (response != null && bool.Parse(response.servicestatus))
                 {
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("NonStockroomPartDetailsupdatedsuccessfully"), 2000);
-                    //await NavigationService.NavigateBackAsync();
+                    await NavigationService.NavigateBackAsync();
 
                     //await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(response.workOrderWrapper.workOrder);
                     //await NavigationService.RemoveLastFromBackStackAsync();

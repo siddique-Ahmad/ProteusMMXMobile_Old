@@ -20,7 +20,7 @@ using ZXing.Net.Mobile.Forms;
 
 namespace ProteusMMX.ViewModel.ClosedWorkorder
 {
-    public class ClosedWorkorderNonStockroomPartsViewModel:ViewModelBase
+    public class ClosedWorkorderNonStockroomPartsViewModel:ViewModelBase, IHandleViewAppearing, IHandleViewDisappearing
     {
 
         #region Fields
@@ -29,7 +29,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
         protected readonly IFormLoadInputService _formLoadInputService;
 
-        protected readonly ICloseWorkorderService _closeWorkorderService;
+        protected  ICloseWorkorderService _closeWorkorderService;
 
 
         #endregion
@@ -428,7 +428,10 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             _formLoadInputService = formLoadInputService;
             _closeWorkorderService = closeWorkorderService;
         }
+        public ClosedWorkorderNonStockroomPartsViewModel()
+        {
 
+        }
         public async Task SetTitlesPropertiesForPage()
         {
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("NonStockParts");
@@ -484,6 +487,26 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
             try
             {
+                if (Application.Current.Properties.ContainsKey("ClosedWorkorderID"))
+                {
+
+                    var ClosedWorkorderid = Application.Current.Properties["ClosedWorkorderID"].ToString();
+                    if (ClosedWorkorderid != null)
+                    {
+                        this.ClosedWorkorderID = Convert.ToInt32(ClosedWorkorderid);
+
+                    }
+                }
+
+                if (Application.Current.Properties.ContainsKey("CloseWorkorderService"))
+                {
+                    ICloseWorkorderService CloseWorkorderService = Application.Current.Properties["CloseWorkorderService"] as ICloseWorkorderService;
+                    if (CloseWorkorderService != null)
+                    {
+                        _closeWorkorderService = CloseWorkorderService;
+
+                    }
+                }
                 OperationInProgress = true;
                 var workordersResponse = await _closeWorkorderService.GetClosedWorkOrdersNonStockroomPartsByClosedWorkorderID(this.ClosedWorkorderID.ToString());
                 if (workordersResponse != null && workordersResponse.clWorkOrderWrapper != null
@@ -526,8 +549,20 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
-       
 
+        public async Task OnViewAppearingAsync(VisualElement view)
+        {
+            await SetTitlesPropertiesForPage();
+
+            NonStockroomPartsCollection.Clear();
+
+            await GetWorkorderNonStockRoomParts();
+        }
+
+        public async Task OnViewDisappearingAsync(VisualElement view)
+        {
+
+        }
 
 
 

@@ -4,37 +4,34 @@
              x:Class="ProteusMMX.Views.Asset.Templates.ViewCells.AssetsViewCell"
            BindingContextChanged="OnBindingContextChanged">
     <ViewCell.View>
-        <Grid RowSpacing="5">
+        <Frame BorderColor="Gray">
+            <StackLayout >
+                <Grid RowSpacing="3" Padding="-15,-15,-15,-15">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
+                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-
-            <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-
-                <Label x:Name="AssetName" />
-                <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding AssetName}" Grid.Column="2"  MinimumWidthRequest="15" LineBreakMode="TailTruncation"/>
-
-            </Grid>
-            <Grid>
-
-                <Button x:Name="ShowAssetSystem" Text="{Binding ShowAssetSystem}" FontSize="Micro"  IsVisible="{Binding ShowAssetSystem}" TextColor="Blue" BackgroundColor="Transparent" BorderColor="Transparent" HorizontalOptions="End" BorderWidth="0" Opacity="3" BorderRadius="0"  Clicked="Button_Clicked"/>
-
+                <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima"  x:Name="AssetName" />
+                <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" Text=":" Grid.Column="1"  />
+                <Label TextColor="#006de0" FontAttributes="Bold" FontSize="14" FontFamily="Ebrima" MinimumWidthRequest="15" LineBreakMode="TailTruncation" Text="{Binding AssetName}" Grid.Column="2" />
 
             </Grid>
-            <Grid Grid.Row="1">
+
+                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -49,7 +46,7 @@
 
             </Grid>
 
-            <Grid x:Name="DescriptionColon" Grid.Row="2" IsVisible="False">
+                    <Grid x:Name="DescriptionColon" Grid.Row="2" Grid.ColumnSpan="2" IsVisible="False" Grid.Column="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
@@ -61,14 +58,22 @@
                 <Label Text=":" Grid.Column="1"  />
                 <Label Text="{Binding Description}" Grid.Column="2" MinimumWidthRequest="15" LineBreakMode="TailTruncation" />
 
-
             </Grid>
 
+                    <Grid Grid.Row="2" Grid.Column="1" >
+                        <!--<Image Source="Viewicon.png" HeightRequest="30"  HorizontalOptions="EndAndExpand" IsVisible="{Binding ShowAssetSystem}">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer
+                                Tapped="Button_Clicked"
+                                        
+                                         NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
 
-            <BoxView Color="Gray"  VerticalOptions="Start" HorizontalOptions="FillAndExpand" HeightRequest="1" />
-
-
-
-        </Grid>
+                        </Image>-->
+                        <Button x:Name="ShowAssetSystem" Text="{Binding ShowAssetSystem}" FontSize="Micro"  IsVisible="{Binding ShowAssetSystem}" TextColor="Blue" BackgroundColor="Transparent" BorderColor="Transparent" HorizontalOptions="End" BorderWidth="0" Opacity="3" BorderRadius="0"  Clicked="Button_Clicked"/>
+             </Grid>
+         </Grid>
+            </StackLayout>
+        </Frame>
     </ViewCell.View>
 </ViewCell>

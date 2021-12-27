@@ -46,7 +46,7 @@
 
                 <ScrollView Grid.Row="0">
                     <Grid
-                        Padding="10,10,10,10"
+                        Padding="0,0,0,0"
                         RowSpacing="5"
                         VerticalOptions="Fill">
 
@@ -82,9 +82,9 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
-                            <Button Text="{Binding TaskName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding TaskCommand}" IsEnabled="{Binding TaskIsEnable}" />
-                            <!--</border:SfBorder>-->
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                <buttons:SfButton Text="{Binding TaskName}" Style="{StaticResource SfButtonStyles}" Command="{Binding TaskCommand}" IsEnabled="{Binding TaskIsEnable}" />
+                            </border:SfBorder>
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" IsVisible="{Binding TaskIsVisible}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
@@ -98,7 +98,6 @@
                             </Label>
                             <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" HeightRequest="100"/>-->
                             <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="100">
-
                                 <controls:UnderLineEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" ></controls:UnderLineEditor>
                             </border:SfBorder>
                         </StackLayout>
@@ -112,9 +111,9 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
-                            <Button Text="{Binding EmployeeName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding EmployeeCommand}" IsEnabled="{Binding EmployeeIsEnable}" />
-                            <!--</border:SfBorder>-->
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                <buttons:SfButton Text="{Binding EmployeeName}" Style="{StaticResource SfButtonStyles}" Command="{Binding EmployeeCommand}" IsEnabled="{Binding EmployeeIsEnable}" />
+                            </border:SfBorder>
                         </StackLayout>
 
                         <StackLayout IsVisible="{Binding ContractorIsVisible}" Orientation="Vertical" Grid.Row="2" Grid.Column="1">
@@ -126,9 +125,9 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
-                            <Button Text="{Binding ContractorName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ContractorCommand}" IsEnabled="{Binding ContractorIsEnable}" />
-                            <!--</border:SfBorder>-->
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                <buttons:SfButton Text="{Binding ContractorName}" Style="{StaticResource SfButtonStyles}" Command="{Binding ContractorCommand}" IsEnabled="{Binding ContractorIsEnable}" />
+                            </border:SfBorder>
                         </StackLayout>
 
                         <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" IsVisible="{Binding TaskStartedDateIsVisible}">
@@ -140,7 +139,9 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <controls:CustomDatePicker SelectedDate="{Binding TaskStartedDate}" MinimumDate="{Binding MinimumTaskStartedDate}" MaximumDate="{Binding MaximumTaskStartedDate}" IsEnabled="{Binding TaskStartedDateIsEnable}"/>
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                <controls:CustomDatePicker SelectedDate="{Binding TaskStartedDate}" Margin="0,8,0,0" MinimumDate="{Binding MinimumTaskStartedDate}" MaximumDate="{Binding MaximumTaskStartedDate}" IsEnabled="{Binding TaskStartedDateIsEnable}"/>
+                            </border:SfBorder>
                         </StackLayout>
 
 
@@ -153,7 +154,9 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <controls:CustomDatePicker SelectedDate="{Binding TaskCompletionDate}" MinimumDate="{Binding MinimumTaskCompletionDate}" MaximumDate="{Binding MaximumTaskCompletionDate}" IsEnabled="{Binding TaskCompletionDateIsEnable}" />
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                <controls:CustomDatePicker SelectedDate="{Binding TaskCompletionDate}" Margin="0,8,0,0" MinimumDate="{Binding MinimumTaskCompletionDate}" MaximumDate="{Binding MaximumTaskCompletionDate}" IsEnabled="{Binding TaskCompletionDateIsEnable}" />
+                            </border:SfBorder>
                         </StackLayout>
 
 
@@ -165,6 +168,7 @@
                         Command="{Binding SaveCommand}"
                         Style="{StaticResource SaveButtonStyle}"
                         HeightRequest="40"
+                            BackgroundColor="#006de0"
                         Text="{Binding SaveTitle}" >
                         </Button>
                     </Grid>

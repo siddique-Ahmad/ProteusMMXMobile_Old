@@ -6,309 +6,330 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              x:Class="ProteusMMX.Views.Common.DashboardPage"
              Title="{Binding PageTitle}"
-             BackgroundColor="{StaticResource White}" >
+             BackgroundColor="White" >
 
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->
+    <!--<ContentPage.Resources>
+        <ResourceDictionary>          
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </ContentPage.Resources>
-
-
+    </ContentPage.Resources>-->
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="1" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="1" Command="{Binding ToolbarCommand}" >
 
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Name="MenuItem1" Order="Primary" Text="{Binding WelcomeTextTitle}" Priority="0"></ToolbarItem>
+        <!--<ToolbarItem Name="MenuItem1" Order="Primary" Text="{Binding WelcomeTextTitle}" Priority="0"></ToolbarItem>-->
     </ContentPage.ToolbarItems>
 
-    <ContentPage.Content>
-        <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+    <Grid BackgroundColor="#fefefe">
+        <StackLayout VerticalOptions="Start">
+            <Grid>
+                <Grid  >
+                    <Grid.RowDefinitions>
+                        <RowDefinition  Height="40*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                </Grid>
+                <border:SfBorder HeightRequest="40" BorderColor="#006de0" CornerRadius="0,0,20,20" BackgroundColor="#006de0"  >
+                    <Label  VerticalOptions="Center" FontSize="Medium" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" HorizontalOptions="Center" Text="{Binding WelcomeTextTitle}"></Label>
+                </border:SfBorder>
+            </Grid>
 
-            <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
+            <ScrollView>
+                <Grid Padding="25"  Margin="0,-39,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="120" />
+                        <RowDefinition Height="120" />
+                        <RowDefinition Height="120" />
+                        <RowDefinition Height="120" />
+                        <RowDefinition Height="120" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Row="0" Grid.Column="0">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                        <Grid Grid.Row="0" >
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="tel1.png">
+                            </Image>
+                            <Image  Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="kpiicon.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding KPICommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="KPI" FontFamily="Ebrima" FontAttributes="Bold" TextColor="Black" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
 
-            <ScrollView Grid.Row="1">
-                <Grid>
-                    <Grid
-                Padding="10,10,10,10"
-                RowSpacing="5"
-                VerticalOptions="Fill">
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Grid.Row="0" Grid.Column="2" IsVisible="{Binding WorkorderBorderVisibility}">
+                        <Grid RowSpacing="10" IsVisible="{Binding WorkorderVisibility}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="tel3.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding WorkordersCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="woicon.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding WorkordersCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding WorkorderTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" Grid.Column="0" IsVisible="{Binding ClosedWorkorderBorderVisibility}">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="tel4.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding CloseWorkordersCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="cwoicon.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding CloseWorkordersCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding CloseWorkorderTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" Grid.Column="2" IsVisible="{Binding InventoryTransactionVisibility}">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
 
-                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="tel6.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding InventoryCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="iticon.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding InventoryCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding InventoryTransactionTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Grid.Row="2" Grid.Column="0" IsVisible="{Binding ServiceRequestBorderVisibility}">
+                        <Grid RowSpacing="10" IsVisible="{Binding ServiceRequestVisibility}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
 
-                        <border:SfBorder Grid.Row="0" Style="{StaticResource SfBorderStyle1}" CornerRadius="5" IsVisible="{Binding WorkorderBorderVisibility}">
-                            <Grid  BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding WorkorderVisibility}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="tel2.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding ServiceRequestCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="sricon.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding ServiceRequestCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding ServiceRequestTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima"  TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Grid.Row="2" Grid.Column="2" IsVisible="{Binding AssetBorderVisibility}">
+                        <Grid RowSpacing="10" IsVisible="{Binding AssetVisibility}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
 
-                                </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="tel5.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding AssetCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="assets.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding AssetCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding AssetsTitle}" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
 
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding WorkordersCommand}"   NumberOfTapsRequired="1" />
-                                </Grid.GestureRecognizers>
+                    </StackLayout>
+                    <StackLayout Grid.Row="3" Grid.Column="0" IsVisible="{Binding BarcodeBorderVisibility}" >
+                        <Grid RowSpacing="10" IsVisible="{Binding BarcodeVisibility}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
 
-                                <Image Source="tapped.jpg">
-                                    <Image.Source>
-                                        <OnPlatform x:TypeArguments="FileImageSource">
-                                            <OnPlatform.iOS>
-                                                <FileImageSource File="Workorder.png"/>
-                                            </OnPlatform.iOS>
-                                            <OnPlatform.Android>
-                                                <FileImageSource File="Workorder.png"/>
-                                            </OnPlatform.Android>
-                                            <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/Workorder.png"/>
-                                            </OnPlatform.WinPhone>
-                                        </OnPlatform>
-                                    </Image.Source>
-                                </Image>
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="tel7.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding BarcodeCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="ssbicon.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding BarcodeCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding BarcodeTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
 
-                                <Label Grid.Column="1" Text="{Binding WorkorderTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
+                    </StackLayout>
+                    <StackLayout Grid.Row="3" Grid.Column="2" IsVisible="{Binding ReceivingBorderVisibility}">
+                        <Grid RowSpacing="10" IsVisible="{Binding ReceivingVisibility}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="30*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                        </Grid>
 
-                            </Grid>
-                        </border:SfBorder>
-
-                        <border:SfBorder Grid.Row="1" Style="{StaticResource SfBorderStyle1}" CornerRadius="5" IsVisible="{Binding ClosedWorkorderBorderVisibility}">
-                            <Grid  BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding CloseWorkorderVisibility}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding CloseWorkordersCommand}"  NumberOfTapsRequired="1" />
-                                </Grid.GestureRecognizers>
-
-                                <Image Source="tapped.jpg">
-                                    <Image.Source>
-                                        <OnPlatform x:TypeArguments="FileImageSource">
-                                            <OnPlatform.iOS>
-                                                <FileImageSource File="ClosedWorkorder.png"/>
-                                            </OnPlatform.iOS>
-                                            <OnPlatform.Android>
-                                                <FileImageSource File="ClosedWorkorder.png"/>
-                                            </OnPlatform.Android>
-                                            <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/ClosedWorkorder.png"/>
-                                            </OnPlatform.WinPhone>
-                                        </OnPlatform>
-                                    </Image.Source>
-                                </Image>
-
-                                <Label Grid.Column="1" Text="{Binding CloseWorkorderTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-
-                            </Grid>
-                        </border:SfBorder>
-
-                        <border:SfBorder Grid.Row="2" Style="{StaticResource SfBorderStyle1}" CornerRadius="5" IsVisible="{Binding InventoryBorderVisibility}">
-                            <Grid  BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding InventoryTransactionVisibility}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding InventoryCommand}"  NumberOfTapsRequired="1" />
-                                </Grid.GestureRecognizers>
-
-
-                                <Image Source="tapped.jpg">
-                                    <Image.Source>
-                                        <OnPlatform x:TypeArguments="FileImageSource">
-                                            <OnPlatform.iOS>
-                                                <FileImageSource File="InventoryParts.png"/>
-                                            </OnPlatform.iOS>
-                                            <OnPlatform.Android>
-                                                <FileImageSource File="InventoryParts.png"/>
-                                            </OnPlatform.Android>
-                                            <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/InventoryParts.png"/>
-                                            </OnPlatform.WinPhone>
-                                        </OnPlatform>
-                                    </Image.Source>
-                                </Image>
-                                <Label Grid.Column="1" Text="{Binding InventoryTransactionTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-                            </Grid>
-
-                        </border:SfBorder>
-
-                        <border:SfBorder Grid.Row="3" Style="{StaticResource SfBorderStyle1}" CornerRadius="5" IsVisible="{Binding ServiceRequestBorderVisibility}">
-                            <Grid  BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding ServiceRequestVisibility}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ServiceRequestCommand}"   NumberOfTapsRequired="1" />
-                                </Grid.GestureRecognizers>
-
-
-                                <Image Source="tapped.jpg">
-                                    <Image.Source>
-                                        <OnPlatform x:TypeArguments="FileImageSource">
-                                            <OnPlatform.iOS>
-                                                <FileImageSource File="Requester.png"/>
-                                            </OnPlatform.iOS>
-                                            <OnPlatform.Android>
-                                                <FileImageSource File="Requester.png"/>
-                                            </OnPlatform.Android>
-                                            <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/Requester.png"/>
-                                            </OnPlatform.WinPhone>
-                                        </OnPlatform>
-                                    </Image.Source>
-                                </Image>
-                                <Label Grid.Column="1" Text="{Binding ServiceRequestTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-                            </Grid>
-                        </border:SfBorder>
-
-                        <border:SfBorder Grid.Row="4" Style="{StaticResource SfBorderStyle1}" CornerRadius="5" IsVisible="{Binding AssetBorderVisibility}">
-                            <Grid  BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding AssetVisibility}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding AssetCommand}"   NumberOfTapsRequired="1" />
-                                </Grid.GestureRecognizers>
-
-
-                                <Image Source="tapped.jpg">
-                                    <Image.Source>
-                                        <OnPlatform x:TypeArguments="FileImageSource">
-                                            <OnPlatform.iOS>
-                                                <FileImageSource File="Asset.jpg"/>
-                                            </OnPlatform.iOS>
-                                            <OnPlatform.Android>
-                                                <FileImageSource File="Asset.jpg"/>
-                                            </OnPlatform.Android>
-                                            <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/Asset.jpg"/>
-                                            </OnPlatform.WinPhone>
-                                        </OnPlatform>
-                                    </Image.Source>
-                                </Image>
-                                <Label Grid.Column="1" Text="{Binding AssetsTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-                            </Grid>
-                        </border:SfBorder>
-
-                        <border:SfBorder Grid.Row="5" Style="{StaticResource SfBorderStyle1}" CornerRadius="5" IsVisible="{Binding BarcodeBorderVisibility}" >
-                            <Grid BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding BarcodeVisibility}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding BarcodeCommand}"   NumberOfTapsRequired="1" />
-                                </Grid.GestureRecognizers>
-
-                                <Image Source="tapped.jpg">
-                                    <Image.Source>
-                                        <OnPlatform x:TypeArguments="FileImageSource">
-                                            <OnPlatform.iOS>
-                                                <FileImageSource File="Barcode.png"/>
-                                            </OnPlatform.iOS>
-                                            <OnPlatform.Android>
-                                                <FileImageSource File="Barcode.png"/>
-                                            </OnPlatform.Android>
-                                            <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/Barcode.png"/>
-                                            </OnPlatform.WinPhone>
-                                        </OnPlatform>
-                                    </Image.Source>
-                                </Image>
-                                <Label Grid.Column="1" Text="{Binding BarcodeTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-                            </Grid>
-                        </border:SfBorder>
-
-                        <border:SfBorder Grid.Row="6" Style="{StaticResource SfBorderStyle1}" CornerRadius="5" IsVisible="{Binding ReceivingBorderVisibility}">
-                            <Grid  BackgroundColor="{StaticResource BackgroundColor}" IsVisible="{Binding ReceivingVisibility}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ReceivingCommand}"   NumberOfTapsRequired="1" />
-                                </Grid.GestureRecognizers>
-
-
-                                <Image Source="tapped.jpg">
-                                    <Image.Source>
-                                        <OnPlatform x:TypeArguments="FileImageSource">
-                                            <OnPlatform.iOS>
-                                                <FileImageSource File="Receiving.jpg"/>
-                                            </OnPlatform.iOS>
-                                            <OnPlatform.Android>
-                                                <FileImageSource File="Receiving.jpg"/>
-                                            </OnPlatform.Android>
-                                            <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/Receiving.jpg"/>
-                                            </OnPlatform.WinPhone>
-                                        </OnPlatform>
-                                    </Image.Source>
-                                </Image>
-                                <Label Grid.Column="1" Text="{Binding ReceivingTitle}" Style="{StaticResource LabelStyle}" HorizontalOptions="Start" VerticalOptions="Center" />
-                            </Grid>
-                        </border:SfBorder>
-
-                        <Label Grid.Row="7" Text="{Binding APIVersion}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Style="{StaticResource LabelStyle}" />
-                        <Label Grid.Row="8" Text="{Binding CopyrightLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Style="{StaticResource LabelStyle}" />
-                        <Label Grid.Row="9" Text="{Binding SupportLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
-
-
-                    </Grid>
-
-                    <ActivityIndicator Grid.Row="0" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
-
-
+                        <Grid Grid.Row="0">
+                            <Image  Aspect="AspectFill"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Source="tel8.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding ReceivingCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                    Aspect="AspectFill"
+                    Source="recicon.png" 
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                         Command="{Binding ReceivingCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding ReceivingTitle}" WidthRequest="80" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
+                    HorizontalOptions="Center"></Label>
+                        </Grid>
+                    </StackLayout>
+                    <StackLayout Grid.Row="4" Grid.ColumnSpan="3">
+                        <Label  Text="{Binding APIVersion}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  />
+                        <Label  Text="{Binding CopyrightLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" />
+                        <Label  Text="{Binding SupportLabel}" HorizontalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  TextColor="Black" />
+                    </StackLayout>
                 </Grid>
             </ScrollView>
-
-        </Grid>
-
-
-    </ContentPage.Content>
-
+        </StackLayout>
+    </Grid>
 </ContentPage>  

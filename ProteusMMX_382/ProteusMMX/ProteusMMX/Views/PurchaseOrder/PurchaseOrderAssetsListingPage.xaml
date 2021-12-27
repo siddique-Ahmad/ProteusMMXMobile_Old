@@ -10,29 +10,23 @@
              BackgroundColor="{StaticResource BackgroundColor}" >
     <ContentPage.Resources>
         <ResourceDictionary>
-
-
-
             <templates:PurchaseOrderAssetsListingTemplateSelector x:Key="DateTemplateSelector">
             </templates:PurchaseOrderAssetsListingTemplateSelector>
-
-
-
         </ResourceDictionary>
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -45,39 +39,17 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-
-
-
-            <Grid Grid.Row="1"  Padding="10,10,10,10">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3.5*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-
-
-                <ListView Grid.Row="2" Grid.ColumnSpan="2"
+            <Grid Grid.Row="1"  Padding="5,0,5,0">
+                <ListView Grid.ColumnSpan="2"
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"
                           CachingStrategy="RecycleElement"
-                          ItemsSource="{Binding PurchaseOrderAssetsCollection}"
-                         
+                          ItemsSource="{Binding PurchaseOrderAssetsCollection}"                         
                           behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding PurchaseOrderAssetSelectedCommand}">
-
                 </ListView>
-            </Grid>
-
+            </Grid>           
             <ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
-
         </Grid>
-
-
     </ContentPage.Content>
 </ContentPage>

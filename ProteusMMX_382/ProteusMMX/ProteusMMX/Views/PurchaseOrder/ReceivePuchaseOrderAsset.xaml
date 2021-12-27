@@ -25,17 +25,17 @@
 
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Dot.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="Dot.png"/>
+                        <FileImageSource File="dots.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/Dot.png"/>
+                        <FileImageSource File="Assets/dots.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -43,12 +43,15 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content >
 
-        <Grid Margin="10,0,0,0" Padding="10,10,10,10" RowSpacing="5">
-
-
-
-
-
+        <Grid  Padding="10,10,10,10" RowSpacing="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0">
                 <Label Text="{Binding ReceiverNameTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                     <Label.FontAttributes>
@@ -58,7 +61,10 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <Button Text="{Binding ReceiverName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ReceiverCommand}"/>
+                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                    <buttons:SfButton Text="{Binding ReceiverName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding ReceiverCommand}" />
+                </border:SfBorder>
+               
             </StackLayout>
 
 
@@ -71,7 +77,10 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <controls:RequiredDateCustomDatePicker SelectedDate="{Binding ReceivedDate}"></controls:RequiredDateCustomDatePicker>
+                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                    <controls:RequiredDateCustomDatePicker SelectedDate="{Binding ReceivedDate}" Padding="0,3,0,0"></controls:RequiredDateCustomDatePicker>
+                </border:SfBorder>
+              
             </StackLayout>
 
             <StackLayout  Grid.Row="2"  Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
@@ -104,7 +113,7 @@
                 </border:SfBorder>
             </StackLayout>
 
-            <StackLayout Orientation="Vertical" Grid.Row="4">
+            <StackLayout HorizontalOptions="CenterAndExpand" Padding="0,20,0,0" Grid.Row="4" WidthRequest="100">
                 <!--<Button Text="{Binding ReceiveTitle}" TextColor="Black"  BackgroundColor="{Binding ColorBackground}"  IsEnabled="{Binding ReceivedButtonIsEnabled}" IsVisible="{Binding ReceivedButtonIsVisible}" Command="{Binding ReceivePurchaseOrderAssetCommand}"  />-->
                 <buttons:SfButton
                         CornerRadius="5"
