@@ -650,19 +650,22 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout x:Name="SignatureLayout" Orientation="Vertical" IsVisible="{Binding  SignaturesIsVisible }" Grid.ColumnSpan="2">
+                            <StackLayout x:Name="SignatureLayout" Grid.Row="37" Orientation="Vertical" IsVisible="{Binding  SignaturesIsVisible }" Grid.ColumnSpan="2">
                                 <Label Text="{Binding Signatures}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
                                 <border:SfBorder CornerRadius="5" BackgroundColor="LightGray" IsEnabled="False" >
+                                    <StackLayout>
                                     <control1:UnderLineEditor Text="{Binding SignatureText}"  HeightRequest="150"></control1:UnderLineEditor>
-                                </border:SfBorder>
-                                <Label Grid.Column="1" BackgroundColor="LightGray"  Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
+                                    
+                                <Label Grid.Column="1" BackgroundColor="Transparent" HorizontalTextAlignment="End"  Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
                                         Command="{Binding TapCommandSignature}"
                                          NumberOfTapsRequired="1" />
                                     </Label.GestureRecognizers>
                                 </Label>
+                                    </StackLayout>
+                                </border:SfBorder>
                             </StackLayout>
                         </Grid>
                     </Grid>

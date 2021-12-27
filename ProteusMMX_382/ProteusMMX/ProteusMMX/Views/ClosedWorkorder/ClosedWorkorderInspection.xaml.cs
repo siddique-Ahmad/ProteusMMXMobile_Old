@@ -101,11 +101,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
         {
             ClosedWorkorderInspectionList = await ViewModel._inspectionService.GetClosedWorkOrdersInspection(this.ClosedWorkorderID.ToString(), this.UserId);
 
-            if (ClosedWorkorderInspectionList.clWorkOrderWrapper == null || ClosedWorkorderInspectionList.clWorkOrderWrapper.ClosedWorkOrderInspection.Count == 0)
-            {
-                // this.InspectionTimerLayout.IsVisible = false;
-                return;
-            }
+           
 
             Grid masterGrid = new Grid();
             masterGrid.BackgroundColor = Color.White;
@@ -134,7 +130,12 @@ namespace ProteusMMX.Views.ClosedWorkorder
             FrameSV.Content = FramesSL;
 
             //TotalInspectionTime = new Label();
-
+            if (ClosedWorkorderInspectionList.clWorkOrderWrapper == null || ClosedWorkorderInspectionList.clWorkOrderWrapper.ClosedWorkOrderInspection.Count == 0)
+            {
+                
+                // this.InspectionTimerLayout.IsVisible = false;
+                return;
+            }
             int CCCount = ClosedWorkorderInspectionList.workOrderEmployee.Count + ClosedWorkorderInspectionList.workorderContractor.Count;
 
             if (CCCount > 1)
@@ -349,33 +350,36 @@ namespace ProteusMMX.Views.ClosedWorkorder
                 };
                 FromDateSL.Children.Add(dateFromBo);
                 CustomDatePicker startDate;
-                if (item.StartDate != null)
-                {
-                    startDate = new CustomDatePicker
+                
+                    if (item.StartDate != null)
                     {
-                        Margin = new Thickness(0, 5, 0, 0),
-                        SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
-                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                        HeightRequest = 2,
-                        BackgroundColor = Color.LightGray,
-                        IsEnabled = false,
-                    };
-                    dateFromBo.Content = startDate;
-                }
-                else
-                {
-                    startDate = new CustomDatePicker
+                        startDate = new CustomDatePicker
+                        {
+                            Margin = new Thickness(0, 5, 0, 0),
+                            SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
+                            MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                            HeightRequest = 2,
+                            BackgroundColor = Color.LightGray,
+                            IsEnabled = false,
+                        };
+                        dateFromBo.Content = startDate;
+                    }
+                    else
                     {
-                        Margin = new Thickness(0, 5, 0, 0),
-                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                        HeightRequest = 2,
-                        HorizontalOptions = LayoutOptions.Start,
-                        BackgroundColor = Color.LightGray,
-                        IsEnabled = false,
-                    };
-                    dateFromBo.Content = startDate;
-                }
+                        startDate = new CustomDatePicker
+                        {
+                            Margin = new Thickness(0, 5, 0, 0),
+                            SelectedDate=null,
+                            //MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                            HeightRequest = 2,
+                            HorizontalOptions = LayoutOptions.Start,
+                            BackgroundColor = Color.LightGray,
+                            IsEnabled = false,
+                        };
+                        dateFromBo.Content = startDate;
+                    }
 
+                
                 StackLayout CompDateSL = new StackLayout();
                 dateFromCompGrid.Children.Add(CompDateSL, 1, 0);
                 Label CompDateLbl = new Label
@@ -414,7 +418,8 @@ namespace ProteusMMX.Views.ClosedWorkorder
                 {
                     CompletionDate = new CustomDatePicker
                     {
-                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        //MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        SelectedDate = null,
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
                         Margin = new Thickness(0, 5, 0, 0),
@@ -674,7 +679,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     startDate = new CustomDatePicker
                     {
                         Margin = new Thickness(0, 5, 0, 0),
-                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        // MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),                       
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
                         BackgroundColor = Color.LightGray,
@@ -721,11 +726,11 @@ namespace ProteusMMX.Views.ClosedWorkorder
                 {
                     CompletionDate = new CustomDatePicker
                     {
-                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        // MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),                        
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
                         Margin = new Thickness(0, 5, 0, 0),
-                        BackgroundColor=Color.LightGray,
+                        BackgroundColor = Color.LightGray,
                         IsEnabled = false,
                     };
                     dateCompBo.Content = CompletionDate;
@@ -750,9 +755,6 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
                 }
             }
-
-
-
 
             Label TotalInspectionLal = new Label
             {
@@ -925,7 +927,8 @@ namespace ProteusMMX.Views.ClosedWorkorder
             // masterGrid.Children.Add(TabViewSL, 0, 4);
             #region **** MiscellaneousGrid ****
 
-            Grid MiscellaneousGrid = new Grid { BackgroundColor = Color.White, MinimumWidthRequest = 550, Padding = 2 };
+            Grid MiscellaneousGrid = new Grid { BackgroundColor = Color.White, MinimumWidthRequest = 300, Padding = 2 };
+          //  Grid MiscellaneousGrid = new Grid { BackgroundColor = Color.White,  Padding = 2 };
             MiscellaneousGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
             StackLayout MiscelMasterSL = new StackLayout();
             MiscellaneousGrid.Children.Add(MiscelMasterSL, 0, 0);
@@ -938,7 +941,8 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
             #region **** GroupSection ***
 
-            Grid GroupSectionsGrid = new Grid { BackgroundColor = Color.White, HeightRequest = 550, Padding = 2 };
+            Grid GroupSectionsGrid = new Grid { BackgroundColor = Color.White, HeightRequest = 300, Padding = 2 };
+            //Grid GroupSectionsGrid = new Grid { BackgroundColor = Color.White, Padding = 2 };
             GroupSectionsGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
             StackLayout GroupSecSl = new StackLayout();
             GroupSectionsGrid.Children.Add(GroupSecSl);
@@ -1946,10 +1950,10 @@ namespace ProteusMMX.Views.ClosedWorkorder
             };
 
             var MiscellGrid = MiscellaneousGrid.Height;
-            layout2Test.HeightRequest = MinimumHeightRequest = 500;
+            //layout2Test.HeightRequest = MinimumHeightRequest = 500;
 
             var GroupSGrid = MiscellaneousGrid.Height;
-            GroupSecSlCaseTest1.HeightRequest = 1200;
+            //GroupSecSlCaseTest1.HeightRequest = 500;
 
             tabView.Items = tabItems;
             MainLayout.Children.Add(tabView);
