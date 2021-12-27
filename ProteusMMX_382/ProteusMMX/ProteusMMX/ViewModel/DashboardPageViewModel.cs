@@ -105,8 +105,8 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-
-        string _copyrightLabel = "Copyright © 2020 Eagle Technology Inc.";
+       static string Year = DateTime.Parse(DateTime.Now.ToString()).Year.ToString();
+        string _copyrightLabel = "Copyright ©"+ Year +" Eagle Technology Inc.";
         public string CopyrightLabel
         {
             get
@@ -700,7 +700,7 @@ namespace ProteusMMX.ViewModel
             {
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("Dashboard");
             }
-            WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.User.UserName;
+            WelcomeTextTitle = AppSettings.User.UserName;
             LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
             CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
             SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
