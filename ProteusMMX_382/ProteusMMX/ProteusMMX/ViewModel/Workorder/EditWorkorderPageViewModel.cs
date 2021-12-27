@@ -6404,7 +6404,9 @@ namespace ProteusMMX.ViewModel.Workorder
         private void GenerateComboBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new MyPicker();
+            var control = new CustomPicker();
+            control.Image = "unnamed";
+            control.HeightRequest = 45;
 
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {

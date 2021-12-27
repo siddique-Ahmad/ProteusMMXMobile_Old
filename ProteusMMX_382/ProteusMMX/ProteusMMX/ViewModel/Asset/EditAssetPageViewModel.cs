@@ -4137,7 +4137,9 @@ namespace ProteusMMX.ViewModel.Asset
         private void GenerateComboBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
             var title = new Label();
-            var control = new MyPicker();
+            var control = new CustomPicker();
+            control.Image = "unnamed";
+            control.HeightRequest = 45;
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;
@@ -4567,6 +4569,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "InstallationDate":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -5075,6 +5083,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "WarrantyDate":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -6265,9 +6279,6 @@ namespace ProteusMMX.ViewModel.Asset
 
 
                 #endregion
-
-
-
 
 
 

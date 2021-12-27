@@ -4023,7 +4023,9 @@ namespace ProteusMMX.ViewModel.Asset
         {
             var title = new Label();
             //var control = new Picker();
-            var control = new MyPicker();
+            var control = new CustomPicker();
+            control.Image = "unnamed";
+            control.HeightRequest = 45;
             if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
             {
                 title.FontAttributes = FontAttributes.Bold;

@@ -47,7 +47,7 @@
         <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <StackLayout HeightRequest="80">
                     <border:SfBorder HeightRequest="80" Grid.Row="0"  BorderColor="#006de0" CornerRadius="0,0,8,8"                      
