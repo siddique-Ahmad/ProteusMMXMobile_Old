@@ -307,15 +307,18 @@
                                 </Label>
                                 <!--<Editor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>-->
                                 <border:SfBorder CornerRadius="5">
-                                    <Control1:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></Control1:UnderLineEditor>
-                                </border:SfBorder>
-                                <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="Accent" FontAttributes="Bold" >
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer
+                                    <StackLayout>
+                                        <Control1:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></Control1:UnderLineEditor>
+
+                                        <Label HorizontalOptions="End" BackgroundColor="Transparent" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
                                         Command="{Binding TapCommand2}"
                                          NumberOfTapsRequired="1" />
-                                    </Label.GestureRecognizers>
-                                </Label>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <Image Grid.Column="1" Grid.Row="0" Source="Assets/mic.png">
@@ -344,16 +347,16 @@
                                 </Label>
                                 <border:SfBorder CornerRadius="5">
                                     <StackLayout>
-                                    <Control1:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding SignatureText}" IsEnabled="False"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
+                                        <Control1:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding SignatureText}" IsEnabled="False"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
 
                                         <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
-                                    <Label.GestureRecognizers>
-                                        <TapGestureRecognizer
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
                                         Command="{Binding TapCommandSignature}"
                                          NumberOfTapsRequired="1" />
-                                    </Label.GestureRecognizers>
-                                </Label>
-                            </StackLayout>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
                                 </border:SfBorder>
                             </StackLayout>
                         </Grid>
