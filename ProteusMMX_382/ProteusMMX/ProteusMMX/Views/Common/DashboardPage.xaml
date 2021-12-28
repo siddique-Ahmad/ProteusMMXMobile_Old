@@ -291,6 +291,11 @@
 
                     </StackLayout>
                     <StackLayout Grid.Row="3" Grid.Column="2" IsVisible="{Binding ReceivingBorderVisibility}">
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer
+                                         Command="{Binding ReceivingCommand}"
+                                         NumberOfTapsRequired="1" />
+                        </StackLayout.GestureRecognizers>
                         <Grid RowSpacing="10" IsVisible="{Binding ReceivingVisibility}">
                             <Grid.RowDefinitions>
                                 <RowDefinition  Height="30*"></RowDefinition>

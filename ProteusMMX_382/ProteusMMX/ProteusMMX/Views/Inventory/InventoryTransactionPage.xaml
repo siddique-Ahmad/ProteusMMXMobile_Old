@@ -280,8 +280,8 @@
                         </border:SfBorder>
                     </StackLayout>
                    
-                    <StackLayout Orientation="Vertical" Grid.Row="12" Grid.Column="1" IsVisible="{Binding Perform_TransactionIsVisible}">
-                        <Button Text="{Binding SaveTitle}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding PerformInventoryCommand}" IsEnabled="{Binding Perform_TransactionIsEnabled}" />
+                    <StackLayout Orientation="Vertical" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding Perform_TransactionIsVisible}">
+                        <Button Text="{Binding SaveTitle}" WidthRequest="150" HorizontalOptions="CenterAndExpand" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding PerformInventoryCommand}" IsEnabled="{Binding Perform_TransactionIsEnabled}" />
                     </StackLayout>
                 </Grid>
             </StackLayout>

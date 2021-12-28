@@ -17,7 +17,7 @@ namespace ProteusMMX.Views.PurchaseOrder.Templates.ViewCells
 		public PurchaseorderViewCell (ref object ParentContext)
 		{
 			InitializeComponent ();
-            this.PurchaseOrderNumber.Text = WebControlTitle.GetTargetNameByTitleName("PurchaseOrderNumber");
+           this.PurchaseOrderNumber.Text = WebControlTitle.GetTargetNameByTitleName("PurchaseOrderNumber");
         }
         public static readonly BindableProperty ParentContextProperty =
      BindableProperty.Create("ParentContext", typeof(object), typeof(PurchaseorderViewCell), null, propertyChanged: OnParentContextPropertyChanged);

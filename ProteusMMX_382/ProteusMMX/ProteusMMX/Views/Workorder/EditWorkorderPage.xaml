@@ -121,10 +121,7 @@
                                 </StackLayout>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="1" HeightRequest="100" Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">
-                               
-
-
+                            <StackLayout Orientation="Vertical" Grid.Row="1"  Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">
                                 <Label Text="{Binding DescriptionTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -134,14 +131,11 @@
                                     </Label.FontAttributes>
                                 </Label>
 
-
-                                <!--<border:SfBorder  CornerRadius="5">
-                                    <Entry Text="{Binding DescriptionText}"
-                                        IsEnabled="{Binding DescriptionIsEnable}" />
-                                </border:SfBorder>-->
                                 <border:SfBorder Grid.Row="2" Style="{StaticResource SfBorderStyle}">
                                     <StackLayout Grid.Row="2">
-                                    <control1:CustomEntry  x:Name="Description" Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"
+                                        <border:SfBorder>
+                                            <StackLayout>
+                                        <control1:UnderLineEditor  x:Name="Description" Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"
                             TextColor="{DynamicResource Gray-900}" />
                                         <Label HorizontalOptions="EndAndExpand" Grid.Column="1" TextColor="#006de0" Text="{Binding MoreText}"  FontAttributes="Bold" >
                                             <Label.GestureRecognizers>
@@ -150,18 +144,19 @@
                                          NumberOfTapsRequired="1" />
                                             </Label.GestureRecognizers>
                                         </Label>
+                                            </StackLayout>
+                                        </border:SfBorder>
                                     </StackLayout>
                                 </border:SfBorder>
-
-                               
-
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding AssetIsVisible}">
                                 <Label Text="{Binding TargetTitle}" TextColor="Black" FontAttributes="Bold" Style="{StaticResource LabelStyle}">
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <Label Text="{Binding TargetName}" Margin="2,10,0,10" Style="{StaticResource LabelStyleNew}" />
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="70">
+                                   
+                                    <Label Text="{Binding TargetName}"   LineBreakMode="WordWrap" Margin="2,10,0,10" Style="{StaticResource LabelStyleNew}" />
+                                    
                                 </border:SfBorder>
                             </StackLayout>
 

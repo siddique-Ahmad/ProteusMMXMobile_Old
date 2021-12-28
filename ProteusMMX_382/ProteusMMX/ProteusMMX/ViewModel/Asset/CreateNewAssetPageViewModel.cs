@@ -4130,6 +4130,12 @@ namespace ProteusMMX.ViewModel.Asset
                     {
                         if (control is Picker)
                         {
+                            if (control is SfBorder)
+                            {
+                                var data = control as SfBorder;
+                                control = data.Content as CustomDatePicker;
+                            }
+
                             //var x = control as Picker;
                             //control.SetBinding(Picker.SelectedItemProperty, nameof(this.AmStepID));
 
@@ -4172,6 +4178,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Capacity":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4219,6 +4231,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Category":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4263,6 +4281,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "CurrentRuntime":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4311,6 +4335,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "DailyRuntime":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4357,6 +4387,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Description":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4402,6 +4438,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "DetailedLocation":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4449,6 +4491,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "InstallationDate":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4501,6 +4549,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "CriticalAsset":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4547,6 +4601,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "MachineClassification%":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4593,6 +4653,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Manufacturer":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4638,6 +4704,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Model":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4684,6 +4756,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "OriginalCostID":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4731,6 +4809,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "ProfileImage":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4775,6 +4859,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Rating":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4820,6 +4910,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "RuntimeUnits":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4866,6 +4962,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "SerialNumber":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4911,6 +5013,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Vendor":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4956,6 +5064,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "WarrantyDate":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -5009,6 +5123,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Weight":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -5056,6 +5176,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "LOTOUrl":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -5106,6 +5232,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField1":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5148,6 +5280,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField2":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5190,6 +5328,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField3":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5233,6 +5377,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField4":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5276,6 +5426,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField5":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5319,6 +5475,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField6":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5362,6 +5524,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField7":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5405,6 +5573,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField8":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5448,6 +5622,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField9":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5491,6 +5671,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField10":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5534,6 +5720,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField11":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5577,6 +5769,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField12":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5620,6 +5818,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField13":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5663,6 +5867,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField14":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5706,6 +5916,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField15":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5749,6 +5965,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField16":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5792,6 +6014,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField17":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5835,6 +6063,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField18":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5878,6 +6112,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField19":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5921,6 +6161,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField20":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5964,6 +6210,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField21":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -6047,6 +6299,12 @@ namespace ProteusMMX.ViewModel.Asset
 
 
 
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
 
                         if (control is Picker)
                         {
@@ -6096,6 +6354,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField23":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -6142,6 +6406,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField24":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -6189,11 +6459,6 @@ namespace ProteusMMX.ViewModel.Asset
 
 
                 #endregion
-
-
-
-
-
 
                 default:
                     break;
