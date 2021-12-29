@@ -139,7 +139,7 @@
                     </Label>
                     <border:SfBorder Style="{StaticResource SfBorderStyle}">
                         <control1:CustomEntry
-                      x:Name="QuantityRequired" Text="{Binding QuantityRequiredText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextChanged="QuantityRequired_TextChanged" />
+                      x:Name="QuantityRequired" Keyboard="Numeric" Text="{Binding QuantityRequiredText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextChanged="QuantityRequired_TextChanged" />
                     </border:SfBorder>
                 </StackLayout>
 
@@ -154,7 +154,7 @@
                     </Label>
                     <border:SfBorder Style="{StaticResource SfBorderStyle}">
                         <control1:CustomEntry
-                       x:Name="QuantityAllocated" Text="{Binding QuantityAllocatedText}" TextChanged="QuantityAllocated_TextChanged"/>
+                       x:Name="QuantityAllocated" Keyboard="Numeric" Text="{Binding QuantityAllocatedText}" TextChanged="QuantityAllocated_TextChanged"/>
                     </border:SfBorder>
                 </StackLayout>
 
@@ -169,7 +169,7 @@
                     </Label>
                     <border:SfBorder Style="{StaticResource SfBorderStyle}">
                         <control1:CustomEntry
-                         x:Name="UnitCost" Text="{Binding UnitCostText}" TextChanged="UnitCost_TextChanged"/>
+                         x:Name="UnitCost" Text="{Binding UnitCostText}" Keyboard="Numeric"  TextChanged="UnitCost_TextChanged"/>
                     </border:SfBorder>
 
                 </StackLayout>

@@ -2012,6 +2012,11 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        public async Task ClearSearchBox()
+        {
+           await GetWorkorders();
+        }
+
         private async Task AddWorkordersInWorkorderCollection(List<workOrders> workorders)
         {
 
@@ -2033,7 +2038,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        private async Task RemoveAllWorkorderFromCollection()
+        public async Task RemoveAllWorkorderFromCollection()
         {
             Device.BeginInvokeOnMainThread(() =>
             {

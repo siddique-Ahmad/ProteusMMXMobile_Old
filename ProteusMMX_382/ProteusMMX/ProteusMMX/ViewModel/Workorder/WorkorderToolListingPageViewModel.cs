@@ -797,6 +797,10 @@ namespace ProteusMMX.ViewModel.Workorder
                     TotalRecordCount = workordersResponse.workOrderWrapper.tools.Count;
 
                 }
+                else
+                {
+                    TotalRecordCount = 0;
+                }
             }
             catch (Exception ex)
             {
