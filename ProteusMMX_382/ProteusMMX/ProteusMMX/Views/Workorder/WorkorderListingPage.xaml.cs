@@ -94,14 +94,17 @@ namespace ProteusMMX.Views.Workorder
             SearchBar searchBar = (SearchBar)sender;
             if (string.IsNullOrEmpty(searchBar.Text))
             {
-                await ViewModel.OnViewDisappearingAsync(null);
-                await ViewModel.RefillWorkorderCollection();
+                //await ViewModel.OnViewDisappearingAsync(null);
+                await ViewModel.RemoveAllWorkorderFromCollection();
+                await ViewModel.ClearSearchBox();
+
+
             }
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            await ViewModel.OnViewDisappearingAsync(this);
+            await ViewModel.OnViewDisappearingAsync(null);
             await ViewModel.RefillWorkorderCollection();
         }
     }
