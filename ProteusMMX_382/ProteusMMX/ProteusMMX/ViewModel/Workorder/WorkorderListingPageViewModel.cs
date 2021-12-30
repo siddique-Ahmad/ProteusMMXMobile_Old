@@ -1689,14 +1689,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 var Weekly = Application.Current.Properties["weekly"].ToString();
                 this.KPIDashboardType = Weekly;
             }
-            if (!String.IsNullOrWhiteSpace(this.KPIDashboardType))
-            {
-                await GetWorkordersFromKPIDashboard();
-            }
-            else
-            {
-                await GetWorkorders();
-            }
+            await GetWorkorders();
+
+
 
 
         }
@@ -1868,58 +1863,22 @@ namespace ProteusMMX.ViewModel.Workorder
             if (string.IsNullOrWhiteSpace(SearchText))
             {
                 PageNumber++;
-                if (!String.IsNullOrWhiteSpace(this.KPIDashboardType))
-                {
-
-                }
-                else
-                {
-                    await GetWorkorders();
-                }
-            }
-
-
-
-        }
-
-
-        async Task GetWorkordersFromKPIDashboard()
-        {
-
-            try
-            {
-                OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkordersfromKPI(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate, KPIDashboardType);
-                if (workordersResponse != null && workordersResponse.workOrderWrapper != null
-                    && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
-                {
-
-                    var workorders = workordersResponse.workOrderWrapper.workOrders;
-
-                    await AddWorkordersInWorkorderCollection(workorders);
-
-                }
-                TotalRecordCount = workordersResponse.workOrderWrapper.WorkOrderCount;
-
-            }
-            catch (Exception ex)
-            {
-
-                OperationInProgress = false;
-            }
-
-            finally
-            {
-                OperationInProgress = false;
+                await GetWorkorders();
             }
         }
+
+
         async Task GetWorkorders()
         {
-
+            
             try
             {
+                if (String.IsNullOrWhiteSpace(this.KPIDashboardType))
+                {
+                    this.KPIDashboardType = null;
+                }
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate);
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate, KPIDashboardType);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
@@ -1949,7 +1908,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", "null", "null", "null", "null", "null", "null", "null");
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", "null", "null", "null", "null", "null", "null", "null","null");
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
@@ -1981,7 +1940,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, "null", "null", "null", "null", "null", "null");
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, "null", "null", "null", "null", "null", "null","null");
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {

@@ -517,6 +517,10 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     await AddWorkorderNonStockroomPartsInWorkorderCollection(workordernonstkparts);
 
                 }
+                else
+                {
+                    await DialogService.ShowAlertAsync("Alert", "No Data Available", "ok");
+                }
             }
             catch (Exception ex)
             {
