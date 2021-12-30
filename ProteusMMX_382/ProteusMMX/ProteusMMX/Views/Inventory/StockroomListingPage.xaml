@@ -64,7 +64,7 @@
                             </Grid.RowDefinitions>
                             <border:SfBorder BackgroundColor="White" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" CornerRadius="10" >
 
-                                <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0"/>
+                                <SearchBar x:Name="filterText" HeightRequest="40" TextChanged="filterText_TextChanged"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0"/>
 
                             </border:SfBorder>
                             <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0">
@@ -90,24 +90,9 @@
                     </StackLayout>
                 </border:SfBorder>
             </StackLayout>
-            <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
-
+            
             <Grid Grid.Row="1"  Padding="5,-5,5,0">
-
               
-                <!--<border:SfBorder CornerRadius="5">
-                    <control1:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
-                </border:SfBorder>
-                <Button Grid.Column="1" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
-                <Label Grid.Column="2" IsVisible="{Binding TotalRecordForTab}" Text= "{Binding TotalRecordTitle}" />
-                <Label Text=":" IsVisible="{Binding TotalRecordForTab}" Grid.Column="3"/>
-                <Label Text="{Binding TotalRecordCount}" IsVisible="{Binding TotalRecordForTab}"  Grid.Column="4" />
-
-                <StackLayout IsVisible="{Binding TotalRecordForPhone}" Grid.Row="1" Orientation="Horizontal" >
-                    <Label Text="{Binding TotalRecordTitle}"/>
-                    <Label Text=":" Grid.Column="3"/>
-                    <Label Text="{Binding TotalRecordCount}"/>
-                </StackLayout>-->
                 <ListView 
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"

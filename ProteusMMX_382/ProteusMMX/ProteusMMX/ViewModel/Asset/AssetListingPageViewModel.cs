@@ -985,6 +985,12 @@ namespace ProteusMMX.ViewModel.Asset
             }
         }
 
+        public async Task ReloadPageAfterSerchBoxCancle()
+        {
+            PageNumber = 1;
+            await RemoveAllAssetsFromCollection();
+            await GetAssets();
+        }
 
         private async Task RemoveAllAssetsFromCollection()
         {
@@ -1076,7 +1082,7 @@ namespace ProteusMMX.ViewModel.Asset
             });
 
         }
-        private async Task RefillAssetCollection()
+        public async Task RefillAssetCollection()
         {
 
             PageNumber = 1;
@@ -1153,13 +1159,6 @@ namespace ProteusMMX.ViewModel.Asset
                 await GetAssets();
              
             }
-            //else
-            //{
-            //    await RemoveAllAssetsFromCollection();
-            //    await GetAssetsFromSearchBar();
-            //}
-           
-
         }
 
         public async Task OnViewDisappearingAsync(VisualElement view)

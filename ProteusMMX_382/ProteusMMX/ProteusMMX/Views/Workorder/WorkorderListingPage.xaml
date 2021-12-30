@@ -172,7 +172,7 @@
                 </Grid.ColumnDefinitions>
 
                 <StackLayout Spacing="0"  Orientation="Horizontal" Padding="3" Grid.Column="0"  >
-                    <ListView HorizontalOptions="FillAndExpand" 
+                    <ListView x:Name="WorkorderList" HorizontalOptions="FillAndExpand" 
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="None"

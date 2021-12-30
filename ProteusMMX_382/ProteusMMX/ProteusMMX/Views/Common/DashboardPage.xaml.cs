@@ -64,6 +64,9 @@ namespace ProteusMMX.Views.Common
             }
         }
 
-        
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Receiving.BackgroundColor = Color.Azure;
+        }
     }
 }

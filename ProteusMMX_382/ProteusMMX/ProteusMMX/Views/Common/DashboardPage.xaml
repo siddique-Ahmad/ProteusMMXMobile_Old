@@ -222,8 +222,8 @@
                     HorizontalOptions="Center"></Label>
                         </Grid>
                     </StackLayout>
-                    <StackLayout Grid.Row="2" Grid.Column="2" IsVisible="{Binding AssetBorderVisibility}">
-                        <Grid RowSpacing="10" IsVisible="{Binding AssetVisibility}">
+                    <StackLayout Grid.Row="2" Grid.Column="2" IsVisible="{Binding AssetBorderVisibility}" >
+                        <Grid RowSpacing="10" IsVisible="{Binding AssetVisibility}" >
                             <Grid.RowDefinitions>
                                 <RowDefinition  Height="30*"></RowDefinition>
                             </Grid.RowDefinitions>
@@ -290,20 +290,20 @@
                         </Grid>
 
                     </StackLayout>
-                    <StackLayout Grid.Row="3" Grid.Column="2" IsVisible="{Binding ReceivingBorderVisibility}">
+                    <StackLayout x:Name="Receiving" Grid.Row="3" Grid.Column="2"  IsVisible="{Binding ReceivingBorderVisibility}">
                         <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
                                          Command="{Binding ReceivingCommand}"
                                          NumberOfTapsRequired="1" />
                         </StackLayout.GestureRecognizers>
-                        <Grid RowSpacing="10" IsVisible="{Binding ReceivingVisibility}">
+                        <Grid RowSpacing="10"  IsVisible="{Binding ReceivingVisibility}">
                             <Grid.RowDefinitions>
                                 <RowDefinition  Height="30*"></RowDefinition>
                             </Grid.RowDefinitions>
                         </Grid>
 
                         <Grid Grid.Row="0">
-                            <Image  Aspect="AspectFill"
+                            <Image  Aspect="AspectFill" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel8.png">
@@ -313,7 +313,7 @@
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
-                            <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
+                            <Image Margin="0,0,0,40"  Grid.Row="0" HeightRequest="30"
                     Aspect="AspectFill"
                     Source="recicon.png" 
                     VerticalOptions="Center"

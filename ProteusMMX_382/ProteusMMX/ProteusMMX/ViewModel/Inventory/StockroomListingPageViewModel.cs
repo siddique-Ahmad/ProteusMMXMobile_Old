@@ -998,6 +998,13 @@ namespace ProteusMMX.ViewModel.Inventory
         {
             this.SearchText = null;
         }
+
+        public async Task ReloadPageAfterSerchBoxCancle()
+        {
+            PageNumber = 1;
+            await RemoveAllStockroomsFromCollection();
+            await GetStockrooms();
+        }
         #endregion
     }
 }
