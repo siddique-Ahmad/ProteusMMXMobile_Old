@@ -801,7 +801,7 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
 
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
-
+            this.SearchText = null;
         }
 
         #endregion

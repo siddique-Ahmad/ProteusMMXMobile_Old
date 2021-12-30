@@ -97,7 +97,9 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
-
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
                             <Grid.ColumnDefinitions>
@@ -667,6 +669,7 @@
                                     </StackLayout>
                                 </border:SfBorder>
                             </StackLayout>
+                            <StackLayout Grid.Row="38" HeightRequest="20"/>
                         </Grid>
                     </Grid>
                 </ScrollView>

@@ -1390,6 +1390,12 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         {
             this.SearchText = "";
         }
+
+        public async Task ReloadPageAfterSerchBoxCancle()
+        {
+            await RemoveAllServiceRequestFromCollection();
+            await GetServiceRequest();
+        }
         #endregion
     }
 }

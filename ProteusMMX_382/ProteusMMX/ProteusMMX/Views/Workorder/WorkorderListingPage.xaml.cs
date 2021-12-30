@@ -88,16 +88,23 @@ namespace ProteusMMX.Views.Workorder
         {
 
         }
-
+        int count = 0;
         private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
         {
+            
             SearchBar searchBar = (SearchBar)sender;
             if (string.IsNullOrEmpty(searchBar.Text))
             {
-                //await ViewModel.OnViewDisappearingAsync(null);
-                await ViewModel.RemoveAllWorkorderFromCollection();
-                await ViewModel.ClearSearchBox();
-
+                count = count + 1;
+                if (count==1)
+                {
+                    await ViewModel.OnViewDisappearingAsync(null);
+                    await ViewModel.RefillWorkorderCollection();
+                }
+                else
+                {
+                    count = 0;
+                }
 
             }
         }
