@@ -593,7 +593,7 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels
                 {
                     var assetSystem = assetSystemResponse.targetWrapper.assetSystems;
 
-                    List<TAssetSystem> FinalassetSystem = assetSystem.Select(a => new TAssetSystem() { AssetSystemID = Convert.ToInt32(a.AssetSystemID), AssetSystemName = a.AssetSystemName.ToString() }).ToList();
+                    List<TAssetSystem> FinalassetSystem = assetSystem.Select(a => new TAssetSystem() { AssetSystemID = Convert.ToInt32(a.AssetSystemID), AssetSystemName = a.AssetSystemName.ToString(), AssetSystemNumber = a.AssetSystemNumber.ToString() }).ToList();
 
                     await AddItemsToPickerItemCollection(FinalassetSystem);
                 }
