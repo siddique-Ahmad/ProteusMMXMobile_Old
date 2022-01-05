@@ -819,8 +819,13 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else
                 {
-                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Thispartdoesnotexist"), 2000);
-                    return;
+                    if (!String.IsNullOrWhiteSpace(this.SearchText))
+                    {
+
+
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Thispartdoesnotexist"), 2000);
+                        return;
+                    }
                 }
             }
             catch (Exception ex)

@@ -233,7 +233,7 @@ namespace ProteusMMX.ViewModel.KPIDashboard
         {
             try
             {
-                await GetKPIDashboardDetailsByPriority(AppSettings.User.UserID, this.PriorityID);
+               
             }
             catch (Exception)
             {
@@ -430,6 +430,8 @@ namespace ProteusMMX.ViewModel.KPIDashboard
             {
                 //Retrive Priority
                 MessagingCenter.Subscribe<object>(this, MessengerKeys.PriorityRequested, OnPriorityRequested);
+
+                await GetKPIDashboardDetailsByPriority(AppSettings.User.UserID, this.PriorityID);
             }
             catch (Exception)
             {

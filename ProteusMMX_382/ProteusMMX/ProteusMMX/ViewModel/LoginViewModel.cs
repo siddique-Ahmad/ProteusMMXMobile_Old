@@ -375,8 +375,9 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
-
-        string _copyrightLabel = "Copyright @ 2021 Eagle Technology Inc.";
+       static string Year = DateTime.Parse(DateTime.Now.ToString()).Year.ToString();
+        string _copyrightLabel = "Copyright ©" + Year + " Eagle Technology Inc.";
+       
         public string CopyrightLabel
         {
             get

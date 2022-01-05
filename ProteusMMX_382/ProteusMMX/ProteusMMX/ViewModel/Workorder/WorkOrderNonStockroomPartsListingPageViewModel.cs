@@ -617,6 +617,11 @@ namespace ProteusMMX.ViewModel.Workorder
                     await AddWorkorderNonStockroomPartsInWorkorderCollection(workordernonstkparts);
 
                 }
+                else
+                {
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Thispartdoesnotexist"), 2000);
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -762,16 +767,20 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task OnViewAppearingAsync(VisualElement view)
         {
-            await SetTitlesPropertiesForPage();
-           
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                await SetTitlesPropertiesForPage();
                 NonStockroomPartsCollection.Clear();
-
                 await GetWorkorderNonStockRoomParts();
+
+
+            }
+            
         }
 
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
-
+            this.SearchText = "";
         }
 
 
