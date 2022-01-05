@@ -994,7 +994,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             try
             {
 
-                var closedWorkorders = await _closeWorkorderService.ClosedWorkOrdersByWorkOrderNumber(this.ListingSearchText, "0", "0");
+                var closedWorkorders = await _closeWorkorderService.ClosedWorkOrdersByWorkOrderNumber(this.ListingSearchText, PageNumber.ToString(), RowCount.ToString());
                 closedWorkorder = closedWorkorders.clWorkOrderWrapper.clworkOrders;
                 //List<ClosedWorkOrder> lstCWO1 = closedWorkorder.Where(i => i.WorkOrderNumber.Contains(ListingSearchText)).ToList();
 

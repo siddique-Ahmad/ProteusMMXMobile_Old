@@ -2322,29 +2322,14 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
 
-                /////TODO: Get Workorder Labour data 
-                //var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
-
-
-                /////TODO: Get Workorder data 
-                //var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
-
-
-
-                /////TODO: Get Inspection 
-                //var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString());
-
-
-                /////TODO: Get Inspection Time 
-                //var InspectionTime = await _workorderService.GetWorkorderInspectionTime(UserID, WorkorderID.ToString());
-
+                
                 try
                 {
                     OperationInProgress = true;
-                    //if (string.IsNullOrWhiteSpace(SearchText))
-                    //{
-                    await GenerateTaskAndLabourLayout();
-                    // }
+                    if (string.IsNullOrWhiteSpace(SearchText))
+                    {
+                        await GenerateTaskAndLabourLayout();
+                    }
                 }
                 catch (Exception ex)
                 {

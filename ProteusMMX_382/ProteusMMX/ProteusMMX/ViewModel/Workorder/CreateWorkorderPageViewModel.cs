@@ -4254,6 +4254,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     this.IsCostLayoutIsVisibleForTab = true;
                 }
+                await GetWorkorderControlRights();
                 await SetTitlesPropertiesForPage();
                 await CreateControlsForPage();
                 
@@ -4330,6 +4331,12 @@ namespace ProteusMMX.ViewModel.Workorder
         {
 
             #region Extract Details control
+            if (Application.Current.Properties.ContainsKey("WorkorderDetailsControls"))
+            {
+                SubModule WorkorderDetails = Application.Current.Properties["WorkorderDetailsControls"] as SubModule;
+                WorkorderControlsNew = WorkorderDetails.listControls;
+            }
+
             if (Application.Current.Properties.ContainsKey("EditRights"))
             {
                 var Edit = Application.Current.Properties["EditRights"].ToString();
@@ -10131,7 +10138,78 @@ namespace ProteusMMX.ViewModel.Workorder
 
             }
         }
+        public async Task GetWorkorderControlRights()
+        {
+            try
+            {
+                ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Details");
+                ServiceOutput FormControlsAndRightsForTask = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tasks");
+                ServiceOutput FormControlsAndRightsForInspection = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Inspections");
+                ServiceOutput FormControlsAndRightsForTools = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tools");
+                ServiceOutput FormControlsAndRightsForParts = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Parts");
+                ServiceOutput FormControlsAndRightsForAttachments = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Attachments");
+                if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
+                {
+                    var WorkOrderModule = FormControlsAndRightsForDetails.lstModules[0];
+                    if (WorkOrderModule.ModuleName == "Details") //ModuleName can't be  changed in service 
+                    {
+                        if (WorkOrderModule.lstSubModules != null && WorkOrderModule.lstSubModules.Count > 0)
+                        {
+                            var WorkOrderSubModule = WorkOrderModule.lstSubModules[0];
+                            if (WorkOrderSubModule.listControls != null && WorkOrderSubModule.listControls.Count > 0)
+                            {
+                                try
+                                {
+                                    Application.Current.Properties["CreateWorkorderRights"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
+                                    Application.Current.Properties["EditRights"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+                                    Application.Current.Properties["CloseWorkorderRightsKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompleteAndClose").Expression;
 
+                                    ///Set workOrderListing Page Rights
+                                    Application.Current.Properties["WorkOrderStartedDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkStartedDate").Expression;
+                                    Application.Current.Properties["WorkOrderCompletionDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression;
+                                    Application.Current.Properties["WorkOrderRequestedDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "RequestedDate").Expression;
+                                    Application.Current.Properties["WorkOrderTypeKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkTypeID").Expression;
+                                    Application.Current.Properties["DescriptionKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
+                                    Application.Current.Properties["PriorityKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
+
+                                    ///Set workOrderEdit Page Rights
+
+
+                                    Application.Current.Properties["WorkorderAdditionalDetailsKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
+                                    Application.Current.Properties["WorkOrderInternalNoteKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "InternalNote").Expression;
+                                    Application.Current.Properties["WorkorderCauseKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes").Expression;
+                                    Application.Current.Properties["WorkorderTargetKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression;
+                                    Application.Current.Properties["WorkorderDetailsControls"] = WorkOrderSubModule;
+                                    Application.Current.Properties["DistributeCost"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression;
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+
+                            }
+
+
+
+                        }
+                    }
+                }
+             
+             
+             
+             
+            }
+            catch (Exception)
+            {
+
+
+            }
+
+        }
         /// <summary>
         /// 
         /// </summary>
