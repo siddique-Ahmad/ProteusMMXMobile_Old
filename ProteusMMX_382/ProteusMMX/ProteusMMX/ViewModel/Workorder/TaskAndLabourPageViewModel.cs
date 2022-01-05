@@ -787,7 +787,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         Label TaskNumberVal = new Label
                         {
                             TextColor = Color.FromHex("#333333"),
-                            Text = item.TaskNumber
+                            Text = ShortString.shor17ten(item.TaskNumber)
                         };
 
                         Taskgrid.Children.Add(TaskNumberVal, 2, 0);

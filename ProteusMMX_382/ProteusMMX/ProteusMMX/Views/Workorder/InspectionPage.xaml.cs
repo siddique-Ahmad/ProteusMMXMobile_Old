@@ -3171,12 +3171,12 @@ namespace ProteusMMX.Views.Workorder
                         var DateSLt1 = DateGrid1.Children[0] as StackLayout;
                         var DateBodder1 = DateSLt1.Children[1] as SfBorder;
                         var StartdateValue = DateBodder1.Children[0] as CustomDatePicker;
-                        var StartdateValue1 = DateTime.Parse(StartdateValue.SelectedDate.ToString());
+                       // var StartdateValue1 = DateTime.Parse(StartdateValue.SelectedDate.ToString());
 
                         var DateSLt2 = DateGrid1.Children[1] as StackLayout;
                         var DateBodder2 = DateSLt2.Children[1] as SfBorder;
                         var CompletionDateValue = DateBodder2.Children[0] as CustomDatePicker;
-                        var CompletionDateValue1 = DateTime.Parse(CompletionDateValue.SelectedDate.ToString());
+                       // var CompletionDateValue1 = DateTime.Parse(CompletionDateValue.SelectedDate.ToString());
 
                         this.InspectionStartDate = StartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(StartdateValue.SelectedDate.ToString()) : (DateTime?)null;
                         this.InspectionCompletionDate = CompletionDateValue.SelectedDate.HasValue ? Convert.ToDateTime(CompletionDateValue.SelectedDate.ToString()) : (DateTime?)null;

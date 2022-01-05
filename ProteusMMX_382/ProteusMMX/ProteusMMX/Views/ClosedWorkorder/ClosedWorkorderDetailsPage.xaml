@@ -156,8 +156,9 @@
                             <StackLayout IsVisible="{Binding DescriptionLayout}" Orientation="Vertical" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Label Text="{Binding DescriptionTitle}" TextColor="Black" FontAttributes="Bold"/>
 
-                                <border:SfBorder CornerRadius="5" IsEnabled="False">
+                                <border:SfBorder CornerRadius="5" >
                                     <StackLayout BackgroundColor="LightGray">
+                                        <StackLayout IsEnabled="False">
                                     <control1:UnderLineEditor Text="{Binding DescriptionText}"  >
                                         <control1:UnderLineEditor.HeightRequest>
                                             <OnPlatform x:TypeArguments="x:Double" Default="56">
@@ -167,9 +168,10 @@
                                                 <On Platform="UWP" Value="56"/>
                                             </OnPlatform>
                                         </control1:UnderLineEditor.HeightRequest>
-
-                                    </control1:UnderLineEditor>
-                                        <Label Grid.Column="1"  BackgroundColor="LightGray"  Text="{Binding MoreText}" HorizontalOptions="EndAndExpand" TextColor="#006de0" FontAttributes="Bold" >
+                                     
+                                        </control1:UnderLineEditor>
+                                        </StackLayout>
+                                        <Label Grid.Column="1"  BackgroundColor="Transparent"  Text="{Binding MoreText}" HorizontalOptions="EndAndExpand" TextColor="#006de0" FontAttributes="Bold" >
                                             <Label.GestureRecognizers>
                                                 <TapGestureRecognizer
                                         Command="{Binding TapCommand1}"
@@ -655,11 +657,13 @@
                             <StackLayout x:Name="SignatureLayout" Grid.Row="37" Orientation="Vertical" IsVisible="{Binding  SignaturesIsVisible }" Grid.ColumnSpan="2">
                                 <Label Text="{Binding Signatures}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
-                                <border:SfBorder CornerRadius="5" BackgroundColor="LightGray" IsEnabled="False" >
+                                <border:SfBorder CornerRadius="5" HeightRequest="150" BackgroundColor="LightGray" >
                                     <StackLayout>
-                                    <control1:UnderLineEditor Text="{Binding SignatureText}"  HeightRequest="150"></control1:UnderLineEditor>
                                     
-                                <Label Grid.Column="1" BackgroundColor="Transparent" HorizontalTextAlignment="End"  Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
+                                        <StackLayout HeightRequest="125">
+                                            <Label Text="{Binding SignatureText}"/>
+                                        </StackLayout>
+                                        <Label Grid.Column="1" BackgroundColor="Transparent" HorizontalTextAlignment="End"  Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
                                         Command="{Binding TapCommandSignature}"

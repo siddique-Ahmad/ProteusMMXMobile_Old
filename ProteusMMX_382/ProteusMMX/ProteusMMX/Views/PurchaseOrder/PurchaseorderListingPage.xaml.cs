@@ -74,5 +74,26 @@ namespace ProteusMMX.Views.PurchaseOrder
                 await viewAware.OnViewDisappearingAsync(this);
             }
         }
+
+        private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                //count = count + 1;
+                //if (count == 1)
+                //{
+                    await ViewModel.OnViewDisappearingAsync(this);
+                    await ViewModel.ReloadPageAfterSerchBoxCancle();
+                //}
+                //else
+                //{
+                //    count = 0;
+                //}
+
+            }
+        }
+
     }
 }

@@ -624,7 +624,7 @@ namespace ProteusMMX.ViewModel.Asset
                     this.SearchText = navigationParams.SearchText;
 
                 }
-                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                UserDialogs.Instance.Loading();
                 //OperationInProgress = true;
                 await SetTitlesPropertiesForPage();
                 await GetAssetControlRights();

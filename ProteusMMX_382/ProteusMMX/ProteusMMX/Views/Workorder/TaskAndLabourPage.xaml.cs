@@ -137,6 +137,25 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
+        private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                //count = count + 1;
+                //if (count == 1)
+                //{
+                    await ViewModel.OnViewDisappearingAsync(null);
+                    await ViewModel.GenerateTaskAndLabourLayout();
+                //}
+                //else
+                //{
+                //    count = 0;
+                //}
+
+            }
+        }
         protected override async void OnDisappearing()
         {
             base.OnDisappearing();
