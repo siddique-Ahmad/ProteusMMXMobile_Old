@@ -71,13 +71,13 @@
                                 <RowDefinition  Height="30*"></RowDefinition>
                             </Grid.RowDefinitions>
                         </Grid>
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="AssetColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="searchBor1.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="AssetBGColor_Change"
                                          Command="{Binding SearchAssetCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -88,13 +88,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
-                                         Command="{Binding WorkordersCommand}"
+                                    <TapGestureRecognizer Tapped="AssetBGColor_Change"
+                                         Command="{Binding SearchAssetCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding SearchAssetTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AssetBGColor_Change"
+                                         Command="{Binding SearchAssetCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </StackLayout>
 
@@ -104,13 +110,13 @@
                                 <RowDefinition  Height="30*"></RowDefinition>
                             </Grid.RowDefinitions>
                         </Grid>
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="WorkorderByAssetColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="searchBor2.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="WorkorderByAsset_Change"
                                          Command="{Binding SearchWorkorderByAssetCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -121,13 +127,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="WorkorderByAsset_Change"
                                          Command="{Binding SearchWorkorderByAssetCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding SearchWorkorderByAssetTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="WorkorderByAsset_Change"
+                                         Command="{Binding SearchWorkorderByAssetCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </StackLayout>
 
@@ -138,13 +150,13 @@
                             </Grid.RowDefinitions>
                         </Grid>
 
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="WorkorderByLocationColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="searchBor3.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer  Tapped="WorkorderByLocationColor_Change"
                                          Command="{Binding SearchWorkorderByLocationCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -155,13 +167,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="WorkorderByLocationColor_Change"
                                          Command="{Binding SearchWorkorderByLocationCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding SearchWorkorderByLocationTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="WorkorderByLocationColor_Change"
+                                         Command="{Binding SearchWorkorderByLocationCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </StackLayout>
 
@@ -172,13 +190,13 @@
                             </Grid.RowDefinitions>
                         </Grid>
 
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="AssetForBillOfMaterialColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="searchBor4.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="AssetForBillOfMaterialColor_Change"
                                          Command="{Binding SearchAssetForBillOfMaterialCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -189,13 +207,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="AssetForBillOfMaterialColor_Change"
                                          Command="{Binding SearchAssetForBillOfMaterialCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding SearchAssetForBillOfMaterialTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AssetForBillOfMaterialColor_Change"
+                                         Command="{Binding SearchAssetForBillOfMaterialCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </StackLayout>
 
@@ -206,13 +230,13 @@
                             </Grid.RowDefinitions>
                         </Grid>
 
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="AssetForAttachmentColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="searchBor5.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="AssetForAttachmentColor_Change"
                                          Command="{Binding SearchAssetForAttachmentCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -223,13 +247,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="AssetForAttachmentColor_Change"
                                          Command="{Binding SearchAssetForAttachmentCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding SearchAssetForAttachmentTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima"  TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AssetForAttachmentColor_Change"
+                                         Command="{Binding SearchAssetForAttachmentCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </StackLayout>
                 </Grid>

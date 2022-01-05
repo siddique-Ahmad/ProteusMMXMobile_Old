@@ -20,6 +20,18 @@ namespace ProteusMMX.Helpers
             return toView;
         }
 
+        public static string shor17ten(string yourStr)
+        {
+            string toView;
+            const int maxView = 14;
+
+            if (yourStr.Length > maxView)
+                toView = yourStr.Substring(0, maxView) + " ..."; // all you have is to use Substring(int, int) .net method
+            else
+                toView = yourStr;
+            return toView;
+        }
+
         public static string smallshorten(string yourStr)
         {
             string toView;

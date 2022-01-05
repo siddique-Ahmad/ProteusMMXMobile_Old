@@ -708,6 +708,13 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
             }
         }
 
+        public async Task ReloadPageAfterSerchBoxCancle()
+        {
+            PageNumber = 1;
+            await RemoveAllPurchaseOrderFromCollection();
+            await GetPurchaseOrders();
+        }
+
         async Task GetPuchaseOrderFromSearchBar()
         {
             try
@@ -849,7 +856,7 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
             });
 
         }
-        private async Task RefillPuchaseOrderCollection()
+        public async Task RefillPuchaseOrderCollection()
         {
             PageNumber = 1;
             await RemoveAllPurchaseOrderFromCollection();
@@ -878,7 +885,11 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
             }
         }
 
+      
+        public async Task OnViewDisappearingAsync(VisualElement view)
+        {
 
+        }
 
         private async void OnSelectPurchaseOrdersync(Model.PurchaseOrderModel.PurchaseOrder item)
         {

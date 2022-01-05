@@ -58,7 +58,7 @@
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <border:SfBorder  IsVisible="{Binding TaskLabourSearchBoxIsEnable ,  Mode=TwoWay}" Style="{StaticResource SfBorderStyle}">
-                        <SearchBar Placeholder="{Binding SearchPlaceholder}"   Text="{Binding SearchText}"/>
+                        <SearchBar Placeholder="{Binding SearchPlaceholder}"  TextChanged="filterText_TextChanged" Text="{Binding SearchText}"/>
                     </border:SfBorder>
                     <Image Grid.Column="1" Grid.Row="0" IsVisible="{Binding TaskLabourSearchButtonIsEnable , Mode=TwoWay}">
                         <Image.Source>

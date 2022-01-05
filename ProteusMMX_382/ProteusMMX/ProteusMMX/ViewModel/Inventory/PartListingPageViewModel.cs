@@ -1091,7 +1091,12 @@ namespace ProteusMMX.ViewModel.Inventory
             }
 
         }
-
+        public async Task ReloadPageAfterSerchBoxCancle()
+        {
+            PageNumber = 1;
+            await RemoveAllStockroomsPartsFromCollection();
+            await GetStockroomParts();
+        }
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
             this.SearchText = null;

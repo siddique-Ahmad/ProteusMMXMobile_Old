@@ -156,6 +156,42 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
 
         #endregion
 
+        bool _disabledTextIsEnable = false;
+        public bool DisabledTextIsEnable
+        {
+            get
+            {
+                return _disabledTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _disabledTextIsEnable)
+                {
+                    _disabledTextIsEnable = value;
+                    OnPropertyChanged(nameof(DisabledTextIsEnable));
+                }
+            }
+        }
+
+
+        string _disabledText = "";
+        public string DisabledText
+        {
+            get
+            {
+                return _disabledText;
+            }
+
+            set
+            {
+                if (value != _disabledText)
+                {
+                    _disabledText = value;
+                    OnPropertyChanged("DisabledText");
+                }
+            }
+        }
 
 
 
@@ -648,12 +684,6 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
                     await NavigationService.NavigateToAsync<LoginPageViewModel>();
                     await NavigationService.RemoveBackStackAsync();
                 }
-
-
-
-
-
-
             }
             catch (Exception ex)
             {
@@ -688,6 +718,12 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
                     await AddPOPartsInPurchaseOrderPartsCollection(purchaseorderParts);
 
                 }
+                else
+                {
+
+                    DisabledText = "No record Found";//WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                    DisabledTextIsEnable = true;
+                }
             }
             catch (Exception ex)
             {
@@ -700,8 +736,6 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
                 OperationInProgress = false;
             }
         }
-
-     
 
         private async Task AddPOPartsInPurchaseOrderPartsCollection(List<Model.PurchaseOrderModel.PurchaseOrderParts> poparts)
         {
@@ -726,7 +760,6 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
 
             }
         }
-
 
         private async Task RemoveAllPurchaseOrderFromCollection()
         {

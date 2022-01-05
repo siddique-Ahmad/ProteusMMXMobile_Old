@@ -69,11 +69,16 @@
                                 <RowDefinition  Height="30*"></RowDefinition>
                             </Grid.RowDefinitions>
                         </Grid>
-                        <Grid Grid.Row="0" >
+                        <Grid x:Name="KPIColor" Grid.Row="0" >
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel1.png">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="KPIBGColor_Change"
+                                         Command="{Binding KPICommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
                             </Image>
                             <Image  Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
                     Aspect="AspectFill"
@@ -81,13 +86,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="KPIBGColor_Change"
                                          Command="{Binding KPICommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="KPI" FontFamily="Ebrima" FontAttributes="Bold" TextColor="Black" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="KPIBGColor_Change"
+                                         Command="{Binding KPICommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
 
                         </Grid>
                     </StackLayout>
@@ -97,13 +108,13 @@
                                 <RowDefinition  Height="30*"></RowDefinition>
                             </Grid.RowDefinitions>
                         </Grid>
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="WorkordersColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel3.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="WorkordersBGColor_Change"
                                          Command="{Binding WorkordersCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -114,13 +125,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="WorkordersBGColor_Change"
                                          Command="{Binding WorkordersCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding WorkorderTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="WorkordersBGColor_Change"
+                                         Command="{Binding WorkordersCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </StackLayout>
                     <StackLayout Grid.Row="1" Grid.Column="0" IsVisible="{Binding ClosedWorkorderBorderVisibility}">
@@ -130,13 +147,13 @@
                             </Grid.RowDefinitions>
                         </Grid>
 
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="CloseWorkordersColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel4.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="CloseWorkordersBGColor_Change"
                                          Command="{Binding CloseWorkordersCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -147,13 +164,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="CloseWorkordersBGColor_Change"
                                          Command="{Binding CloseWorkordersCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding CloseWorkorderTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="CloseWorkordersBGColor_Change"
+                                         Command="{Binding CloseWorkordersCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </StackLayout>
                     <StackLayout Grid.Row="1" Grid.Column="2" IsVisible="{Binding InventoryTransactionVisibility}">
@@ -163,13 +186,13 @@
                             </Grid.RowDefinitions>
                         </Grid>
 
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="InventoryColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel6.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="InventoryBGColor_Change"
                                          Command="{Binding InventoryCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -180,13 +203,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="InventoryBGColor_Change"
                                          Command="{Binding InventoryCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding InventoryTransactionTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="InventoryBGColor_Change"
+                                         Command="{Binding InventoryCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </StackLayout>
                     <StackLayout Grid.Row="2" Grid.Column="0" IsVisible="{Binding ServiceRequestBorderVisibility}">
@@ -196,13 +225,13 @@
                             </Grid.RowDefinitions>
                         </Grid>
 
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="ServiceRequestColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel2.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="ServiceRequestBGColor_Change"
                                          Command="{Binding ServiceRequestCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -213,13 +242,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="ServiceRequestBGColor_Change"
                                          Command="{Binding ServiceRequestCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding ServiceRequestTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima"  TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ServiceRequestBGColor_Change"
+                                         Command="{Binding ServiceRequestCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </StackLayout>
                     <StackLayout Grid.Row="2" Grid.Column="2" IsVisible="{Binding AssetBorderVisibility}" >
@@ -229,13 +264,13 @@
                             </Grid.RowDefinitions>
                         </Grid>
 
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="AssetsColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel5.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="AssetBGColor_Change"
                                          Command="{Binding AssetCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -246,13 +281,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="AssetBGColor_Change"
                                          Command="{Binding AssetCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding AssetsTitle}" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AssetBGColor_Change"
+                                         Command="{Binding AssetCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
 
                     </StackLayout>
@@ -263,13 +304,13 @@
                             </Grid.RowDefinitions>
                         </Grid>
 
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="BarcodeColor" Grid.Row="0">
                             <Image  Aspect="AspectFill"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel7.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="BarcodeBGColor_Change"
                                          Command="{Binding BarcodeCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -280,35 +321,37 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="BarcodeBGColor_Change"
                                          Command="{Binding BarcodeCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding BarcodeTitle}" WidthRequest="100" HorizontalTextAlignment="Center" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="BarcodeBGColor_Change"
+                                         Command="{Binding BarcodeCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
 
                     </StackLayout>
                     <StackLayout x:Name="Receiving" Grid.Row="3" Grid.Column="2"  IsVisible="{Binding ReceivingBorderVisibility}">
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"
-                                         Command="{Binding ReceivingCommand}"
-                                         NumberOfTapsRequired="1" />
-                        </StackLayout.GestureRecognizers>
+                        
                         <Grid RowSpacing="10"  IsVisible="{Binding ReceivingVisibility}">
                             <Grid.RowDefinitions>
                                 <RowDefinition  Height="30*"></RowDefinition>
                             </Grid.RowDefinitions>
                         </Grid>
 
-                        <Grid Grid.Row="0">
+                        <Grid x:Name="ReceivingColor"  Grid.Row="0" >
                             <Image  Aspect="AspectFill" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel8.png">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="ReceivingBGColor_Change"
                                          Command="{Binding ReceivingCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
@@ -319,13 +362,19 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
                                 <Image.GestureRecognizers>
-                                    <TapGestureRecognizer
+                                    <TapGestureRecognizer Tapped="ReceivingBGColor_Change"
                                          Command="{Binding ReceivingCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
                             <Label Text="{Binding ReceivingTitle}" WidthRequest="80" FontFamily="Ebrima" TextColor="Black" FontAttributes="Bold" Margin="0,35,0,0"  VerticalOptions="Center"
-                    HorizontalOptions="Center"></Label>
+                    HorizontalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="ReceivingBGColor_Change"
+                                         Command="{Binding ReceivingCommand}"
+                                         NumberOfTapsRequired="1" />
+                                </Label.GestureRecognizers>
+                            </Label>
                         </Grid>
                     </StackLayout>
                     <StackLayout Grid.Row="4" Grid.ColumnSpan="3">

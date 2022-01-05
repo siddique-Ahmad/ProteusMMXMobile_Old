@@ -157,6 +157,42 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
         #endregion
 
 
+        bool _disabledTextIsEnable = false;
+        public bool DisabledTextIsEnable
+        {
+            get
+            {
+                return _disabledTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _disabledTextIsEnable)
+                {
+                    _disabledTextIsEnable = value;
+                    OnPropertyChanged(nameof(DisabledTextIsEnable));
+                }
+            }
+        }
+
+
+        string _disabledText = "";
+        public string DisabledText
+        {
+            get
+            {
+                return _disabledText;
+            }
+
+            set
+            {
+                if (value != _disabledText)
+                {
+                    _disabledText = value;
+                    OnPropertyChanged("DisabledText");
+                }
+            }
+        }
 
 
         int _totalRecordCount;
@@ -613,6 +649,11 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
                     
                     await AddPOAssetsInPurchaseOrderAssetsCollection(purchaseorders);
 
+                }
+                else
+                {
+                    DisabledText = "No record Found";//WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                    DisabledTextIsEnable = true;
                 }
             }
             catch (Exception ex)
