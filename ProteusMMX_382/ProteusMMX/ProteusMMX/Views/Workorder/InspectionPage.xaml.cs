@@ -355,6 +355,7 @@ namespace ProteusMMX.Views.Workorder
             //masterGrid.RowDefinitions.Add(new RowDefinition { Height = 5 });
             //masterGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
             //masterGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+            masterGrid.Children.Clear();
             #region ******TotalInspection******
             StackLayout TotalInspectionSL = new StackLayout();
             TotalInspectionSL.Padding = new Thickness(5, 2, 0, 0);
@@ -549,7 +550,7 @@ namespace ProteusMMX.Views.Workorder
             MainLayout.Children.Clear();
             ParentLayout.Children.Clear();
             ParentLayout.Children.Remove(FinalLayout);
-
+            
             await RetriveAllWorkorderInspectionsAsync();
             StackLayout FrameSL = new StackLayout
             {
@@ -4307,11 +4308,11 @@ namespace ProteusMMX.Views.Workorder
         }
         private void OnEmployeeRequested(object obj)
         {
-            if (ParentLayout.Children.Count > 5)
-            {
-                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("CannotAddMorethan5EmployeeORContractor"), TimeSpan.FromSeconds(2));
-                return;
-            }
+            //if (ParentLayout.Children.Count > 5)
+            //{
+            //    UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("CannotAddMorethan5EmployeeORContractor"), TimeSpan.FromSeconds(2));
+            //    return;
+            //}
             if (obj != null)
             {
 
@@ -4344,11 +4345,11 @@ namespace ProteusMMX.Views.Workorder
 
         private void OnContractorRequested(object obj)
         {
-            if (ParentLayout.Children.Count > 5)
-            {
-                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("CannotAddMorethan5EmployeeORContractor"), TimeSpan.FromSeconds(2));
-                return;
-            }
+            //if (ParentLayout.Children.Count > 5)
+            //{
+            //    UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("CannotAddMorethan5EmployeeORContractor"), TimeSpan.FromSeconds(2));
+            //    return;
+            //}
             if (obj != null)
             {
 

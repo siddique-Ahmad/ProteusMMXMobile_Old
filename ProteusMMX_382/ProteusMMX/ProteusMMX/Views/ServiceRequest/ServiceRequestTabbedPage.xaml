@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="{Binding PageTitle}" 
             xmlns:pages ="clr-namespace:ProteusMMX.Views.ServiceRequest;assembly=ProteusMMX"
-             x:Class="ProteusMMX.Views.ServiceRequest.ServiceRequestTabbedPage">
+             x:Class="ProteusMMX.Views.ServiceRequest.ServiceRequestTabbedPage"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+        android:TabbedPage.IsSwipePagingEnabled="False"
+            >
  
 </TabbedPage>

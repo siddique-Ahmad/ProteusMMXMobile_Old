@@ -347,6 +347,19 @@
                                 </Label>
                                 <border:SfBorder CornerRadius="5">
                                     <StackLayout>
+                                        <StackLayout HeightRequest="125">
+                                            <Label Text="{Binding SignatureText}"/>
+                                        </StackLayout>
+                                        <!--<control1:UnderLineEditor  Text="{Binding SignatureText}" IsEnabled="False"  />-->
+                                        <Label HorizontalOptions="End"  Grid.Column="1" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                        Command="{Binding TapCommandSignature}"
+                                         NumberOfTapsRequired="1" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                    <!--<StackLayout>
                                         <Control1:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding SignatureText}" IsEnabled="False"  HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>
 
                                         <Label HorizontalOptions="End" Grid.Column="1" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
@@ -356,11 +369,11 @@
                                          NumberOfTapsRequired="1" />
                                             </Label.GestureRecognizers>
                                         </Label>
-                                    </StackLayout>
+                                    </StackLayout>-->
                                 </border:SfBorder>
                             </StackLayout>
                         </Grid>
-                        <Button x:Name="SaveButton" CornerRadius="5" IsEnabled="{Binding ServiceRequestIsEnabled}" IsVisible="{Binding ServiceRequestIsVisible}" Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10"  VerticalOptions="StartAndExpand" Command="{Binding SaveServiceRequestCommand}" />
+                        <Button x:Name="SaveButton" HorizontalOptions="CenterAndExpand" WidthRequest="150" CornerRadius="5" IsEnabled="{Binding ServiceRequestIsEnabled}" IsVisible="{Binding ServiceRequestIsVisible}" Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10"  VerticalOptions="StartAndExpand" Command="{Binding SaveServiceRequestCommand}" />
 
                         <!--<ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 

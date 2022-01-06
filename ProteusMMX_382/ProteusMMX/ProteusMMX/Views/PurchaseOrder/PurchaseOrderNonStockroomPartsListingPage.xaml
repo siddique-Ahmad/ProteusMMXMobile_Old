@@ -47,7 +47,7 @@
             </Grid.RowDefinitions>
 
 
-            <Label TextColor="Red"  Grid.Row="1" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}" Style="{StaticResource LabelStyle}"/>
+            <Label TextColor="Red"  Grid.Row="1" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}" />
             
             <Grid Grid.Row="1"  Padding="10,10,10,10">
 

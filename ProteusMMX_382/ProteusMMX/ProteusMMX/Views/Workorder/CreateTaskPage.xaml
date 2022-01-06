@@ -165,10 +165,10 @@
                         Grid.Row="4"
                         Grid.ColumnSpan="2"
                         CornerRadius="5"
+                            HorizontalOptions="CenterAndExpand" WidthRequest="150"
                         Command="{Binding SaveCommand}"
                         Style="{StaticResource SaveButtonStyle}"
-                        HeightRequest="40"
-                            BackgroundColor="#006de0"
+                        
                         Text="{Binding SaveTitle}" >
                         </Button>
                     </Grid>

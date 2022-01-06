@@ -5,7 +5,8 @@
              
              BarBackgroundColor="#006de0"
              BarTextColor="White"
-            
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+        android:TabbedPage.IsSwipePagingEnabled="False"
              x:Class="ProteusMMX.Views.Workorder.WorkorderTabbedPage">
   <!--Pages can be added as references or inline-->
     <!--<pages:EditWorkorderPage />-->
