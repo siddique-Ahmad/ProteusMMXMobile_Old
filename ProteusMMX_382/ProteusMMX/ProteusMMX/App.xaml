@@ -27,7 +27,7 @@
             <Color x:Key="RedColor">#FF0000</Color>
             <Color x:Key="NavigationBarColor">#0078cc</Color>
 
-            <Color x:Key="ColorButton">#87CEFA</Color>
+            <Color x:Key="ColorButton">#006de0</Color>
             <Color x:Key="ColorLabel">#253748</Color>
             <Color x:Key="ColorText">#253748</Color>
 

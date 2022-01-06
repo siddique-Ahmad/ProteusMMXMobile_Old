@@ -262,7 +262,7 @@
 
                         </Grid>
 
-                        <Button Text="{Binding SaveTitle}" CornerRadius="5" Style="{StaticResource SaveButtonStyle}" Grid.Row="3" Margin="10,10,10,10" Command="{Binding SaveAssetCommand}" IsVisible="{Binding EditAssetIsVisible}" IsEnabled="{Binding EditAssetIsEnabled}"  VerticalOptions="StartAndExpand"/>
+                        <Button Text="{Binding SaveTitle}" CornerRadius="5" HorizontalOptions="CenterAndExpand" WidthRequest="150" Style="{StaticResource SaveButtonStyle}" Grid.Row="3" Margin="10,10,10,10" Command="{Binding SaveAssetCommand}" IsVisible="{Binding EditAssetIsVisible}" IsEnabled="{Binding EditAssetIsEnabled}"  VerticalOptions="StartAndExpand"/>
 
                         <!--<ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 

@@ -137,9 +137,10 @@
                 <Button
                         Grid.Row="4"
                      CornerRadius="5"
+                    HorizontalOptions="CenterAndExpand" WidthRequest="150"
                             VerticalOptions="StartAndExpand"
                         Command="{Binding SaveEditStockroomPartsCommand}"
-                        Style="{StaticResource LoginButtonStyle}"
+                        Style="{StaticResource SaveButtonStyle}"
                        IsEnabled="{Binding StockroomPartIsEnabled}"
                         Text="{Binding SaveTitle}" >
                 </Button>

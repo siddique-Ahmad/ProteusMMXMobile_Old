@@ -609,7 +609,7 @@
                         </Grid>
 
                        
-                        <Button x:Name="SaveButton" Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>
+                        <Button x:Name="SaveButton" Text="{Binding SaveTitle}" HorizontalOptions="CenterAndExpand" WidthRequest="150" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>
 
                     </Grid>
                 </ScrollView>

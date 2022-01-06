@@ -161,7 +161,8 @@
                 <buttons:SfButton
                         CornerRadius="5"
                         Grid.Row="7"
-                        BackgroundColor="#87CEFA"
+                         HorizontalOptions="CenterAndExpand" WidthRequest="150"
+                        Style="{StaticResource SaveButtonStyle}"
                         VerticalOptions="StartAndExpand"
                         Command="{Binding ReceivePurchaseOrderPartCommand}"
                         IsVisible="{Binding ReceivedButtonIsVisible}"

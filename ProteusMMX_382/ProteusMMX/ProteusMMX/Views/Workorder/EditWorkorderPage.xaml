@@ -758,7 +758,7 @@
 
                         </Grid>
 
-                        <Button x:Name="SaveButton"  Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="5" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>
+                        <Button x:Name="SaveButton" HorizontalOptions="CenterAndExpand" WidthRequest="150" Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="5" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>
 
                     </Grid>
                 </ScrollView>

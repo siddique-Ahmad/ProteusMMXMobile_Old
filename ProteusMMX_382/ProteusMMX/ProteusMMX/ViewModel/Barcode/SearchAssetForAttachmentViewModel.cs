@@ -989,7 +989,7 @@ namespace ProteusMMX.ViewModel.Barcode
                         {
                             Attachments.RemoveAt(count - i);
                         }
-
+                        PDFImageText = null;
                     }
 
                     if (DocumentAttachments != null && DocumentAttachments.Count > 0)
@@ -999,7 +999,7 @@ namespace ProteusMMX.ViewModel.Barcode
                         {
                             DocumentAttachments.RemoveAt(count - i);
                         }
-
+                        PDFImageText = null;
                     }
                     #endregion
 
@@ -1150,6 +1150,13 @@ namespace ProteusMMX.ViewModel.Barcode
             }
         }
         private async Task GetAssetAttachment()
+        {
+
+            await GetAttachmentByAsset();
+
+        }
+
+        public async Task RefillWorkorderCollection()
         {
 
             await GetAttachmentByAsset();

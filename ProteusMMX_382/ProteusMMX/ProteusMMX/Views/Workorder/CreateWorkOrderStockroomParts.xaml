@@ -178,9 +178,10 @@
                     <Button     
                     
                     CornerRadius="5"
+                        HorizontalOptions="CenterAndExpand" WidthRequest="150"
                        VerticalOptions="StartAndExpand"
                        Command="{Binding SaveStockroomPartsCommand}"
-                       Style="{StaticResource LoginButtonStyle}"                      
+                       Style="{StaticResource SaveButtonStyle}"                      
                        Text="{Binding SaveTitle}" >
                     </Button>
                 </StackLayout>

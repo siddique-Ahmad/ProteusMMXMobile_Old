@@ -41,7 +41,7 @@
                 <border:SfBorder CornerRadius="5" Grid.Row="4"  Grid.Column="0">
                     <controls:CustomEntry  x:Name="PassLabel" TextColor="{StaticResource ColorLabel}" IsPassword="True" />
                 </border:SfBorder>
-                <Button Grid.Row="5" WidthRequest="150" HorizontalOptions="CenterAndExpand" Grid.Column="0" BackgroundColor="LightSkyBlue" x:Name="ok" CornerRadius="5" Clicked="OK_Clicked" />
+                <Button Grid.Row="5" WidthRequest="150" HorizontalOptions="CenterAndExpand" Grid.Column="0" Style="{StaticResource SaveButtonStyle}" x:Name="ok" CornerRadius="5" Clicked="OK_Clicked" />
 
             </Grid>
         </ScrollView>
