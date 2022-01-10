@@ -3681,7 +3681,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
                 SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 //DescriptionTitle= WebControlTitle.GetTargetNameByTitleName("Description");
-                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
+                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("Notes");
                 FacilityTitle = WebControlTitle.GetTargetNameByTitleName("Facility");
                 LocationTitle = WebControlTitle.GetTargetNameByTitleName("Location");
                 AssetsTitle = WebControlTitle.GetTargetNameByTitleName("Asset");

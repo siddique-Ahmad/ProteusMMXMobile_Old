@@ -1278,7 +1278,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         // workorder started Date
-        DateTime? _workStartedDate1;
+        DateTime? _workStartedDate1= DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
         public DateTime? WorkStartedDate1
         {
             get
@@ -4303,7 +4303,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 InternalNotesTitle = WebControlTitle.GetTargetNameByTitleName("InternalNote");
                 ChargeCostsOnlyToChildAssets = WebControlTitle.GetTargetNameByTitleName("ChargeCostsOnlyToChildAssets");
                 ParentCostsOnly = WebControlTitle.GetTargetNameByTitleName("Chargecosttotheparentsystemandchildassets");
-                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
+                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("Notes");
                 DistributeCostforAssetsystem = WebControlTitle.GetTargetNameByTitleName("DistributeCostforAssetsystem");
                 if (DistributeCostforAssetsystem == null)
                 {

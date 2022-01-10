@@ -3608,7 +3608,7 @@ namespace ProteusMMX.ViewModel.Asset
                 //RuntimeUnitTitle = WebControlTitle.GetTargetNameByTitleName("RuntimeUnits");
                 //VendorTitle = WebControlTitle.GetTargetNameByTitleName("Vendor");
                 CreateWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder");
-                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
+                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("Notes");
                 SaveTitle = WebControlTitle.GetTargetNameByTitleName("Save");
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 MoreText = WebControlTitle.GetTargetNameByTitleName("More");

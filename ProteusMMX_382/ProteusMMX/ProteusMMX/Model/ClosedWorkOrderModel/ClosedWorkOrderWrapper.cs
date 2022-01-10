@@ -9,6 +9,7 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
 {
     public class ClosedWorkOrderWrapper
     {
+        public string _IsWorkOrderHasTaskORInspection { get; set; }
         public ClosedWorkOrder clworkOrder { get; set; }
         public List<ClosedWorkOrder> clworkOrders { get; set; }
         public List<SignatureAuditDetail> SignatureAuditDetails { get; set; }
