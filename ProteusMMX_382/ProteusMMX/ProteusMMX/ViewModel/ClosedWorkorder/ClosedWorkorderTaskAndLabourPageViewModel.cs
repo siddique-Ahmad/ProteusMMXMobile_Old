@@ -63,7 +63,41 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
+        bool _disabledTextIsEnable = false;
+        public bool DisabledTextIsEnable
+        {
+            get
+            {
+                return _disabledTextIsEnable;
+            }
 
+            set
+            {
+                if (value != _disabledTextIsEnable)
+                {
+                    _disabledTextIsEnable = value;
+                    OnPropertyChanged(nameof(DisabledTextIsEnable));
+                }
+            }
+        }
+
+        string _disabledText = "";
+        public string DisabledText
+        {
+            get
+            {
+                return _disabledText;
+            }
+
+            set
+            {
+                if (value != _disabledText)
+                {
+                    _disabledText = value;
+                    OnPropertyChanged("DisabledText");
+                }
+            }
+        }
         string _pageTitle = "";
         public string PageTitle
         {
@@ -444,13 +478,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             {
                 OperationInProgress = true;
 
-                //if (ConnectivityService.IsConnected == false)
-                //{
-                //    await DialogService.ShowAlertAsync("internet not available", "Alert", "OK");
-                //    return;
-
-                //}
-
                 if (navigationData != null)
                 {
 
@@ -465,6 +492,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
 
                 await SetTitlesPropertiesForPage();
+               
                 FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.WorkorderModuleName);
                 await CreateTaskAndLabourLayout(FormControlsAndRights);
 
@@ -631,6 +659,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
             try
             {
+              
 
                 StackLayout contentLayout = await GetContentLayout();
 
@@ -1469,6 +1498,16 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
             try
             {
+                if (Application.Current.Properties.ContainsKey("TaskOrInspection"))
+                {
+                    string TaskorInspection = (string)Application.Current.Properties["TaskOrInspection"];
+                    if (TaskorInspection == "Inspections")
+                    {
+                        DisabledText = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                        DisabledTextIsEnable = true;
+                        return;
+                    }
+                }
 
                 /////TODO: Get Workorder Labour data 
                 //var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());

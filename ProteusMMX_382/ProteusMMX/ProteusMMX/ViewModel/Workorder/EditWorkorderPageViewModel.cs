@@ -4799,7 +4799,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     AssetsTitle = WebControlTitle.GetTargetNameByTitleName("Asset");
                     AssetSystemTitle = WebControlTitle.GetTargetNameByTitleName("AssetSystem");
                     InternalNotesTitle = WebControlTitle.GetTargetNameByTitleName("InternalNote");
-                    AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
+                    AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("Notes");
                     MoreText = WebControlTitle.GetTargetNameByTitleName("More");
                     Signatures = WebControlTitle.GetTargetNameByTitleName("Signatures");
                     AssociatedAssets = (WebControlTitle.GetTargetNameByTitleName("AssociatedAssets"));
@@ -10946,7 +10946,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 ///TODO: Get Workorder data 
                 var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
-
+               
 
                 ///TODO: Get Inspection 
                 //var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString());
@@ -11422,7 +11422,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 var workorder = workorderWrapper.workOrderWrapper.workOrder;
 
-                //var workorderWrapper = workorderWrapper;
+                Application.Current.Properties["TaskOrInspection"] = workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection;
+
 
                 if (workorder.DistributeCost == true)
                 {

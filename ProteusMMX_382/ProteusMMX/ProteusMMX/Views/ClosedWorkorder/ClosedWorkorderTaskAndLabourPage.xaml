@@ -52,11 +52,12 @@
 
 
                 </Grid>
-
+               
                 <ScrollView Grid.Row="1">
-
+                    
                     <!--This is gonna be content grid-->
                     <StackLayout >
+                        <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}"/>
                         <control1:CustomEntry Text="{Binding entryHours }" x:Name="hh" IsEnabled="False"></control1:CustomEntry>
                     </StackLayout>
                 </ScrollView>

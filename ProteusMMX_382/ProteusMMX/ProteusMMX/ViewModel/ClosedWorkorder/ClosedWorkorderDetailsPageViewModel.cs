@@ -4527,6 +4527,11 @@ string _currentRuntime;
 
                 if (response != null && response.clWorkOrderWrapper != null && response.clWorkOrderWrapper.clworkOrder != null)
                 {
+                    //Check for task or Inspection//////////
+                    Application.Current.Properties["TaskOrInspection"] = response.clWorkOrderWrapper._IsWorkOrderHasTaskORInspection;
+
+
+
                     bool fdasignatureKey = AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation;
 
                     if (fdasignatureKey == true)
@@ -4601,7 +4606,7 @@ string _currentRuntime;
                 SectionNameTitle = WebControlTitle.GetTargetNameByTitleName("RiskQuestion");
                 TotalTimeTilte = WebControlTitle.GetTargetNameByTitleName("TotalTime");
                 DescriptionTitle = WebControlTitle.GetTargetNameByTitleName("Description");
-                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
+                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("Notes");
                 InternalNoteTitle = WebControlTitle.GetTargetNameByTitleName("InternalNote");
                 RequiredDateTitle = WebControlTitle.GetTargetNameByTitleName("RequiredDate");
                 WorkStartedDateTitle = WebControlTitle.GetTargetNameByTitleName("WorkStartedDate");

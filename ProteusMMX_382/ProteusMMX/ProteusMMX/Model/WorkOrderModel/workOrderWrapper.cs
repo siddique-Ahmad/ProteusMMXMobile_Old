@@ -8,6 +8,7 @@ namespace ProteusMMX.Model.WorkOrderModel
 {
     public class workOrderWrapper
     {
+        public string _IsWorkOrderHasTaskORInspection { get; set; }
         public int UserId { get; set; }
         public workOrders workOrder { get; set; }
 

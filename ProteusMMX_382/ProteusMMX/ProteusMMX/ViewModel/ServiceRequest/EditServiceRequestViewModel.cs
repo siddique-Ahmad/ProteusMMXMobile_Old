@@ -3943,7 +3943,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 TagTypePickerTitles = new ObservableCollection<string>() {"SHE Tag", "Maintenance Tag", "Operator Tag" };
                 //DescriptionTitle = WebControlTitle.GetTargetNameByTitleName("Description");
-                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
+                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("Notes");
                 FacilityTitle = WebControlTitle.GetTargetNameByTitleName("Facility");
                 LocationTitle = WebControlTitle.GetTargetNameByTitleName("Location");
                 AssetsTitle = WebControlTitle.GetTargetNameByTitleName("Asset");

@@ -82,6 +82,16 @@ namespace ProteusMMX.Views.ClosedWorkorder
         {
             try
             {
+                if (Application.Current.Properties.ContainsKey("TaskOrInspection"))
+                {
+                    string TaskorInspection = (string)Application.Current.Properties["TaskOrInspection"];
+                    if (TaskorInspection == "Task")
+                    {
+                       ViewModel.DisabledText = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                        ViewModel.DisabledTextIsEnable = true;
+                        return;
+                    }
+                }
                 this.ClosedWorkorderID = ViewModel.ClosedWorkorderID;
                 AnswerText.Clear();
                 ParentLayout.Children.Clear();
