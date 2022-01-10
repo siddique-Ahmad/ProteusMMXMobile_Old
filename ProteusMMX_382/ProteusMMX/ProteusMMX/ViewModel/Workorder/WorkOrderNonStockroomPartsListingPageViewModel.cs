@@ -698,6 +698,12 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        public async Task ReloadPageAfterSerchBoxCancle()
+        {
+            PageNumber = 1;
+            await RemoveAllNonStockPartsFromCollection();
+            await GetWorkorderNonStockRoomParts();
+        }
         private async Task RemoveAllNonStockPartsFromCollection()
         {
             Device.BeginInvokeOnMainThread(() =>

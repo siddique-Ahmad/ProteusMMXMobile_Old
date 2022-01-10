@@ -2650,7 +2650,7 @@ namespace ProteusMMX.Views.Workorder
                     btnDelete.Clicked += BtnSectionDelete_Clicked;
 
                     StackLayout Case1SL = new StackLayout();
-                    layout2.Children.Add(Case1SL);
+                    
                     Grid Case1Grid = new Grid();
                     Case1Grid.Padding = new Thickness(0, 1, 0, -10);
                     Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
@@ -2661,6 +2661,7 @@ namespace ProteusMMX.Views.Workorder
                     Case1Grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                     Case1Grid.RowDefinitions.Add(new RowDefinition { Height = 45 });
                     Case1SL.Children.Add(Case1Grid);
+                    layout2.Children.Add(Case1SL);
                     #region Add Signature image
                     if (item.SignatureRequired.GetValueOrDefault())
                     {
@@ -3430,6 +3431,7 @@ namespace ProteusMMX.Views.Workorder
                 UserDialogs.Instance.HideLoading();
                 total = total.Subtract(total);
                 MainLayout.Children.Clear();
+                ParentLayout.Children.Clear();
                 OnAppearing();
 
             }
@@ -3919,6 +3921,7 @@ namespace ProteusMMX.Views.Workorder
 
             total = total.Subtract(total);
             MainLayout.Children.Clear();
+            ParentLayout.Children.Clear();
             OnAppearing();
 
 

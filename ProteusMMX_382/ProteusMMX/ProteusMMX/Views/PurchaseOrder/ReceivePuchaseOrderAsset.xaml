@@ -113,9 +113,9 @@
                 </border:SfBorder>
             </StackLayout>
 
-            <StackLayout HorizontalOptions="CenterAndExpand" Padding="0,20,0,0" Grid.Row="4" WidthRequest="100">
+            <StackLayout HorizontalOptions="CenterAndExpand" Padding="0,10,0,0" Grid.Row="4" WidthRequest="100">
                 <!--<Button Text="{Binding ReceiveTitle}" TextColor="Black"  BackgroundColor="{Binding ColorBackground}"  IsEnabled="{Binding ReceivedButtonIsEnabled}" IsVisible="{Binding ReceivedButtonIsVisible}" Command="{Binding ReceivePurchaseOrderAssetCommand}"  />-->
-                <buttons:SfButton
+                <Button
                         CornerRadius="5"
                         Grid.Row="4"
                     HorizontalOptions="CenterAndExpand" WidthRequest="150"
@@ -125,7 +125,7 @@
                         IsVisible="{Binding ReceivedButtonIsVisible}"
                         IsEnabled="{Binding ReceivedButtonIsEnabled}"
                         Text="{Binding ReceiveTitle}" >
-                </buttons:SfButton>
+                </Button>
             </StackLayout>
         </Grid>
     </ContentPage.Content>

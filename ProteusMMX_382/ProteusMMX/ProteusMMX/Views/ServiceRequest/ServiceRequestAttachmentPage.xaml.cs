@@ -40,10 +40,6 @@ namespace ProteusMMX.Views.ServiceRequest
                 await viewAware.OnViewAppearingAsync(this);
             }
 
-
-
-
-
         }
 
 
