@@ -597,8 +597,6 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 OperationInProgress = true;
 
-              
-
                 if (navigationData != null)
                 {
 
@@ -653,10 +651,6 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
                 }
                 OperationInProgress = false;
-
-
-
-
 
             }
             catch (Exception ex)
@@ -729,7 +723,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 
                 {
                    
-                        PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
+                    PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
                     
                     
                     WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
@@ -1068,7 +1062,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 string filepath = file.FilePath;
                 string base64String = Convert.ToBase64String(file.DataArray);
-
+              
                 workOrderWrapper workorderWrapper = new workOrderWrapper();
                 workorderWrapper.attachments = new List<WorkOrderAttachment>();
                 WorkOrderAttachment woattachment = new WorkOrderAttachment();
@@ -1367,6 +1361,9 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         WorkOrderAttachment woattachment = new WorkOrderAttachment();
                         woattachment.WorkOrderID = WorkorderID;
+
+
+
                         //woattachment.ModifiedUserName = "Eagle4";
                         woattachment.attachmentFile = Convert.ToBase64String(file.ImageBytes);
                         woattachment.attachmentFileExtension = file.attachmentFileExtension;

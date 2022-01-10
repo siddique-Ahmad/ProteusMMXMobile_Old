@@ -54,7 +54,7 @@ namespace ProteusMMX.Views.Workorder
             if (string.IsNullOrEmpty(searchBar.Text))
             {
                 ViewModel.OnViewDisappearingAsync(null);
-                ViewModel.RefillNonStockPartsCollection();
+                ViewModel.ReloadPageAfterSerchBoxCancle();
             }
         }
     }

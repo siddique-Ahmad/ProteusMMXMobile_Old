@@ -376,9 +376,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
-
-
-
         public ObservableCollection<ServicerequestAttachment> Attachments { get; set; }
         public ObservableCollection<string> DocumentAttachments { get; set; }
 
