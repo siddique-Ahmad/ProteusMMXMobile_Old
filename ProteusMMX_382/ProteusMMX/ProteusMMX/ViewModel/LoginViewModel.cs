@@ -626,8 +626,8 @@ namespace ProteusMMX.ViewModel
             {
                // Crashes.GenerateTestCrash();
                 ServiceOutput apiVersion = new ServiceOutput();
-                UserDialogs.Instance.ShowLoading("Please wait..loading all data");
-
+                UserDialogs.Instance.ShowLoading("Please wait..loading all data",MaskType.Gradient);
+                await Task.Delay(100);
                 if (string.IsNullOrEmpty(SiteUrl))
                 {
                     UserDialogs.Instance.HideLoading();

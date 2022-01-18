@@ -4630,8 +4630,121 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         #endregion
+        #region Show More Text
 
+        string _descriptionMoreText;
+        public string DescriptionMoreText
+        {
+            get
+            {
+                return _descriptionMoreText;
+            }
+
+            set
+            {
+                if (value != _descriptionMoreText)
+                {
+                    _descriptionMoreText = value;
+                    OnPropertyChanged(nameof(DescriptionMoreText));
+                }
+            }
+        }
+
+        bool _moreDescriptionTextIsEnable = false;
+        public bool MoreDescriptionTextIsEnable
+        {
+            get
+            {
+                return _moreDescriptionTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreDescriptionTextIsEnable)
+                {
+                    _moreDescriptionTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreDescriptionTextIsEnable));
+                }
+            }
+        }
+
+
+        string _internalNoteMoreText;
+        public string InternalNoteMoreText
+        {
+            get
+            {
+                return _internalNoteMoreText;
+            }
+
+            set
+            {
+                if (value != _internalNoteMoreText)
+                {
+                    _internalNoteMoreText = value;
+                    OnPropertyChanged(nameof(InternalNoteMoreText));
+                }
+            }
+        }
+
+        bool _moreInternalNoteTextIsEnable = false;
+        public bool MoreInternalNoteTextIsEnable
+        {
+            get
+            {
+                return _moreInternalNoteTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreInternalNoteTextIsEnable)
+                {
+                    _moreInternalNoteTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreInternalNoteTextIsEnable));
+                }
+            }
+        }
+
+
+
+        string _additionalDetailsMoreText;
+        public string AdditionalDetailsMoreText
+        {
+            get
+            {
+                return _additionalDetailsMoreText;
+            }
+
+            set
+            {
+                if (value != _additionalDetailsMoreText)
+                {
+                    _additionalDetailsMoreText = value;
+                    OnPropertyChanged(nameof(AdditionalDetailsMoreText));
+                }
+            }
+        }
+
+        bool _moreAdditionalDetailsTextIsEnable = false;
+        public bool MoreAdditionalDetailsTextIsEnable
+        {
+            get
+            {
+                return _moreAdditionalDetailsTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreAdditionalDetailsTextIsEnable)
+                {
+                    _moreAdditionalDetailsTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreAdditionalDetailsTextIsEnable));
+                }
+            }
+        }
         #endregion
+        #endregion
+
 
 
 
@@ -4652,6 +4765,8 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand WorkorderTypeCommand => new AsyncCommand(ShowWorkorderType);
         public ICommand CauseCommand => new AsyncCommand(ShowCause);
         public ICommand MaintenanceCodeCommand => new AsyncCommand(ShowMaintenanceCode);
+
+        public ICommand DescriptionCommand => new AsyncCommand(ShowMore1Description);
 
         public ICommand TapCommand1 => new AsyncCommand(ShowMoreDescription);
 
@@ -11460,6 +11575,17 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
 
                 this.DescriptionText = workorder.Description;
+
+                if (!string.IsNullOrWhiteSpace(workorder.Description) && workorder.Description.Length >= 150)
+                {
+                    MoreDescriptionTextIsEnable = true;
+                }
+
+
+                this.DescriptionMoreText = workorder.Description;
+                this.DescriptionText = workorder.Description;
+
+
                 if (!string.IsNullOrWhiteSpace(workorder.AdditionalDetails))
                 {
                     //if (Device.Idiom == TargetIdiom.Phone)
@@ -11470,7 +11596,13 @@ namespace ProteusMMX.ViewModel.Workorder
                     //else
                     //{
                         this.AdditionalDetailsText = RemoveHTML.StripHTML(workorder.AdditionalDetails);
-                   // }
+                    if (workorder.AdditionalDetails.Length >= 150)
+                    {
+                        MoreAdditionalDetailsTextIsEnable = true;
+                    }
+                    this.AdditionalDetailsMoreText = this.AdditionalDetailsText;
+                    this.AdditionalDetailsText = this.AdditionalDetailsText;
+                    // }
 
                 }
 
@@ -11514,7 +11646,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
 
-                InternalNoteText = workorder.InternalNote;
+               
+                if (!string.IsNullOrEmpty(workorder.Description)  &&   workorder.Description.Length >= 150)
+                {
+                    MoreInternalNoteTextIsEnable = true;
+                }
+                InternalNoteMoreText = workorder.InternalNote;
+                this.InternalNoteText = workorder.InternalNote;
+
                 /// Set Targets and Other
                 /// 
                 if (!string.IsNullOrEmpty(workorder.FacilityName))
@@ -12469,9 +12608,6 @@ namespace ProteusMMX.ViewModel.Workorder
                 ///TODO: Apply Requester Email Validation. 
                 ///Its a dynamic field Validations can't be applied or Need type information to apply validation.
 
-
-
-
                 ///TODO: Check the IsRequired Fields for OverridenControls
                 ///
                 var validationResultForOverriddenControls = await ValidateOverriddenControlsIsRequired(OverriddenControlsNew);
@@ -12482,10 +12618,6 @@ namespace ProteusMMX.ViewModel.Workorder
                     DialogService.ShowToast(validationResultForOverriddenControls.ErrorMessage);
                     return;
                 }
-
-
-
-
 
                 ///TODO: Check the IsRequired Fields According to field rights
                 ///on button save we will call formload and check all WorkOrderFormLoad with Its associative Property
@@ -15139,7 +15271,36 @@ namespace ProteusMMX.ViewModel.Workorder
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                tnobj.Description = DescriptionText;
+                tnobj.Description = DescriptionMoreText;
+                await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
+                // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+
+                //OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+
+                // OperationInProgress = false;
+
+            }
+        }
+
+        public async Task ShowMore1Description()
+        {
+
+            try
+            {
+                UserDialogs.Instance.HideLoading();
+
+                TargetNavigationData tnobj = new TargetNavigationData();
+                tnobj.Description = DescriptionMoreText;
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
             }
@@ -15173,7 +15334,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 //}
                 //else
                 //{
-                    tnobj.Description = AdditionalDetailsText;
+                    tnobj.Description = AdditionalDetailsMoreText;
                // }
 
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
@@ -15204,14 +15365,13 @@ namespace ProteusMMX.ViewModel.Workorder
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                if (Device.Idiom == TargetIdiom.Phone)
-                {
-                    tnobj.Description = InternalNotesTextForMobile;
-                }
-                else
-                {
-                    tnobj.Description = InternalNoteText;
-                }
+                //if (Device.Idiom == TargetIdiom.Phone)
+                //{
+                //    tnobj.Description = InternalNotesTextForMobile;
+                //}
+                
+                    tnobj.Description = InternalNoteMoreText;
+                
 
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 

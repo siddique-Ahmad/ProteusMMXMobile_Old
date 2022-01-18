@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
              x:Class="ProteusMMX.Views.ServiceRequest.CreateServiceRequest"
                 Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
@@ -125,7 +125,6 @@
                                 
                             </StackLayout>
 
-
                             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0" IsVisible="{Binding AssetIdIsVisible}">
                                 <Label Text="{Binding AssetsTitle}" TextColor="Black">
                                     <Label.FontAttributes>
@@ -168,7 +167,6 @@
                                 </border:SfBorder>                                
                             </StackLayout>
 
-
                             <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1" IsVisible="{Binding WorkorderRequesterIsVisible}">
                                 <Label Text="{Binding WorkorderRequesterTitle}" TextColor="Black">
                                     <Label.FontAttributes>
@@ -197,7 +195,6 @@
                                 </border:SfBorder>
                                 
                             </StackLayout>
-
 
                             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="1" IsVisible="{Binding PriorityIsVisible}">
                                 <Label Text="{Binding PriorityTitle}" TextColor="Black">
@@ -271,6 +268,7 @@
                                 </border:SfBorder>
 
                             </StackLayout>
+                            
                             <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="0">
                                 <Label Text="{Binding RequiredDateTitle}" TextColor="Black">
                                     <Label.FontAttributes>
@@ -297,6 +295,7 @@
 
 
                         </Grid>
+                        
                         <Grid Margin="10,0,20,0" Grid.Row="2" x:Name="Grid_column" IsVisible="{Binding AdditionalDetailsIsVisible}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1500*" ></ColumnDefinition>
@@ -314,8 +313,8 @@
                                 </Label>
                                 
                                 <border:SfBorder CornerRadius="5">
-                                    
-                                    <controls:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></controls:UnderLineEditor>
+
+                                    <richtexteditor:SfRichTextEditor PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" HeightRequest="108"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" />
                                 </border:SfBorder>
                             </StackLayout>
 

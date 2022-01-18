@@ -7,7 +7,7 @@
              xmlns:control1="clr-namespace:ProteusMMX.Controls"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfCalendar.XForms;assembly=Syncfusion.SfCalendar.XForms"
-             xmlns:controls1="clr-namespace:Windows.UI.Xaml.Controls;assembly=Windows.Foundation.UniversalApiContract"
+             xmlns:controls1="clr-namespace:Windows.UI.Xaml.Controls;assembly=Windows.Foundation.UniversalApiContract" xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
              x:Class="ProteusMMX.Views.Workorder.EditWorkorderPage"
              Icon="details.png">
 
@@ -121,7 +121,7 @@
                                 </StackLayout>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="1"  Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">
                                 <Label Text="{Binding DescriptionTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -131,23 +131,19 @@
                                     </Label.FontAttributes>
                                 </Label>
 
-                                <border:SfBorder Grid.Row="2" Style="{StaticResource SfBorderStyle}">
-                                    <StackLayout Grid.Row="2">
-                                        <border:SfBorder>
-                                            <StackLayout>
-                                        <control1:UnderLineEditor  x:Name="Description" Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"
-                            TextColor="{DynamicResource Gray-900}" />
-                                        <Label HorizontalOptions="EndAndExpand" Grid.Column="1" TextColor="#006de0" Text="{Binding MoreText}"  FontAttributes="Bold" >
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer
-                                        Command="{Binding TapCommand1}"
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="133">
+                                    <StackLayout>
+                                        <richtexteditor:SfRichTextEditor PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" x:Name="Description" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" Text="{Binding DescriptionText}" HeightRequest="108"></richtexteditor:SfRichTextEditor>
+                                        <Label Grid.Column="1" IsVisible="{Binding MoreDescriptionTextIsEnable}" Padding="0,-5,0,0"  BackgroundColor="Transparent" HorizontalTextAlignment="End"  Text="{Binding MoreText}" HeightRequest="25" TextColor="#006de0" FontAttributes="Bold" >
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                        Command="{Binding DescriptionCommand}"
                                          NumberOfTapsRequired="1" />
-                                            </Label.GestureRecognizers>
-                                        </Label>
-                                            </StackLayout>
-                                        </border:SfBorder>
+                                        </Label.GestureRecognizers>
+                                    </Label>
                                     </StackLayout>
                                 </border:SfBorder>
+                               
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding AssetIsVisible}">
@@ -659,8 +655,10 @@
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
                                     <StackLayout >
-                                        <control1:UnderLineEditor HeightRequest="120"  Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" />
-                                        <Label HorizontalOptions="End" HeightRequest="30" Grid.Column="1" VerticalOptions="End" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
+                                        <richtexteditor:SfRichTextEditor PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" HeightRequest="120" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" />
+
+                                        
+                                        <Label HorizontalOptions="End" IsVisible="{Binding MoreAdditionalDetailsTextIsEnable}" HeightRequest="30" Grid.Column="1" VerticalOptions="End" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
                                             <Label.GestureRecognizers>
                                                 <TapGestureRecognizer
                                         Command="{Binding TapCommand2}"
@@ -690,7 +688,7 @@
 
                         </Grid>
 
-                        <Grid Margin="10,0,0,0"  Grid.Row="3" x:Name="Grid_column1" IsVisible="{Binding InternalNotesIsVisible}" >
+                        <!--<Grid Margin="10,0,0,0"  Grid.Row="3" x:Name="Grid_column1" IsVisible="{Binding InternalNotesIsVisible}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1500*" ></ColumnDefinition>
                                 <ColumnDefinition Width="40*"></ColumnDefinition>
@@ -709,7 +707,7 @@
                                             <control1:UnderLineEditor HeightRequest="120" Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
 
 
-                                        <Label HorizontalOptions="End" HeightRequest="30" Grid.Column="1" VerticalOptions="End" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
+                                        <Label HorizontalOptions="End" IsVisible="{Binding MoreInternalNoteTextIsEnable}" HeightRequest="30" Grid.Column="1" VerticalOptions="End" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
                                             <Label.GestureRecognizers>
                                                 <TapGestureRecognizer
                                         Command="{Binding TapCommand3}"
@@ -719,6 +717,39 @@
                                     </StackLayout>
                                 </border:SfBorder>
                                 
+                            </StackLayout>
+
+                        </Grid>-->
+
+                        <Grid Margin="10,0,0,0"  Grid.Row="3" x:Name="Grid_column1" IsVisible="{Binding InternalNotesIsVisible}" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1500*" ></ColumnDefinition>
+                                <ColumnDefinition Width="40*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackLayout Orientation="Vertical" Grid.Column="0" Grid.Row="0"  >
+                                <Label Text="{Binding InternalNotesTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes">
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Label.FontAttributes>
+                                </Label>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="150"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                                    <StackLayout>
+                                        <richtexteditor:SfRichTextEditor PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" HeightRequest="120" Text="{Binding InternalNoteText}" IsEnabled="{Binding InternalNotesIsEnable, Mode=TwoWay}" />
+
+
+                                        <Label HorizontalOptions="End" IsVisible="{Binding MoreInternalNoteTextIsEnable}" HeightRequest="30" Grid.Column="1" VerticalOptions="End" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                        Command="{Binding TapCommand3}"
+                                         NumberOfTapsRequired="1" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                </border:SfBorder>
+
                             </StackLayout>
 
                         </Grid>

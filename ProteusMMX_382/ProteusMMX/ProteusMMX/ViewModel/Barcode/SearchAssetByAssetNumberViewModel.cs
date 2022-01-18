@@ -1,4 +1,5 @@
-﻿using ProteusMMX.Helpers;
+﻿using Acr.UserDialogs;
+using ProteusMMX.Helpers;
 using ProteusMMX.Model.AssetModel;
 using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.WorkOrderModel;
@@ -562,12 +563,6 @@ namespace ProteusMMX.ViewModel.Barcode
             }
         }
 
-
-
-
-    
-
-
         private async Task RemoveAllAssetsFromCollection()
         {
             Device.BeginInvokeOnMainThread(() =>
@@ -624,13 +619,15 @@ namespace ProteusMMX.ViewModel.Barcode
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
 
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+               // OperationInProgress = false;
 
             }
         }

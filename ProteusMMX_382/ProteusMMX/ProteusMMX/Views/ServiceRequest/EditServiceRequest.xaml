@@ -4,7 +4,7 @@
               xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:Control1="clr-namespace:ProteusMMX.Controls" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:Control1="clr-namespace:ProteusMMX.Controls" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
              x:Class="ProteusMMX.Views.ServiceRequest.EditServiceRequest"
               Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
@@ -308,7 +308,7 @@
                                 <!--<Editor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>-->
                                 <border:SfBorder CornerRadius="5">
                                     <StackLayout>
-                                        <Control1:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></Control1:UnderLineEditor>
+                                        <richtexteditor:SfRichTextEditor PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></richtexteditor:SfRichTextEditor>
 
                                         <Label HorizontalOptions="End" BackgroundColor="Transparent" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
                                             <Label.GestureRecognizers>
@@ -348,7 +348,7 @@
                                 <border:SfBorder CornerRadius="5">
                                     <StackLayout>
                                         <StackLayout HeightRequest="125">
-                                            <Label Text="{Binding SignatureText}"/>
+                                            <richtexteditor:SfRichTextEditor ReadOnly="True" PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" Text="{Binding SignatureText}"/>
                                         </StackLayout>
                                         <!--<control1:UnderLineEditor  Text="{Binding SignatureText}" IsEnabled="False"  />-->
                                         <Label HorizontalOptions="End"  Grid.Column="1" Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >

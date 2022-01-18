@@ -1061,8 +1061,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 string filepath = file.FilePath;
+
+                
                 string base64String = Convert.ToBase64String(file.DataArray);
-              
                 workOrderWrapper workorderWrapper = new workOrderWrapper();
                 workorderWrapper.attachments = new List<WorkOrderAttachment>();
                 WorkOrderAttachment woattachment = new WorkOrderAttachment();

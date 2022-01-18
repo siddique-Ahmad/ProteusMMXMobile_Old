@@ -98,8 +98,8 @@ namespace ProteusMMX.Views.Workorder
                 count = count + 1;
                 if (count==1)
                 {
-                    await ViewModel.OnViewDisappearingAsync(null);
-                    await ViewModel.RefillWorkorderCollection();
+                   await ViewModel.searchBoxTextCler();
+                    
                 }
                 else
                 {

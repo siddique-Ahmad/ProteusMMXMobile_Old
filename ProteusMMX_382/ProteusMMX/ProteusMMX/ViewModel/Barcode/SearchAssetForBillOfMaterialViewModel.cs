@@ -831,6 +831,11 @@ namespace ProteusMMX.ViewModel.Barcode
 
         }
 
+        public async Task SearchBoxClerText()
+        {
+           await RemoveAllBOMPartsFromCollection();
+            await GetBOMParts();
+        }
 
     
         public async Task SearchAssetForBOM()

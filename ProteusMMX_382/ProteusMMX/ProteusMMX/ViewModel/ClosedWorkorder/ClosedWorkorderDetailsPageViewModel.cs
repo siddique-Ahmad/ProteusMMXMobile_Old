@@ -4499,6 +4499,119 @@ string _currentRuntime;
             }
         }
 
+        #region Show More Text
+
+        string _descriptionMoreText;
+        public string DescriptionMoreText
+        {
+            get
+            {
+                return _descriptionMoreText;
+            }
+
+            set
+            {
+                if (value != _descriptionMoreText)
+                {
+                    _descriptionMoreText = value;
+                    OnPropertyChanged(nameof(DescriptionMoreText));
+                }
+            }
+        }
+
+        bool _moreDescriptionTextIsEnable = false;
+        public bool MoreDescriptionTextIsEnable
+        {
+            get
+            {
+                return _moreDescriptionTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreDescriptionTextIsEnable)
+                {
+                    _moreDescriptionTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreDescriptionTextIsEnable));
+                }
+            }
+        }
+
+
+        string _internalNoteMoreText;
+        public string InternalNoteMoreText
+        {
+            get
+            {
+                return _internalNoteMoreText;
+            }
+
+            set
+            {
+                if (value != _internalNoteMoreText)
+                {
+                    _internalNoteMoreText = value;
+                    OnPropertyChanged(nameof(InternalNoteMoreText));
+                }
+            }
+        }
+
+        bool _moreInternalNoteTextIsEnable = false;
+        public bool MoreInternalNoteTextIsEnable
+        {
+            get
+            {
+                return _moreInternalNoteTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreInternalNoteTextIsEnable)
+                {
+                    _moreInternalNoteTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreInternalNoteTextIsEnable));
+                }
+            }
+        }
+
+
+
+        string _additionalDetailsMoreText;
+        public string AdditionalDetailsMoreText
+        {
+            get
+            {
+                return _additionalDetailsMoreText;
+            }
+
+            set
+            {
+                if (value != _additionalDetailsMoreText)
+                {
+                    _additionalDetailsMoreText = value;
+                    OnPropertyChanged(nameof(AdditionalDetailsMoreText));
+                }
+            }
+        }
+
+        bool _moreAdditionalDetailsTextIsEnable = false;
+        public bool MoreAdditionalDetailsTextIsEnable
+        {
+            get
+            {
+                return _moreAdditionalDetailsTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreAdditionalDetailsTextIsEnable)
+                {
+                    _moreAdditionalDetailsTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreAdditionalDetailsTextIsEnable));
+                }
+            }
+        }
+        #endregion
 
         #region Methods
         public override async Task InitializeAsync(object navigationData)
@@ -4884,9 +4997,34 @@ string _currentRuntime;
             this.WorkorderNumberText = workorder.WorkOrderNumber;
             this.JobNumberText = workorder.JobNumber;
             this.DescriptionText = workorder.Description;
+
+            if (workorder.Description.Length >= 150)
+            {
+                MoreDescriptionTextIsEnable = true;
+            }
+            this.DescriptionMoreText = workorder.Description;
+            this.DescriptionText = workorder.Description;
+
+
             this.TotalTimeText = workorder.TotalTime;
+           // this.AdditionalDetailsText = workorder.AdditionalDetails;
+            if (workorder.AdditionalDetails.Length >= 150)
+            {
+                MoreAdditionalDetailsTextIsEnable = true;
+            }
+            this.AdditionalDetailsMoreText = workorder.AdditionalDetails;
             this.AdditionalDetailsText = workorder.AdditionalDetails;
+
+            
+
             this.RequiredDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.RequiredDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+
+            this.InternalNoteText = workorder.InternalNote;
+            if (workorder.InternalNote.Length >= 150)
+            {
+                MoreInternalNoteTextIsEnable = true;
+            }
+            this.InternalNoteMoreText = workorder.InternalNote;
             this.InternalNoteText = workorder.InternalNote;
 
             /// Workorder Start Date Property Set
@@ -5186,7 +5324,7 @@ string _currentRuntime;
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                tnobj.Description = AdditionalDetailsText;
+                tnobj.Description = AdditionalDetailsMoreText;
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
             }
@@ -5246,7 +5384,7 @@ string _currentRuntime;
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                tnobj.Description = DescriptionText;
+                tnobj.Description = DescriptionMoreText;
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
             }
@@ -5275,7 +5413,7 @@ string _currentRuntime;
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                tnobj.Description = InternalNoteText;
+                tnobj.Description = InternalNoteMoreText;
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
             }
