@@ -624,7 +624,7 @@ namespace ProteusMMX.ViewModel.Asset
                     this.SearchText = navigationParams.SearchText;
 
                 }
-                UserDialogs.Instance.Loading();
+                UserDialogs.Instance.ShowLoading();
                 //OperationInProgress = true;
                 await SetTitlesPropertiesForPage();
                 await GetAssetControlRights();
@@ -948,6 +948,7 @@ namespace ProteusMMX.ViewModel.Asset
                     await RemoveAllAssetsFromCollection();
                     await AddAssetsInAssetCollection(assets);
                     TotalRecordCount = AssetResponse.assetWrapper.assets.Count;
+                    OperationInProgress = false;
                 }
                 else
                 {

@@ -3029,11 +3029,14 @@ namespace ProteusMMX.Views.Workorder
 
             try
             {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(1000);
                 CC = await ViewModel._inspectionService.GetWorkorderInspection(this.WorkorderID.ToString(), AppSettings.User.UserID.ToString());
                 if (CC.workOrderEmployee.Count == 0 && CC.workorderContractor.Count == 0)
                 {
 
                     UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleaseFirstAddEmployeeORContractor"), TimeSpan.FromSeconds(2));
+                    UserDialogs.Instance.HideLoading();
                     return;
 
                 }
@@ -3042,8 +3045,7 @@ namespace ProteusMMX.Views.Workorder
                 List<InspectionTOAnswers> listcompletionAnswer = new List<InspectionTOAnswers>();
 
 
-                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-                await Task.Delay(1000);
+                
                 var test = (sender as Button).Parent.Parent;
                 var stacklayout = (sender as Button).Parent.Parent as StackLayout;
 
@@ -3444,11 +3446,14 @@ namespace ProteusMMX.Views.Workorder
         }
         private async void Btnsave_Clicked(object sender, EventArgs e)
         {
+            UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+            await Task.Delay(1000);
             CC = await ViewModel._inspectionService.GetWorkorderInspection(this.WorkorderID.ToString(), AppSettings.User.UserID.ToString());
             if (CC.workOrderEmployee.Count == 0 && CC.workorderContractor.Count == 0)
             {
 
                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleaseFirstAddEmployeeORContractor"), TimeSpan.FromSeconds(2));
+                UserDialogs.Instance.HideLoading();
                 return;
 
             }
@@ -3458,8 +3463,7 @@ namespace ProteusMMX.Views.Workorder
 
             InspectionTOAnswers listtoAnswerModel;
 
-            UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-            await Task.Delay(1000);
+           
             var test = (sender as Button).Parent.Parent.Parent.Parent;
             var ssdv = (sender as Button).Parent.Parent.Parent as StackLayout;
 

@@ -5,7 +5,7 @@
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls" xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
              x:Class="ProteusMMX.Views.ClosedWorkorder.ClosedWorkorderDetailsPage"
              
               Icon="details.png"
@@ -156,22 +156,16 @@
                             <StackLayout IsVisible="{Binding DescriptionLayout}" Orientation="Vertical" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                                 <Label Text="{Binding DescriptionTitle}" TextColor="Black" FontAttributes="Bold"/>
 
-                                <border:SfBorder CornerRadius="5" >
-                                    <StackLayout BackgroundColor="LightGray">
-                                        <StackLayout IsEnabled="False">
-                                    <control1:UnderLineEditor Text="{Binding DescriptionText}"  >
-                                        <control1:UnderLineEditor.HeightRequest>
-                                            <OnPlatform x:TypeArguments="x:Double" Default="56">
-                                                <On Platform="iOS" Value="56"/>
-                                                <On Platform="Android" Value="60"/>
-                                                <On Platform="WinPhone" Value="56"/>
-                                                <On Platform="UWP" Value="56"/>
-                                            </OnPlatform>
-                                        </control1:UnderLineEditor.HeightRequest>
-                                     
-                                        </control1:UnderLineEditor>
+                                <border:SfBorder CornerRadius="5"  BackgroundColor="LightGray" HeightRequest="133">
+                                    <StackLayout BackgroundColor="Transparent">
+                                        <StackLayout  BackgroundColor="Transparent">
+                                            <!--<Label Text="{Binding DescriptionText}"   MaxLines="3" TextColor="Black"/>-->
+                                            <richtexteditor:SfRichTextEditor BackgroundColor="LightGray" ReadOnly="True" PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" Text="{Binding DescriptionText}"  HeightRequest="108">
+                                        
+                                        </richtexteditor:SfRichTextEditor>
+                                            
                                         </StackLayout>
-                                        <Label Grid.Column="1"  BackgroundColor="Transparent"  Text="{Binding MoreText}" HorizontalOptions="EndAndExpand" TextColor="#006de0" FontAttributes="Bold" >
+                                        <Label  IsVisible="{Binding MoreDescriptionTextIsEnable}"  HeightRequest="25" Padding="0,-5,0,0" BackgroundColor="Transparent"  Text="{Binding MoreText}" HorizontalTextAlignment="End" TextColor="#006de0" FontAttributes="Bold" >
                                             <Label.GestureRecognizers>
                                                 <TapGestureRecognizer
                                         Command="{Binding TapCommand1}"
@@ -623,9 +617,9 @@
                                 <!--<Editor Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150" />-->
                                 <border:SfBorder CornerRadius="5">
                                     <StackLayout BackgroundColor="LightGray">
-                                        <control1:UnderLineEditor BackgroundColor="LightGray" Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150"></control1:UnderLineEditor>
+                                        <richtexteditor:SfRichTextEditor ReadOnly="True" PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" BackgroundColor="LightGray" Text="{Binding AdditionalDetailsText}" HeightRequest="108"></richtexteditor:SfRichTextEditor>
 
-                                        <Label Grid.Column="1" Text="{Binding MoreText}" HorizontalOptions="EndAndExpand" TextColor="#006de0" FontAttributes="Bold" >
+                                        <Label Grid.Column="1" IsVisible="{Binding MoreAdditionalDetailsTextIsEnable}" Text="{Binding MoreText}" HorizontalOptions="EndAndExpand" TextColor="#006de0" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
                                         Command="{Binding TapCommand}"
@@ -641,9 +635,9 @@
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
                                 <border:SfBorder CornerRadius="5" BackgroundColor="LightGray" >
                                     <StackLayout >
-                                        <control1:UnderLineEditor IsEnabled="False" Text="{Binding InternalNoteText}" HeightRequest="150"></control1:UnderLineEditor>
+                                        <richtexteditor:SfRichTextEditor ReadOnly="True" BackgroundColor="LightGray" PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" Text="{Binding InternalNoteText}"   HeightRequest="108"></richtexteditor:SfRichTextEditor>
 
-                                        <Label Grid.Column="1" Text="{Binding MoreText}" HorizontalOptions="EndAndExpand" TextColor="#006de0" FontAttributes="Bold" >
+                                        <Label Grid.Column="1" IsVisible="{Binding MoreInternalNoteTextIsEnable}" Text="{Binding MoreText}" HorizontalOptions="EndAndExpand" TextColor="#006de0" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer
                                         Command="{Binding InternalNotesTapCommand}"
@@ -661,7 +655,7 @@
                                     <StackLayout>
                                     
                                         <StackLayout HeightRequest="125">
-                                            <Label Text="{Binding SignatureText}"/>
+                                            <richtexteditor:SfRichTextEditor ReadOnly="True" PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" Text="{Binding SignatureText}"/>
                                         </StackLayout>
                                         <Label Grid.Column="1" BackgroundColor="Transparent" HorizontalTextAlignment="End"  Text="{Binding MoreText}" TextColor="#006de0" FontAttributes="Bold" >
                                     <Label.GestureRecognizers>

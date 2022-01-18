@@ -446,7 +446,42 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         #endregion
 
 
+        bool _disabledTextIsEnable = false;
+        public bool DisabledTextIsEnable
+        {
+            get
+            {
+                return _disabledTextIsEnable;
+            }
 
+            set
+            {
+                if (value != _disabledTextIsEnable)
+                {
+                    _disabledTextIsEnable = value;
+                    OnPropertyChanged(nameof(DisabledTextIsEnable));
+                }
+            }
+        }
+
+
+        string _disabledText = "";
+        public string DisabledText
+        {
+            get
+            {
+                return _disabledText;
+            }
+
+            set
+            {
+                if (value != _disabledText)
+                {
+                    _disabledText = value;
+                    OnPropertyChanged("DisabledText");
+                }
+            }
+        }
 
 
         #region ListView Properties
@@ -673,7 +708,8 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
                 else
                 {
-                    await DialogService.ShowAlertAsync("Alert", "No Data Available", "ok");
+                    DisabledText = "No record Found";//WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                    DisabledTextIsEnable = true;
                 }
             }
             catch (Exception ex)

@@ -141,10 +141,11 @@
 
                                 <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"/>-->
                                 <!--<dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></dependencyinterface:CustomEditor>-->
-                                <border:SfBorder
-                                    Style="{StaticResource SfBorderStyle}">
-                                    <control1:CustomEntry x:Name="Description" Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"
-                            TextColor="{DynamicResource Gray-900}" />
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="100">
+                                    <control1:UnderLineEditor x:Name="Description" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" Text="{Binding DescriptionText}" HeightRequest="150"></control1:UnderLineEditor>
+
+                                    <!--<control1:CustomEntry x:Name="Description" Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"
+                            TextColor="{DynamicResource Gray-900}" />-->
                                 </border:SfBorder>
                             </StackLayout>
 

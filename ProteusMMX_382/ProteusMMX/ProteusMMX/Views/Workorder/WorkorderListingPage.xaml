@@ -185,7 +185,7 @@
                 </StackLayout>
                 
             </Grid>
-            <ActivityIndicator  IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+            <!--<ActivityIndicator  IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
                
             </Grid>
 

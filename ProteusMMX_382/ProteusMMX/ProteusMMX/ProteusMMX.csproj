@@ -43,6 +43,7 @@
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="19.3.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRichTextEditor" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="19.3.0.48" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.1.1" />
     <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.1" />

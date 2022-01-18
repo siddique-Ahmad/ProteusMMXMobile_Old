@@ -599,7 +599,44 @@ namespace ProteusMMX.ViewModel.Workorder
         #endregion
 
 
+        #region More IsVisible 
+        string _descriptionMoreText;
+        public string DescriptionMoreText
+        {
+            get
+            {
+                return _descriptionMoreText;
+            }
 
+            set
+            {
+                if (value != _descriptionMoreText)
+                {
+                    _descriptionMoreText = value;
+                    OnPropertyChanged(nameof(DescriptionMoreText));
+                }
+            }
+        }
+
+        bool _moreTextIsEnable = false;
+        public bool MoreTextIsEnable
+        {
+            get
+            {
+                return _moreTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreTextIsEnable)
+                {
+                    _moreTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreTextIsEnable));
+                }
+            }
+        }
+
+        #endregion
 
 
         #region Commands

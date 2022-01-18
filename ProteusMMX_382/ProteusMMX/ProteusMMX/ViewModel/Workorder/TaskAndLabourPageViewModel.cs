@@ -703,7 +703,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         StackLayout MasterstackLayout = new StackLayout();
                         StackLayout frameStackLayout = new StackLayout
                         {
-                            Padding = new Thickness(3,0,3,0)
+                            Padding = new Thickness(3, 0, 3, 0)
                         };
                         MasterstackLayout.Children.Add(frameStackLayout);
                         Frame frame = new Frame
@@ -850,12 +850,21 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         StackLayout DescStackLayout = new StackLayout();
                         MainGrid.Children.Add(DescStackLayout, 0, 2);
+                        bool MoreTextIsEnable = false;
+                        if (!string.IsNullOrWhiteSpace(item.Description))
+                        {
+                            if (item.Description.Length >= 90)
+                            {
+                                MoreTextIsEnable = true;
 
-
+                            }
+                        }
                         if (String.IsNullOrEmpty(item.Description))
                         {
                             CustomEntry DescEntry = new CustomEntry()
                             {
+                                HeightRequest = 40,
+                                BackgroundColor = Color.White,
                                 TextColor = Color.Black,
                                 Text = item.Description,
                                 FontSize = 13,
@@ -868,16 +877,23 @@ namespace ProteusMMX.ViewModel.Workorder
                             string result = RemoveHTML.StripHtmlTags(item.Description);
                             CustomEntry DescEntry = new CustomEntry()
                             {
+                                HeightRequest = 40,
+                                
                                 TextColor = Color.Black,
                                 Text = result,
                                 FontSize = 13,
-                                Margin = new Thickness(0, -10, 0, 0)
+                                BackgroundColor = Color.White,
+                                Margin = new Thickness(0, 0, 0, 0)
                             };
                             DescStackLayout.Children.Add(DescEntry);
+
                         }
+
+
 
                         Label more = new Label
                         {
+                            IsVisible = MoreTextIsEnable,
                             HorizontalOptions = LayoutOptions.End,
                             TextColor = Color.FromHex("#006de0"),
                             Text = WebControlTitle.GetTargetNameByTitleName("More"),
@@ -911,8 +927,9 @@ namespace ProteusMMX.ViewModel.Workorder
                         hrsMin.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                         buttnoStackLayout.Children.Add(hrsMin);
 
-                        StackLayout buttnoStackLayoutHrs = new StackLayout { 
-                        Padding = new Thickness(0, -7, 0, 0)
+                        StackLayout buttnoStackLayoutHrs = new StackLayout
+                        {
+                            Padding = new Thickness(0, -7, 0, 0)
                         };
                         Grid BMainGrid = new Grid();
                         BMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
@@ -2322,7 +2339,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
 
-                
+
                 try
                 {
                     OperationInProgress = true;

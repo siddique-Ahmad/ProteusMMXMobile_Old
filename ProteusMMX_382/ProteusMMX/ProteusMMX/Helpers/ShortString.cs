@@ -46,13 +46,84 @@ namespace ProteusMMX.Helpers
 
         public static string shortenMobile(string yourStr)
         {
-            string toView;
-            const int maxView = 90;
+            string toView = yourStr; 
+            if (!string.IsNullOrWhiteSpace(yourStr))
+            {
+                const int maxView = 90;
 
-            if (yourStr.Length > maxView)
-                toView = yourStr.Substring(0, maxView) + " ..."; // all you have is to use Substring(int, int) .net method
-            else
-                toView = yourStr;
+                if (yourStr.Length > maxView)
+                    toView = yourStr.Substring(0, maxView) + " ..."; // all you have is to use Substring(int, int) .net method
+                else
+                    toView = yourStr;
+            }
+            return toView;
+        }
+
+        public static string short150(string yourStr)
+        {
+            string toView = yourStr;
+            if (!string.IsNullOrWhiteSpace(yourStr))
+            {
+
+                const int maxView = 100;
+
+                if (yourStr.Length > maxView)
+                    toView = yourStr.Substring(0, maxView) + " ....."; // all you have is to use Substring(int, int) .net method
+                else
+                    toView = yourStr;
+            }
+
+            return toView;
+        }
+
+        public static string short75(string yourStr)
+        {
+            string toView = yourStr;
+            if (!string.IsNullOrWhiteSpace(yourStr))
+            {
+
+                const int maxView = 75;
+
+                if (yourStr.Length > maxView)
+                    toView = yourStr.Substring(0, maxView) + " ....."; // all you have is to use Substring(int, int) .net method
+                else
+                    toView = yourStr;
+            }
+
+            return toView;
+        }
+
+        public static string short200(string yourStr)
+        {
+            string toView= yourStr;
+            if (!string.IsNullOrWhiteSpace(yourStr))
+            {
+                
+                const int maxView = 75;
+
+                if (yourStr.Length > maxView)
+                    toView = yourStr.Substring(0, maxView) + " ....."; // all you have is to use Substring(int, int) .net method
+                else
+                    toView = yourStr;
+            }
+            
+            return toView;
+        }
+
+        public static string short160(string yourStr)
+        {
+            string toView = yourStr;
+            if (!string.IsNullOrWhiteSpace(yourStr))
+            {
+
+                const int maxView = 140;
+
+                if (yourStr.Length > maxView)
+                    toView = yourStr.Substring(0, maxView) + " ....."; // all you have is to use Substring(int, int) .net method
+                else
+                    toView = yourStr;
+            }
+
             return toView;
         }
 

@@ -26,5 +26,24 @@ namespace ProteusMMX.Views.Barcode
                 return this.BindingContext as SearchAssetForBillOfMaterialViewModel;
             }
         }
+
+        private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                //count = count + 1;
+                //if (count == 1)
+                //{
+                await ViewModel.SearchBoxClerText();
+                //}
+                //else
+                //{
+                //    count = 0;
+                //}
+
+            }
+        }
     }
 }

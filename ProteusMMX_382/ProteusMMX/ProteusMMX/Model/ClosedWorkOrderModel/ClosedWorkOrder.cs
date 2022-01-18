@@ -35,6 +35,7 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public string AssignToEmployee { get; set; }
         public string RequestNumber { get; set; }
         public string Description { get; set; }
+                
         public DateTime? ActivationDate { get; set; }
         public DateTime? WorkStartedDate { get; set; }
         public DateTime? RequiredDate { get; set; }

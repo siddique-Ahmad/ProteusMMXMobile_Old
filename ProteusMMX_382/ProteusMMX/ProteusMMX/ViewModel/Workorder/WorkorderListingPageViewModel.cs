@@ -1316,7 +1316,8 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
                 if (navigationData != null)
                 {
 
@@ -1329,7 +1330,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     //this.KPIDashboardType = navigationParams.Type;
                 }
                 await GetWorkorderControlRights();
-                OperationInProgress = true;
+                
                 Application.Current.Properties["gridrowindex"] = 1;
                 //await GetWorkorderControlRights();
                 await SetTitlesPropertiesForPage();
@@ -1376,13 +1377,13 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
 
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
         }
 
@@ -1504,7 +1505,8 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
                 if (CreateWorkorderRights == "E")
                 {
                     var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
@@ -1557,19 +1559,20 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
         }
         public async Task SortByFilterAction()
         {
             try
             {
-
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
                 var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, PickerTitles);
                 if (response == CancelTitle)
                 {
@@ -1611,18 +1614,20 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
         }
         public async Task SortByAction()
         {
             try
             {
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
                 var response = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("SortByActivationdate"), SortByActivationdateTitle, CancelTitle, new ObservableCollection<string>() { NoneTitle, AscendingTitle, DescendingTitle });
                 if (response == CancelTitle)
                 {
@@ -1655,12 +1660,14 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
             }
         }
 
@@ -1691,11 +1698,31 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             await GetWorkorders();
 
-
-
-
         }
 
+        public async Task searchBoxTextCler()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
+                await OnViewDisappearingAsync(null);
+                await RefillWorkorderCollection();
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+        }
         public async Task Cleardate()
         {
 
@@ -1704,15 +1731,35 @@ namespace ProteusMMX.ViewModel.Workorder
         }
         public async Task ShowdatePicker()
         {
+            try
+            {
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
 
-            UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result), IsCancellable = true });
+                UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result), IsCancellable = true });
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+
         }
         public async Task SearchWorkorder()
         {
 
             try
             {
-                OperationInProgress = true;
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
 
 
                 #region Barcode Section and Search Section
@@ -1775,17 +1822,18 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
 
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
 
             }
         }
-
 
         private async void _scanner_OnScanResult(ZXing.Result result)
         {
@@ -1806,7 +1854,6 @@ namespace ProteusMMX.ViewModel.Workorder
             });
 
         }
-
 
         private void SearchText_TextChanged()
         {
@@ -1830,13 +1877,13 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-
         public async Task AddTitlesToPicker()
         {
 
             try
             {
-                OperationInProgress = true;
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
 
                 SortByLocationpickerTitles.Add(SelectTitle);
                 SortByShiftpickerTitles.Add(SelectTitle);
@@ -1846,17 +1893,16 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
 
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
 
             }
         }
-
 
         public async Task GetWorkordersAuto()
         {
@@ -1867,17 +1913,16 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-
         async Task GetWorkorders()
-        {
-            
+        {                
             try
             {
                 if (String.IsNullOrWhiteSpace(this.KPIDashboardType))
                 {
                     this.KPIDashboardType = null;
                 }
-                OperationInProgress = true;
+                //UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                //await Task.Delay(10);
                 var workordersResponse = await _workorderService.GetWorkorders(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate, KPIDashboardType);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
@@ -1894,12 +1939,12 @@ namespace ProteusMMX.ViewModel.Workorder
             catch (Exception ex)
             {
 
-                OperationInProgress = false;
+               // UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-                OperationInProgress = false;
+              //  UserDialogs.Instance.HideLoading();
             }
         }
 
@@ -1919,8 +1964,6 @@ namespace ProteusMMX.ViewModel.Workorder
                     IsGetWorkorderCallFromRequiredDate = true;
                 }
 
-
-
             }
             catch (Exception ex)
             {
@@ -1934,12 +1977,12 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-
         async Task GetWorkordersFromSearchBar()
         {
             try
             {
-                OperationInProgress = true;
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
                 var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, "null", "null", "null", "null", "null", "null","null");
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
@@ -1962,12 +2005,12 @@ namespace ProteusMMX.ViewModel.Workorder
             catch (Exception ex)
             {
 
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
         }
 
@@ -1978,24 +2021,24 @@ namespace ProteusMMX.ViewModel.Workorder
 
         private async Task AddWorkordersInWorkorderCollection(List<workOrders> workorders)
         {
-
-            if (workorders != null && workorders.Count > 0)
-            {
-                foreach (var item in workorders)
+           
+                if (workorders != null && workorders.Count > 0)
                 {
-
-                    Device.BeginInvokeOnMainThread(() =>
+                    foreach (var item in workorders)
                     {
-                        _workordersCollection.Add(item);
-                        OnPropertyChanged(nameof(WorkordersCollection));
-                    });
 
-                }
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            _workordersCollection.Add(item);
+                            OnPropertyChanged(nameof(WorkordersCollection));
+                        });
+
+                    }
 
 
-            }
+                }            
+
         }
-
 
         public async Task RemoveAllWorkorderFromCollection()
         {
@@ -2004,9 +2047,6 @@ namespace ProteusMMX.ViewModel.Workorder
                 _workordersCollection.Clear();
                 OnPropertyChanged(nameof(WorkordersCollection));
             });
-
-
-
         }
 
         private async Task RefillLocationFromPicker(string Locationfilter)
@@ -2047,6 +2087,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         }
+
         private async Task RefillDueDateFromPicker(string SortByDateText)
         {
 
@@ -2062,6 +2103,7 @@ namespace ProteusMMX.ViewModel.Workorder
             await RefillWorkorderCollection();
 
         }
+
         private async Task RefillPriorityFromPicker(string Priorityfilter)
         {
             if (string.IsNullOrWhiteSpace(Priorityfilter))
@@ -2081,6 +2123,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         }
+
         private async Task RefillWororderFromPicker()
         {
             if (SelectedIndexPicker == -1)
@@ -2135,22 +2178,21 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(10);
                 if (item.WorkOrderApproved == "true" && item.CompletionDate != null)
                 {
                     return;
                 }
                 if (EditRights == "E" || EditRights == "V")
                 {
-
                     if (AppSettings.User.blackhawkLicValidator.RiskAssasment.Equals(true))
                     {
-
-
                         if (item != null)
                         {
                             if (item.IsRiskQuestion == false)
                             {
-                                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                               /// UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                                 //OperationInProgress = true;
                                 TargetNavigationData tnobj = new TargetNavigationData();
                                 tnobj.WorkOrderId = item.WorkOrderID;
@@ -2163,23 +2205,21 @@ namespace ProteusMMX.ViewModel.Workorder
                             }
                             else
                             {
-
                                 if (item != null)
                                 {
-                                    UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                                  ///  UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                                     // OperationInProgress = true;
                                     Application.Current.Properties["WorkorderID"] = item.WorkOrderID;
                                     await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item);
                                     //OperationInProgress = false;
                                     UserDialogs.Instance.HideLoading();
                                 }
-
                             }
                         }
                     }
                     else
                     {
-                        UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                      /// UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                         //OperationInProgress = true;
 
                         await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item);
@@ -2203,6 +2243,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
 
         }
+
         public async Task CloseWorkorder(workOrders workorderItem)
         {
             try
@@ -2575,69 +2616,83 @@ namespace ProteusMMX.ViewModel.Workorder
                 // OperationInProgress = false;
             }
         }
+
         public async Task OnViewAppearingAsync(VisualElement view)
         {
-            if (string.IsNullOrWhiteSpace(this.SearchText))
+            try
             {
-                await RefillWorkorderCollection();
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
+                if (string.IsNullOrWhiteSpace(this.SearchText))
+                {
+                    await RefillWorkorderCollection();
+
+                }
+
+                if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
+                {
+                    var Locationfilter = Application.Current.Properties["LocationFilterkey"];
+                    if (Locationfilter != null)
+                    {
+                        await RefillLocationFromPicker(Locationfilter.ToString());
+
+                    }
+                    else
+                    {
+                        await RefillLocationFromPicker(null);
+                    }
+                }
+                if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
+                {
+                    var Shiftfilter = Application.Current.Properties["ShiftFilterkey"];
+                    if (Shiftfilter != null)
+                    {
+                        await RefillShiftFromPicker(Shiftfilter.ToString());
+
+                    }
+                    else
+                    {
+                        await RefillShiftFromPicker(null);
+                    }
+                }
+                if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
+                {
+                    var Priorityfilter = Application.Current.Properties["PriorityFilterkey"];
+                    if (Priorityfilter != null)
+                    {
+                        await RefillPriorityFromPicker(Priorityfilter.ToString());
+
+                    }
+                    else
+                    {
+                        await RefillPriorityFromPicker(null);
+                    }
+                }
+                if (Application.Current.Properties.ContainsKey("DateFilterkey"))
+                {
+                    var datefilter = Application.Current.Properties["DateFilterkey"];
+                    if (datefilter != null)
+                    {
+                        await RefillDueDateFromPicker(datefilter.ToString());
+
+                    }
+                    else
+                    {
+                        await RefillDueDateFromPicker(null);
+                    }
+                }
 
             }
-
-            if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
+            catch (Exception ex)
             {
-                var Locationfilter = Application.Current.Properties["LocationFilterkey"];
-                if (Locationfilter != null)
-                {
-                    await RefillLocationFromPicker(Locationfilter.ToString());
-
-                }
-                else
-                {
-                    await RefillLocationFromPicker(null);
-                }
-            }
-            if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
-            {
-                var Shiftfilter = Application.Current.Properties["ShiftFilterkey"];
-                if (Shiftfilter != null)
-                {
-                    await RefillShiftFromPicker(Shiftfilter.ToString());
-
-                }
-                else
-                {
-                    await RefillShiftFromPicker(null);
-                }
-            }
-            if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
-            {
-                var Priorityfilter = Application.Current.Properties["PriorityFilterkey"];
-                if (Priorityfilter != null)
-                {
-                    await RefillPriorityFromPicker(Priorityfilter.ToString());
-
-                }
-                else
-                {
-                    await RefillPriorityFromPicker(null);
-                }
-            }
-            if (Application.Current.Properties.ContainsKey("DateFilterkey"))
-            {
-                var datefilter = Application.Current.Properties["DateFilterkey"];
-                if (datefilter != null)
-                {
-                    await RefillDueDateFromPicker(datefilter.ToString());
-
-                }
-                else
-                {
-                    await RefillDueDateFromPicker(null);
-                }
+                UserDialogs.Instance.HideLoading();
             }
 
-
-
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+               
+            }
 
         }
 
@@ -2950,7 +3005,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
         }
         #endregion
-
 
     }
 }
