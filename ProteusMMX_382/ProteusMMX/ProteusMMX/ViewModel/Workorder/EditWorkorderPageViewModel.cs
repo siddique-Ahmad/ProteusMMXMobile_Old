@@ -1098,6 +1098,42 @@ namespace ProteusMMX.ViewModel.Workorder
 
         #region EditWorkorder Properties
 
+        //Originator
+        string _originatorTitle;
+        public string OriginatorTitle
+        {
+            get
+            {
+                return _originatorTitle;
+            }
+
+            set
+            {
+                if (value != _originatorTitle)
+                {
+                    _originatorTitle = value;
+                    OnPropertyChanged(nameof(OriginatorTitle));
+                }
+            }
+        }
+
+        string _originatorName;
+        public string OriginatorName
+        {
+            get
+            {
+                return _originatorName;
+            }
+
+            set
+            {
+                if (value != _originatorName)
+                {
+                    _originatorName = value;
+                    OnPropertyChanged(nameof(OriginatorName));
+                }
+            }
+        }
 
         Page _page;
         public Page Page
@@ -1351,7 +1387,25 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        
 
+        bool _isWorkorderFromSchedule = false;
+        public bool IsWorkorderFromSchedule
+        {
+            get
+            {
+                return _isWorkorderFromSchedule;
+            }
+
+            set
+            {
+                if (value != _isWorkorderFromSchedule)
+                {
+                    _isWorkorderFromSchedule = value;
+                    OnPropertyChanged(nameof(IsWorkorderFromSchedule));
+                }
+            }
+        }
         // Required Date
         DateTime _requiredDate1;
         public DateTime RequiredDate1
@@ -4781,6 +4835,10 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand SaveWorkorderCommand => new AsyncCommand(SaveWorkorder);
 
         public ICommand TapCommand => new AsyncCommand(SpeechtoText);
+
+        public ICommand IssueWorkorderCommand => new AsyncCommand(IssueWorkorder);
+
+        
         #endregion
 
         #region Methods
@@ -4829,7 +4887,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     this.IsCostLayoutIsVisibleForTab = true;
                 }
-                //FormLoadInputForWorkorder = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
+             
                 await SetTitlesPropertiesForPage();
 
                 workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
@@ -4840,22 +4898,16 @@ namespace ProteusMMX.ViewModel.Workorder
                 else
                 {
                     this.Cause = workorderWrapper.workOrderWrapper.Cause[0];
-                    //OnCauseRequested(workorderWrapper.Cause[0].SelectedValue);
+                   
                 }
-
+                if(workorderWrapper.workOrderWrapper.WorkorderCreatedfromSchedule)
+                {
+                    IsWorkorderFromSchedule = true;
+                }
                 await SetControlsPropertiesForPage(workorderWrapper);
-                // FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(AppSettings.User.UserID.ToString(), AppSettings.WorkorderModuleName);
-
-                //  FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.WorkorderModuleName);
                 await CreateControlsForPage();
 
-               
-                //await SetTitlesPropertiesForPage(FormLoadInputForWorkorder);
-                //await CreateControlsForPage(FormLoadInputForWorkorder);
 
-                ///// Retrive Workorder Data and Set Control properties
-                ///// 
-                //await SetControlsPropertiesForPage();
 
             }
             catch (Exception ex)
@@ -4886,7 +4938,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 {
-
+                    OriginatorTitle = "Originator";
                     CurrentRuntimeTitle = WebControlTitle.GetTargetNameByTitleName("CurrentRuntime");
                     PageTitle = WebControlTitle.GetTargetNameByTitleName("Details");
                     WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
@@ -4933,7 +4985,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
 
-                    //ParentCostDistributed = WebControlTitle.GetTargetNameByTitleName("ParentCostDistributed");
+                   
                 }
             }
             catch (Exception ex)
@@ -5932,524 +5984,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             #endregion
 
-            #region Old Code
-
-
-            ///// Remove static controls titles so they won't render twice.
-            ///// Apply visibility according to expression on Overridden controls 
-            //#region Remove Overridden controls from titles
-
-            //if (titles != null && titles.CFLI != null && titles.CFLI.Count > 0)
-            //{
-
-            //    try
-            //    {
-            //        ///WorkOrderNumber
-            //        ///JobNumber
-            //        ///Description
-            //        ///RequiredDate
-            //        ///WorkStartedDate
-            //        ///CompletionDate
-            //        ///AssignedToEmployeeID
-            //        ///WorkOrderRequesterID
-            //        ///CostCenterID
-            //        ///PriorityID
-            //        ///ShiftID
-            //        ///WorkOrderStatusID
-            //        ///WorkTypeID
-            //        ///UserField22
-            //        ///MaintenanceCodeID
-
-
-
-
-            //        var WorkOrderNumber = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkOrderNumber");
-            //        if (WorkOrderNumber != null)
-            //        {
-            //            OverriddenControls.Add(WorkOrderNumber);
-            //            titles.CFLI.Remove(WorkOrderNumber);
-            //        }
-
-            //        var JobNumber = titles.CFLI.FirstOrDefault(x => x.FieldName == "JobNumber");
-            //        if (JobNumber != null)
-            //        {
-            //            OverriddenControls.Add(JobNumber);
-            //            titles.CFLI.Remove(JobNumber);
-            //        }
-
-            //        var description = titles.CFLI.FirstOrDefault(x => x.FieldName == "Description");
-            //        if (description != null)
-            //        {
-            //            OverriddenControls.Add(description);
-            //            titles.CFLI.Remove(description);
-            //        }
-
-            //        var RequiredDate = titles.CFLI.FirstOrDefault(x => x.FieldName == "RequiredDate");
-            //        if (RequiredDate != null)
-            //        {
-            //            OverriddenControls.Add(RequiredDate);
-            //            titles.CFLI.Remove(RequiredDate);
-            //        }
-
-            //        var WorkStartedDate = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkStartedDate");
-            //        if (WorkStartedDate != null)
-            //        {
-            //            OverriddenControls.Add(WorkStartedDate);
-            //            titles.CFLI.Remove(WorkStartedDate);
-            //        }
-
-            //        var CompletionDate = titles.CFLI.FirstOrDefault(x => x.FieldName == "CompletionDate");
-            //        if (CompletionDate != null)
-            //        {
-            //            OverriddenControls.Add(CompletionDate);
-            //            titles.CFLI.Remove(CompletionDate);
-            //        }
-
-            //        var AssignedToEmployeeID = titles.CFLI.FirstOrDefault(x => x.FieldName == "AssignedToEmployeeID");
-            //        if (AssignedToEmployeeID != null)
-            //        {
-            //            OverriddenControls.Add(AssignedToEmployeeID);
-            //            titles.CFLI.Remove(AssignedToEmployeeID);
-            //        }
-
-            //        var WorkOrderRequesterID = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkOrderRequesterID");
-            //        if (WorkOrderRequesterID != null)
-            //        {
-            //            OverriddenControls.Add(WorkOrderRequesterID);
-            //            titles.CFLI.Remove(WorkOrderRequesterID);
-            //        }
-
-            //        var CostCenterID = titles.CFLI.FirstOrDefault(x => x.FieldName == "CostCenterID");
-            //        if (CostCenterID != null)
-            //        {
-            //            OverriddenControls.Add(CostCenterID);
-            //            titles.CFLI.Remove(CostCenterID);
-            //        }
-
-            //        var PriorityID = titles.CFLI.FirstOrDefault(x => x.FieldName == "PriorityID");
-            //        if (PriorityID != null)
-            //        {
-            //            OverriddenControls.Add(PriorityID);
-            //            titles.CFLI.Remove(PriorityID);
-            //        }
-
-            //        var ShiftID = titles.CFLI.FirstOrDefault(x => x.FieldName == "ShiftID");
-            //        if (ShiftID != null)
-            //        {
-            //            OverriddenControls.Add(ShiftID);
-            //            titles.CFLI.Remove(ShiftID);
-            //        }
-
-            //        var WorkOrderStatusID = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkOrderStatusID");
-            //        if (WorkOrderStatusID != null)
-            //        {
-            //            OverriddenControls.Add(WorkOrderStatusID);
-            //            titles.CFLI.Remove(WorkOrderStatusID);
-            //        }
-
-            //        var WorkTypeID = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkTypeID");
-            //        if (WorkTypeID != null)
-            //        {
-            //            OverriddenControls.Add(WorkTypeID);
-            //            titles.CFLI.Remove(WorkTypeID);
-            //        }
-
-            //        var MaintenanceCodeID = titles.CFLI.FirstOrDefault(x => x.FieldName == "MaintenanceCodeID");
-            //        if (MaintenanceCodeID != null)
-            //        {
-            //            OverriddenControls.Add(MaintenanceCodeID);
-            //            titles.CFLI.Remove(MaintenanceCodeID);
-            //        }
-
-
-            //        var EstimatedDowntime = titles.CFLI.FirstOrDefault(x => x.FieldName == "EstimatedDowntime");
-            //        if (EstimatedDowntime != null)
-            //        {
-            //            OverriddenControls.Add(EstimatedDowntime);
-            //            titles.CFLI.Remove(EstimatedDowntime);
-            //        }
-
-            //        var ActualDowntime = titles.CFLI.FirstOrDefault(x => x.FieldName == "ActualDowntime");
-            //        if (ActualDowntime != null)
-            //        {
-            //            OverriddenControls.Add(ActualDowntime);
-            //            titles.CFLI.Remove(ActualDowntime);
-            //        }
-
-            //        var MiscellaneousLaborCostID = titles.CFLI.FirstOrDefault(x => x.FieldName == "MiscellaneousLaborCostID");
-            //        if (MiscellaneousLaborCostID != null)
-            //        {
-            //            OverriddenControls.Add(MiscellaneousLaborCostID);
-            //            titles.CFLI.Remove(MiscellaneousLaborCostID);
-            //        }
-
-            //        var MiscellaneousMaterialsCostID = titles.CFLI.FirstOrDefault(x => x.FieldName == "MiscellaneousMaterialsCostID");
-            //        if (MiscellaneousMaterialsCostID != null)
-            //        {
-            //            OverriddenControls.Add(MiscellaneousMaterialsCostID);
-            //            titles.CFLI.Remove(MiscellaneousMaterialsCostID);
-            //        }
-
-
-
-
-
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-
-            //    }
-
-            //}
-
-            //#endregion
-
-            //#region Apply visibility according to expression on Overridden controls
-
-            //if (OverriddenControls != null && OverriddenControls.Count > 0)
-            //{
-
-            //    try
-            //    {
-            //        ///WorkOrderNumber
-            //        ///JobNumber
-            //        ///Description
-            //        ///RequiredDate
-            //        ///WorkStartedDate
-            //        ///CompletionDate
-            //        ///AssignedToEmployeeID
-            //        ///WorkOrderRequesterID
-            //        ///CostCenterID
-            //        ///PriorityID
-            //        ///ShiftID
-            //        ///WorkOrderStatusID
-            //        ///WorkTypeID
-            //        ///UserField22
-            //        ///MaintenanceCodeID
-
-            //        var formRoles = titles.lstRoles;
-
-            //        foreach (var item in OverriddenControls)
-            //        {
-            //            var finalizedRole = await ParseControlRoleExpressionWithFormsRoles(item.Expression, formRoles);
-
-            //            switch (item.FieldName)
-            //            {
-
-            //                case "WorkOrderNumber":
-            //                    {
-            //                        break;
-            //                    }
-
-
-
-            //                case "JobNumber":
-            //                    {
-            //                        break;
-            //                    }
-
-
-
-            //                case "Description":
-            //                    {
-            //                        DescriptionIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "RequiredDate":
-            //                    {
-            //                        RequiredDateIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-
-            //                case "WorkStartedDate":
-            //                    {
-            //                        WorkStartedDateIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "CompletionDate":
-            //                    {
-            //                        WorkorderCompletionDateIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "AssignedToEmployeeID":
-            //                    {
-            //                        AssignToEmployeeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "WorkOrderRequesterID":
-            //                    {
-            //                        WorkorderRequesterIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "CostCenterID":
-            //                    {
-            //                        CostCenterIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "PriorityID":
-            //                    {
-            //                        PriorityIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "ShiftID":
-            //                    {
-            //                        ShiftIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "WorkOrderStatusID":
-            //                    {
-            //                        WorkorderStatusIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "WorkTypeID":
-            //                    {
-            //                        WorkorderTypeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "UserField22":
-            //                    {
-            //                        CauseIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "MaintenanceCodeID":
-            //                    {
-            //                        MaintenanceCodeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "EstimatedDowntime":
-            //                    {
-            //                        EstimstedDowntimeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "ActualDowntime":
-            //                    {
-            //                        ActualDowntimeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "MiscellaneousLaborCostID":
-            //                    {
-            //                        MiscellaneousLabourCostIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "MiscellaneousMaterialsCostID":
-            //                    {
-            //                        MiscellaneousMaterialCostIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //            }
-
-            //        }
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-
-            //    }
-
-            //}
-
-            //#endregion
-
-            //#region Generate and Bind Dyanmic controls
-            //if (titles != null && titles.CFLI != null && titles.CFLI.Count > 0)
-            //{
-
-            //    #region Test 3
-
-
-
-            //    Grid contentGrid = await GetContentGrid();
-            //    contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //    //contentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            //    //contentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-
-
-            //    int rowCount = 0;
-            //    int columnCount = 0;
-            //    bool isItemAddedInFirstColumn = false;
-            //    bool isItemAddedInSecondColumn = false;
-            //    var formRoles = titles.lstRoles;
-            //    foreach (var item in titles.CFLI)
-            //    {
-            //        var finalizedRole = await ParseControlRoleExpressionWithFormsRoles(item.Expression, formRoles);
-
-            //        switch (item.DisplayFormat)
-            //        {
-
-            //            case "ComboBox":
-            //                if (!isItemAddedInFirstColumn)
-            //                {
-            //                    if (!isItemAddedInSecondColumn)
-            //                    {
-            //                        GenerateComboBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        //increment column
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-            //                        columnCount = 1;
-            //                    }
-            //                    else
-            //                    {
-            //                        //generate new row
-            //                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //                        rowCount++;
-            //                        GenerateComboBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        columnCount = 1;
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-
-            //                    }
-            //                }
-
-            //                else
-            //                {
-            //                    GenerateComboBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                    //increment column
-            //                    isItemAddedInFirstColumn = false;
-            //                    isItemAddedInSecondColumn = true;
-            //                    columnCount = 0;
-            //                }
-
-
-            //                break;
-
-            //            case "DateTime":
-            //                if (!isItemAddedInFirstColumn)
-            //                {
-            //                    if (!isItemAddedInSecondColumn)
-            //                    {
-            //                        GenerateDateTimeLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        //increment column
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-            //                        columnCount = 1;
-            //                    }
-            //                    else
-            //                    {
-            //                        //generate new row
-            //                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //                        rowCount++;
-            //                        GenerateDateTimeLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        columnCount = 1;
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-
-            //                    }
-            //                }
-
-            //                else
-            //                {
-            //                    GenerateDateTimeLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                    //increment column
-            //                    isItemAddedInFirstColumn = false;
-            //                    isItemAddedInSecondColumn = true;
-            //                    columnCount = 0;
-            //                }
-
-
-
-
-            //                break;
-
-            //            case "TextBox":
-            //                if (!isItemAddedInFirstColumn)
-            //                {
-            //                    if (!isItemAddedInSecondColumn)
-            //                    {
-            //                        GenerateTextBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        //increment column
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-            //                        columnCount = 1;
-            //                    }
-            //                    else
-            //                    {
-            //                        //generate new row
-            //                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //                        rowCount++;
-            //                        GenerateTextBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        columnCount = 1;
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-
-            //                    }
-            //                }
-
-            //                else
-            //                {
-            //                    GenerateTextBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                    //increment column
-            //                    isItemAddedInFirstColumn = false;
-            //                    isItemAddedInSecondColumn = true;
-            //                    columnCount = 0;
-            //                }
-
-
-            //                break;
-
-
-            //        }
-
-
-            //    }
-
-
-
-            //    #endregion
-
-
-
-
-
-
-
-            //}
-            //#endregion
-
-
-
-            #endregion
+          
         }
 
         private bool ApplyIsEnable(ControlRole finalizedRole)
@@ -6610,1186 +6145,13 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        #region Old Code
-        //private void GenerateTextBoxLayout(ControlRole finalizedRole, WorkOrderFormLoad formLoadItem, Grid contentGrid, int row, int column)
-        //{
-        //    var title = new Label();
-        //    var control = new Entry();
-
-        //    title.Text = formLoadItem.FieldLabel;
-        //    SetControlBindingAccordingToControlType(control, formLoadItem);
-        //    if (finalizedRole.RoleRight == ControlRight.Edit)
-        //    {
-        //        control.IsEnabled = true;
-        //    }
-        //    else
-        //    {
-        //        control.IsEnabled = false;
-
-        //    }
-
-        //    var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
-        //    wrapperLayout.Children.Add(title);
-        //    wrapperLayout.Children.Add(control);
-
-        //    contentGrid.Children.Add(wrapperLayout, column, row);
-        //}
-        //private void GenerateComboBoxLayout(ControlRole finalizedRole, WorkOrderFormLoad formLoadItem, Grid contentGrid, int row, int column)
-        //{
-        //    var title = new Label();
-        //    var control = new Picker();
-
-        //    title.Text = formLoadItem.FieldLabel;
-        //    control.ItemsSource = formLoadItem.listCombo;
-
-        //    SetControlBindingAccordingToControlType(control, formLoadItem);
-        //    /// bind with its value associative property.
-        //    /// 
-
-        //    //control.SetBinding(Picker.SelectedItemProperty);
-
-        //    if (finalizedRole.RoleRight == ControlRight.Edit)
-        //    {
-        //        control.IsEnabled = true;
-        //    }
-        //    else
-        //    {
-        //        control.IsEnabled = false;
-
-        //    }
-
-        //    var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
-        //    wrapperLayout.Children.Add(title);
-        //    wrapperLayout.Children.Add(control);
-
-        //    contentGrid.Children.Add(wrapperLayout, column, row);
-
-        //}
-        //private void GenerateDateTimeLayout(ControlRole finalizedRole, WorkOrderFormLoad formLoadItem, Grid contentGrid, int row, int column)
-        //{
-        //    var title = new Label();
-
-        //    View control;
-        //    if (formLoadItem.IsRequired)
-        //    {
-        //        control = new DatePicker();
-        //    }
-        //    else
-        //    {
-        //        control = new CustomDatePicker();
-        //    }
-
-        //    SetControlBindingAccordingToControlType(control, formLoadItem);
-        //    //new CustomDatePicker(); //new DatePicker();
-
-        //    title.Text = formLoadItem.FieldLabel;
-
-        //    if (finalizedRole.RoleRight == ControlRight.Edit)
-        //    {
-        //        control.IsEnabled = true;
-        //    }
-        //    else
-        //    {
-        //        control.IsEnabled = false;
-
-        //    }
-
-        //    var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
-        //    wrapperLayout.Children.Add(title);
-        //    wrapperLayout.Children.Add(control);
-
-        //    contentGrid.Children.Add(wrapperLayout, column, row);
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //private void SetControlBindingAccordingToControlType(View control, WorkOrderFormLoad formLoadItem)
-        //{
-        //    switch (formLoadItem.FieldName)
-        //    {
-
-        //        case "ActivationDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ActivationDateText));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ActivationDateText));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ActivationDateText = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ActivationDateText));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ActivationDateText));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "ClosedDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ClosedDateText));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ClosedDateText));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ClosedDateText = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ClosedDateText));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ClosedDateText));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "AbnormalityID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.AbnormalityText));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.AbnormalityText));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    AbnormalityText = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.AbnormalityText));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AbnormalityText));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "ActualDowntime":
-        //            {
-        //                //if (control is Picker)
-        //                //{
-        //                //    var x = control as Picker;
-        //                //    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ActualDowntimeText));
-        //                //}
-
-        //                //else if (control is Entry)
-        //                //{
-        //                //    control.SetBinding(Entry.TextProperty, nameof(this.ActualDowntimeText));
-        //                //}
-
-        //                //else if (control is DatePicker)
-        //                //{
-        //                //    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                //    ActualDowntimeText = DateTime.Now.ToString();
-        //                //    control.SetBinding(DatePicker.DateProperty, nameof(this.ActualDowntimeText));
-        //                //}
-
-        //                //else if (control is CustomDatePicker)
-        //                //{
-        //                //    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ActualDowntimeText));
-        //                //}
-        //                break;
-
-        //            }
-
-        //        case "AmStepID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.AmStepID));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.AmStepID));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    AmStepID = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.AmStepID));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AmStepID));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "AnalysisPerformedDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.AnalysisPerformedDate));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.AnalysisPerformedDate));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    AnalysisPerformedDate = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.AnalysisPerformedDate));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AnalysisPerformedDate));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "ConfirmEmail":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ConfirmEmail));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ConfirmEmail));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ConfirmEmail = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ConfirmEmail));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ConfirmEmail));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "CountermeasuresDefinedDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.CountermeasuresDefinedDate));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.CountermeasuresDefinedDate));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    CountermeasuresDefinedDate = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.CountermeasuresDefinedDate));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.CountermeasuresDefinedDate));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "CurrentRuntime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.CurrentRuntime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.CurrentRuntime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    CurrentRuntime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.CurrentRuntime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.CurrentRuntime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "DiagnosticTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.DiagnosticTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.DiagnosticTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    DiagnosticTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.DiagnosticTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.DiagnosticTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "DigitalSignatures":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.DigitalSignatures));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.DigitalSignatures));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    DigitalSignatures = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.DigitalSignatures));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.DigitalSignatures));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "EstimatedDowntime":
-        //            {
-        //                //if (control is Picker)
-        //                //{
-        //                //    var x = control as Picker;
-        //                //    control.SetBinding(Picker.SelectedItemProperty, nameof(this.EstimatedDowntime));
-        //                //}
-
-        //                //else if (control is Entry)
-        //                //{
-        //                //    control.SetBinding(Entry.TextProperty, nameof(this.EstimatedDowntime));
-        //                //}
-
-        //                //else if (control is DatePicker)
-        //                //{
-        //                //    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                //    EstimatedDowntime = DateTime.Now.ToString();
-        //                //    control.SetBinding(DatePicker.DateProperty, nameof(this.EstimatedDowntime));
-        //                //}
-
-        //                //else if (control is CustomDatePicker)
-        //                //{
-        //                //    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.EstimatedDowntime));
-        //                //}
-        //                break;
-
-        //            }
-
-        //        case "ImplementationValidatedDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ImplementationValidatedDate));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ImplementationValidatedDate));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ImplementationValidatedDate = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ImplementationValidatedDate));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ImplementationValidatedDate));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "InitialWaitTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.InitialWaitTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.InitialWaitTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    InitialWaitTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.InitialWaitTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.InitialWaitTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "JobNumber":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.JobNumber));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.JobNumber));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    JobNumber = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.JobNumber));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.JobNumber));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "NotificationTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.NotificationTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.NotificationTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    NotificationTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.NotificationTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.NotificationTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "PartWaitingTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.PartWaitingTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.PartWaitingTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    PartWaitingTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.PartWaitingTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.PartWaitingTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "ProblemID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ProblemID));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ProblemID));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ProblemID = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ProblemID));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ProblemID));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "project":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.Project));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.Project));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    Project = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.Project));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Project));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RelatedToID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RelatedToID));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RelatedToID));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RelatedToID = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RelatedToID));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RelatedToID));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RepairingOrReplacementTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RepairingOrReplacementTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RepairingOrReplacementTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RepairingOrReplacementTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RepairingOrReplacementTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RepairingOrReplacementTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RequestedDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RequestedDate));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RequestedDate));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RequestedDate = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RequestedDate));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequestedDate));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RequesterEmail":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RequesterEmail));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RequesterEmail));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RequesterEmail = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterEmail));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterEmail));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RequesterFullName":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RequesterFullName));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RequesterFullName));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RequesterFullName = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterFullName));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterFullName));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RequesterPhone":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RequesterPhone));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RequesterPhone));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RequesterPhone = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterPhone));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterPhone));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RequestNumber":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RequestNumber));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RequestNumber));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RequestNumber = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RequestNumber));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequestNumber));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "ServiceRequestModeID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ServiceRequestModeID));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ServiceRequestModeID));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ServiceRequestModeID = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ServiceRequestModeID));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ServiceRequestModeID));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "StartupTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.StartupTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.StartupTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    StartupTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.StartupTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.StartupTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "TotalTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.TotalTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.TotalTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    TotalTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.TotalTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.TotalTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UnsafeConditionID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UnsafeConditionID));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UnsafeConditionID = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UnsafeConditionID));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UnsafeConditionID));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UserField15":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UserField15));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UserField15));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UserField15 = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UserField15));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField15));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UserField18":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UserField18));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UserField18));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UserField18 = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UserField18));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField18));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UserField2":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UserField2));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UserField2));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UserField2 = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UserField2));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField2));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UserField21":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UserField21));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UserField21));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UserField21 = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UserField21));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField21));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UserField24":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UserField24));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UserField24));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UserField24 = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UserField24));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField24));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "WorkOrderNumber":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.WorkOrderNumber));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.WorkOrderNumber));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    WorkOrderNumber = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.WorkOrderNumber));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.WorkOrderNumber));
-        //                }
-        //                break;
-
-        //            }
-
-
-        //        default:
-        //            break;
-        //    }
-
-        //}
-
-
-        #endregion
-
-
-
+       
         private void SetControlBindingAccordingToControlType(View control, FormControl formControl)
         {
 
             switch (formControl.ControlName)
             {
 
-                //case "ActivationDate":
-                //    {
-                //        if (control is Picker)
-                //        {
-                //            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.ActivationDateText));
-
-                //            var x = control as Picker;
-                //            x.ClassId = formControl.ControlName;
-                //            x.IsEnabled = false;
-                //            x.InputTransparent = true;
-                //            var source = x.ItemsSource as List<ComboDD>;
-                //            ComboDD item = null;
-                //            try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(ActivationDateText)); }
-                //            catch (Exception) { }
-
-                //            if (item != null)
-                //            {
-                //                x.SelectedItem = item;
-                //                ActivationDateText = item.SelectedValue.ToString();
-                //            }
-
-                //            x.SelectedIndexChanged += Picker_SelectedIndexChanged;
-
-                //        }
-
-                //        else if (control is Entry)
-                //        {
-                //            control.SetBinding(Entry.TextProperty, nameof(this.ActivationDateText));
-                //            control.IsEnabled = false;
-                //            control.InputTransparent = true;
-
-                //        }
-
-                //        else if (control is DatePicker)
-                //        {
-                //            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                //            ActivationDateText = DateTime.Now.ToString();
-                //            //control.SetBinding(Entry.TextProperty, nameof(this.ActivationDateText));
-                //            control.SetBinding(DatePicker.DateProperty, nameof(this.ActivationDateText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                //        }
-
-                //        else if (control is CustomDatePicker)
-                //        {
-                //            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ActivationDateText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                //        }
-                //        break;
-
-                //    }
                 case "LOTOUrl":
                     {
                         if (control is Picker)
@@ -11581,7 +9943,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     MoreDescriptionTextIsEnable = true;
                 }
 
-
+                OriginatorName = workorder.Originator;
                 this.DescriptionMoreText = workorder.Description;
                 this.DescriptionText = workorder.Description;
 
@@ -12646,7 +11008,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 #region check if all answers of a sections are required
 
                 // check if all answers of a sections are required///////
-                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null))
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null && WorkorderCompletionDate != null))
                 {
                     if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.sections != null && workorderWrapper.workOrderWrapper.sections.Count>0))
                     {
@@ -12667,12 +11029,42 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 #endregion
 
+               
+                #region Check WorkOrder Identified through Breakdown
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.WorkOrderIdentifiedThroughBreakdownFlag) && MaintenanceCodeName== "IDENTIFIED THROUGH BREAKDOWN")
+                {
+                    string expression = @"^(\()?[0-9]+(?>,[0-9]{3})*(?>\.[0-9]{3})?(?<!^[0\.]+)$";
 
-                ///TODO: Get Workorder data and check IsCheckedAutoFillStartdateOnTaskAndLabor
-                ///If True and Workorder startdate is  null and the initial start date of Task and labour is not null
-                ///then display message PleaseFirstClearTaskstartdate from task and Labour then you can clear the 
-                ///Workorder start date.
-                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor) && WorkStartedDate1 == null)
+                  
+                    if (String.IsNullOrWhiteSpace(EstimstedDowntimeText) || !(Regex.IsMatch(EstimstedDowntimeText, expression)))
+                    {
+
+                        DialogService.ShowToast("EstimatedDowntime Is Required");
+                        return;
+                    }
+                    if (String.IsNullOrWhiteSpace(ActualDowntimeText) || !(Regex.IsMatch(ActualDowntimeText, expression)))
+                    {
+                        DialogService.ShowToast("ActualDowntime Is Required");
+                        return;
+                    }
+                    if (String.IsNullOrWhiteSpace(UserField21))
+                    {
+                        DialogService.ShowToast("UserField21 Is Required");
+                        return;
+                    }
+                    if (String.IsNullOrWhiteSpace(PriorityName))
+                    {
+                        DialogService.ShowToast("PriorityName Is Required");
+                        return;
+                    }
+                }
+                    #endregion
+
+                    ///TODO: Get Workorder data and check IsCheckedAutoFillStartdateOnTaskAndLabor
+                    ///If True and Workorder startdate is  null and the initial start date of Task and labour is not null
+                    ///then display message PleaseFirstClearTaskstartdate from task and Labour then you can clear the 
+                    ///Workorder start date.
+                    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor) && WorkStartedDate1 == null)
                 {
                     if (workorderLabourWrapper.workOrderWrapper.InitialStartDate != null)
                     {
@@ -13242,6 +11634,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     EstimstedDowntimeText = "0";
                 }
+
                 if (string.IsNullOrWhiteSpace(MiscellaneousLabourCostText))
                 {
                     MiscellaneousLabourCostText = "0.0";
@@ -15198,6 +13591,31 @@ namespace ProteusMMX.ViewModel.Workorder
 
             return Task.FromResult(true);
 
+        }
+        
+
+        public Task IssueWorkorder()
+        {
+            try
+            {
+                TargetNavigationData tnobj = new TargetNavigationData();
+                tnobj.WorkOrderId = WorkorderID;
+                NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>(tnobj);
+
+            }
+            catch (Exception ex)
+            {
+               
+
+            }
+
+            finally
+            {
+                
+
+            }
+
+            return Task.CompletedTask;
         }
 
         public async Task SpeechtoText()

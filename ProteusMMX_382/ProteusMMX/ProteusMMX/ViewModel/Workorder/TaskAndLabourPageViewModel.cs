@@ -55,6 +55,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         #region Properties
 
+      
         #region Page Properties
 
         string LabourEstimatedHours = string.Empty;
@@ -679,11 +680,11 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
 
                 StackLayout contentLayout = await GetContentLayout();
-
+                ServiceOutput workorderLabour = null;
                 //clear the contentLayout 
                 contentLayout.Children.Clear();
 
-                ServiceOutput workorderLabour = null;
+              
                 ///TODO: Get Workorder data 
                 if (!string.IsNullOrWhiteSpace(SearchText))
                 {
@@ -697,6 +698,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 if (workorderLabour != null && workorderLabour.workOrderWrapper != null && workorderLabour.workOrderWrapper.workOrderLabors != null && workorderLabour.workOrderWrapper.workOrderLabors.Count > 0)
                 {
+                 
                     foreach (var item in workorderLabour.workOrderWrapper.workOrderLabors)
                     {
 
@@ -1542,7 +1544,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         };
 
                         /// Stop button Click 
-                        stopButton.Clicked += (sender, e) =>
+                        stopButton.Clicked +=async (sender, e) =>
                           {
                               try
                               {
@@ -1604,7 +1606,66 @@ namespace ProteusMMX.ViewModel.Workorder
                                   Grid parentGrid = parent as Grid;
                                   StackLayout Hrs1StackLayout = parentGrid.Children[0] as StackLayout;
                                   Hrs1StackLayout.StyleId = item.HoursAtRate1.ToString();
-                              }
+
+                                  ////////Save HoursAtRate1 to database//////
+                                  ///
+
+                                  var workorderLabourHour1 = (WorkOrderLabor)((SfButton)sender).CommandParameter;
+                                  var taskID = workorderLabourHour1.TaskID;
+                                  var workOrderLaborID = workorderLabourHour1.WorkOrderLaborID;
+                              
+
+                                  if (String.IsNullOrEmpty(hoursEntry.Text))
+                                  {
+                                      hoursEntry.Text = "0";
+                                  }
+                                  if (String.IsNullOrEmpty(minuteEntry.Text))
+                                  {
+                                      minuteEntry.Text = "0";
+                                  }
+
+                                 
+                                  if (minuteEntry.Text.Length == 1)
+                                  {
+                                      int FormattedHours = Convert.ToInt32(minuteEntry.Text);
+                                      minuteEntry.Text = string.Format("{0:00}", FormattedHours);
+
+                                  }
+
+                                 
+
+                                  decimal FinalHour1 = decimal.Parse(hoursEntry.Text + "." + minuteEntry.Text);
+
+                                
+
+                                  var workOrderWrapper = new workOrderWrapper
+                                  {
+                                      TimeZone = AppSettings.UserTimeZone,
+                                      CultureName = AppSettings.UserCultureName,
+                                      UserId = Convert.ToInt32(UserID),
+                                      ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                                      workOrderLabor = new WorkOrderLabor
+                                      {
+                                          ModifiedUserName = AppSettings.User.UserName,
+                                          CompletionDate =DateTime.Parse(completeDateButton.Text),
+                                          HoursAtRate1 = FinalHour1,
+                                          TaskID = taskID,
+                                          StartDate = fromEntry.SelectedDate.Value.Add(DateTime.Now.TimeOfDay),
+
+                                          WorkOrderLaborID = workOrderLaborID
+                                      },
+
+                                  };
+
+
+
+
+                                  var response = await _taskAndLabourService.UpdateTaskAndLabour(workOrderWrapper);
+                                  if (response != null && bool.Parse(response.servicestatus))
+                                  {
+                                      DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskLabourSuccessfullyUpdated"), 2000);
+                                  }
+                                  }
                               catch (Exception ex)
                               {
                                   throw;
@@ -1837,6 +1898,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 ///TODO: Get Workorder data 
                 var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
+                 var  workLabourHour = await _taskAndLabourService.WorkOrderLaborsByWorkOrderID(UserID, WorkorderID.ToString());
+
                 if (workorderWrapper != null && workorderWrapper.workOrderWrapper != null && workorderWrapper.workOrderWrapper.workOrder != null)
                 {
                     DateTime startDate = new DateTime();
@@ -2025,6 +2088,43 @@ namespace ProteusMMX.ViewModel.Workorder
                         decimal decHour1 = decimal.Parse(hours + "." + minutes);
 
                         decimal decHour2 = decimal.Parse(hoursforRate1 + "." + minutesforRate1);
+
+
+                        #region Check Employee Work Hour Flag
+                        if (workLabourHour.workOrderWrapper.EmployeeWorkHourFlag)
+                        {
+                            if (decHour1 >    workLabourHour.workOrderWrapper.EmployeeWorkHourValue)
+                            {
+
+                                var result = await DialogService.ShowConfirmAsync("Are you sure you want to add "+ decHour1 + " hours to this workorder?", WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
+                                if (result == true)
+                                {
+                                   
+                                }
+                                else
+                                {
+                                    return;
+                                }
+                            }
+                            if (decHour2 > workLabourHour.workOrderWrapper.EmployeeWorkHourValue)
+                            {
+                                var result = await DialogService.ShowConfirmAsync("Are you sure you want to add " + decHour2 + " hours to this workorder?", WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
+                                if (result == true)
+                                {
+
+                                }
+                                else
+                                {
+                                    return;
+                                }
+
+                            }
+
+                        }
+
+                        
+                        #endregion
+
 
                         var workOrderWrapper = new workOrderWrapper
                         {

@@ -102,7 +102,11 @@
                                         </Label.FormattedText>
                                     </Label>
                                 </StackLayout>
-                                
+
+                             
+                                    
+                               
+
                                 <StackLayout Orientation="Vertical" Grid.Row="1" IsVisible="{Binding JobNumberFlag}">
                                     <Label IsVisible="{Binding JobNumberFlag}" TextColor="#006de0" FontAttributes="Bold" FontSize="16" FontFamily="Ebrima">
                                         <Label.FontAttributes>
@@ -118,6 +122,23 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
+                                </StackLayout>
+
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="1" Grid.Column="1" IsVisible="{Binding IsWorkorderFromSchedule}">
+                                    <Image Source="Assets/Workorder.png">
+                                        <Image.Source>
+                                            <OnPlatform  x:TypeArguments="ImageSource">
+                                                <OnPlatform.iOS>Workorder.png</OnPlatform.iOS>
+                                                <OnPlatform.Android>Workorder.png</OnPlatform.Android>
+                                                <OnPlatform.WinPhone>Assets/Workorder.png</OnPlatform.WinPhone>
+                                            </OnPlatform>
+                                        </Image.Source>
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                        Command="{Binding IssueWorkorderCommand}"
+                                         NumberOfTapsRequired="1" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
                                 </StackLayout>
                             </StackLayout>
 
@@ -145,6 +166,8 @@
                                 </border:SfBorder>
                                
                             </StackLayout>
+
+                            
 
                             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding AssetIsVisible}">
                                 <Label Text="{Binding TargetTitle}" TextColor="Black" FontAttributes="Bold" Style="{StaticResource LabelStyle}">
@@ -321,8 +344,20 @@
                                     <buttons:SfButton Text="{Binding AssignToEmployeeName}"  Command="{Binding AssignToCommand}" Style="{StaticResource SfButtonStyles}" IsEnabled="{Binding AssignToEmployeeIsEnable}" >
                                     </buttons:SfButton>
                                 </border:SfBorder>
-                                <!--<Button Text="{Binding AssignToEmployeeName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding AssignToCommand}" IsEnabled="{Binding AssignToEmployeeIsEnable}" />-->
-
+                               
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1" >
+                                <Label Text="{Binding OriginatorTitle}" IsEnabled="False" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes">
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Label.FontAttributes>
+                                </Label>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                    <buttons:SfButton BackgroundColor="LightGray" Text="{Binding OriginatorName}" Style="{StaticResource SfButtonStyles}" IsEnabled="False" CornerRadius="5"/>
+                                </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="8">

@@ -86,47 +86,9 @@
                                 <ColumnDefinition  Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <StackLayout Orientation="Vertical"  Grid.Row="0" Grid.ColumnSpan="2" IsVisible="{Binding WorkorderNumberIsVisible}" >
-                                <Label TextColor="#006de0" FontAttributes="Bold" FontSize="16" FontFamily="Ebrima">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <Span Text="{Binding WorkorderNumbeTitle}"/>
-                                            <Span Text="{Binding WorkorderNumberText}"/>
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-                            </StackLayout>
+                          
                             
-                            <!--<Label Text="{Binding WorkorderNumbeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <Label Text="{Binding WorkorderNumberText}"/>
-                            </StackLayout>-->
-
-                            <!--<StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="1" IsVisible="{Binding JobNumberIsVisible}">
-                                <Label Text="{Binding JobNumberTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <Label Text="{Binding JobNumberText}"/>
-                            </StackLayout>-->
-
-
+                           
                             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">
 
                                 <Label Text="{Binding DescriptionTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
@@ -254,6 +216,20 @@
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
                                     <buttons:SfButton Text="{Binding AssignToEmployeeName}" Style="{StaticResource SfButtonStyles}" Command="{Binding AssignToCommand}" IsEnabled="{Binding AssignToEmployeeIsEnable}" CornerRadius="5"/>
+                                </border:SfBorder>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Vertical" Grid.Row="5" Grid.Column="1" >
+                                <Label Text="{Binding OriginatorTitle}" IsEnabled="False" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes">
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Label.FontAttributes>
+                                </Label>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                    <buttons:SfButton BackgroundColor="LightGray" Text="{Binding OriginatorName}" Style="{StaticResource SfButtonStyles}" IsEnabled="False" CornerRadius="5"/>
                                 </border:SfBorder>
                             </StackLayout>
 
