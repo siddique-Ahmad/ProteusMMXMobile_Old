@@ -15,6 +15,7 @@ using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
 using ProteusMMX.Services.SelectionListPageServices;
 using ProteusMMX.Services.Workorder;
+using ProteusMMX.Services.Workorder.TaskAndLabour;
 using ProteusMMX.Utils;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.SelectionListPagesViewModels;
@@ -49,7 +50,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
         protected readonly IWorkorderService _workorderService;
 
+        protected readonly ITaskAndLabourService _taskAndLabourService;
+
         protected readonly IFacilityService _facilityService;
+
+        
         #endregion
 
         #region Properties
@@ -1515,6 +1520,25 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _facilityID = value;
                     OnPropertyChanged(nameof(FacilityID));
+                }
+            }
+        }
+
+    
+        int _workorderID;
+        public int WorkorderID
+        {
+            get
+            {
+                return _workorderID;
+            }
+
+            set
+            {
+                if (value != _workorderID)
+                {
+                    _workorderID = value;
+                    OnPropertyChanged(nameof(WorkorderID));
                 }
             }
         }
@@ -3647,6 +3671,44 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        
+        //Originator
+        string _originatorTitle;
+        public string OriginatorTitle
+        {
+            get
+            {
+                return _originatorTitle;
+            }
+
+            set
+            {
+                if (value != _originatorTitle)
+                {
+                    _originatorTitle = value;
+                    OnPropertyChanged(nameof(OriginatorTitle));
+                }
+            }
+        }
+
+        string _originatorName;
+        public string OriginatorName
+        {
+            get
+            {
+                return _originatorName;
+            }
+
+            set
+            {
+                if (value != _originatorName)
+                {
+                    _originatorName = value;
+                    OnPropertyChanged(nameof(OriginatorName));
+                }
+            }
+        }
+
         //WorkOrderNumber
         string _workOrderNumber;
         public string WorkOrderNumber
@@ -4189,10 +4251,12 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (navigationData != null)
                 {
                     var navigationParams = navigationData as TargetNavigationData;
+                    if (navigationParams.WorkOrderId > 0)
+                    {
+                        this.WorkorderID = navigationParams.WorkOrderId;
+                        
+                    }
                     //Set Facility
-
-
-
                     if (navigationParams.FacilityID != null)
                     {
                         this.FacilityID = navigationParams.FacilityID;
@@ -4255,9 +4319,17 @@ namespace ProteusMMX.ViewModel.Workorder
                     this.IsCostLayoutIsVisibleForTab = true;
                 }
                 await GetWorkorderControlRights();
+                OriginatorName = AppSettings.User.UserName;
                 await SetTitlesPropertiesForPage();
                 await CreateControlsForPage();
-                
+                if (this.WorkorderID > 0)
+                {
+                    await SetControlsPropertiesForPage();
+                }
+
+
+
+
             }
             catch (Exception ex)
             {
@@ -4268,19 +4340,21 @@ namespace ProteusMMX.ViewModel.Workorder
                 OperationInProgress = false;
             }
         }
-        public CreateWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService, IFacilityService facilityService, IAssetModuleService assetService)
+        public CreateWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService, IFacilityService facilityService, IAssetModuleService assetService,ITaskAndLabourService taskAndLabourService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _workorderService = workorderService;
             _facilityService = facilityService;
             _assetService = assetService;
+            _taskAndLabourService = taskAndLabourService;
         }
 
         public async Task SetTitlesPropertiesForPage()
         {
             try
             {
+                OriginatorTitle = "Originator";
                 CurrentRuntimeTitle = WebControlTitle.GetTargetNameByTitleName("CurrentRuntime");
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
@@ -5688,6 +5762,375 @@ namespace ProteusMMX.ViewModel.Workorder
             #endregion
         }
 
+        public async Task SetControlsPropertiesForPage()
+        {
+
+
+           var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+            if (workorderWrapper != null && workorderWrapper.workOrderWrapper != null && workorderWrapper.workOrderWrapper.workOrder != null)
+            {
+                bool fdasignatureKey = AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation;
+
+               
+
+                var workorder = workorderWrapper.workOrderWrapper.workOrder;
+
+                Application.Current.Properties["TaskOrInspection"] = workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection;
+
+
+                if (workorder.DistributeCost == true)
+                {
+                    IsCostDistributed = true;
+
+
+                }
+
+                if (workorder.ParentandChildCost == true)
+                {
+                    ParentCostDistributed = true;
+                }
+
+                if (workorder.ChildCost == true)
+                {
+                    ChildCostDistributed = true;
+                }
+
+                this.WorkorderNumberText = workorder.WorkOrderNumber;
+
+               
+
+                this.DescriptionText = workorder.Description;
+
+               
+                this.DescriptionText = workorder.Description;
+
+
+                if (!string.IsNullOrWhiteSpace(workorder.AdditionalDetails))
+                {
+                   
+                    this.AdditionalDetailsText = RemoveHTML.StripHTML(workorder.AdditionalDetails);
+                    
+
+                }
+
+
+                this.ApprovalLevel = workorder.ApprovalLevel;
+                this.ApprovalNumber = workorder.ApprovalNumber;
+
+               
+                this.RequiredDate1 = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.RequiredDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+              
+              
+                /// Workorder Completion Date Property Set
+                if (workorder.CompletionDate == null)
+                {
+                    this.WorkorderCompletionDate = null;
+                    this.MaximumWorkorderCompletionDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+
+                }
+                else
+                {
+                    this.WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.CompletionDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    this.MaximumWorkorderCompletionDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+
+                }
+
+
+                
+                this.InternalNoteText = workorder.InternalNote;
+
+                /// Set Targets and Other
+                /// 
+                if (!string.IsNullOrEmpty(workorder.FacilityName))
+                {
+                    FacilityName = ShortString.shorten(workorder.FacilityName);
+                }
+                else
+                {
+                    FacilityName = workorder.FacilityName;
+                }
+                FacilityID = workorder.FacilityID;
+
+                if (!string.IsNullOrEmpty(workorder.LocationName))
+                {
+                    LocationName = ShortString.shorten(workorder.LocationName);
+
+                }
+                else
+                {
+                    LocationName = workorder.LocationName;
+
+                }
+                LocationID = workorder.LocationID;
+
+                if (!string.IsNullOrEmpty(workorder.AssetName))
+                {
+                    AssetName = ShortString.shorten(workorder.AssetName);
+
+                }
+                else
+                {
+                    AssetName = workorder.AssetName;
+
+                }
+                AssetID = workorder.AssetID;
+                //if (AssetID != null)
+                //{
+                //    var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString());
+
+
+                //    if (string.IsNullOrWhiteSpace(AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString()))
+                //    {
+                //        this.CurrentRuntimeText = "0.0";
+
+
+                //    }
+                //    else
+                //    {
+                //        this.CurrentRuntimeText = AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString();
+
+                //    }
+                //}
+                //else
+                //{
+                //    CurrentRuntimeIsVisible = false;
+                //}
+
+                if (!string.IsNullOrEmpty(workorder.AssetSystemName))
+                {
+                    AssetSystemName = ShortString.shorten(workorder.AssetSystemName);
+                    //ShowAssociatedAssets = true;
+                }
+                else
+                {
+                    AssetSystemName = workorder.AssetSystemName;
+
+                }
+
+                if (!string.IsNullOrEmpty(workorder.AssetSystemName))
+                {
+                    AssetSystemName = ShortString.shorten(workorder.AssetSystemName);
+
+                }
+                else
+                {
+                    AssetSystemName = workorder.AssetSystemName;
+
+                }
+                AssetSystemID = workorder.AssetSystemID;
+
+                if (!string.IsNullOrEmpty(workorder.EmployeeName))
+                {
+                    AssignToEmployeeName = ShortString.shorten(workorder.EmployeeName);
+
+                }
+                else
+                {
+                    AssignToEmployeeName = workorder.EmployeeName;
+
+                }
+                AssignToEmployeeID = workorder.AssignedToEmployeeID;
+                string targetname = string.Empty;
+                if (workorder.AssetID != null)
+                {
+                    targetname = "Assets";
+                }
+                else if (workorder.AssetSystemID != null)
+                {
+                    targetname = "Asset System";
+                }
+                else
+                {
+                    targetname = "Location";
+                }
+
+                
+
+                if (!string.IsNullOrEmpty(workorder.CostCenterName))
+                {
+                    CostCenterName = ShortString.shorten(workorder.CostCenterName);
+
+                }
+                else
+                {
+                    CostCenterName = workorder.CostCenterName;
+
+                }
+                // ActivationDateText = workorder.ActivationDate.ToString();
+                CostCenterID = workorder.CostCenterID;
+
+                if (workorderWrapper.workOrderWrapper.Cause != null && workorderWrapper.workOrderWrapper.Cause.Count > 0)
+                {
+                    if (!string.IsNullOrEmpty(workorderWrapper.workOrderWrapper.Cause[0].CauseNumber))
+                    {
+                        CauseName = ShortString.shorten(workorderWrapper.workOrderWrapper.Cause[0].CauseNumber);
+
+                    }
+                    else
+                    {
+                        CauseName = workorderWrapper.workOrderWrapper.Cause[0].CauseNumber;
+
+                    }
+                    CauseID = workorderWrapper.workOrderWrapper.Cause[0].CauseID;
+                }
+
+                if (!string.IsNullOrEmpty(workorder.WorkOrderRequesterName))
+                {
+                    WorkorderRequesterName = ShortString.shorten(workorder.WorkOrderRequesterName);
+
+                }
+                else
+                {
+                    WorkorderRequesterName = workorder.WorkOrderRequesterName;
+
+                }
+                WorkorderRequesterID = workorder.WorkOrderRequesterID;
+
+                if (!string.IsNullOrEmpty(workorder.ShiftName))
+                {
+                    ShiftName = ShortString.shorten(workorder.ShiftName);
+
+                }
+                else
+                {
+                    ShiftName = workorder.ShiftName;
+
+                }
+                ShiftID = workorder.ShiftID;
+
+                if (!string.IsNullOrEmpty(workorder.WorkOrderStatusName))
+                {
+                    WorkorderStatusName = ShortString.shorten(workorder.WorkOrderStatusName);
+
+                }
+                else
+                {
+                    WorkorderStatusName = workorder.WorkOrderStatusName;
+
+                }
+                WorkorderStatusID = workorder.WorkOrderStatusID;
+
+                if (!string.IsNullOrEmpty(workorder.WorkTypeName))
+                {
+                    WorkorderTypeName = ShortString.shorten(workorder.WorkTypeName);
+
+                }
+                else
+                {
+                    WorkorderTypeName = workorder.WorkTypeName;
+
+                }
+                WorkorderTypeID = workorder.WorkTypeID;
+
+                if (!string.IsNullOrEmpty(workorder.MaintenanceCodeName))
+                {
+                    MaintenanceCodeName = ShortString.shorten(workorder.MaintenanceCodeName);
+
+                }
+                else
+                {
+                    MaintenanceCodeName = workorder.MaintenanceCodeName;
+
+                }
+                MaintenanceCodeID = workorder.MaintenanceCodeID;
+
+                if (!string.IsNullOrEmpty(workorder.PriorityName))
+                {
+                    PriorityName = ShortString.shorten(workorder.PriorityName);
+
+                }
+                else
+                {
+                    PriorityName = workorder.PriorityName;
+
+                }
+                PriorityID = workorder.PriorityID;
+
+
+                EstimstedDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.EstimatedDowntime) ? 0 : decimal.Parse(workorder.EstimatedDowntime));
+                ActualDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.ActualDowntime) ? 0 : decimal.Parse(workorder.ActualDowntime));
+                MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
+                MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);
+              
+
+                ///Set Dyanmic Field Properties
+                ///
+                #region Set Dyanmic Field Properties
+
+
+
+                #region User Fields
+
+                UserField1 = workorder.UserField1;
+                UserField2 = workorder.UserField2;
+                UserField3 = workorder.UserField3;
+                UserField4 = workorder.UserField4;
+                UserField5 = workorder.UserField5;
+                UserField6 = workorder.UserField6;
+                UserField7 = workorder.UserField7;
+                UserField8 = workorder.UserField8;
+                UserField9 = workorder.UserField9;
+                UserField10 = workorder.UserField10;
+                UserField11 = workorder.UserField11;
+                UserField12 = workorder.UserField12;
+                UserField13 = workorder.UserField13;
+                UserField14 = workorder.UserField14;
+                UserField15 = workorder.UserField15;
+                UserField16 = workorder.UserField16;
+                UserField17 = workorder.UserField17;
+                UserField18 = workorder.UserField18;
+                UserField19 = workorder.UserField19;
+                UserField20 = workorder.UserField20;
+                UserField21 = workorder.UserField21;
+                UserField22 = workorder.UserField22;
+                UserField23 = workorder.UserField23;
+                UserField24 = workorder.UserField24;
+                #endregion
+
+
+                #region New Properties 31.5.2018
+
+
+                ///TODO: Set all properties here for those custom control is made.
+
+                ConfirmEmail = workorder.ConfirmEmail;
+                DigitalSignatures = workorder.DigitalSignatures;
+                JobNumber = workorder.JobNumber;
+                Project = workorder.project;
+
+                ///Service Request Fields
+                RequesterFullName = workorder.RequesterFullName;
+                RequesterEmail = workorder.RequesterEmail;
+                RequesterPhone = workorder.RequesterPhone;
+                if (workorder.RequestNumber != null && workorder.RequestedDate != null)
+                {
+                    RequestNumber = workorder.RequestNumber;
+                    //  RequestedDate = workorder.RequestedDate.ToString();
+                    
+
+                }
+
+
+
+
+
+
+
+                #endregion
+
+
+
+
+
+
+
+                #endregion
+
+
+
+            }
+
+        }
 
         private bool ApplyIsEnable(String Expression)
         {
@@ -9895,12 +10338,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.WorkOrderStatusID = WorkorderStatusID;
                 workOrder.WorkTypeID = WorkorderTypeID;
                 workOrder.MaintenanceCodeID = MaintenanceCodeID;
-
-                //MiscellaneousLaborCostID = workorderWrapper.workOrderWrapper.workOrder.MiscellaneousLaborCostID,
-                //MiscellaneousMaterialsCostID = workorderWrapper.workOrderWrapper.workOrder.MiscellaneousMaterialsCostID,
-                workOrder.AdditionalDetails = AdditionalDetailsText; //String.IsNullOrEmpty(AdditionalDetails1.Text) ? null : AdditionalDetails1.Text;
-
+                workOrder.Originator = OriginatorName;
+                workOrder.AdditionalDetails = AdditionalDetailsText;
                 workOrder.InternalNote = InternalNoteText;
+
 
                 if (string.IsNullOrWhiteSpace(ActualDowntimeText))
                 {
@@ -9919,8 +10360,6 @@ namespace ProteusMMX.ViewModel.Workorder
                     MiscellaneousMaterialCostText = "0.0";
                 }
 
-
-                //workOrder.ApprovalLevel=
 
                 workOrder.DistributeCost = IsCostDistributed;
                 workOrder.ParentandChildCost = ParentCostDistributed;
@@ -9990,15 +10429,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 #endregion
 
 
-                #region New Properties 31.5.2018
-
-
-
-
-
-
-
-                #endregion
+              
 
                 bool fdasignatureKey = AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation;
 
@@ -10035,7 +10466,46 @@ namespace ProteusMMX.ViewModel.Workorder
                             var response = await _workorderService.CreateWorkorder(workorder);
                             if (response != null && bool.Parse(response.servicestatus.ToString()))
                             {
-                                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullycreated"));
+                                if (this.WorkorderID > 0)
+                                {
+                                    #region Create Default Task
+
+                                    ServiceOutput assignto = await _workorderService.GetEmployeeAssignTo(UserID);
+                                    if (assignto.EmployeeLaborCraftID == 0 || string.IsNullOrWhiteSpace(assignto.EmployeeLaborCraftID.ToString()))
+                                    {
+
+
+                                    }
+
+                                    var yourobject1 = new workOrderWrapper
+                                    {
+                                        TimeZone = "UTC",
+                                        CultureName = "en-US",
+                                        ClientIANATimeZone = NodaTime.DateTimeZoneProviders.Serialization.GetSystemDefault().ToString(),
+                                        workOrderLabor = new WorkOrderLabor
+                                        {
+
+                                            WorkOrderID = this.WorkorderID,
+                                            TaskID = null,
+                                            StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
+                                            EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
+
+
+                                        },
+
+                                    };
+
+                                    var status = await _taskAndLabourService.CreateWorkOrderLabor(yourobject1);
+                                    if (Boolean.Parse(status.servicestatus))
+                                    {
+
+                                        UserDialogs.Instance.HideLoading();
+
+                                    }
+                                    #endregion
+                                }
+
+                                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullycreated"));
                                 await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(response.workOrderWrapper.workOrder);
                                 await NavigationService.RemoveLastFromBackStackAsync();
 
@@ -10060,6 +10530,44 @@ namespace ProteusMMX.ViewModel.Workorder
                             var response = await _workorderService.CreateWorkorder(workorder);
                             if (response != null && bool.Parse(response.servicestatus.ToString()))
                             {
+                                if (this.WorkorderID > 0)
+                                {
+                                    #region Create Default Task
+
+                                    ServiceOutput assignto = await _workorderService.GetEmployeeAssignTo(UserID);
+                                    if (assignto.EmployeeLaborCraftID == 0 || string.IsNullOrWhiteSpace(assignto.EmployeeLaborCraftID.ToString()))
+                                    {
+
+
+                                    }
+
+                                    var yourobject1 = new workOrderWrapper
+                                    {
+                                        TimeZone = "UTC",
+                                        CultureName = "en-US",
+                                        ClientIANATimeZone = NodaTime.DateTimeZoneProviders.Serialization.GetSystemDefault().ToString(),
+                                        workOrderLabor = new WorkOrderLabor
+                                        {
+
+                                            WorkOrderID = this.WorkorderID,
+                                            TaskID = null,
+                                            StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
+                                            EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
+
+
+                                        },
+
+                                    };
+
+                                    var status = await _taskAndLabourService.CreateWorkOrderLabor(yourobject1);
+                                    if (Boolean.Parse(status.servicestatus))
+                                    {
+
+                                        UserDialogs.Instance.HideLoading();
+
+                                    }
+                                    #endregion
+                                }
                                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullycreated"));
                                 await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(response.workOrderWrapper.workOrder);
                                 await NavigationService.RemoveLastFromBackStackAsync();
@@ -10089,6 +10597,44 @@ namespace ProteusMMX.ViewModel.Workorder
                         var response = await _workorderService.CreateWorkorder(workorder);
                         if (response != null && bool.Parse(response.servicestatus.ToString()))
                         {
+                            if (this.WorkorderID > 0)
+                            {
+                                #region Create Default Task
+
+                                ServiceOutput assignto = await _workorderService.GetEmployeeAssignTo(UserID);
+                                if (assignto.EmployeeLaborCraftID == 0 || string.IsNullOrWhiteSpace(assignto.EmployeeLaborCraftID.ToString()))
+                                {
+
+
+                                }
+
+                                var yourobject1 = new workOrderWrapper
+                                {
+                                    TimeZone = "UTC",
+                                    CultureName = "en-US",
+                                    ClientIANATimeZone = NodaTime.DateTimeZoneProviders.Serialization.GetSystemDefault().ToString(),
+                                    workOrderLabor = new WorkOrderLabor
+                                    {
+
+                                        WorkOrderID = this.WorkorderID,
+                                        TaskID = null,
+                                        StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
+                                        EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
+
+
+                                    },
+
+                                };
+
+                                var status = await _taskAndLabourService.CreateWorkOrderLabor(yourobject1);
+                                if (Boolean.Parse(status.servicestatus))
+                                {
+
+                                    UserDialogs.Instance.HideLoading();
+
+                                }
+                                #endregion
+                            }
                             UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullycreated"));
                             await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(response.workOrderWrapper.workOrder);
                             await NavigationService.RemoveLastFromBackStackAsync();
@@ -10114,6 +10660,44 @@ namespace ProteusMMX.ViewModel.Workorder
                         var response = await _workorderService.CreateWorkorder(workorder);
                         if (response != null && bool.Parse(response.servicestatus.ToString()))
                         {
+                            if (this.WorkorderID > 0)
+                            {
+                                #region Create Default Task
+
+                                ServiceOutput assignto = await _workorderService.GetEmployeeAssignTo(UserID);
+                                if (assignto.EmployeeLaborCraftID == 0 || string.IsNullOrWhiteSpace(assignto.EmployeeLaborCraftID.ToString()))
+                                {
+
+
+                                }
+
+                                var yourobject1 = new workOrderWrapper
+                                {
+                                    TimeZone = "UTC",
+                                    CultureName = "en-US",
+                                    ClientIANATimeZone = NodaTime.DateTimeZoneProviders.Serialization.GetSystemDefault().ToString(),
+                                    workOrderLabor = new WorkOrderLabor
+                                    {
+
+                                        WorkOrderID = this.WorkorderID,
+                                        TaskID = null,
+                                        StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
+                                        EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
+
+
+                                    },
+
+                                };
+
+                                var status = await _taskAndLabourService.CreateWorkOrderLabor(yourobject1);
+                                if (Boolean.Parse(status.servicestatus))
+                                {
+
+                                    UserDialogs.Instance.HideLoading();
+
+                                }
+                                #endregion
+                            }
                             UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullycreated"));
                             await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(response.workOrderWrapper.workOrder);
                             await NavigationService.RemoveLastFromBackStackAsync();
@@ -10133,6 +10717,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             finally
             {
+                
                 UserDialogs.Instance.HideLoading();
                 //  OperationInProgress = false;
 

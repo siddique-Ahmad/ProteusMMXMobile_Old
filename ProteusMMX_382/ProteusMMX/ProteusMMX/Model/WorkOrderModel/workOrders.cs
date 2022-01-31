@@ -17,6 +17,7 @@ namespace ProteusMMX.Model.WorkOrderModel
         public int? ScheduleID { get; set; }
         public int? AssetID { get; set; }
 
+        public string Originator { get; set; }
         public string JobNumber { get; set; }
         public int? CustomerLocationID { get; set; }
         public int? LocationID { get; set; }

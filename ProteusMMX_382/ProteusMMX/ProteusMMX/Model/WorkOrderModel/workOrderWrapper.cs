@@ -9,6 +9,14 @@ namespace ProteusMMX.Model.WorkOrderModel
     public class workOrderWrapper
     {
         public string _IsWorkOrderHasTaskORInspection { get; set; }
+
+        public bool WorkorderCreatedfromSchedule { get; set; }
+
+        public bool EmployeeWorkHourFlag { get; set; }
+
+        public decimal EmployeeWorkHourValue { get; set; }
+
+        public bool WorkOrderIdentifiedThroughBreakdownFlag { get; set; }
         public int UserId { get; set; }
         public workOrders workOrder { get; set; }
 
