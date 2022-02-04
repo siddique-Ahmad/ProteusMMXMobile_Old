@@ -430,6 +430,24 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        int? _workOrderLaborHourID;
+        public int? WorkOrderLaborHourID
+        {
+            get
+            {
+                return _workOrderLaborHourID;
+            }
+
+            set
+            {
+                if (value != _workOrderLaborHourID)
+                {
+                    _workOrderLaborHourID = value;
+                    OnPropertyChanged(nameof(WorkOrderLaborHourID));
+                }
+            }
+        }
+        
 
 
         string _serverTimeZone = AppSettings.User.ServerIANATimeZone;
@@ -1451,340 +1469,553 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                         #endregion
 
-                        #region ***** button Click Event *****
+                      #region ***** button Click Event *****
                         /// Start button Click 
-                        startButton.Clicked += (sender, e) =>
-                        {
-                            try
-                            {
-                                //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
-                                var buttonStart = sender as SfButton;
-                                WorkOrderLabor workOrderLabor = buttonStart.CommandParameter as WorkOrderLabor;
+                       startButton.Clicked += async (sender, e) =>
+                   {
+                       UserDialogs.Instance.ShowLoading("", MaskType.Gradient);
+                       var buttonStart = sender as SfButton;
+                     WorkOrderLabor workOrderLabor = buttonStart.CommandParameter as WorkOrderLabor;
+                    var workOrderWrapper = new workOrderWrapper
+                    {
+                        TimeZone = AppSettings.UserTimeZone,
+                        CultureName = AppSettings.UserCultureName,
+                        UserId = Convert.ToInt32(UserID),
+                        ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                       workOrderLabor = new WorkOrderLabor
+                       {
+                       StartDate = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                       EndDate = null,
+                       CompletionDate = null,
+                       HoursAtRate1Start = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                       ModifiedUserName = AppSettings.User.UserName,
+                       WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
+                       WorkOrderID = this.WorkorderID,
+                       WorkOrderLaborHourID = null,
+                       TaskID= workOrderLabor.TaskID
 
-                                workOrderLabor.StartTimeOfTimer = DateTime.Now;
-                                startButton.CommandParameter = workOrderLabor; //reassign to commandParameter.
+                       },
 
-
-                                var parent = buttonStart.Parent.Parent.Parent;
-                                Grid parentGrid = parent as Grid;
-                                //  parentGrid.StyleId = item.HoursAtRate1.ToString();
-                                StackLayout btnStopLocal = parentGrid.Children[1] as StackLayout;//Find the stopbutton from parent
-                                Grid btnStopLocalGrid = btnStopLocal.Children[0] as Grid;//Find the stopbutton from parent
-                                SfButton btnStop = btnStopLocalGrid.Children[0] as SfButton;//Find the stopbutton from parent
-                                btnStop.CommandParameter = workOrderLabor; //reassign to commandParameter to stopbutton
-
-
-                                //Save in Local
-                                string key = "WorkOrderLabor:" + workOrderLabor.WorkOrderLaborID;
-                                workOrderLabor.Description = "";
-                                WorkOrderLaborStorge.Storage.Set(key, JsonConvert.SerializeObject(workOrderLabor));
-
-                                string keyhours1 = "WorkOrderLaborHours1:" + workOrderLabor.HoursAtRate1;
-                                workOrderLabor.Description = "";
-                                WorkOrderLaborStorge.Storage.Set(keyhours1, JsonConvert.SerializeObject(workOrderLabor));
-
-                                //StartTime = DateTime.Now;
-
-                                startButton.TextColor = Color.Green;
-                                startButton.ImageSource = "starticon1.png";
-                                stopButton.IsEnabled = true;
-                                stopButton.TextColor = Color.FromHex("#87CEFA");
-                                stopButton.ImageSource = "stoppending.png";
-
-                            }
-                            catch (Exception ex)
+                   };
+                            var response = await _taskAndLabourService.CreateWorkOrderLaborHours(workOrderWrapper);
+                            if (response != null && bool.Parse(response.servicestatus))
                             {
 
-                                throw;
+                           if (response.workOrderWrapper != null && response.workOrderWrapper.workOrderLabor != null)
+                           {
+                               this.WorkOrderLaborHourID = response.workOrderWrapper.workOrderLabor.WorkOrderLaborHourID;
+                           }
+                           UserDialogs.Instance.HideLoading();
+                           DialogService.ShowToast("Timer Successfully Started");
                             }
+                            //    try
+                            //{
+                            //    //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
+                            //    var buttonStart = sender as SfButton;
+                            //    WorkOrderLabor workOrderLabor = buttonStart.CommandParameter as WorkOrderLabor;
+
+                            //    workOrderLabor.StartTimeOfTimer = DateTime.Now;
+                            //    startButton.CommandParameter = workOrderLabor; //reassign to commandParameter.
+
+
+                            //    var parent = buttonStart.Parent.Parent.Parent;
+                            //    Grid parentGrid = parent as Grid;
+                            //    //  parentGrid.StyleId = item.HoursAtRate1.ToString();
+                            //    StackLayout btnStopLocal = parentGrid.Children[1] as StackLayout;//Find the stopbutton from parent
+                            //    Grid btnStopLocalGrid = btnStopLocal.Children[0] as Grid;//Find the stopbutton from parent
+                            //    SfButton btnStop = btnStopLocalGrid.Children[0] as SfButton;//Find the stopbutton from parent
+                            //    btnStop.CommandParameter = workOrderLabor; //reassign to commandParameter to stopbutton
+
+
+                            //    //Save in Local
+                            //    string key = "WorkOrderLabor:" + workOrderLabor.WorkOrderLaborID;
+                            //    workOrderLabor.Description = "";
+                            //    WorkOrderLaborStorge.Storage.Set(key, JsonConvert.SerializeObject(workOrderLabor));
+
+                            //    string keyhours1 = "WorkOrderLaborHours1:" + workOrderLabor.HoursAtRate1;
+                            //    workOrderLabor.Description = "";
+                            //    WorkOrderLaborStorge.Storage.Set(keyhours1, JsonConvert.SerializeObject(workOrderLabor));
+
+                            //    //StartTime = DateTime.Now;
+
+                            //    startButton.TextColor = Color.Green;
+                            //    startButton.ImageSource = "starticon1.png";
+                            //    stopButton.IsEnabled = true;
+                            //    stopButton.TextColor = Color.FromHex("#87CEFA");
+                            //    stopButton.ImageSource = "stoppending.png";
+
+                            //}
+                            //catch (Exception ex)
+                            //{
+
+                            //    throw;
+                            //}
 
                         };
 
-                        startButtonforRate2.Clicked += (sender, e) =>
+                        startButtonforRate2.Clicked += async (sender, e) =>
                         {
-                            //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
-
                             var buttonStartforRate2 = sender as SfButton;
                             WorkOrderLabor workOrderLabor = buttonStartforRate2.CommandParameter as WorkOrderLabor;
+                            var workOrderWrapper = new workOrderWrapper
+                            {
+                                TimeZone = AppSettings.UserTimeZone,
+                                CultureName = AppSettings.UserCultureName,
+                                UserId = Convert.ToInt32(UserID),
+                                ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                                workOrderLabor = new WorkOrderLabor
+                                {
+                                    StartDate = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                    EndDate = null,
+                                    CompletionDate = null,
+                                    HoursAtRate2Start = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                    ModifiedUserName = AppSettings.User.UserName,
+                                    WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
+                                    WorkOrderID = this.WorkorderID,
+                                    WorkOrderLaborHourID = null,
+                                    TaskID = workOrderLabor.TaskID
 
-                            workOrderLabor.StartTimeOfTimer = DateTime.Now;
-                            startButtonforRate2.CommandParameter = workOrderLabor; //reassign to commandParameter.
+                                },
+
+                            };
+                            var response = await _taskAndLabourService.CreateWorkOrderLaborHours(workOrderWrapper);
+                            if (response != null && bool.Parse(response.servicestatus))
+                            {
+
+                                if (response.workOrderWrapper != null && response.workOrderWrapper.workOrderLabor != null)
+                                {
+                                    this.WorkOrderLaborHourID = response.workOrderWrapper.workOrderLabor.WorkOrderLaborHourID;
+                                }
+
+                                DialogService.ShowToast("Timer Successfully Started");
+                            }
+                            //try
+                            //{
+                            //    //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
+
+                            //    var buttonStartforRate2 = sender as SfButton;
+                            //    WorkOrderLabor workOrderLabor = buttonStartforRate2.CommandParameter as WorkOrderLabor;
+
+                            //    workOrderLabor.StartTimeOfTimer = DateTime.Now;
+                            //    startButtonforRate2.CommandParameter = workOrderLabor; //reassign to commandParameter.
 
 
-                            var parent = buttonStartforRate2.Parent.Parent.Parent;
-                            Grid parentGrid = parent as Grid;
-                            //  parentGrid.StyleId = item.HoursAtRate1.ToString();
-                            StackLayout btnStopLocal = parentGrid.Children[1] as StackLayout;//Find the stopbutton from parent
-                            Grid btnStopLocalGrid = btnStopLocal.Children[0] as Grid;//Find the stopbutton from parent
-                            SfButton btnStop = btnStopLocalGrid.Children[0] as SfButton;//Find the stopbutton from parent
-                            btnStop.CommandParameter = workOrderLabor; //reassign to commandParameter to stopbutton
+                            //    var parent = buttonStartforRate2.Parent.Parent.Parent;
+                            //    Grid parentGrid = parent as Grid;
+                            //    //  parentGrid.StyleId = item.HoursAtRate1.ToString();
+                            //    StackLayout btnStopLocal = parentGrid.Children[1] as StackLayout;//Find the stopbutton from parent
+                            //    Grid btnStopLocalGrid = btnStopLocal.Children[0] as Grid;//Find the stopbutton from parent
+                            //    SfButton btnStop = btnStopLocalGrid.Children[0] as SfButton;//Find the stopbutton from parent
+                            //    btnStop.CommandParameter = workOrderLabor; //reassign to commandParameter to stopbutton
 
-                            //var parent = buttonStartforRate2.Parent;
-                            //Grid parentGrid = parent as Grid;
-                            //// parentGrid.StyleId = item.HoursAtRate2.ToString();
-                            //Button btnStopLocal = parentGrid.Children[1] as Button;//Find the stopbutton from parent
-                            //btnStopLocal.CommandParameter = workOrderLabor; //reassign to commandParameter to stopbutton
-
-
-
-                            //Save in Local
-                            string key = "WorkOrderLaborHours2:" + workOrderLabor.WorkOrderLaborID;
-                            workOrderLabor.Description = "";
-                            WorkOrderLaborStorge.Storage.Set(key, JsonConvert.SerializeObject(workOrderLabor));
+                            //    //var parent = buttonStartforRate2.Parent;
+                            //    //Grid parentGrid = parent as Grid;
+                            //    //// parentGrid.StyleId = item.HoursAtRate2.ToString();
+                            //    //Button btnStopLocal = parentGrid.Children[1] as Button;//Find the stopbutton from parent
+                            //    //btnStopLocal.CommandParameter = workOrderLabor; //reassign to commandParameter to stopbutton
 
 
-                            //StartTime = DateTime.Now;
 
-                            startButtonforRate2.TextColor = Color.Green;
-                            startButtonforRate2.ImageSource = "starticon1.png";
-                            stopButtonforRate2.IsEnabled = true;
-                            stopButtonforRate2.TextColor = Color.FromHex("#87CEFA");
-                            stopButtonforRate2.ImageSource = "stoppending.png";
+                            //    //Save in Local
+                            //    string key = "WorkOrderLaborHours2:" + workOrderLabor.WorkOrderLaborID;
+                            //    workOrderLabor.Description = "";
+                            //    WorkOrderLaborStorge.Storage.Set(key, JsonConvert.SerializeObject(workOrderLabor));
+
+
+                            //    //StartTime = DateTime.Now;
+
+                            //    startButtonforRate2.TextColor = Color.Green;
+                            //    startButtonforRate2.ImageSource = "starticon1.png";
+                            //    stopButtonforRate2.IsEnabled = true;
+                            //    stopButtonforRate2.TextColor = Color.FromHex("#87CEFA");
+                            //    stopButtonforRate2.ImageSource = "stoppending.png";
+                            //}
+                            //catch (Exception)
+                            //{
+
+                            //    throw;
+                            //}
+
 
                         };
 
                         /// Stop button Click 
                         stopButton.Clicked +=async (sender, e) =>
                           {
-                              try
+                              UserDialogs.Instance.ShowLoading("", MaskType.Gradient);
+                              var buttonStop= sender as SfButton;
+                              WorkOrderLabor workOrderLabor = buttonStop.CommandParameter as WorkOrderLabor;
+                              var workOrderWrapper = new workOrderWrapper
                               {
-
-                                  var StopTime = DateTime.Now;
-
-                                  var x1 = sender as SfButton;
-                                  WorkOrderLabor workOrderLabor = x1.CommandParameter as WorkOrderLabor;
-
-                                  if (workOrderLabor.StartTimeOfTimer == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                                  TimeZone = AppSettings.UserTimeZone,
+                                  CultureName = AppSettings.UserCultureName,
+                                  UserId = Convert.ToInt32(UserID),
+                                  ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                                  workOrderLabor = new WorkOrderLabor
                                   {
-                                      return;
-                                  }
+                                      StartDate =null ,
+                                      EndDate = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                      CompletionDate = null,
+                                      HoursAtRate1Start =null,
+                                      HoursAtRate1Stop = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                      ModifiedUserName = AppSettings.User.UserName,
+                                      WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
+                                      WorkOrderID = this.WorkorderID,
+                                      WorkOrderLaborHourID =this.WorkOrderLaborHourID,
+                                      TaskID = workOrderLabor.TaskID
 
-                                  TimeSpan elapsed = StopTime.Subtract(workOrderLabor.StartTimeOfTimer);
+                                  },
 
-                                  int mn = elapsed.Minutes;
-                                  if (String.IsNullOrWhiteSpace(minuteEntry.Text))
-                                  {
-                                      minuteEntry.Text = "0";
-                                  }
-                                  if (String.IsNullOrWhiteSpace(hoursEntry.Text))
-                                  {
-                                      hoursEntry.Text = "0";
-                                  }
-                                  int mn1 = Convert.ToInt32(minuteEntry.Text);
-                                  if (mn + mn1 > 59)
-                                  {
-                                      TimeSpan span = TimeSpan.FromMinutes(mn + mn1);
-                                      string elapsedTime1 = String.Format("{0:00}:{1:00}",
-                                                                    span.Hours, span.Minutes);
-                                      int hrs = span.Hours;
-                                      int hrs1 = Convert.ToInt32(hoursEntry.Text);
-                                      hoursEntry.Text = (hrs + hrs1).ToString();
-
-                                      int hrs2 = span.Minutes;
-                                      minuteEntry.Text = hrs2.ToString();
-                                  }
-                                  else
-                                  {
-
-                                      int hrs = elapsed.Hours;
-                                      int hrs1 = Convert.ToInt32(hoursEntry.Text);
-                                      hoursEntry.Text = (hrs + hrs1).ToString();
-
-                                      int hrs2 = elapsed.Minutes;
-                                      int hrs21 = Convert.ToInt32(minuteEntry.Text);
-                                      minuteEntry.Text = (hrs2 + hrs21).ToString();
-                                  }
-
-
-                                  completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
-
-                                  stopButton.TextColor = Color.Red;
-                                  stopButton.ImageSource = "startred.png";
-                                  startButton.TextColor = Color.Red;
-                                  startButton.ImageSource = "stopicon1.png";
-                                  var parent = stopButton.Parent.Parent.Parent.Parent.Parent;
-                                  Grid parentGrid = parent as Grid;
-                                  StackLayout Hrs1StackLayout = parentGrid.Children[0] as StackLayout;
-                                  Hrs1StackLayout.StyleId = item.HoursAtRate1.ToString();
-
-                                  ////////Save HoursAtRate1 to database//////
-                                  ///
-
-                                  var workorderLabourHour1 = (WorkOrderLabor)((SfButton)sender).CommandParameter;
-                                  var taskID = workorderLabourHour1.TaskID;
-                                  var workOrderLaborID = workorderLabourHour1.WorkOrderLaborID;
-                              
-
-                                  if (String.IsNullOrEmpty(hoursEntry.Text))
-                                  {
-                                      hoursEntry.Text = "0";
-                                  }
-                                  if (String.IsNullOrEmpty(minuteEntry.Text))
-                                  {
-                                      minuteEntry.Text = "0";
-                                  }
-
-                                 
-                                  if (minuteEntry.Text.Length == 1)
-                                  {
-                                      int FormattedHours = Convert.ToInt32(minuteEntry.Text);
-                                      minuteEntry.Text = string.Format("{0:00}", FormattedHours);
-
-                                  }
-
-                                 
-
-                                  decimal FinalHour1 = decimal.Parse(hoursEntry.Text + "." + minuteEntry.Text);
-
-                                
-
-                                  var workOrderWrapper = new workOrderWrapper
-                                  {
-                                      TimeZone = AppSettings.UserTimeZone,
-                                      CultureName = AppSettings.UserCultureName,
-                                      UserId = Convert.ToInt32(UserID),
-                                      ClientIANATimeZone = AppSettings.ClientIANATimeZone,
-                                      workOrderLabor = new WorkOrderLabor
-                                      {
-                                          ModifiedUserName = AppSettings.User.UserName,
-                                          CompletionDate =DateTime.Parse(completeDateButton.Text),
-                                          HoursAtRate1 = FinalHour1,
-                                          TaskID = taskID,
-                                          StartDate = fromEntry.SelectedDate.Value.Add(DateTime.Now.TimeOfDay),
-
-                                          WorkOrderLaborID = workOrderLaborID
-                                      },
-
-                                  };
-
-
-
-
-                                  var response = await _taskAndLabourService.UpdateTaskAndLabour(workOrderWrapper);
-                                  if (response != null && bool.Parse(response.servicestatus))
-                                  {
-                                      DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskLabourSuccessfullyUpdated"), 2000);
-                                  }
-                                  }
-                              catch (Exception ex)
+                              };
+                              var response = await _taskAndLabourService.CreateWorkOrderLaborHours(workOrderWrapper);
+                              if (response != null && bool.Parse(response.servicestatus))
                               {
-                                  throw;
+                                  UserDialogs.Instance.HideLoading();
+                                  await this.OnViewAppearingAsync(null);
+                                  DialogService.ShowToast("Timer Successfully Stopped");
                               }
+                              //try
+                              //{
+
+                              //    var StopTime = DateTime.Now;
+
+                              //    var x1 = sender as SfButton;
+                              //    WorkOrderLabor workOrderLabor = x1.CommandParameter as WorkOrderLabor;
+
+                              //    if (workOrderLabor.StartTimeOfTimer == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                              //    {
+                              //        return;
+                              //    }
+
+                              //    TimeSpan elapsed = StopTime.Subtract(workOrderLabor.StartTimeOfTimer);
+
+                              //    int mn = elapsed.Minutes;
+                              //    if (String.IsNullOrWhiteSpace(minuteEntry.Text))
+                              //    {
+                              //        minuteEntry.Text = "0";
+                              //    }
+                              //    if (String.IsNullOrWhiteSpace(hoursEntry.Text))
+                              //    {
+                              //        hoursEntry.Text = "0";
+                              //    }
+                              //    int mn1 = Convert.ToInt32(minuteEntry.Text);
+                              //    if (mn + mn1 > 59)
+                              //    {
+                              //        TimeSpan span = TimeSpan.FromMinutes(mn + mn1);
+                              //        string elapsedTime1 = String.Format("{0:00}:{1:00}",
+                              //                                      span.Hours, span.Minutes);
+                              //        int hrs = span.Hours;
+                              //        int hrs1 = Convert.ToInt32(hoursEntry.Text);
+                              //        hoursEntry.Text = (hrs + hrs1).ToString();
+
+                              //        int hrs2 = span.Minutes;
+                              //        minuteEntry.Text = hrs2.ToString();
+                              //    }
+                              //    else
+                              //    {
+
+                              //        int hrs = elapsed.Hours;
+                              //        int hrs1 = Convert.ToInt32(hoursEntry.Text);
+                              //        hoursEntry.Text = (hrs + hrs1).ToString();
+
+                              //        int hrs2 = elapsed.Minutes;
+                              //        int hrs21 = Convert.ToInt32(minuteEntry.Text);
+                              //        minuteEntry.Text = (hrs2 + hrs21).ToString();
+                              //    }
+
+
+                              //    completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+
+                              //    stopButton.TextColor = Color.Red;
+                              //    stopButton.ImageSource = "startred.png";
+                              //    startButton.TextColor = Color.Red;
+                              //    startButton.ImageSource = "stopicon1.png";
+                              //    var parent = stopButton.Parent.Parent.Parent.Parent.Parent;
+                              //    Grid parentGrid = parent as Grid;
+                              //    StackLayout Hrs1StackLayout = parentGrid.Children[0] as StackLayout;
+                              //    Hrs1StackLayout.StyleId = item.HoursAtRate1.ToString();
+
+                              //    ////////Save HoursAtRate1 to database//////
+                              //    ///
+
+                              //    var workorderLabourHour1 = (WorkOrderLabor)((SfButton)sender).CommandParameter;
+                              //    var taskID = workorderLabourHour1.TaskID;
+                              //    var workOrderLaborID = workorderLabourHour1.WorkOrderLaborID;
+
+
+                              //    if (String.IsNullOrEmpty(hoursEntry.Text))
+                              //    {
+                              //        hoursEntry.Text = "0";
+                              //    }
+                              //    if (String.IsNullOrEmpty(minuteEntry.Text))
+                              //    {
+                              //        minuteEntry.Text = "0";
+                              //    }
+
+
+                              //    if (minuteEntry.Text.Length == 1)
+                              //    {
+                              //        int FormattedHours = Convert.ToInt32(minuteEntry.Text);
+                              //        minuteEntry.Text = string.Format("{0:00}", FormattedHours);
+
+                              //    }
+
+
+
+                              //    decimal FinalHour1 = decimal.Parse(hoursEntry.Text + "." + minuteEntry.Text);
+
+
+
+                              //    var workOrderWrapper = new workOrderWrapper
+                              //    {
+                              //        TimeZone = AppSettings.UserTimeZone,
+                              //        CultureName = AppSettings.UserCultureName,
+                              //        UserId = Convert.ToInt32(UserID),
+                              //        ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                              //        workOrderLabor = new WorkOrderLabor
+                              //        {
+                              //            ModifiedUserName = AppSettings.User.UserName,
+                              //            CompletionDate =DateTime.Parse(completeDateButton.Text),
+                              //            HoursAtRate1 = FinalHour1,
+                              //            TaskID = taskID,
+                              //            StartDate = fromEntry.SelectedDate.Value.Add(DateTime.Now.TimeOfDay),
+
+                              //            WorkOrderLaborID = workOrderLaborID
+                              //        },
+
+                              //    };
+
+
+
+
+                              //    var response = await _taskAndLabourService.UpdateTaskAndLabour(workOrderWrapper);
+                              //    if (response != null && bool.Parse(response.servicestatus))
+                              //    {
+                              //        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskLabourSuccessfullyUpdated"), 2000);
+                              //    }
+                              //    }
+                              //catch (Exception ex)
+                              //{
+                              //    throw;
+                              //}
                           };
 
-                        stopButtonforRate2.Clicked += (sender, e) =>
+                        stopButtonforRate2.Clicked += async (sender, e) =>
                         {
-                            var StopTime = DateTime.Now;
-
-                            var x1 = sender as SfButton;
-                            WorkOrderLabor workOrderLabor = x1.CommandParameter as WorkOrderLabor;
-
-                            if (workOrderLabor.StartTimeOfTimer == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                            var buttonStop2 = sender as SfButton;
+                            WorkOrderLabor workOrderLabor = buttonStop2.CommandParameter as WorkOrderLabor;
+                            var workOrderWrapper = new workOrderWrapper
                             {
-                                return;
-                            }
+                                TimeZone = AppSettings.UserTimeZone,
+                                CultureName = AppSettings.UserCultureName,
+                                UserId = Convert.ToInt32(UserID),
+                                ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                                workOrderLabor = new WorkOrderLabor
+                                {
+                                    StartDate = null,
+                                    EndDate = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                    CompletionDate = null,
+                                    HoursAtRate1Start = null,
+                                    HoursAtRate2Stop = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                    ModifiedUserName = AppSettings.User.UserName,
+                                    WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
+                                    WorkOrderID = this.WorkorderID,
+                                    WorkOrderLaborHourID = this.WorkOrderLaborHourID,
+                                    TaskID = workOrderLabor.TaskID
 
-                            TimeSpan elapsed = StopTime.Subtract(workOrderLabor.StartTimeOfTimer);
+                                },
 
-                            int mn = elapsed.Minutes;
-                            if (String.IsNullOrWhiteSpace(minuteEntryforRate2.Text))
+                            };
+                            var response = await _taskAndLabourService.CreateWorkOrderLaborHours(workOrderWrapper);
+                            if (response != null && bool.Parse(response.servicestatus))
                             {
-                                minuteEntryforRate2.Text = "0";
+                                await this.OnViewAppearingAsync(null);
+                                DialogService.ShowToast("Timer Successfully Stopped");
                             }
-                            if (String.IsNullOrWhiteSpace(hoursEntryforRate2.Text))
-                            {
-                                hoursEntryforRate2.Text = "0";
-                            }
-                            int mn1 = Convert.ToInt32(minuteEntryforRate2.Text);
-                            if (mn + mn1 > 59)
-                            {
+                            //try
+                            //{
+                            //    var StopTime = DateTime.Now;
+
+                            //    var x1 = sender as SfButton;
+                            //    WorkOrderLabor workOrderLabor = x1.CommandParameter as WorkOrderLabor;
+
+                            //    if (workOrderLabor.StartTimeOfTimer == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                            //    {
+                            //        return;
+                            //    }
+
+                            //    TimeSpan elapsed = StopTime.Subtract(workOrderLabor.StartTimeOfTimer);
+
+                            //    int mn = elapsed.Minutes;
+                            //    if (String.IsNullOrWhiteSpace(minuteEntryforRate2.Text))
+                            //    {
+                            //        minuteEntryforRate2.Text = "0";
+                            //    }
+                            //    if (String.IsNullOrWhiteSpace(hoursEntryforRate2.Text))
+                            //    {
+                            //        hoursEntryforRate2.Text = "0";
+                            //    }
+                            //    int mn1 = Convert.ToInt32(minuteEntryforRate2.Text);
+                            //    if (mn + mn1 > 59)
+                            //    {
 
 
-                                TimeSpan span = TimeSpan.FromMinutes(mn + mn1);
-                                string elapsedTime1 = String.Format("{0:00}:{1:00}",
-                                                              span.Hours, span.Minutes);
-                                int hrs = span.Hours;
-                                int hrs1 = Convert.ToInt32(hoursEntryforRate2.Text);
-                                hoursEntryforRate2.Text = (hrs + hrs1).ToString();
+                            //        TimeSpan span = TimeSpan.FromMinutes(mn + mn1);
+                            //        string elapsedTime1 = String.Format("{0:00}:{1:00}",
+                            //                                      span.Hours, span.Minutes);
+                            //        int hrs = span.Hours;
+                            //        int hrs1 = Convert.ToInt32(hoursEntryforRate2.Text);
+                            //        hoursEntryforRate2.Text = (hrs + hrs1).ToString();
 
-                                int hrs2 = span.Minutes;
-                                minuteEntryforRate2.Text = hrs2.ToString();
-                            }
-                            else
-                            {
+                            //        int hrs2 = span.Minutes;
+                            //        minuteEntryforRate2.Text = hrs2.ToString();
+                            //    }
+                            //    else
+                            //    {
 
-                                int hrs = elapsed.Hours;
-                                int hrs1 = Convert.ToInt32(hoursEntryforRate2.Text);
-                                hoursEntryforRate2.Text = (hrs + hrs1).ToString();
+                            //        int hrs = elapsed.Hours;
+                            //        int hrs1 = Convert.ToInt32(hoursEntryforRate2.Text);
+                            //        hoursEntryforRate2.Text = (hrs + hrs1).ToString();
 
-                                int hrs2 = elapsed.Minutes;
-                                int hrs21 = Convert.ToInt32(minuteEntryforRate2.Text);
-                                minuteEntryforRate2.Text = (hrs2 + hrs21).ToString();
-                            }
+                            //        int hrs2 = elapsed.Minutes;
+                            //        int hrs21 = Convert.ToInt32(minuteEntryforRate2.Text);
+                            //        minuteEntryforRate2.Text = (hrs2 + hrs21).ToString();
+                            //    }
 
 
-                            completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+                            //    completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
 
-                            stopButtonforRate2.TextColor = Color.Red;
-                            stopButtonforRate2.ImageSource = "startred.png";
-                            startButtonforRate2.TextColor = Color.Red;
-                            startButtonforRate2.ImageSource = "stopicon1.png";
+                            //    stopButtonforRate2.TextColor = Color.Red;
+                            //    stopButtonforRate2.ImageSource = "startred.png";
+                            //    startButtonforRate2.TextColor = Color.Red;
+                            //    startButtonforRate2.ImageSource = "stopicon1.png";
 
-                            var parent = stopButton.Parent.Parent.Parent.Parent.Parent;
-                            Grid parentGrid = parent as Grid;
-                            StackLayout Hrs2StackLayout = parentGrid.Children[1] as StackLayout;
-                            Hrs2StackLayout.StyleId = item.HoursAtRate2.ToString();
+                            //    var parent = stopButton.Parent.Parent.Parent.Parent.Parent;
+                            //    Grid parentGrid = parent as Grid;
+                            //    StackLayout Hrs2StackLayout = parentGrid.Children[1] as StackLayout;
+                            //    Hrs2StackLayout.StyleId = item.HoursAtRate2.ToString();
+                            //}
+                            //catch (Exception)
+                            //{
+
+                            //    throw;
+                            //}
+
                         };
 
                         /// complete Button Click 
-                        completeButton.Clicked += (sender, e) =>
+                        completeButton.Clicked += async (sender, e) =>
                         {
-                            try
+                            completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+                            UserDialogs.Instance.ShowLoading("", MaskType.Gradient);
+                            var buttonComplete = sender as SfButton;
+                            WorkOrderLabor workOrderLabor = buttonComplete.CommandParameter as WorkOrderLabor;
+                            var workOrderWrapper = new workOrderWrapper
                             {
-                                stopButton.IsEnabled = false;
-                                stopButton.TextColor = Color.FromHex("#708090");
-                                stopButton.ImageSource = "stopcomplate.png";
+                                TimeZone = AppSettings.UserTimeZone,
+                                CultureName = AppSettings.UserCultureName,
+                                UserId = Convert.ToInt32(UserID),
+                                ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                                workOrderLabor = new WorkOrderLabor
+                                {
+                                    StartDate = null,
+                                    EndDate = null,
+                                    CompletionDate = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                    HoursAtRate1Start = null,
+                                    HoursAtRate1Stop = null,
+                                    ModifiedUserName = AppSettings.User.UserName,
+                                    WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
+                                    WorkOrderID = this.WorkorderID,
+                                    WorkOrderLaborHourID = this.WorkOrderLaborHourID,
+                                    TaskID = workOrderLabor.TaskID
 
-                                completeButton.IsEnabled = false;
-                                completeButton.TextColor = Color.FromHex("#708090");
-                                completeButton.ImageSource = "complet1.png";
+                                },
 
-                                startButton.IsEnabled = false;
-                                startButton.TextColor = Color.FromHex("#708090");
-                                startButton.ImageSource = "startcomplte.png";
-
-                                completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
-                                var parent = stopButton.Parent.Parent.Parent.Parent.Parent;
-                                Grid parentGrid = parent as Grid;
-                                StackLayout Hrs1StackLayout = parentGrid.Children[0] as StackLayout;
-                                Hrs1StackLayout.StyleId = item.HoursAtRate1.ToString();
-                            }
-                            catch (Exception ex)
+                            };
+                            var response = await _taskAndLabourService.CreateWorkOrderLaborHours(workOrderWrapper);
+                            if (response != null && bool.Parse(response.servicestatus))
                             {
-
-                                throw;
+                                UserDialogs.Instance.HideLoading();
+                                await this.OnViewAppearingAsync(null);
+                                DialogService.ShowToast("Timer Successfully Completed");
                             }
+                            //try
+                            //{
+                            //    stopButton.IsEnabled = false;
+                            //    stopButton.TextColor = Color.FromHex("#708090");
+                            //    stopButton.ImageSource = "stopcomplate.png";
+
+                            //    completeButton.IsEnabled = false;
+                            //    completeButton.TextColor = Color.FromHex("#708090");
+                            //    completeButton.ImageSource = "complet1.png";
+
+                            //    startButton.IsEnabled = false;
+                            //    startButton.TextColor = Color.FromHex("#708090");
+                            //    startButton.ImageSource = "startcomplte.png";
+
+                            //    completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+                            //    var parent = stopButton.Parent.Parent.Parent.Parent.Parent;
+                            //    Grid parentGrid = parent as Grid;
+                            //    StackLayout Hrs1StackLayout = parentGrid.Children[0] as StackLayout;
+                            //    Hrs1StackLayout.StyleId = item.HoursAtRate1.ToString();
+                            //}
+                            //catch (Exception ex)
+                            //{
+
+                            //    throw;
+                            //}
                         };
 
-                        completeButtonforRate2.Clicked += (sender, e) =>
+                        completeButtonforRate2.Clicked += async (sender, e) =>
                         {
-                            stopButtonforRate2.IsEnabled = false;
-                            stopButtonforRate2.TextColor = Color.FromHex("#708090");
-                            stopButtonforRate2.ImageSource = "stopcomplate.png";
-
-                            completeButtonforRate2.IsEnabled = false;
-                            completeButtonforRate2.TextColor = Color.FromHex("#708090");
-                            completeButtonforRate2.ImageSource = "complet1.png";
-
-                            startButtonforRate2.IsEnabled = false;
-                            startButtonforRate2.TextColor = Color.FromHex("#708090");
-                            startButtonforRate2.ImageSource = "startcomplte.png";
-
                             completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
-                            var parent = stopButton.Parent.Parent.Parent.Parent.Parent;
-                            Grid parentGrid = parent as Grid;
-                            StackLayout Hrs2StackLayout = parentGrid.Children[1] as StackLayout;
-                            Hrs2StackLayout.StyleId = item.HoursAtRate2.ToString();
+                            var buttonComplete2 = sender as SfButton;
+                            WorkOrderLabor workOrderLabor = buttonComplete2.CommandParameter as WorkOrderLabor;
+                            var workOrderWrapper = new workOrderWrapper
+                            {
+                                TimeZone = AppSettings.UserTimeZone,
+                                CultureName = AppSettings.UserCultureName,
+                                UserId = Convert.ToInt32(UserID),
+                                ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                                workOrderLabor = new WorkOrderLabor
+                                {
+                                    StartDate = null,
+                                    EndDate = null,
+                                    CompletionDate = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                    HoursAtRate1Start = null,
+                                    HoursAtRate1Stop = null,
+                                    ModifiedUserName = AppSettings.User.UserName,
+                                    WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
+                                    WorkOrderID = this.WorkorderID,
+                                    WorkOrderLaborHourID = this.WorkOrderLaborHourID,
+                                    TaskID = workOrderLabor.TaskID
+
+                                },
+
+                            };
+                            var response = await _taskAndLabourService.CreateWorkOrderLaborHours(workOrderWrapper);
+                            if (response != null && bool.Parse(response.servicestatus))
+                            {
+                                await this.OnViewAppearingAsync(null);
+                                DialogService.ShowToast("Timer Successfully Completed");
+                            }
+                            //stopButtonforRate2.IsEnabled = false;
+                            //stopButtonforRate2.TextColor = Color.FromHex("#708090");
+                            //stopButtonforRate2.ImageSource = "stopcomplate.png";
+
+                            //completeButtonforRate2.IsEnabled = false;
+                            //completeButtonforRate2.TextColor = Color.FromHex("#708090");
+                            //completeButtonforRate2.ImageSource = "complet1.png";
+
+                            //startButtonforRate2.IsEnabled = false;
+                            //startButtonforRate2.TextColor = Color.FromHex("#708090");
+                            //startButtonforRate2.ImageSource = "startcomplte.png";
+
+                            //completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
+                            //var parent = stopButton.Parent.Parent.Parent.Parent.Parent;
+                            //Grid parentGrid = parent as Grid;
+                            //StackLayout Hrs2StackLayout = parentGrid.Children[1] as StackLayout;
+                            //Hrs2StackLayout.StyleId = item.HoursAtRate2.ToString();
                         };
 
                         // save Button 

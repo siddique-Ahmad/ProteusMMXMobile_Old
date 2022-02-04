@@ -15,6 +15,16 @@ namespace ProteusMMX.Services.Workorder.TaskAndLabour
         {
             _requestService = requestService;
         }
+        
+
+        public Task<ServiceOutput> CreateWorkOrderLaborHours(object workorder)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.CreateWorkOrderLaborHours);
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.PostAsync(uri, workorder);//GetAsync(uri);
+        }
 
         public Task<ServiceOutput> UpdateTaskAndLabour(object workorder)
         {

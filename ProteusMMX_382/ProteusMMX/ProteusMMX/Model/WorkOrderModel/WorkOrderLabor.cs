@@ -21,6 +21,8 @@ namespace ProteusMMX.Model.WorkOrderModel
         /// Mandatory
         /// </summary>
         public DateTime? StartDate { get; set; }
+
+       
         public DateTime? CompletionDate { get; set; }
         public int? ContractorLaborCraftID { get; set; }
         public int? EmployeeLaborCraftID { get; set; }
@@ -60,6 +62,21 @@ namespace ProteusMMX.Model.WorkOrderModel
         public List<EmployeeLookUp> Employees { get; set; }
         public List<ContractorLookUp> Contractors { get; set; }
 
+        #region New properties for Timer
+
+        public DateTime? EndDate { get; set; }
+        public DateTime? HoursAtRate1Stop { get; set; }
+        public DateTime? HoursAtRate2Stop { get; set; }
+        public DateTime? HoursAtRate1Start { get; set; }
+        public DateTime? HoursAtRate2Start { get; set; }
+        public int? WorkOrderLaborHourAtRate1ID { get; set; }
+        public int? WorkOrderLaborHourAtRate2ID { get; set; }
+        public string TotalHoursAtRate1 { get; set; }
+        public string TotalHoursAtRate2 { get; set; }
+        public int? WorkOrderLaborHourID { get; set; }
+
+
+        #endregion
 
         #region For GlobalTimer
         public DateTime StartTimeOfTimer { get; set; }
