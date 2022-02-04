@@ -634,6 +634,25 @@ namespace ProteusMMX
 
         }
 
+        //CreateWorkOrderLaborHours
+        private static string _createWorkOrderLaborHours = "Inspection/service/CreateWorkOrderLaborHours";
+        public static string CreateWorkOrderLaborHours
+        {
+            get
+            {
+                return _createWorkOrderLaborHours;
+            }
+
+            set
+            {
+                if (value != _createWorkOrderLaborHours)
+                {
+                    _createWorkOrderLaborHours = value;
+                }
+            }
+
+        }
+        
         //CreateWorkOrderLabor
         private static string _createWorkOrderLabor = "Inspection/service/CreateWorkOrderLabor";
         public static string CreateWorkOrderLabor
