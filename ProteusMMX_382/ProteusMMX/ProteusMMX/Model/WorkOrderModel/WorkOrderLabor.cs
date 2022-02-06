@@ -74,7 +74,11 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string TotalHoursAtRate1 { get; set; }
         public string TotalHoursAtRate2 { get; set; }
         public int? WorkOrderLaborHourID { get; set; }
+        public bool IsMannual { get; set; }
+        public int? TimerID { get; set; }
 
+        public int? Timer1 { get; set; }
+        public int? Timer2 { get; set; }
 
         #endregion
 

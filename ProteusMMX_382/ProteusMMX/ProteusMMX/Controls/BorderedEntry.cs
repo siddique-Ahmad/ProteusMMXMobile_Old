@@ -3,23 +3,13 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace ProteusMMX.DependencyInterface
+namespace ProteusMMX.Controls
 {
-    public class MyEntry : Entry
+    public class BorderedEntry : Entry
     {
-        public static readonly BindableProperty BorderColorProperty =
-    BindableProperty.Create(nameof(BorderColor),
-        typeof(Color), typeof(MyEntry), Color.Black);
-        // Gets or sets BorderColor value  
-        public Color BorderColor
-        {
-            get => (Color)GetValue(BorderColorProperty);
-            set => SetValue(BorderColorProperty, value);
-        }
-
         public static readonly BindableProperty BorderWidthProperty =
-        BindableProperty.Create(nameof(BorderWidth), typeof(int),
-            typeof(MyEntry), Device.OnPlatform<int>(1, 2, 2));
+      BindableProperty.Create(nameof(BorderWidth), typeof(int),
+          typeof(BorderedEntry), Device.OnPlatform<int>(1, 2, 2));
         // Gets or sets BorderWidth value  
         public int BorderWidth
         {
@@ -28,7 +18,7 @@ namespace ProteusMMX.DependencyInterface
         }
         public static readonly BindableProperty CornerRadiusProperty =
         BindableProperty.Create(nameof(CornerRadius),
-            typeof(double), typeof(MyEntry), Device.OnPlatform<double>(6, 7, 7));
+            typeof(double), typeof(BorderedEntry), Device.OnPlatform<double>(6, 7, 7));
         // Gets or sets CornerRadius value  
         public double CornerRadius
         {
@@ -37,7 +27,7 @@ namespace ProteusMMX.DependencyInterface
         }
         public static readonly BindableProperty IsCurvedCornersEnabledProperty =
         BindableProperty.Create(nameof(IsCurvedCornersEnabled),
-            typeof(bool), typeof(MyEntry), true);
+            typeof(bool), typeof(BorderedEntry), true);
         // Gets or sets IsCurvedCornersEnabled value  
         public bool IsCurvedCornersEnabled
         {

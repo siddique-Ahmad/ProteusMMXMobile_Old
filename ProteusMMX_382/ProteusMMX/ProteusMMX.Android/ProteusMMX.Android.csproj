@@ -179,12 +179,14 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyService\CustomBorderedEntry.cs" />
     <Compile Include="DependencyService\CustomEditorRenderer.cs" />
     <Compile Include="DependencyService\CustomEntryRendere.cs" />
     <Compile Include="DependencyService\CustomEntryRenderer.cs" />
     <Compile Include="DependencyService\CustomPickerIconRenderer.cs" />
     <Compile Include="DependencyService\CustomPickerRenderer.cs" />
     <Compile Include="DependencyService\CustomSwitchRenderer.cs" />
+    <Compile Include="DependencyService\CustomValidationPickerRenderer.cs" />
     <Compile Include="DependencyService\ImageEntryRenderer.cs" />
     <Compile Include="DependencyService\LoginSwitchRenderer.cs" />
     <Compile Include="DependencyService\MyEntryRenderer.cs" />
