@@ -1,6 +1,7 @@
 ﻿using ProteusMMX.DependencyInterface;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
+using Syncfusion.XForms.Border;
 using Syncfusion.XForms.Buttons;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,12 @@ using Xamarin.Forms.Xaml;
 
 namespace ProteusMMX.Views.Workorder
 {
-	 [XamlCompilation(XamlCompilationOptions.Skip)]
-	public partial class CreateWorkorderPage : ContentPage
-	{
-		public CreateWorkorderPage ()
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Skip)]
+    public partial class CreateWorkorderPage : ContentPage
+    {
+        public CreateWorkorderPage()
+        {
+            InitializeComponent();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
@@ -68,6 +69,21 @@ namespace ProteusMMX.Views.Workorder
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
             }
+
+
+            string requred = e1.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = e1.Parent as SfBorder;
+                if (string.IsNullOrEmpty(e1.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
         }
 
         private void NumericEntry_TextChanged_1(object sender, TextChangedEventArgs e)
@@ -84,6 +100,19 @@ namespace ProteusMMX.Views.Workorder
             {
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
+            }
+            string requred = e1.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = e1.Parent as SfBorder;
+                if (string.IsNullOrEmpty(e1.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
             }
         }
 
@@ -102,6 +131,19 @@ namespace ProteusMMX.Views.Workorder
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
             }
+            string requred = e1.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = e1.Parent as SfBorder;
+                if (string.IsNullOrEmpty(e1.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
         }
 
         private void NumericEntry_TextChanged_3(object sender, TextChangedEventArgs e)
@@ -118,6 +160,19 @@ namespace ProteusMMX.Views.Workorder
             {
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
+            }
+            string requred = e1.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = e1.Parent as SfBorder;
+                if (string.IsNullOrEmpty(e1.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
             }
         }
         private void RadioButton_StateChanged(object sender, StateChangedEventArgs e)
@@ -143,6 +198,335 @@ namespace ProteusMMX.Views.Workorder
                 RadioButton.IsChecked = false;
             }
 
+        }
+
+        private void Description_PropertyChanged(object sender, TextChangedEventArgs e)
+        {
+            Editor Desc = sender as Editor;
+            string requred = Desc.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = Desc.Parent as SfBorder;
+                if (string.IsNullOrEmpty(Desc.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+
+        }
+
+        private void WorkorderType_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton WorkType = sender as SfButton;
+            string requred = WorkType.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = WorkType.Parent as SfBorder;
+                if (string.IsNullOrEmpty(WorkType.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+        }
+
+        private void workorderStatus_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton WorkTypeStatus = sender as SfButton;
+            string requred = WorkTypeStatus.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = WorkTypeStatus.Parent as SfBorder;
+                if (string.IsNullOrEmpty(WorkTypeStatus.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+        }
+
+        private void Cause_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton Cause = sender as SfButton;
+            string requred = Cause.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = Cause.Parent as SfBorder;
+                if (string.IsNullOrEmpty(Cause.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+        }
+
+        private void MaintenanceCode_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton MaintenanceCode = sender as SfButton;
+            string requred = MaintenanceCode.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = MaintenanceCode.Parent as SfBorder;
+                if (string.IsNullOrEmpty(MaintenanceCode.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+        }
+
+        private void AssignedToEmployee_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton AssignedToEmployee = sender as SfButton;
+            string requred = AssignedToEmployee.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = AssignedToEmployee.Parent as SfBorder;
+                if (string.IsNullOrEmpty(AssignedToEmployee.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+        }
+
+        private void Facility_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton Cause = sender as SfButton;
+            string requred = Cause.FontFamily;
+            var BorderColor = Cause.Parent as SfBorder;
+            if (string.IsNullOrEmpty(Cause.Text))
+            {
+                BorderColor.BorderColor = Color.Red;
+            }
+            else
+            {
+                BorderColor.BorderColor = Color.Black;
+            }
+
+        }
+
+        private void Location_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            var Location = sender as SfButton;
+            var LocationName = LocationNameBtn as SfButton;
+            var AssetName = AssetNameBtn as SfButton;
+            var AssignToEmployee = AssignToEmployeeBtn as SfButton;
+
+            var LocationNamePar = LocationNameBtn.Parent as SfBorder;
+            var AssetNamePar = AssetNameBtn.Parent as SfBorder;
+            var AssignToEmployeePar = AssignToEmployeeBtn.Parent as SfBorder;
+
+            if (!string.IsNullOrEmpty(Location.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else if (!string.IsNullOrEmpty(AssetName.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else if (!string.IsNullOrEmpty(AssignToEmployee.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else
+            {
+                LocationNamePar.BorderColor = Color.Red;
+                AssetNamePar.BorderColor = Color.Red;
+                AssignToEmployeePar.BorderColor = Color.Red;
+            }
+
+
+        }
+
+        private void Asset_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            var Asset = sender as SfButton;
+            var LocationName = LocationNameBtn as SfButton;
+            var AssetName = AssetNameBtn as SfButton;
+            var AssignToEmployee = AssignToEmployeeBtn as SfButton;
+
+            var LocationNamePar = LocationNameBtn.Parent as SfBorder;
+            var AssetNamePar = AssetNameBtn.Parent as SfBorder;
+            var AssignToEmployeePar = AssignToEmployeeBtn.Parent as SfBorder;
+
+            if (!string.IsNullOrEmpty(Asset.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else if (!string.IsNullOrEmpty(LocationName.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else if (!string.IsNullOrEmpty(AssignToEmployee.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else
+            {
+                LocationNamePar.BorderColor = Color.Red;
+                AssetNamePar.BorderColor = Color.Red;
+                AssignToEmployeePar.BorderColor = Color.Red;
+            }
+
+        }
+
+        private void AssetSystem_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            var AssetSystem = sender as SfButton;
+            var LocationName = LocationNameBtn as SfButton;
+            var AssetName = AssetNameBtn as SfButton;
+            var AssignToEmployee = AssignToEmployeeBtn as SfButton;
+
+            var LocationNamePar = LocationNameBtn.Parent as SfBorder;
+            var AssetNamePar = AssetNameBtn.Parent as SfBorder;
+            var AssignToEmployeePar = AssignToEmployeeBtn.Parent as SfBorder;
+
+            if (!string.IsNullOrEmpty(AssetSystem.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else if (!string.IsNullOrEmpty(LocationName.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else if (!string.IsNullOrEmpty(AssignToEmployee.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else
+            {
+                LocationNamePar.BorderColor = Color.Red;
+                AssetNamePar.BorderColor = Color.Red;
+                AssignToEmployeePar.BorderColor = Color.Red;
+            }
+        }
+
+        private void Originator_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton WorkType = sender as SfButton;
+            string requred = WorkType.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = WorkType.Parent as SfBorder;
+                if (string.IsNullOrEmpty(WorkType.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+        }
+
+        private void WorkOrderRequester_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton WorkType = sender as SfButton;
+            string requred = WorkType.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = WorkType.Parent as SfBorder;
+                if (string.IsNullOrEmpty(WorkType.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+        }
+
+        private void CostCenter_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton WorkType = sender as SfButton;
+            string requred = WorkType.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = WorkType.Parent as SfBorder;
+                if (string.IsNullOrEmpty(WorkType.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+        }
+
+        private void Priority_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton WorkType = sender as SfButton;
+            string requred = WorkType.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = WorkType.Parent as SfBorder;
+                if (string.IsNullOrEmpty(WorkType.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+        }
+
+        private void Shift_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            SfButton WorkType = sender as SfButton;
+            string requred = WorkType.FontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = WorkType.Parent as SfBorder;
+                if (string.IsNullOrEmpty(WorkType.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
         }
     }
 }

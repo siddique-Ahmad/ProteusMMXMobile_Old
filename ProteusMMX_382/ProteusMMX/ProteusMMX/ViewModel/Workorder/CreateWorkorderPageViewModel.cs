@@ -54,7 +54,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         protected readonly IFacilityService _facilityService;
 
-        
+
         #endregion
 
         #region Properties
@@ -968,6 +968,677 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        #region **** Validation ****
+        //Description
+        string _descriptionColor;
+        public string DescriptionColor
+        {
+            get
+            {
+                return _descriptionColor;
+            }
+
+            set
+            {
+                if (value != _descriptionColor)
+                {
+                    _descriptionColor = value;
+                    OnPropertyChanged(nameof(DescriptionColor));
+                }
+            }
+        }
+
+        string _descriptionIsRequred;
+        public string DescriptionIsRequred
+        {
+            get
+            {
+                return _descriptionIsRequred;
+            }
+
+            set
+            {
+                if (value != _descriptionIsRequred)
+                {
+                    _descriptionIsRequred = value;
+                    OnPropertyChanged(nameof(DescriptionIsRequred));
+                }
+            }
+        }
+
+        //WorkOrderStatusID
+        string _workOrderStatusColor;
+        public string WorkOrderStatusColor
+        {
+            get
+            {
+                return _workOrderStatusColor;
+            }
+
+            set
+            {
+                if (value != _workOrderStatusColor)
+                {
+                    _workOrderStatusColor = value;
+                    OnPropertyChanged(nameof(WorkOrderStatusColor));
+                }
+            }
+        }
+
+        string _workOrderStatusIsRequred;
+        public string WorkOrderStatusIsRequred
+        {
+            get
+            {
+                return _workOrderStatusIsRequred;
+            }
+
+            set
+            {
+                if (value != _workOrderStatusIsRequred)
+                {
+                    _workOrderStatusIsRequred = value;
+                    OnPropertyChanged(nameof(WorkOrderStatusIsRequred));
+                }
+            }
+        }
+
+        //WorkTypeID
+        string _currentRuntimeColor;
+        public string CurrentRuntimeColor
+        {
+            get
+            {
+                return _currentRuntimeColor;
+            }
+
+            set
+            {
+                if (value != _currentRuntimeColor)
+                {
+                    _currentRuntimeColor = value;
+                    OnPropertyChanged(nameof(CurrentRuntimeColor));
+                }
+            }
+        }
+
+        string _currentRuntimeIsRequred;
+        public string CurrentRuntimeIsRequred
+        {
+            get
+            {
+                return _currentRuntimeIsRequred;
+            }
+
+            set
+            {
+                if (value != _currentRuntimeIsRequred)
+                {
+                    _currentRuntimeIsRequred = value;
+                    OnPropertyChanged(nameof(CurrentRuntimeIsRequred));
+                }
+            }
+        }
+
+        //WorkTypeID
+        string _workTypeIDColor;
+        public string WorkTypeIDColor
+        {
+            get
+            {
+                return _workTypeIDColor;
+            }
+
+            set
+            {
+                if (value != _workTypeIDColor)
+                {
+                    _workTypeIDColor = value;
+                    OnPropertyChanged(nameof(WorkTypeIDColor));
+                }
+            }
+        }
+
+        string _workTypeIDIsRequred;
+        public string WorkTypeIDIsRequred
+        {
+            get
+            {
+                return _workTypeIDIsRequred;
+            }
+
+            set
+            {
+                if (value != _workTypeIDIsRequred)
+                {
+                    _workTypeIDIsRequred = value;
+                    OnPropertyChanged(nameof(WorkTypeIDIsRequred));
+                }
+            }
+        }
+
+
+        //cause
+        string _causeColor;
+        public string CauseColor
+        {
+            get
+            {
+                return _causeColor;
+            }
+
+            set
+            {
+                if (value != _causeColor)
+                {
+                    _causeColor = value;
+                    OnPropertyChanged(nameof(CauseColor));
+                }
+            }
+        }
+
+        string _causeIsRequred;
+        public string CauseIsRequred
+        {
+            get
+            {
+                return _causeIsRequred;
+            }
+
+            set
+            {
+                if (value != _causeIsRequred)
+                {
+                    _causeIsRequred = value;
+                    OnPropertyChanged(nameof(CauseIsRequred));
+                }
+            }
+        }
+
+        //MaintenanceCode
+        string _maintenanceCodeColor;
+        public string MaintenanceCodeColor
+        {
+            get
+            {
+                return _maintenanceCodeColor;
+            }
+
+            set
+            {
+                if (value != _maintenanceCodeColor)
+                {
+                    _maintenanceCodeColor = value;
+                    OnPropertyChanged(nameof(MaintenanceCodeColor));
+                }
+            }
+        }
+
+        string _maintenanceCodeIsRequred;
+        public string MaintenanceCodeIsRequred
+        {
+            get
+            {
+                return _maintenanceCodeIsRequred;
+            }
+
+            set
+            {
+                if (value != _maintenanceCodeIsRequred)
+                {
+                    _maintenanceCodeIsRequred = value;
+                    OnPropertyChanged(nameof(MaintenanceCodeIsRequred));
+                }
+            }
+        }
+
+        //EstimstedDowntime
+        string _estimstedDowntimeColor;
+        public string EstimstedDowntimeColor
+        {
+            get
+            {
+                return _estimstedDowntimeColor;
+            }
+
+            set
+            {
+                if (value != _estimstedDowntimeColor)
+                {
+                    _estimstedDowntimeColor = value;
+                    OnPropertyChanged(nameof(EstimstedDowntimeColor));
+                }
+            }
+        }
+
+        string _estimstedDowntimeIsRequred;
+        public string EstimstedDowntimeIsRequred
+        {
+            get
+            {
+                return _estimstedDowntimeIsRequred;
+            }
+
+            set
+            {
+                if (value != _estimstedDowntimeIsRequred)
+                {
+                    _estimstedDowntimeIsRequred = value;
+                    OnPropertyChanged(nameof(EstimstedDowntimeIsRequred));
+                }
+            }
+        }
+
+
+        //ActualDowntime
+        string _actualDowntimeColor;
+        public string ActualDowntimeColor
+        {
+            get
+            {
+                return _actualDowntimeColor;
+            }
+
+            set
+            {
+                if (value != _actualDowntimeColor)
+                {
+                    _actualDowntimeColor = value;
+                    OnPropertyChanged(nameof(ActualDowntimeColor));
+                }
+            }
+        }
+
+        string _actualDowntimeIsRequred;
+        public string ActualDowntimeIsRequred
+        {
+            get
+            {
+                return _actualDowntimeIsRequred;
+            }
+
+            set
+            {
+                if (value != _actualDowntimeIsRequred)
+                {
+                    _actualDowntimeIsRequred = value;
+                    OnPropertyChanged(nameof(ActualDowntimeIsRequred));
+                }
+            }
+        }
+
+
+        //MiscellaneousLaborCostID
+        string _miscellaneousLaborCostIDColor;
+        public string MiscellaneousLaborCostIDColor
+        {
+            get
+            {
+                return _miscellaneousLaborCostIDColor;
+            }
+
+            set
+            {
+                if (value != _miscellaneousLaborCostIDColor)
+                {
+                    _miscellaneousLaborCostIDColor = value;
+                    OnPropertyChanged(nameof(MiscellaneousLaborCostIDColor));
+                }
+            }
+        }
+
+        string _miscellaneousLaborCostIDIsRequred;
+        public string MiscellaneousLaborCostIDIsRequred
+        {
+            get
+            {
+                return _miscellaneousLaborCostIDIsRequred;
+            }
+
+            set
+            {
+                if (value != _miscellaneousLaborCostIDIsRequred)
+                {
+                    _miscellaneousLaborCostIDIsRequred = value;
+                    OnPropertyChanged(nameof(MiscellaneousLaborCostIDIsRequred));
+                }
+            }
+        }
+
+        //MiscellaneousMaterialsCostID
+        string _miscellaneousMaterialsCostIDColor;
+        public string MiscellaneousMaterialsCostIDColor
+        {
+            get
+            {
+                return _miscellaneousMaterialsCostIDColor;
+            }
+
+            set
+            {
+                if (value != _miscellaneousMaterialsCostIDColor)
+                {
+                    _miscellaneousMaterialsCostIDColor = value;
+                    OnPropertyChanged(nameof(MiscellaneousMaterialsCostIDColor));
+                }
+            }
+        }
+
+        string _miscellaneousMaterialsCostIDIsRequred;
+        public string MiscellaneousMaterialsCostIDIsRequred
+        {
+            get
+            {
+                return _miscellaneousMaterialsCostIDIsRequred;
+            }
+
+            set
+            {
+                if (value != _miscellaneousMaterialsCostIDIsRequred)
+                {
+                    _miscellaneousMaterialsCostIDIsRequred = value;
+                    OnPropertyChanged(nameof(MiscellaneousMaterialsCostIDIsRequred));
+                }
+            }
+        }
+
+        //Description
+        string _facilityColor;
+        public string FacilityColor
+        {
+            get
+            {
+                return _facilityColor;
+            }
+
+            set
+            {
+                if (value != _facilityColor)
+                {
+                    _facilityColor = value;
+                    OnPropertyChanged(nameof(FacilityColor));
+                }
+            }
+        }
+
+        string _facilityIsRequred;
+        public string FacilityIsRequred
+        {
+            get
+            {
+                return _facilityIsRequred;
+            }
+
+            set
+            {
+                if (value != _facilityIsRequred)
+                {
+                    _facilityIsRequred = value;
+                    OnPropertyChanged(nameof(FacilityIsRequred));
+                }
+            }
+        }
+       
+        // ShiftID       
+        string _shiftIDColor;
+        public string ShiftIDColor
+        {
+            get
+            {
+                return _shiftIDColor;
+            }
+
+            set
+            {
+                if (value != _shiftIDColor)
+                {
+                    _shiftIDColor = value;
+                    OnPropertyChanged(nameof(ShiftIDColor));
+                }
+            }
+        }
+
+        string _shiftIDIsRequred;
+        public string ShiftIDIsRequred
+        {
+            get
+            {
+                return _shiftIDIsRequred;
+            }
+
+            set
+            {
+                if (value != _shiftIDIsRequred)
+                {
+                    _shiftIDIsRequred = value;
+                    OnPropertyChanged(nameof(ShiftIDIsRequred));
+                }
+            }
+        }
+
+        // PriorityID       
+        string _priorityIDColor;
+        public string PriorityIDColor
+        {
+            get
+            {
+                return _priorityIDColor;
+            }
+
+            set
+            {
+                if (value != _priorityIDColor)
+                {
+                    _priorityIDColor = value;
+                    OnPropertyChanged(nameof(PriorityIDColor));
+                }
+            }
+        }
+
+        string _priorityIDIsRequred;
+        public string PriorityIDIsRequred
+        {
+            get
+            {
+                return _priorityIDIsRequred;
+            }
+
+            set
+            {
+                if (value != _priorityIDIsRequred)
+                {
+                    _priorityIDIsRequred = value;
+                    OnPropertyChanged(nameof(PriorityIDIsRequred));
+                }
+            }
+        }
+
+        // AssignedToEmployeeID       
+        string _assignedToEmployeeIDColor;
+        public string AssignedToEmployeeIDColor
+        {
+            get
+            {
+                return _assignedToEmployeeIDColor;
+            }
+
+            set
+            {
+                if (value != _assignedToEmployeeIDColor)
+                {
+                    _assignedToEmployeeIDColor = value;
+                    OnPropertyChanged(nameof(AssignedToEmployeeIDColor));
+                }
+            }
+        }
+
+        string _assignedToEmployeeIDIsRequred;
+        public string AssignedToEmployeeIDIsRequred
+        {
+            get
+            {
+                return _assignedToEmployeeIDIsRequred;
+            }
+
+            set
+            {
+                if (value != _assignedToEmployeeIDIsRequred)
+                {
+                    _assignedToEmployeeIDIsRequred = value;
+                    OnPropertyChanged(nameof(AssignedToEmployeeIDIsRequred));
+                }
+            }
+        }
+
+        // EstimatedDowntime       
+        string _estimatedDowntimeColor;
+        public string EstimatedDowntimeColor
+        {
+            get
+            {
+                return _estimatedDowntimeColor;
+            }
+
+            set
+            {
+                if (value != _estimatedDowntimeColor)
+                {
+                    _estimatedDowntimeColor = value;
+                    OnPropertyChanged(nameof(EstimatedDowntimeColor));
+                }
+            }
+        }
+
+        string _estimatedDowntimeIsRequred;
+        public string EstimatedDowntimeIsRequred
+        {
+            get
+            {
+                return _estimatedDowntimeIsRequred;
+            }
+
+            set
+            {
+                if (value != _estimatedDowntimeIsRequred)
+                {
+                    _estimatedDowntimeIsRequred = value;
+                    OnPropertyChanged(nameof(EstimatedDowntimeIsRequred));
+                }
+            }
+        }
+
+        // Originator       
+        string _originatorColor;
+        public string OriginatorColor
+        {
+            get
+            {
+                return _originatorColor;
+            }
+
+            set
+            {
+                if (value != _originatorColor)
+                {
+                    _originatorColor = value;
+                    OnPropertyChanged(nameof(OriginatorColor));
+                }
+            }
+        }
+
+        string _originatorIsRequred;
+        public string OriginatorIsRequred
+        {
+            get
+            {
+                return _originatorIsRequred;
+            }
+
+            set
+            {
+                if (value != _originatorIsRequred)
+                {
+                    _originatorIsRequred = value;
+                    OnPropertyChanged(nameof(OriginatorIsRequred));
+                }
+            }
+        }
+
+        // workOrderRequesterID       
+        string _workOrderRequesterIDColor;
+        public string WorkOrderRequesterIDColor
+        {
+            get
+            {
+                return _workOrderRequesterIDColor;
+            }
+
+            set
+            {
+                if (value != _workOrderRequesterIDColor)
+                {
+                    _workOrderRequesterIDColor = value;
+                    OnPropertyChanged(nameof(WorkOrderRequesterIDColor));
+                }
+            }
+        }
+
+        string _workOrderRequesterIDIsRequred;
+        public string WorkOrderRequesterIDIsRequred
+        {
+            get
+            {
+                return _workOrderRequesterIDIsRequred;
+            }
+
+            set
+            {
+                if (value != _workOrderRequesterIDIsRequred)
+                {
+                    _workOrderRequesterIDIsRequred = value;
+                    OnPropertyChanged(nameof(WorkOrderRequesterIDIsRequred));
+                }
+            }
+        }
+
+        // CostCenterID       
+        string _costCenterIDColor;
+        public string CostCenterIDColor
+        {
+            get
+            {
+                return _costCenterIDColor;
+            }
+
+            set
+            {
+                if (value != _costCenterIDColor)
+                {
+                    _costCenterIDColor = value;
+                    OnPropertyChanged(nameof(CostCenterIDColor));
+                }
+            }
+        }
+
+        string _costCenterIDIsRequred;
+        public string CostCenterIDIsRequred
+        {
+            get
+            {
+                return _costCenterIDIsRequred;
+            }
+
+            set
+            {
+                if (value != _costCenterIDIsRequred)
+                {
+                    _costCenterIDIsRequred = value;
+                    OnPropertyChanged(nameof(CostCenterIDIsRequred));
+                }
+            }
+        }
+
+        #endregion
 
         #region CreateWorkorder Properties
 
@@ -1283,7 +1954,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         // workorder started Date
-        DateTime? _workStartedDate1= DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+        DateTime? _workStartedDate1 = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
         public DateTime? WorkStartedDate1
         {
             get
@@ -1524,7 +2195,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-    
+
         int _workorderID;
         public int WorkorderID
         {
@@ -3671,7 +4342,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        
+
         //Originator
         string _originatorTitle;
         public string OriginatorTitle
@@ -4254,7 +4925,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     if (navigationParams.WorkOrderId > 0)
                     {
                         this.WorkorderID = navigationParams.WorkOrderId;
-                        
+
                     }
                     //Set Facility
                     if (navigationParams.FacilityID != null)
@@ -4340,7 +5011,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 OperationInProgress = false;
             }
         }
-        public CreateWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService, IFacilityService facilityService, IAssetModuleService assetService,ITaskAndLabourService taskAndLabourService)
+        public CreateWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService, IFacilityService facilityService, IAssetModuleService assetService, ITaskAndLabourService taskAndLabourService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
@@ -4382,17 +5053,17 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (DistributeCostforAssetsystem == null)
                 {
                     IsCostLayoutIsVisible = false;
-                   
-                  
+
+
                 }
-                if(ParentCostsOnly == null || ChargeCostsOnlyToChildAssets == null)
+                if (ParentCostsOnly == null || ChargeCostsOnlyToChildAssets == null)
                 {
-                   
+
                     IsCostLayoutIsVisibleForChild = false;
                     IsCostLayoutIsVisibleForParent = false;
-                   
+
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -4650,7 +5321,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     ///PriorityID
                     ///ShiftID
                     ///WorkOrderStatusID
-                    ///WorkTypeID
+                    ////WorkTypeID
                     ///UserField22
                     ///MaintenanceCodeID
 
@@ -4671,7 +5342,16 @@ namespace ProteusMMX.ViewModel.Workorder
                         OverriddenControlsNew.Add(CurrentRuntime);
                         CurrentRuntimeVisiblevalue = CurrentRuntime.Expression;
                         CurrentRuntimeEnablevalue = CurrentRuntime.Expression;
-                        
+                        if (CurrentRuntime.IsRequired ?? true)
+                        {
+                            CurrentRuntimeIsRequred = "true";
+                            CurrentRuntimeColor = "Red";
+                        }
+                        else
+                        {
+                            CurrentRuntimeColor = "false";
+                        }
+
                     }
                     var JobNumber = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "JobNumber");
                     if (JobNumber != null)
@@ -4687,6 +5367,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         DescriptionTitle = description.TargetName;
                         OverriddenControlsNew.Add(description);
                         WorkorderControlsNew.Remove(description);
+                        if (description.IsRequired ?? true)
+                        {
+                            DescriptionIsRequred = "true";
+                            DescriptionColor = "Red";
+                        }
+                        else
+                        {
+                            DescriptionIsRequred = "false";
+                        }
                     }
 
                     var RequiredDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "RequiredDate");
@@ -4719,6 +5408,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         AssignToEmployeeTitle = AssignedToEmployeeID.TargetName;
                         OverriddenControlsNew.Add(AssignedToEmployeeID);
                         WorkorderControlsNew.Remove(AssignedToEmployeeID);
+                        if (AssignedToEmployeeID.IsRequired ?? true)
+                        {
+                            AssignedToEmployeeIDIsRequred = "true";
+                            AssignedToEmployeeIDColor = "Red";
+                        }
+                        else
+                        {
+                            AssignedToEmployeeIDIsRequred = "false";
+                        }
                     }
 
                     var WorkOrderRequesterID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkOrderRequesterID");
@@ -4727,6 +5425,16 @@ namespace ProteusMMX.ViewModel.Workorder
                         WorkorderRequesterTitle = WorkOrderRequesterID.TargetName;
                         OverriddenControlsNew.Add(WorkOrderRequesterID);
                         WorkorderControlsNew.Remove(WorkOrderRequesterID);
+
+                        if (WorkOrderRequesterID.IsRequired ?? true)
+                        {
+                            WorkOrderRequesterIDIsRequred = "true";
+                            WorkOrderRequesterIDColor = "Red";
+                        }
+                        else
+                        {
+                            WorkOrderRequesterIDIsRequred = "false";
+                        }
                     }
 
                     var CostCenterID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "CostCenterID");
@@ -4735,6 +5443,16 @@ namespace ProteusMMX.ViewModel.Workorder
                         CostCenterTitle = CostCenterID.TargetName;
                         OverriddenControlsNew.Add(CostCenterID);
                         WorkorderControlsNew.Remove(CostCenterID);
+                        WorkorderControlsNew.Remove(description);
+                        if (CostCenterID.IsRequired ?? true)
+                        {
+                            CostCenterIDIsRequred = "true";
+                            CostCenterIDColor = "Red";
+                        }
+                        else
+                        {
+                            CostCenterIDIsRequred = "false";
+                        }
                     }
 
                     var PriorityID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "PriorityID");
@@ -4743,6 +5461,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         PriorityTitle = PriorityID.TargetName;
                         OverriddenControlsNew.Add(PriorityID);
                         WorkorderControlsNew.Remove(PriorityID);
+                        if (PriorityID.IsRequired ?? true)
+                        {
+                            PriorityIDIsRequred = "true";
+                            PriorityIDColor = "Red";
+                        }
+                        else
+                        {
+                            PriorityIDIsRequred = "false";
+                        }
                     }
 
                     var ShiftID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "ShiftID");
@@ -4751,6 +5478,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         ShiftTitle = ShiftID.TargetName;
                         OverriddenControlsNew.Add(ShiftID);
                         WorkorderControlsNew.Remove(ShiftID);
+                        if (ShiftID.IsRequired ?? true)
+                        {
+                            ShiftIDIsRequred = "true";
+                            ShiftIDColor = "Red";
+                        }
+                        else
+                        {
+                            ShiftIDIsRequred = "false";
+                        }
                     }
 
                     var WorkOrderStatusID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkOrderStatusID");
@@ -4759,6 +5495,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         WorkorderStatusTitle = WorkOrderStatusID.TargetName;
                         OverriddenControlsNew.Add(WorkOrderStatusID);
                         WorkorderControlsNew.Remove(WorkOrderStatusID);
+                        if (WorkOrderStatusID.IsRequired ?? true)
+                        {
+                            WorkOrderStatusIsRequred = "true";
+                            WorkOrderStatusColor = "Red";
+                        }
+                        else
+                        {
+                            WorkOrderStatusIsRequred = "false";
+                        }
                     }
 
                     var WorkTypeID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkTypeID");
@@ -4767,6 +5512,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         WorkorderTypeTitle = WorkTypeID.TargetName;
                         OverriddenControlsNew.Add(WorkTypeID);
                         WorkorderControlsNew.Remove(WorkTypeID);
+                        if (WorkTypeID.IsRequired ?? true)
+                        {
+                            WorkTypeIDIsRequred = "true";
+                            WorkTypeIDColor = "Red";
+                        }
+                        else
+                        {
+                            WorkTypeIDIsRequred = "false";
+                        }
                     }
 
 
@@ -4776,6 +5530,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         CauseTitle = CauseID.TargetName;
                         OverriddenControlsNew.Add(CauseID);
                         WorkorderControlsNew.Remove(CauseID);
+                        if (CauseID.IsRequired ?? true)
+                        {
+                            CauseIsRequred = "true";
+                            CauseColor = "Red";
+                        }
+                        else
+                        {
+                            CauseIsRequred = "false";
+                        }
                     }
 
 
@@ -4785,6 +5548,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         MaintenanceCodeTitle = MaintenanceCodeID.TargetName;
                         OverriddenControlsNew.Add(MaintenanceCodeID);
                         WorkorderControlsNew.Remove(MaintenanceCodeID);
+                        if (MaintenanceCodeID.IsRequired ?? true)
+                        {
+                            MaintenanceCodeIsRequred = "true";
+                            MaintenanceCodeColor = "Red";
+                        }
+                        else
+                        {
+                            MaintenanceCodeColor = "false";
+                        }
                     }
 
 
@@ -4794,6 +5566,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         EstimstedDowntimeTitle = EstimatedDowntime.TargetName;
                         OverriddenControlsNew.Add(EstimatedDowntime);
                         WorkorderControlsNew.Remove(EstimatedDowntime);
+                        if (EstimatedDowntime.IsRequired ?? true)
+                        {
+                            EstimstedDowntimeIsRequred = "true";
+                            EstimstedDowntimeColor = "Red";
+                        }
+                        else
+                        {
+                            EstimstedDowntimeColor = "false";
+                        }
                     }
 
                     var ActualDowntime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "ActualDowntime");
@@ -4802,6 +5583,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         ActualDowntimeTitle = ActualDowntime.TargetName;
                         OverriddenControlsNew.Add(ActualDowntime);
                         WorkorderControlsNew.Remove(ActualDowntime);
+                        if (ActualDowntime.IsRequired ?? true)
+                        {
+                            ActualDowntimeIsRequred = "true";
+                            ActualDowntimeColor = "Red";
+                        }
+                        else
+                        {
+                            ActualDowntimeColor = "false";
+                        }
                     }
 
                     var MiscellaneousLaborCostID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "MiscellaneousLaborCostID");
@@ -4810,6 +5600,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         MiscellaneousLabourCostTitle = MiscellaneousLaborCostID.TargetName;
                         OverriddenControlsNew.Add(MiscellaneousLaborCostID);
                         WorkorderControlsNew.Remove(MiscellaneousLaborCostID);
+                        if (MiscellaneousLaborCostID.IsRequired ?? true)
+                        {
+                            MiscellaneousLaborCostIDIsRequred = "true";
+                            MiscellaneousLaborCostIDColor = "Red";
+                        }
+                        else
+                        {
+                            MiscellaneousLaborCostIDColor = "false";
+                        }
                     }
 
                     var MiscellaneousMaterialsCostID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "MiscellaneousMaterialsCostID");
@@ -4818,7 +5617,51 @@ namespace ProteusMMX.ViewModel.Workorder
                         MiscellaneousMaterialCostTitle = MiscellaneousMaterialsCostID.TargetName;
                         OverriddenControlsNew.Add(MiscellaneousMaterialsCostID);
                         WorkorderControlsNew.Remove(MiscellaneousMaterialsCostID);
+                        if (MiscellaneousMaterialsCostID.IsRequired ?? true)
+                        {
+                            MiscellaneousMaterialsCostIDIsRequred = "true";
+                            MiscellaneousMaterialsCostIDColor = "Red";
+                        }
+                        else
+                        {
+                            MiscellaneousMaterialsCostIDColor = "false";
+                        }
                     }
+
+                    var WorkOrderRequester = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkOrderRequesterID");
+                    if (WorkOrderRequester != null)
+                    {
+                        if (WorkOrderRequester.IsRequired ?? true)
+                        {
+                            WorkOrderRequesterIDIsRequred = "true";
+                            WorkOrderRequesterIDColor = "Red";
+                        }
+                        else
+                        {
+                            MiscellaneousMaterialsCostIDColor = "false";
+                        }
+                    }
+
+                    var Originator = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "Originator");
+                    if (Originator != null)
+                    {
+                        if (Originator.IsRequired ?? true)
+                        {
+                            OriginatorIsRequred = "true";
+                            OriginatorColor = "Red";
+                        }
+                        else
+                        {
+                            OriginatorColor = "false";
+                        }
+                    }
+
+                    //var ShiftID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "ShiftID");
+                    //var PriorityID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "PriorityID");
+                    //var AssignedToEmployeeID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "AssignedToEmployeeID");
+
+                    //var EstimatedDowntime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "EstimatedDowntime");
+                    //var ActualDowntime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "ActualDowntime");
 
                 }
                 catch (Exception ex)
@@ -5766,12 +6609,12 @@ namespace ProteusMMX.ViewModel.Workorder
         {
 
 
-           var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+            var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
             if (workorderWrapper != null && workorderWrapper.workOrderWrapper != null && workorderWrapper.workOrderWrapper.workOrder != null)
             {
                 bool fdasignatureKey = AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation;
 
-               
+
 
                 var workorder = workorderWrapper.workOrderWrapper.workOrder;
 
@@ -5797,19 +6640,19 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 this.WorkorderNumberText = workorder.WorkOrderNumber;
 
-               
+
 
                 this.DescriptionText = workorder.Description;
 
-               
+
                 this.DescriptionText = workorder.Description;
 
 
                 if (!string.IsNullOrWhiteSpace(workorder.AdditionalDetails))
                 {
-                   
+
                     this.AdditionalDetailsText = RemoveHTML.StripHTML(workorder.AdditionalDetails);
-                    
+
 
                 }
 
@@ -5817,10 +6660,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 this.ApprovalLevel = workorder.ApprovalLevel;
                 this.ApprovalNumber = workorder.ApprovalNumber;
 
-               
+
                 this.RequiredDate1 = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.RequiredDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-              
-              
+
+
                 /// Workorder Completion Date Property Set
                 if (workorder.CompletionDate == null)
                 {
@@ -5836,7 +6679,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
 
 
-                
+
                 this.InternalNoteText = workorder.InternalNote;
 
                 /// Set Targets and Other
@@ -5944,7 +6787,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     targetname = "Location";
                 }
 
-                
+
 
                 if (!string.IsNullOrEmpty(workorder.CostCenterName))
                 {
@@ -6051,7 +6894,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 ActualDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.ActualDowntime) ? 0 : decimal.Parse(workorder.ActualDowntime));
                 MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
                 MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);
-              
+
 
                 ///Set Dyanmic Field Properties
                 ///
@@ -6106,7 +6949,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     RequestNumber = workorder.RequestNumber;
                     //  RequestedDate = workorder.RequestedDate.ToString();
-                    
+
 
                 }
 
@@ -6158,87 +7001,175 @@ namespace ProteusMMX.ViewModel.Workorder
 
         private void GenerateTextBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
-            var title = new Label();
-            var control = new MyEntry();
-            if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+            if (formControl.IsRequired ?? true)
             {
-                title.FontAttributes = FontAttributes.Bold;
-            }
-            title.TextColor = Color.Black;
-            title.Text = formControl.TargetName;// + "<<>>" + formControl.ControlName;
-            SetControlBindingAccordingToControlType(control, formControl);
+                var title = new Label();
+                var control = new BorderedEntry();
+                if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+                {
+                    title.FontAttributes = FontAttributes.Bold;
+                }
+                title.TextColor = Color.Black;
+                title.Text = formControl.TargetName;// + "<<>>" + formControl.ControlName;
+                SetControlBindingAccordingToControlType(control, formControl);
 
-            if (formControl.Expression == "E")
-            {
-                control.IsEnabled = true;
+                if (formControl.Expression == "E")
+                {
+                    control.IsEnabled = true;
+                }
+                else
+                {
+                    control.IsEnabled = false;
+                }
+
+                var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
+                wrapperLayout.Children.Add(title);
+                wrapperLayout.Children.Add(control);
+                contentGrid.Children.Add(wrapperLayout, column, row);
             }
             else
             {
-                control.IsEnabled = false;
+                var title = new Label();
+                var control = new MyEntry();
+                if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+                {
+                    title.FontAttributes = FontAttributes.Bold;
+                }
+                title.TextColor = Color.Black;
+                title.Text = formControl.TargetName;// + "<<>>" + formControl.ControlName;
+                SetControlBindingAccordingToControlType(control, formControl);
 
+                if (formControl.Expression == "E")
+                {
+                    control.IsEnabled = true;
+                }
+                else
+                {
+                    control.IsEnabled = false;
+                }
+
+                var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
+                wrapperLayout.Children.Add(title);
+                wrapperLayout.Children.Add(control);
+                contentGrid.Children.Add(wrapperLayout, column, row);
             }
-
-            var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
-            wrapperLayout.Children.Add(title);
-            wrapperLayout.Children.Add(control);
-
-            contentGrid.Children.Add(wrapperLayout, column, row);
         }
 
         private void GenerateComboBoxLayout(FormControl formControl, Grid contentGrid, int row, int column)
         {
-            var title = new Label();
-            var control = new CustomPicker();
-            control.Image = "unnamed";
-            control.HeightRequest = 45;
-
-            Frame frame = new Frame { BorderColor = Color.Orange, CornerRadius = 10, HasShadow = true, Content = control };
-
-            title.Text = formControl.TargetName;// + "<<>>" + formControl.ControlName;
-            if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+            if (formControl.IsRequired ?? true)
             {
-                title.FontAttributes = FontAttributes.Bold;
-            }
-            title.TextColor = Color.Black;
+                var title = new Label();
+                var control = new CustomValidationPicker();
+
+                control.Image = "unnamed";
+                control.HeightRequest = 45;
+
+                Frame frame = new Frame { BorderColor = Color.Orange, CornerRadius = 10, HasShadow = true, Content = control };
+
+                title.Text = formControl.TargetName;// + "<<>>" + formControl.ControlName;
+                if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+                {
+                    title.FontAttributes = FontAttributes.Bold;
+                }
+                title.TextColor = Color.Black;
 
 
-            List<ComboDD> NEWCOMBO = new List<ComboDD>();
-            ComboDD abc = new ComboDD();
-            abc.SelectedText = WebControlTitle.GetTargetNameByTitleName("Select");
-            abc.SelectedValue = 0;
-            NEWCOMBO.Insert(0, abc);
-            foreach (var item in formControl.listCombo)
-            {
-                NEWCOMBO.Add(item);
+                List<ComboDD> NEWCOMBO = new List<ComboDD>();
+                ComboDD abc = new ComboDD();
+                abc.SelectedText = WebControlTitle.GetTargetNameByTitleName("Select");
+                abc.SelectedValue = 0;
+                NEWCOMBO.Insert(0, abc);
+                foreach (var item in formControl.listCombo)
+                {
+                    NEWCOMBO.Add(item);
 
-            }
-            control.ItemsSource = NEWCOMBO;
+                }
+                control.ItemsSource = NEWCOMBO;
 
-            control.ItemDisplayBinding = new Binding(nameof(ComboDD.SelectedText));
-            SetControlBindingAccordingToControlType(control, formControl);
+                control.ItemDisplayBinding = new Binding(nameof(ComboDD.SelectedText));
+                SetControlBindingAccordingToControlType(control, formControl);
 
 
 
-            /// bind with its value associative property.
-            /// 
+                /// bind with its value associative property.
+                /// 
 
-            //control.SetBinding(Picker.SelectedItemProperty);
+                //control.SetBinding(Picker.SelectedItemProperty);
 
-            if (formControl.Expression == "E")
-            {
-                control.IsEnabled = true;
+                if (formControl.Expression == "E")
+                {
+                    control.IsEnabled = true;
+                }
+                else
+                {
+                    control.IsEnabled = false;
+
+                }
+
+                var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
+                wrapperLayout.Children.Add(title);
+                wrapperLayout.Children.Add(control);
+
+                contentGrid.Children.Add(wrapperLayout, column, row);
             }
             else
             {
-                control.IsEnabled = false;
+                var title = new Label();
+                var control = new CustomPicker();
 
+                control.Image = "unnamed";
+                control.HeightRequest = 45;
+
+                Frame frame = new Frame { BorderColor = Color.Orange, CornerRadius = 10, HasShadow = true, Content = control };
+
+                title.Text = formControl.TargetName;// + "<<>>" + formControl.ControlName;
+                if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
+                {
+                    title.FontAttributes = FontAttributes.Bold;
+                }
+                title.TextColor = Color.Black;
+
+
+                List<ComboDD> NEWCOMBO = new List<ComboDD>();
+                ComboDD abc = new ComboDD();
+                abc.SelectedText = WebControlTitle.GetTargetNameByTitleName("Select");
+                abc.SelectedValue = 0;
+                NEWCOMBO.Insert(0, abc);
+                foreach (var item in formControl.listCombo)
+                {
+                    NEWCOMBO.Add(item);
+
+                }
+                control.ItemsSource = NEWCOMBO;
+
+                control.ItemDisplayBinding = new Binding(nameof(ComboDD.SelectedText));
+                SetControlBindingAccordingToControlType(control, formControl);
+
+
+
+                /// bind with its value associative property.
+                /// 
+
+                //control.SetBinding(Picker.SelectedItemProperty);
+
+                if (formControl.Expression == "E")
+                {
+                    control.IsEnabled = true;
+                }
+                else
+                {
+                    control.IsEnabled = false;
+
+                }
+
+                var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
+                wrapperLayout.Children.Add(title);
+                wrapperLayout.Children.Add(control);
+
+                contentGrid.Children.Add(wrapperLayout, column, row);
             }
 
-            var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
-            wrapperLayout.Children.Add(title);
-            wrapperLayout.Children.Add(control);
-
-            contentGrid.Children.Add(wrapperLayout, column, row);
 
         }
 
@@ -6281,8 +7212,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
             contentGrid.Children.Add(wrapperLayout, column, row);
         }
-
-
 
         private void SetControlBindingAccordingToControlType(View control, FormControl formControl)
         {
@@ -9977,11 +10906,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
 
-        
-    
 
 
-    
+
+
+
 
         private void OnAssetSystemRequested(object obj)
         {
@@ -10429,7 +11358,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 #endregion
 
 
-              
+
 
                 bool fdasignatureKey = AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation;
 
@@ -10505,7 +11434,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     #endregion
                                 }
 
-                                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullycreated"));
+                                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullycreated"));
                                 await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(response.workOrderWrapper.workOrder);
                                 await NavigationService.RemoveLastFromBackStackAsync();
 
@@ -10717,7 +11646,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             finally
             {
-                
+
                 UserDialogs.Instance.HideLoading();
                 //  OperationInProgress = false;
 
