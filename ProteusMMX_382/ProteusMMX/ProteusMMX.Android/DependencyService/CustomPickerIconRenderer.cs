@@ -37,7 +37,7 @@ namespace ProteusMMX.Droid.DependencyService
 		public LayerDrawable AddPickerStyles(string imagePath)
 		{
 			ShapeDrawable border = new ShapeDrawable();
-			border.Paint.Color = Android.Graphics.Color.Gray;
+			border.Paint.Color = Android.Graphics.Color.Black;
 			border.SetPadding(30, 0, 0, 0);
 			border.Paint.SetStyle(Paint.Style.Stroke);
 
