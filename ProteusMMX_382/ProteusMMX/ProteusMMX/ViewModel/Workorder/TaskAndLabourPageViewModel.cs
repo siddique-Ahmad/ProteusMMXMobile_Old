@@ -2689,6 +2689,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             ClientIANATimeZone = AppSettings.ClientIANATimeZone,
                             workOrderLabor = new WorkOrderLabor
                             {
+                                IsMannual=true,
                                 ModifiedUserName = AppSettings.User.UserName,
                                 CompletionDate = FinaldateComp,
                                 HoursAtRate1 = decHour1,
