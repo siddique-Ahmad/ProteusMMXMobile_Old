@@ -85,7 +85,13 @@
                             </Grid.ColumnDefinitions>
                             <StackLayout Grid.Row="0" Grid.ColumnSpan="2">
                                 <StackLayout Orientation="Vertical" Grid.Row="0"  IsVisible="{Binding WorkorderNumberIsVisible}" >
-                                    <Label TextColor="#006de0" FontAttributes="Bold" FontSize="16" FontFamily="Ebrima">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="80*"/>
+                                            <ColumnDefinition Width="20*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label Grid.Column="0" HeightRequest="40" TextColor="#006de0" FontAttributes="Bold" FontSize="16" FontFamily="Ebrima">
                                         <Label.FontAttributes>
                                             <OnPlatform x:TypeArguments="FontAttributes">
                                                 <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -101,11 +107,22 @@
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
+                                        <Image Grid.Column="1" HeightRequest="40" Source="Assets/Workorder.png" IsVisible="{Binding IsWorkorderFromSchedule}">
+                                            <Image.Source>
+                                                <OnPlatform  x:TypeArguments="ImageSource">
+                                                    <OnPlatform.iOS>Workorder.png</OnPlatform.iOS>
+                                                    <OnPlatform.Android>Workorder.png</OnPlatform.Android>
+                                                    <OnPlatform.WinPhone>Assets/Workorder.png</OnPlatform.WinPhone>
+                                                </OnPlatform>
+                                            </Image.Source>
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                        Command="{Binding IssueWorkorderCommand}"
+                                         NumberOfTapsRequired="1" />
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </Grid>
                                 </StackLayout>
-
-                             
-                                    
-                               
 
                                 <StackLayout Orientation="Vertical" Grid.Row="1" IsVisible="{Binding JobNumberFlag}">
                                     <Label IsVisible="{Binding JobNumberFlag}" TextColor="#006de0" FontAttributes="Bold" FontSize="16" FontFamily="Ebrima">
@@ -124,7 +141,7 @@
                                     </Label>
                                 </StackLayout>
 
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="1" Grid.Column="1" IsVisible="{Binding IsWorkorderFromSchedule}">
+                                <!--<StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="1" Grid.Column="1" IsVisible="{Binding IsWorkorderFromSchedule}">
                                     <Image Source="Assets/Workorder.png">
                                         <Image.Source>
                                             <OnPlatform  x:TypeArguments="ImageSource">
@@ -139,7 +156,7 @@
                                          NumberOfTapsRequired="1" />
                                         </Image.GestureRecognizers>
                                     </Image>
-                                </StackLayout>
+                                </StackLayout>-->
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">

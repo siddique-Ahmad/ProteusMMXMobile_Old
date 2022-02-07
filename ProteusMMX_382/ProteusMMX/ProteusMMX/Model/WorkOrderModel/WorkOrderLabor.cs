@@ -69,8 +69,8 @@ namespace ProteusMMX.Model.WorkOrderModel
         public DateTime? HoursAtRate2Stop { get; set; }
         public DateTime? HoursAtRate1Start { get; set; }
         public DateTime? HoursAtRate2Start { get; set; }
-        public int? WorkOrderLaborHourAtRate1ID { get; set; }
-        public int? WorkOrderLaborHourAtRate2ID { get; set; }
+        public int? WorkOrderLaborHourID1 { get; set; }
+        public int? WorkOrderLaborHourID2 { get; set; }
         public string TotalHoursAtRate1 { get; set; }
         public string TotalHoursAtRate2 { get; set; }
         public int? WorkOrderLaborHourID { get; set; }

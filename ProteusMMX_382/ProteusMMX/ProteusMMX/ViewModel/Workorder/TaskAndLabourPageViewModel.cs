@@ -1056,20 +1056,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 IsEnabled = true
                             };
                         }
-                        else if (item.Timer1 != null && (item.Timer1 == 2 || item.Timer1 == 3))
-                        {
-                            stopButton = new SfButton
-                            {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
-                                FontAttributes = FontAttributes.Bold,
-                                ShowIcon = true,
-                                BackgroundColor = Color.Transparent,
-                                TextColor = Color.FromHex("#87CEFA"),
-                                CommandParameter = item,
-                                ImageSource = "stoppending.png",
-                                IsEnabled = false
-                            };
-                        }
+                        
                         else
                         {
                             stopButton = new SfButton
@@ -1114,20 +1101,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 IsEnabled = true,
                             };
                         }
-                        else if (item.Timer1 == 3)
-                        {
-                            completeButton = new SfButton
-                            {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Complete"),
-                                FontAttributes = FontAttributes.Bold,
-                                ShowIcon = true,
-                                BackgroundColor = Color.Transparent,
-                                TextColor = Color.Black,
-                                CommandParameter = item,
-                                ImageSource = "complateicon.png",
-                                IsEnabled = false,
-                            };
-                        }
+                        
                         else
                         {
                             completeButton = new SfButton
@@ -1318,20 +1292,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 IsEnabled = true
                             };
                         }
-                       else if (item.Timer2 != null &&   (item.Timer2 == 5 || item.Timer2 == 6))
-                        {
-                            stopButtonforRate2 = new SfButton
-                            {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
-                                FontAttributes = FontAttributes.Bold,
-                                ShowIcon = true,
-                                BackgroundColor = Color.Transparent,
-                                TextColor = Color.FromHex("#87CEFA"),
-                                CommandParameter = item,
-                                ImageSource = "stoppending.png",
-                                IsEnabled = true
-                            };
-                        }
+                      
                         else
                         {
                             stopButtonforRate2 = new SfButton
@@ -1375,20 +1336,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                  IsEnabled = true,
                              };
                         }
-                        else if (item.Timer2 == 6)
-                        {
-                            completeButtonforRate2 = new SfButton
-                            {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Complete"),
-                                FontAttributes = FontAttributes.Bold,
-                                ShowIcon = true,
-                                BackgroundColor = Color.Transparent,
-                                TextColor = Color.Black,
-                                CommandParameter = item,
-                                ImageSource = "complateicon.png",
-                                IsEnabled = false,
-                            };
-                        }
+                        
                         else
                         {
                             completeButtonforRate2 = new SfButton
@@ -1751,11 +1699,11 @@ namespace ProteusMMX.ViewModel.Workorder
                         if (response != null && bool.Parse(response.servicestatus))
                         {
 
-                            if (response.workOrderWrapper != null && response.workOrderWrapper.workOrderLabor != null)
-                            {
-                                this.WorkOrderLaborHourID = response.workOrderWrapper.workOrderLabor.WorkOrderLaborHourID;
-                                Application.Current.Properties["WorkOrderLaborHourID"] = WorkOrderLaborHourID;
-                            }
+                            //if (response.workOrderWrapper != null && response.workOrderWrapper.workOrderLabor != null)
+                            //{
+                            //    this.WorkOrderLaborHourID = response.workOrderWrapper.workOrderLabor.WorkOrderLaborHourID;
+                            //    Application.Current.Properties["WorkOrderLaborHourID"] = WorkOrderLaborHourID;
+                            //}
                             var data = buttonStart.Parent.Parent.Parent as Grid;
                             var Min1 = data.Children[4] as StackLayout;
                             var Min2 = Min1.Children[0] as Grid;
@@ -1780,7 +1728,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             stopButton.IsEnabled = true;
                             completeButton.IsEnabled = true;
 
-
+                            await OnViewAppearingAsync(null);
                             UserDialogs.Instance.HideLoading();
                             DialogService.ShowToast("Timer Successfully Started");
                         }
@@ -1859,11 +1807,11 @@ namespace ProteusMMX.ViewModel.Workorder
                             if (response != null && bool.Parse(response.servicestatus))
                             {
 
-                                if (response.workOrderWrapper != null && response.workOrderWrapper.workOrderLabor != null)
-                                {
-                                    this.WorkOrderLaborHour2ID = response.workOrderWrapper.workOrderLabor.WorkOrderLaborHourID;
-                                    Application.Current.Properties["WorkOrderLaborHour2ID"] = WorkOrderLaborHour2ID;
-                                }
+                                //if (response.workOrderWrapper != null && response.workOrderWrapper.workOrderLabor != null)
+                                //{
+                                //    this.WorkOrderLaborHour2ID = response.workOrderWrapper.workOrderLabor.WorkOrderLaborHourID;
+                                //    Application.Current.Properties["WorkOrderLaborHour2ID"] = WorkOrderLaborHour2ID;
+                                //}
                                 var data = buttonStartforRate2.Parent.Parent.Parent as Grid;
                                 var Min1 = data.Children[4] as StackLayout;
                                 var Min2 = Min1.Children[0] as Grid;
@@ -1886,6 +1834,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 completeButtonforRate2.TextColor = Color.FromHex("#879afa");
 
                                 UserDialogs.Instance.HideLoading();
+                                await OnViewAppearingAsync(null);
                                 DialogService.ShowToast("Timer Successfully Started");
                             }
                             //try
@@ -1961,7 +1910,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                        ModifiedUserName = AppSettings.User.UserName,
                                        WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
                                        WorkOrderID = this.WorkorderID,
-                                       WorkOrderLaborHourID = this.WorkOrderLaborHourID,
+                                       WorkOrderLaborHourID = item.WorkOrderLaborHourID1,
                                        TaskID = workOrderLabor.TaskID,
                                        TimerID = 2,
                                    },
@@ -2121,7 +2070,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     ModifiedUserName = AppSettings.User.UserName,
                                     WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
                                     WorkOrderID = this.WorkorderID,
-                                    WorkOrderLaborHourID = this.WorkOrderLaborHour2ID,
+                                    WorkOrderLaborHourID = item.WorkOrderLaborHourID2,
                                     TaskID = workOrderLabor.TaskID,
                                     TimerID = 5,
                                 },
@@ -2228,7 +2177,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     ModifiedUserName = AppSettings.User.UserName,
                                     WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
                                     WorkOrderID = this.WorkorderID,
-                                    WorkOrderLaborHourID = this.WorkOrderLaborHourID,
+                                    WorkOrderLaborHourID = item.WorkOrderLaborHourID1,
                                     TaskID = workOrderLabor.TaskID,
                                     TimerID = 3,
                                 },
@@ -2290,7 +2239,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     ModifiedUserName = AppSettings.User.UserName,
                                     WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
                                     WorkOrderID = this.WorkorderID,
-                                    WorkOrderLaborHourID = this.WorkOrderLaborHour2ID,
+                                    WorkOrderLaborHourID = item.WorkOrderLaborHourID2,
                                     TaskID = workOrderLabor.TaskID,
                                     TimerID = 6,
                                 },
