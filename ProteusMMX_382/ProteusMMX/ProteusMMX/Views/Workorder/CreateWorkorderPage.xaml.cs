@@ -296,86 +296,85 @@ namespace ProteusMMX.Views.Workorder
 
         private  void  Asset_PropertyChanged(object sender, TextChangedEventArgs e)
         {
-            //var Asset = sender as Entry;
-            //var LocationName = LocationNameBtn as Entry;
-            //var AssetName = AssetNameBtn as Entry;
-            //var AssignToEmployee = AssetSystemNameBtn as Entry;
+            var Asset = sender as Entry;
+            var LocationName = LocationNameBtn as Entry;
+            var AssetName = AssetNameBtn as Entry;
+            var AssignToEmployee = AssetSystemNameBtn as Entry;
 
-            //var LocationNamePar = LocationNameBtn.Parent.Parent as SfBorder;
-            //var AssetNamePar = AssetNameBtn.Parent.Parent as SfBorder;
-            //var AssignToEmployeePar = AssetSystemNameBtn.Parent.Parent as SfBorder;
+            var LocationNamePar = LocationNameBtn.Parent.Parent as SfBorder;
+            var AssetNamePar = AssetNameBtn.Parent.Parent as SfBorder;
+            var AssignToEmployeePar = AssetSystemNameBtn.Parent.Parent as SfBorder;
 
 
-            //if (!string.IsNullOrEmpty(Asset.Text))
-            //{
-            //    LocationNamePar.BorderColor = Color.Black;
-            //    AssetNamePar.BorderColor = Color.Black;
-            //    AssignToEmployeePar.BorderColor = Color.Black;
-            //}
-            //else if (!string.IsNullOrEmpty(LocationName.Text))
-            //{
-              
+            if (!string.IsNullOrEmpty(Asset.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else if (!string.IsNullOrEmpty(LocationName.Text))
+            {
 
-            //    LocationNamePar.BorderColor = Color.Black;
-            //    AssetNamePar.BorderColor = Color.Black;
-            //    AssignToEmployeePar.BorderColor = Color.Black;
-            //}
-            //else if (!string.IsNullOrEmpty(AssignToEmployee.Text))
-            //{
-              
-            //    LocationNamePar.BorderColor = Color.Black;
-            //    AssetNamePar.BorderColor = Color.Black;
-            //    AssignToEmployeePar.BorderColor = Color.Black;
-            //}
-            //else
-            //{
-                
-            //    LocationNamePar.BorderColor = Color.Red;
-            //    AssetNamePar.BorderColor = Color.Red;
-            //    AssignToEmployeePar.BorderColor = Color.Red;
-            //}
+
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else if (!string.IsNullOrEmpty(AssignToEmployee.Text))
+            {
+
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else
+            {
+
+                LocationNamePar.BorderColor = Color.Red;
+                AssetNamePar.BorderColor = Color.Red;
+                AssignToEmployeePar.BorderColor = Color.Red;
+            }
 
         }
 
         private void AssetSystem_PropertyChanged(object sender, TextChangedEventArgs e)
         {
-            //var AssetSystem = sender as Entry;
-            //var LocationName = LocationNameBtn as Entry;
-            //var AssetName = AssetNameBtn as Entry;
-            //var AssignToEmployee = AssetSystemNameBtn as Entry;
+            var AssetSystem = sender as Entry;
+            var LocationName = LocationNameBtn as Entry;
+            var AssetName = AssetNameBtn as Entry;
+            var AssignToEmployee = AssetSystemNameBtn as Entry;
 
-            //var LocationNamePar = LocationNameBtn.Parent.Parent as SfBorder;
-            //var AssetNamePar = AssetNameBtn.Parent.Parent as SfBorder;
-            //var AssignToEmployeePar = AssetSystemNameBtn.Parent.Parent as SfBorder;
+            var LocationNamePar = LocationNameBtn.Parent.Parent as SfBorder;
+            var AssetNamePar = AssetNameBtn.Parent.Parent as SfBorder;
+            var AssignToEmployeePar = AssetSystemNameBtn.Parent.Parent as SfBorder;
 
 
-            //if (!string.IsNullOrEmpty(AssetSystem.Text))
-            //{
-            //    LocationNamePar.BorderColor = Color.Black;
-            //    AssetNamePar.BorderColor = Color.Black;
-            //    AssignToEmployeePar.BorderColor = Color.Black;
-            //}
-            //else if (!string.IsNullOrEmpty(LocationName.Text))
-            //{
-            //    LocationNamePar.BorderColor = Color.Black;
-            //    AssetNamePar.BorderColor = Color.Black;
-            //    AssignToEmployeePar.BorderColor = Color.Black;
-            //}
-            //else if (!string.IsNullOrEmpty(AssignToEmployee.Text))
-            //{
-            //    LocationNamePar.BorderColor = Color.Black;
-            //    AssetNamePar.BorderColor = Color.Black;
-            //    AssignToEmployeePar.BorderColor = Color.Black;
-            //}
-            //else
-            //{
-            //    LocationNamePar.BorderColor = Color.Red;
-            //    AssetNamePar.BorderColor = Color.Red;
-            //    AssignToEmployeePar.BorderColor = Color.Red;
-            //}
+            if (!string.IsNullOrEmpty(AssetSystem.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else if (!string.IsNullOrEmpty(LocationName.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else if (!string.IsNullOrEmpty(AssignToEmployee.Text))
+            {
+                LocationNamePar.BorderColor = Color.Black;
+                AssetNamePar.BorderColor = Color.Black;
+                AssignToEmployeePar.BorderColor = Color.Black;
+            }
+            else
+            {
+                LocationNamePar.BorderColor = Color.Red;
+                AssetNamePar.BorderColor = Color.Red;
+                AssignToEmployeePar.BorderColor = Color.Red;
+            }
         }
 
-     
         private void WorkOrderRequester_PropertyChanged(object sender, TextChangedEventArgs e)
         {
             Entry WorkType = sender as Entry;
