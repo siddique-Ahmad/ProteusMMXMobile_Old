@@ -86,12 +86,12 @@
                                 <ColumnDefinition  Width="*" />
                             </Grid.ColumnDefinitions>
 
-                          
-                            
-                           
+
+
+
                             <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">
 
-                                <Label Text="{Binding DescriptionTitle}" StyleId="{Binding DescriptionIsRequred, Mode=TwoWay}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                <Label Text="{Binding DescriptionTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
                                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -103,8 +103,8 @@
 
                                 <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"/>-->
                                 <!--<dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></dependencyinterface:CustomEditor>-->
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}" StyleId="{Binding DescriptionIsRequred, Mode=TwoWay}"   BorderColor="{Binding DescriptionColor}" HeightRequest="100">
-                                    <control1:UnderLineEditor FontFamily="{Binding DescriptionIsRequred}" x:Name="Description" TextChanged="Description_PropertyChanged" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" Text="{Binding DescriptionText}" HeightRequest="150"></control1:UnderLineEditor>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="100" BorderColor="{Binding DescriptionColor}">
+                                    <control1:UnderLineEditor x:Name="Description" FontFamily="{Binding DescriptionIsRequred}" TextChanged="Description_PropertyChanged" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" Text="{Binding DescriptionText}" HeightRequest="150"></control1:UnderLineEditor>
 
                                     <!--<control1:CustomEntry x:Name="Description" Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"
                             TextColor="{DynamicResource Gray-900}" />-->
@@ -122,8 +122,8 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <controls:RequiredDateCustomDatePicker  Margin="0,8,0,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}" />
-                                <!--<DatePicker Date="{Binding RequiredDate}"  MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}"/>-->
+                                    <controls:RequiredDateCustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}" />
+                                    <!--<DatePicker Date="{Binding RequiredDate}"  MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}"/>-->
                                 </border:SfBorder>
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="1"  IsVisible="{Binding WorkStartedDateIsVisible}">
@@ -156,9 +156,11 @@
                                 </Label>
                                 <!--<border:SfBorder Style="{StaticResource SfBorderStyle}">-->
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="Red">
-                                    <buttons:SfButton Text="{Binding FacilityName}" 
-                                                       BackgroundColor="White" TextColor="Black"  ImageAlignment="End" ShowIcon="True" ImageSource="unnamed.png"
-                                                      PropertyChanged="Facility_PropertyChanged" Style="{StaticResource SfButtonStyles}" Command="{Binding FacilityCommand}" IsEnabled="{Binding FacilityIsEnable}" CornerRadius="5"/>
+                                    <StackLayout>
+                                        <Entry Text="{Binding FacilityName}" FontFamily="{Binding FacilityCommand}" IsVisible="false" TextChanged="Facility_PropertyChanged" />
+                                        <buttons:SfButton Text="{Binding FacilityName}" Style="{StaticResource SfButtonStyles}" Command="{Binding FacilityCommand}" IsEnabled="{Binding FacilityIsEnable}" CornerRadius="5"/>
+                                    </StackLayout>
+                                    
                                 </border:SfBorder>
                                 <!--</border:SfBorder>-->
                             </StackLayout>
@@ -172,10 +174,11 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="Red" IsVisible="{Binding LocationIsVisibleForLicensing}" >
-                                    <buttons:SfButton x:Name="LocationNameBtn" Text="{Binding LocationName}" 
-                                                      BackgroundColor="White" TextColor="Black"  ImageAlignment="End" ShowIcon="True" ImageSource="unnamed.png" CornerRadius="5" 
-                                                    PropertyChanged="Location_PropertyChanged"   IsEnabled="{Binding AssetIsEnable}" Style="{StaticResource SfButtonStyles}" Command="{Binding LocationCommand}" />
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="Red">
+                                    <StackLayout>
+                                        <Entry x:Name="LocationNameBtn" Text="{Binding LocationName}"  IsVisible="false" TextChanged="Location_PropertyChanged" />
+                                        <buttons:SfButton Text="{Binding LocationName}" Style="{StaticResource SfButtonStyles}" Command="{Binding LocationCommand}" IsEnabled="{Binding AssetIsEnable}" IsVisible="{Binding LocationIsVisibleForLicensing}" CornerRadius="5"/>
+                                    </StackLayout>                                    
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -189,10 +192,12 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder  Style="{StaticResource SfBorderStyle}" BorderColor="Red">
-                                    <buttons:SfButton x:Name="AssetNameBtn" 
-                                                      BackgroundColor="White" TextColor="Black"  ImageAlignment="End" ShowIcon="True" ImageSource="unnamed.png" CornerRadius="5" 
-                                                      Text="{Binding AssetName}" PropertyChanged="Asset_PropertyChanged" Style="{StaticResource SfButtonStyles}" Command="{Binding AssetCommand}" IsEnabled="{Binding AssetIsEnable}"/>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="Red">
+                                    <StackLayout>
+                                        <Entry x:Name="AssetNameBtn" Text="{Binding AssetName}"  IsVisible="false" TextChanged="Asset_PropertyChanged" />
+                                        <buttons:SfButton Text="{Binding AssetName}" Style="{StaticResource SfButtonStyles}" Command="{Binding AssetCommand}" IsEnabled="{Binding AssetIsEnable}" CornerRadius="5"/>
+                                    </StackLayout>
+                                   
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -205,13 +210,14 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder  Style="{StaticResource SfBorderStyle}" BorderColor="Red">
-                                    <buttons:SfButton x:Name="AssignToEmployeeBtn" 
-                                                      BackgroundColor="White" TextColor="Black"  ImageAlignment="End" ShowIcon="True" ImageSource="unnamed.png" CornerRadius="5" 
-                                                      Text="{Binding AssetSystemName}" PropertyChanged="AssetSystem_PropertyChanged"  Style="{StaticResource SfButtonStyles}" Command="{Binding AssetSystemCommand}" IsVisible="{Binding AssetSystemIsVisibleForLicensing}" IsEnabled="{Binding AssetIsEnable}" />
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="Red">
+                                    <StackLayout>
+                                        <Entry x:Name="AssetSystemNameBtn"  Text="{Binding AssetSystemName}"  IsVisible="false" TextChanged="AssetSystem_PropertyChanged" />
+                                        <buttons:SfButton Text="{Binding AssetSystemName}" Style="{StaticResource SfButtonStyles}" Command="{Binding AssetSystemCommand}" IsVisible="{Binding AssetSystemIsVisibleForLicensing}" IsEnabled="{Binding AssetIsEnable}" CornerRadius="5" />
+                                    </StackLayout>
+                                    
                                 </border:SfBorder>
                             </StackLayout>
-
 
                             <StackLayout Orientation="Vertical" Grid.Row="5" Grid.Column="0"  IsVisible="{Binding AssignToEmployeeIsVisible}">
                                 <Label Text="{Binding AssignToEmployeeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
@@ -222,8 +228,8 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding AssignedToEmployeeIDColor}">
-                                    <buttons:SfButton PropertyChanged="AssignedToEmployee_PropertyChanged" FontFamily="{Binding AssignedToEmployeeIDIsRequred}" Text="{Binding AssignToEmployeeName}" Style="{StaticResource SfButtonStyles}" Command="{Binding AssignToCommand}" IsEnabled="{Binding AssignToEmployeeIsEnable}" CornerRadius="5"/>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                    <buttons:SfButton Text="{Binding AssignToEmployeeName}" Style="{StaticResource SfButtonStyles}" Command="{Binding AssignToCommand}" IsEnabled="{Binding AssignToEmployeeIsEnable}" CornerRadius="5"/>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -236,8 +242,8 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}" BackgroundColor="{Binding OriginatorColor}">
-                                    <buttons:SfButton BackgroundColor="LightGray" PropertyChanged="Originator_PropertyChanged" FontFamily="{Binding OriginatorIsRequred}" Text="{Binding OriginatorName}" Style="{StaticResource SfButtonStyles}" IsEnabled="False" CornerRadius="5"/>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                    <buttons:SfButton BackgroundColor="LightGray" Text="{Binding OriginatorName}" Style="{StaticResource SfButtonStyles}" IsEnabled="False" CornerRadius="5"/>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -289,7 +295,10 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding WorkOrderRequesterIDColor}">
-                                    <buttons:SfButton PropertyChanged="WorkOrderRequester_PropertyChanged" FontFamily="{Binding WorkOrderRequesterIDIsRequred}" Text="{Binding WorkorderRequesterName}" Style="{StaticResource SfButtonStyles}" Command="{Binding WorkorderRequesterCommand}"  IsEnabled="{Binding WorkorderRequesterIsEnable}" CornerRadius="5" />
+                                    <StackLayout>
+                                        <Entry Text="{Binding WorkorderRequesterName}" FontFamily="{Binding WorkOrderRequesterIDIsRequred}" IsVisible="false" TextChanged="WorkOrderRequester_PropertyChanged" />
+                                        <buttons:SfButton Text="{Binding WorkorderRequesterName}" Style="{StaticResource SfButtonStyles}" Command="{Binding WorkorderRequesterCommand}"  IsEnabled="{Binding WorkorderRequesterIsEnable}" CornerRadius="5" />
+                                    </StackLayout>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -303,7 +312,10 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding CostCenterIDColor}">
-                                    <buttons:SfButton PropertyChanged="CostCenter_PropertyChanged" FontFamily="{Binding CostCenterIDIsRequred}" Text="{Binding CostCenterName}" Style="{StaticResource SfButtonStyles}" Command="{Binding CostCenterCommand}" IsEnabled="{Binding CostCenterIsEnable}" CornerRadius="5"/>
+                                    <StackLayout>
+                                        <Entry Text="{Binding CostCenterName}" FontFamily="{Binding CostCenterIDIsRequred}" IsVisible="false" TextChanged="CostCenter_PropertyChanged" />
+                                        <buttons:SfButton Text="{Binding CostCenterName}" Style="{StaticResource SfButtonStyles}" Command="{Binding CostCenterCommand}" IsEnabled="{Binding CostCenterIsEnable}" CornerRadius="5"/>
+                                    </StackLayout>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -318,7 +330,10 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding PriorityIDColor}">
-                                    <buttons:SfButton PropertyChanged="Priority_PropertyChanged" FontFamily="{Binding PriorityIDIsRequred}" Text="{Binding PriorityName}" Style="{StaticResource SfButtonStyles}" Command="{Binding PriorityCommand}" IsEnabled="{Binding PriorityIsEnable}" CornerRadius="5"/>
+                                    <StackLayout>
+                                        <Entry Text="{Binding PriorityName}" FontFamily="{Binding PriorityIDIsRequred}" IsVisible="false" TextChanged="Priority_PropertyChanged" />
+                                        <buttons:SfButton Text="{Binding PriorityName}" Style="{StaticResource SfButtonStyles}" Command="{Binding PriorityCommand}" IsEnabled="{Binding PriorityIsEnable}" CornerRadius="5"/>
+                                    </StackLayout>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -332,7 +347,10 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding ShiftIDColor}">
-                                    <buttons:SfButton PropertyChanged="Shift_PropertyChanged" Text="{Binding ShiftName}" FontFamily="{Binding ShiftIDIsRequred}" Style="{StaticResource SfButtonStyles}" Command="{Binding ShiftCommand}" IsEnabled="{Binding ShiftIsEnable}" CornerRadius="5"/>
+                                    <StackLayout>
+                                        <Entry Text="{Binding ShiftName}" FontFamily="{Binding ShiftIDIsRequred}" IsVisible="false" TextChanged="Shift_PropertyChanged" />
+                                        <buttons:SfButton Text="{Binding ShiftName}" Style="{StaticResource SfButtonStyles}" Command="{Binding ShiftCommand}" IsEnabled="{Binding ShiftIsEnable}" CornerRadius="5"/>
+                                    </StackLayout>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -346,7 +364,10 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding WorkOrderStatusColor}">
-                                    <buttons:SfButton  Text="{Binding WorkorderStatusName}" FontFamily="{Binding WorkOrderStatusIsRequred}" PropertyChanged="workorderStatus_PropertyChanged" Style="{StaticResource SfButtonStyles}" Command="{Binding WorkorderStatusCommand}"  IsEnabled="{Binding WorkorderStatusIsEnable}" CornerRadius="5"/>
+                                    <StackLayout>
+                                        <Entry Text="{Binding WorkorderStatusName}" FontFamily="{Binding WorkOrderStatusIsRequred}" IsVisible="false" TextChanged="workorderStatus_PropertyChanged" />
+                                        <buttons:SfButton Text="{Binding WorkorderStatusName}" Style="{StaticResource SfButtonStyles}" Command="{Binding WorkorderStatusCommand}"  IsEnabled="{Binding WorkorderStatusIsEnable}" CornerRadius="5"/>
+                                    </StackLayout>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -360,7 +381,11 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding WorkTypeIDColor}">
-                                    <buttons:SfButton Text="{Binding WorkorderTypeName}" PropertyChanged="WorkorderType_PropertyChanged" FontFamily="{Binding WorkTypeIDIsRequred}" Style="{StaticResource SfButtonStyles}" Command="{Binding WorkorderTypeCommand}" IsEnabled="{Binding WorkorderTypeIsEnable}" CornerRadius="5"/>
+                                    <StackLayout>
+                                        <Entry Text="{Binding WorkorderTypeName}" FontFamily="{Binding WorkTypeIDIsRequred}" IsVisible="false" TextChanged="WorkorderType_PropertyChanged" />
+
+                                        <buttons:SfButton Text="{Binding WorkorderTypeName}" Style="{StaticResource SfButtonStyles}" Command="{Binding WorkorderTypeCommand}" IsEnabled="{Binding WorkorderTypeIsEnable}" CornerRadius="5"/>
+                                    </StackLayout>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -374,7 +399,10 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding CauseColor}">
-                                    <buttons:SfButton Text="{Binding CauseName}" FontFamily="{Binding CauseIsRequred}" PropertyChanged="Cause_PropertyChanged" Style="{StaticResource SfButtonStyles}" Command="{Binding CauseCommand}" IsEnabled="{Binding CauseIsEnable}" CornerRadius="5"/>
+                                    <StackLayout>
+                                        <Entry Text="{Binding CauseName}" FontFamily="{Binding CauseIsRequred}" IsVisible="false" TextChanged="Cause_PropertyChanged" />
+                                        <buttons:SfButton Text="{Binding CauseName}" Style="{StaticResource SfButtonStyles}" Command="{Binding CauseCommand}" IsEnabled="{Binding CauseIsEnable}" CornerRadius="5"/>
+                                    </StackLayout>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -388,7 +416,11 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding MaintenanceCodeColor}">
-                                    <buttons:SfButton Text="{Binding MaintenanceCodeName}" FontFamily="{Binding MaintenanceCodeIsRequred}" PropertyChanged="MaintenanceCode_PropertyChanged" Style="{StaticResource SfButtonStyles}" Command="{Binding MaintenanceCodeCommand}"  IsEnabled="{Binding MaintenanceCodeIsEnable}" CornerRadius="5"/>
+                                    <StackLayout>
+                                        <Entry Text="{Binding MaintenanceCodeName}" FontFamily="{Binding MaintenanceCodeIsRequred}" IsVisible="false" TextChanged="MaintenanceCode_PropertyChanged" />
+
+                                        <buttons:SfButton Text="{Binding MaintenanceCodeName}" Style="{StaticResource SfButtonStyles}" Command="{Binding MaintenanceCodeCommand}"  IsEnabled="{Binding MaintenanceCodeIsEnable}" CornerRadius="5"/>
+                                    </StackLayout>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -409,7 +441,8 @@
                                    
                                     x:Name="EstimstedDowntime"
                                            
-                                        TextChanged="NumericEntry_TextChanged" FontFamily="{Binding EstimstedDowntimeIsRequred}" Text="{Binding EstimstedDowntimeText}"
+                                        TextChanged="NumericEntry_TextChanged"    
+                            Text="{Binding EstimstedDowntimeText}" FontFamily="{Binding EstimstedDowntimeIsRequred}"
                                         IsEnabled="{Binding EstimstedDowntimeIsEnable , Mode=TwoWay}"
                             TextColor="{DynamicResource Gray-900}" />
                                 </border:SfBorder>
@@ -426,13 +459,14 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <!--<controls:NumericEntry Text="{Binding ActualDowntimeText}" IsEnabled="{Binding ActualDowntimeIsEnable}" />-->
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding ActualDowntimeColor}">
+                                <border:SfBorder
+                                    Style="{StaticResource SfBorderStyle}" BorderColor="{Binding ActualDowntimeColor}">
                                     <control1:CustomEntry
-                            x:Name="ActualDowntime" FontFamily="{Binding ActualDowntimeIsRequred}"
+                            x:Name="ActualDowntime"
                                        
                             Text="{Binding ActualDowntimeText}"
                                         IsEnabled="{Binding ActualDowntimeIsEnable , Mode=TwoWay}"
-                                        TextChanged="NumericEntry_TextChanged_1"
+                                        TextChanged="NumericEntry_TextChanged_1" FontFamily="{Binding ActualDowntimeIsRequred}"
                             TextColor="{DynamicResource Gray-900}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -448,10 +482,15 @@
                                 </Label>
                                 <!--<controls:NumericEntry Text="{Binding MiscellaneousLabourCostText}" IsEnabled="{Binding MiscellaneousLabourCostIsEnable}"/>-->
                                 <border:SfBorder   Style="{StaticResource SfBorderStyle}" BorderColor="{Binding MiscellaneousLaborCostIDColor}">
-                                    <control1:CustomEntry FontFamily="{Binding MiscellaneousLaborCostIDIsRequred}" x:Name="MiscellaneousLabourCost"
+                                    <control1:CustomEntry
+                                   
+                                 
+                            x:Name="MiscellaneousLabourCost"
+                                       
+                          
                             Text="{Binding MiscellaneousLabourCostText}"
                                         IsEnabled="{Binding MiscellaneousLabourCostIsEnable , Mode=TwoWay}"
-                                        TextChanged="NumericEntry_TextChanged_2"
+                                        TextChanged="NumericEntry_TextChanged_2" FontFamily="{Binding MiscellaneousLaborCostIDIsRequred}"
                             TextColor="{DynamicResource Gray-900}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -466,13 +505,14 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <!--<controls:NumericEntry Text="{Binding MiscellaneousMaterialCostText}" IsEnabled="{Binding MiscellaneousMaterialCostIsEnable}"/>-->
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding MiscellaneousMaterialsCostIDColor}">
-                                    <control1:CustomEntry FontFamily="{Binding MiscellaneousMaterialsCostIDIsRequred}"
+                                <border:SfBorder  
+                                    Style="{StaticResource SfBorderStyle}" BorderColor="{Binding MiscellaneousMaterialsCostIDColor}">
+                                    <control1:CustomEntry
                             x:Name="MiscellaneousMaterialCost"                              
                             Text="{Binding MiscellaneousMaterialCostText}"
                                    
                              IsEnabled="{Binding MiscellaneousMaterialCostIsEnable , Mode=TwoWay}"
-                                    TextChanged="NumericEntry_TextChanged_3"
+                                    TextChanged="NumericEntry_TextChanged_3" FontFamily="{Binding MiscellaneousMaterialsCostIDIsRequred}"
                             TextColor="{DynamicResource Gray-900}" />
                                 </border:SfBorder>
 
@@ -489,9 +529,9 @@
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" BorderColor="{Binding CurrentRuntimeColor}">
                                     <control1:CustomEntry
-                           x:Name="CurrentRuntime"   FontFamily="{Binding CurrentRuntimeIsRequred}"                            
+                           x:Name="CurrentRuntime"      FontFamily="{Binding CurrentRuntimeIsRequred}"                         
                            Text="{Binding CurrentRuntimeText}"
-                                  
+                            TextChanged="CurrentRuntime_TextChanged"      
                            
                            TextColor="{DynamicResource Gray-900}"
                                    IsEnabled="{Binding CurrentRuntimeIsEnable , Mode=TwoWay}"/>
@@ -507,7 +547,7 @@
 
 
                         </Grid>
-                     
+
                         <Grid Margin="10,0,0,0" Grid.Row="2" x:Name="Grid_column" IsVisible="{Binding AdditionalDetailsIsVisible}" >
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1500*" ></ColumnDefinition>
@@ -584,7 +624,7 @@
 
                         </Grid>
 
-                       
+
                         <Button x:Name="SaveButton" Text="{Binding SaveTitle}" HorizontalOptions="CenterAndExpand" WidthRequest="150" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>
 
                     </Grid>

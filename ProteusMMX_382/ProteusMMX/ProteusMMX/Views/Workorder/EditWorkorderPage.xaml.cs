@@ -39,7 +39,6 @@ namespace ProteusMMX.Views.Workorder
                 this.SaveButton.SetValue(Grid.RowProperty, 4);
             }
            
-
         }
 
         protected override async void OnAppearing()
