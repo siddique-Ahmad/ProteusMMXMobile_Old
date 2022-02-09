@@ -46,8 +46,8 @@ namespace ProteusMMX.Droid.DependencyService
                     _gradientBackground.SetColor(view.BackgroundColor.ToAndroid());
 
                     // Thickness of the stroke line  
-                    _gradientBackground.SetStroke(view.BorderWidth, Xamarin.Forms.Color.Red.ToAndroid());
-
+                    //_gradientBackground.SetStroke(view.BorderWidth, Xamarin.Forms.Color.Red.ToAndroid());
+                    _gradientBackground.SetStroke(view.BorderWidth, Android.Graphics.Color.Red);
                     // Radius for the curves  
                     _gradientBackground.SetCornerRadius(
                         DpToPixels(this.Context, Convert.ToSingle(view.CornerRadius)));
@@ -71,12 +71,14 @@ namespace ProteusMMX.Droid.DependencyService
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            var view = (BorderedEntry)Element;
-            if (e.PropertyName == Entry.TextProperty.PropertyName)
+            if (e.PropertyName != null)
             {
-                if (string.IsNullOrWhiteSpace(Control.Text))  //this is your condition(For example, here is the length of the text content)
+                var view = (BorderedEntry)Element;
+                if (e.PropertyName == Entry.TextProperty.PropertyName)
                 {
-                       
+                    if (string.IsNullOrWhiteSpace(Control.Text))  //this is your condition(For example, here is the length of the text content)
+                    {
+
                         if (view.IsCurvedCornersEnabled)
                         {
                             // creating gradient drawable for the curved background  
@@ -85,7 +87,7 @@ namespace ProteusMMX.Droid.DependencyService
                             _gradientBackground.SetColor(view.BackgroundColor.ToAndroid());
 
                             // Thickness of the stroke line  
-                            _gradientBackground.SetStroke(view.BorderWidth, Xamarin.Forms.Color.Red.ToAndroid());
+                            _gradientBackground.SetStroke(view.BorderWidth, Android.Graphics.Color.Red);
 
                             // Radius for the curves  
                             _gradientBackground.SetCornerRadius(
@@ -98,32 +100,33 @@ namespace ProteusMMX.Droid.DependencyService
                         Control.SetPadding(
                             (int)DpToPixels(this.Context, Convert.ToSingle(12)), Control.PaddingTop,
                             (int)DpToPixels(this.Context, Convert.ToSingle(12)), Control.PaddingBottom);
-                    
-                }
-                else
-                {
-                    if (view.IsCurvedCornersEnabled)
-                    {
-                        // creating gradient drawable for the curved background  
-                        var _gradientBackground = new GradientDrawable();
-                        _gradientBackground.SetShape(ShapeType.Rectangle);
-                        _gradientBackground.SetColor(view.BackgroundColor.ToAndroid());
 
-                        // Thickness of the stroke line  
-                        _gradientBackground.SetStroke(view.BorderWidth, Xamarin.Forms.Color.Black.ToAndroid());
-
-                        // Radius for the curves  
-                        _gradientBackground.SetCornerRadius(
-                            DpToPixels(this.Context, Convert.ToSingle(view.CornerRadius)));
-
-                        // set the background of the   
-                        Control.SetBackground(_gradientBackground);
                     }
-                    // Set padding for the internal text from border  
-                    Control.SetPadding(
-                        (int)DpToPixels(this.Context, Convert.ToSingle(12)), Control.PaddingTop,
-                        (int)DpToPixels(this.Context, Convert.ToSingle(12)), Control.PaddingBottom);
+                    else
+                    {
+                        if (view.IsCurvedCornersEnabled)
+                        {
+                            // creating gradient drawable for the curved background  
+                            var _gradientBackground = new GradientDrawable();
+                            _gradientBackground.SetShape(ShapeType.Rectangle);
+                            _gradientBackground.SetColor(view.BackgroundColor.ToAndroid());
 
+                            // Thickness of the stroke line  
+                            //_gradientBackground.SetStroke(view.BorderWidth, Xamarin.Forms.Color.Black.ToAndroid());
+                            _gradientBackground.SetStroke(view.BorderWidth, Android.Graphics.Color.Red);
+                            // Radius for the curves  
+                            _gradientBackground.SetCornerRadius(
+                                DpToPixels(this.Context, Convert.ToSingle(view.CornerRadius)));
+
+                            // set the background of the   
+                            Control.SetBackground(_gradientBackground);
+                        }
+                        // Set padding for the internal text from border  
+                        Control.SetPadding(
+                            (int)DpToPixels(this.Context, Convert.ToSingle(12)), Control.PaddingTop,
+                            (int)DpToPixels(this.Context, Convert.ToSingle(12)), Control.PaddingBottom);
+
+                    }
                 }
             }
         }

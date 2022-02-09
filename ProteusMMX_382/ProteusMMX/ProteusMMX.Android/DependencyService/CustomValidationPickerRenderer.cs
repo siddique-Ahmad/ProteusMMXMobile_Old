@@ -73,6 +73,7 @@ namespace ProteusMMX.Droid.DependencyService
             else
             {
                 Control.Background = AddPickerStyles(element.Image, "Black");
+
             }
 
         }
