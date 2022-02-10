@@ -111,7 +111,7 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}" IsEnabled="{Binding EmployeeIsEnable}">
                                 <buttons:SfButton Text="{Binding EmployeeName}" Style="{StaticResource SfButtonStyles}" Command="{Binding EmployeeCommand}" IsEnabled="{Binding EmployeeIsEnable}" />
                             </border:SfBorder>
                         </StackLayout>
@@ -125,7 +125,7 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}"  IsEnabled="{Binding ContractorIsEnable}">
                                 <buttons:SfButton Text="{Binding ContractorName}" Style="{StaticResource SfButtonStyles}" Command="{Binding ContractorCommand}" IsEnabled="{Binding ContractorIsEnable}" />
                             </border:SfBorder>
                         </StackLayout>

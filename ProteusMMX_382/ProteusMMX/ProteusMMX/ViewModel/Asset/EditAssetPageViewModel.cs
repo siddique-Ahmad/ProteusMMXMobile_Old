@@ -3727,10 +3727,6 @@ namespace ProteusMMX.ViewModel.Asset
                     ///Vendor
                     ///RuntimeUnit
 
-
-
-
-
                     var assetName = AssetControlsNew.FirstOrDefault(x => x.ControlName == "AssetName");
                     if (assetName != null)
                     {
@@ -3822,17 +3818,13 @@ namespace ProteusMMX.ViewModel.Asset
                     ///RuntimeUnit
 
                     //var formRoles = titles.lstRoles;
-
+                    //List<FormControl> OverriddenControlsNew
                     foreach (var item in OverriddenControlsNew)
                     {
                         //var finalizedRole = await ParseControlRoleExpressionWithFormsRoles(item.Expression, formRoles);
 
                         switch (item.ControlName)
                         {
-
-
-
-
                             case "AssetName":
                                 {
                                     AssetIsEnable = ApplyIsEnable(item.Expression);

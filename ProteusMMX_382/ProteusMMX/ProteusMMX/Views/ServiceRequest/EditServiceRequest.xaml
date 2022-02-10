@@ -101,7 +101,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding FacilityIsEnable}">
                                     <buttons:SfButton Text="{Binding FacilityName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding FacilityCommand}" IsEnabled="{Binding FacilityIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -115,7 +115,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding LocationIsEnable}">
                                     <buttons:SfButton Text="{Binding LocationName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding LocationCommand}" IsEnabled="{Binding LocationIsEnable}" IsVisible="{Binding LocationForLicensingIsVisible}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -130,7 +130,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding AssetIsEnable}">
                                     <buttons:SfButton Text="{Binding AssetName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding AssetCommand}" IsEnabled="{Binding AssetIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -144,7 +144,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding AssetSystemIsVisibleForLicensing}">
                                     <buttons:SfButton Text="{Binding AssetSystemName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding AssetSystemCommand}" IsEnabled="{Binding AssetSystemIsVisibleForLicensing}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -159,7 +159,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding AssignToEmployeeIsEnable}">
                                     <buttons:SfButton Text="{Binding AssignToEmployeeName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding AssignToCommand}"  IsEnabled="{Binding AssignToEmployeeIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -174,7 +174,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding WorkorderRequesterIsEnable}">
                                     <buttons:SfButton Text="{Binding WorkorderRequesterName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding WorkorderRequesterCommand}"  IsEnabled="{Binding WorkorderRequesterIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -188,7 +188,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding CostCenterIsEnable}">
                                     <buttons:SfButton Text="{Binding CostCenterName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding CostCenterCommand}"  IsEnabled="{Binding CostCenterIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -203,7 +203,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding PriorityIsEnable}">
                                     <buttons:SfButton Text="{Binding PriorityName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding PriorityCommand}"  IsEnabled="{Binding PriorityIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -217,7 +217,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding ShiftIsEnable}" >
                                     <buttons:SfButton Text="{Binding ShiftName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding ShiftCommand}"  IsEnabled="{Binding ShiftIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -231,7 +231,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding WorkorderStatusIsEnable}">
                                     <buttons:SfButton Text="{Binding WorkorderStatusName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding WorkorderStatusCommand}"  IsEnabled="{Binding WorkorderStatusIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -245,7 +245,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding WorkorderTypeIsEnable}">
                                     <buttons:SfButton Text="{Binding WorkorderTypeName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding WorkorderTypeCommand}"  IsEnabled="{Binding WorkorderTypeIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -261,7 +261,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding MaintenanceCodeIsEnable}">
                                     <buttons:SfButton Text="{Binding MaintenanceCodeName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding MaintenanceCodeCommand}"  IsEnabled="{Binding MaintenanceCodeIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
