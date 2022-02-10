@@ -132,14 +132,13 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
-                                    <buttons:SfButton Text="{Binding FacilityName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding FacilityCommand}" IsEnabled="{Binding FacilityIsEnable}" />
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding FacilityIsEnable}">
+                                    <buttons:SfButton Text="{Binding FacilityName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding FacilityCommand}"  IsEnabled="{Binding FacilityIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="1" IsVisible="{Binding LocationIsVisible}">
-                                <Label Text="{Binding LocationTitle}" TextColor="Black" IsVisible="{Binding LocationForLicensingIsVisible}"
-                                       >
+                                <Label Text="{Binding LocationTitle}" TextColor="Black" IsVisible="{Binding LocationForLicensingIsVisible}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
                                             <OnPlatform.iOS>Bold</OnPlatform.iOS>
@@ -147,8 +146,8 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
-                                    <buttons:SfButton Text="{Binding LocationName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding LocationCommand}" IsEnabled="{Binding LocationIsEnable}" IsVisible="{Binding LocationForLicensingIsVisible}" />
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding LocationIsEnable}" >
+                                    <buttons:SfButton Text="{Binding LocationName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding LocationCommand}" IsEnabled="{Binding LocationIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -161,7 +160,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding AssetSystemIsEnable}" >
                                     <buttons:SfButton Text="{Binding AssetSystemName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding AssetSystemCommand}" IsEnabled="{Binding AssetSystemIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -176,8 +175,8 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
-                                    <buttons:SfButton Text="{Binding CategoryText}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding CategoryCommand}" IsEnabled="{Binding CategoryIsEnable}" />
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding CategoryIsEnable}">
+                                    <buttons:SfButton Text="{Binding CategoryText}" CornerRadius="5" Style="{StaticResource SfButtonStyles}"  Command="{Binding CategoryCommand}"  IsEnabled="{Binding CategoryIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -191,8 +190,8 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
-                                    <buttons:SfButton Text="{Binding VendorText}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding VendorCommand}"  IsEnabled="{Binding VendorIsEnable}" />
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding VendorIsEnable}">
+                                    <buttons:SfButton Text="{Binding VendorText}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding VendorCommand}" IsEnabled="{Binding VendorIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -205,8 +204,8 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
-                                    <buttons:SfButton Text="{Binding RuntimeUnitText}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding RuntimeUnitCommand}"  IsEnabled="{Binding RuntimeUnitCommandIsEnable}" />
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding RuntimeUnitCommandIsEnable}">
+                                    <buttons:SfButton Text="{Binding RuntimeUnitText}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding RuntimeUnitCommand}" IsEnabled="{Binding RuntimeUnitCommandIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
 
