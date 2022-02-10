@@ -1315,53 +1315,28 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 var ServiceRequestID = serviceRequestItem.ServiceRequestID;
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-                //OperationInProgress = true;
+               
 
+                ////Check if User is Admin////
+                //bool IFUserIsAdmin = Convert.ToBoolean(AppSettings.User.UserIsAdmin);
+                //if (IFUserIsAdmin == false)
+                //{
+                //    //Check if User is Service Request Admin////
+                //    bool IFUserIsSRAdmin = Convert.ToBoolean(AppSettings.User.UserIsSRAdmin);
+                //    if (IFUserIsSRAdmin == false)
+                //    {
+                //        UserDialogs.Instance.HideLoading();
 
-
-
-
-                //Check if User is Admin////
-                bool IFUserIsAdmin = Convert.ToBoolean(AppSettings.User.UserIsAdmin);
-                if (IFUserIsAdmin == false)
-                {
-                    //Check if User is Service Request Admin////
-                    bool IFUserIsSRAdmin = Convert.ToBoolean(AppSettings.User.UserIsSRAdmin);
-                    if (IFUserIsSRAdmin == false)
-                    {
-                        UserDialogs.Instance.HideLoading();
-
-                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("CurrentuserisnotauthorizedtodeclineselectedServiceRequest"), 2000);
-                        return;
-                    }
-                }
+                //        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("CurrentuserisnotauthorizedtodeclineselectedServiceRequest"), 2000);
+                //        return;
+                //    }
+                //}
 
 
                 var page = new SRDecline(UserID, ServiceRequestID, _serviceRequestService);
                 await PopupNavigation.PushAsync(page);
 
-                //var yourobject = new ServiceRequests
-                //{
-
-
-                //    UserId = Convert.ToInt32(this.UserID),
-                //    ServiceRequestID = ServiceRequestID,
-
-
-                //};
-
-
-
-                //var response = await _serviceRequestService.DeclineServiceRequest(yourobject);
-
-                //if (Boolean.Parse(response.servicestatus))
-                //{
-                //    await RemoveAllServiceRequestFromCollection();
-                //    await GetServiceRequest();
-                //}
-                //UserDialogs.Instance.HideLoading();
-                //OperationInProgress = false;
-
+               
             }
             catch (Exception ex)
             {

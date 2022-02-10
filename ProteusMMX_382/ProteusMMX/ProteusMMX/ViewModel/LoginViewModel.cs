@@ -636,13 +636,26 @@ namespace ProteusMMX.ViewModel
                 }
                 apiVersion = await _authenticationService.GetAPIVersion(SiteUrl);
 
-
                 if (apiVersion == null)
                 {
-                    UserDialogs.Instance.HideLoading();
+                    if (SiteUrl.Contains("https:"))
+                    {
+                        SiteUrl = SiteUrl.Replace("https:", "http:");
+                        apiVersion = await _authenticationService.GetAPIVersion(SiteUrl);
+                    }
+                   
+                    if (apiVersion == null)
+                    {
+                        SiteUrl = SiteUrl.Replace("http:", "https:");
+                        apiVersion = await _authenticationService.GetAPIVersion(SiteUrl);
+                    }
+                    if (apiVersion == null)
+                    {
+                        UserDialogs.Instance.HideLoading();
+                        await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
+                        return;
+                    }
 
-                    await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
-                    return;
 
                 }
 

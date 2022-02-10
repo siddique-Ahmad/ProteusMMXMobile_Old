@@ -373,7 +373,7 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <buttons:SfButton BackgroundColor="LightGray" Text="{Binding OriginatorName}" Style="{StaticResource SfButtonStyles}" IsEnabled="False" CornerRadius="5"/>
+                                    <buttons:SfButton BackgroundColor="LightGray" Text="{Binding OriginatorName}"  IsEnabled="False" CornerRadius="5"/>
                                 </border:SfBorder>
                             </StackLayout>
 
