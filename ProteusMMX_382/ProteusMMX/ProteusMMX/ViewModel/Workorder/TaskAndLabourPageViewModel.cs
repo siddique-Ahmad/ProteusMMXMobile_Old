@@ -2948,24 +2948,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 try
                 {
                     OperationInProgress = true;
-                    if (Application.Current.Properties.ContainsKey("WorkOrderLaborHourID"))
-                    {
-                        var WorkOrderLaborHourID = Application.Current.Properties["WorkOrderLaborHourID"].ToString();
-                        if (WorkOrderLaborHourID != null)
-                        {
-                            this.WorkOrderLaborHourID = Convert.ToInt32(WorkOrderLaborHourID);
-
-                        }
-                    }
-                    if (Application.Current.Properties.ContainsKey("WorkOrderLaborHour2ID"))
-                    {
-                        var WorkOrderLaborHour2ID = Application.Current.Properties["WorkOrderLaborHour2ID"].ToString();
-                        if (WorkOrderLaborHour2ID != null)
-                        {
-                            this.WorkOrderLaborHour2ID = Convert.ToInt32(WorkOrderLaborHour2ID);
-
-                        }
-                    }
+                  
                     if (string.IsNullOrWhiteSpace(SearchText))
                     {
                         await GenerateTaskAndLabourLayout();

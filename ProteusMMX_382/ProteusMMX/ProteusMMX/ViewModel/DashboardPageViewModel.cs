@@ -86,8 +86,8 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        // string _userID = AppSettings.User.UserID.ToString();
-        string _userID = "1";
+        string _userID = AppSettings.User.UserID.ToString();
+        
         public string UserID
         {
             get

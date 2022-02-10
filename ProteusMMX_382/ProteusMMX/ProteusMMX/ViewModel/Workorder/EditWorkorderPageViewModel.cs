@@ -13598,6 +13598,8 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
+                UserDialogs.Instance.ShowLoading("", MaskType.Gradient);
+                Task.Delay(100);
                 TargetNavigationData tnobj = new TargetNavigationData();
                 tnobj.WorkOrderId = WorkorderID;
                 NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>(tnobj);
@@ -13605,13 +13607,13 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-               
 
+                UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-                
+                UserDialogs.Instance.HideLoading();
 
             }
 
