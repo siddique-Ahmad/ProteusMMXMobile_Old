@@ -363,6 +363,7 @@
                                 </border:SfBorder>
                                
                             </StackLayout>
+                            
                             <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1" >
                                 <Label Text="{Binding OriginatorTitle}" IsEnabled="False" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
@@ -378,10 +379,10 @@
                             </StackLayout>
 
                             <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="8">
-                                <StackLayout Orientation="Horizontal">
+                                <StackLayout Orientation="Horizontal"  IsEnabled="{Binding IsCostLayoutIsEnable}">
                                     <!--<dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
                                     </dependencyinterface:LoginSwitch>-->
-                                    <buttons:SfSwitch   IsEnabled="{Binding IsCostLayoutIsEnable}" IsOn="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
+                                    <buttons:SfSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsOn="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
                                     </buttons:SfSwitch>
                                     <Label  FontAttributes="Bold"  Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
 

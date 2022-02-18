@@ -692,7 +692,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                 {
                                     Application.Current.Properties["CreateSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
                                     Application.Current.Properties["RemoveSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
-                                    Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestModuleAttachment.Expression;
+                                    Application.Current.Properties["AttachmentFiles"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Attach").Expression;
+                                    Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestModuleAttachment.Expression;                                    
                                 }
                                 catch (Exception ex)
                                 {

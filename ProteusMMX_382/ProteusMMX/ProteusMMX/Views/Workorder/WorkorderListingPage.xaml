@@ -44,33 +44,33 @@
     </ContentPage.Resources>
 
 
-    <ContentPage.ToolbarItems>       
-        <ToolbarItem Name="MenuItem2"  Text=":" Icon="filtericon.png"  Command="{Binding SortByCommand}" >
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="shortingN.png"  Command="{Binding SortByCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="filtericon.png"/>
+                        <FileImageSource File="shortingN.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/filtericon.png"/>
+                        <FileImageSource File="Assets/shortingN.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/filtericon.png"/>
+                        <FileImageSource File="Assets/shortingN.png"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
-        <ToolbarItem Name="MenuItem2"  Text=":" Icon="shfiltericon.png"   Command="{Binding SortByFilterCommand}" >
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="filterN.png"   Command="{Binding SortByFilterCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="shfiltericon.png"/>
+                        <FileImageSource File="filterN.png"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/shfiltericon.png"/>
+                        <FileImageSource File="Assets/filterN.png"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/shfiltericon.png"/>  
+                        <FileImageSource File="Assets/filterN.png"/>  
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
@@ -132,7 +132,7 @@
                                 <Image HorizontalOptions="End" Margin="20,0,0,5">
                                     <Image.Source>
                                         <OnPlatform x:TypeArguments="ImageSource" >
-                                            <OnPlatform.Android>sortinganswers.png</OnPlatform.Android>
+                                                <OnPlatform.Android>searchN.png</OnPlatform.Android>
                                         </OnPlatform>
                                     </Image.Source>
                                     <Image.GestureRecognizers>
@@ -144,7 +144,7 @@
                                 <Image HorizontalOptions="End" Margin="20,0,0,5">
                                     <Image.Source>
                                         <OnPlatform x:TypeArguments="ImageSource" >
-                                                <OnPlatform.Android>sortclosing.png</OnPlatform.Android>
+                                                <OnPlatform.Android>clearN.png</OnPlatform.Android>
                                         </OnPlatform>
                                     </Image.Source>
                                     <Image.GestureRecognizers>

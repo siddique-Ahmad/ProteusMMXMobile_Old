@@ -1005,7 +1005,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
                                 CommandParameter = item,
-                                TextColor = Color.Green,
+                                TextColor = Color.Gray,
                                 ImageSource = "starticon1.png",
                                 IsEnabled = false,
 
@@ -1065,7 +1065,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
-                                TextColor = Color.Black,
+                                TextColor = Color.Gray,
                                 CommandParameter = item,
                                 ImageSource = "stopicon.png",
                                 IsEnabled = false,
@@ -1095,7 +1095,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
-                                TextColor = Color.FromHex("#879afa"),
+                                TextColor = Color.FromHex("#879afa"),                               
                                 CommandParameter = item,
                                 ImageSource = "complateicon.png",
                                 IsEnabled = true,
@@ -1110,7 +1110,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
-                                TextColor = Color.Black,
+                                TextColor = Color.Gray,
                                 CommandParameter = item,
                                 ImageSource = "complateicon.png",
                                 IsEnabled = false,
@@ -1301,7 +1301,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
-                                TextColor = Color.Black,
+                                TextColor = Color.Gray,
                                 CommandParameter = item,
                                 ImageSource = "stopicon.png",
                                 IsEnabled = false,
@@ -1345,7 +1345,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
-                                TextColor = Color.Black,
+                                TextColor = Color.Gray,
                                 CommandParameter = item,
                                 ImageSource = "complateicon.png",
                                 IsEnabled = false,
@@ -1716,7 +1716,8 @@ namespace ProteusMMX.ViewModel.Workorder
                             var Hras4 = Hras3.Content as Entry;
                             Hras4.IsReadOnly = true;
 
-                            startButton.TextColor = Color.Green;
+                            //startButton.TextColor = Color.Green;
+                            startButton.TextColor = Color.Gray;
                             startButton.ImageSource = "starticon1.png";
 
                             stopButton.TextColor = Color.FromHex("#87CEFA");
@@ -1824,7 +1825,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 var Hras4 = Hras3.Content as Entry;
                                 Hras4.IsReadOnly = true;
 
-                                startButtonforRate2.TextColor = Color.Green;
+                                // startButtonforRate2.TextColor = Color.Green;
+                                startButtonforRate2.TextColor = Color.Gray;
                                 startButtonforRate2.ImageSource = "starticon1.png";
                                 startButtonforRate2.IsEnabled = false;
                                 stopButtonforRate2.IsEnabled = true;
@@ -2455,6 +2457,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                         else
                         {
+                            
                             hours = hoursEntry.Text;
                             minutes = minutesEntry.Text;
                         }

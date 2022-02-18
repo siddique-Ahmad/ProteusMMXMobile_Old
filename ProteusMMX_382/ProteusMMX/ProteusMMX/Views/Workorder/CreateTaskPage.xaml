@@ -82,8 +82,8 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                <buttons:SfButton Text="{Binding TaskName}" Style="{StaticResource SfButtonStyles}" Command="{Binding TaskCommand}" IsEnabled="{Binding TaskIsEnable}" />
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}" IsEnabled="{Binding TaskIsEnable}">
+                                <buttons:SfButton Text="{Binding TaskName}" Style="{StaticResource SfButtonStyles}" Command="{Binding TaskCommand}"  />
                             </border:SfBorder>
                         </StackLayout>
 

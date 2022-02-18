@@ -898,7 +898,6 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
-
         private async void BtnSaveSection_Clicked(object sender, EventArgs e)
         {
             try
@@ -1003,7 +1002,6 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
-
         protected override async void OnDisappearing()
         {
             base.OnDisappearing();
@@ -1013,6 +1011,7 @@ namespace ProteusMMX.Views.Workorder
                 await viewAware.OnViewDisappearingAsync(this);
             }
         }
+
         static async Task SendURI(Uri u, HttpContent c)
         {
             var response = string.Empty;
@@ -1036,8 +1035,6 @@ namespace ProteusMMX.Views.Workorder
     }
 }
 
-
-
 //public class Range
 //{
 //    public decimal? MaxRange { get; set; }
@@ -1052,4 +1049,3 @@ namespace ProteusMMX.Views.Workorder
 //    public bool IsTimerRunning { get; set; }
 
 //}
-
