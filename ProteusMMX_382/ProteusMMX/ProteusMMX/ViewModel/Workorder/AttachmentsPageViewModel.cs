@@ -461,6 +461,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         string CreateAttachment;
         string DeleteAttachments;
+        string AttachmentFilesAttachments;
 
         bool _attachmentCameraButtonIsVisible = true;
         public bool AttachmentCameraButtonIsVisible
@@ -588,6 +589,43 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+
+        bool _attachmentFileIsEnabled = true;
+        public bool AttachmentFileIsEnabled
+        {
+            get
+            {
+                return _attachmentFileIsEnabled;
+            }
+
+            set
+            {
+                if (value != _attachmentFileIsEnabled)
+                {
+                    _attachmentFileIsEnabled = value;
+                    OnPropertyChanged(nameof(AttachmentFileIsEnabled));
+                }
+            }
+        }
+
+        bool _attachmentFileIsVisible = true;
+        public bool AttachmentFileIsVisible
+        {
+            get
+            {
+                return _attachmentFileIsVisible;
+            }
+
+            set
+            {
+                if (value != _attachmentFileIsVisible)
+                {
+                    _attachmentFileIsVisible = value;
+                    OnPropertyChanged(nameof(AttachmentFileIsVisible));
+                }
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -648,6 +686,22 @@ namespace ProteusMMX.ViewModel.Workorder
                     else
                     {
                         AttachmentDeleteButtonIsVisible = false;
+                    }
+                }
+                if (Application.Current.Properties.ContainsKey("AttachmentFiles"))
+                {
+                    AttachmentFilesAttachments = Application.Current.Properties["AttachmentFiles"].ToString();
+                    if (AttachmentFilesAttachments == "E")
+                    {
+                        AttachmentFileIsVisible = true;
+                    }
+                    else if (AttachmentFilesAttachments == "V")
+                    {
+                        AttachmentFileIsEnabled = false;
+                    }
+                    else
+                    {
+                        AttachmentFileIsVisible = false;
                     }
                 }
                 OperationInProgress = false;

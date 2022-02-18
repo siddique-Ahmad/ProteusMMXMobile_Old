@@ -2984,6 +2984,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
                                 Application.Current.Properties["CreateAttachment"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
                                 Application.Current.Properties["DeleteAttachments"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+                                Application.Current.Properties["AttachmentFiles"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Attach").Expression;
 
                             }
                             catch (Exception ex)

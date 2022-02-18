@@ -5082,9 +5082,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 WorkorderControlsNew = WorkorderDetails.listControls;
             }
 
-            if (Application.Current.Properties.ContainsKey("EditRights"))
+            if (Application.Current.Properties.ContainsKey("CreateWorkorderRights"))
             {
-                var Edit = Application.Current.Properties["EditRights"].ToString();
+                var Edit = Application.Current.Properties["CreateWorkorderRights"].ToString();
                 if (Edit == "E")
                 {
                     this.EditWorkIsVisible = true;

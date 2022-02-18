@@ -676,19 +676,51 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AddStockroompartTitle, LogoutTitle });
-
-                if (response == AddStockroompartTitle)
+                if (AddParts == "E")
                 {
-                    await NavigationService.NavigateToAsync<CreateWorkOrderStockroomPartsViewModel>(this.WorkorderID);
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AddStockroompartTitle, LogoutTitle });
+
+                    if (response == AddStockroompartTitle)
+                    {
+                        await NavigationService.NavigateToAsync<CreateWorkOrderStockroomPartsViewModel>(this.WorkorderID);
+                    }
+
+                    if (response == LogoutTitle)
+                    {
+                        await _authenticationService.LogoutAsync();
+                        await NavigationService.NavigateToAsync<LoginPageViewModel>();
+                        await NavigationService.RemoveBackStackAsync();
+                    }
+                }
+               else if (AddParts == "V")
+                {
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AddStockroompartTitle, LogoutTitle });
+
+                    if (response == AddStockroompartTitle)
+                    {
+                        
+                    }
+
+                    if (response == LogoutTitle)
+                    {
+                        await _authenticationService.LogoutAsync();
+                        await NavigationService.NavigateToAsync<LoginPageViewModel>();
+                        await NavigationService.RemoveBackStackAsync();
+                    }
+                }
+                else
+                {
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
+
+                   
+                    if (response == LogoutTitle)
+                    {
+                        await _authenticationService.LogoutAsync();
+                        await NavigationService.NavigateToAsync<LoginPageViewModel>();
+                        await NavigationService.RemoveBackStackAsync();
+                    }
                 }
 
-                if (response == LogoutTitle)
-                {
-                    await _authenticationService.LogoutAsync();
-                    await NavigationService.NavigateToAsync<LoginPageViewModel>();
-                    await NavigationService.RemoveBackStackAsync();
-                }
             }
             catch (Exception ex)
             {

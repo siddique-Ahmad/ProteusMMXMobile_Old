@@ -44,7 +44,7 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <Frame BackgroundColor="White"  BorderColor="Black"  CornerRadius="5">
+                            <Frame BackgroundColor="White"  BorderColor="Black"  CornerRadius="5" IsVisible="{Binding AttachmentFileIsVisible}" IsEnabled="{Binding AttachmentFileIsEnabled}">
                                 <StackLayout HeightRequest="350" WidthRequest="350">
                                     <cards:CarouselView IsNextItemPanInteractionEnabled="False" IsPanInteractionEnabled="False" IsPanSwipeEnabled="False" IsPrevItemPanInteractionEnabled="False" VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}">
                                         <cards:CarouselView.ItemTemplate>
