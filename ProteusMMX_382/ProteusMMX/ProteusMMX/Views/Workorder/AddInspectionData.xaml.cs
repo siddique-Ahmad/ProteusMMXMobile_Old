@@ -56,14 +56,6 @@ namespace ProteusMMX.Views.Workorder
         }
 
 
-
-
-
-
-
-
-
-
         protected async Task OnAppearingOld()
         {
 
@@ -83,14 +75,10 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
-
-
-
-
-
-
         private async Task RetriveAllWorkorderInspectionsAsync()
         {
+            UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+            await Task.Delay(1000);
             try
             {
                 string uri = AppSettings.BaseURL + "/Inspection/service/GetWorkorderInspectionData/" + WorkorderID;
@@ -114,12 +102,14 @@ namespace ProteusMMX.Views.Workorder
 
                     }
                 }
-                BindLayout(Inspectiondata.WorkOrderInspectionDataWrapper);
+               BindLayout(Inspectiondata.WorkOrderInspectionDataWrapper);
+
+              
 
             }
             catch (Exception ex)
             {
-
+                UserDialogs.Instance.HideLoading();
                 throw;
             }
 
@@ -132,7 +122,7 @@ namespace ProteusMMX.Views.Workorder
             //    //return;
             //}
 
-
+            UserDialogs.Instance.HideLoading();
 
 
         }
@@ -140,7 +130,7 @@ namespace ProteusMMX.Views.Workorder
 
 
 
-        private void BindLayout(List<WorkOrderInspectionData> listInspection)
+        private async void  BindLayout(List<WorkOrderInspectionData> listInspection)
         {
             int singlecount = 0;
             int Groupcount;
@@ -643,10 +633,6 @@ namespace ProteusMMX.Views.Workorder
                 }
                 else
                 {
-
-
-
-
                     List<WorkOrderInspectionData> commonSections = listInspection.Where(a => a.SectionName != "Miscellaneous Questions").ToList();
 
                     if (commonSections.Count == 0)
@@ -1069,19 +1055,7 @@ namespace ProteusMMX.Views.Workorder
             scrollView.Content = stack;
             this.Content = scrollView;
 
-
-
-
-
         }
-
-
-
-
-
-
-
-
 
 
         private async void BtnSaveSection_Clicked(object sender, EventArgs e)
