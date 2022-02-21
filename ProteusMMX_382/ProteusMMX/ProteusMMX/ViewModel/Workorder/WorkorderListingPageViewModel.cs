@@ -1398,9 +1398,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
                 SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 CreateWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder");
-                //SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName(titles, "SelectOptionsTitles"); 
-                PreventiveMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("PreventiveMaintenance");
-                DemandMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("DemandMaintenance");
+
+            PreventiveMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("PreventiveMaintenance");
+
+            DemandMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("DemandMaintenance");
                 EmergencyMaintenanceTitle = WebControlTitle.GetTargetNameByTitleName("EmergencyMaintenance");
 
                 SortByActivationdateTitle = WebControlTitle.GetTargetNameByTitleName("SortByActivationdate");
@@ -1418,6 +1419,10 @@ namespace ProteusMMX.ViewModel.Workorder
                     if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                     {
                         PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                    }
+                    else if(string.IsNullOrWhiteSpace(PreventiveMaintenenceTitle))
+                    {
+
                     }
                     else
                     {
@@ -1448,15 +1453,32 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                 {
+                  
                     PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
                 }
                 else
                 {
-                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle,FailedInspectionTitle };
+                    
+                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
+                    
                 }
                
             }
-                WorkorderTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("SortByWorkOrderType");
+            if (PreventiveMaintenenceTitle == null)
+            {
+                PickerTitles.Remove(PreventiveMaintenenceTitle);
+            }
+            if (DemandMaintenenceTitle == null)
+            {
+                PickerTitles.Remove(DemandMaintenenceTitle);
+            }
+            if (EmergencyMaintenanceTitle == null)
+            {
+                PickerTitles.Remove(EmergencyMaintenanceTitle);
+            }
+
+
+            WorkorderTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("SortByWorkOrderType");
                 SortByLocationLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Location");
                 SortByShiftLabelTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Shift");
                 SortByDuedateTitle = WebControlTitle.GetTargetNameByTitleName("Sortby") + " " + WebControlTitle.GetTargetNameByTitleName("Due") + " " + WebControlTitle.GetTargetNameByTitleName("Date");

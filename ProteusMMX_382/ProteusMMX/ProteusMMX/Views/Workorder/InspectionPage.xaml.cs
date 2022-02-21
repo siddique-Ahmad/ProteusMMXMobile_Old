@@ -1646,81 +1646,81 @@ namespace ProteusMMX.Views.Workorder
 
             }
 
-            if (CC.listInspection.Count == 0 && (CC.workOrderEmployee.Count > 0 || CC.workorderContractor.Count > 0))
-            {
+            //if (CC.listInspection.Count == 0 && (CC.workOrderEmployee.Count > 0 || CC.workorderContractor.Count > 0))
+            //{
 
-                foreach (var item in CC.workOrderEmployee)
-                {
-                    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/DeleteEmployeeAndContrator");
+            //    foreach (var item in CC.workOrderEmployee)
+            //    {
+            //        Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/DeleteEmployeeAndContrator");
 
-                    var payload = new Dictionary<string, string>
-             {
-              {"EmployeeLaborCraftID", item.EmployeeLaborCraftID.ToString()},
-              {"WorkorderID", WorkorderID.ToString()},
-               {"ContractorLaborCraftID", "0"},
+            //        var payload = new Dictionary<string, string>
+            // {
+            //  {"EmployeeLaborCraftID", item.EmployeeLaborCraftID.ToString()},
+            //  {"WorkorderID", WorkorderID.ToString()},
+            //   {"ContractorLaborCraftID", "0"},
 
-            };
+            //};
 
-                    string strPayload = JsonConvert.SerializeObject(payload);
-                    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                    var t = Task.Run(() => SendURI(posturi, c));
-
-
-                }
-                foreach (var item in CC.workorderContractor)
-                {
-                    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/DeleteEmployeeAndContrator");
-
-                    var payload = new Dictionary<string, string>
-            {
-              {"EmployeeLaborCraftID", "0"},
-              {"WorkorderID", WorkorderID.ToString()},
-               {"ContractorLaborCraftID", item.ContractorLaborCraftID.ToString()},
-
-            };
-
-                    string strPayload = JsonConvert.SerializeObject(payload);
-                    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                    var t = Task.Run(() => SendURI(posturi, c));
-
-                }
-
-                OnAppearing();
+            //        string strPayload = JsonConvert.SerializeObject(payload);
+            //        HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            //        var t = Task.Run(() => SendURI(posturi, c));
 
 
+            //    }
+            //    foreach (var item in CC.workorderContractor)
+            //    {
+            //        Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/DeleteEmployeeAndContrator");
 
-            }
-            if (CC.listInspection.Count > 0 && CC.workOrderEmployee.Count == 0)
-            {
-                ServiceOutput taskResponse = null;
+            //        var payload = new Dictionary<string, string>
+            //{
+            //  {"EmployeeLaborCraftID", "0"},
+            //  {"WorkorderID", WorkorderID.ToString()},
+            //   {"ContractorLaborCraftID", item.ContractorLaborCraftID.ToString()},
 
-                taskResponse = await ViewModel._taskService.GetEmployee(UserID, "0", "0", AppSettings.User.EmployeeName, "Inspection", this.WorkorderID);
+            //};
 
-                if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
-                {
-                    var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
-                    if (assingedToEmployees != null)
-                    {
-                        this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
-                        this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName) + "(" + assingedToEmployees.First().LaborCraftCode + ")";
-                    }
+            //        string strPayload = JsonConvert.SerializeObject(payload);
+            //        HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            //        var t = Task.Run(() => SendURI(posturi, c));
 
-                }
-                Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/AssociateEmployeeAndContractorLaborCraftToWorkOrder");
+            //    }
 
-                var payload = new Dictionary<string, string>
-            {
-              {"EmployeeLaborCraftID", this.EmployeeID.ToString()},
-              {"WorkorderID", WorkorderID.ToString()},
-               {"ContractorLaborCraftID","0"}
-            };
+            //    OnAppearing();
 
-                string strPayload = JsonConvert.SerializeObject(payload);
-                HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                var t = Task.Run(() => SendURI(posturi, c));
 
-                OnAppearing();
-            }
+
+            //}
+            //if (CC.listInspection.Count > 0 && CC.workOrderEmployee.Count == 0)
+            //{
+            //    ServiceOutput taskResponse = null;
+
+            //    taskResponse = await ViewModel._taskService.GetEmployee(UserID, "0", "0", AppSettings.User.EmployeeName, "Inspection", this.WorkorderID);
+
+            //    if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
+            //    {
+            //        var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
+            //        if (assingedToEmployees != null)
+            //        {
+            //            this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
+            //            this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName) + "(" + assingedToEmployees.First().LaborCraftCode + ")";
+            //        }
+
+            //    }
+            //    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/AssociateEmployeeAndContractorLaborCraftToWorkOrder");
+
+            //    var payload = new Dictionary<string, string>
+            //{
+            //  {"EmployeeLaborCraftID", this.EmployeeID.ToString()},
+            //  {"WorkorderID", WorkorderID.ToString()},
+            //   {"ContractorLaborCraftID","0"}
+            //};
+
+            //    string strPayload = JsonConvert.SerializeObject(payload);
+            //    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            //    var t = Task.Run(() => SendURI(posturi, c));
+
+            //    OnAppearing();
+            //}
 
             BindLayout(CC.listInspection);
 
@@ -2051,9 +2051,9 @@ namespace ProteusMMX.Views.Workorder
 
                             GenerateAnswerText(item);
 
-                            (Layout as MyEntry).BindingContext = new Range() { MaxRange = item.MaxRange, MinRange = item.MinRange };
-                            (Layout as MyEntry).TextChanged += StandardRange_TextChanged;
-                            (Layout as MyEntry).Text = item.AnswerDescription;
+                            (Layout as Entry).BindingContext = new Range() { MaxRange = item.MaxRange, MinRange = item.MinRange };
+                            (Layout as Entry).TextChanged += StandardRange_TextChanged;
+                            (Layout as Entry).Text = item.AnswerDescription;
 
                             sta = new Grid() { HorizontalOptions = LayoutOptions.FillAndExpand, BindingContext = item };
                             sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(80) });
@@ -2647,9 +2647,9 @@ namespace ProteusMMX.Views.Workorder
 
                                 Layout = new MyEntry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
 
-                                (Layout as MyEntry).BindingContext = new Range() { MaxRange = item1.MaxRange, MinRange = item1.MinRange };
-                                (Layout as MyEntry).TextChanged += StandardRange_TextChanged;
-                                (Layout as MyEntry).Text = item1.AnswerDescription;
+                                (Layout as Entry).BindingContext = new Range() { MaxRange = item1.MaxRange, MinRange = item1.MinRange };
+                                (Layout as Entry).TextChanged += StandardRange_TextChanged;
+                                (Layout as Entry).Text = item1.AnswerDescription;
 
 
                                 sta = new Grid() { };
@@ -3289,7 +3289,7 @@ namespace ProteusMMX.Views.Workorder
                 {
                     if (decimal.Parse(e1.Text) >= range.MinRange && decimal.Parse(e1.Text) <= range.MaxRange)
                     {
-                        e1.BackgroundColor = Color.White;
+                        e1.BackgroundColor = Color.Black;
                         // CreateWorkorderButtonColor = false;
                     }
 
