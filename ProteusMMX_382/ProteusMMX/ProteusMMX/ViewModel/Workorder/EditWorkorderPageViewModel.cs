@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -4763,6 +4764,21 @@ namespace ProteusMMX.ViewModel.Workorder
                     LocationTitle = WebControlTitle.GetTargetNameByTitleName("Location");
                     AssetsTitle = WebControlTitle.GetTargetNameByTitleName("Asset");
                     AssetSystemTitle = WebControlTitle.GetTargetNameByTitleName("AssetSystem");
+
+                    /// Added new Titles
+                    /// 
+                    AssignToEmployeeTitle = WebControlTitle.GetTargetNameByTitleName("Coordinator");
+                    WorkorderRequesterTitle = WebControlTitle.GetTargetNameByTitleName("WorkorderRequester");
+                    CostCenterTitle = WebControlTitle.GetTargetNameByTitleName("CostCenter");
+                    PriorityTitle = WebControlTitle.GetTargetNameByTitleName("Priority");
+                    ShiftTitle = WebControlTitle.GetTargetNameByTitleName("Shift");
+                    WorkorderStatusTitle = WebControlTitle.GetTargetNameByTitleName("WorkorderStatus");
+                    WorkorderTypeTitle = WebControlTitle.GetTargetNameByTitleName("WorkorderType");
+                    CauseTitle = WebControlTitle.GetTargetNameByTitleName("Cause");
+                    MaintenanceCodeTitle = WebControlTitle.GetTargetNameByTitleName("MaintenanceCode");
+                    EstimstedDowntimeTitle = WebControlTitle.GetTargetNameByTitleName("EstimatedDowntime");
+                    ActualDowntimeTitle = WebControlTitle.GetTargetNameByTitleName("ActualDowntime");
+
                     InternalNotesTitle = WebControlTitle.GetTargetNameByTitleName("InternalNote");
                     AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
                     MoreText = WebControlTitle.GetTargetNameByTitleName("More");
@@ -5202,7 +5218,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     var AssignedToEmployeeID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "AssignedToEmployeeID");
                     if (AssignedToEmployeeID != null)
                     {
-                        AssignToEmployeeTitle = AssignedToEmployeeID.TargetName;
+                        //AssignToEmployeeTitle = AssignedToEmployeeID.TargetName;
                         OverriddenControlsNew.Add(AssignedToEmployeeID);
                         WorkorderControlsNew.Remove(AssignedToEmployeeID);
                     }
@@ -5210,85 +5226,111 @@ namespace ProteusMMX.ViewModel.Workorder
                     var WorkOrderRequesterID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkOrderRequesterID");
                     if (WorkOrderRequesterID != null)
                     {
-                        WorkorderRequesterTitle = WorkOrderRequesterID.TargetName;
+                       // WorkorderRequesterTitle = WorkOrderRequesterID.TargetName;
                         OverriddenControlsNew.Add(WorkOrderRequesterID);
                         WorkorderControlsNew.Remove(WorkOrderRequesterID);
+                        
                     }
+
+                  
 
                     var CostCenterID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "CostCenterID");
                     if (CostCenterID != null)
                     {
-                        CostCenterTitle = CostCenterID.TargetName;
+                       // CostCenterTitle = CostCenterID.TargetName;
                         OverriddenControlsNew.Add(CostCenterID);
                         WorkorderControlsNew.Remove(CostCenterID);
+                        
                     }
+
+                    
 
                     var PriorityID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "PriorityID");
                     if (PriorityID != null)
                     {
-                        PriorityTitle = PriorityID.TargetName;
+                        //PriorityTitle = PriorityID.TargetName;
                         OverriddenControlsNew.Add(PriorityID);
                         WorkorderControlsNew.Remove(PriorityID);
+                        
                     }
+
+                   
 
                     var ShiftID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "ShiftID");
                     if (ShiftID != null)
                     {
-                        ShiftTitle = ShiftID.TargetName;
+                        //ShiftTitle = ShiftID.TargetName;
                         OverriddenControlsNew.Add(ShiftID);
                         WorkorderControlsNew.Remove(ShiftID);
+                       
                     }
+
+                   
 
                     var WorkOrderStatusID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkOrderStatusID");
                     if (WorkOrderStatusID != null)
                     {
-                        WorkorderStatusTitle = WorkOrderStatusID.TargetName;
+                       // WorkorderStatusTitle = WorkOrderStatusID.TargetName;
                         OverriddenControlsNew.Add(WorkOrderStatusID);
                         WorkorderControlsNew.Remove(WorkOrderStatusID);
+                       
                     }
+
 
                     var WorkTypeID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkTypeID");
                     if (WorkTypeID != null)
                     {
-                        WorkorderTypeTitle = WorkTypeID.TargetName;
+                       // WorkorderTypeTitle = WorkTypeID.TargetName;
                         OverriddenControlsNew.Add(WorkTypeID);
                         WorkorderControlsNew.Remove(WorkTypeID);
+                       
                     }
+
 
 
                     var CauseID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "Causes");
                     if (CauseID != null)
                     {
-                        CauseTitle = CauseID.TargetName;
+                       // CauseTitle = CauseID.TargetName;
                         OverriddenControlsNew.Add(CauseID);
                         WorkorderControlsNew.Remove(CauseID);
+                       
                     }
+
 
 
                     var MaintenanceCodeID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "MaintenanceCodeID");
                     if (MaintenanceCodeID != null)
                     {
-                        MaintenanceCodeTitle = MaintenanceCodeID.TargetName;
+                        //MaintenanceCodeTitle = MaintenanceCodeID.TargetName;
                         OverriddenControlsNew.Add(MaintenanceCodeID);
                         WorkorderControlsNew.Remove(MaintenanceCodeID);
+                       
                     }
 
+                   
 
                     var EstimatedDowntime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "EstimatedDowntime");
                     if (EstimatedDowntime != null)
                     {
-                        EstimstedDowntimeTitle = EstimatedDowntime.TargetName;
+                        //EstimstedDowntimeTitle = EstimatedDowntime.TargetName;
                         OverriddenControlsNew.Add(EstimatedDowntime);
                         WorkorderControlsNew.Remove(EstimatedDowntime);
+                        
                     }
+
+                    
 
                     var ActualDowntime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "ActualDowntime");
                     if (ActualDowntime != null)
                     {
-                        ActualDowntimeTitle = ActualDowntime.TargetName;
+                        //ActualDowntimeTitle = ActualDowntime.TargetName;
                         OverriddenControlsNew.Add(ActualDowntime);
                         WorkorderControlsNew.Remove(ActualDowntime);
+                       
                     }
+
+                    
 
                     var MiscellaneousLaborCostID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "MiscellaneousLaborCostID");
                     if (MiscellaneousLaborCostID != null)
@@ -10720,10 +10762,20 @@ namespace ProteusMMX.ViewModel.Workorder
         }
         public async Task ShowActions()
         {
+           
             try
             {
+                
+
+                
+               
+
+                
+
+               
                 if (CloseWorkorderRights == "E")
                 {
+                    
                     var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CloseWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
@@ -10743,6 +10795,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else if (CloseWorkorderRights == "V")
                 {
+                 
                     var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CloseWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
@@ -10759,6 +10812,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else
                 {
+                    
                     var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
@@ -10781,6 +10835,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             finally
             {
+             
                 OperationInProgress = false;
             }
         }
