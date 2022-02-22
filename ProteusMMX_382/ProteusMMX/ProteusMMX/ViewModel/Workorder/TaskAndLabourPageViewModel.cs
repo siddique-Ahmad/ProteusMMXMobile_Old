@@ -2052,17 +2052,16 @@ namespace ProteusMMX.ViewModel.Workorder
 
             if (Application.Current.Properties.ContainsKey("TaskIDkey"))
             {
-                var TaskID = Application.Current.Properties["TaskIDkey"];
-                if (TaskID != null)
+                var TaskID = Application.Current.Properties["TaskIDkey"].ToString();
+                if (!string.IsNullOrEmpty(TaskID))
                 {
-
                     taskID = Convert.ToInt32(TaskID);
                 }
             }
             if (Application.Current.Properties.ContainsKey("WorkOrderLabourIdkey"))
             {
-                var workOrderLabourId = Application.Current.Properties["WorkOrderLabourIdkey"];
-                if (workOrderLabourId != null)
+                var workOrderLabourId = Application.Current.Properties["WorkOrderLabourIdkey"].ToString();
+                if (!string.IsNullOrEmpty(workOrderLabourId))
                 {
 
                     workOrderLaborID = Convert.ToInt32(workOrderLabourId);
@@ -2070,8 +2069,8 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             if (Application.Current.Properties.ContainsKey("HrsTextkey"))
             {
-                var hrsText = Application.Current.Properties["HrsTextkey"];
-                if (hrsText != null)
+                var hrsText = Application.Current.Properties["HrsTextkey"].ToString();
+                if (!string.IsNullOrEmpty(hrsText))
                 {
                     HrsText = hrsText.ToString();
 
@@ -2079,8 +2078,8 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             if (Application.Current.Properties.ContainsKey("decHourKey"))
             {
-                var decHour = Application.Current.Properties["decHourKey"];
-                if (decHour != null)
+                var decHour = Application.Current.Properties["decHourKey"].ToString();
+                if (!string.IsNullOrEmpty(decHour))
                 {
                     decHour1 = Convert.ToDecimal(decHour);
 
