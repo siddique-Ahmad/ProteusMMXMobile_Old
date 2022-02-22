@@ -169,6 +169,9 @@
     <EmbeddedResource Update="Views\Common\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Common\ManualTimer.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Common\SignaturePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -310,6 +313,12 @@
     <EmbeddedResource Update="Views\Workorder\WorkorderTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Views\Common\ManualTimer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties Behaviors_4json1_1json__JSONSchema="http://json.schemastore.org/coffeelint" /></VisualStudio></ProjectExtensions>

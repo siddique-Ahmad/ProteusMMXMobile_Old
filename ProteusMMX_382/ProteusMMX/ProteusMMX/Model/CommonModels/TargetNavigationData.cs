@@ -58,6 +58,12 @@ namespace ProteusMMX.Model.CommonModels
 
         public int? AssetSystemID { get; set; }
 
+        public int? TaskID { get; set; }
+
+        public int? WorkOrderLabourId { get; set; }
+
+        public string HrsText { get; set; }
+
         public string SearchText { get; set; }
 
         public string FacilityName { get; set; }
