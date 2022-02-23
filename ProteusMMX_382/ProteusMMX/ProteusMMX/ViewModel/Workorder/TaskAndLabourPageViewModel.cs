@@ -975,7 +975,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             FontSize = 13,
                             FontAttributes = FontAttributes.Bold,
                             TextColor = Color.FromHex("#333333"),
-                            Text = "HourAtRate1"
+                            Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate1")
                         };
                         buttnoStackLayoutHrs.Children.Add(Hrs1);
                         buttnoStackLayoutHrs.Children.Add(BMainGrid);
@@ -1201,23 +1201,44 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         StackLayout complateButtonStackLayout = new StackLayout
                         {
-                            Margin = new Thickness(0, 0, 0, 0)
+                            Margin = new Thickness(10, 0, 0, 0)
                         };
                         BMainGrid.Children.Add(complateButtonStackLayout, 4, 0);
                         Grid complateButtonGrid = new Grid();
                         complateButtonGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                        SfButton AddTimeBtn = new SfButton
+                        ImageButton AddTimeBtn;
+                        if (item.Timer1 != null && item.Timer1 == 1)
                         {
-                            Text = "Add",
-                            Margin = new Thickness(10, 0, 0, 0),
-                            FontAttributes = FontAttributes.Bold,
-                            ShowIcon = true,
-                            WidthRequest = 50,
-                            BackgroundColor = Color.Transparent,
-                            CommandParameter = item,
-                            ImageSource = "addinsp.png",
-                        };
-                        complateButtonGrid.Children.Add(AddTimeBtn, 0, 0);
+                             AddTimeBtn = new ImageButton
+                            {
+                                WidthRequest = 35,
+                                Source = "Adddis.png",
+                                Margin = new Thickness(0, 0, 0, 0),
+                                IsEnabled=false,
+                            };
+                        }
+                        else
+                        {
+                             AddTimeBtn = new ImageButton
+                            {
+                                WidthRequest = 35,
+                                Source = "AddIcon.png",
+                                Margin = new Thickness(0, 0, 0, 0),
+                                IsEnabled=true,
+                            };
+                        }
+                            //SfButton AddTimeBtn = new SfButton
+                            //{
+                            //    Text = "Add",
+                            //    Margin = new Thickness(10, 0, 0, 0),
+                            //    FontAttributes = FontAttributes.Bold,
+                            //    ShowIcon = true,
+                            //    WidthRequest = 50,
+                            //    BackgroundColor = Color.Transparent,
+                            //    CommandParameter = item,
+                            //    ImageSource = "addinsp.png",
+                            //};
+                            complateButtonGrid.Children.Add(AddTimeBtn, 0, 0);
                         complateButtonStackLayout.Children.Add(complateButtonGrid);
 
                         #endregion
@@ -1240,7 +1261,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             FontSize = 13,
                             FontAttributes = FontAttributes.Bold,
                             TextColor = Color.FromHex("#333333"),
-                            Text = "HourAtRate2"
+                            Text = WebControlTitle.GetTargetNameByTitleName("HoursAtRate2")
                         };
                         startStopButtonGridHoursforRate2.Children.Add(Hrs2);
                         startStopButtonGridHoursforRate2.Children.Add(BMainGridforRate2);
@@ -1429,17 +1450,39 @@ namespace ProteusMMX.ViewModel.Workorder
                         BMainGridforRate2.Children.Add(complateButtonStackLayoutforRate2, 4, 0);
                         Grid complateButtonGridforRate2 = new Grid();
                         complateButtonGridforRate2.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                        SfButton AddTimeBtn2 = new SfButton
+                        ImageButton AddTimeBtn2;
+                       
+                        if (item.Timer2 != null && item.Timer2 == 4)
                         {
-                            Text = "Add",
-                            Margin = new Thickness(0, 0, 0, 0),
-                            FontAttributes = FontAttributes.Bold,
-                            ShowIcon = true,
-                            WidthRequest = 50,
-                            BackgroundColor = Color.Transparent,
-                            CommandParameter = item,
-                            ImageSource = "addinsp.png",
-                        };
+                             AddTimeBtn2 = new ImageButton
+                            {
+                                WidthRequest = 35,
+                                Source = "Adddis.png",
+                                Margin = new Thickness(0, 0, 0, 0),
+                                IsEnabled=false,
+                            };
+                        }
+                        else
+                        {
+                             AddTimeBtn2 = new ImageButton
+                            {
+                                WidthRequest = 35,
+                                Source = "AddIcon.png",
+                                Margin = new Thickness(0, 0, 0, 0),
+                                 IsEnabled = true,
+                             };
+                        }
+                        //SfButton AddTimeBtn2 = new SfButton
+                        //{
+                        //    Text = "Add",
+                        //    Margin = new Thickness(0, 0, 0, 0),
+                        //    FontAttributes = FontAttributes.Bold,
+                        //    ShowIcon = true,
+                        //    WidthRequest = 50,
+                        //    BackgroundColor = Color.Transparent,
+                        //    CommandParameter = item,
+                        //    ImageSource = "addinsp.png",
+                        //};
                         complateButtonGridforRate2.Children.Add(AddTimeBtn2, 0, 0);
                         complateButtonStackLayoutforRate2.Children.Add(complateButtonGridforRate2);
 
@@ -1741,7 +1784,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             stopButton.IsEnabled = true;
                            
                             await OnViewAppearingAsync(null);
-                            UserDialogs.Instance.HideLoading();
+                           // UserDialogs.Instance.HideLoading();
                             DialogService.ShowToast("Timer Successfully Started");
                         }
 
@@ -1896,7 +1939,7 @@ namespace ProteusMMX.ViewModel.Workorder
                              TargetNavigationData tnobj1 = new TargetNavigationData();
                              tnobj1.TaskID = item.TaskID;
                              tnobj1.WorkOrderLabourId = item.WorkOrderLaborID;
-                             tnobj1.HrsText = "Hour At Rate 1";
+                             tnobj1.HrsText = "HoursAtRate1";
                              // var ManualTimer = new ManualTimer(tnobj1);
                              //await Navigation.PushPopupAsync(ManualTimer);
                              await Application.Current.MainPage.Navigation.PushAsync(new ManualTimer(tnobj1));
@@ -1909,7 +1952,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             TargetNavigationData tnobj1 = new TargetNavigationData();
                             tnobj1.TaskID = item.TaskID;
                             tnobj1.WorkOrderLabourId = item.WorkOrderLaborID;
-                            tnobj1.HrsText = "Hour At Rate 2";
+                            tnobj1.HrsText = "HoursAtRate2";
                             // var ManualTimer = new ManualTimer(tnobj1);
                             //await Navigation.PushPopupAsync(ManualTimer);
                             await Application.Current.MainPage.Navigation.PushAsync(new ManualTimer(tnobj1));
@@ -1957,7 +2000,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         #endregion
                         async void OnAlertYesNoClicked(int? taskID, int? workOrderLaborID)
                         {
-                            var result = await DialogService.ShowConfirmAsync("Did you finish your work...?", WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
+                            var result = await DialogService.ShowConfirmAsync(WebControlTitle.GetTargetNameByTitleName("Didyoufinishyourwork...?"), WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
 
                             if (result == true)
                             {
@@ -1982,14 +2025,14 @@ namespace ProteusMMX.ViewModel.Workorder
                                 var response = await _taskAndLabourService.UpdateTaskAndLabour(workOrderWrapper);
                                 if (response != null && bool.Parse(response.servicestatus))
                                 {
-                                    UserDialogs.Instance.HideLoading();
+                                    //UserDialogs.Instance.HideLoading();
                                     await this.OnViewAppearingAsync(null);
                                     DialogService.ShowToast("Timer Successfully Stopped");
                                 }
                             }
                             else
                             {
-                                UserDialogs.Instance.HideLoading();
+                               // UserDialogs.Instance.HideLoading();
                                 await this.OnViewAppearingAsync(null);
                                 DialogService.ShowToast("Timer Successfully Stopped");
                             }
@@ -1999,18 +2042,18 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             try
                             {
-                                OperationInProgress = true;
+                                UserDialogs.Instance.ShowLoading("", MaskType.Gradient);
                                 await SaveTaskAndLabour(sender, e);
                             }
                             catch (Exception ex)
                             {
-                                OperationInProgress = false;
-
+                                //OperationInProgress = false;
+                                UserDialogs.Instance.HideLoading();
                             }
 
                             finally
                             {
-                                OperationInProgress = false;
+                                //OperationInProgress = false;
                             }
                         };
 
@@ -2086,7 +2129,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
 
-            if (!string.IsNullOrEmpty(HrsText) && HrsText == "Hour At Rate 1")
+            if (!string.IsNullOrEmpty(HrsText) && HrsText == "HoursAtRate1")
             {
                 try
                 {
@@ -2201,7 +2244,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
 
-            if (!string.IsNullOrEmpty(HrsText) && HrsText == "Hour At Rate 2")
+            if (!string.IsNullOrEmpty(HrsText) && HrsText == "HoursAtRate2")
             {
                 try
                 {
@@ -2950,7 +2993,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 try
                 {
-                    OperationInProgress = true;
+                    // OperationInProgress = true;
+                    UserDialogs.Instance.ShowLoading("", MaskType.Gradient);
                     string HrsText = "";
                     if (Application.Current.Properties.ContainsKey("HrsTextkey"))
                     {
@@ -2972,13 +3016,14 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 catch (Exception ex)
                 {
-
-                    OperationInProgress = false;
+                    UserDialogs.Instance.HideLoading();
+                    // OperationInProgress = false;
                 }
 
                 finally
                 {
-                    OperationInProgress = false;
+                    UserDialogs.Instance.HideLoading();
+                    // OperationInProgress = false;
                 }
 
             }

@@ -1,4 +1,5 @@
-﻿using ProteusMMX.Model.CommonModels;
+﻿using ProteusMMX.Helpers;
+using ProteusMMX.Model.CommonModels;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -26,6 +27,9 @@ namespace ProteusMMX.Views.Common
                 TaskID.Text = navigationParams.TaskID.ToString();
                 WorkOrderLabourId.Text = navigationParams.WorkOrderLabourId.ToString();
                 HrsText.Text = navigationParams.HrsText.ToString();
+                HrsText1.Text = WebControlTitle.GetTargetNameByTitleName(HrsText.Text);
+                Cancel.Text= WebControlTitle.GetTargetNameByTitleName("Cancel");
+                Save.Text = WebControlTitle.GetTargetNameByTitleName("Save");
             }
 
         }

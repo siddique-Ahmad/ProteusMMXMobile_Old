@@ -10,9 +10,9 @@
             <StackLayout VerticalOptions="Center" Spacing="0" HorizontalOptions="Center"  BackgroundColor="Transparent">
                 <Label x:Name="TaskID" IsVisible="False"/>
                 <Label x:Name="WorkOrderLabourId" IsVisible="False"/>
-                <!--<Label x:Name="HrsText" IsVisible="False"/>-->
+                <Label x:Name="HrsText" IsVisible="False"/>
                 <border:SfBorder BackgroundColor="#006de0" HeightRequest="40" >
-                    <Label x:Name="HrsText" FontSize="18" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  FontAttributes="Bold"/>
+                    <Label x:Name="HrsText1" FontSize="18" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"  FontAttributes="Bold"/>
                 </border:SfBorder>
                 <StackLayout Orientation="Vertical" VerticalOptions="Center" HeightRequest="120"  Padding="20,20,20,15" WidthRequest="270" BackgroundColor="White">
                     <StackLayout.Resources>
@@ -48,8 +48,8 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button Text="Cancel" CornerRadius="5"  Clicked="CancelBtn_Clicked" BackgroundColor="#c2c2c2" HeightRequest="40" WidthRequest="90" VerticalOptions="CenterAndExpand" Grid.Column="0" Grid.Row="0"  HorizontalOptions="CenterAndExpand"/>
-                            <Button Text="Save" CornerRadius="5" Clicked="SaveBtn_Clicked"  BackgroundColor="#006de0" TextColor="White" HeightRequest="40" WidthRequest="90" VerticalOptions="CenterAndExpand" Grid.Column="1" Grid.Row="0"  HorizontalOptions="CenterAndExpand"/>
+                            <Button x:Name="Cancel"  CornerRadius="5"  Clicked="CancelBtn_Clicked" BackgroundColor="#c2c2c2" HeightRequest="40" WidthRequest="90" VerticalOptions="CenterAndExpand" Grid.Column="0" Grid.Row="0"  HorizontalOptions="CenterAndExpand"/>
+                            <Button x:Name="Save" CornerRadius="5" Clicked="SaveBtn_Clicked"  BackgroundColor="#006de0" TextColor="White" HeightRequest="40" WidthRequest="90" VerticalOptions="CenterAndExpand" Grid.Column="1" Grid.Row="0"  HorizontalOptions="CenterAndExpand"/>
                         </Grid>
                     </StackLayout>
                 </StackLayout>
