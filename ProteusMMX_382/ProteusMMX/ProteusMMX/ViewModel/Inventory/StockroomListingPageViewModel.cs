@@ -35,6 +35,8 @@ namespace ProteusMMX.ViewModel.Inventory
 
         protected readonly IInventoryService _inventoryService;
 
+        protected readonly IWorkorderService _workorderService;
+
 
         #endregion
 
@@ -548,6 +550,64 @@ namespace ProteusMMX.ViewModel.Inventory
 
 
         #region Methods
+
+        public async Task GetInventoryControlRights()
+        {
+
+            ServiceOutput FormControlsAndRightsForInventory = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "StockroomParts", "Dialog");
+
+
+            if (FormControlsAndRightsForInventory != null && FormControlsAndRightsForInventory.lstModules != null && FormControlsAndRightsForInventory.lstModules.Count > 0)
+            {
+                var StockroomParts = FormControlsAndRightsForInventory.lstModules[0];
+                if (StockroomParts.ModuleName == "StockroomParts") //ModuleName can't be  changed in service
+                {
+                    if (StockroomParts.lstSubModules != null && StockroomParts.lstSubModules.Count > 0)
+                    {
+                        var StockroomPartsSubModule = StockroomParts.lstSubModules[0];
+                        if (StockroomPartsSubModule.listControls != null && StockroomPartsSubModule.listControls.Count > 0)
+                        {
+                            try
+                            {
+                                Application.Current.Properties["StockroomPartsVisibilityKey"] = StockroomParts.Expression;
+                                Application.Current.Properties["StockroomTransactionDialog"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "StockroomTransactionDialog").Expression;
+                                Application.Current.Properties["ShelfBinKey"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "ShelfBin").Expression;
+
+                                Application.Current.Properties["InventoryPerformTransaction"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "PerformTransaction").Expression;
+                                Application.Current.Properties["UpdateLastPhysicalInventorydate"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UpdateLastPhysicalInventorydate").Expression;
+                                Application.Current.Properties["InventoryUserField1"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField1").Expression;
+                                Application.Current.Properties["InventoryUserField2"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField2").Expression;
+                                Application.Current.Properties["InventoryUserField3"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField3").Expression;
+                                Application.Current.Properties["InventoryUserField4"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UserField4").Expression;
+                                Application.Current.Properties["InventoryPartNumber"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "PartNumber").Expression;
+                                Application.Current.Properties["InventoryPartName"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "PartName").Expression;
+                                Application.Current.Properties["InventoryQuantityOnHand"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "QuantityOnHand").Expression;
+                                Application.Current.Properties["InventoryCostCenterName"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "CostCenterName").Expression;
+                                Application.Current.Properties["InventoryDescription"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
+                                Application.Current.Properties["InventoryTransactionReasonName"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "TransactionReasonName").Expression;
+                                Application.Current.Properties["InventoryTransactor"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Transactor").Expression;
+                                Application.Current.Properties["InventoryUnitCostID"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "UnitCostID").Expression;
+                                Application.Current.Properties["InventoryCheckOutTo"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "CheckOutTo").Expression;
+                                Application.Current.Properties["InventoryTransactionType"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "TransactionType").Expression;
+                                Application.Current.Properties["InventoryTransactionQuantity"] = StockroomPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "TransactionQuantity").Expression;
+
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
+
+
+                        }
+
+
+
+                    }
+                }
+            }
+
+        }
         public override async Task InitializeAsync(object navigationData)
         {
             try
@@ -565,7 +625,7 @@ namespace ProteusMMX.ViewModel.Inventory
 
                 OperationInProgress = true;
                 await SetTitlesPropertiesForPage();
-                
+                await GetInventoryControlRights();
                 //FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.InventoryModuleName);
                 await CreateControlsForPage();
 
@@ -606,11 +666,12 @@ namespace ProteusMMX.ViewModel.Inventory
             }
         }
 
-        public StockroomListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IInventoryService inventoryService)
+        public StockroomListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IInventoryService inventoryService, IWorkorderService workorderService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _inventoryService = inventoryService;
+            _workorderService = workorderService;
         }
 
         public async Task SetTitlesPropertiesForPage()

@@ -1420,13 +1420,13 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 DateTime dt;
                 if (DateTime.TryParse(StartDate.ToString(), out dt))
                 {
-                    parsedFinalStartDate = dt.ToString("dd-MMM-yyyy hh:mmtt");
+                    parsedFinalStartDate = dt.ToString("dd-MMM-yyyy");
                 }
                 string parsedFinalEndDate = string.Empty;
                 DateTime dt1;
                 if (DateTime.TryParse(EndDate.ToString(), out dt1))
                 {
-                    parsedFinalEndDate = dt1.ToString("dd-MMM-yyyy hh:mmtt");
+                    parsedFinalEndDate = dt1.ToString("dd-MMM-yyyy");
                 }
 
               

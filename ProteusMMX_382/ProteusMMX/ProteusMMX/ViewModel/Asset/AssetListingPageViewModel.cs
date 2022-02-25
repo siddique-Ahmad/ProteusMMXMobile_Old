@@ -36,6 +36,8 @@ namespace ProteusMMX.ViewModel.Asset
 
         protected readonly IAssetModuleService _assetService;
 
+        protected readonly IWorkorderService _workorderService;
+
         public readonly INavigationService _navigationService;
 
         Page page;
@@ -625,7 +627,7 @@ namespace ProteusMMX.ViewModel.Asset
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                 //OperationInProgress = true;
                 await SetTitlesPropertiesForPage();
-
+                await GetAssetControlRights();
                 if (Application.Current.Properties.ContainsKey("CreateAssetKey"))
                 {
                     var CreateRights = Application.Current.Properties["CreateAssetKey"].ToString();
@@ -687,12 +689,13 @@ namespace ProteusMMX.ViewModel.Asset
 
         //}
 
-        public AssetListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IAssetModuleService assetService, INavigationService navigationService)
+        public AssetListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IAssetModuleService assetService, INavigationService navigationService, IWorkorderService workorderService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _assetService = assetService;
             _navigationService = navigationService;
+            _workorderService = workorderService;
 
         }
         //public async Task NavigationFromAssetListing(string AssetSytemName,string AssetSystemNumber)
@@ -1063,7 +1066,81 @@ namespace ProteusMMX.ViewModel.Asset
                 }
             }
         }
+        public async Task GetAssetControlRights()
+        {
 
+            ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "Assets", "Details");
+            ServiceOutput FormControlsAndRightsForButton = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "Assets", "Assets");
+
+            if (FormControlsAndRightsForButton != null && FormControlsAndRightsForButton.lstModules != null && FormControlsAndRightsForButton.lstModules.Count > 0)
+            {
+                var AssetModule = FormControlsAndRightsForButton.lstModules[0];
+                if (AssetModule.ModuleName == "Assets") //ModuleName can't be  changed in service
+                {
+                    if (AssetModule.lstSubModules != null && AssetModule.lstSubModules.Count > 0)
+                    {
+                        var AssetSubModule = AssetModule.lstSubModules[0];
+                        if (AssetSubModule.listControls != null && AssetSubModule.listControls.Count > 0)
+                        {
+                            try
+                            {
+                                Application.Current.Properties["CreateAssetKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
+                                Application.Current.Properties["EditAssetKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+                                Application.Current.Properties["IssueWorkorderKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "IssueWorkOrder").Expression;
+
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
+
+
+
+
+                        }
+
+
+
+                    }
+                }
+            }
+            if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
+            {
+                var AssetModule = FormControlsAndRightsForDetails.lstModules[0];
+                if (AssetModule.ModuleName == "Details") //ModuleName can't be  changed in service
+                {
+
+                    if (AssetModule.lstSubModules != null && AssetModule.lstSubModules.Count > 0)
+                    {
+                        var AssetSubModule = AssetModule.lstSubModules[0];
+                        if (AssetSubModule.listControls != null && AssetSubModule.listControls.Count > 0)
+                        {
+                            try
+                            {
+                                Application.Current.Properties["DescriptionTabKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
+                                Application.Current.Properties["AssetAdditionalDetailsTabKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
+                                Application.Current.Properties["AssetLocationDetailsTabKey"] = AssetSubModule.listControls.FirstOrDefault(i => i.ControlName == "Location").Expression;
+                                // Application.Current.Properties["AssetDetailsTabKey"] = AssetSubModule;    
+                                Application.Current.Properties["AssetsDetailsControls"] = AssetSubModule;
+                            }
+                            catch (Exception ex)
+                            {
+
+
+                            }
+
+
+
+                        }
+
+
+
+                    }
+                }
+            }
+
+        }
         public async Task OnViewAppearingAsync(VisualElement view)
         {
        

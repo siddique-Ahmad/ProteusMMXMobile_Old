@@ -21,7 +21,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
             {
                 if (AppSettings.User.RequireSignaturesForValidation == "True")
                 {
-                    this.SignatureLayout.SetValue(Grid.RowProperty, 34);
+                    this.SignatureLayout.SetValue(Grid.RowProperty, 35);
                 }
                 else
                 {
@@ -30,7 +30,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
             }
             else
             {
-                this.SignatureLayout.SetValue(Grid.RowProperty, 34);
+                this.SignatureLayout.SetValue(Grid.RowProperty, 35);
             }
 
 

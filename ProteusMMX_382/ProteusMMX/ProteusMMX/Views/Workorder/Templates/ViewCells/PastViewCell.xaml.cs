@@ -326,29 +326,29 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
 
         private void Cell_OnAppearing(object sender, EventArgs e)
         {
-            if (Device.RuntimePlatform == Device.UWP)
-            {
+            //if (Device.RuntimePlatform == Device.UWP)
+            //{
 
-                var viewCell = (ViewCell)sender;
-                if (viewCell.View != null && viewCell.View.BackgroundColor == default(Color))
-                {
-                    int rowindex = Convert.ToInt32(Application.Current.Properties["gridrowindex"]);
-                    if (rowindex % 2 == 0)
-                    {
-                        // rowcolor = Color.White;
-                        viewCell.View.BackgroundColor = Color.White;
+            //    var viewCell = (ViewCell)sender;
+            //    if (viewCell.View != null && viewCell.View.BackgroundColor == default(Color))
+            //    {
+            //        int rowindex = Convert.ToInt32(Application.Current.Properties["gridrowindex"]);
+            //        if (rowindex % 2 == 0)
+            //        {
+            //            rowcolor = Color.White;
+            //            viewCell.View.BackgroundColor = Color.White;
 
 
-                    }
-                    else
-                    {
+            //        }
+            //        else
+            //        {
 
-                        viewCell.View.BackgroundColor = Color.FromHex("#D3D3D3");
-                    }
-                    rowindex = rowindex + 1;
-                    Application.Current.Properties["gridrowindex"] = rowindex;
-                }
-            }
+            //            viewCell.View.BackgroundColor = Color.FromHex("#D3D3D3");
+            //        }
+            //        rowindex = rowindex + 1;
+            //        Application.Current.Properties["gridrowindex"] = rowindex;
+            //    }
+            //}
         }
     }
 }
