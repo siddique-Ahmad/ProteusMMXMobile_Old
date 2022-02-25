@@ -41,7 +41,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
         protected readonly IServiceRequestModuleService _serviceRequestService;
 
-
+        protected readonly IWorkorderService _workorderService;
         #endregion
 
         #region Properties
@@ -564,6 +564,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
 
                 OperationInProgress = true;
+                await GetServiceRequestControlRights();
                 await SetTitlesPropertiesForPage();
                 if (Application.Current.Properties.ContainsKey("CreateServiceRequestKey"))
                 {
@@ -624,11 +625,12 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 OperationInProgress = false;
             }
         }
-        public ServiceRequestListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IServiceRequestModuleService _serviceReqService)
+        public ServiceRequestListingPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IServiceRequestModuleService _serviceReqService, IWorkorderService workorderService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
             _serviceRequestService = _serviceReqService;
+            _workorderService = workorderService;
 
         }
 
@@ -1181,6 +1183,212 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
             this.SearchText = "";
+        }
+        public async Task GetServiceRequestControlRights()
+        {
+            try
+            {
+                ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "Details");
+                ServiceOutput FormControlsAndRightsForButton = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "ServiceRequest");
+                ServiceOutput FormControlsAndRightsForOperatorTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "OperatorTag");
+                ServiceOutput FormControlsAndRightsForMaintenanceTag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "MaintenanceTag");
+                ServiceOutput FormControlsAndRightsForSHETag = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "SHETag");
+
+                if (FormControlsAndRightsForButton != null && FormControlsAndRightsForButton.lstModules != null && FormControlsAndRightsForButton.lstModules.Count > 0)
+                {
+                    var ServiceRequestModule = FormControlsAndRightsForButton.lstModules[0];
+                    if (ServiceRequestModule.ModuleName == "ServiceRequests") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModule.lstSubModules != null && ServiceRequestModule.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModule = ServiceRequestModule.lstSubModules[0];
+                            if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                            {
+
+                                try
+                                {
+                                    Application.Current.Properties["AcceptKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Accept").Expression;
+                                    Application.Current.Properties["DEclineKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Decline").Expression;
+                                    Application.Current.Properties["CreateServiceRequestKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
+                                    Application.Current.Properties["EditServiceRequestKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+
+
+
+                            }
+
+
+
+                        }
+                    }
+                    var ServiceRequestModuleAttachment = FormControlsAndRightsForButton.lstModules[2];
+                    if (ServiceRequestModuleAttachment.ModuleName == "Attachments") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModuleAttachment.lstSubModules != null && ServiceRequestModuleAttachment.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModule = ServiceRequestModuleAttachment.lstSubModules[0];
+                            if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                            {
+                                try
+                                {
+                                    Application.Current.Properties["CreateSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
+                                    Application.Current.Properties["RemoveSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+                                    Application.Current.Properties["AttachmentFiles"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Attach").Expression;
+                                    Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestModuleAttachment.Expression;
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
+                {
+                    var ServiceRequestModule = FormControlsAndRightsForDetails.lstModules[0];
+                    if (ServiceRequestModule.ModuleName == "Details") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModule.lstSubModules != null && ServiceRequestModule.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModule = ServiceRequestModule.lstSubModules[0];
+                            if (ServiceRequestSubModule.listControls != null && ServiceRequestSubModule.listControls.Count > 0)
+                            {
+
+
+                                try
+                                {
+                                    Application.Current.Properties["PriorityTabKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
+                                    Application.Current.Properties["ServiceRequestAdditionalDetailsKey"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
+                                    Application.Current.Properties["ServiceRequestDetailsControls"] = ServiceRequestSubModule;
+                                    Application.Current.Properties["ServiceRequestTarget"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression; ;
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+                            }
+
+
+
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForSHETag != null && FormControlsAndRightsForSHETag.lstModules != null && FormControlsAndRightsForSHETag.lstModules.Count > 0)
+                {
+                    var ServiceRequestModuleSHETAg = FormControlsAndRightsForSHETag.lstModules[0];
+                    if (ServiceRequestModuleSHETAg.ModuleName == "SHETagDetail") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                            if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                            {
+
+
+                                try
+                                {
+                                    Application.Current.Properties["SHETagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+                            }
+
+
+
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForMaintenanceTag != null && FormControlsAndRightsForMaintenanceTag.lstModules != null && FormControlsAndRightsForMaintenanceTag.lstModules.Count > 0)
+                {
+                    var ServiceRequestModuleSHETAg = FormControlsAndRightsForMaintenanceTag.lstModules[0];
+                    if (ServiceRequestModuleSHETAg.ModuleName == "MaintenanceTagDetail") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                            if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                            {
+
+
+                                try
+                                {
+                                    Application.Current.Properties["MaintenanceTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+                            }
+
+
+
+                        }
+                    }
+                }
+
+                if (FormControlsAndRightsForOperatorTag != null && FormControlsAndRightsForOperatorTag.lstModules != null && FormControlsAndRightsForOperatorTag.lstModules.Count > 0)
+                {
+                    var ServiceRequestModuleSHETAg = FormControlsAndRightsForOperatorTag.lstModules[0];
+                    if (ServiceRequestModuleSHETAg.ModuleName == "OperatorTagDetail") //ModuleName can't be  changed in service
+                    {
+                        if (ServiceRequestModuleSHETAg.lstSubModules != null && ServiceRequestModuleSHETAg.lstSubModules.Count > 0)
+                        {
+                            var ServiceRequestSubModuleSheTAg = ServiceRequestModuleSHETAg.lstSubModules[0];
+                            if (ServiceRequestSubModuleSheTAg.listControls != null && ServiceRequestSubModuleSheTAg.listControls.Count > 0)
+                            {
+
+                                try
+                                {
+                                    Application.Current.Properties["OperatorTagTypeKey"] = ServiceRequestSubModuleSheTAg.listControls.FirstOrDefault(i => i.ControlName == "TagType").Expression;
+                                }
+                                catch (Exception ex)
+                                {
+
+
+                                }
+
+
+
+                            }
+
+
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+
         }
         #endregion
     }
