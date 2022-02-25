@@ -1784,7 +1784,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             stopButton.IsEnabled = true;
                            
                             await OnViewAppearingAsync(null);
-                           // UserDialogs.Instance.HideLoading();
+                           UserDialogs.Instance.HideLoading();
                             DialogService.ShowToast("Timer Successfully Started");
                         }
 
@@ -1887,9 +1887,9 @@ namespace ProteusMMX.ViewModel.Workorder
                                if (response != null && bool.Parse(response.servicestatus))
                                {
                                    OnAlertYesNoClicked(workOrderLabor.TaskID, workOrderLabor.WorkOrderLaborID);
-                                   //UserDialogs.Instance.HideLoading();
-                                   //await OnViewAppearingAsync(null);
-                                   //DialogService.ShowToast("Timer Successfully Stopped");
+                                   UserDialogs.Instance.HideLoading();
+                                   await OnViewAppearingAsync(null);
+                                   DialogService.ShowToast("Timer Successfully Stopped");
                                }
 
                            };
@@ -1925,7 +1925,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             if (response != null && bool.Parse(response.servicestatus))
                             {
                                 OnAlertYesNoClicked(workOrderLabor.TaskID, workOrderLabor.WorkOrderLaborID);
-                                
+                                UserDialogs.Instance.HideLoading();
+                                await OnViewAppearingAsync(null);
+                                DialogService.ShowToast("Timer Successfully Stopped");
                             }
 
 
