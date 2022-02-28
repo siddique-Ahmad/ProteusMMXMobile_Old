@@ -77,6 +77,9 @@
                         <Image.Source>
                             <OnPlatform x:TypeArguments="ImageSource" >
                                 <OnPlatform.Android>barcerch.png</OnPlatform.Android>
+                                <OnPlatform.iOS>
+                                    <FileImageSource File="barcerch.png"/>
+                                </OnPlatform.iOS>
                             </OnPlatform>
                         </Image.Source>
                         <Image.GestureRecognizers>

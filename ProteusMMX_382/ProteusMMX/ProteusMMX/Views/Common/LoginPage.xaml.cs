@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
 
 namespace ProteusMMX.Views.Common
@@ -26,7 +27,7 @@ namespace ProteusMMX.Views.Common
         {
             
             InitializeComponent();
-
+            On<Xamarin.Forms.PlatformConfiguration.iOS>().SetUseSafeArea(true);
             if (Device.Idiom == TargetIdiom.Phone)
             {
                 Phone.IsVisible = true;
@@ -39,7 +40,7 @@ namespace ProteusMMX.Views.Common
             }
             //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
             //((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
-            NavigationPage.SetHasBackButton(this, false);
+            Xamarin.Forms.NavigationPage.SetHasBackButton(this, false);
 
           
 
@@ -47,7 +48,7 @@ namespace ProteusMMX.Views.Common
             {
                 try
                 {
-                    Entry siteurl = sender as Entry;
+                    Xamarin.Forms.Entry siteurl = sender as Xamarin.Forms.Entry;
 
                     var FDALicensekey = await AuthService.GetFDAValidationAsync(siteurl.Text, null);
                     if (FDALicensekey != null)
@@ -81,7 +82,7 @@ namespace ProteusMMX.Views.Common
         {
             base.OnAppearing();
 
-            NavigationPage.SetHasBackButton(this, false); // I wanted just the button to be hidden
+            Xamarin.Forms.NavigationPage.SetHasBackButton(this, false); // I wanted just the button to be hidden
 
         }
 
