@@ -116,7 +116,10 @@
                                 <Image.Source>
                                     <OnPlatform x:TypeArguments="ImageSource" >
                                         <OnPlatform.Android>searchicon.png</OnPlatform.Android>
-                                    </OnPlatform>
+                                            <OnPlatform.iOS>
+                                                <FileImageSource File="searchicon.png"/>
+                                            </OnPlatform.iOS>
+                                        </OnPlatform>
                                 </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer
@@ -133,7 +136,10 @@
                                     <Image.Source>
                                         <OnPlatform x:TypeArguments="ImageSource" >
                                                 <OnPlatform.Android>searchN.png</OnPlatform.Android>
-                                        </OnPlatform>
+                                                <OnPlatform.iOS>
+                                                    <FileImageSource File="searchN.png"/>
+                                                </OnPlatform.iOS>
+                                            </OnPlatform>
                                     </Image.Source>
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer
@@ -145,7 +151,10 @@
                                     <Image.Source>
                                         <OnPlatform x:TypeArguments="ImageSource" >
                                                 <OnPlatform.Android>clearN.png</OnPlatform.Android>
-                                        </OnPlatform>
+                                                <OnPlatform.iOS>
+                                                    <FileImageSource File="clearN.png"/>
+                                                </OnPlatform.iOS>
+                                            </OnPlatform>
                                     </Image.Source>
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer

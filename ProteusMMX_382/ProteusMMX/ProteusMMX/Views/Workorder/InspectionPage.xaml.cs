@@ -2757,10 +2757,10 @@ namespace ProteusMMX.Views.Workorder
             };
 
             var MiscellGrid = MiscellaneousGrid.Height;
-            layout2Test.HeightRequest = MinimumHeightRequest=500; 
+            layout2Test.HeightRequest = MinimumHeightRequest=1000; 
 
             var GroupSGrid = MiscellaneousGrid.Height;
-            GroupSecSlCaseTest1.HeightRequest=1200;
+            GroupSecSlCaseTest1.HeightRequest=2000;
 
             tabView.Items = tabItems;
             MainLayout.Children.Add(tabView);

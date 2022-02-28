@@ -28,6 +28,7 @@ namespace ProteusMMX.iOS
             global::Xamarin.Forms.Forms.Init();
 
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
+            Syncfusion.XForms.iOS.Buttons.SfSwitchRenderer.Init();
             LoadApplication(new App());
             AppCenter.Start("7edb0700-5702-4890-9beb-3561942dd6f4", typeof(Analytics), typeof(Crashes));
             return base.FinishedLaunching(app, options);
