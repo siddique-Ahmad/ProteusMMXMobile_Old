@@ -1735,10 +1735,10 @@ namespace ProteusMMX.ViewModel.Workorder
                             ClientIANATimeZone = AppSettings.ClientIANATimeZone,
                             workOrderLabor = new WorkOrderLabor
                             {
-                                StartDate = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                                 EndDate = null,
                               
-                                HoursAtRate1Start = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                HoursAtRate1Start = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                                 ModifiedUserName = AppSettings.User.UserName,
                                 WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
                                 WorkOrderID = this.WorkorderID,
@@ -1803,10 +1803,10 @@ namespace ProteusMMX.ViewModel.Workorder
                                 ClientIANATimeZone = AppSettings.ClientIANATimeZone,
                                 workOrderLabor = new WorkOrderLabor
                                 {
-                                    StartDate = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                    StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                                     EndDate = null,                                   
                                     IsMannual = false,
-                                    HoursAtRate2Start = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                    HoursAtRate2Start = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                                     ModifiedUserName = AppSettings.User.UserName,
                                     WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
                                     WorkOrderID = this.WorkorderID,
@@ -1869,11 +1869,11 @@ namespace ProteusMMX.ViewModel.Workorder
                                    workOrderLabor = new WorkOrderLabor
                                    {
                                        StartDate = null,
-                                       EndDate = DateTime.Now.Add(DateTime.Now.TimeOfDay),
-                                      
+                                       EndDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+
                                        HoursAtRate1Start = null,
                                        IsMannual = false,
-                                       HoursAtRate1Stop = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                       HoursAtRate1Stop = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                                        ModifiedUserName = AppSettings.User.UserName,
                                        WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
                                        WorkOrderID = this.WorkorderID,
@@ -1907,11 +1907,11 @@ namespace ProteusMMX.ViewModel.Workorder
                                 workOrderLabor = new WorkOrderLabor
                                 {
                                     StartDate = null,
-                                    EndDate = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                    EndDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),,
                                    
                                     HoursAtRate1Start = null,
                                     IsMannual = false,
-                                    HoursAtRate2Stop = DateTime.Now.Add(DateTime.Now.TimeOfDay),
+                                    HoursAtRate2Stop = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                                     ModifiedUserName = AppSettings.User.UserName,
                                     WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
                                     WorkOrderID = this.WorkorderID,
