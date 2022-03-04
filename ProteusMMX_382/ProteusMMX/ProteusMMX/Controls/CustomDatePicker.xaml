@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Label TextColor="Black" FontAttributes="Bold"  BindingContext="{x:Reference Name=Control}" Text="{Binding SelectedDate , Mode=TwoWay, StringFormat='{0:MMMM d, yyyy}'}" WidthRequest="150" VerticalTextAlignment="Center"/>
+            <Label TextColor="Black" FontAttributes="None" FontSize="13" BindingContext="{x:Reference Name=Control}" Text="{Binding SelectedDate , Mode=TwoWay, StringFormat='{0:MMMM d, yyyy}'}" WidthRequest="150" VerticalTextAlignment="Center"/>
             <Image Grid.Column="1">
                 <Image.Source>
                     <OnPlatform x:TypeArguments="FileImageSource">
@@ -61,7 +61,7 @@
                 </Image.GestureRecognizers>
             </Image>
 
-            <Label Grid.Row="1" TextColor="Black" BindingContext="{x:Reference Name=Control}" FontSize="12" Text="{Binding WarningText}" />
+            <Label Grid.Row="1" TextColor="Black"  BindingContext="{x:Reference Name=Control}" FontSize="10" Text="{Binding WarningText}" />
 
 
         </Grid>
