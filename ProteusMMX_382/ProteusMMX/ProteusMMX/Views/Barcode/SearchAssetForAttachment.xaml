@@ -74,7 +74,12 @@
                             <cards:CarouselView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"   ItemsSource="{Binding Attachments}" x:Name="CarouselView" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}" BackgroundColor="White">
                                 <cards:CarouselView.ItemTemplate>
                                     <DataTemplate>
-                                        <Grid>
+                                        <ScrollView  VerticalOptions="FillAndExpand"   VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Always" >
+                                            <StackLayout >
+                                                <Image Aspect="Fill" Grid.RowSpan="2" Source="{Binding AttachmentImageSource}"/>
+                                            </StackLayout>
+                                        </ScrollView>
+                                        <!--<Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
                                                 <RowDefinition Height="Auto"/>
@@ -82,7 +87,7 @@
                                             <StackLayout HeightRequest="450" WidthRequest='450'>
                                                 <Image Grid.RowSpan="2"   Aspect="AspectFit"  Source="{Binding AttachmentImageSource}"/>
                                             </StackLayout>
-                                        </Grid>
+                                        </Grid>-->
                                     </DataTemplate>
                                 </cards:CarouselView.ItemTemplate>
                             </cards:CarouselView>

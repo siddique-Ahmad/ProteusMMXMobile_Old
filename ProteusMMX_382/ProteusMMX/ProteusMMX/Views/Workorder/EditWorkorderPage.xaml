@@ -202,31 +202,18 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <Entry Text="{Binding ActivationDateText}" IsEnabled="False" ></Entry>
+                                    <Entry Text="{Binding ActivationDateText}" FontSize="13" IsEnabled="False" ></Entry>
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="0" IsVisible="{Binding AssetIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="4" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="2" IsVisible="{Binding AssetIsVisible}">
                                 <Label Text="{Binding TargetTitle}" TextColor="Black" FontAttributes="Bold" Style="{StaticResource LabelStyle}">
 
                                 </Label>
                                 <Label Text="{Binding TargetName}"/>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="1" IsVisible="{Binding RequestedDateIsVisible }">
-                                <Label Text="{Binding RequestedDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <Entry Text="{Binding RequestedDate}" IsEnabled="False" ></Entry>
-                                </border:SfBorder>
-                            </StackLayout>
-
+                            
 
                             <StackLayout Orientation="Vertical" Grid.Row="5" Grid.Column="0" IsVisible="{Binding AssetIsVisible}">
                                 <Label Text="{Binding FacilityTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
@@ -312,6 +299,21 @@
                                 <Button Text="{Binding AssignToEmployeeName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding AssignToCommand}" IsEnabled="{Binding AssignToEmployeeIsEnable}" />
 
                             </StackLayout>
+
+                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1" IsVisible="{Binding RequestedDateIsVisible }">
+                                <Label Text="{Binding RequestedDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes">
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Label.FontAttributes>
+                                </Label>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                    <Entry Text="{Binding RequestedDate}" IsEnabled="False" ></Entry>
+                                </border:SfBorder>
+                            </StackLayout>
+
                             <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="8">
                                 <StackLayout Orientation="Horizontal">
                                     <dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
@@ -348,10 +350,6 @@
 
                             </StackLayout>
 
-
-
-
-
                             <StackLayout Orientation="Vertical" Grid.Row="9" Grid.Column="0" IsVisible="{Binding WorkorderRequesterIsVisible}">
                                 <Label Text="{Binding WorkorderRequesterTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
@@ -381,8 +379,6 @@
                                 <Button Text="{Binding CostCenterName}" Style="{StaticResource TargetButtonStyle}" Command="{Binding CostCenterCommand}" IsEnabled="{Binding CostCenterIsEnable}" />
 
                             </StackLayout>
-
-
 
                             <StackLayout Orientation="Vertical" Grid.Row="10" Grid.Column="0" IsVisible="{Binding PriorityIsVisible}">
                                 <Label Text="{Binding PriorityTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
@@ -569,11 +565,12 @@
                             Text="{Binding MiscellaneousMaterialCostText}"
                                    
                              IsEnabled="{Binding MiscellaneousMaterialCostIsEnable , Mode=TwoWay}"
-                            TextColor="{DynamicResource Gray-900}" />
+                            TextColor="{DynamicResource Gray-900}" TextChanged="NumericEntry_TextChanged_2"/>
                                 </border:SfBorder>
 
 
                             </StackLayout>
+                            
                             <StackLayout Orientation="Vertical" Grid.Row="15" Grid.Column="1" IsVisible="{Binding CurrentRuntimeIsVisible}">
                                 <Label Text="{Binding CurrentRuntimeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
