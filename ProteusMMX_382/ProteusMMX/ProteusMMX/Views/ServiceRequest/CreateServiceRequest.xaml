@@ -92,7 +92,8 @@
                                 </Label>
                                 <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"/>-->
                                 <border:SfBorder CornerRadius="5">
-                                    <controls:UnderLineEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></controls:UnderLineEditor>
+                                    <richtexteditor:SfRichTextEditor PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" Text="{Binding DescriptionText}" HeightRequest="108"></richtexteditor:SfRichTextEditor>
+                                    <!--<controls:UnderLineEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></controls:UnderLineEditor>-->
                                 </border:SfBorder>
                             </StackLayout>
 

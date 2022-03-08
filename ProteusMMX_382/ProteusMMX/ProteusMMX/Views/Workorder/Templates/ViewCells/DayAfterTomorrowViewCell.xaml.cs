@@ -77,15 +77,15 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
 
             /// For workordernumber////
             var workorderNumber = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkOrderNumber");
-            //if (workorderNumber != null)
-            //{
-            //    this.WorkorderNumberLabel.Text = workorderNumber.TargetName;
+            if (workorderNumber != null)
+            {
+                this.WorkorderNumberLabel.Text = workorderNumber.TargetName;
 
-            //}
-            //else
-            //{
-            //    this.WorkorderNumberLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkorderNumber");
-            //}
+            }
+            else
+            {
+                this.WorkorderNumberLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkorderNumber");
+            }
 
             /// For Requireddate////
             var requiredDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "RequiredDate");
