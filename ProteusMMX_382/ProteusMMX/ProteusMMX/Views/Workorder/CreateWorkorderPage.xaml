@@ -5,7 +5,7 @@
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
+             xmlns:control1="clr-namespace:ProteusMMX.Controls" xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
              x:Class="ProteusMMX.Views.Workorder.CreateWorkorderPage"
              Title="{Binding PageTitle}"
              BackgroundColor="{StaticResource BackgroundColor}" >
@@ -104,8 +104,8 @@
                                 <!--<Editor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"/>-->
                                 <!--<dependencyinterface:CustomEditor Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"></dependencyinterface:CustomEditor>-->
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" HeightRequest="100" BorderColor="{Binding DescriptionColor}">
-                                    <control1:UnderLineEditor x:Name="Description" FontFamily="{Binding DescriptionIsRequred}" TextChanged="Description_PropertyChanged" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" Text="{Binding DescriptionText}" HeightRequest="150"></control1:UnderLineEditor>
-
+                                    <!--<control1:UnderLineEditor x:Name="Description" FontFamily="{Binding DescriptionIsRequred}" TextChanged="Description_PropertyChanged" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" Text="{Binding DescriptionText}" HeightRequest="150"></control1:UnderLineEditor>-->
+                                    <richtexteditor:SfRichTextEditor x:Name="Description" PlaceHolderFontFamily="{Binding DescriptionIsRequred}"  PlaceHolderFontColor="Black" DefaultFontColor="Black" TextChanged="Description_TextChanged" ShowToolbar="False" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}" Text="{Binding DescriptionText}" HeightRequest="150"></richtexteditor:SfRichTextEditor>
                                     <!--<control1:CustomEntry x:Name="Description" Text="{Binding DescriptionText}" IsEnabled="{Binding DescriptionIsEnable , Mode=TwoWay}"
                             TextColor="{DynamicResource Gray-900}" />-->
                                 </border:SfBorder>
@@ -122,7 +122,7 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <controls:RequiredDateCustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}" />
+                                    <controls:RequiredDateCustomDatePicker  Margin="0,8,0,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}" />
                                     <!--<DatePicker Date="{Binding RequiredDate}"  MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}"/>-->
                                 </border:SfBorder>
                             </StackLayout>

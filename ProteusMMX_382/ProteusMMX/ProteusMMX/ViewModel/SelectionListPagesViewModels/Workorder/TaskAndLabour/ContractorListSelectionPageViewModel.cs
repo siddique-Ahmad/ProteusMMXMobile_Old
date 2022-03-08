@@ -469,7 +469,7 @@ namespace ProteusMMX.ViewModel.SelectionListPagesViewModels.Workorder.TaskAndLab
                     MessagingCenter.Send(item, MessengerKeys.ContractorRequested_AddInspection);
                 }
                 else
-                {
+                {                    
                     MessagingCenter.Send(item, MessengerKeys.ContractorRequested_AddTask);
                 }
                 await NavigationService.NavigateBackAsync();

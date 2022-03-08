@@ -3,6 +3,7 @@ using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
 using Syncfusion.XForms.Border;
 using Syncfusion.XForms.Buttons;
+using Syncfusion.XForms.RichTextEditor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void NumericEntry_TextChanged(object sender, TextChangedEventArgs e)
+        private void NumericEntry_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry e1 = sender as Entry;
             String val = e1.Text; //Get Current Text
@@ -86,7 +87,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void NumericEntry_TextChanged_1(object sender, TextChangedEventArgs e)
+        private void NumericEntry_TextChanged_1(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry e1 = sender as Entry;
             String val = e1.Text; //Get Current Text
@@ -116,7 +117,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void NumericEntry_TextChanged_2(object sender, TextChangedEventArgs e)
+        private void NumericEntry_TextChanged_2(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry e1 = sender as Entry;
             String val = e1.Text; //Get Current Text
@@ -146,7 +147,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void NumericEntry_TextChanged_3(object sender, TextChangedEventArgs e)
+        private void NumericEntry_TextChanged_3(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry e1 = sender as Entry;
             String val = e1.Text; //Get Current Text
@@ -200,26 +201,8 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
-        private void Description_PropertyChanged(object sender, TextChangedEventArgs e)
-        {
-            Editor Desc = sender as Editor;
-            string requred = Desc.FontFamily;
-            if (requred == "true")
-            {
-                var BorderColor = Desc.Parent as SfBorder;
-                if (string.IsNullOrEmpty(Desc.Text))
-                {
-                    BorderColor.BorderColor = Color.Red;
-                }
-                else
-                {
-                    BorderColor.BorderColor = Color.Black;
-                }
-            }
-
-        }
-
-        private void AssignedToEmployee_PropertyChanged(object sender, TextChangedEventArgs e)
+       
+        private void AssignedToEmployee_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry AssignedToEmployee = sender as Entry;
             string requred = AssignedToEmployee.FontFamily;
@@ -237,7 +220,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void Facility_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void Facility_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry Cause = sender as Entry;
 
@@ -253,7 +236,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void Location_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void Location_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
 
             var Location = sender as Entry;
@@ -294,7 +277,7 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
-        private  void  Asset_PropertyChanged(object sender, TextChangedEventArgs e)
+        private  void  Asset_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             var Asset = sender as Entry;
             var LocationName = LocationNameBtn as Entry;
@@ -337,7 +320,7 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
-        private void AssetSystem_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void AssetSystem_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             var AssetSystem = sender as Entry;
             var LocationName = LocationNameBtn as Entry;
@@ -375,7 +358,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void WorkOrderRequester_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void WorkOrderRequester_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry WorkType = sender as Entry;
             string requred = WorkType.FontFamily;
@@ -393,7 +376,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void CostCenter_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void CostCenter_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry WorkType = sender as Entry;
             string requred = WorkType.FontFamily;
@@ -411,7 +394,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void Priority_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void Priority_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry WorkType = sender as Entry;
             string requred = WorkType.FontFamily;
@@ -429,7 +412,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void Shift_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void Shift_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry WorkType = sender as Entry;
             string requred = WorkType.FontFamily;
@@ -447,7 +430,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void WorkorderType_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void WorkorderType_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry WorkType = sender as Entry;
             string requred = WorkType.FontFamily;
@@ -465,7 +448,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void workorderStatus_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void workorderStatus_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry WorkTypeStatus = sender as Entry;
             string requred = WorkTypeStatus.FontFamily;
@@ -483,7 +466,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void Cause_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void Cause_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry Cause = sender as Entry;
             string requred = Cause.FontFamily;
@@ -501,7 +484,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void MaintenanceCode_PropertyChanged(object sender, TextChangedEventArgs e)
+        private void MaintenanceCode_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry MaintenanceCode = sender as Entry;
             string requred = MaintenanceCode.FontFamily;
@@ -519,7 +502,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        private void CurrentRuntime_TextChanged(object sender, TextChangedEventArgs e)
+        private void CurrentRuntime_TextChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry e1 = sender as Entry;
             string requred = e1.FontFamily;
@@ -527,6 +510,25 @@ namespace ProteusMMX.Views.Workorder
             {
                 var BorderColor = e1.Parent as SfBorder;
                 if (string.IsNullOrEmpty(e1.Text))
+                {
+                    BorderColor.BorderColor = Color.Red;
+                }
+                else
+                {
+                    BorderColor.BorderColor = Color.Black;
+                }
+            }
+        }
+
+        private void Description_TextChanged(object sender, Syncfusion.XForms.RichTextEditor.TextChangedEventArgs e)
+        {
+            SfRichTextEditor Desc = sender as SfRichTextEditor;
+
+            string requred = Desc.PlaceHolderFontFamily;
+            if (requred == "true")
+            {
+                var BorderColor = Desc.Parent as SfBorder;
+                if (string.IsNullOrWhiteSpace(Desc.Text))
                 {
                     BorderColor.BorderColor = Color.Red;
                 }

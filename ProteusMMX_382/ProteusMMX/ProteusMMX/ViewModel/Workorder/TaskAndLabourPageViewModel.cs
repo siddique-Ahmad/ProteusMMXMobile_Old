@@ -1907,7 +1907,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 workOrderLabor = new WorkOrderLabor
                                 {
                                     StartDate = null,
-                                    EndDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),,
+                                    EndDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                                    
                                     HoursAtRate1Start = null,
                                     IsMannual = false,
