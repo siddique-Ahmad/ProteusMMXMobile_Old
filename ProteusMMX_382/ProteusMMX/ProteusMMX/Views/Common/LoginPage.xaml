@@ -67,7 +67,7 @@
                         <StackLayout Padding="10,10,10,10" BackgroundColor="White" HorizontalOptions="Center" VerticalOptions="Center">
 
                             <StackLayout x:Name="Tablet" Orientation="Horizontal">
-                                <StackLayout  Grid.Row="1" Orientation="Horizontal" Spacing="250" >
+                                <StackLayout  Grid.Row="1" Orientation="Horizontal" Spacing="200" >
                                     <Image Source="tapped.jpg">
                                         <Image.Source>
                                             <OnPlatform x:TypeArguments="FileImageSource">
@@ -91,7 +91,7 @@
                             </StackLayout>
 
                             <StackLayout x:Name="Phone" Orientation="Horizontal" Padding="5,5,5,5">
-                                    <StackLayout Grid.RowSpan="1" Grid.Row="1" Orientation="Horizontal" Spacing="150"  >
+                                    <StackLayout Grid.RowSpan="1" Grid.Row="1" Orientation="Horizontal" Spacing="50"  >
                                         <Image HeightRequest="160" WidthRequest="100" Source="tapped.jpg">
                                             <Image.Source>
                                                 <OnPlatform x:TypeArguments="FileImageSource">
