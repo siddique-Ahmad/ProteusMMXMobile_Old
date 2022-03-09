@@ -54,7 +54,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="{Binding AssetName}"/>
-                                        <Span Text=":"/>
+                                        <Span Text=":p"/>
                                         <Span Text="{Binding AssetNumber}"/>
                                         <Span Text=" (Asset)" />
                                     </FormattedString>
@@ -97,13 +97,13 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Label  x:Name="WorkorderTypeLabel" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333" />
+                        <Label  x:Name="WorkorderTypeLabel" WidthRequest="100" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333" />
                         <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                         <Label LineBreakMode="TailTruncation"  Text="{Binding WorkOrderType}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" />
                         <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
                             <Label Text="(" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}"/>
                             <Label  LineBreakMode="TailTruncation"  Text="{Binding PriorityName}" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}" />
-                            <Label Text=")" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}"/>
+                            <Label Text=")" Padding="0,0,3,0" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}"/>
                         </StackLayout>
                     </Grid>
 

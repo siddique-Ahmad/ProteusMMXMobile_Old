@@ -494,6 +494,32 @@ namespace ProteusMMX.ViewModel
            
 
         }
+
+        public async Task searchBoxTextCler()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
+                PageNumber = 1;
+                await RemoveAllAssetsFromCollection();
+                await GetAssetsFromSearchBar();
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+        }
+
         async Task GetAssetsFromSearchBar()
         {
             try

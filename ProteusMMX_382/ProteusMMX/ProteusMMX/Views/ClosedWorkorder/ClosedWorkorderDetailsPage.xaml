@@ -254,6 +254,12 @@
                                     <control1:CustomEntry Text="{Binding AssignToEmployeeName}"  BackgroundColor="LightGray"></control1:CustomEntry>
                                 </border:SfBorder>
                             </StackLayout>
+                            <StackLayout  IsEnabled="False" Orientation="Vertical" Grid.Row="9" Grid.Column="1">
+                                <Label Text="{Binding OriginatorTitle}" TextColor="Black" FontAttributes="Bold"/>
+                                <border:SfBorder CornerRadius="5"  IsEnabled="False">
+                                    <control1:CustomEntry Text="{Binding OriginatorName}"  BackgroundColor="LightGray"></control1:CustomEntry>
+                                </border:SfBorder>
+                            </StackLayout>
                             <StackLayout  Grid.Row="10" Grid.ColumnSpan="2" >
                                 <StackLayout Orientation="Horizontal">
                                     <dependencyinterface:LoginSwitch   IsEnabled="False" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}" HorizontalOptions="StartAndExpand"  x:Uid="MySwitch" >
