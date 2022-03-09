@@ -1433,6 +1433,45 @@ string _currentRuntime;
             }
         }
 
+
+        #region **** 
+        string _originatorName;
+        public string OriginatorName
+        {
+            get
+            {
+                return _originatorName;
+            }
+
+            set
+            {
+                if (value != _originatorName)
+                {
+                    _originatorName = value;
+                    OnPropertyChanged(nameof(OriginatorName));
+                }
+            }
+        }
+
+        string _originatorTitle;
+        public string OriginatorTitle
+        {
+            get
+            {
+                return _originatorTitle;
+            }
+
+            set
+            {
+                if (value != _originatorTitle)
+                {
+                    _originatorTitle = value;
+                    OnPropertyChanged(nameof(OriginatorTitle));
+                }
+            }
+        }
+        #endregion
+
         bool _assignToEmployeeIsEnable = true;
         public bool AssignToEmployeeIsEnable
         {
@@ -4708,6 +4747,7 @@ string _currentRuntime;
         {
             try
             {
+                OriginatorTitle = "Originator";
                 CurrentRuntimeTitle = WebControlTitle.GetTargetNameByTitleName("CurrentRuntime");
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("Details");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
@@ -5210,7 +5250,7 @@ string _currentRuntime;
                 }
                 AssignToEmployeeName = workorder.AssignToEmployee;
 
-
+                OriginatorName = workorder.Originator;
                 EstimstedDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.EstimatedDowntime == null ? 0 : workorder.EstimatedDowntime));
 
 
