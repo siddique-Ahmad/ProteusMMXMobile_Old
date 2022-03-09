@@ -114,5 +114,7 @@ namespace ProteusMMX.Model
         public int? RecordCount { get; set; }
 
         public string TransactionNumber { get; set; }
+
+        public List<ComboDD> SRAEmployees { get; set; }
     }
 }

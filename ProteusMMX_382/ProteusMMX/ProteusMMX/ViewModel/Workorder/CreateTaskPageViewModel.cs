@@ -1497,11 +1497,18 @@ namespace ProteusMMX.ViewModel.Workorder
             {
 
                 var employee = obj as EmployeeLookUp;
+                if(String.IsNullOrWhiteSpace(employee.EmployeeName))
+                {
+                    this.EmployeeID = null;
+                    this.EmployeeName = "";
+                    ResetContractor();
+                    return;
+                }
                 this.EmployeeID = employee.EmployeeLaborCraftID;
                // this.EmployeeName = ShortString.shorten(employee.EmployeeName);
                 this.EmployeeName = ShortString.shorten(employee.EmployeeName) + "(" + employee.LaborCraftCode + ")";
 
-                ResetContractor();
+               
 
             }
 
@@ -1515,6 +1522,13 @@ namespace ProteusMMX.ViewModel.Workorder
             {
 
                 var contractor = obj as ContractorLookUp;
+                if (String.IsNullOrWhiteSpace(contractor.ContractorName))
+                {
+                    this.ContractorID = null;
+                    this.ContractorName = "";
+                    ResetEmployee();
+                    return;
+                }
                 this.ContractorID = contractor.ContractorLaborCraftID;
                 //this.ContractorName = ShortString.shorten(contractor.ContractorName);
                 this.ContractorName = ShortString.shorten(contractor.ContractorName) + "(" + contractor.LaborCraftCode + ")";

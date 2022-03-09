@@ -11,6 +11,7 @@ namespace ProteusMMX.Constants
         public const string ReceiverRequested = "ReceiverRequested";
         public const string LocationRequested = "LocationRequested";
         public const string AssetRequested = "AssetRequested";
+        public const string AdministerRequested = "AdministerRequested";
         public const string AssetSyastemRequested = "AssetSyastemRequested";
         public const string AssignToRequested = "AssignToRequested";
         public const string WorkorderRequesterRequested = "WorkorderRequesterRequested";

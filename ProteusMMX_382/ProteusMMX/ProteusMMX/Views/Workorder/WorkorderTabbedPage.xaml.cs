@@ -20,38 +20,48 @@ namespace ProteusMMX.Views.Workorder
             InitializeComponent();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+          
             this.CurrentPageChanged += (object sender, EventArgs e) => {
-                var index = this.Children.IndexOf(this.CurrentPage);
-                var CurrentPage = this.Children.ElementAt(index);
-                string Selectedpage = CurrentPage.ToString();
-                if(Selectedpage.Contains("EditWorkorderPage"))
+                try
                 {
-                  this.Title= WebControlTitle.GetTargetNameByTitleName("Details");
+                    var index = this.Children.IndexOf(this.CurrentPage);
+                    var CurrentPage = this.Children.ElementAt(index);
+                    string Selectedpage = CurrentPage.ToString();
+                    if (Selectedpage.Contains("EditWorkorderPage"))
+                    {
+                        this.Title = WebControlTitle.GetTargetNameByTitleName("Details");
+                    }
+                    else if (Selectedpage.Contains("TaskAndLabourPage"))
+                    {
+                        this.Title = WebControlTitle.GetTargetNameByTitleName("TasksandLabor");
+                    }
+                    else if (Selectedpage.Contains("InspectionPage"))
+                    {
+                        this.Title = WebControlTitle.GetTargetNameByTitleName("Inspection");
+                    }
+                    else if (Selectedpage.Contains("WorkOrderPartTab"))
+                    {
+                        this.Title = WebControlTitle.GetTargetNameByTitleName("Parts");
+                    }
+                    else if (Selectedpage.Contains("WorkOrderTools"))
+                    {
+                        this.Title = WebControlTitle.GetTargetNameByTitleName("Tools");
+                    }
+                    else if (Selectedpage.Contains("AttachmentsPage"))
+                    {
+                        this.Title = WebControlTitle.GetTargetNameByTitleName("Attachments");
+                    }
+                    else
+                    {
+
+                    }
                 }
-                else if(Selectedpage.Contains("TaskAndLabourPage"))
-                {
-                    this.Title = WebControlTitle.GetTargetNameByTitleName("TasksandLabor");
-                }
-                else if (Selectedpage.Contains("InspectionPage"))
-                {
-                    this.Title = WebControlTitle.GetTargetNameByTitleName("Inspection");
-                }
-                else if (Selectedpage.Contains("WorkOrderPartTab"))
-                {
-                    this.Title = WebControlTitle.GetTargetNameByTitleName("Parts");
-                }
-                else if (Selectedpage.Contains("WorkOrderTools"))
-                {
-                    this.Title = WebControlTitle.GetTargetNameByTitleName("Tools");
-                }
-                else if (Selectedpage.Contains("AttachmentsPage"))
-                {
-                    this.Title = WebControlTitle.GetTargetNameByTitleName("Attachments");
-                }
-                else
+                catch (Exception ex)
                 {
 
+                   
                 }
+               
               
             };
         }

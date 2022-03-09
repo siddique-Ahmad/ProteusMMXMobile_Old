@@ -50,7 +50,7 @@
             </Grid>
 
             <ScrollView>
-                <Grid Padding="25"  Margin="0,-39,0,0">
+                <Grid Padding="25"  Margin="0,-25,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="120" />
                         <RowDefinition Height="120" />

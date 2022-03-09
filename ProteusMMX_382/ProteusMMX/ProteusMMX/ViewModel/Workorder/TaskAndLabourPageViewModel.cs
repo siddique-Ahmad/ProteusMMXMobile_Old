@@ -2385,7 +2385,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
         private async void CompletionDate_Clicked(object sender, EventArgs e)
         {
-            UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTime.Now });
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                UserDialogs.Instance.DatePrompt(new DatePromptConfig { iOSPickerStyle = iOSPickerStyle.Wheels, OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTime.Now });
+            }
+            else
+            {
+                UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTime.Now });
+            }
         }
 
         private void SetCompletionDateResult(DatePromptResult result, object sender, EventArgs e)
@@ -2559,6 +2566,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 {
                                     //DialogService.ShowToast(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "CompletionDatecannotbegreaterthanWorkorderCompletionDate").TargetName, formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
                                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("CompletionDatecannotbegreaterthanWorkorderCompletionDate"));
+                                    UserDialogs.Instance.HideLoading();
                                     return;
                                 }
                             }
@@ -2575,6 +2583,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             //DialogService.ShowToast(validationResult.ErrorMessage);
                             DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskStartdatecannotbegreaterthanWorkOrderCompletionDate"));
+                            UserDialogs.Instance.HideLoading();
                             return;
                         }
                         if (workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate != null)
@@ -2585,6 +2594,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "TaskStartdatecannotbelessthanWorkOrderStartDate").TargetName, formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
                             DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskStartdatecannotbelessthanWorkOrderStartDate"));
+                            UserDialogs.Instance.HideLoading();
                             return;
                         }
                         if (!string.IsNullOrWhiteSpace(completeDate))
@@ -2596,6 +2606,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
                                 //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "TaskCompletionDatedatecannotbelessthanTaskStartDate").TargetName, formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
                                 DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskCompletionDatedatecannotbelessthanTaskStartDate"));
+                                UserDialogs.Instance.HideLoading();
                                 return;
                             }
                         }

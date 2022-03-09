@@ -1134,23 +1134,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        string _noneTitle;
-        public string NoneTitle
-        {
-            get
-            {
-                return _noneTitle;
-            }
-
-            set
-            {
-                if (value != _noneTitle)
-                {
-                    _noneTitle = value;
-                    OnPropertyChanged(nameof(NoneTitle));
-                }
-            }
-        }
+       
 
 
         string _ascendingTitle;
@@ -1248,24 +1232,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        bool _TotalRecordForPhone = false;
-        public bool TotalRecordForPhone
-        {
-            get
-            {
-                return _TotalRecordForPhone;
-            }
-
-            set
-            {
-                if (value != _TotalRecordForPhone)
-                {
-                    _TotalRecordForPhone = value;
-                    OnPropertyChanged(nameof(TotalRecordForPhone));
-                }
-            }
-        }
-
+      
         bool _TotalRecordForTab = false;
         public bool TotalRecordForTab
         {
@@ -1361,14 +1328,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
                 }
-                if (Device.Idiom == TargetIdiom.Phone)
-                {
-                    this.TotalRecordForPhone = true;
-                }
-                else
-                {
-                    this.TotalRecordForTab = true;
-                }
+               
 
                 OperationInProgress = false;
 
@@ -1412,7 +1372,7 @@ namespace ProteusMMX.ViewModel.Workorder
             EmergencyMaintenanceTitle = WebControlTitle.GetTargetNameByTitleName("EmergencyMaintenance");
 
             SortByActivationdateTitle = WebControlTitle.GetTargetNameByTitleName("SortByActivationdate");
-            NoneTitle = WebControlTitle.GetTargetNameByTitleName("None");
+           
             AscendingTitle = WebControlTitle.GetTargetNameByTitleName("Ascending");
             DescendingTitle = WebControlTitle.GetTargetNameByTitleName("Descending");
             SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
@@ -1425,11 +1385,11 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle };
                     }
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
                     }
                 }
 
@@ -1441,11 +1401,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle };
                     }
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle };
                     }
 
                 }
@@ -1456,11 +1416,11 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                 {
-                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                    PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle };
                 }
                 else
                 {
-                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
+                    PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
                 }
 
             }
@@ -1509,7 +1469,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 await Task.Delay(10);
                 if (CreateWorkorderRights == "E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1526,7 +1486,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else if (CreateWorkorderRights == "V")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1542,7 +1502,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("","", CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1628,7 +1588,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
                 await Task.Delay(10);
-                var response = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("SortByActivationdate"), SortByActivationdateTitle, CancelTitle, new ObservableCollection<string>() { NoneTitle, AscendingTitle, DescendingTitle });
+                var response = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("SortByActivationdate"), SortByActivationdateTitle, CancelTitle, new ObservableCollection<string>() { AscendingTitle, DescendingTitle });
                 if (response == CancelTitle)
                 {
                     this.SelectedSortingText = null;

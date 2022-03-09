@@ -128,7 +128,7 @@
                                 </Image.GestureRecognizers>
                             </Image>
 
-                            <StackLayout IsVisible="{Binding TotalRecordForPhone}"  VerticalOptions="Center" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
+                            <StackLayout VerticalOptions="Center" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}"/>
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text=":" Grid.Column="3"/>
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordCount}"/>

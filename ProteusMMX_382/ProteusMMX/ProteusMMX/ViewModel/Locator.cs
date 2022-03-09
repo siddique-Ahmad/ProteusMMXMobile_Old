@@ -157,6 +157,7 @@ namespace ProteusMMX.ViewModel
             _containerBuilder.RegisterType<SearchWorkorderByLocationViewModel>();
             _containerBuilder.RegisterType<SearchAssetForBillOfMaterialViewModel>();
             _containerBuilder.RegisterType<SearchAssetForAttachmentViewModel>();
+            _containerBuilder.RegisterType<AdministratorListSelectionPageViewModel>();
             _containerBuilder.RegisterType<PurchaseOrderShelfBinListSelectionPageViewModel>();
 
             _containerBuilder.RegisterType<InventoryPerformByListSelectionPageViewModel>();
@@ -165,7 +166,7 @@ namespace ProteusMMX.ViewModel
             _containerBuilder.RegisterType<DescriptionViewModel>();
             _containerBuilder.RegisterType<SignatureHistoryViewModel>();
             _containerBuilder.RegisterType<ClosedWorkorderStockroomPartsViewModelForIOS>();
-            _containerBuilder.RegisterType<WorkOrderStockroomPartsListingPageViewModelForIOS>();
+            //_containerBuilder.RegisterType<WorkOrderStockroomPartsListingPageViewModelForIOS>();
             _containerBuilder.RegisterType<SearchWorkorderByLocationFromBarcodeViewModel>();
             _containerBuilder.RegisterType<SearchWorkorderByAssetNumberFromBarcodeViewModel>();
             _containerBuilder.RegisterType<SearchAssetFromBarcodeViewModel>();

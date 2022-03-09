@@ -4948,7 +4948,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     TotalTimeTilte = WebControlTitle.GetTargetNameByTitleName("TotalTime");
 
                     WorkorderTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrder");
-                    CloseWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("ClosedWorkOrder");
+                    CloseWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("CloseWorkOrder");
                     InventoryTransactionTitle = WebControlTitle.GetTargetNameByTitleName("InventoryTransaction");
                     ServiceRequestTitle = WebControlTitle.GetTargetNameByTitleName("ServiceRequest");
                     AssetsTitle = WebControlTitle.GetTargetNameByTitleName("Assets");
