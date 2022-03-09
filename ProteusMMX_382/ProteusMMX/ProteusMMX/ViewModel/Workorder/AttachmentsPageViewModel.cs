@@ -1506,7 +1506,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         if (attachment.workOrderWrapper.attachments.Count > 0)
                         {
                             var FirstattachmentName = attachment.workOrderWrapper.attachments.First();
-                            PDFImageText = FirstattachmentName.attachmentFileExtension;
+                           
                             ImageText = WebControlTitle.GetTargetNameByTitleName("Total")+ " " + WebControlTitle.GetTargetNameByTitleName("Image")+ " : " + attachment.workOrderWrapper.attachments.Count;
                             foreach (var file in attachment.workOrderWrapper.attachments)
                             {
@@ -1519,7 +1519,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     file.attachmentFileExtension.ToLower().Contains(".xlsx") ||
                                     file.attachmentFileExtension.ToLower().Contains(".txt")))
                                 {
-
+                                    PDFImageText = FirstattachmentName.attachmentFileExtension;
                                     DocumentAttachments.Add(file.attachmentFileExtension);
                                   
                                     byte[] imgUser = StreamToBase64.StringToByte(ShortString.shortenBase64(""));

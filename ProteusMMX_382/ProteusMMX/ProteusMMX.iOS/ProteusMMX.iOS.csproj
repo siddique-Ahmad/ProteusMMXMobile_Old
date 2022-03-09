@@ -17,7 +17,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <ProvisioningType>automatic</ProvisioningType>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,14 +29,11 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <MtouchArch>x86_64</MtouchArch>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignKey>iPhone Developer</CodesignKey>
-    <CodesignProvision>382ProvisioningProfile</CodesignProvision>
-    <MtouchSdkVersion>15.2</MtouchSdkVersion>
-    <MtouchFloat32>true</MtouchFloat32>
-    <MtouchProfiling>false</MtouchProfiling>
-    <IOSDebugOverWiFi>false</IOSDebugOverWiFi>
+    <CodesignKey>Apple Distribution: Wasique Ahmad (HN6B245NYW)</CodesignKey>
+    <CodesignProvision>2022 Distribution MMX315</CodesignProvision>
+    <MtouchSdkVersion>11.2</MtouchSdkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -59,15 +56,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <MtouchArch>
-    </MtouchArch>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <MtouchArch>ARM64</MtouchArch>
+    <CodesignKey>iPhone Distribution: Wasique Ahmad (HN6B245NYW)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignProvision />
+    <CodesignProvision>mmx315 new profile</CodesignProvision>
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <CodesignEntitlements />
-    <MtouchLink>None</MtouchLink>
+    <IOSDebugOverWiFi>true</IOSDebugOverWiFi>
+    <MtouchLink>SdkOnly</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -75,11 +72,11 @@
     <OutputPath>bin\iPhone\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <MtouchArch>ARM64</MtouchArch>
+    <MtouchArch>ARMv7, ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Distribution: Wasique khan (HN6B245NYW)</CodesignKey>
+    <CodesignKey>Apple Distribution: Wasique Ahmad (HN6B245NYW)</CodesignKey>
     <BuildIpa>true</BuildIpa>
-    <CodesignProvision>MMX distribution Profile</CodesignProvision>
+    <CodesignProvision>2022 Distribution MMX315</CodesignProvision>
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <CodesignEntitlements />
@@ -95,11 +92,13 @@
     <ConsolePause>False</ConsolePause>
     <MtouchArch>ARM64</MtouchArch>
     <BuildIpa>True</BuildIpa>
-    <CodesignProvision>MMX development Profile</CodesignProvision>
-    <CodesignKey>iPhone Developer: Wasique khan (VXW6ZWS8C5)</CodesignKey>
+    <CodesignProvision>mmx315 new profile</CodesignProvision>
+    <CodesignKey>iPhone Distribution: Wasique Ahmad (HN6B245NYW)</CodesignKey>
     <CodesignExtraArgs />
     <CodesignResourceRules />
     <CodesignEntitlements />
+    <MtouchLink>None</MtouchLink>
+    <MtouchSdkVersion>15.2</MtouchSdkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>none</DebugType>
@@ -119,6 +118,8 @@
     <Compile Include="CustomRenderer\CustomPickerRenderer.cs" />
     <Compile Include="CustomRenderer\EditorCustomRenderer.cs" />
     <Compile Include="CustomRenderer\ImageEntryRenderer.cs" />
+    <Compile Include="CustomRenderer\PickerWithIconRenderer.cs" />
+    <Compile Include="CustomRenderer\TabbedPageRenderer.cs" />
     <Compile Include="DependencyService\PDFViewer.cs" />
     <Compile Include="DependencyService\SimpleStorage.cs" />
     <Compile Include="Main.cs" />
@@ -153,7 +154,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs">
-      <Version>7.0.1</Version>
+      <Version>7.2.0.562</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter">
       <Version>1.9.0</Version>
@@ -197,6 +198,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
       <Version>19.3.0.48</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfListView">
+      <Version>19.3.0.48</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
       <Version>19.3.0.48</Version>
     </PackageReference>
@@ -221,7 +225,7 @@
     <PackageReference Include="Xamarin.Controls.SignaturePad.Forms">
       <Version>3.0.0</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2125" />
     <PackageReference Include="Xamarin.Forms.CarouselView">
       <Version>2.3.0-pre2</Version>
     </PackageReference>
@@ -368,348 +372,122 @@
     <BundleResource Include="Resources\ThumbsUp.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\addbtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Adddis.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\AddIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\addinsp.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\AscendingIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\assets.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\BackgroundImage.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Backgroundlogin.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\barcerch.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\bottomimg.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Browse.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\CCalender.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Ccler.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\clear.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\clearN.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\clearsymbol.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\complateicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\complet1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Cstart.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Cstop.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\cwoicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\delbtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Deletebtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\delicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\delIcon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Descendingicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\dots.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\eyicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\fail1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\failbtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\failredbtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\filtericon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\filterN.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\greencheck.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\GreenTickMark.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Inspection1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Inspection2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Inspection3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Inspection12.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Inspection22.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Inspection32.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\iticon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\KPIIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\leftrightarrow.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Login.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\LoginPageBackgroundImage.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Morefilter.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\na.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\no.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Pass.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\passbluebtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\passbtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\passicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\pdf.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Priority.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\ProteusCMMS.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\ReadMore.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\recicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\save.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\savebtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\saveicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\saveicon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\search.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\search1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\search2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\search3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\search4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\search5.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\searchBor1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\searchBor2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\searchBor3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\searchBor4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\searchBor5.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\searchicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\searchiconblack.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\searchN.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\shfiltericon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\shortingN.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\signature.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\sortclosing.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\SortIcon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\sorting1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\sortinganswers.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\splash_logo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\sricon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\ssbicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\startcomplte.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\starticon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\starticon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\startred.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\stopcomplate.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\stopicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\stopicon1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\stoppending.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\submitbtn.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tel1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tel2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tel3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tel4.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tel5.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tel6.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tel7.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\tel8.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\unnamed - Copy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\unnamed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\urlicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\usericon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\Viewicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\woattachment.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\woicon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\workorder1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\workorder2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\workorderlocation.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\yes.png" />
+    <Content Include="Resources\addbtn.png" />
+    <Content Include="Resources\Adddis.png" />
+    <Content Include="Resources\AddIcon.png" />
+    <Content Include="Resources\addinsp.png" />
+    <Content Include="Resources\AscendingIcon.png" />
+    <Content Include="Resources\assets.png" />
+    <Content Include="Resources\BackgroundImage.jpg" />
+    <Content Include="Resources\Backgroundlogin.png" />
+    <Content Include="Resources\barcerch.png" />
+    <Content Include="Resources\bottomimg.png" />
+    <Content Include="Resources\Browse.png" />
+    <Content Include="Resources\CCalender.png" />
+    <Content Include="Resources\Ccler.png" />
+    <Content Include="Resources\clear.png" />
+    <Content Include="Resources\clearN.png" />
+    <Content Include="Resources\clearsymbol.png" />
+    <Content Include="Resources\complateicon.png" />
+    <Content Include="Resources\complet1.png" />
+    <Content Include="Resources\Cstart.png" />
+    <Content Include="Resources\Cstop.png" />
+    <Content Include="Resources\cwoicon.png" />
+    <Content Include="Resources\delbtn.png" />
+    <Content Include="Resources\Deletebtn.png" />
+    <Content Include="Resources\delicon.png" />
+    <Content Include="Resources\delIcon1.png" />
+    <Content Include="Resources\Descendingicon.png" />
+    <Content Include="Resources\dots.png" />
+    <Content Include="Resources\eyicon.png" />
+    <Content Include="Resources\fail1.png" />
+    <Content Include="Resources\failbtn.png" />
+    <Content Include="Resources\failredbtn.png" />
+    <Content Include="Resources\filtericon.png" />
+    <Content Include="Resources\filterN.png" />
+    <Content Include="Resources\greencheck.png" />
+    <Content Include="Resources\GreenTickMark.png" />
+    <Content Include="Resources\icon.png" />
+    <Content Include="Resources\image167x167.png" />
+    <Content Include="Resources\Inspection1.png" />
+    <Content Include="Resources\Inspection12.png" />
+    <Content Include="Resources\Inspection2.png" />
+    <Content Include="Resources\Inspection22.png" />
+    <Content Include="Resources\Inspection3.png" />
+    <Content Include="Resources\Inspection32.png" />
+    <Content Include="Resources\iticon.png" />
+    <Content Include="Resources\KPIIcon.png" />
+    <Content Include="Resources\leftrightarrow.png" />
+    <Content Include="Resources\Login.png" />
+    <Content Include="Resources\LoginPageBackgroundImage.png" />
+    <Content Include="Resources\Morefilter.png" />
+    <Content Include="Resources\na.png" />
+    <Content Include="Resources\no.png" />
+    <Content Include="Resources\Part.png" />
+    <Content Include="Resources\Pass.png" />
+    <Content Include="Resources\passbluebtn.png" />
+    <Content Include="Resources\passbtn.png" />
+    <Content Include="Resources\passicon.png" />
+    <Content Include="Resources\pdf.png" />
+    <Content Include="Resources\Priority.png" />
+    <Content Include="Resources\ProteusCMMS.png" />
+    <Content Include="Resources\ReadMore.png" />
+    <Content Include="Resources\recicon.png" />
+    <Content Include="Resources\save.png" />
+    <Content Include="Resources\savebtn.png" />
+    <Content Include="Resources\saveicon.png" />
+    <Content Include="Resources\saveicon1.png" />
+    <Content Include="Resources\search.png" />
+    <Content Include="Resources\search1.png" />
+    <Content Include="Resources\search2.png" />
+    <Content Include="Resources\search3.png" />
+    <Content Include="Resources\search4.png" />
+    <Content Include="Resources\search5.png" />
+    <Content Include="Resources\searchBor1.png" />
+    <Content Include="Resources\searchBor2.png" />
+    <Content Include="Resources\searchBor3.png" />
+    <Content Include="Resources\searchBor4.png" />
+    <Content Include="Resources\searchBor5.png" />
+    <Content Include="Resources\searchicon.png" />
+    <Content Include="Resources\searchiconblack.png" />
+    <Content Include="Resources\searchN.png" />
+    <Content Include="Resources\shfiltericon.png" />
+    <Content Include="Resources\shortingN.png" />
+    <Content Include="Resources\signature.png" />
+    <Content Include="Resources\sortclosing.png" />
+    <Content Include="Resources\SortIcon.png" />
+    <Content Include="Resources\sorting1.png" />
+    <Content Include="Resources\sortinganswers.png" />
+    <Content Include="Resources\splash_logo.png" />
+    <Content Include="Resources\sricon.png" />
+    <Content Include="Resources\ssbicon.png" />
+    <Content Include="Resources\startcomplte.png" />
+    <Content Include="Resources\starticon.png" />
+    <Content Include="Resources\starticon1.png" />
+    <Content Include="Resources\startred.png" />
+    <Content Include="Resources\stopcomplate.png" />
+    <Content Include="Resources\stopicon.png" />
+    <Content Include="Resources\stopicon1.png" />
+    <Content Include="Resources\stoppending.png" />
+    <Content Include="Resources\submitbtn.png" />
+    <Content Include="Resources\tel1.png" />
+    <Content Include="Resources\tel2.png" />
+    <Content Include="Resources\tel3.png" />
+    <Content Include="Resources\tel4.png" />
+    <Content Include="Resources\tel5.png" />
+    <Content Include="Resources\tel6.png" />
+    <Content Include="Resources\tel7.png" />
+    <Content Include="Resources\tel8.png" />
+    <Content Include="Resources\unnamed - Copy.png" />
+    <Content Include="Resources\unnamed.png" />
+    <Content Include="Resources\urlicon.png" />
+    <Content Include="Resources\usericon.png" />
+    <Content Include="Resources\Viewicon.png" />
+    <Content Include="Resources\woattachment.png" />
+    <Content Include="Resources\woicon.png" />
+    <Content Include="Resources\workorder1.png" />
+    <Content Include="Resources\workorder2.png" />
+    <Content Include="Resources\workorderlocation.png" />
+    <Content Include="Resources\yes.png" />
   </ItemGroup>
 </Project>

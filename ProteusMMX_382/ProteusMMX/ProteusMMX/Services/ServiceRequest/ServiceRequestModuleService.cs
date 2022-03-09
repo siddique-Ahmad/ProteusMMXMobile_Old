@@ -15,6 +15,16 @@ namespace ProteusMMX.Services.ServiceRequest
         {
             _requestService = requestService;
         }
+        
+
+        public Task<ServiceOutput> GetAdministrators()
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.GetAdministrator);
+           
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.GetAsync(uri);
+        }
         public Task<ServiceOutput> GetServiceRequests(string UserID, string PageNumber, string RowCount)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);

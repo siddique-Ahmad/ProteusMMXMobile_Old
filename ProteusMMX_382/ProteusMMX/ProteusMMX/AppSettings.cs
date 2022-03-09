@@ -27,7 +27,7 @@ namespace ProteusMMX
 
         public static string APPVersion
         {
-            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.15");
+            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.15.5");
         }
         public static string UserName
         {
@@ -1731,8 +1731,25 @@ namespace ProteusMMX
         #region ServiceRequest
 
 
+        
 
+        private static string _getAdministrator = "Inspection/service/GetSRAEmloyees";
+        public static string GetAdministrator
+        {
+            get
+            {
+                return _getAdministrator;
+            }
 
+            set
+            {
+                if (value != _getAdministrator)
+                {
+                    _getAdministrator = value;
+                }
+            }
+
+        }
         private static string _getServiceRequest = "Inspection/service/ServiceRequests";
         public static string GetServiceRequest
         {

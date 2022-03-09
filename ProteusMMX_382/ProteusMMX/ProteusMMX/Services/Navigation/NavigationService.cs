@@ -246,18 +246,11 @@ namespace ProteusMMX.Services.Navigation
                   
                 var StockroomPartstabbedPage = page as TabbedPage;
                     WorkOrderStockroomParts stockroomPart = parameter as WorkOrderStockroomParts;
-                    if (Device.RuntimePlatform == Device.iOS)
-                    {
-                        workOrderStockroomParts = CreateAndBindPage(typeof(WorkOrderStockroomPartsListingPageViewModelForIOS), parameter);
-                        var workOrderStockroomPartsPageParameter = new PageParameters { Page = workOrderStockroomParts, Parameter = parameter };
-                        (workOrderStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderStockroomPartsPageParameter);
-                    }
-                    else
-                    {
+                 
                         workOrderStockroomParts = CreateAndBindPage(typeof(WorkorderStockroomPartsTabbedPageViewModel), parameter);
                         var workOrderStockroomPartsPageParameter = new PageParameters { Page = workOrderStockroomParts, Parameter = parameter };
                         (workOrderStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderStockroomPartsPageParameter);
-                    }
+                
                     if (Application.Current.Properties.ContainsKey("PartsTabKey"))
                     {
                         var PartsTab = Application.Current.Properties["PartsTabKey"].ToString();
@@ -276,10 +269,7 @@ namespace ProteusMMX.Services.Navigation
 
                         }
 
-                    //workOrderNonStockroomParts = CreateAndBindPage(typeof(WorkOrderNonStockroomPartsListingPageViewModel), parameter);
-                    //var workOrderNonStockroomPartsPageParameter = new PageParameters { Page = workOrderNonStockroomParts, Parameter = parameter };
-                    //(workOrderNonStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderNonStockroomPartsPageParameter);
-                    //StockroomPartstabbedPage.Children.Add(workOrderNonStockroomParts);
+                   
                 }
                 
                 #endregion
@@ -324,7 +314,8 @@ namespace ProteusMMX.Services.Navigation
                         tabbedPage.Children.Add(attachmentsPage);
                     }
                 }
-
+              
+               
                 #endregion
 
 
@@ -781,7 +772,7 @@ namespace ProteusMMX.Services.Navigation
             _mappings.Add(typeof(RiskQuestionPageViewModel), typeof(RiskQuestionsPage));
             _mappings.Add(typeof(DescriptionViewModel), typeof(Description));
             _mappings.Add(typeof(ClosedWorkorderStockroomPartsViewModelForIOS), typeof(ClosedWorkorderStockroomPartsForIOS));
-            _mappings.Add(typeof(WorkOrderStockroomPartsListingPageViewModelForIOS), typeof(WorkOrderStockRoomPartsListingForIOS));
+            //_mappings.Add(typeof(WorkOrderStockroomPartsListingPageViewModelForIOS), typeof(WorkOrderStockRoomPartsListingForIOS));
             _mappings.Add(typeof(SearchWorkorderByLocationFromBarcodeViewModel), typeof(SearchWorkorderByLocationFromBarcode));
             _mappings.Add(typeof(SearchWorkorderByAssetNumberFromBarcodeViewModel), typeof(SearchWorkorderByAssetNumberFromBarcode));
             _mappings.Add(typeof(SearchAssetFromBarcodeViewModel), typeof(SearchAssetFromBarcode));
@@ -805,6 +796,9 @@ namespace ProteusMMX.Services.Navigation
             _mappings.Add(typeof(WorkorderTypeListSelectionPageViewModel), typeof(WorkorderTypeListSelectionPage));
             _mappings.Add(typeof(CauseListSelectionPageViewModel), typeof(CauseListSelectionPage));
             _mappings.Add(typeof(MaintenanceCodeListSelectionPageViewModel), typeof(MaintenanceCodeListSelectionPage));
+
+            _mappings.Add(typeof(AdministratorListSelectionPageViewModel), typeof(AdministratorListSelectionPage));
+            
 
             #region Workorder 
 

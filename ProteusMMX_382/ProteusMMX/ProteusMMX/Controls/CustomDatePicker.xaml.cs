@@ -93,12 +93,15 @@ namespace ProteusMMX.Controls
             try
             {
 
-                var dateConfig = new DatePromptConfig();
+                var dateConfig = new Acr.UserDialogs.DatePromptConfig();
                 dateConfig.MinimumDate = this.MinimumDate;
                 dateConfig.MaximumDate = this.MaximumDate;
                 dateConfig.SelectedDate = this.SelectedDate;
                 dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
-
+                if (Device.RuntimePlatform == Device.iOS)
+                {
+                    dateConfig.iOSPickerStyle = iOSPickerStyle.Wheels;
+                }
 
                 var dateResult = await UserDialogs.Instance.DatePromptAsync(dateConfig);
 

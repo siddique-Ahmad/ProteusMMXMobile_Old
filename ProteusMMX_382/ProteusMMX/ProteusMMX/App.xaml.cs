@@ -55,13 +55,13 @@ namespace ProteusMMX
 
         protected override void OnStart()
         {
-            AppCenter.Start("ios=51232fc7-be85-4adb-99d3-e1c8f6f3db2f" +
-                   "uwp=7529a611-c100-4257-872f-a9315b2161dc" +
-                    "android=7edb0700-5702-4890-9beb-3561942dd6f4",
-                  // "android= 24b17e2f-b607-4143-abd0-60877acd4676",
+            //AppCenter.Start("ios=51232fc7-be85-4adb-99d3-e1c8f6f3db2f" +
+            //       "uwp=7529a611-c100-4257-872f-a9315b2161dc" +
+            //        "android=7edb0700-5702-4890-9beb-3561942dd6f4",
+            //      // "android= 24b17e2f-b607-4143-abd0-60877acd4676",
 
                   
-                   typeof(Analytics), typeof(Crashes));
+            //       typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()

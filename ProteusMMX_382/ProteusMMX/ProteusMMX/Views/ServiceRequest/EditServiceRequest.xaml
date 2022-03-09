@@ -281,6 +281,21 @@
                                     <controls:RequiredDateCustomDatePicker Padding="0,3,0,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
+
+                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1">
+                                <Label Text="{Binding AdministratorTitle}" TextColor="Black">
+                                    <Label.FontAttributes>
+                                        <OnPlatform x:TypeArguments="FontAttributes">
+                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                            <OnPlatform.Android>Bold</OnPlatform.Android>
+                                        </OnPlatform>
+                                    </Label.FontAttributes>
+                                </Label>
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                    <buttons:SfButton Text="{Binding AdministratorName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding AdministratorCommand}" />
+                                </border:SfBorder>
+
+                            </StackLayout>
                         </Grid>
 
                         <Grid

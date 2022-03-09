@@ -1878,7 +1878,59 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
+        string _administratorTitle;
+        public string AdministratorTitle
+        {
+            get
+            {
+                return _administratorTitle;
+            }
 
+            set
+            {
+                if (value != _administratorTitle)
+                {
+                    _administratorTitle = value;
+                    OnPropertyChanged(nameof(AdministratorTitle));
+                }
+            }
+        }
+
+        string _administratorName;
+        public string AdministratorName
+        {
+            get
+            {
+                return _administratorName;
+            }
+
+            set
+            {
+                if (value != _administratorName)
+                {
+                    _administratorName = value;
+                    OnPropertyChanged(nameof(AdministratorName));
+                }
+            }
+        }
+        // AdministratorID
+        int? _administratorID;
+        public int? AdministratorID
+        {
+            get
+            {
+                return _administratorID;
+            }
+
+            set
+            {
+                if (value != _administratorID)
+                {
+                    _administratorID = value;
+                    OnPropertyChanged(nameof(AdministratorID));
+                }
+            }
+        }
         // WorkorderStatus
         int? _workorderStatusID;
         public int? WorkorderStatusID
@@ -3745,7 +3797,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
 
-
+        public ICommand AdministratorCommand => new AsyncCommand(ShowAdministrator);
         public ICommand FacilityCommand => new AsyncCommand(ShowFacilities);
         public ICommand LocationCommand => new AsyncCommand(ShowLocations);
         public ICommand AssetCommand => new AsyncCommand(ShowAssets);
@@ -3932,7 +3984,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         {
             try
             {
-
+                AdministratorTitle = "Administrator";
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("Details");
                 TagTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("TagType");
                
@@ -6638,6 +6690,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     //Retrive Asset
                     MessagingCenter.Subscribe<object>(this, MessengerKeys.AssetRequested, OnAssetRequested);
 
+                    //Retrive Administrator
+                    MessagingCenter.Subscribe<object>(this, MessengerKeys.AdministerRequested, OnAdministratorRequested);
 
                     //Retrive Asset System
                     MessagingCenter.Subscribe<object>(this, MessengerKeys.AssetSyastemRequested, OnAssetSystemRequested);
@@ -6726,7 +6780,32 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
             }
         }
+        public async Task ShowAdministrator()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
 
+                // OperationInProgress = true;
+                IsPickerDataRequested = true;
+                await NavigationService.NavigateToAsync<AdministratorListSelectionPageViewModel>(new TargetNavigationData() { }); //Pass the control here
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+
+                // OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+
+                //  OperationInProgress = false;
+
+            }
+        }
         public async Task ShowLocations()
         {
             try
@@ -7089,7 +7168,20 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
         }
+        private void OnAdministratorRequested(object obj)
+        {
 
+            if (obj != null)
+            {
+
+                var administrator = obj as ComboDD;
+                this.AdministratorID = administrator.SelectedValue;
+                this.AdministratorName = administrator.SelectedText;
+
+            }
+
+
+        }
         private void OnAssetRequested(object obj)
         {
 
@@ -7755,7 +7847,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ServiceRequest.TagType = TagTypeSelectedPickerText;
                 ServiceRequest.MaintenanceCodeID = MaintenanceCodeID;
 
-                ServiceRequest.AdministratorID = null;
+                ServiceRequest.AdministratorID = this.AdministratorID;
                 ServiceRequest.EstimatedDowntime = !string.IsNullOrEmpty(EstimatedDowntime) ? (decimal?)decimal.Parse(EstimatedDowntime.Replace(",", "")) : null;
                 ServiceRequest.RequesterEmail = RequesterEmail;
                 ServiceRequest.ConfirmEmail = RequesterEmail;

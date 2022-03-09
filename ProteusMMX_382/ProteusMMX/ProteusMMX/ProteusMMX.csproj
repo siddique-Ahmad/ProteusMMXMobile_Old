@@ -17,13 +17,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModel\Workorder\WorkOrderStockroomPartsListingPageViewModelForIOS.cs" />
+    <Compile Remove="Views\Workorder\WorkOrderStockRoomPartsListingForIOS.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\Workorder\WorkOrderStockRoomPartsListingForIOS.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Views\Common\Style.xaml~RFb1ca455.TMP" />
     <None Remove="Views\Inventory\Templates\ViewCells\StockroomViewCell.xaml~RF2968507b.TMP" />
     <None Remove="Views\PurchaseOrder\ReceivePuchaseOrderStockroomPart.xaml~RFa99fdcc.TMP" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
+    <PackageReference Include="Acr.UserDialogs" Version="7.2.0.562" />
     <PackageReference Include="Autofac" Version="4.7.0" />
     <PackageReference Include="CardsView" Version="2.6.3" />
     <PackageReference Include="Microsoft.AppCenter" Version="1.9.0" />
