@@ -77,7 +77,7 @@
 
 
                     </Grid>
-                    <Image Source="delIcon1.png"  HorizontalOptions="End" Grid.Row="3">
+                    <Image x:Name="RemoveImage" IsEnabled="{Binding RemoveIsEnable}" IsVisible="{Binding RemoveIsVisible}" Source="delIcon1.png"  HorizontalOptions="End" Grid.Row="3">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer
                                 Tapped="TapGestureRecognizer_Tapped"
