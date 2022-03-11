@@ -389,7 +389,99 @@ namespace ProteusMMX.ViewModel.Workorder
 
         #endregion
 
+        #region **** Rights *****
+        bool _taskLabourTabIsEnable = true;
+        public bool TaskLabourTabIsEnable
+        {
+            get
+            {
+                return _taskLabourTabIsEnable;
+            }
 
+            set
+            {
+                if (value != _taskLabourTabIsEnable)
+                {
+                    _taskLabourTabIsEnable = value;
+                    OnPropertyChanged(nameof(TaskLabourTabIsEnable));
+                }
+            }
+        }
+
+        bool _hourAtRate1IsEnable = false;
+        public bool HourAtRate1IsEnable
+        {
+            get
+            {
+                return _hourAtRate1IsEnable;
+            }
+
+            set
+            {
+                if (value != _hourAtRate1IsEnable)
+                {
+                    _hourAtRate1IsEnable = value;
+                    OnPropertyChanged(nameof(HourAtRate1IsEnable));
+                }
+            }
+        }
+
+        bool _hourAtRate1IsVisible = false;
+        public bool HourAtRate1IsVisible
+        {
+            get
+            {
+                return _hourAtRate1IsVisible;
+            }
+
+            set
+            {
+                if (value != _hourAtRate1IsVisible)
+                {
+                    _hourAtRate1IsVisible = value;
+                    OnPropertyChanged(nameof(HourAtRate1IsVisible));
+                }
+            }
+        }
+
+        bool _hourAtRate2IsEnable = false;
+        public bool HourAtRate2IsEnable
+        {
+            get
+            {
+                return _hourAtRate2IsEnable;
+            }
+
+            set
+            {
+                if (value != _hourAtRate2IsEnable)
+                {
+                    _hourAtRate2IsEnable = value;
+                    OnPropertyChanged(nameof(HourAtRate2IsEnable));
+                }
+            }
+        }
+
+        bool _hourAtRate2IsVisible = false;
+        public bool HourAtRate2IsVisible
+        {
+            get
+            {
+                return _hourAtRate2IsVisible;
+            }
+
+            set
+            {
+                if (value != _hourAtRate2IsVisible)
+                {
+                    _hourAtRate2IsVisible = value;
+                    OnPropertyChanged(nameof(HourAtRate2IsVisible));
+                }
+            }
+        }
+
+
+        #endregion
 
         #endregion
 
@@ -727,21 +819,30 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 if (workorderLabour != null && workorderLabour.workOrderWrapper != null && workorderLabour.workOrderWrapper.workOrderLabors != null && workorderLabour.workOrderWrapper.workOrderLabors.Count > 0)
                 {
-
+                    
                     foreach (var item in workorderLabour.workOrderWrapper.workOrderLabors)
                     {
-
+                        if (Application.Current.Properties.ContainsKey("EditTask"))
+                        {
+                            var TaskLabourTab = Application.Current.Properties["EditTask"].ToString();
+                            if (TaskLabourTab == "V" || TaskLabourTab == "N")
+                            {
+                                 TaskLabourTabIsEnable = false;
+                            }
+                        }
                         StackLayout MasterstackLayout = new StackLayout();
                         StackLayout frameStackLayout = new StackLayout
                         {
-                            Padding = new Thickness(3, 0, 3, 0)
+                            Padding = new Thickness(3, 0, 3, 0),
+                            IsEnabled = TaskLabourTabIsEnable
                         };
                         MasterstackLayout.Children.Add(frameStackLayout);
                         Frame frame = new Frame
                         {
                             BackgroundColor = Color.White,
                             BorderColor = Color.Black,
-                            CornerRadius = 10
+                            CornerRadius = 10,
+                           
                         };
                         frameStackLayout.Children.Add(frame);
 
@@ -949,6 +1050,20 @@ namespace ProteusMMX.ViewModel.Workorder
                         #endregion
 
                         #region ***** Button And Hrs And Min ****
+
+                        if (Application.Current.Properties.ContainsKey("HourAtRate1"))
+                        {
+                            var TaskLabourTab = Application.Current.Properties["HourAtRate1"].ToString();
+                            if (TaskLabourTab == "V")
+                            {
+                                TaskLabourTabIsEnable = false;
+                            }
+                            else if (TaskLabourTab == "N")
+                            {
+
+                            }
+                        }
+
                         StackLayout buttnoStackLayout = new StackLayout();
 
                         MainGrid.Children.Add(buttnoStackLayout, 0, 3);

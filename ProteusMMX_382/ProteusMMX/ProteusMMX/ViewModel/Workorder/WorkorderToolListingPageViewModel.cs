@@ -293,6 +293,40 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        bool _removeIsEnable = true;
+        public bool RemoveIsEnable
+        {
+            get
+            {
+                return _removeIsEnable;
+            }
+
+            set
+            {
+                if (value != _removeIsEnable)
+                {
+                    _removeIsEnable = value;
+                    OnPropertyChanged(nameof(RemoveIsEnable));
+                }
+            }
+        }
+        bool _removeIsVisible = true;
+        public bool RemoveIsVisible
+        {
+            get
+            {
+                return _removeIsVisible;
+            }
+
+            set
+            {
+                if (value != _removeIsVisible)
+                {
+                    _removeIsVisible = value;
+                    OnPropertyChanged(nameof(RemoveIsVisible));
+                }
+            }
+        }
         #endregion
 
         #region Dialog Actions Titles
@@ -497,6 +531,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
 
+
         #region Methods
         public override async Task InitializeAsync(object navigationData)
         {
@@ -529,7 +564,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (Application.Current.Properties.ContainsKey("DeleteTool"))
                 {
                     DeleteTool = Application.Current.Properties["DeleteTool"].ToString();
-
+                    
                 }
 
                 Application.Current.Properties["DeleteToolKey"] = DeleteTool;
@@ -897,6 +932,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task OnViewAppearingAsync(VisualElement view)
         {
+            if (DeleteTool == "V")
+            {
+                RemoveIsEnable = false;
+            }
+            if (DeleteTool == "N")
+            {
+                RemoveIsVisible = false;
+            }
             if (string.IsNullOrWhiteSpace(SearchText))
             {
                 await RemoveAllWorkorderToolsFromCollection();
