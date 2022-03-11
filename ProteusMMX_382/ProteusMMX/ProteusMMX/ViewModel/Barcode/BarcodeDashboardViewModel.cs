@@ -612,12 +612,12 @@ namespace ProteusMMX.ViewModel.Barcode
                 //SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName(titles, "SelectOptionsTitles"); 
 
 
-                SearchAssetTitle = WebControlTitle.GetTargetNameByTitleName("SearchAsset");
-                SearchWorkorderByAssetTitle = WebControlTitle.GetTargetNameByTitleName("SearchWorkOrderbyAsset");
-                SearchWorkorderByLocationTitle = WebControlTitle.GetTargetNameByTitleName("SearchWorkOrderbyLocation");
-                SearchAssetForBillOfMaterialTitle = WebControlTitle.GetTargetNameByTitleName("SearchScanAssetForBillOfMaterial");
-                SearchAssetForAttachmentTitle = WebControlTitle.GetTargetNameByTitleName("SearchscanAssetforAttachments");
-                BarcodeTitle = WebControlTitle.GetTargetNameByTitleName("SearchScanBarcode");
+                SearchAssetTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchAsset"));
+                SearchWorkorderByAssetTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchWorkOrderbyAsset"));
+                SearchWorkorderByLocationTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchWorkOrderbyLocation"));
+                SearchAssetForBillOfMaterialTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchScanAssetForBillOfMaterial"));
+                SearchAssetForAttachmentTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchscanAssetforAttachments"));
+                BarcodeTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchScanBarcode"));
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
         }
         public async Task SetBarcodeModulesVisibility()

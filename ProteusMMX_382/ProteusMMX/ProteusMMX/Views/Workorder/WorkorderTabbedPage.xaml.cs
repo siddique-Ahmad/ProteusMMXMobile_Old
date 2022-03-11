@@ -39,7 +39,7 @@ namespace ProteusMMX.Views.Workorder
                     {
                         this.Title = WebControlTitle.GetTargetNameByTitleName("Inspection");
                     }
-                    else if (Selectedpage.Contains("WorkOrderPartTab"))
+                    else if (Selectedpage.Contains("WorkorderStockroomPartsTabbedPage"))
                     {
                         this.Title = WebControlTitle.GetTargetNameByTitleName("Parts");
                     }
