@@ -518,7 +518,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
         public async Task SetTitlesPropertiesForPage()
         {
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("Assets");
+                PageTitle = WebControlTitle.GetTargetNameByTitleName("SearchAsset");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");

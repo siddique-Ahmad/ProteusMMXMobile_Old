@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="ProteusMMX.Views.Workorder.Templates.ViewCells.ToolsViewCell" BindingContextChanged="OnBindingContextChanged">
+             x:Class="ProteusMMX.Views.Workorder.Templates.ViewCells.ToolsViewCell" >
     <ViewCell.View >
        
             <StackLayout  x:Name="TopLayout" Padding="0,1,0,1" >
@@ -90,7 +90,5 @@
             </Frame>
         </StackLayout>
     </ViewCell.View>
-    <ViewCell.ContextActions>
-        <MenuItem x:Name="ToolsMenuItem" IsDestructive="{Binding RemoveToolVisibility}" Clicked="RemoveTool"  CommandParameter="{Binding .}"  Text="RemoveTool" />
-    </ViewCell.ContextActions>
+   
 </ViewCell>

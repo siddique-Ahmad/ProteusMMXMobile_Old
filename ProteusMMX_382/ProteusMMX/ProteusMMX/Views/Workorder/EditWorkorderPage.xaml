@@ -101,8 +101,8 @@
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <!--<Span Text="{Binding WorkorderNumberTitle}"/>-->
-                                                <Span Text="Work Order Number"></Span>
-                                                <Span Text=":"/>
+                                                    <Span Text="{Binding WorkorderNumbeTitle}"></Span>
+                                                    <Span Text=":"/>
                                                 <Span Text="{Binding WorkorderNumberText}"/>
                                             </FormattedString>
                                         </Label.FormattedText>
@@ -206,7 +206,7 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}"  IsEnabled="{Binding RequiredDateIsEnable}"  />
+                                    <controls:RequiredDateCustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}"  IsEnabled="{Binding RequiredDateIsEnable}"  />
                                 </border:SfBorder>
                             </StackLayout>
 

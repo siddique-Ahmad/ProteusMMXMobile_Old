@@ -707,13 +707,19 @@ namespace ProteusMMX.ViewModel
             //SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName(titles, "SelectOptionsTitles"); 
 
 
-            WorkorderTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrder");
-            CloseWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("ClosedWorkOrder");
-            InventoryTransactionTitle = WebControlTitle.GetTargetNameByTitleName("InventoryTransaction");
-            ServiceRequestTitle = WebControlTitle.GetTargetNameByTitleName("ServiceRequest");
-            AssetsTitle = WebControlTitle.GetTargetNameByTitleName("Assets");
-            BarcodeTitle = WebControlTitle.GetTargetNameByTitleName("SearchScanBarcode");
-            ReceivingTitle = WebControlTitle.GetTargetNameByTitleName("Receiving");
+            WorkorderTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("WorkOrder"));
+
+
+            CloseWorkorderTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("ClosedWorkOrder"));
+
+            InventoryTransactionTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("InventoryTransaction"));
+
+            ServiceRequestTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("ServiceRequest"));
+
+            AssetsTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("Assets"));
+            BarcodeTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchScanBarcode"));
+            ReceivingTitle = ShortString.shorten(WebControlTitle.GetTargetNameByTitleName("Receiving"));
+
             SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
 
 
