@@ -654,9 +654,27 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
+        bool _descriptionIsVisible = true;
+        public bool DescriptionIsVisible
+        {
+            get
+            {
+                return _descriptionIsVisible;
+            }
+
+            set
+            {
+                if (value != _descriptionIsVisible)
+                {
+                    _descriptionIsVisible = value;
+                    OnPropertyChanged(nameof(DescriptionIsVisible));
+                }
+            }
+        }
+
 
         // Required Date
-        DateTime _requiredDate1=DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+        DateTime _requiredDate1 =DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
         public DateTime RequiredDate1
         {
             get
@@ -745,7 +763,46 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
             }
         }
-        
+
+        bool _administratorIsEnable = true;
+        public bool AdministratorIsEnable
+        {
+            get
+            {
+                return _administratorIsEnable;
+            }
+
+            set
+            {
+                if (value != _administratorIsEnable)
+                {
+                    _administratorIsEnable = value;
+                    OnPropertyChanged(nameof(AdministratorIsEnable));
+                }
+            }
+        }
+
+        bool _administratoreIsVisible = true;
+        public bool AdministratorIsVisible
+        {
+            get
+            {
+                return _administratoreIsVisible;
+            }
+
+            set
+            {
+                if (value != _administratoreIsVisible)
+                {
+                    _administratoreIsVisible = value;
+                    OnPropertyChanged(nameof(AdministratorIsVisible));
+                }
+            }
+        }
+
+
+
+
 
         bool _requiredDateIsEnable = true;
         public bool RequiredDateIsEnable
@@ -765,6 +822,23 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
+        bool _requiredDateIsVisible = true;
+        public bool RequiredDateIsVisible
+        {
+            get
+            {
+                return _requiredDateIsVisible;
+            }
+
+            set
+            {
+                if (value != _requiredDateIsVisible)
+                {
+                    _requiredDateIsVisible = value;
+                    OnPropertyChanged(nameof(RequiredDateIsVisible));
+                }
+            }
+        }
 
         // workorder started Date
         DateTime? _workStartedDate;
@@ -3587,7 +3661,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         public ICommand TapCommand => new AsyncCommand(SpeechtoText);
 
         #endregion
-
+        string Create;
         #region Methods
         public override async Task InitializeAsync(object navigationData)
         {
@@ -3669,7 +3743,27 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     }
                 }
 
+                if (Application.Current.Properties.ContainsKey("CreateServiceRequestKey"))
+                {
+                    var CreateRights = Application.Current.Properties["CreateServiceRequestKey"].ToString();
+                    if (CreateRights != null)
+                    {
+                        Create = CreateRights.ToString();
 
+                    }
+                }
+                if (Create == "E")
+                {
+                    this.ServiceRequestIsVisible = true;
+                }
+                else if (Create == "V")
+                {
+                    this.ServiceRequestIsEnabled = false;
+                }
+                else
+                {
+                    this.ServiceRequestIsVisible = false;
+                }
 
                 if (Application.Current.Properties.ContainsKey("ServiceRequestTarget"))
                 {
@@ -4123,7 +4217,24 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     }
 
                     var requiredDate = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "RequiredDate");
-                    RequiredDateTitle = requiredDate.TargetName;
+                    if (requiredDate != null)
+                    {
+                        RequiredDateTitle = requiredDate.TargetName;
+                        OverriddenControlsNew.Add(requiredDate);
+                        ServiceRequestControlsNew.Remove(requiredDate);
+                    }
+
+                    var administrator = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "AdministratorID");
+                    if (administrator != null)
+                    {
+                        
+                        AdministratorTitle = administrator.TargetName;
+                        OverriddenControlsNew.Add(administrator);
+                        ServiceRequestControlsNew.Remove(administrator);
+                    }
+
+                    //var requiredDate = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "RequiredDate");
+                    //RequiredDateTitle = requiredDate.TargetName;
 
 
                 }
@@ -4153,6 +4264,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "WorkTypeID");
                 ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "MaintenanceCodeID");
                 ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "RequiredDate");
+                ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "AdministratorID");
             }
 
             #endregion
@@ -4188,16 +4300,22 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         switch (item.ControlName)
                         {
 
-                            
+
 
                             case "Description":
                                 {
                                     DescriptionIsEnable = ApplyIsEnable(item.Expression);
+                                    DescriptionIsVisible = ApplyIsVisible(item.Expression);
                                     break;
                                 }
 
 
-
+                            case "RequiredDate":
+                                {
+                                    RequiredDateIsEnable = ApplyIsEnable(item.Expression);
+                                    RequiredDateIsVisible = ApplyIsVisible(item.Expression);
+                                    break;
+                                }
 
                             case "AssignedToEmployeeID":
                                 {
@@ -4206,6 +4324,12 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                     break;
                                 }
 
+                            case "AdministratorID":
+                                {
+                                    AdministratorIsEnable = ApplyIsEnable(item.Expression);
+                                    AdministratorIsVisible = ApplyIsVisible(item.Expression);
+                                    break;
+                                }
 
                             case "WorkOrderRequesterID":
                                 {

@@ -349,8 +349,8 @@
                                 </border:SfBorder>
                                
                             </StackLayout>
-                            
-                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1" >
+
+                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1"  IsVisible="{Binding OriginatorIsVisible}">
                                 <Label Text="{Binding OriginatorTitle}" IsEnabled="False" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -378,8 +378,9 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="9">
-                                <StackLayout Orientation="Horizontal"  IsEnabled="{Binding IsCostLayoutIsEnable}">
+                            <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="9" Grid.ColumnSpan="2">
+                                <StackLayout IsVisible="{Binding DistributeCostforAssetsystemIsVisible}" IsEnabled="{Binding DistributeCostforAssetsystemIsEnable}">
+                                <StackLayout Orientation="Horizontal"   IsEnabled="{Binding IsCostLayoutIsEnable}">
                                     <!--<dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
                                     </dependencyinterface:LoginSwitch>-->
                                     <buttons:SfSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsOn="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
@@ -395,10 +396,11 @@
                                     <buttons:SfRadioButton IsVisible="{Binding IsCostLayoutIsVisibleForParent}"  CheckedColor="DeepSkyBlue" IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}" Margin="10,10,10,10" Text="{Binding ParentCostsOnly}" StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
 
                                 </StackLayout>
-
+                                </StackLayout>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding IsCostLayoutIsVisibleForPhone}" Grid.Row="9" Grid.ColumnSpan="2" >
+                                <StackLayout IsVisible="{Binding DistributeCostforAssetsystemIsVisible}" IsEnabled="{Binding distributeCostforAssetsystemIsEnable}">
                                 <StackLayout Orientation="Horizontal">
                                     <buttons:SfSwitch IsEnabled="{Binding IsCostLayoutIsEnable}" IsOn="{Binding IsCostDistributed, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" x:Uid="MySwitch" >
                                     </buttons:SfSwitch>
@@ -413,7 +415,7 @@
                                 <StackLayout Orientation="Horizontal" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}">
                                     <buttons:SfRadioButton x:Name="Button1" CheckedColor="DeepSkyBlue"  IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}"  Text="{Binding ParentCostsOnly}" HorizontalOptions="StartAndExpand" VerticalOptions='StartAndExpand' StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
                                 </StackLayout>
-
+                                </StackLayout>
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="10" Grid.Column="0" IsVisible="{Binding WorkorderRequesterIsVisible}">
