@@ -126,5 +126,17 @@ namespace ProteusMMX.Views.Common
 
         }
 
+        //public async override void OnBackPressed()
+        //{
+        //    if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
+        //    {
+        //        await PopupNavigation.Instance.PopAsync();
+        //    }
+        //    else
+        //    {
+        //        // Do something if there are not any pages in the `PopupStack`
+        //    }
+        //}
+
     }
 }

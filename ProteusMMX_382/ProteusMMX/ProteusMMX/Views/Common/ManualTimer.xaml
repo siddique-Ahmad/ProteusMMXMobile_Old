@@ -3,7 +3,8 @@
                   xmlns="http://xamarin.com/schemas/2014/forms"
                   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
                   xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-                  x:Class="ProteusMMX.Views.Common.ManualTimer" BackgroundColor="Transparent">
+                  x:Class="ProteusMMX.Views.Common.ManualTimer" BackgroundColor="Transparent" 
+                  CloseWhenBackgroundIsClicked="True" >
     <AbsoluteLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
         <border:SfBorder CornerRadius="5">
 

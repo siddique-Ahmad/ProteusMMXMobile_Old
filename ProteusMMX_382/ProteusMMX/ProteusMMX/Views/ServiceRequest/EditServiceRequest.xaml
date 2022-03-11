@@ -77,7 +77,7 @@
                                 <ColumnDefinition  Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                            <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding DescriptionIsVisible}">
                                 <Label Text="{Binding DescriptionTitle}" TextColor="Black">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -267,7 +267,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="0">
+                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="0" IsVisible="{Binding RequiredDateIsVisible}">
                                 <Label Text="{Binding RequiredDateTitle}" TextColor="Black">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -282,7 +282,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1">
+                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1" IsVisible="{Binding AdministratorIsVisible}">
                                 <Label Text="{Binding AdministratorTitle}" TextColor="Black">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -291,7 +291,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding AdministratorIsEnable}">
                                     <buttons:SfButton Text="{Binding AdministratorName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding AdministratorCommand}" />
                                 </border:SfBorder>
 

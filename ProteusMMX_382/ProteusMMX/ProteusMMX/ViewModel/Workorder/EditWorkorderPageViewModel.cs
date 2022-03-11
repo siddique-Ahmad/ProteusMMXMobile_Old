@@ -744,6 +744,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        #region ***** DistributeCost *****
         string _distributeCostforAssetsystem;
         public string DistributeCostforAssetsystem
         {
@@ -761,6 +762,43 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+
+        bool _distributeCostforAssetsystemIsVisible = true;
+        public bool DistributeCostforAssetsystemIsVisible
+        {
+            get
+            {
+                return _distributeCostforAssetsystemIsVisible;
+            }
+
+            set
+            {
+                if (value != _distributeCostforAssetsystemIsVisible)
+                {
+                    _distributeCostforAssetsystemIsVisible = value;
+                    OnPropertyChanged(nameof(DistributeCostforAssetsystemIsVisible));
+                }
+            }
+        }
+
+        bool _distributeCostforAssetsystemIsEnable = true;
+        public bool DistributeCostforAssetsystemIsEnable
+        {
+            get
+            {
+                return _distributeCostforAssetsystemIsEnable;
+            }
+
+            set
+            {
+                if (value != _distributeCostforAssetsystemIsEnable)
+                {
+                    _distributeCostforAssetsystemIsEnable = value;
+                    OnPropertyChanged(nameof(DistributeCostforAssetsystemIsEnable));
+                }
+            }
+        }
+        #endregion
 
         string _chargeCostsOnlyToChildAssets;
         public string ChargeCostsOnlyToChildAssets
@@ -811,8 +849,6 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-
-
 
         List<FormControl> _overriddenControlsNew = new List<FormControl>();
         public List<FormControl> OverriddenControlsNew
@@ -1131,6 +1167,42 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _originatorName = value;
                     OnPropertyChanged(nameof(OriginatorName));
+                }
+            }
+        }
+
+        bool _originatorIsVisible = true;
+        public bool OriginatorIsVisible
+        {
+            get
+            {
+                return _originatorIsVisible;
+            }
+
+            set
+            {
+                if (value != _originatorIsVisible)
+                {
+                    _originatorIsVisible = value;
+                    OnPropertyChanged(nameof(OriginatorIsVisible));
+                }
+            }
+        }
+
+        bool _originatorIsEnable = true;
+        public bool OriginatorIsEnable
+        {
+            get
+            {
+                return _originatorIsEnable;
+            }
+
+            set
+            {
+                if (value != _originatorIsEnable)
+                {
+                    _originatorIsEnable = value;
+                    OnPropertyChanged(nameof(OriginatorIsEnable));
                 }
             }
         }
@@ -1950,6 +2022,25 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+
+        bool _totalTimeIsEnable = true;
+        public bool TotalTimeIsEnable
+        {
+            get
+            {
+                return _totalTimeIsEnable;
+            }
+
+            set
+            {
+                if (value != _totalTimeIsEnable)
+                {
+                    _totalTimeIsEnable = value;
+                    OnPropertyChanged(nameof(TotalTimeIsEnable));
+                }
+            }
+        }
+
 
         bool _locationIsEnable = true;
         public bool LocationIsEnable
@@ -5377,6 +5468,30 @@ namespace ProteusMMX.ViewModel.Workorder
                         WorkorderControlsNew.Remove(description);
                     }
 
+                    var TotalTime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "TotalTime");
+                    if (TotalTime != null)
+                    {
+                        TotalTimeTilte = TotalTime.TargetName;
+                        OverriddenControlsNew.Add(TotalTime);
+                        WorkorderControlsNew.Remove(TotalTime);
+                    }
+
+                    var Originator = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "Originator");
+                    if (Originator != null)
+                    {
+                        OriginatorTitle = Originator.TargetName;
+                        OverriddenControlsNew.Add(Originator);
+                        WorkorderControlsNew.Remove(Originator);
+                    }
+
+                    var DistributeCost = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "DistributeCost");
+                    if (DistributeCost != null)
+                    {
+                        DistributeCostforAssetsystem = DistributeCost.TargetName;
+                        OverriddenControlsNew.Add(DistributeCost);
+                        WorkorderControlsNew.Remove(DistributeCost);
+                    }
+
                     var RequiredDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "RequiredDate");
                     if (RequiredDate != null)
                     {
@@ -5569,8 +5684,6 @@ namespace ProteusMMX.ViewModel.Workorder
                                     break;
                                 }
 
-
-
                             case "Description":
                                 {
                                     DescriptionIsEnable = ApplyIsEnable(item.Expression);
@@ -5736,6 +5849,20 @@ namespace ProteusMMX.ViewModel.Workorder
                                     }
                                     MiscellaneousMaterialCostIsEnable = ApplyIsEnable(item.Expression);
                                     MiscellaneousMaterialCostIsVisible = ApplyIsVisible(item.Expression);
+                                    break;
+                                }
+
+                            case "DistributeCost":
+                                {
+                                    DistributeCostforAssetsystemIsVisible = ApplyIsVisible(item.Expression);
+                                    DistributeCostforAssetsystemIsEnable = ApplyIsEnable(item.Expression);
+                                    break;
+                                }
+
+                            case "Originator":
+                                {
+                                    DistributeCostforAssetsystemIsVisible = ApplyIsVisible(item.Expression);
+                                    DistributeCostforAssetsystemIsEnable = ApplyIsEnable(item.Expression);
                                     break;
                                 }
 

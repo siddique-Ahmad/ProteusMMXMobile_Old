@@ -677,6 +677,23 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
+        bool _descriptionIsVisible = true;
+        public bool DescriptionIsVisible
+        {
+            get
+            {
+                return _descriptionIsVisible;
+            }
+
+            set
+            {
+                if (value != _descriptionIsVisible)
+                {
+                    _descriptionIsVisible = value;
+                    OnPropertyChanged(nameof(DescriptionIsVisible));
+                }
+            }
+        }
 
         // Required Date
         DateTime _requiredDate1;
@@ -3793,7 +3810,61 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
+        bool _administratorIsEnable = true;
+        public bool AdministratorIsEnable
+        {
+            get
+            {
+                return _administratorIsEnable;
+            }
+
+            set
+            {
+                if (value != _administratorIsEnable)
+                {
+                    _administratorIsEnable = value;
+                    OnPropertyChanged(nameof(AdministratorIsEnable));
+                }
+            }
+        }
+
+        bool _administratoreIsVisible = true;
+        public bool AdministratorIsVisible
+        {
+            get
+            {
+                return _administratoreIsVisible;
+            }
+
+            set
+            {
+                if (value != _administratoreIsVisible)
+                {
+                    _administratoreIsVisible = value;
+                    OnPropertyChanged(nameof(AdministratorIsVisible));
+                }
+            }
+        }
+
+        bool _requiredDateIsVisible = true;
+        public bool RequiredDateIsVisible
+        {
+            get
+            {
+                return _requiredDateIsVisible;
+            }
+
+            set
+            {
+                if (value != _requiredDateIsVisible)
+                {
+                    _requiredDateIsVisible = value;
+                    OnPropertyChanged(nameof(RequiredDateIsVisible));
+                }
+            }
+        }
         #endregion
+
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
 
@@ -4331,7 +4402,21 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     }
 
                     var requiredDate = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "RequiredDate");
-                    RequiredDateTitle = requiredDate.TargetName;
+                    if (requiredDate != null)
+                    {
+                        RequiredDateTitle = requiredDate.TargetName;
+                        OverriddenControlsNew.Add(requiredDate);
+                        ServiceRequestControlsNew.Remove(requiredDate);
+                    }
+
+                    var administrator = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "AdministratorID");
+                    if (administrator != null)
+                    {
+
+                        AdministratorTitle = administrator.TargetName;
+                        OverriddenControlsNew.Add(administrator);
+                        ServiceRequestControlsNew.Remove(administrator);
+                    }
 
                 }
                 catch (Exception ex)
@@ -4362,6 +4447,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "WorkTypeID");
                 ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "MaintenanceCodeID");
                 ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "RequiredDate");
+                ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "AdministratorID");
             }
 
             #endregion
@@ -4402,10 +4488,23 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             case "Description":
                                 {
                                     DescriptionIsEnable = ApplyIsEnable(item.Expression);
+                                    DescriptionIsVisible = ApplyIsEnable(item.Expression);
                                     break;
                                 }
 
+                            case "RequiredDate":
+                                {
+                                    RequiredDateIsEnable = ApplyIsEnable(item.Expression);
+                                    RequiredDateIsVisible = ApplyIsVisible(item.Expression);
+                                    break;
+                                }
 
+                            case "AdministratorID":
+                                {
+                                    AdministratorIsEnable = ApplyIsEnable(item.Expression);
+                                    AdministratorIsVisible = ApplyIsVisible(item.Expression);
+                                    break;
+                                }
 
                             case "AssignedToEmployeeID":
                                 {
