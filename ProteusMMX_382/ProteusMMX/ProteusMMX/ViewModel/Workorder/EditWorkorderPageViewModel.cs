@@ -11132,29 +11132,29 @@ namespace ProteusMMX.ViewModel.Workorder
                 var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
 
-                #region check if all answers of a sections are required
+                //#region check if all answers of a sections are required
 
-                // check if all answers of a sections are required///////
-                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null && WorkorderCompletionDate != null))
-                {
-                    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.sections != null && workorderWrapper.workOrderWrapper.sections.Count > 0))
-                    {
-                        StringBuilder RequiredSection = new StringBuilder();
+                //// check if all answers of a sections are required///////
+                //if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null && WorkorderCompletionDate != null))
+                //{
+                //    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.sections != null && workorderWrapper.workOrderWrapper.sections.Count > 0))
+                //    {
+                //        StringBuilder RequiredSection = new StringBuilder();
 
-                        foreach (var item in workorderWrapper.workOrderWrapper.sections)
-                        {
-                            RequiredSection.Append(item.SectionName);
-                            RequiredSection.Append(",");
-                        }
+                //        foreach (var item in workorderWrapper.workOrderWrapper.sections)
+                //        {
+                //            RequiredSection.Append(item.SectionName);
+                //            RequiredSection.Append(",");
+                //        }
 
-                        await DialogService.ShowAlertAsync(RequiredSection.ToString().TrimEnd(','), WebControlTitle.GetTargetNameByTitleName("PleaseProvideFollowingSectionQuestionAnswer"), "OK");
-                        return;
+                //        await DialogService.ShowAlertAsync(RequiredSection.ToString().TrimEnd(','), WebControlTitle.GetTargetNameByTitleName("PleaseProvideFollowingSectionQuestionAnswer"), "OK");
+                //        return;
 
 
-                    }
-                }
+                //    }
+                //}
 
-                #endregion
+                //#endregion
 
 
                 #region Check WorkOrder Identified through Breakdown
