@@ -88,7 +88,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Label  x:Name="WorkorderTypeLabel" WidthRequest="100" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
+                        <Label  x:Name="WorkorderTypeLabel" Grid.Column="0" WidthRequest="100" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                         <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                         <Label LineBreakMode="TailTruncation"  Text="{Binding WorkOrderType}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" />
                         <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
