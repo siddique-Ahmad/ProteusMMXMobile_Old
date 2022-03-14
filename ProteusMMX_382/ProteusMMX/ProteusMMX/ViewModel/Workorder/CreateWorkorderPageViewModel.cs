@@ -29,6 +29,7 @@ using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -6641,11 +6642,18 @@ namespace ProteusMMX.ViewModel.Workorder
                 this.WorkorderNumberText = workorder.WorkOrderNumber;
 
 
+                if (this.WorkorderID > 0)
+                {
 
-                this.DescriptionText = workorder.Description;
+                 this.DescriptionText = "Due to PM WorkOrder" + "(" + WorkorderNumberText + ")";
+                }
+                else
+                {
+                    this.DescriptionText = workorder.Description;
+                }
 
 
-                this.DescriptionText = workorder.Description;
+             
 
 
                 if (!string.IsNullOrWhiteSpace(workorder.AdditionalDetails))
@@ -11233,7 +11241,36 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 #endregion
 
+                #region Check WorkOrder Identified through Breakdown
+                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.WorkOrderIdentifiedThroughBreakdownFlag) && MaintenanceCodeName == "IDENTIFIED THROUGH BREAKDOWN")
+                {
+                    string expression = @"^(\()?[0-9]+(?>,[0-9]{3})*(?>\.[0-9]{3})?(?<!^[0\.]+)$";
 
+
+                    if (String.IsNullOrWhiteSpace(EstimstedDowntimeText) || !(Regex.IsMatch(EstimstedDowntimeText, expression)))
+                    {
+
+                        DialogService.ShowToast("EstimatedDowntime Is Required");
+                        return;
+                    }
+                    if (String.IsNullOrWhiteSpace(ActualDowntimeText) || !(Regex.IsMatch(ActualDowntimeText, expression)))
+                    {
+                        DialogService.ShowToast("ActualDowntime Is Required");
+                        return;
+                    }
+                    if (String.IsNullOrWhiteSpace(UserField21))
+                    {
+                        DialogService.ShowToast("UserField21 Is Required");
+                        return;
+                    }
+                    if (String.IsNullOrWhiteSpace(PriorityName))
+                    {
+                        DialogService.ShowToast("PriorityName Is Required");
+                        return;
+                    }
+                }
+                #endregion
                 ///TODO:ActualDowntime1 , MLC1 , MMC1 , EstimatedDowntime1 parse into decimal value.
 
                 /// Create WO wrapper and data into it and update the workorder
@@ -11414,7 +11451,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                         workOrderLabor = new WorkOrderLabor
                                         {
 
-                                            WorkOrderID = this.WorkorderID,
+                                            WorkOrderID = response.workOrderWrapper.workOrder.WorkOrderID,
                                             TaskID = null,
                                             StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
                                             EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
@@ -11478,7 +11515,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                         workOrderLabor = new WorkOrderLabor
                                         {
 
-                                            WorkOrderID = this.WorkorderID,
+                                            WorkOrderID = response.workOrderWrapper.workOrder.WorkOrderID,
                                             TaskID = null,
                                             StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
                                             EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
@@ -11545,7 +11582,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     workOrderLabor = new WorkOrderLabor
                                     {
 
-                                        WorkOrderID = this.WorkorderID,
+                                        WorkOrderID = response.workOrderWrapper.workOrder.WorkOrderID,
                                         TaskID = null,
                                         StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
                                         EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
@@ -11608,7 +11645,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     workOrderLabor = new WorkOrderLabor
                                     {
 
-                                        WorkOrderID = this.WorkorderID,
+                                        WorkOrderID = response.workOrderWrapper.workOrder.WorkOrderID,
                                         TaskID = null,
                                         StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
                                         EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
