@@ -21,6 +21,7 @@ using ProteusMMX.Utils;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.SelectionListPagesViewModels;
 using ProteusMMX.Views.Common;
+using ProteusMMX.Views.Workorder;
 using Syncfusion.XForms.Border;
 using Syncfusion.XForms.Buttons;
 using System;
@@ -2059,7 +2060,7 @@ namespace ProteusMMX.ViewModel.Workorder
                              tnobj1.HrsText = "HoursAtRate1";
                              // var ManualTimer = new ManualTimer(tnobj1);
                              //await Navigation.PushPopupAsync(ManualTimer);
-                             await Application.Current.MainPage.Navigation.PushAsync(new ManualTimer(tnobj1));
+                             await Application.Current.MainPage.Navigation.PushAsync(new TimerManual(tnobj1));
                              // NavigationService.NavigateToAsync<>
 
                          };
