@@ -82,7 +82,16 @@ namespace ProteusMMX.Views.Workorder
                 }
                 else
                 {
-                    BorderColor.BorderColor = Color.Black;
+                    if (e1.Text == "0")
+                    {
+                        e1.Text = string.Empty;
+                        BorderColor.BorderColor = Color.Red;
+                    }
+                    else
+                    {
+                        BorderColor.BorderColor = Color.Black;
+                    }
+                    
                 }
             }
         }
@@ -112,6 +121,15 @@ namespace ProteusMMX.Views.Workorder
                 }
                 else
                 {
+                    if (e1.Text == "0")
+                    {
+                        e1.Text = string.Empty;
+                        BorderColor.BorderColor = Color.Red;
+                    }
+                    else
+                    {
+                        BorderColor.BorderColor = Color.Black;
+                    }
                     BorderColor.BorderColor = Color.Black;
                 }
             }
@@ -142,6 +160,16 @@ namespace ProteusMMX.Views.Workorder
                 }
                 else
                 {
+                    //string data = e1.Text.Trim('0', '.');
+                    if (e1.Text == "0")
+                    {
+                        e1.Text = string.Empty;
+                        BorderColor.BorderColor = Color.Red;
+                    }
+                    else
+                    {
+                        BorderColor.BorderColor = Color.Black;
+                    }
                     BorderColor.BorderColor = Color.Black;
                 }
             }
@@ -172,6 +200,16 @@ namespace ProteusMMX.Views.Workorder
                 }
                 else
                 {
+                    string data = e1.Text.Trim('0', '.');
+                    if (e1.Text == "0")
+                    {
+                        e1.Text = string.Empty;
+                        BorderColor.BorderColor = Color.Red;
+                    }
+                    else
+                    {
+                        BorderColor.BorderColor = Color.Black;
+                    }
                     BorderColor.BorderColor = Color.Black;
                 }
             }
@@ -201,7 +239,7 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
-       
+
         private void AssignedToEmployee_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             Entry AssignedToEmployee = sender as Entry;
@@ -277,7 +315,7 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
-        private  void  Asset_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
+        private void Asset_PropertyChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             var Asset = sender as Entry;
             var LocationName = LocationNameBtn as Entry;

@@ -24,6 +24,7 @@ namespace ProteusMMX.Model.ServiceRequestModel
         public int? WorkOrderRequesterID { get; set; }
         public int? AssignedToEmployeeID { get; set; }
         public int? AdministratorID { get; set; }
+        public string AdministratorName { get; set; }
         public DateTime? RequestedDate { get; set; }
         public string Description { get; set; }
         public string RequestNumber { get; set; }

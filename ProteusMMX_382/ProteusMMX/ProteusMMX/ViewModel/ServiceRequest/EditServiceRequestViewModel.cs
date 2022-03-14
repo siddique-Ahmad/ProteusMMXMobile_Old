@@ -7718,6 +7718,20 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
                 WorkorderTypeID = serviceRequest.WorkTypeID;
 
+
+                if (!string.IsNullOrEmpty(serviceRequest.AdministratorName))
+                {
+                    AdministratorName = ShortString.shorten(serviceRequest.AdministratorName);
+
+                }
+                else
+                {
+                    AdministratorName = serviceRequest.AdministratorName;
+
+                }
+                AdministratorID = serviceRequest.AdministratorID;
+
+
                 if (!string.IsNullOrEmpty(serviceRequest.MaintenanceCodeName))
                 {
                     MaintenanceCodeName = ShortString.shorten(serviceRequest.MaintenanceCodeName);
