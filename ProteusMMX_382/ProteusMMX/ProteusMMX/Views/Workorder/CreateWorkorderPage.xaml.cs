@@ -82,16 +82,7 @@ namespace ProteusMMX.Views.Workorder
                 }
                 else
                 {
-                    if (e1.Text == "0")
-                    {
-                        e1.Text = string.Empty;
-                        BorderColor.BorderColor = Color.Red;
-                    }
-                    else
-                    {
-                        BorderColor.BorderColor = Color.Black;
-                    }
-                    
+                    BorderColor.BorderColor = Color.Black;
                 }
             }
         }
@@ -121,15 +112,6 @@ namespace ProteusMMX.Views.Workorder
                 }
                 else
                 {
-                    if (e1.Text == "0")
-                    {
-                        e1.Text = string.Empty;
-                        BorderColor.BorderColor = Color.Red;
-                    }
-                    else
-                    {
-                        BorderColor.BorderColor = Color.Black;
-                    }
                     BorderColor.BorderColor = Color.Black;
                 }
             }
@@ -160,16 +142,7 @@ namespace ProteusMMX.Views.Workorder
                 }
                 else
                 {
-                    //string data = e1.Text.Trim('0', '.');
-                    if (e1.Text == "0")
-                    {
-                        e1.Text = string.Empty;
-                        BorderColor.BorderColor = Color.Red;
-                    }
-                    else
-                    {
-                        BorderColor.BorderColor = Color.Black;
-                    }
+
                     BorderColor.BorderColor = Color.Black;
                 }
             }
@@ -200,16 +173,6 @@ namespace ProteusMMX.Views.Workorder
                 }
                 else
                 {
-                    string data = e1.Text.Trim('0', '.');
-                    if (e1.Text == "0")
-                    {
-                        e1.Text = string.Empty;
-                        BorderColor.BorderColor = Color.Red;
-                    }
-                    else
-                    {
-                        BorderColor.BorderColor = Color.Black;
-                    }
                     BorderColor.BorderColor = Color.Black;
                 }
             }

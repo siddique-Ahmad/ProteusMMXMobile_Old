@@ -12833,7 +12833,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "EstimatedDowntime":
                             {
-                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, EstimstedDowntimeText);
+                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, EstimstedDowntimeText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -12843,7 +12843,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "ActualDowntime":
                             {
-                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, ActualDowntimeText);
+                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, ActualDowntimeText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -12853,7 +12853,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "MiscellaneousLaborCostID":
                             {
-                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, MiscellaneousLabourCostText);
+                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, MiscellaneousLabourCostText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -12863,7 +12863,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "MiscellaneousMaterialsCostID":
                             {
-                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, MiscellaneousMaterialCostText);
+                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, MiscellaneousMaterialCostText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -12944,6 +12944,32 @@ namespace ProteusMMX.ViewModel.Workorder
             return validationResult;
 
         }
+
+        private ValidationResult ValidateValidationsForOverriddennControls1(FormControl formControl, string PropertyValue)
+        {
+            var validationResult = new ValidationResult();
+            if ((formControl.IsRequired ?? false) && string.IsNullOrWhiteSpace(PropertyValue))
+            {
+
+                validationResult.FailedItem = formControl;
+                validationResult.ErrorMessage = formControl.TargetName + " " + ConstantStrings.IsRequiredField;
+                return validationResult;
+            }
+            else
+            {
+                string Val = PropertyValue.Trim('0', '.', ',');
+                if ((formControl.IsRequired ?? false) && string.IsNullOrWhiteSpace(Val))
+                {
+                    validationResult.FailedItem = formControl;
+                    validationResult.ErrorMessage = formControl.TargetName + " " + ConstantStrings.IsRequiredField;
+                    return validationResult;
+                }
+            }
+
+            return validationResult;
+
+        }
+
 
 
 
