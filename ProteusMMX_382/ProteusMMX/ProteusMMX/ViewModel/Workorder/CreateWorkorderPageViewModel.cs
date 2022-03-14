@@ -12957,13 +12957,17 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             else
             {
-                string Val = PropertyValue.Trim('0', '.', ',');
-                if ((formControl.IsRequired ?? false) && string.IsNullOrWhiteSpace(Val))
+                if ((formControl.IsRequired ?? false) && !string.IsNullOrWhiteSpace(PropertyValue))
                 {
-                    validationResult.FailedItem = formControl;
-                    validationResult.ErrorMessage = formControl.TargetName + " " + ConstantStrings.IsRequiredField;
-                    return validationResult;
+                    string Val = PropertyValue.Trim('0', '.', ',');
+                    if ( string.IsNullOrWhiteSpace(Val))
+                    {
+                        validationResult.FailedItem = formControl;
+                        validationResult.ErrorMessage = formControl.TargetName + " " + ConstantStrings.IsRequiredField;
+                        return validationResult;
+                    }
                 }
+                
             }
 
             return validationResult;
