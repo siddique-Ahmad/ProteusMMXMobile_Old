@@ -1379,7 +1379,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-       
+
         // ShiftID       
         string _shiftIDColor;
         public string ShiftIDColor
@@ -4933,6 +4933,10 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         this.FacilityID = navigationParams.FacilityID;
                         this.FacilityName = navigationParams.FacilityName;
+                        this.FacilityIsEnable = false;
+                        this.LocationIsEnable = false;
+                        this.AssetIsEnable = false;
+                        this.AssetSystemIsEnable = false;
                     }
                     //Set Location
                     if (navigationParams.LocationID != null)
@@ -5916,7 +5920,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequestedDate"));
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequesterEmail"));
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequestNumber"));
-
+                WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequesterPhone"));
+                WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequesterFullName"));
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "RiskQuestion"));
             }
 
@@ -6645,7 +6650,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (this.WorkorderID > 0)
                 {
 
-                 this.DescriptionText = "Due to PM WorkOrder" + "(" + WorkorderNumberText + ")";
+                    this.DescriptionText = "Due to PM WorkOrder" + "(" + WorkorderNumberText + ")";
                 }
                 else
                 {
@@ -6653,7 +6658,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
 
 
-             
+
 
 
                 if (!string.IsNullOrWhiteSpace(workorder.AdditionalDetails))
@@ -12960,14 +12965,14 @@ namespace ProteusMMX.ViewModel.Workorder
                 if ((formControl.IsRequired ?? false) && !string.IsNullOrWhiteSpace(PropertyValue))
                 {
                     string Val = PropertyValue.Trim('0', '.', ',');
-                    if ( string.IsNullOrWhiteSpace(Val))
+                    if (string.IsNullOrWhiteSpace(Val))
                     {
                         validationResult.FailedItem = formControl;
                         validationResult.ErrorMessage = formControl.TargetName + " " + ConstantStrings.IsRequiredField;
                         return validationResult;
                     }
                 }
-                
+
             }
 
             return validationResult;

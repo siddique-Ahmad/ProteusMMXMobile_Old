@@ -5935,6 +5935,14 @@ namespace ProteusMMX.ViewModel.Workorder
                             WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequestNumber"));
                             this.RequestedDateIsVisible = false;
                         }
+                        if (workorder.RequesterFullName == null)
+                        {                           
+                            WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequesterFullName"));
+                        }
+                        if (workorder.RequesterPhone == null)
+                        {
+                            WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequesterPhone"));
+                        }
                         if (string.IsNullOrWhiteSpace(workorder.RequesterEmail))
                         {
                             WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequesterEmail"));
