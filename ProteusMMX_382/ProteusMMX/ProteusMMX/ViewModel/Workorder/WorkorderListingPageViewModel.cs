@@ -1773,7 +1773,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     //reset pageno. and start search again.
                     await GetWorkordersFromSearchBar();
-
+                   // await GetWorkorders();
                 }
 
                 #endregion
@@ -1809,7 +1809,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 //reset pageno. and start search again.
                 await GetWorkordersFromSearchBar();
-
+                //await GetWorkorders();
 
             });
 
@@ -1889,7 +1889,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
 
                     var workorders = workordersResponse.workOrderWrapper.workOrders;
-
+                    
                     await AddWorkordersInWorkorderCollection(workorders);
 
                 }
@@ -1943,7 +1943,8 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
                 await Task.Delay(10);
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, "null", "null", "null", "null", "null", "null","null");
+                string WorkorderType = GetPickerType();
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate, KPIDashboardType);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
@@ -2132,6 +2133,48 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
 
+        }
+
+        private string GetPickerType()
+        {
+            if (SelectedIndexPicker == -1)
+            {
+                return null;
+            }
+
+            var SelectedPickerText = PickerTitles[SelectedIndexPicker];
+
+            if (SelectedPickerText == SelectTitle)
+            {
+                WorkorderTypeFilterText = null;               
+            }
+
+            else if (SelectedPickerText == PreventiveMaintenenceTitle)
+            {
+                WorkorderTypeFilterText = "PreventiveMaintenance";                
+            }
+
+            else if (SelectedPickerText == DemandMaintenenceTitle)
+            {
+                WorkorderTypeFilterText = "DemandMaintenance";                
+
+            }
+
+            else if (SelectedPickerText == EmergencyMaintenanceTitle)
+            {
+                WorkorderTypeFilterText = "EmergencyMaintenance";                
+
+            }
+            else if (SelectedPickerText == FailedInspectionTitle)
+            {
+                WorkorderTypeFilterText = "FailedInspection";               
+            }
+            else
+            {
+                WorkorderTypeFilterText = null;                
+            }
+
+            return WorkorderTypeFilterText;
         }
 
         private async void OnSelectWorkorderAsync(workOrders item)

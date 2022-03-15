@@ -7229,6 +7229,17 @@ namespace ProteusMMX.ViewModel.Asset
                 //    return;
                 //}
 
+                if (Application.Current.Properties.ContainsKey("AssetLocationDetailsTabKey"))
+                {
+                    var Locationdetails = Application.Current.Properties["AssetLocationDetailsTabKey"].ToString();
+
+                    if (Locationdetails != null && Locationdetails == "N")
+                    {
+                        FacilityID = null;
+
+                    }                 
+                }
+
                 if (FacilityID == null)
                 {
                     UserDialogs.Instance.HideLoading();
@@ -7236,7 +7247,21 @@ namespace ProteusMMX.ViewModel.Asset
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Selectthefacilityfield"), 2000);
                     return;
                 }
+                else if (LocationID == null && AssetSystemID == null && AssetID == null)
+                {
+                    UserDialogs.Instance.HideLoading();
 
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Selectthelocationassetsystemassetfield"), 2000);
+                    return;
+                }
+
+                else if (AssetSystemID != null && AssetID != null)
+                {
+                    UserDialogs.Instance.HideLoading();
+
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleaseselecteitherassetOrassetsystem"), 2000);
+                    return;
+                }
                 #endregion
                 //if (WarrantyDate < InstallationDate)
                 //{
