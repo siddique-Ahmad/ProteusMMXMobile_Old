@@ -40,6 +40,10 @@ namespace ProteusMMX.Droid
             LoadApplication(new App());
         }
 
+        public override void OnBackPressed()
+        {
+            Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed);
+        }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);

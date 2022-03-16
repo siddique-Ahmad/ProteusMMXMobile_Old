@@ -696,7 +696,7 @@ namespace ProteusMMX.Views.Workorder
                 HrsStackLayout.Children.Add(HrsGrid);
                 SfBorder HrsBorder = new SfBorder
                 {
-                    HeightRequest = 35,
+                    HeightRequest = 40,
                     WidthRequest = 50,
                     BorderColor = Color.Black,
                     CornerRadius = 10
@@ -704,9 +704,10 @@ namespace ProteusMMX.Views.Workorder
                 HrsGrid.Children.Add(HrsBorder);
                 Entry hoursEntry = new Entry
                 {
-                    HeightRequest = 35,
-                    Placeholder = "Hrs",
-                    FontSize = 12
+                    HeightRequest = 40,
+                    Placeholder = "hh",
+                    FontSize = 12,
+                    Margin = new Thickness(3,0,0,0)
                 };
                 HrsBorder.Content = hoursEntry;
                 #endregion
@@ -723,7 +724,7 @@ namespace ProteusMMX.Views.Workorder
                 MinStackLayout.Children.Add(MinGrid);
                 SfBorder MinBorder = new SfBorder
                 {
-                    HeightRequest = 35,
+                    HeightRequest = 40,
                     WidthRequest = 50,
                     BorderColor = Color.Black,
                     CornerRadius = 10
@@ -731,9 +732,10 @@ namespace ProteusMMX.Views.Workorder
                 MinGrid.Children.Add(MinBorder);
                 Entry minuteEntry = new Entry
                 {
-                    HeightRequest = 35,
-                    Placeholder = "Min",
-                    FontSize = 12
+                    HeightRequest = 40,
+                    Placeholder = "mm",
+                    FontSize = 12,
+                    Margin = new Thickness(3, 0, 0, 0)
                 };
                 MinBorder.Content = minuteEntry;
 
@@ -799,10 +801,10 @@ namespace ProteusMMX.Views.Workorder
                 {
                     startDate = new CustomDatePicker
                     {
-                        Margin = new Thickness(0, 5, 0, 0),
+                        Margin = new Thickness(2, 5, 2, 0),
                         SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                        HeightRequest = 2
+                        HeightRequest = 2,
                     };
                     dateFromBo.Content = startDate;
                 }
@@ -810,10 +812,10 @@ namespace ProteusMMX.Views.Workorder
                 {
                     startDate = new CustomDatePicker
                     {
-                        Margin = new Thickness(0, 5, 0, 0),
+                        Margin = new Thickness(2, 5, 2, 0),
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
-                        HorizontalOptions = LayoutOptions.Start
+                        HorizontalOptions = LayoutOptions.Start,
                     };
                     dateFromBo.Content = startDate;
                 }
@@ -844,7 +846,7 @@ namespace ProteusMMX.Views.Workorder
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
-                        Margin = new Thickness(0, 5, 0, 0),
+                        Margin = new Thickness(2, 5, 2, 0),
                     };
                     dateCompBo.Content = CompletionDate;
                 }
@@ -856,7 +858,7 @@ namespace ProteusMMX.Views.Workorder
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
-                        Margin = new Thickness(0, 5, 0, 0),
+                        Margin = new Thickness(2, 5, 2, 0),
                     };
                     dateCompBo.Content = CompletionDate;
                 }
@@ -888,9 +890,10 @@ namespace ProteusMMX.Views.Workorder
 
                         startButton.CommandParameter = savedemployeelocal;
                         stopButton.CommandParameter = savedemployeelocal;
-
-                        startButton.TextColor = Color.Green;
-                        startButton.ImageSource = "starticon1.png";
+                        startDate.SelectedDate = savedemployeelocal.StartDate;
+                        startButton.TextColor = Color.Gray;
+                        startButton.ImageSource = "startcomplte.png";
+                        startButton.IsEnabled = false;
 
                         var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(savedemployeelocal.InspectionTime));
                         var timeString = (int)timeInspection.Hours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
@@ -917,6 +920,7 @@ namespace ProteusMMX.Views.Workorder
                     WorkOrderEmployee workorderemployee = buttonStart.CommandParameter as WorkOrderEmployee;
 
                     workorderemployee.StartTimeOfTimer = DateTime.Now;
+                    workorderemployee.StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                     startButton.CommandParameter = workorderemployee; //reassign to commandParameter.
 
 
@@ -943,7 +947,7 @@ namespace ProteusMMX.Views.Workorder
                     //{
                     WorkorderInspectionStorge.Storage.Set(key, JsonConvert.SerializeObject(workorderemployee));
                     // }
-
+                    startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
 
                     //StartTime = DateTime.Now;
 
@@ -951,11 +955,15 @@ namespace ProteusMMX.Views.Workorder
                     //stopButton.IsEnabled = true;
                     //stopButton.BackgroundColor = Color.FromHex("#87CEFA");
 
-                    startButton.TextColor = Color.Green;
-                    startButton.ImageSource = "starticon1.png";
-                    stopButton.IsEnabled = true;
-                    stopButton.TextColor = Color.FromHex("#87CEFA");
-                    stopButton.ImageSource = "stoppending.png";
+                    startButton.TextColor = Color.Black;
+                    startButton.ImageSource = "startcomplte.png";
+                    startButton.IsEnabled = true;
+                    startButton.BorderColor = Color.Transparent;
+
+                    stopButton.BorderColor = Color.Transparent;
+                    stopButton.IsEnabled = false;
+                    stopButton.TextColor = Color.Gray;
+                    stopButton.ImageSource = "stopicon.png";
 
                 };
 
@@ -1010,15 +1018,18 @@ namespace ProteusMMX.Views.Workorder
                         int hrs21 = Convert.ToInt32(minuteEntry.Text);
                         minuteEntry.Text = (hrs2 + hrs21).ToString();
                     }
-                    startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                   // startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                     CompletionDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
 
-                    stopButton.TextColor = Color.Red;
-                    stopButton.ImageSource = "stopicon1.png";
+                    stopButton.TextColor = Color.Black;
+                    stopButton.ImageSource = "stopcomplate.png";
                     stopButton.IsEnabled = false;
-                    startButton.TextColor = Color.Red;
-                    startButton.ImageSource = "startred.png";
-                    startButton.IsEnabled = false;
+                    stopButton.BorderColor = Color.Transparent;
+
+                    startButton.TextColor = Color.Gray;
+                    startButton.ImageSource = "starticon.png";
+                    startButton.IsEnabled = true;
+                    startButton.BorderColor = Color.Transparent;
                     //this.BackgroundColor = Color.White;
                 };
                 #endregion

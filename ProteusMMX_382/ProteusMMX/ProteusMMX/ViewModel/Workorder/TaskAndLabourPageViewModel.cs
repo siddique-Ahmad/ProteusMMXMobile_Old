@@ -2503,11 +2503,11 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             if (Device.RuntimePlatform == Device.iOS)
             {
-                UserDialogs.Instance.DatePrompt(new DatePromptConfig { iOSPickerStyle = iOSPickerStyle.Wheels, OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTime.Now });
+                UserDialogs.Instance.DatePrompt(new DatePromptConfig { iOSPickerStyle = iOSPickerStyle.Wheels, OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone) });
             }
             else
             {
-                UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTime.Now });
+                UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone), });
             }
         }
 

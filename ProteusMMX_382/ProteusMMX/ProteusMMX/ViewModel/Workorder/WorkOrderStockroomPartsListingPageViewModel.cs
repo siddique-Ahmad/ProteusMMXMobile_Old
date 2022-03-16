@@ -653,7 +653,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
 
 
-            PageTitle = WebControlTitle.GetTargetNameByTitleName("Parts");
+            PageTitle = WebControlTitle.GetTargetNameByTitleName("StockroomParts");
             WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
             LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
             CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
