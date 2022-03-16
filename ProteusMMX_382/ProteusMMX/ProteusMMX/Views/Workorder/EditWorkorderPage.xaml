@@ -101,9 +101,9 @@
                                         <Label.FormattedText>
                                             <FormattedString>
                                                 <!--<Span Text="{Binding WorkorderNumberTitle}"/>-->
-                                                    <Span Text="{Binding WorkorderNumbeTitle}"></Span>
-                                                    <Span Text=":"/>
-                                                <Span Text="{Binding WorkorderNumberText}"/>
+                                                    <Span Text="{Binding WorkorderNumbeTitle}" FontAttributes="Bold" FontSize="14"></Span>
+                                                    <Span Text=" : "/>
+                                                    <Span Text="{Binding WorkorderNumberText}" FontAttributes="Bold"  FontSize="14"/>
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>
@@ -134,8 +134,9 @@
                                         </Label.FontAttributes>
                                         <Label.FormattedText>
                                             <FormattedString>
-                                                <Span Text="{Binding JobNumberTitle}"/>
-                                                <Span Text="{Binding JobNumberText}"/>
+                                                <Span Text="{Binding JobNumberTitle}" FontAttributes="Bold" FontSize="13"/>
+                                                <Span Text=" : "/>
+                                                <Span Text="{Binding JobNumberText}" FontAttributes="Bold" FontSize="13"/>
                                             </FormattedString>
                                         </Label.FormattedText>
                                     </Label>

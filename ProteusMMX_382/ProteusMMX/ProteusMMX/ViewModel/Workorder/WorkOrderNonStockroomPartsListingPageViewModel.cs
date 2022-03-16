@@ -496,7 +496,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
 
             
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("NonStockParts");
+                PageTitle = WebControlTitle.GetTargetNameByTitleName("NonStockRoomParts");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
