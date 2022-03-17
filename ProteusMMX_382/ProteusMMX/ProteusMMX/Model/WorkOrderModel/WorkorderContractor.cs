@@ -16,6 +16,12 @@ namespace ProteusMMX.Model.WorkOrderModel
 
         public int? ContractorLaborCraftID { get; set; }
 
+        public bool StartBtn { get; set; }
+        public bool StopBtn { get; set; }
+
+        public string Hours { get; set; }
+        public string Minutes { get; set; }
+
         #region For GlobalTimer
         public DateTime StartTimeOfTimer { get; set; }
 
