@@ -252,7 +252,7 @@ namespace ProteusMMX.ViewModel.KPIDashboard
             try
             {
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-             
+                await Task.Delay(10);
                 await NavigationService.NavigateToAsync<PriorityListSelectionPageViewModel>(new TargetNavigationData() { }); //Pass the control here
             }
             catch (Exception ex)
@@ -428,6 +428,8 @@ namespace ProteusMMX.ViewModel.KPIDashboard
         {
             try
             {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(10);
                 //Retrive Priority
                 MessagingCenter.Subscribe<object>(this, MessengerKeys.PriorityRequested, OnPriorityRequested);
 
@@ -435,8 +437,15 @@ namespace ProteusMMX.ViewModel.KPIDashboard
             }
             catch (Exception)
             {
+                UserDialogs.Instance.HideLoading();
+                
+            }
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
 
-                throw;
+                //OperationInProgress = false;
+
             }
         }
         public async Task OnViewDisappearingAsync(VisualElement view)

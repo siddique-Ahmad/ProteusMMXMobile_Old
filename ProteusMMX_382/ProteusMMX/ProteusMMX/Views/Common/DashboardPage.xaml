@@ -218,7 +218,8 @@
                             </Label>
                         </Grid>
                     </StackLayout>
-                    <StackLayout Grid.Row="2" Grid.Column="0" IsVisible="{Binding ServiceRequestBorderVisibility}">
+                    
+                    <StackLayout Grid.Row="3" Grid.Column="0" IsVisible="{Binding ServiceRequestBorderVisibility}">
                         <Grid RowSpacing="10" IsVisible="{Binding ServiceRequestVisibility}">
                             <Grid.RowDefinitions>
                                 <RowDefinition  Height="30*"></RowDefinition>
@@ -257,6 +258,7 @@
                             </Label>
                         </Grid>
                     </StackLayout>
+                    
                     <StackLayout Grid.Row="2" Grid.Column="2" IsVisible="{Binding AssetBorderVisibility}" >
                         <Grid RowSpacing="10" IsVisible="{Binding AssetVisibility}" >
                             <Grid.RowDefinitions>
@@ -297,7 +299,8 @@
                         </Grid>
 
                     </StackLayout>
-                    <StackLayout Grid.Row="3" Grid.Column="0" IsVisible="{Binding BarcodeBorderVisibility}" >
+                    
+                    <StackLayout Grid.Row="2" Grid.Column="0" IsVisible="{Binding BarcodeBorderVisibility}" >
                         <Grid RowSpacing="10" IsVisible="{Binding BarcodeVisibility}">
                             <Grid.RowDefinitions>
                                 <RowDefinition  Height="30*"></RowDefinition>
@@ -337,6 +340,7 @@
                         </Grid>
 
                     </StackLayout>
+                    
                     <StackLayout x:Name="Receiving" Grid.Row="3" Grid.Column="2"  IsVisible="{Binding ReceivingBorderVisibility}">
                         
                         <Grid RowSpacing="10"  IsVisible="{Binding ReceivingVisibility}">

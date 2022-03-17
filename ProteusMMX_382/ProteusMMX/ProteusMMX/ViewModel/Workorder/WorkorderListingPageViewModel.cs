@@ -2913,6 +2913,8 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
                                 Application.Current.Properties["AssociateEmployeeContr"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateEmployeeContr").Expression;
                                 Application.Current.Properties["AssociateInspection"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateInspection").Expression;
+                                Application.Current.Properties["RemoveInspection"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "RemoveInspection").Expression;
+                                Application.Current.Properties["RemoveEmployeeContrator"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "RemoveEmployeeContrator").Expression;
                             }
                             catch (Exception ex)
                             {
