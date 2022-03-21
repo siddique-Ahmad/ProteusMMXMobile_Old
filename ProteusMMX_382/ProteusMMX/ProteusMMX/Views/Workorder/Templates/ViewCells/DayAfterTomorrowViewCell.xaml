@@ -81,7 +81,7 @@
                         <Label Text=":" Grid.Column="1"  FontSize="13" FontAttributes="Bold" TextColor="#333333" />
                         <Label Text="{Binding TargetName}" TextColor="#006de0"  FontAttributes="Bold" FontSize="18.72" FontFamily="Ebrima"  LineBreakMode="TailTruncation" />
 
-                    </Grid>-->
+                    </Grid>-->  
 
                     <Grid x:Name="WorkorderTypeColon" IsVisible="False" Grid.Row="1">
                         <Grid.ColumnDefinitions>

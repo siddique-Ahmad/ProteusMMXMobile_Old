@@ -138,16 +138,17 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             }
 
             ////For Workordertype////
-            var workOrderType = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkTypeID");
-            if (workOrderType != null)
-            {
-                this.WorkorderTypeLabel.Text = workOrderType.TargetName;
+            this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
+            //var workOrderType = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkTypeID");
+            //if (workOrderType != null)
+            //{
+            //    this.WorkorderTypeLabel.Text = workOrderType.TargetName;
 
-            }
-            else
-            {
-                this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
-            }
+            //}
+            //else
+            //{
+            //    this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
+            //}
            
             this.WorkorderTypeColon.IsVisible = true;
            
