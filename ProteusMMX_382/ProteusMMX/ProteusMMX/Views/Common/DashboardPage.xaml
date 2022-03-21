@@ -37,20 +37,27 @@
     </ContentPage.ToolbarItems>
 
     <Grid BackgroundColor="#fefefe">
-        <StackLayout VerticalOptions="Start">
+        
+            <Grid.RowDefinitions>
+                <RowDefinition  Height="Auto"></RowDefinition>
+                <RowDefinition  Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+       
+        <StackLayout Grid.Row="0" VerticalOptions="StartAndExpand">
             <Grid>
-                <Grid  >
+                
                     <Grid.RowDefinitions>
-                        <RowDefinition  Height="40*"></RowDefinition>
+                        <RowDefinition  Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                </Grid>
-                <border:SfBorder HeightRequest="40" BorderColor="#006de0" CornerRadius="0,0,20,20" BackgroundColor="#006de0"  >
-                    <Label  VerticalOptions="Center" FontSize="Medium" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,5" HorizontalOptions="Center" Text="{Binding WelcomeTextTitle}"></Label>
+                
+                <border:SfBorder  Grid.Row="0" BorderColor="#006de0" CornerRadius="0,0,20,20" BackgroundColor="#006de0"  >
+                    <Label  VerticalOptions="CenterAndExpand" FontSize="Medium" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,-5,0,0" HorizontalOptions="CenterAndExpand" Text="{Binding WelcomeTextTitle}"></Label>
                 </border:SfBorder>
-            </Grid>
-
-            <ScrollView>
-                <Grid Padding="25"  Margin="0,-25,0,0">
+            </Grid>            
+        </StackLayout>
+        <StackLayout  Grid.Row="1">
+            <ScrollView >
+                <Grid Padding="25,0,25,0"  Margin="0,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="120" />
                         <RowDefinition Height="120" />
@@ -218,7 +225,7 @@
                             </Label>
                         </Grid>
                     </StackLayout>
-                    
+
                     <StackLayout Grid.Row="3" Grid.Column="0" IsVisible="{Binding ServiceRequestBorderVisibility}">
                         <Grid RowSpacing="10" IsVisible="{Binding ServiceRequestVisibility}">
                             <Grid.RowDefinitions>
@@ -258,7 +265,7 @@
                             </Label>
                         </Grid>
                     </StackLayout>
-                    
+
                     <StackLayout Grid.Row="2" Grid.Column="2" IsVisible="{Binding AssetBorderVisibility}" >
                         <Grid RowSpacing="10" IsVisible="{Binding AssetVisibility}" >
                             <Grid.RowDefinitions>
@@ -299,7 +306,7 @@
                         </Grid>
 
                     </StackLayout>
-                    
+
                     <StackLayout Grid.Row="2" Grid.Column="0" IsVisible="{Binding BarcodeBorderVisibility}" >
                         <Grid RowSpacing="10" IsVisible="{Binding BarcodeVisibility}">
                             <Grid.RowDefinitions>
@@ -340,9 +347,9 @@
                         </Grid>
 
                     </StackLayout>
-                    
+
                     <StackLayout x:Name="Receiving" Grid.Row="3" Grid.Column="2"  IsVisible="{Binding ReceivingBorderVisibility}">
-                        
+
                         <Grid RowSpacing="10"  IsVisible="{Binding ReceivingVisibility}">
                             <Grid.RowDefinitions>
                                 <RowDefinition  Height="30*"></RowDefinition>
@@ -389,5 +396,6 @@
                 </Grid>
             </ScrollView>
         </StackLayout>
+      
     </Grid>
 </ContentPage>  
