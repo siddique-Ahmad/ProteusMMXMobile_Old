@@ -46,8 +46,15 @@ namespace ProteusMMX.Droid
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
         {
+           
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-            global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            for (int i = 0; i < permissions.Length; i++)
+            {
+                if (permissions[i].Equals("android.permission.CAMERA") && grantResults[i] == Permission.Granted)
+                    global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            }
+            //base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+          //  global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
