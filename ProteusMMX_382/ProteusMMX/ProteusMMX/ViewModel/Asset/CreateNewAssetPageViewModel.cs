@@ -7247,21 +7247,15 @@ namespace ProteusMMX.ViewModel.Asset
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Selectthefacilityfield"), 2000);
                     return;
                 }
-                else if (LocationID == null && AssetSystemID == null && AssetID == null)
+                else if (LocationID == null)
                 {
                     UserDialogs.Instance.HideLoading();
-
-                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Selectthelocationassetsystemassetfield"), 2000);
+                    string LocationTitle = WebControlTitle.GetTargetNameByTitleName("Select")+" " + WebControlTitle.GetTargetNameByTitleName("Location");
+                    DialogService.ShowToast(LocationTitle, 2000);
                     return;
                 }
 
-                else if (AssetSystemID != null && AssetID != null)
-                {
-                    UserDialogs.Instance.HideLoading();
-
-                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleaseselecteitherassetOrassetsystem"), 2000);
-                    return;
-                }
+                
                 #endregion
                 //if (WarrantyDate < InstallationDate)
                 //{

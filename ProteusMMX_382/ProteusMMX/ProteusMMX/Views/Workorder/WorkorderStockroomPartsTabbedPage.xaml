@@ -13,14 +13,14 @@
     </TabbedPage.Children>-->
 
     <TabbedPage.Children>
-        <Pages:WorkOrderStockRoomPartsListing >
+        <Pages:WorkOrderStockRoomPartsListing x:Name="StockroomParts" >
             <Pages:WorkOrderStockRoomPartsListing.BindingContext>
                 <viewModels:WorkOrderStockroomPartsListingPageViewModel/>
             </Pages:WorkOrderStockRoomPartsListing.BindingContext>
         </Pages:WorkOrderStockRoomPartsListing>
-        
-        
-        <Pages:WorkOrderNonStockRoomPartsListing >
+
+
+        <Pages:WorkOrderNonStockRoomPartsListing x:Name="NonStockroomParts">
             <Pages:WorkOrderNonStockRoomPartsListing.BindingContext>
                 <viewModels:WorkOrderNonStockroomPartsListingPageViewModel/>
             </Pages:WorkOrderNonStockRoomPartsListing.BindingContext>

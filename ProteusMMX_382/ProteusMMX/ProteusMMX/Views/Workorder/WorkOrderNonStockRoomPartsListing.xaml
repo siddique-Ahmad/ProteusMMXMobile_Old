@@ -6,7 +6,7 @@
              xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             Title="{Binding PageTitle}" 
+           
              BackgroundColor="{StaticResource BackgroundColor}">
 
     <ContentPage.ToolbarItems>
