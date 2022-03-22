@@ -273,7 +273,7 @@ namespace ProteusMMX.Views.Workorder
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

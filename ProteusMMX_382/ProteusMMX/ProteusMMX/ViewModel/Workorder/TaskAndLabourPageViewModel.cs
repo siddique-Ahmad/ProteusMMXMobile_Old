@@ -820,7 +820,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 if (workorderLabour != null && workorderLabour.workOrderWrapper != null && workorderLabour.workOrderWrapper.workOrderLabors != null && workorderLabour.workOrderWrapper.workOrderLabors.Count > 0)
                 {
-                    
+
                     foreach (var item in workorderLabour.workOrderWrapper.workOrderLabors)
                     {
                         if (Application.Current.Properties.ContainsKey("EditTask"))
@@ -828,7 +828,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             var TaskLabourTab = Application.Current.Properties["EditTask"].ToString();
                             if (TaskLabourTab == "V" || TaskLabourTab == "N")
                             {
-                                 TaskLabourTabIsEnable = false;
+                                TaskLabourTabIsEnable = false;
                             }
                         }
                         StackLayout MasterstackLayout = new StackLayout();
@@ -843,7 +843,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             BackgroundColor = Color.White,
                             BorderColor = Color.Black,
                             CornerRadius = 10,
-                           
+
                         };
                         frameStackLayout.Children.Add(frame);
 
@@ -1325,36 +1325,36 @@ namespace ProteusMMX.ViewModel.Workorder
                         ImageButton AddTimeBtn;
                         if (item.Timer1 != null && item.Timer1 == 1)
                         {
-                             AddTimeBtn = new ImageButton
+                            AddTimeBtn = new ImageButton
                             {
                                 WidthRequest = 35,
                                 Source = "Adddis.png",
                                 Margin = new Thickness(0, 0, 0, 0),
-                                IsEnabled=false,
+                                IsEnabled = false,
                             };
                         }
                         else
                         {
-                             AddTimeBtn = new ImageButton
+                            AddTimeBtn = new ImageButton
                             {
                                 WidthRequest = 35,
                                 Source = "AddIcon.png",
                                 Margin = new Thickness(0, 0, 0, 0),
-                                IsEnabled=true,
+                                IsEnabled = true,
                             };
                         }
-                            //SfButton AddTimeBtn = new SfButton
-                            //{
-                            //    Text = "Add",
-                            //    Margin = new Thickness(10, 0, 0, 0),
-                            //    FontAttributes = FontAttributes.Bold,
-                            //    ShowIcon = true,
-                            //    WidthRequest = 50,
-                            //    BackgroundColor = Color.Transparent,
-                            //    CommandParameter = item,
-                            //    ImageSource = "addinsp.png",
-                            //};
-                            complateButtonGrid.Children.Add(AddTimeBtn, 0, 0);
+                        //SfButton AddTimeBtn = new SfButton
+                        //{
+                        //    Text = "Add",
+                        //    Margin = new Thickness(10, 0, 0, 0),
+                        //    FontAttributes = FontAttributes.Bold,
+                        //    ShowIcon = true,
+                        //    WidthRequest = 50,
+                        //    BackgroundColor = Color.Transparent,
+                        //    CommandParameter = item,
+                        //    ImageSource = "addinsp.png",
+                        //};
+                        complateButtonGrid.Children.Add(AddTimeBtn, 0, 0);
                         complateButtonStackLayout.Children.Add(complateButtonGrid);
 
                         #endregion
@@ -1567,26 +1567,26 @@ namespace ProteusMMX.ViewModel.Workorder
                         Grid complateButtonGridforRate2 = new Grid();
                         complateButtonGridforRate2.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                         ImageButton AddTimeBtn2;
-                       
+
                         if (item.Timer2 != null && item.Timer2 == 4)
                         {
-                             AddTimeBtn2 = new ImageButton
+                            AddTimeBtn2 = new ImageButton
                             {
                                 WidthRequest = 35,
                                 Source = "Adddis.png",
                                 Margin = new Thickness(0, 0, 0, 0),
-                                IsEnabled=false,
+                                IsEnabled = false,
                             };
                         }
                         else
                         {
-                             AddTimeBtn2 = new ImageButton
+                            AddTimeBtn2 = new ImageButton
                             {
                                 WidthRequest = 35,
                                 Source = "AddIcon.png",
                                 Margin = new Thickness(0, 0, 0, 0),
-                                 IsEnabled = true,
-                             };
+                                IsEnabled = true,
+                            };
                         }
                         //SfButton AddTimeBtn2 = new SfButton
                         //{
@@ -1713,16 +1713,36 @@ namespace ProteusMMX.ViewModel.Workorder
                         #region **** Hrs and min ****
                         try
                         {
-                            string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate1)).ToString();
-                            var FinalHrs1 = FinalHours.Split('.');
-                            hoursEntry.Text = FinalHrs1[0];
-                            minuteEntry.Text = FinalHrs1[1];
+                            //string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate1)).ToString();
+                            if (item.HoursAtRate1.HasValue)
+                            {
+                                string FinalHours = item.HoursAtRate1.ToString();
+                                var FinalHrs1 = FinalHours.Split('.');
+                                hoursEntry.Text = FinalHrs1[0];
+                                minuteEntry.Text = FinalHrs1[1];
+                            }
+                            else
+                            {
+                                
+                                hoursEntry.Text = "0";
+                                minuteEntry.Text = "0";
+                            }
 
-                            string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
-                            var FinalHrs2 = FinalHours2.Split('.');
-                            hoursEntryforRate2.Text = FinalHrs2[0];
-                            minuteEntryforRate2.Text = FinalHrs2[1];
+                            // string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
+                            if (item.HoursAtRate2.HasValue)
+                            {
+                                string FinalHours = item.HoursAtRate2.ToString();
+                                var FinalHrs2 = FinalHours.Split('.');
+                                hoursEntryforRate2.Text = FinalHrs2[0];
+                                minuteEntryforRate2.Text = FinalHrs2[1];
+                            }
+                            else
+                            {
 
+                                hoursEntryforRate2.Text = "0";
+                                minuteEntryforRate2.Text = "0";
+                            }
+                           
                             if (item.CompletionDate != null)
                             {
                                 completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
@@ -1853,7 +1873,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
                                 StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                                 EndDate = null,
-                              
+
                                 HoursAtRate1Start = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                                 ModifiedUserName = AppSettings.User.UserName,
                                 WorkOrderLaborID = workOrderLabor.WorkOrderLaborID,
@@ -1890,7 +1910,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             // var Min1 = data.Children[4] as StackLayout;
 
                             //startButton.TextColor = Color.Green;
-                           // startButton.TextColor = Color.Gray;
+                            // startButton.TextColor = Color.Gray;
                             startButton.ImageSource = "starticon1.png";
 
                             stopButton.TextColor = Color.FromHex("#87CEFA");
@@ -1898,9 +1918,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             startButton.IsEnabled = false;
                             stopButton.IsEnabled = true;
-                           
+
                             await OnViewAppearingAsync(null);
-                           UserDialogs.Instance.HideLoading();
+                            UserDialogs.Instance.HideLoading();
                             DialogService.ShowToast("Timer Successfully Started");
                         }
 
@@ -1920,7 +1940,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 workOrderLabor = new WorkOrderLabor
                                 {
                                     StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                                    EndDate = null,                                   
+                                    EndDate = null,
                                     IsMannual = false,
                                     HoursAtRate2Start = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                                     ModifiedUserName = AppSettings.User.UserName,
@@ -2024,7 +2044,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 {
                                     StartDate = null,
                                     EndDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                                   
+
                                     HoursAtRate1Start = null,
                                     IsMannual = false,
                                     HoursAtRate2Stop = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
@@ -2150,7 +2170,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             }
                             else
                             {
-                               // UserDialogs.Instance.HideLoading();
+                                // UserDialogs.Instance.HideLoading();
                                 await this.OnViewAppearingAsync(null);
                                 DialogService.ShowToast("Timer Successfully Stopped");
                             }
