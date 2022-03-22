@@ -1230,7 +1230,7 @@ namespace ProteusMMX.Views.Workorder
                     ShowIcon = true,
                     BackgroundColor = Color.Transparent,
                     TextColor = Color.Black,
-                    IsEnabled=true,
+                    IsEnabled = true,
                     CommandParameter = item,
                     ImageSource = "starticon.png",
                 };
@@ -1740,9 +1740,17 @@ namespace ProteusMMX.Views.Workorder
 
         private async Task RetriveAllWorkorderInspectionsAsync()
         {
-            CC = await ViewModel._inspectionService.GetWorkorderInspection(this.WorkorderID.ToString(), AppSettings.User.UserID.ToString());
+            try
+            {
+                CC = await ViewModel._inspectionService.GetWorkorderInspection(this.WorkorderID.ToString(), AppSettings.User.UserID.ToString());
 
-            BindLayout(CC.listInspection);
+                BindLayout(CC.listInspection);
+            }
+            catch (Exception)
+            {
+
+            }
+           
 
         }
 
@@ -3009,10 +3017,74 @@ namespace ProteusMMX.Views.Workorder
 
         private void GenerateAnswerText(ExistingInspections item)
         {
-            this.AnswerText.Append(item.InspectionDescription);
-            this.AnswerText.Append(": ");
-            this.AnswerText.Append(item.AnswerDescription);
-            this.AnswerText.Append(System.Environment.NewLine);
+            switch (item.ResponseTypeName)
+            {
+                case "Yes/No/N/A":
+                    if (item.AnswerDescription == "No")
+                    {
+                        this.AnswerText.Append(item.InspectionDescription);
+                        this.AnswerText.Append(": ");
+                        this.AnswerText.Append(item.AnswerDescription);
+                        this.AnswerText.Append(System.Environment.NewLine);
+                    }
+
+                    break;
+                case "Pass/Fail":
+                    if (item.AnswerDescription == "Fail")
+                    {
+                        this.AnswerText.Append(item.InspectionDescription);
+                        this.AnswerText.Append(": ");
+                        this.AnswerText.Append(item.AnswerDescription);
+                        this.AnswerText.Append(System.Environment.NewLine);
+                    }
+                    break;
+                case "Standard Range":
+                    if (string.IsNullOrWhiteSpace(item.AnswerDescription))
+                    {
+                        if (item.MinRange != null && item.MaxRange != null)
+                        {
+                            if (decimal.Parse(item.AnswerDescription) <= item.MinRange && decimal.Parse(item.AnswerDescription) >= item.MaxRange)
+                            {
+                                this.AnswerText.Append(item.InspectionDescription);
+                                this.AnswerText.Append(": ");
+                                this.AnswerText.Append(item.AnswerDescription);
+                                this.AnswerText.Append(System.Environment.NewLine);
+                            }
+                        }
+                        
+                    }
+                    break;
+
+                case "Multiple Choice":
+                    if (string.IsNullOrWhiteSpace(item.AnswerDescription))
+                    {
+                        this.AnswerText.Append(item.InspectionDescription);
+                        this.AnswerText.Append(": ");
+                        this.AnswerText.Append(item.AnswerDescription);
+                        this.AnswerText.Append(System.Environment.NewLine);
+                    }
+                    break;
+
+                case "Text":
+                    if (string.IsNullOrWhiteSpace(item.AnswerDescription))
+                    {
+                        this.AnswerText.Append(item.InspectionDescription);
+                        this.AnswerText.Append(": ");
+                        this.AnswerText.Append(item.AnswerDescription);
+                        this.AnswerText.Append(System.Environment.NewLine);
+                    }
+                    break;
+                case "Count":
+                    if (string.IsNullOrWhiteSpace(item.AnswerDescription))
+                    {
+                        this.AnswerText.Append(item.InspectionDescription);
+                        this.AnswerText.Append(": ");
+                        this.AnswerText.Append(item.AnswerDescription);
+                        this.AnswerText.Append(System.Environment.NewLine);
+                    }
+                    break;
+            }
+
         }
 
         private void BtnTrue_Clicked(object sender, EventArgs e)
