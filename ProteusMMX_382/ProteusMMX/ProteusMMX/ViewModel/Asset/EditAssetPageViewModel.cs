@@ -7048,12 +7048,14 @@ namespace ProteusMMX.ViewModel.Asset
                 if (!string.IsNullOrEmpty(asset.RuntimeUnitName))
                 {
                     RuntimeUnitText = ShortString.shorten(asset.RuntimeUnitName);
+                    RuntimeUnitID = asset.RuntimeUnits;
                 }
                 else
                 {
                     RuntimeUnitText = asset.RuntimeUnitName;
+                    RuntimeUnitID = null;
                 }
-                RuntimeUnitID = asset.RuntimeUnits;
+               
                 AssetTagText = asset.AssetTag;
                 CapacityText = asset.Capacity;
                 DetailedLocation = asset.DetailedLocation;
@@ -7556,6 +7558,17 @@ namespace ProteusMMX.ViewModel.Asset
                 //    return;
                 //}
 
+                if (Application.Current.Properties.ContainsKey("AssetLocationDetailsTabKey"))
+                {
+                    var Locationdetails = Application.Current.Properties["AssetLocationDetailsTabKey"].ToString();
+
+                    if (Locationdetails != null && Locationdetails == "N")
+                    {
+                        FacilityID = null;
+
+                    }
+                }
+
                 if (FacilityID == null)
                 {
                     UserDialogs.Instance.HideLoading();
@@ -7563,17 +7576,19 @@ namespace ProteusMMX.ViewModel.Asset
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Selectthefacilityfield"), 2000);
                     return;
                 }
-
-
-
-                if(RuntimeUnitID==0)
+                else if (LocationID == null)
                 {
-                    RuntimeUnitID = null;
+                    UserDialogs.Instance.HideLoading();
+
+                    string LocationTitle = WebControlTitle.GetTargetNameByTitleName("Select") + " " + WebControlTitle.GetTargetNameByTitleName("Location");
+                    DialogService.ShowToast(LocationTitle, 2000);
+                    return;
                 }
 
+                
                 #endregion
 
-               
+
                 /// Create Asset wrapper
 
 

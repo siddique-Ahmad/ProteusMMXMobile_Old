@@ -1,4 +1,5 @@
-﻿using ProteusMMX.ViewModel.Miscellaneous;
+﻿using ProteusMMX.Helpers;
+using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
 using System;
 using System.Collections.Generic;
@@ -20,8 +21,12 @@ namespace ProteusMMX.Views.Workorder
             InitializeComponent();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            StockroomParts.Title= WebControlTitle.GetTargetNameByTitleName("StockroomParts");
+            NonStockroomParts.Title = WebControlTitle.GetTargetNameByTitleName("NonStockRoomParts");
 
             this.CurrentPageChanged += (object sender, EventArgs e) => {
+
+             
                //ViewModel._navigationservice.InitializeAsync<WorkOrderNonStockroomPartsListingPageViewModel>(WorkorderID);
                // ViewModel.
 

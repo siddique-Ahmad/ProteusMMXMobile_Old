@@ -7083,9 +7083,17 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
 
                 var administrator = obj as ComboDD;
-                this.AdministratorID = administrator.SelectedValue;
-                this.AdministratorName = administrator.SelectedText;
-                
+                if (administrator == null)
+                {
+                    this.AdministratorID = null;
+                    this.AdministratorName = "";
+                }
+                else
+                {
+                    this.AdministratorID = administrator.SelectedValue;
+                    this.AdministratorName = administrator.SelectedText;
+                }
+
             }
 
 

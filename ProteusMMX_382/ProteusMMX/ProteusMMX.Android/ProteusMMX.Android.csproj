@@ -190,6 +190,7 @@
     <Compile Include="DependencyService\ImageEntryRenderer.cs" />
     <Compile Include="DependencyService\LoginSwitchRenderer.cs" />
     <Compile Include="DependencyService\MyEntryRenderer.cs" />
+    <Compile Include="DependencyService\MytabbedPageREnderer.cs" />
     <Compile Include="DependencyService\PDFViewer.cs" />
     <Compile Include="DependencyService\ResizeImage.cs" />
     <Compile Include="DependencyService\SimpleStorage.cs" />
