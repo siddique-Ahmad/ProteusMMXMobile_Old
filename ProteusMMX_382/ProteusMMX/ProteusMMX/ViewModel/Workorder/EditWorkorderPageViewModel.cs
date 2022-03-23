@@ -11129,7 +11129,16 @@ namespace ProteusMMX.ViewModel.Workorder
                     return;
                 }
 
-
+                string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
+                if (!string.IsNullOrWhiteSpace(IsCheckedCause))
+                {
+                    if (IsCheckedCause == "True" && CauseID == null)
+                    {
+                        UserDialogs.Instance.HideLoading();
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
+                        return;
+                    }
+                }
 
 
                 ///TODO: Get Workorder Labour data 
