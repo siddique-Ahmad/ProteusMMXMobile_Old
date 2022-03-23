@@ -5529,13 +5529,10 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
 
 
-                    var CauseID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "Causes");
-                    if (CauseID != null)
+                    string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
+                    if (!string.IsNullOrWhiteSpace(IsCheckedCause))
                     {
-                        CauseTitle = CauseID.TargetName;
-                        OverriddenControlsNew.Add(CauseID);
-                        WorkorderControlsNew.Remove(CauseID);
-                        if (CauseID.IsRequired ?? true)
+                        if (IsCheckedCause == "True")
                         {
                             CauseIsRequred = "true";
                             CauseColor = "Red";
@@ -5544,6 +5541,29 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             CauseIsRequred = "false";
                         }
+                    }
+
+
+                    var CauseID = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "Causes");
+                    if (CauseID != null)
+                    {
+                        CauseTitle = CauseID.TargetName;
+                        OverriddenControlsNew.Add(CauseID);
+                        WorkorderControlsNew.Remove(CauseID);
+                        //string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
+                        //if (!string.IsNullOrWhiteSpace(IsCheckedCause))
+                        //{
+
+                        //}
+                        //if (CauseID.IsRequired ?? true)
+                        //{
+                        //    CauseIsRequred = "true";
+                        //    CauseColor = "Red";
+                        //}
+                        //else
+                        //{
+                        //    CauseIsRequred = "false";
+                        //}
                     }
 
 
@@ -11123,6 +11143,19 @@ namespace ProteusMMX.ViewModel.Workorder
                     DialogService.ShowToast(validationResult.ErrorMessage);
                     return;
                 }
+
+
+                string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
+                if (!string.IsNullOrWhiteSpace(IsCheckedCause))
+                {
+                    if (IsCheckedCause == "True" && CauseID == null)
+                    {
+                        UserDialogs.Instance.HideLoading();
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
+                        return;
+                    }
+                }
+
                 #region Start date and End Date validation
 
 

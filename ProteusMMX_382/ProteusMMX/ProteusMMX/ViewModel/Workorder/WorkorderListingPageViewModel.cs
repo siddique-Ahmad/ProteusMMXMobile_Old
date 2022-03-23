@@ -1887,6 +1887,11 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
+                    if (!string.IsNullOrWhiteSpace(workordersResponse.workOrderWrapper.IsCheckedCause))
+                    {
+                        Application.Current.Properties["IsCheckedCauseKey"] = workordersResponse.workOrderWrapper.IsCheckedCause;
+                    }
+                   
 
                     var workorders = workordersResponse.workOrderWrapper.workOrders;
                     
