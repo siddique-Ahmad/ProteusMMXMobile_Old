@@ -34,6 +34,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 namespace ProteusMMX.ViewModel.Workorder
 {
@@ -1086,90 +1087,193 @@ namespace ProteusMMX.ViewModel.Workorder
             }
 
         }
+        #region Old 
+        //public async Task PickFile()
+        //{
+        //    String FinalLogstring = String.Empty;
+        //    try
+        //    {
+
+        //        FinalLogstring = "PickFile Is Start";
+        //        OperationInProgress = true;
+        //        int count = 0;
+        //        foreach (var item in Attachments)
+        //        {
+
+        //            if (item.IsSynced == false)
+        //            {
+        //                count++;
+        //            }
+
+
+        //        }
+        //        string[] fileTypes = null;
+        //        if (Device.RuntimePlatform == Device.iOS|| Device.RuntimePlatform == Device.Android)
+        //        {
+        //            fileTypes = new string[] { "com.adobe.pdf", "public.rft", "com.microsoft.word.doc", "org.openxmlformats.wordprocessingml.document" };
+        //        }
+        //       // await PickAndShow(fileTypes);
+        //        FinalLogstring = FinalLogstring + " file await CrossFilePicker.Current.PickFile() start ";
+        //        var file = await CrossFilePicker.Current.PickFile(fileTypes);
+        //        //var file = await FilePicker.PickAsync(options);
+        //        FinalLogstring = FinalLogstring + " file check null ";
+        //        if (file == null)
+        //        {
+
+        //            return;
+        //        }
+
+        //        FinalLogstring = FinalLogstring + " file await  " + file.FilePath;
+
+        //        string filepath = file.FilePath;
+        //        int filesize = file.DataArray.Length;
+        //        var filelength = filesize / 1024;
+        //        string strfilesize = Convert.ToString(filelength) + "KB";
+        //        FinalLogstring = FinalLogstring + " file Size  " + strfilesize;
+        //        if (filelength > 1024)
+        //        {
+        //            await App.Current.MainPage.DisplayAlert("Alert", "File too large File must be less than 1 Mb", "OK");
+        //            //UserDialogs.Instance.Toast("File too large File must be less than 1 Mb");
+        //            return;
+        //            //filelength = filelength / 1024;
+        //            //strfilesize = Convert.ToString(filelength) + "MB";
+        //        }
+        //        FinalLogstring = FinalLogstring + " Checked All Validation   ";
+
+        //        string base64String = Convert.ToBase64String(file.DataArray);
+        //        FinalLogstring = FinalLogstring + "base64String   file.DataArray ";
+        //        workOrderWrapper workorderWrapper = new workOrderWrapper();
+        //        workorderWrapper.attachments = new List<WorkOrderAttachment>();
+        //        WorkOrderAttachment woattachment = new WorkOrderAttachment();
+        //        woattachment.WorkOrderID = WorkorderID;
+        //        woattachment.attachmentFile = base64String;
+        //        woattachment.attachmentFileExtension = file.FileName;
+        //        workorderWrapper.attachments.Add(woattachment);
+        //        FinalLogstring = FinalLogstring + "Rady CreateWorkorderAttachment userId :" + UserID;
+        //        var status = await _attachmentService.CreateWorkorderAttachment(UserID, workorderWrapper);
+
+        //        if (Boolean.Parse(status.servicestatus))
+        //        {
+        //            FinalLogstring = FinalLogstring + "If status.servicestatus   " + status.servicestatus;
+        //            IsDataRequested = false;
+        //            await this.OnViewAppearingAsync(null);
+        //            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("AttachmentSuccessfullySaved"), 2000);
+        //        }
+        //        else
+        //        {
+        //            FinalLogstring = FinalLogstring + " else status.servicestatus   " + status.servicestatus;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        LogMessage(FinalLogstring + " catch " + ex.ToString() + " StackTrace " + ex.StackTrace + " InnerException  " + ex.InnerException);
+        //        OperationInProgress = false;
+        //    }
+
+        //    finally
+        //    {
+        //        LogMessage(FinalLogstring + " finally : ");
+        //        OperationInProgress = false;
+        //    }
+        //}
+        #endregion
+
         public async Task PickFile()
         {
-            String FinalLogstring = String.Empty;
+            string FinalLogstring = string.Empty;
             try
             {
-                
-                FinalLogstring = "PickFile Is Start";
                 OperationInProgress = true;
-                int count = 0;
-                foreach (var item in Attachments)
+                string[] fileTypes = null;
+                if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
                 {
+                    fileTypes = new string[] { "com.adobe.pdf", "public.rft", "com.microsoft.word.doc", "org.openxmlformats.wordprocessingml.document" };
+                }
+                await PickAndShow(fileTypes);
+            }
+            catch (Exception ex)
+            {
 
-                    if (item.IsSynced == false)
+                LogMessage(FinalLogstring + " catch PickFile1 " + ex.ToString() + " StackTrace " + ex.StackTrace + " InnerException  " + ex.InnerException);
+                OperationInProgress = false;
+            }
+            finally
+            {
+                LogMessage(FinalLogstring + " finally PickFile1 : ");
+                OperationInProgress = false;
+            }
+        }
+
+        private async Task PickAndShow(string[] fileTypes)
+        {
+            string FinalLogstring = string.Empty;
+            try
+            {
+
+                var file = await CrossFilePicker.Current.PickFile(fileTypes);
+                if (file != null)
+                {
+                    if (file == null)
                     {
-                        count++;
+
+                        return;
                     }
 
+                    FinalLogstring = FinalLogstring + " file await  " + file.FilePath;
 
-                }
-                FinalLogstring = FinalLogstring + " file await CrossFilePicker.Current.PickFile() start ";
-                var file = await CrossFilePicker.Current.PickFile();
+                    string filepath = file.FilePath;
+                    int filesize = file.DataArray.Length;
+                    var filelength = filesize / 1024;
+                    string strfilesize = Convert.ToString(filelength) + "KB";
+                    FinalLogstring = FinalLogstring + " file Size  " + strfilesize;
+                    if (filelength > 1024)
+                    {
+                        await App.Current.MainPage.DisplayAlert("Alert", "File too large File must be less than 1 Mb", "OK");
+                        //UserDialogs.Instance.Toast("File too large File must be less than 1 Mb");
+                        return;
+                        //filelength = filelength / 1024;
+                        //strfilesize = Convert.ToString(filelength) + "MB";
+                    }
+                    FinalLogstring = FinalLogstring + " Checked All Validation   ";
 
-                FinalLogstring = FinalLogstring + " file check null ";
-                if (file == null)
-                {
+                    string base64String = Convert.ToBase64String(file.DataArray);
+                    FinalLogstring = FinalLogstring + "base64String   file.DataArray ";
+                    workOrderWrapper workorderWrapper = new workOrderWrapper();
+                    workorderWrapper.attachments = new List<WorkOrderAttachment>();
+                    WorkOrderAttachment woattachment = new WorkOrderAttachment();
+                    woattachment.WorkOrderID = WorkorderID;
+                    woattachment.attachmentFile = base64String;
+                    woattachment.attachmentFileExtension = file.FileName;
+                    workorderWrapper.attachments.Add(woattachment);
+                    FinalLogstring = FinalLogstring + "Rady CreateWorkorderAttachment userId :" + UserID;
+                    var status = await _attachmentService.CreateWorkorderAttachment(UserID, workorderWrapper);
 
-                    return;
-                }
-
-                FinalLogstring = FinalLogstring + " file await  " + file.FilePath;
-
-                string filepath = file.FilePath;
-                int filesize = file.DataArray.Length;
-                var filelength = filesize / 1024;
-                string strfilesize = Convert.ToString(filelength) + "KB";
-                FinalLogstring = FinalLogstring + " file Size  " + strfilesize;
-                if (filelength > 1024)
-                {
-                    await App.Current.MainPage.DisplayAlert("Alert", "File too large File must be less than 1 Mb", "OK");
-                    //UserDialogs.Instance.Toast("File too large File must be less than 1 Mb");
-                    return;
-                    //filelength = filelength / 1024;
-                    //strfilesize = Convert.ToString(filelength) + "MB";
-                }
-                FinalLogstring = FinalLogstring + " Checked All Validation   ";
-
-                string base64String = Convert.ToBase64String(file.DataArray);
-                FinalLogstring = FinalLogstring + "base64String   file.DataArray ";
-                workOrderWrapper workorderWrapper = new workOrderWrapper();
-                workorderWrapper.attachments = new List<WorkOrderAttachment>();
-                WorkOrderAttachment woattachment = new WorkOrderAttachment();
-                woattachment.WorkOrderID = WorkorderID;
-                woattachment.attachmentFile = base64String;
-                woattachment.attachmentFileExtension = file.FileName;
-                workorderWrapper.attachments.Add(woattachment);
-                FinalLogstring = FinalLogstring + "Rady CreateWorkorderAttachment userId :"+ UserID;
-                var status = await _attachmentService.CreateWorkorderAttachment(UserID, workorderWrapper);
-
-                if (Boolean.Parse(status.servicestatus))
-                {
-                    FinalLogstring = FinalLogstring + "If status.servicestatus   " + status.servicestatus;
-                    IsDataRequested = false;
-                    await this.OnViewAppearingAsync(null);
-                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("AttachmentSuccessfullySaved"), 2000);
-                }
-                else
-                {
-                    FinalLogstring = FinalLogstring + " else status.servicestatus   " + status.servicestatus;
+                    if (Boolean.Parse(status.servicestatus))
+                    {
+                        FinalLogstring = FinalLogstring + "If status.servicestatus   " + status.servicestatus;
+                        IsDataRequested = false;
+                        await this.OnViewAppearingAsync(null);
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("AttachmentSuccessfullySaved"), 2000);
+                    }
+                    else
+                    {
+                        FinalLogstring = FinalLogstring + " else status.servicestatus   " + status.servicestatus;
+                    }
                 }
             }
             catch (Exception ex)
             {
 
-                LogMessage(FinalLogstring + " catch " + ex.Message + " StackTrace " + ex.StackTrace + " InnerException  " + ex.InnerException);
+                LogMessage(FinalLogstring + " catch " + ex.ToString() + " StackTrace " + ex.StackTrace + " InnerException  " + ex.InnerException);
                 OperationInProgress = false;
             }
-
             finally
             {
                 LogMessage(FinalLogstring + " finally : ");
                 OperationInProgress = false;
             }
         }
-
         public async Task PickPhoto()
         {
             try
@@ -1808,7 +1912,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
     }
 
-   
+
 
     public class WorkorderAttachment
     {
