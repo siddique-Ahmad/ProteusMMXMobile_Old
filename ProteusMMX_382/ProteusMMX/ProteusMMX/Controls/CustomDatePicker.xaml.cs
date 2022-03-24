@@ -96,7 +96,7 @@ namespace ProteusMMX.Controls
                 var dateConfig = new Acr.UserDialogs.DatePromptConfig();
                 dateConfig.MinimumDate = this.MinimumDate;
                 dateConfig.MaximumDate = this.MaximumDate;
-                dateConfig.SelectedDate = this.SelectedDate;
+                dateConfig.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                 dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
                 if (Device.RuntimePlatform == Device.iOS)
                 {

@@ -4654,6 +4654,7 @@ namespace ProteusMMX.ViewModel.Asset
 
                         else if (control is CustomDatePicker)
                         {
+                           
                             control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.InstallationDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
@@ -6972,7 +6973,7 @@ namespace ProteusMMX.ViewModel.Asset
 
         public async Task SetControlsPropertiesForPage()
         {
-            var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString());
+            var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString(),AppSettings.User.UserID);
        
 
             if (AssetWrapper != null && AssetWrapper.assetWrapper != null && AssetWrapper.assetWrapper.asset != null)
@@ -7061,8 +7062,8 @@ namespace ProteusMMX.ViewModel.Asset
                 DetailedLocation = asset.DetailedLocation;
                 if(asset.InstallationDate.HasValue)
                 {
-                    InstallationDate = asset.InstallationDate.ToString();
-                    //InstallationDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.InstallationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                   // InstallationDate = asset.InstallationDate.ToString();
+                    InstallationDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.InstallationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
                 }
                 else
                 {
@@ -7078,8 +7079,8 @@ namespace ProteusMMX.ViewModel.Asset
                 Weight = asset.Weight;
                 if (asset.WarrantyDate.HasValue)
                 {
-                    WarrantyDate = asset.WarrantyDate.ToString();
-                   // WarrantyDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.WarrantyDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                    //WarrantyDate = asset.WarrantyDate.ToString();
+                    WarrantyDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.WarrantyDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
                 }
                 else
                 {
@@ -7699,6 +7700,8 @@ namespace ProteusMMX.ViewModel.Asset
                 var assetwrapper = new CreateNewAssetLong
                 {
                     IsAttachmentModified = false,
+                    UserID = Convert.ToInt32(AppSettings.User.UserID),
+                    ClientIANATimeZone = AppSettings.ClientIANATimeZone,
                     asset = asset,
 
                 };
