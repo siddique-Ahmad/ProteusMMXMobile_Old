@@ -10903,7 +10903,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else
                 {
-                    var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString());
+                    var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString(), AppSettings.User.UserID);
 
                     if (string.IsNullOrWhiteSpace(AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString()))
                     {

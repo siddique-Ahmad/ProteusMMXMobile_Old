@@ -2557,6 +2557,7 @@ namespace ProteusMMX.ViewModel.Asset
         }
 
 
+
         string _installationDate;
         public string InstallationDate
         {
@@ -2770,7 +2771,8 @@ namespace ProteusMMX.ViewModel.Asset
         }
 
 
-       string _warrantyDate;
+     
+        string _warrantyDate;
         public string WarrantyDate
         {
             get
@@ -5107,7 +5109,7 @@ namespace ProteusMMX.ViewModel.Asset
 
                         else if (control is CustomDatePicker)
                         {
-                            if (this.WarrantyDate==null || this.WarrantyDate == ("1/1/0001 12:00:00 AM"))
+                            if (this.WarrantyDate == null || this.WarrantyDate == ("1/1/0001 12:00:00 AM"))
                             {
 
                             }
@@ -5115,6 +5117,7 @@ namespace ProteusMMX.ViewModel.Asset
                             {
                                 WarrantyDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
                             }
+                          
                             control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.WarrantyDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
@@ -7270,6 +7273,7 @@ namespace ProteusMMX.ViewModel.Asset
                 var asset = new asset();
                 #region Asset properties initialzation
                
+                
                 asset.ModifiedUserName = AppSettings.User.UserName;
                 asset.Description = String.IsNullOrEmpty(Description) ? null : Description.Trim();
                 asset.AssetName = String.IsNullOrEmpty(AssetNameText) ? null : AssetNameText.Trim();
@@ -7288,52 +7292,7 @@ namespace ProteusMMX.ViewModel.Asset
                 asset.AssetTag = String.IsNullOrEmpty(AssetTagText) ? null : AssetTagText.Trim();
                 asset.Capacity = String.IsNullOrEmpty(CapacityText) ? null : CapacityText.Trim();
                 asset.DetailedLocation = String.IsNullOrEmpty(DetailedLocation) ? null : DetailedLocation.Trim();
-                //   try
-                //   {
-                //       string s = InstallationDate.ToString();
-
-                //       var formats = new string[]
-                //       {
-                //"dd/MM/yyyy",
-                //"d/M/yyyy",
-                //"dd/mm/yy",
-                //"d/m/yy",
-
-                //"dd-MM-yyyy",
-                //"d-M-yyyy",
-                //"dd-MM-yy",
-                //"d-M-yy",
-
-                //"dd.MM.yyyy",
-                //"d.M.yyyy",
-                //"dd.MM.yy",
-                //"d.M.yy",
-
-                //"dd MM yyyy",
-                //"d M yyyy",
-                //"dd MM yy",
-                //"d M yy",
-                //       };
-                //       DateTime dt;
-                //       DateTime.TryParseExact(s, formats, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt);
-                //       if (InstallationDate == null || InstallationDate.ToString() == dt.ToString())
-                //       {
-                //           asset.InstallationDate = null;
-                //       }
-
-                //       else
-                //       {
-                //           asset.InstallationDate = InstallationDate.Date.Add(DateTime.Now.TimeOfDay);
-
-                //           //RequiredDate1.Date.Add(DateTime.Now.TimeOfDay);
-                //       }
-                //   }
-                //   catch (Exception)
-                //   {
-
-                //       asset.InstallationDate = null;
-                //   }
-              
+               
                 if (InstallationDate == null)
                 {
                     asset.InstallationDate = null;
@@ -7350,52 +7309,7 @@ namespace ProteusMMX.ViewModel.Asset
                 asset.SerialNumber = String.IsNullOrEmpty(SerialNumber) ? null : SerialNumber.Trim();
                 asset.Weight = String.IsNullOrEmpty(Weight) ? null : Weight.Trim();
 
-                //   try
-                //   {
-                //       string s1 = WarrantyDate.ToString();
-
-                //       var formats1 = new string[]
-                //       {
-                //"dd/MM/yyyy",
-                //"d/M/yyyy",
-                //"dd/mm/yy",
-                //"d/m/yy",
-
-                //"dd-MM-yyyy",
-                //"d-M-yyyy",
-                //"dd-MM-yy",
-                //"d-M-yy",
-
-                //"dd.MM.yyyy",
-                //"d.M.yyyy",
-                //"dd.MM.yy",
-                //"d.M.yy",
-
-                //"dd MM yyyy",
-                //"d M yyyy",
-                //"dd MM yy",
-                //"d M yy",
-                //       };
-                //       DateTime dt1;
-                //       DateTime.TryParseExact(s1, formats1, CultureInfo.InvariantCulture, DateTimeStyles.None, out dt1);
-
-                //       if (WarrantyDate == null || WarrantyDate.ToString() == dt1.ToString())
-                //       {
-                //           asset.WarrantyDate = null;
-                //       }
-                //       else
-                //       {
-                //           asset.WarrantyDate = WarrantyDate.Date.Add(DateTime.Now.TimeOfDay);
-                //       }
-
-
-                //   }
-                //   catch (Exception)
-                //   {
-
-                //       asset.WarrantyDate = null;
-                //   }
-
+               
                 if (WarrantyDate == null)
                 {
                     asset.WarrantyDate = null;
@@ -7463,7 +7377,8 @@ namespace ProteusMMX.ViewModel.Asset
                 #endregion
                 var assetwrapper = new CreateNewAssetLong
                 {
-                    
+                    UserID = Convert.ToInt32(AppSettings.User.UserID),
+                    ClientIANATimeZone = AppSettings.ClientIANATimeZone,
                     asset = asset,
 
                 };

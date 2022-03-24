@@ -28,12 +28,13 @@ namespace ProteusMMX.Services.Asset
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }
-        public Task<ServiceOutput> GetAssetsBYAssetID(string AssetID)
+        public Task<ServiceOutput> GetAssetsBYAssetID(string AssetID, int Userid)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetAssetsBYAssetID);
             builder.AppendToPath(AssetID);
-           
+            builder.AppendToPath(Userid.ToString());
+
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }
