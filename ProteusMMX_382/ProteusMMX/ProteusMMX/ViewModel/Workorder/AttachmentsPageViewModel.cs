@@ -34,7 +34,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 namespace ProteusMMX.ViewModel.Workorder
 {
@@ -914,7 +913,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery"), "File" };
+                List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery")};
                 var selected = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("ChooseFile"), SelectTitle, CancelTitle, choice.ToArray());
                 if (selected != null && !selected.Equals(WebControlTitle.GetTargetNameByTitleName("Cancel")))
                 {
