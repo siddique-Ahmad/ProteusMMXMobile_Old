@@ -589,11 +589,16 @@ namespace ProteusMMX.Views.Workorder
                 #region **** Frame content *********
 
                 // FramesSL.Children.Add(AssociateLal);
-
+                string workImpId = "";
+                if (item.WorkOrderInspectionTimeID != null)
+                {
+                    workImpId = Convert.ToString(item.WorkOrderInspectionTimeID);
+                }
                 Frame Associateframe = new Frame
                 {
                     CornerRadius = 5,
-                    BorderColor = Color.Black
+                    BorderColor = Color.Black,
+                    StyleId = workImpId,
                 };
                 FramesSL.Children.Add(Associateframe);
 
@@ -830,7 +835,7 @@ namespace ProteusMMX.Views.Workorder
                 {
                     startDate = new CustomDatePicker
                     {
-                        Margin = new Thickness(2, 5, 2, 0),
+                        Margin = new Thickness(0, 5, 3, 0),
                         SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
@@ -841,7 +846,7 @@ namespace ProteusMMX.Views.Workorder
                 {
                     startDate = new CustomDatePicker
                     {
-                        Margin = new Thickness(2, 5, 2, 0),
+                        Margin = new Thickness(0, 5, 3, 0),
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
@@ -875,7 +880,7 @@ namespace ProteusMMX.Views.Workorder
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
-                        Margin = new Thickness(2, 5, 2, 0),
+                        Margin = new Thickness(0, 5, 8, 0),
                     };
                     dateCompBo.Content = CompletionDate;
                 }
@@ -887,7 +892,7 @@ namespace ProteusMMX.Views.Workorder
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
-                        Margin = new Thickness(2, 5, 2, 0),
+                        Margin = new Thickness(0, 5, 8, 0),
                     };
                     dateCompBo.Content = CompletionDate;
                 }
@@ -1154,11 +1159,16 @@ namespace ProteusMMX.Views.Workorder
                 #region **** Frame content *********
 
                 // FramesSL.Children.Add(AssociateLal);
-
+                string workImpId = "";
+                if (item.WorkOrderInspectionTimeID != null)
+                {
+                    workImpId = Convert.ToString(item.WorkOrderInspectionTimeID);
+                }
                 Frame Associateframe = new Frame
                 {
                     CornerRadius = 5,
-                    BorderColor = Color.Black
+                    BorderColor = Color.Black,
+                    StyleId = workImpId,
                 };
                 FramesSL.Children.Add(Associateframe);
 
@@ -3468,7 +3478,12 @@ namespace ProteusMMX.Views.Workorder
                     {
                         string EmpLaborCraftID = "0";
                         string ContLaborCraftID = "0";
-                        var FrameLayout = stacklayout1.Children[i] as Frame;
+                        int? WorkOrderInspectionTimeIDs = null;
+                        var FrameLayout = stacklayout1.Children[i] as Frame;                     
+                        if (!string.IsNullOrWhiteSpace(FrameLayout.StyleId))
+                        {
+                            WorkOrderInspectionTimeIDs = Convert.ToInt32(FrameLayout.StyleId);
+                        }
                         var Fstacklayout = FrameLayout.Children[0] as StackLayout;
                         var Fstacklayout1 = Fstacklayout.Children[0] as StackLayout;
 
@@ -3579,7 +3594,8 @@ namespace ProteusMMX.Views.Workorder
                             CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
                             EmployeeLaborCraftid = EmpLaborCraftID,
                             ContractorLaborCraftId = ContLaborCraftID,
-                            ModifiedUserName = AppSettings.UserName
+                            ModifiedUserName = AppSettings.UserName,
+                            WorkOrderInspectionTimeID= WorkOrderInspectionTimeIDs
                         });
                         liststartAnswer.Add(new InspectionTOAnswers()
                         {
@@ -3755,7 +3771,7 @@ namespace ProteusMMX.Views.Workorder
             }
             catch (Exception ex)
             {
-
+                UserDialogs.Instance.HideLoading();
 
             }
 
@@ -3935,8 +3951,13 @@ namespace ProteusMMX.Views.Workorder
                 {
                     string EmpLaborCraftID = "0";
                     string ContLaborCraftID = "0";
+                    int? WorkOrderInspectionTimeIDs = null;
                     listtoAnswerModel = new InspectionTOAnswers();
                     var FrameLayout = stacklayout1.Children[i] as Frame;
+                    if (!string.IsNullOrWhiteSpace(FrameLayout.StyleId))
+                    {
+                        WorkOrderInspectionTimeIDs = Convert.ToInt32(FrameLayout.StyleId);
+                    }
                     var Fstacklayout = FrameLayout.Children[0] as StackLayout;
                     var Fstacklayout1 = Fstacklayout.Children[0] as StackLayout;
 
@@ -4057,7 +4078,8 @@ namespace ProteusMMX.Views.Workorder
                         CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
                         EmployeeLaborCraftid = EmpLaborCraftID,
                         ContractorLaborCraftId = ContLaborCraftID,
-                        ModifiedUserName = AppSettings.UserName
+                        ModifiedUserName = AppSettings.UserName,
+                        WorkOrderInspectionTimeID = WorkOrderInspectionTimeIDs
                     });
 
                     liststartAnswer.Add(new InspectionTOAnswers()
