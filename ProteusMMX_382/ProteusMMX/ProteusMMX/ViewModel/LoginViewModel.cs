@@ -681,7 +681,7 @@ namespace ProteusMMX.ViewModel
                     return;
                 }
                 /// Save the MMXUser Properties the so we can reuse that.
-                AppSettings.APIVersion = user.mmxUser.blackhawkLicValidator.APIVersion;
+                AppSettings.APIVersion = apiVersion.APIVersion;
                 AppSettings.User = user.mmxUser;
                 AppSettings.UserName = UserName;
                 AppSettings.Password = Password;

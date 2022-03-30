@@ -18,7 +18,7 @@ namespace ProteusMMX.iOS.CustomRenderer
             base.OnElementChanged(e);
 
             TabBar.TintColor = UIColor.White;
-            TabBar.BarTintColor = UIColor.Black;
+            
             TabBar.BackgroundColor = Color.FromHex("#006de0").ToUIColor();
         }
     }

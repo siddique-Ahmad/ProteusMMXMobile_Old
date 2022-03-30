@@ -692,10 +692,7 @@ namespace ProteusMMX.ViewModel
             {
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("Dashboard")+ (WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.User.UserName).PadLeft(90);
             }
-            else if(Device.RuntimePlatform == Device.iOS)
-            {
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("Dashboard").PadLeft(50);
-            }
+           
             else
             {
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("Dashboard");
