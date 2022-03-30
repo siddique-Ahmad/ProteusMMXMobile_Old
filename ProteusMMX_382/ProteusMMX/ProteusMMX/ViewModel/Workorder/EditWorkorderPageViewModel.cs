@@ -10259,6 +10259,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 //Set Target String/////////
                 TargetName = "(" + targetname + ")" + " " + AppSettings.User.CompanyName + " " + ">>" + " " + workorder.FacilityName + ">>" + workorder.LocationName;
                 ActivationDateText = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ActivationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                //if (!string.IsNullOrEmpty(ActivationDateText.ToString()))
+                //{
+                //   ActivationDateText = Convert.ToDateTime(ActivationDateText.ToString("0:MMM d, yyyy"));
+                //}
 
                 if (!string.IsNullOrEmpty(workorder.CostCenterName))
                 {
