@@ -298,6 +298,23 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+        string _searchPlaceholder;
+        public string SearchPlaceholder
+        {
+            get
+            {
+                return _searchPlaceholder;
+            }
+
+            set
+            {
+                if (value != _searchPlaceholder)
+                {
+                    _searchPlaceholder = value;
+                    OnPropertyChanged("SearchPlaceholder");
+                }
+            }
+        }
         string _createNonStockroomParts = "";
         public string CreateNonStockroomParts
         {
@@ -508,7 +525,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
             ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
             SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
-
+            SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("NonStockParts");
 
         }
         public async Task ShowActions()

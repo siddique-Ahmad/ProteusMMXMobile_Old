@@ -1417,7 +1417,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         if (attachment.serviceRequestWrapper.attachments.Count > 0)
                         {
                             var FirstattachmentName = attachment.serviceRequestWrapper.attachments.First();
-                            PDFImageText = FirstattachmentName.attachmentFileExtension;
+                            //PDFImageText = FirstattachmentName.attachmentFileExtension;
                             ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.serviceRequestWrapper.attachments.Count;
                             foreach (var file in attachment.serviceRequestWrapper.attachments)
                             {
@@ -1430,7 +1430,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                     file.attachmentFileExtension.ToLower().Contains(".xlsx") ||
                                     file.attachmentFileExtension.ToLower().Contains(".txt")))
                                 {
-
+                                    PDFImageText = FirstattachmentName.attachmentFileExtension;
                                     DocumentAttachments.Add(file.attachmentFileExtension);
 
                                     byte[] imgUser = StreamToBase64.StringToByte(ShortString.shortenBase64(""));

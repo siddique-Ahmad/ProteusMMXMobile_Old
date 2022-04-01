@@ -49,6 +49,10 @@
                     <Image.Source>
                         <OnPlatform x:TypeArguments="ImageSource" >
                             <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                            <OnPlatform.iOS>
+                                <FileImageSource File="ssbicon.png"/>
+                            </OnPlatform.iOS>
+
                         </OnPlatform>
                     </Image.Source>
                     <Image.GestureRecognizers>

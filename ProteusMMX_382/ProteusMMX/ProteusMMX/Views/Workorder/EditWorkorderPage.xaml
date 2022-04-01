@@ -254,7 +254,7 @@
                                     </Label.FontAttributes>
                                 </Label>
                                 <border:SfBorder Style="{StaticResource SfBorderStyle}" IsEnabled="False">
-                                    <control1:CustomEntry FontSize="14" TextColor="Black" FontAttributes="None"  Text="{Binding ActivationDateText , Mode=TwoWay, StringFormat='{0:MMM d, yyyy}'}"  ></control1:CustomEntry>
+                                    <control1:CustomEntry BackgroundColor="LightGray" FontSize="14" TextColor="Black" FontAttributes="None"  Text="{Binding ActivationDateText , Mode=TwoWay, StringFormat='{0:MMM d, yyyy}'}"  ></control1:CustomEntry>
                                 </border:SfBorder>
                             </StackLayout>
 
