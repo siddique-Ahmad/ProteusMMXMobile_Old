@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -11745,8 +11746,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (string.IsNullOrWhiteSpace(CurrentRuntimeText))
                 {
                     this.CurrentRuntimeText = "0.00";
-
-
+                }
+                else
+                {
+                    this.CurrentRuntimeText = CurrentRuntimeText.Replace(',', '.');
                 }
                 workOrder.ModifiedUserName = AppSettings.User.UserName;
                 workOrder.Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim();
@@ -11778,6 +11781,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     ActualDowntimeText = "0";
                 }
+                else
+                {
+                    this.ActualDowntimeText = ActualDowntimeText.Replace(',', '.');
+                }
                 if (string.IsNullOrWhiteSpace(EstimstedDowntimeText))
                 {
                     EstimstedDowntimeText = "0";
@@ -11799,8 +11806,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.ChildCost = ChildCostDistributed;
                 workOrder.ActualDowntime = ActualDowntimeText;
                 workOrder.EstimatedDowntime = EstimstedDowntimeText;
-                workOrder.MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText);
-                workOrder.MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText);
+                workOrder.MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture);
+                workOrder.MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture);
 
 
                 #region Dynamic Field need to add in model so it can save on server.
@@ -11929,8 +11936,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                     InternalNote = InternalNoteText,
                                     ActualDowntime = ActualDowntimeText,
                                     EstimatedDowntime = EstimstedDowntimeText,
-                                    MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText),
-                                    MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText),
+                                    MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture),
+                                    MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture),
                                     ApprovalLevel = this.ApprovalLevel,
                                     ApprovalNumber = this.ApprovalNumber,
                                     IsSignatureValidated = false,
@@ -12054,8 +12061,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                     InternalNote = InternalNoteText,
                                     ActualDowntime = ActualDowntimeText,
                                     EstimatedDowntime = EstimstedDowntimeText,
-                                    MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText),
-                                    MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText),
+                                    MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture),
+                                    MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture),
                                     ApprovalLevel = this.ApprovalLevel,
                                     ApprovalNumber = this.ApprovalNumber,
                                     IsSignatureValidated = false,
@@ -12178,8 +12185,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 InternalNote = InternalNoteText,
                                 ActualDowntime = ActualDowntimeText,
                                 EstimatedDowntime = EstimstedDowntimeText,
-                                MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText),
-                                MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText),
+                                MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture),
+                                MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture),
                                 ApprovalLevel = this.ApprovalLevel,
                                 ApprovalNumber = this.ApprovalNumber,
                                 IsSignatureValidated = false,
@@ -12303,8 +12310,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 InternalNote = InternalNoteText,
                                 ActualDowntime = ActualDowntimeText,
                                 EstimatedDowntime = EstimstedDowntimeText,
-                                MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText),
-                                MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText),
+                                MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture),
+                                MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture),
                                 ApprovalLevel = this.ApprovalLevel,
                                 ApprovalNumber = this.ApprovalNumber,
                                 IsSignatureValidated = false,

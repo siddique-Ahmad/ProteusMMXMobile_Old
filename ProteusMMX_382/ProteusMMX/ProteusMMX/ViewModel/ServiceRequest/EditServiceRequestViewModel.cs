@@ -4924,11 +4924,11 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
             else
             {
-                control = new CustomDatePicker();
+                control = new CustomDatePicker1();
             }
 
             SetControlBindingAccordingToControlType(control, formControl);
-            //new CustomDatePicker(); //new DatePicker();
+            //new CustomDatePicker1(); //new DatePicker();
 
             title.Text = formControl.TargetName;
 
@@ -4995,9 +4995,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.Administrator), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Administrator), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.Administrator), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5042,9 +5042,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterConfirmEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterConfirmEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.RequesterConfirmEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5088,9 +5088,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.EstimatedDowntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.EstimatedDowntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.EstimatedDowntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5134,9 +5134,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.SendSMSToEmployee), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.SendSMSToEmployee), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.SendSMSToEmployee), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5178,9 +5178,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.RequesterEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5223,9 +5223,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterFullName), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterFullName), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.RequesterFullName), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5272,9 +5272,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterPhone), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterPhone), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.RequesterPhone), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5317,9 +5317,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RequestNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequestNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.RequestNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5365,9 +5365,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequiredDate1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.RequiredDate1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5410,9 +5410,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5452,9 +5452,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField2), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField2), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField2), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5495,9 +5495,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField3), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField3), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField3), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5538,9 +5538,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField4), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField4), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField4), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5581,9 +5581,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField5), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField5), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField5), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5624,9 +5624,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField6), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField6), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField6), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5667,9 +5667,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField7), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField7), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField7), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5710,9 +5710,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField8), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField8), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField8), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5753,9 +5753,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField9), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField9), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField9), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5796,9 +5796,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField10), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField10), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField10), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5839,9 +5839,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField11), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField11), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField11), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5882,9 +5882,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField12), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField12), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField12), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5925,9 +5925,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField13), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField13), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField13), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5968,9 +5968,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField14), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField14), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField14), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6011,9 +6011,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField15), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField15), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField15), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6054,9 +6054,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField16), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField16), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField16), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6097,9 +6097,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField17), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField17), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField17), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6140,9 +6140,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField18), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField18), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField18), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6183,9 +6183,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField19), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField19), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField19), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6226,9 +6226,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField20), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField20), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField20), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6270,9 +6270,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6316,9 +6316,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField22), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField22), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField22), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6361,9 +6361,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField23), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField23), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField23), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6408,9 +6408,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField24), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField24), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField24), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 

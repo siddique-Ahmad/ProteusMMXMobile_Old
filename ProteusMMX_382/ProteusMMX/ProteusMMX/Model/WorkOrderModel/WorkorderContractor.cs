@@ -15,7 +15,9 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string LaborCraftCode { get; set; }
 
         public int? ContractorLaborCraftID { get; set; }
-
+        public int? WorkOrderInspectionDetailsID { get; set; }
+        public string TimerStatus { get; set; }
+        public DateTime? InspectionCompletionDate { get; set; }
         public bool StartBtn { get; set; }
         public bool StopBtn { get; set; }
 

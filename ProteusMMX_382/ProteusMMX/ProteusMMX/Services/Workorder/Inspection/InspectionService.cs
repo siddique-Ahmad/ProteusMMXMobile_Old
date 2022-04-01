@@ -95,6 +95,14 @@ namespace ProteusMMX.Services.Workorder.Inspection
             return _requestService.PostAsync(uri, inspectionAnswer);//GetAsync(uri);
         }
 
+        public Task<ServiceOutput> CreateInspectionTimeDetails(object inspectionAnswer)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.CreateInspectionTimeDetails);
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.PostAsync(uri, inspectionAnswer);//GetAsync(uri);
+        }
 
     }
 }

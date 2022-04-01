@@ -1647,7 +1647,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             //FontSize = 11
                         };
-                        fromEntry.Margin = new Thickness(0, 5, 0, 0);
+                        fromEntry.Margin = new Thickness(0, 5, 3, 0);
                         FsfBorder.Content = fromEntry;
                         #endregion
 
@@ -1745,7 +1745,9 @@ namespace ProteusMMX.ViewModel.Workorder
                            
                             if (item.CompletionDate != null)
                             {
-                                completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                                completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy");
+
+                                
                             }
 
 

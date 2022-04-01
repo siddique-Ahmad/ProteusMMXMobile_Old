@@ -727,6 +727,24 @@ namespace ProteusMMX
             }
 
         }
+
+        private static string _createInspectionTimeDetails = "Inspection/service/CreateInspectionTimeDetails";
+        public static string CreateInspectionTimeDetails
+        {
+            get
+            {
+                return _createInspectionTimeDetails;
+            }
+
+            set
+            {
+                if (value != _createInspectionTimeDetails)
+                {
+                    _createInspectionTimeDetails = value;
+                }
+            }
+
+        }
         #endregion
         #region WorkOrderStockroomParts
 
