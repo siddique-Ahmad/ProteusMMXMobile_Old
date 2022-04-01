@@ -135,7 +135,7 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                <border:SfBorder >
                     <control1:CustomEntry
                         x:Name="InvoiceNumber" Text="{Binding InvoiceNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
                 </border:SfBorder>
@@ -150,7 +150,7 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                <border:SfBorder>
                     <control1:CustomEntry
                 x:Name="PackagingSlipNumber" Text="{Binding PackagingSlipNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
                 </border:SfBorder>
