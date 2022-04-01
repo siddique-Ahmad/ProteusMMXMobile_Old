@@ -116,5 +116,15 @@ namespace ProteusMMX.Model
         public string TransactionNumber { get; set; }
 
         public List<ComboDD> SRAEmployees { get; set; }
+
+        public Int64? WorkOrderInspectionDetailsID { get; set; }
+        
+        public DateTime? InspectionStartedDate { get; set; }
+       
+        public Double? TotalInspectionHours { get; set; }
+       
+        public DateTime? InspectionCompleteDate { get; set; }
+        
+        public string InspectionStatus { get; set; }
     }
 }

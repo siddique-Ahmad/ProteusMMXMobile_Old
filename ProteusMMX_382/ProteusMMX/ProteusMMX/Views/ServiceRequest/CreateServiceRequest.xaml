@@ -281,7 +281,7 @@
                                 </Label>
                                 <!--<DatePicker Date="{Binding RequiredDate}"  MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}"/>-->
                                 <border:SfBorder CornerRadius="5" BorderColor="Black">
-                                <controls:RequiredDateCustomDatePicker SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}" />
+                                    <controls:RequiredDateCustomDatePicker Padding="0,3,3,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
                             <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1" IsVisible="{Binding AdministratorIsVisible}">
