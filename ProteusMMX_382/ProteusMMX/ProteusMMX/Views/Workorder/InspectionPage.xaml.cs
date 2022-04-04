@@ -298,6 +298,7 @@ namespace ProteusMMX.Views.Workorder
 
         protected override async void OnAppearing()
         {
+            total = TimeSpan.Zero;
             // for disscoson 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
@@ -573,8 +574,13 @@ namespace ProteusMMX.Views.Workorder
 
             masterGrid.Children.Add(FrameSL, 0, 2);
             ScrollView FrameSV = new ScrollView();
+
             FrameSL.Children.Add(FrameSV);
             StackLayout FramesSL = new StackLayout();
+            if (CC.listInspection.Count == 0)
+            {
+                FramesSL.IsEnabled = false;
+            }
             FrameSV.Content = FramesSL;
             #endregion
             int CCCount = CC.workOrderEmployee.Count + CC.workorderContractor.Count;
@@ -600,12 +606,14 @@ namespace ProteusMMX.Views.Workorder
                     BorderColor = Color.Black,
                     StyleId = workImpId,
                 };
+               
                 FramesSL.Children.Add(Associateframe);
 
                 StackLayout AssociateSL = new StackLayout
                 {
                     Margin = new Thickness(-15, -10, -15, -10)
                 };
+               
                 Associateframe.Content = AssociateSL;
                 #region **** Start Stop Hrs Min Delete Icon *****
 
