@@ -993,9 +993,9 @@ namespace ProteusMMX.Views.Workorder
 
                 #region **** data base Button  working ****
 
-                startDate.SelectedDate = item.StartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(item.StartDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
-
-                CompletionDate.SelectedDate = item.CompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(item.CompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
+              //  startDate.SelectedDate = item.StartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(item.StartDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
+                startDate.SelectedDate = item.StartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone): (DateTime?)null;
+                CompletionDate.SelectedDate = item.CompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
 
                 if (item.TimerStatus == "Start")
                 {
@@ -1550,9 +1550,12 @@ namespace ProteusMMX.Views.Workorder
                 #region GlobalTimer Logic
 
                 #region **** data base Button  working ****
-                startDate.SelectedDate = item.StartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(item.StartDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
+                startDate.SelectedDate = item.StartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
+                CompletionDate.SelectedDate = item.CompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
 
-                CompletionDate.SelectedDate = item.CompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(item.CompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
+                //startDate.SelectedDate = item.StartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(item.StartDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
+
+                //CompletionDate.SelectedDate = item.CompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(item.CompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
 
                 if (item.TimerStatus == "Start")
                 {
