@@ -14,7 +14,7 @@ namespace ProteusMMX.Model.WorkOrderModel
 
         public bool EmployeeWorkHourFlag { get; set; }
 
-        public decimal EmployeeWorkHourValue { get; set; }
+        public String EmployeeWorkHourValue { get; set; }
 
         public bool WorkOrderIdentifiedThroughBreakdownFlag { get; set; }
         public int UserId { get; set; }
