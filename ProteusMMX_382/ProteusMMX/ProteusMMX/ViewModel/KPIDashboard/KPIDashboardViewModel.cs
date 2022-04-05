@@ -219,7 +219,23 @@ namespace ProteusMMX.ViewModel.KPIDashboard
             }
         }
 
-        
+        string _pageTitle;
+        public string PageTitle
+        {
+            get
+            {
+                return _pageTitle;
+            }
+
+            set
+            {
+                if (value != _pageTitle)
+                {
+                    _pageTitle = value;
+                    OnPropertyChanged("PageTitle");
+                }
+            }
+        }
 
 
 
@@ -233,7 +249,7 @@ namespace ProteusMMX.ViewModel.KPIDashboard
         {
             try
             {
-               
+                PageTitle = WebControlTitle.GetTargetNameByTitleName("KPIDashboard");
             }
             catch (Exception)
             {

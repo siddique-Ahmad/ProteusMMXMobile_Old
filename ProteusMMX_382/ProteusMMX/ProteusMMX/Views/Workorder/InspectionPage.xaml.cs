@@ -1033,7 +1033,8 @@ namespace ProteusMMX.Views.Workorder
                     //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
                     var buttonStart = sender as SfButton;
                     WorkOrderEmployee workorderemployee = buttonStart.CommandParameter as WorkOrderEmployee;
-
+                    UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                    await Task.Delay(1000);
                     var AddEmpTimer = new InspectionTOAnswers
                     {
                         ClientIANATimeZone = AppSettings.ClientIANATimeZone,
@@ -1092,8 +1093,12 @@ namespace ProteusMMX.Views.Workorder
 
                         hoursEntry.IsReadOnly = true;
                         minuteEntry.IsReadOnly = true;
+                        UserDialogs.Instance.HideLoading();
                     }
-
+                    else
+                    {
+                        UserDialogs.Instance.HideLoading();
+                    }
                 };
 
                 stopButton.Clicked += async (sender, e) =>
@@ -1126,6 +1131,8 @@ namespace ProteusMMX.Views.Workorder
                 #endregion
                 async void OnAlertYesNoClicked(WorkOrderEmployee workOrderemp)
                 {
+                    UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                    await Task.Delay(1000);
                     var result = await UserDialogs.Instance.ConfirmAsync(WebControlTitle.GetTargetNameByTitleName("Didyoufinishyourwork...?"), WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
                     WorkOrderEmployee savedemployeelocal1 = null;
 
@@ -1198,9 +1205,12 @@ namespace ProteusMMX.Views.Workorder
                             TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
 
                         }
-
+                        UserDialogs.Instance.HideLoading();
                     }
-
+                    else
+                    {
+                        UserDialogs.Instance.HideLoading();
+                    }
                 }
 
                 if (!string.IsNullOrWhiteSpace(item.InspectionTime))
@@ -1666,7 +1676,8 @@ namespace ProteusMMX.Views.Workorder
                     //save its workOrderLabor in local storage so we can start timer when we come on this page then we can retrive it.
                     var buttonStart = sender as SfButton;
                     WorkorderContractor workordercontrcator = buttonStart.CommandParameter as WorkorderContractor;
-
+                    UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                    await Task.Delay(1000);
                     var AddEmpTimer = new InspectionTOAnswers
                     {
                         ClientIANATimeZone = AppSettings.ClientIANATimeZone,
@@ -1726,8 +1737,12 @@ namespace ProteusMMX.Views.Workorder
 
                         hoursEntry.IsReadOnly = true;
                         minuteEntry.IsReadOnly = true;
+                        UserDialogs.Instance.HideLoading();
                     }
-
+                    else
+                    {
+                        UserDialogs.Instance.HideLoading();
+                    }
                     //workordercontrcator.StartTimeOfTimer = DateTime.Now;
                     //workordercontrcator.StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                     //startButton.CommandParameter = workordercontrcator; //reassign to commandParameter.
@@ -1848,6 +1863,8 @@ namespace ProteusMMX.Views.Workorder
 
                 async void OnAlertYesNoClicked(WorkorderContractor workOrdercontrcator)
                 {
+                    UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                    await Task.Delay(1000);
                     var result = await UserDialogs.Instance.ConfirmAsync(WebControlTitle.GetTargetNameByTitleName("Didyoufinishyourwork...?"), WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
 
                     InspectionTOAnswers AddEmpTimer;
@@ -1932,6 +1949,11 @@ namespace ProteusMMX.Views.Workorder
 
                         hoursEntry.IsReadOnly = false;
                         minuteEntry.IsReadOnly = false;
+                        UserDialogs.Instance.HideLoading();
+                    }
+                    else
+                    {
+                        UserDialogs.Instance.HideLoading();
                     }
                 }
 
@@ -2702,11 +2724,8 @@ namespace ProteusMMX.Views.Workorder
                         {
                             imageView.HeightRequest = 150;
                         }
-
-                        //var addSignatureButton = new Button() { CornerRadius = 5, Text = WebControlTitle.GetTargetNameByTitleName("AddSignature"), BackgroundColor = Color.FromHex("#87CEFA"), HeightRequest = 35, FontSize = 12, TextColor = Color.White, BorderColor = Color.Black };
-                        var addSignatureButton = new Button() { BackgroundColor = Color.White, ImageSource = "signature.png" };
+                        var addSignatureButton = new Button() { BackgroundColor = Color.White,  ImageSource = "signature.png" };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
-                        // layout2.Children.Add(addSignatureButton);
                         Case1Grid.Children.Add(btnsave, 2, 1);
                         Case1Grid.Children.Add(btnDelete, 3, 1);
                         Case1Grid.Children.Add(addSignatureButton, 4, 1);
@@ -3286,7 +3305,6 @@ namespace ProteusMMX.Views.Workorder
         {
             var data = (sender as Button).Parent;
             var parentView = ((sender as Button).Parent as Grid);
-            // var image1 = parentView.Children[parentView.Children.Count - 4] as CustomImage;
 
             var image = parentView.Children[0] as CustomImage;
             image.HeightRequest = 150;
