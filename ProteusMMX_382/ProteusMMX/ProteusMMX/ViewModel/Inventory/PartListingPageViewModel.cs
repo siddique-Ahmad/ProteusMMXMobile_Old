@@ -770,7 +770,7 @@ namespace ProteusMMX.ViewModel.Inventory
         {
 
 
-            PageTitle = WebControlTitle.GetTargetNameByTitleName("StockroomParts") + " - " + StockroomName;// + (WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName).PadLeft(104); 
+            PageTitle = StockroomName;// + (WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName).PadLeft(104); 
             //WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
             LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
             CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");

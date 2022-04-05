@@ -519,7 +519,7 @@ namespace ProteusMMX.ViewModel.Barcode
                 AssetNumber = WebControlTitle.GetTargetNameByTitleName("AssetNumber");
                 Description = WebControlTitle.GetTargetNameByTitleName("Description");
                 CreateNewAsset = WebControlTitle.GetTargetNameByTitleName("CreateAsset");
-                SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchorScanByAssetNumberNameTag");
+                SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("SearchLocationName");
                 GoTitle = WebControlTitle.GetTargetNameByTitleName("Go");
                 ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
                 SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");

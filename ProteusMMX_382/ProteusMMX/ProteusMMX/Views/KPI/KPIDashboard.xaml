@@ -22,7 +22,7 @@
                         </Grid.RowDefinitions>
                     </Grid>
                     <border:SfBorder HeightRequest="50" BorderColor="#006de0" CornerRadius="0,0,8,8" BackgroundColor="#006de0"  >
-                        <Label VerticalOptions="Center" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,-5" HorizontalOptions="Center" Text="KPI Dashboard"></Label>
+                        <Label VerticalOptions="Center" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,-5" HorizontalOptions="Center" Text="{Binding PageTitle}"></Label>
                     </border:SfBorder>
                 </Grid>
             </StackLayout>

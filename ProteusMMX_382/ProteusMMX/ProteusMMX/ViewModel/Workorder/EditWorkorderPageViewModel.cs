@@ -10200,7 +10200,8 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
                     else
                     {
-                        this.CurrentRuntimeText = AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString();
+                        this.CurrentRuntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString()) ? 0 : decimal.Parse(AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString()));
+                       // this.CurrentRuntimeText = string.Format(StringFormat.NumericZero(), AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString());
 
                     }
                 }
