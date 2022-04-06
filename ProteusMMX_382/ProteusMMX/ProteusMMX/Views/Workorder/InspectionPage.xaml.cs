@@ -316,8 +316,7 @@ namespace ProteusMMX.Views.Workorder
                 this.EmployeeContratorRRight = EmployeeContratorRRight;
             }
 
-            UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-            await Task.Delay(3000);
+            
             base.OnAppearing();
 
             this.WorkorderID = ViewModel.WorkorderID;
@@ -332,6 +331,8 @@ namespace ProteusMMX.Views.Workorder
                 UserDialogs.Instance.HideLoading();
                 return;
             }
+            UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+            await Task.Delay(3000);
             if (!IsPickerDataSubscribed)
             {
 

@@ -4,41 +4,37 @@ using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
 using Syncfusion.XForms.Buttons;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ProteusMMX.Views.Workorder
 {
-	 [XamlCompilation(XamlCompilationOptions.Skip)]
-	public partial class EditWorkorderPage : ContentPage
-	{
-		public EditWorkorderPage ()
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Skip)]
+    public partial class EditWorkorderPage : ContentPage
+    {
+        public EditWorkorderPage()
+        {
+            InitializeComponent();
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
-            if (AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation)
-            {
-                if (AppSettings.User.RequireSignaturesForValidation == "True")
-                {
+            //if (AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation)
+            //{
+            //    if (AppSettings.User.RequireSignaturesForValidation == "True")
+            //    {
 
-                }
-                else
-                {
-                    this.SaveButton.SetValue(Grid.RowProperty, 4);
-                }
-            }
-            else
-            {
-                this.SaveButton.SetValue(Grid.RowProperty, 4);
-            }
-           
+            //    }
+            //    else
+            //    {
+            //        this.SaveButton.SetValue(Grid.RowProperty, 4);
+            //    }
+            //}
+            //else
+            //{
+            //    this.SaveButton.SetValue(Grid.RowProperty, 4);
+            //}
+
         }
 
         protected override async void OnAppearing()
