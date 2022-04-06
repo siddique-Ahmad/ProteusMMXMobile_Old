@@ -24,6 +24,7 @@ using ProteusMMX.Views.Common;
 using ProteusMMX.Views.Workorder;
 using Syncfusion.XForms.Border;
 using Syncfusion.XForms.Buttons;
+using Syncfusion.XForms.RichTextEditor;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -193,8 +194,6 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-
-
 
         #endregion
 
@@ -611,7 +610,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                OperationInProgress = true;
+                
 
                 if (navigationData != null)
                 {
@@ -621,11 +620,9 @@ namespace ProteusMMX.ViewModel.Workorder
                     var workorder = navigationParams.Parameter as workOrders;
                     this.WorkorderID = workorder.WorkOrderID;
                 }
-
                 await SetTitlesPropertiesForPage();
-
                 ServiceOutput InspectionList = await _inspectionService.GetWorkorderInspection(this.WorkorderID.ToString(), AppSettings.User.UserID.ToString());
-                if (InspectionList.listInspection != null && InspectionList.listInspection.Count > 0)
+                if (InspectionList.listInspection != null && (InspectionList.listInspection.Count > 0 || InspectionList.workOrderEmployee.Count > 0 || InspectionList.workorderContractor.Count > 0))
                 {
                     DisabledText = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
                     DisabledTextIsEnable = true;
@@ -641,6 +638,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     return;
                 }
+                
+                OperationInProgress = true;
             }
             catch (Exception ex)
             {
@@ -994,29 +993,30 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                         if (String.IsNullOrEmpty(item.Description))
                         {
-                            CustomEntry DescEntry = new CustomEntry()
+                            SfRichTextEditor DescEntry = new SfRichTextEditor()
                             {
-                                HeightRequest = 40,
+                                HeightRequest = 50,
                                 BackgroundColor = Color.White,
-                                TextColor = Color.Black,
+                                DefaultFontColor = Color.Black,
                                 Text = item.Description,
-                                FontSize = 13,
-                                Margin = new Thickness(0, -10, 0, 0)
+                                DefaultFontSize = 11,
+                              //  Margin = new Thickness(0, -10, 0, 0),
+                                ShowToolbar=false
                             };
                             DescStackLayout.Children.Add(DescEntry);
                         }
                         else
                         {
                             string result = RemoveHTML.StripHtmlTags(item.Description);
-                            CustomEntry DescEntry = new CustomEntry()
+                            SfRichTextEditor DescEntry = new SfRichTextEditor()
                             {
-                                HeightRequest = 40,
-
-                                TextColor = Color.Black,
-                                Text = result,
-                                FontSize = 13,
+                                HeightRequest = 80,
                                 BackgroundColor = Color.White,
-                                Margin = new Thickness(0, 0, 0, 0)
+                                DefaultFontColor = Color.Black,
+                                Text = result,
+                                DefaultFontSize = 11,                                
+                                Margin = new Thickness(0, 0, 0, 0),
+                                ShowToolbar = false
                             };
                             DescStackLayout.Children.Add(DescEntry);
 
@@ -1250,7 +1250,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             hoursEntry = new CustomEntry
                             {
-                                Placeholder = "Hrs",
+                                Placeholder = "hh",
+                                HeightRequest = 40,
                                 FontSize = 14,
                                 WidthRequest = 45,
                                 IsReadOnly = true,
@@ -1261,7 +1262,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             hoursEntry = new CustomEntry
                             {
-                                Placeholder = "Hrs",
+                                Placeholder = "hh",
+                                HeightRequest = 40,
                                 FontSize = 14,
                                 WidthRequest = 45,
                                 IsReadOnly = true,
@@ -1291,7 +1293,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             minuteEntry = new CustomEntry
                             {
-                                Placeholder = "Min",
+                                Placeholder = "mm",
+                                HeightRequest = 40,
                                 FontSize = 14,
                                 WidthRequest = 45,
                                 IsReadOnly = true,
@@ -1302,7 +1305,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             minuteEntry = new CustomEntry
                             {
-                                Placeholder = "Min",
+                                Placeholder = "mm",
+                                HeightRequest = 40,
                                 FontSize = 14,
                                 WidthRequest = 45,
                                 IsReadOnly = true,
@@ -1494,7 +1498,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             hoursEntryforRate2 = new CustomEntry
                             {
-                                Placeholder = "Hrs",
+                                Placeholder = "hh",
+                                HeightRequest = 40,
                                 FontSize = 14,
                                 WidthRequest = 45,
                                 IsReadOnly = true,
@@ -1505,7 +1510,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             hoursEntryforRate2 = new CustomEntry
                             {
-                                Placeholder = "Hrs",
+                                Placeholder = "hh",
+                                HeightRequest = 40,
                                 FontSize = 14,
                                 WidthRequest = 45,
                                 IsReadOnly = true,
@@ -1534,7 +1540,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             minuteEntryforRate2 = new CustomEntry
                             {
-                                Placeholder = "Min",
+                                Placeholder = "mm",
+                                HeightRequest = 40,
                                 FontSize = 14,
                                 WidthRequest = 45,
                                 IsReadOnly = true,
@@ -1545,7 +1552,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             minuteEntryforRate2 = new CustomEntry
                             {
-                                Placeholder = "Min",
+                                Placeholder = "mm",
+                                HeightRequest = 40,
                                 FontSize = 14,
                                 WidthRequest = 45,
                                 IsReadOnly = true,
@@ -1723,7 +1731,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             }
                             else
                             {
-                                
+
                                 hoursEntry.Text = "0";
                                 minuteEntry.Text = "0";
                             }
@@ -1742,12 +1750,12 @@ namespace ProteusMMX.ViewModel.Workorder
                                 hoursEntryforRate2.Text = "0";
                                 minuteEntryforRate2.Text = "0";
                             }
-                           
+
                             if (item.CompletionDate != null)
                             {
                                 completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy");
 
-                                
+
                             }
 
 
@@ -2211,18 +2219,18 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        private ImageSource getSource()
+        private Xamarin.Forms.ImageSource getSource()
         {
             switch (Device.RuntimePlatform)
             {
                 case Device.iOS:
-                    return ImageSource.FromFile("Remove.png");
+                    return Xamarin.Forms.ImageSource.FromFile("Remove.png");
                 case Device.Android:
-                    return ImageSource.FromFile("Remove.png");
+                    return Xamarin.Forms.ImageSource.FromFile("Remove.png");
                 case Device.UWP:
-                    return ImageSource.FromFile("Assets/Remove.png");
+                    return Xamarin.Forms.ImageSource.FromFile("Assets/Remove.png");
                 default:
-                    return ImageSource.FromFile("Remove.png");
+                    return Xamarin.Forms.ImageSource.FromFile("Remove.png");
             }
         }
 
@@ -2501,8 +2509,6 @@ namespace ProteusMMX.ViewModel.Workorder
             }
 
         }
-
-
 
         private async void imageClicked(object sender, EventArgs args)
         {

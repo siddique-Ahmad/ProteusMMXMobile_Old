@@ -237,8 +237,6 @@ namespace ProteusMMX.ViewModel.KPIDashboard
             }
         }
 
-
-
         public ICommand PriorityCommand => new AsyncCommand(ShowPriority);
         
         public ICommand TodayTapCommand => new AsyncCommand(TodayTap);
@@ -448,7 +446,7 @@ namespace ProteusMMX.ViewModel.KPIDashboard
                 await Task.Delay(10);
                 //Retrive Priority
                 MessagingCenter.Subscribe<object>(this, MessengerKeys.PriorityRequested, OnPriorityRequested);
-
+                PageTitle = WebControlTitle.GetTargetNameByTitleName("KPIDashboard");
                 await GetKPIDashboardDetailsByPriority(AppSettings.User.UserID, this.PriorityID);
             }
             catch (Exception)
