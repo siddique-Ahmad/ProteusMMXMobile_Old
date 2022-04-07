@@ -15,6 +15,7 @@ namespace ProteusMMX.Views.ServiceRequest
         public ServiceRequestTabbedPage ()
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
