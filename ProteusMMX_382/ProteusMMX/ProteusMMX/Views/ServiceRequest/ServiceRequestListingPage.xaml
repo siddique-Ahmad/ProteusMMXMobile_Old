@@ -93,25 +93,11 @@
                 </border:SfBorder>
             </StackLayout>
             <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
-
-            <Grid Grid.Row="1"  Padding="10,-5,10,10">
-
-                
-                <!--<border:SfBorder CornerRadius="5">
-                    <control1:CustomEntry Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
-                </border:SfBorder>
-                <Button Grid.Column="1" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
-                <Label Grid.Column="2" Text= "{Binding TotalRecordTitle}" IsVisible="{Binding TotalRecordForTab}" />
-                <Label Text=":" Grid.Column="3" IsVisible="{Binding TotalRecordForTab}"/>
-                <Label Text="{Binding TotalRecordCount}"  Grid.Column="4" IsVisible="{Binding TotalRecordForTab}" />
-                <StackLayout IsVisible="{Binding TotalRecordForPhone}" Grid.Row="1" Orientation="Horizontal" >
-                    <Label  Text= "{Binding TotalRecordTitle}" />
-                    <Label Text=":" />
-                    <Label Text="{Binding TotalRecordCount}"  />
-                </StackLayout>-->
-
-
-                <ListView 
+           
+                <Grid Grid.Row="1"  Padding="10,-5,10,10">
+                <AbsoluteLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
+                    <ListView 
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"
@@ -121,6 +107,19 @@
                           behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding ServiceRequestSelectedCommand}">
 
                 </ListView>
+                    <ImageButton
+            AbsoluteLayout.LayoutBounds="0.95,0.95,50,50"
+            AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding AddNewServiceCommand}"
+            BackgroundColor="Transparent" Source="Assets/addbtn.png">
+                        <ImageButton.Source>
+                            <OnPlatform  x:TypeArguments="ImageSource">
+                                <OnPlatform.iOS>addbtn.png</OnPlatform.iOS>
+                                <OnPlatform.Android>addbtn.png</OnPlatform.Android>
+                                <OnPlatform.WinPhone>Assets/addbtn.png</OnPlatform.WinPhone>
+                            </OnPlatform>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </AbsoluteLayout>
             </Grid>
 
             <!--<ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->

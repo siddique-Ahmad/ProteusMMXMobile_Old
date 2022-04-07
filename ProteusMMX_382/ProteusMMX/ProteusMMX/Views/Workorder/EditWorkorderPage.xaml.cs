@@ -4,7 +4,6 @@ using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
 using Syncfusion.XForms.Buttons;
 using System;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

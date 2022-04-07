@@ -95,36 +95,13 @@
                 </border:SfBorder>
             </StackLayout>
             <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
-
-            <Grid Grid.Row="1"  Padding="10,-5,10,10">
-                <!--<Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3.5*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-
-                <border:SfBorder CornerRadius="5">
-                    <control1:CustomEntry Placeholder="{Binding SearchPlaceholder}" Grid.Row="0" Text="{Binding SearchText}" />
-                </border:SfBorder>
-                <Button Grid.Column="1" CornerRadius="5" Text="{Binding SearchButtonTitle}" Grid.Row="0" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />
-                <Label Grid.Column="2" Text= "{Binding TotalRecordTitle}" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
-                <Label Text=":" Grid.Column="3" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
-                <Label Text="{Binding TotalRecordCount}"  Grid.Column="4" IsVisible="{Binding TotalRecordForTab}" Grid.Row="0"/>
-                <StackLayout IsVisible="{Binding TotalRecordForPhone}" Grid.Row="1" Orientation="Horizontal" >
-                    <Label  Text= "{Binding TotalRecordTitle}"  />
-                    <Label Text=":"  />
-                    <Label Text="{Binding TotalRecordCount}"  />
-                </StackLayout>-->
+       
+                <Grid Grid.Row="1"  Padding="10,-5,10,10">
 
 
-                <ListView 
+                <AbsoluteLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
+                    <ListView 
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"
@@ -133,10 +110,24 @@
                           ItemAppearing="ListView_ItemAppearing"
                           behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding AssetSelectedCommand}">
 
-                </ListView>
-            </Grid>
+                    </ListView>
+                    <ImageButton 
+            AbsoluteLayout.LayoutBounds="0.95,0.95,50,50"
+            AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding NewAssetCommand}"
+            BackgroundColor="Transparent" Source="Assets/addbtn.png">
+                        <ImageButton.Source>
+                            <OnPlatform  x:TypeArguments="ImageSource">
+                                <OnPlatform.iOS>addbtn.png</OnPlatform.iOS>
+                                <OnPlatform.Android>addbtn.png</OnPlatform.Android>
+                                <OnPlatform.WinPhone>Assets/addbtn.png</OnPlatform.WinPhone>
+                            </OnPlatform>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </AbsoluteLayout>
 
-            <!--<ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
+            </Grid>
+               
+                <!--<ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 
         </Grid>
 

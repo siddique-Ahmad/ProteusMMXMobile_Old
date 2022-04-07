@@ -65,7 +65,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _searchText = value;
                     OnPropertyChanged("SearchText");
-                   
+
                 }
             }
         }
@@ -177,7 +177,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-      
+
 
 
 
@@ -371,8 +371,8 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        
-        string _addTool ="";
+
+        string _addTool = "";
         public string AddTool
         {
             get
@@ -466,11 +466,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
-
+        public ICommand NewToolbarCommand => new AsyncCommand(AddNewToolbar);
         public ICommand ScanCommand => new AsyncCommand(ScanTools);
 
-       
-        
+
+
 
         #endregion
 
@@ -527,7 +527,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
         #endregion
-       
+
 
 
 
@@ -538,7 +538,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
 
-              
+
 
                 if (navigationData != null)
                 {
@@ -564,7 +564,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (Application.Current.Properties.ContainsKey("DeleteTool"))
                 {
                     DeleteTool = Application.Current.Properties["DeleteTool"].ToString();
-                    
+
                 }
 
                 Application.Current.Properties["DeleteToolKey"] = DeleteTool;
@@ -593,20 +593,20 @@ namespace ProteusMMX.ViewModel.Workorder
         public async Task SetTitlesPropertiesForPage()
         {
 
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("Tools");
-                WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
-                LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
-                CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
-                SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-                ToolName = WebControlTitle.GetTargetNameByTitleName("ToolName");
-                ToolNumber = WebControlTitle.GetTargetNameByTitleName("ToolNumber");
-                ToolCribName = WebControlTitle.GetTargetNameByTitleName("ToolCribName");
-                AddTool= WebControlTitle.GetTargetNameByTitleName("AddTool");
-                ToolSize = WebControlTitle.GetTargetNameByTitleName("ToolSize");
-                Remove = WebControlTitle.GetTargetNameByTitleName("RemoveTool");
-                SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
-                 TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName("TotalRecords");
-            SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("Search")+ WebControlTitle.GetTargetNameByTitleName("Tools");
+            PageTitle = WebControlTitle.GetTargetNameByTitleName("Tools");
+            WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
+            LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
+            CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
+            SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+            ToolName = WebControlTitle.GetTargetNameByTitleName("ToolName");
+            ToolNumber = WebControlTitle.GetTargetNameByTitleName("ToolNumber");
+            ToolCribName = WebControlTitle.GetTargetNameByTitleName("ToolCribName");
+            AddTool = WebControlTitle.GetTargetNameByTitleName("AddTool");
+            ToolSize = WebControlTitle.GetTargetNameByTitleName("ToolSize");
+            Remove = WebControlTitle.GetTargetNameByTitleName("RemoveTool");
+            SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+            TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName("TotalRecords");
+            SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("Search") + WebControlTitle.GetTargetNameByTitleName("Tools");
             // TotalRecordTitle = WebControlTitle.GetTargetNameByTitleName(titles, "TotalRecords");
 
 
@@ -726,7 +726,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
                 }
-                else if(CreateTool == "V")
+                else if (CreateTool == "V")
                 {
                     var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AddTool, LogoutTitle });
 
@@ -737,11 +737,11 @@ namespace ProteusMMX.ViewModel.Workorder
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                  
+
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -766,7 +766,33 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        public async Task AddNewToolbar()
+        {
+            try
+            {
+                if (CreateTool == "E")
+                {
+                    TargetNavigationData tnobj = new TargetNavigationData();
 
+                    tnobj.WorkOrderId = this.WorkorderID;
+                    await NavigationService.NavigateToAsync<AddNewToolViewModel>(tnobj);
+                }
+                else if (CreateTool == "V")
+                {
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                OperationInProgress = false;
+            }
+
+            finally
+            {
+                OperationInProgress = false;
+            }
+        }
 
         //private async Task RefillWorkorderToolCollection()
         //{
@@ -786,7 +812,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task GetWorkorderToolsAuto()
         {
-           // PageNumber++;
+            // PageNumber++;
             await GetWorkorderTools();
         }
 
@@ -822,7 +848,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorderTools(WorkorderID.ToString(),null);
+                var workordersResponse = await _workorderService.GetWorkorderTools(WorkorderID.ToString(), null);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.tools != null && workordersResponse.workOrderWrapper.tools.Count > 0)
                 {
@@ -899,7 +925,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     tool = new WorkOrderTool
                     {
-                      
+
                         WorkOrderToolID = workordertoolID
                     },
 

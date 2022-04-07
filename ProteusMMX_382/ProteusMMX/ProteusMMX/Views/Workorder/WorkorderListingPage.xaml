@@ -179,8 +179,9 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/> 
                 </Grid.ColumnDefinitions>
-
-                <StackLayout Spacing="0"  Orientation="Horizontal" Padding="3" Grid.Column="0"  >
+                    <AbsoluteLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
+                <!--<StackLayout Spacing="0"  Orientation="Horizontal" Padding="3" Grid.Column="0"  >-->
                     <ListView x:Name="WorkorderList" HorizontalOptions="FillAndExpand" 
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
@@ -191,7 +192,20 @@
                           behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding WorkorderSelectedCommand}">
 
                     </ListView>
-                </StackLayout>
+                        <ImageButton 
+            AbsoluteLayout.LayoutBounds="0.95,0.95,50,50"
+            AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding NewWorkOrderCommand}"
+            BackgroundColor="Transparent" Source="Assets/addbtn.png">
+                            <ImageButton.Source>
+                                <OnPlatform  x:TypeArguments="ImageSource">
+                                    <OnPlatform.iOS>addbtn.png</OnPlatform.iOS>
+                                    <OnPlatform.Android>addbtn.png</OnPlatform.Android>
+                                    <OnPlatform.WinPhone>Assets/addbtn.png</OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </ImageButton.Source>
+                        </ImageButton>  
+                    </AbsoluteLayout>
+                    <!--</StackLayout>-->
                 
             </Grid>
             <!--<ActivityIndicator  IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->

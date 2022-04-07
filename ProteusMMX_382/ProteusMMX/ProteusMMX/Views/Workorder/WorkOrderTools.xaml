@@ -130,7 +130,9 @@
 
 
                 <StackLayout Spacing="0" Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HeightRequest="40">
-                    <ListView  Grid.Row="1" Grid.ColumnSpan="2"
+                    <AbsoluteLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
+                        <ListView  Grid.Row="1" Grid.ColumnSpan="2"
                          ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                                BackgroundColor="White"
@@ -141,6 +143,19 @@
 
 
                     </ListView>
+                        <ImageButton 
+            AbsoluteLayout.LayoutBounds="0.95,0.95,50,50"
+            AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding NewToolbarCommand}"
+            BackgroundColor="Transparent" Source="Assets/addbtn.png">
+                            <ImageButton.Source>
+                                <OnPlatform  x:TypeArguments="ImageSource">
+                                    <OnPlatform.iOS>addbtn.png</OnPlatform.iOS>
+                                    <OnPlatform.Android>addbtn.png</OnPlatform.Android>
+                                    <OnPlatform.WinPhone>Assets/addbtn.png</OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </ImageButton.Source>
+                        </ImageButton>
+                    </AbsoluteLayout>
                 </StackLayout>
             </Grid>
 

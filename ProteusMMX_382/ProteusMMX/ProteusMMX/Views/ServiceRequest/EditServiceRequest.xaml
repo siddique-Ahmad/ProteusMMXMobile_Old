@@ -46,8 +46,10 @@
                 </Grid.RowDefinitions>
                 <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
 
-                <ScrollView Grid.Row="1">
-                    <Grid>
+                <AbsoluteLayout>
+                    <ScrollView Grid.Row="1" AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
+                        <Grid>
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -389,7 +391,7 @@
                                 </border:SfBorder>
                             </StackLayout>
                         </Grid>
-                        <Button x:Name="SaveButton" HorizontalOptions="CenterAndExpand" WidthRequest="150" CornerRadius="5" IsEnabled="{Binding ServiceRequestIsEnabled}" IsVisible="{Binding ServiceRequestIsVisible}" Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10"  VerticalOptions="StartAndExpand" Command="{Binding SaveServiceRequestCommand}" />
+                        <!--<Button x:Name="SaveButton" HorizontalOptions="CenterAndExpand" WidthRequest="150" CornerRadius="5" IsEnabled="{Binding ServiceRequestIsEnabled}" IsVisible="{Binding ServiceRequestIsVisible}" Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10"  VerticalOptions="StartAndExpand" Command="{Binding SaveServiceRequestCommand}" />-->
 
                         <!--<ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 
@@ -397,6 +399,20 @@
                     </Grid>
                 </ScrollView>
 
+                    <ImageButton IsEnabled="{Binding ServiceRequestIsEnabled}" IsVisible="{Binding ServiceRequestIsVisible}"
+            AbsoluteLayout.LayoutBounds="0.95,0.95,40,40"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+                                   Command="{Binding SaveServiceRequestCommand}" 
+            BackgroundColor="Transparent" Source="Assets/save.png">
+                    <ImageButton.Source>
+                        <OnPlatform  x:TypeArguments="ImageSource">
+                            <OnPlatform.iOS>save.png</OnPlatform.iOS>
+                            <OnPlatform.Android>save.png</OnPlatform.Android>
+                            <OnPlatform.WinPhone>Assets/save.png</OnPlatform.WinPhone>
+                        </OnPlatform>
+                    </ImageButton.Source>
+                </ImageButton>
+                </AbsoluteLayout>
             </Grid>
 
             <ActivityIndicator IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>

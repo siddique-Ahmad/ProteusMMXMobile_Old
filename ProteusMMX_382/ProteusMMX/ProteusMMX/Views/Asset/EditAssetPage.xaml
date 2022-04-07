@@ -45,8 +45,9 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
-                <ScrollView Grid.Row="1">
-                    <Grid>
+                <AbsoluteLayout>
+                    <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+                        <Grid>
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -261,14 +262,25 @@
 
                         </Grid>
 
-                        <Button Text="{Binding SaveTitle}" CornerRadius="5" HorizontalOptions="CenterAndExpand" WidthRequest="150" Style="{StaticResource SaveButtonStyle}" Grid.Row="3" Margin="10,10,10,10" Command="{Binding SaveAssetCommand}" IsVisible="{Binding EditAssetIsVisible}" IsEnabled="{Binding EditAssetIsEnabled}"  VerticalOptions="StartAndExpand"/>
+                        <!--<Button Text="{Binding SaveTitle}" CornerRadius="5" HorizontalOptions="CenterAndExpand" WidthRequest="150" Style="{StaticResource SaveButtonStyle}" Grid.Row="3" Margin="10,10,10,10" Command="{Binding SaveAssetCommand}" IsVisible="{Binding EditAssetIsVisible}" IsEnabled="{Binding EditAssetIsEnabled}"  VerticalOptions="StartAndExpand"/>-->
 
                         <!--<ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 
 
                     </Grid>
                 </ScrollView>
-
+                <ImageButton AbsoluteLayout.LayoutBounds="0.95,0.95,40,40"
+            AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding SaveAssetCommand}" IsVisible="{Binding EditAssetIsVisible}" IsEnabled="{Binding EditAssetIsEnabled}"
+            BackgroundColor="Transparent" Source="Assets/save.png">
+                    <ImageButton.Source>
+                        <OnPlatform  x:TypeArguments="ImageSource">
+                            <OnPlatform.iOS>save.png</OnPlatform.iOS>
+                            <OnPlatform.Android>save.png</OnPlatform.Android>
+                            <OnPlatform.WinPhone>Assets/save.png</OnPlatform.WinPhone>
+                        </OnPlatform>
+                    </ImageButton.Source>
+                </ImageButton>
+                </AbsoluteLayout>
             </Grid>
 
             <ActivityIndicator IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
