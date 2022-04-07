@@ -1134,7 +1134,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-       
+
 
 
         string _ascendingTitle;
@@ -1232,7 +1232,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-      
+
         bool _TotalRecordForTab = false;
         public bool TotalRecordForTab
         {
@@ -1262,6 +1262,116 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
         #endregion
+
+        #region **** Icon Image ****
+        string _sortBy = "";
+        public string SortBy
+        {
+            get
+            {
+                return _sortBy;
+            }
+
+            set
+            {
+                if (value != _sortBy)
+                {
+                    _sortBy = value;
+                    OnPropertyChanged("SortBy");
+                }
+            }
+        }
+
+        string _filterBy = "";
+        public string FilterBy
+        {
+            get
+            {
+                return _filterBy;
+            }
+
+            set
+            {
+                if (value != _filterBy)
+                {
+                    _filterBy = value;
+                    OnPropertyChanged("FilterBy");
+                }
+            }
+        }
+
+        string _groupBy = "";
+        public string GroupBy
+        {
+            get
+            {
+                return _groupBy;
+            }
+
+            set
+            {
+                if (value != _groupBy)
+                {
+                    _groupBy = value;
+                    OnPropertyChanged("GroupBy");
+                }
+            }
+        }
+
+        string _sortByWin = "";
+        public string SortByWin
+        {
+            get
+            {
+                return _sortByWin;
+            }
+
+            set
+            {
+                if (value != _sortByWin)
+                {
+                    _sortByWin = value;
+                    OnPropertyChanged("SortByWin");
+                }
+            }
+        }
+
+        string _filterByWin = "";
+        public string FilterByWin
+        {
+            get
+            {
+                return _filterByWin;
+            }
+
+            set
+            {
+                if (value != _filterByWin)
+                {
+                    _filterByWin = value;
+                    OnPropertyChanged("FilterByWin");
+                }
+            }
+        }
+
+        string _groupByWin = "";
+        public string GroupByWin
+        {
+            get
+            {
+                return _groupByWin;
+            }
+
+            set
+            {
+                if (value != _groupByWin)
+                {
+                    _groupByWin = value;
+                    OnPropertyChanged("GroupByWin");
+                }
+            }
+        }
+        #endregion
         #endregion
 
         #region Commands
@@ -1274,6 +1384,7 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand ShowDateCommand => new AsyncCommand(ShowdatePicker);
         public ICommand DateCommand => new AsyncCommand(Cleardate);
 
+        public ICommand NewWorkOrderCommand => new AsyncCommand(NewWorkOrder);
         public ICommand WorkorderSelectedCommand => new Command<workOrders>(OnSelectWorkorderAsync);
 
         #endregion
@@ -1297,7 +1408,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     //this.KPIDashboardType = navigationParams.Type;
                 }
                 await GetWorkorderControlRights();
-                
+
                 Application.Current.Properties["gridrowindex"] = 1;
                 //await GetWorkorderControlRights();
                 await SetTitlesPropertiesForPage();
@@ -1328,7 +1439,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
                 }
-               
+
 
                 OperationInProgress = false;
 
@@ -1372,7 +1483,7 @@ namespace ProteusMMX.ViewModel.Workorder
             EmergencyMaintenanceTitle = WebControlTitle.GetTargetNameByTitleName("EmergencyMaintenance");
 
             SortByActivationdateTitle = WebControlTitle.GetTargetNameByTitleName("SortByActivationdate");
-           
+
             AscendingTitle = WebControlTitle.GetTargetNameByTitleName("Ascending");
             DescendingTitle = WebControlTitle.GetTargetNameByTitleName("Descending");
             SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
@@ -1502,7 +1613,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync("","", CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1773,7 +1884,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     //reset pageno. and start search again.
                     await GetWorkordersFromSearchBar();
-                   // await GetWorkorders();
+                    // await GetWorkorders();
                 }
 
                 #endregion
@@ -1795,6 +1906,31 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        public async Task NewWorkOrder()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
+                if (CreateWorkorderRights == "E")
+                {
+                    await NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>();
+                }
+                else if (CreateWorkorderRights == "V")
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+        }
         private async void _scanner_OnScanResult(ZXing.Result result)
         {
             //Set the text property
@@ -1874,7 +2010,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
         async Task GetWorkorders()
-        {                
+        {
             try
             {
                 if (String.IsNullOrWhiteSpace(this.KPIDashboardType))
@@ -1891,10 +2027,10 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         Application.Current.Properties["IsCheckedCauseKey"] = workordersResponse.workOrderWrapper.IsCheckedCause;
                     }
-                   
+
 
                     var workorders = workordersResponse.workOrderWrapper.workOrders;
-                    
+
                     await AddWorkordersInWorkorderCollection(workorders);
 
                 }
@@ -1904,12 +2040,12 @@ namespace ProteusMMX.ViewModel.Workorder
             catch (Exception ex)
             {
 
-               // UserDialogs.Instance.HideLoading();
+                // UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-              //  UserDialogs.Instance.HideLoading();
+                //  UserDialogs.Instance.HideLoading();
             }
         }
 
@@ -1918,7 +2054,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", "null", "null", "null", "null", "null", "null", "null","null");
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", "null", "null", "null", "null", "null", "null", "null", "null");
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
@@ -1982,27 +2118,27 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task ClearSearchBox()
         {
-           await GetWorkorders();
+            await GetWorkorders();
         }
 
         private async Task AddWorkordersInWorkorderCollection(List<workOrders> workorders)
         {
-           
-                if (workorders != null && workorders.Count > 0)
+
+            if (workorders != null && workorders.Count > 0)
+            {
+                foreach (var item in workorders)
                 {
-                    foreach (var item in workorders)
+
+                    Device.BeginInvokeOnMainThread(() =>
                     {
+                        _workordersCollection.Add(item);
+                        OnPropertyChanged(nameof(WorkordersCollection));
+                    });
 
-                        Device.BeginInvokeOnMainThread(() =>
-                        {
-                            _workordersCollection.Add(item);
-                            OnPropertyChanged(nameof(WorkordersCollection));
-                        });
-
-                    }
+                }
 
 
-                }            
+            }
 
         }
 
@@ -2151,32 +2287,32 @@ namespace ProteusMMX.ViewModel.Workorder
 
             if (SelectedPickerText == SelectTitle)
             {
-                WorkorderTypeFilterText = null;               
+                WorkorderTypeFilterText = null;
             }
 
             else if (SelectedPickerText == PreventiveMaintenenceTitle)
             {
-                WorkorderTypeFilterText = "PreventiveMaintenance";                
+                WorkorderTypeFilterText = "PreventiveMaintenance";
             }
 
             else if (SelectedPickerText == DemandMaintenenceTitle)
             {
-                WorkorderTypeFilterText = "DemandMaintenance";                
+                WorkorderTypeFilterText = "DemandMaintenance";
 
             }
 
             else if (SelectedPickerText == EmergencyMaintenanceTitle)
             {
-                WorkorderTypeFilterText = "EmergencyMaintenance";                
+                WorkorderTypeFilterText = "EmergencyMaintenance";
 
             }
             else if (SelectedPickerText == FailedInspectionTitle)
             {
-                WorkorderTypeFilterText = "FailedInspection";               
+                WorkorderTypeFilterText = "FailedInspection";
             }
             else
             {
-                WorkorderTypeFilterText = null;                
+                WorkorderTypeFilterText = null;
             }
 
             return WorkorderTypeFilterText;
@@ -2200,7 +2336,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             if (item.IsRiskQuestion == false)
                             {
-                               /// UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                                /// UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                                 //OperationInProgress = true;
                                 TargetNavigationData tnobj = new TargetNavigationData();
                                 tnobj.WorkOrderId = item.WorkOrderID;
@@ -2215,7 +2351,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
                                 if (item != null)
                                 {
-                                  ///  UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                                    ///  UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                                     // OperationInProgress = true;
                                     Application.Current.Properties["WorkorderID"] = item.WorkOrderID;
                                     await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item);
@@ -2227,7 +2363,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
                     else
                     {
-                      /// UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                        /// UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                         //OperationInProgress = true;
 
                         await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item);
@@ -2629,6 +2765,12 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
+                //this.SortBy = "shortingN.png";
+                //this.FilterBy = "filterN.png";
+                //this.GroupBy = "clearN.png";
+                //this.SortByWin = "Assets/shortingN.png";
+                //this.FilterByWin = "Assets/filterN.png";
+                //this.GroupByWin = "Assets/clearN.png";
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
                 await Task.Delay(10);
                 if (string.IsNullOrWhiteSpace(this.SearchText))
@@ -2699,14 +2841,14 @@ namespace ProteusMMX.ViewModel.Workorder
             finally
             {
                 UserDialogs.Instance.HideLoading();
-               
+
             }
 
         }
 
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
-            if (view==null)
+            if (view == null)
             {
                 this.SearchText = null;
             }
@@ -2867,7 +3009,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             var WorkOrderTaskSubModule = WorkOrderTaskModule.lstSubModules[0];
                             if (WorkOrderTaskSubModule.listControls != null && WorkOrderTaskSubModule.listControls.Count > 0)
                             {
-                                
+
                                 try
                                 {
                                     Application.Current.Properties["TaskandLabourTabKey"] = WorkOrderTaskModule.Expression;

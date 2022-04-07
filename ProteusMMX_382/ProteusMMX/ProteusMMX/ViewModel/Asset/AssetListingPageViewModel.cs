@@ -497,7 +497,7 @@ namespace ProteusMMX.ViewModel.Asset
 
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
-
+        public ICommand NewAssetCommand => new AsyncCommand(NewAsset);
         public ICommand ScanCommand => new AsyncCommand(SearchAsset);
 
         public ICommand AssetSelectedCommand => new Command<Assets>(OnSelectAssetsync);
@@ -890,7 +890,37 @@ namespace ProteusMMX.ViewModel.Asset
             }
         }
 
-       
+        public async Task NewAsset()
+        {
+            try
+            {
+                // UserDialogs.Instance.ShowLoading();
+
+                if (Create == "E")
+                {
+                        await NavigationService.NavigateToAsync<CreateNewAssetPageViewModel>();
+
+                }
+                else if (Create == "V")
+                {
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+                OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+                OperationInProgress = false;
+            }
+        }
+
 
 
         public async Task GetAssetsAuto()
@@ -1010,8 +1040,9 @@ namespace ProteusMMX.ViewModel.Asset
 
             try
             {
-               // UserDialogs.Instance.ShowLoading();
-                OperationInProgress = true;
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(1000);
+                //  OperationInProgress = true;
 
 
                 #region Barcode Section and Search Section
@@ -1048,18 +1079,17 @@ namespace ProteusMMX.ViewModel.Asset
 
                 //await NavigationService.NavigateToAsync<WorkorderListingPageViewModel>();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 UserDialogs.Instance.HideLoading();
-               OperationInProgress = false;
+               //OperationInProgress = false;
 
             }
 
             finally
             {
                 UserDialogs.Instance.HideLoading();
-               OperationInProgress = false;
-
+            
             }
         }
 

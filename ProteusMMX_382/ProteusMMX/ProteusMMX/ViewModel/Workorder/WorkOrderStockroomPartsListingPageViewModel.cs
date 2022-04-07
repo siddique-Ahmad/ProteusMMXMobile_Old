@@ -507,6 +507,7 @@ namespace ProteusMMX.ViewModel.Workorder
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
 
+        public ICommand ToolAddNewSPartCommand => new AsyncCommand(AddNewSPart);
         public ICommand ScanCommand => new AsyncCommand(ScanParts);
 
         public ICommand AddPartCommand => new AsyncCommand(AddPart);
@@ -730,6 +731,34 @@ namespace ProteusMMX.ViewModel.Workorder
             finally
             {
                 OperationInProgress = false;
+            }
+        }
+
+        public async Task AddNewSPart()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(1000);
+                if (AddParts == "E")
+                {
+                    
+                        await NavigationService.NavigateToAsync<CreateWorkOrderStockroomPartsViewModel>(this.WorkorderID);
+                   
+                }
+                else if (AddParts == "V")
+                {
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
             }
         }
 

@@ -440,7 +440,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
-
+        public ICommand AddNewServiceCommand => new AsyncCommand(AddNewService);
 
         public ICommand ServiceRequestSelectedCommand => new Command<ServiceRequests>(OnSelectServiceRequestsync);
 
@@ -693,7 +693,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                     Application.Current.Properties["CreateSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
                                     Application.Current.Properties["RemoveSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
                                     Application.Current.Properties["AttachmentFiles"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Attach").Expression;
-                                    Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestModuleAttachment.Expression;                                    
+                                    Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestModuleAttachment.Expression;
                                 }
                                 catch (Exception ex)
                                 {
@@ -930,7 +930,34 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
+        public async Task AddNewService()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(1000);
+                if (Create == "E")
+                {
 
+                    await NavigationService.NavigateToAsync<CreateServiceRequestViewModel>();
+                }
+
+                else if (Create == "V")
+                {
+                    
+
+                }
+            }
+            catch (Exception )
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+        }
 
 
         public async Task GetServiceRequestAuto()
@@ -1316,7 +1343,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 var ServiceRequestID = serviceRequestItem.ServiceRequestID;
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-               
+
 
                 ////Check if User is Admin////
                 //bool IFUserIsAdmin = Convert.ToBoolean(AppSettings.User.UserIsAdmin);
@@ -1337,7 +1364,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 var page = new SRDecline(UserID, ServiceRequestID, _serviceRequestService);
                 await PopupNavigation.PushAsync(page);
 
-               
+
             }
             catch (Exception ex)
             {

@@ -46,7 +46,9 @@
                 </Grid.RowDefinitions>
                 <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
 
-                <ScrollView Grid.Row="1">
+                <AbsoluteLayout>
+                    <ScrollView Grid.Row="1" AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
                     <Grid>
 
                         <Grid.RowDefinitions>
@@ -259,7 +261,18 @@
 
                     </Grid>
                 </ScrollView>
-
+                    <ImageButton AbsoluteLayout.LayoutBounds="0.95,0.95,40,40"
+            AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding SaveAssetCommand}"
+            BackgroundColor="Transparent" Source="Assets/save.png">
+                        <ImageButton.Source>
+                            <OnPlatform  x:TypeArguments="ImageSource">
+                                <OnPlatform.iOS>save.png</OnPlatform.iOS>
+                                <OnPlatform.Android>save.png</OnPlatform.Android>
+                                <OnPlatform.WinPhone>Assets/save.png</OnPlatform.WinPhone>
+                            </OnPlatform>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </AbsoluteLayout>
             </Grid>
 
             <ActivityIndicator IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>

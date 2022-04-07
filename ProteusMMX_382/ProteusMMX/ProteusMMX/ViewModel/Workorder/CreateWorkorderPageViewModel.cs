@@ -10303,9 +10303,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 var parentGrid = page.Content as Grid;
                 var grid = parentGrid.Children[0] as Grid;
-
+                var Abslut = grid.Children[0] as AbsoluteLayout;
                 //var grid = page.Content as Grid;
-                var scrollView = grid.Children[0] as ScrollView;
+                var scrollView = Abslut.Children[0] as ScrollView;
                 var scrollViewGrid = scrollView.Content as Grid;
                 var contentGrid = scrollViewGrid.Children[1] as Grid;
                 return contentGrid;

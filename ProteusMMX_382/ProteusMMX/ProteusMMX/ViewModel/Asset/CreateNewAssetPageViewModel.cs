@@ -6752,9 +6752,8 @@ namespace ProteusMMX.ViewModel.Asset
 
                 var parentGrid = page.Content as Grid;
                 var grid = parentGrid.Children[0] as Grid;
-
-                //var grid = page.Content as Grid;
-                var scrollView = grid.Children[0] as ScrollView;
+                var Abslut = grid.Children[0] as AbsoluteLayout;
+                var scrollView = Abslut.Children[0] as ScrollView;
                 var scrollViewGrid = scrollView.Content as Grid;
                 var contentGrid = scrollViewGrid.Children[1] as Grid;
                 return contentGrid;

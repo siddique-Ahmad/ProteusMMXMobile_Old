@@ -23,16 +23,16 @@ namespace ProteusMMX.Views.ServiceRequest
             {
                 if (AppSettings.User.RequireSignaturesForValidation == "True")
                 {
-
+                    this.Grid_column2.SetValue(Grid.RowProperty, 3);
                 }
                 else
                 {
-                    this.SaveButton.SetValue(Grid.RowProperty, 3);
+                    this.Grid_column2.SetValue(Grid.RowProperty, 2);
                 }
             }
             else
             {
-                this.SaveButton.SetValue(Grid.RowProperty, 3);
+                this.Grid_column2.SetValue(Grid.RowProperty, 2);
             }
 
         }
