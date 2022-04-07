@@ -17,6 +17,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
 		public ClosedWorkorderListingPage ()
 		{
 			InitializeComponent ();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }

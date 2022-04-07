@@ -17,6 +17,7 @@ namespace ProteusMMX.Views.Workorder
         public TimerManual(object navigationData)
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "");
             if (navigationData != null)
             {
                 var navigationParams = navigationData as TargetNavigationData;

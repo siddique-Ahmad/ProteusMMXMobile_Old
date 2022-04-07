@@ -12,6 +12,7 @@ namespace ProteusMMX.Views
         public Description()
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "");
             // BindingContext = new DescriptionViewModel();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
