@@ -47,10 +47,10 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions> 
-                <ScrollView>
-                    <!--<AbsoluteLayout>
+                <!--<ScrollView>-->
+                    <AbsoluteLayout>
                     <ScrollView Grid.Row="1" AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="SizeProportional">-->
+            AbsoluteLayout.LayoutFlags="SizeProportional">
                     <Grid>
 
                         <Grid.RowDefinitions>
@@ -541,10 +541,10 @@
                             </StackLayout>
                         </Grid>
 
-                        <Grid
+                            <Grid Grid.Row="1"
                 Padding="10,10,10,10"
                 RowSpacing="5"
-                VerticalOptions="Fill" Grid.Row="1">
+                VerticalOptions="Fill" >
 
 
 
@@ -627,28 +627,24 @@
                         </Grid>
 
 
-                        <Button x:Name="SaveButton" Text="{Binding SaveTitle}" HorizontalOptions="CenterAndExpand" WidthRequest="150" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>
+                        <!--<Button x:Name="SaveButton" Text="{Binding SaveTitle}" HorizontalOptions="CenterAndExpand" WidthRequest="150" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Margin="10,10,10,10" Command="{Binding SaveWorkorderCommand}" IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}" HeightRequest="40"  VerticalOptions="StartAndExpand"/>-->
 
                     </Grid>
                 </ScrollView>
-                    <!--<Image IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}"
+                    <ImageButton IsVisible="{Binding EditWorkIsVisible}" IsEnabled="{Binding EditWorkIsEnable}"
             AbsoluteLayout.LayoutBounds="0.95,0.95,40,40"
             AbsoluteLayout.LayoutFlags="PositionProportional"
+                                  Command="{Binding SaveWorkorderCommand}"
             BackgroundColor="Transparent" Source="Assets/save.png">
-                        <Image.Source>
+                        <ImageButton.Source>
                             <OnPlatform  x:TypeArguments="ImageSource">
                                 <OnPlatform.iOS>save.png</OnPlatform.iOS>
                                 <OnPlatform.Android>save.png</OnPlatform.Android>
                                 <OnPlatform.WinPhone>Assets/save.png</OnPlatform.WinPhone>
                             </OnPlatform>
-                        </Image.Source>
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer
-                                        Command="{Binding SaveWorkorderCommand}"
-                                         NumberOfTapsRequired="1" />
-                        </Image.GestureRecognizers>
-                    </Image>
-                </AbsoluteLayout>-->
+                        </ImageButton.Source>                      
+                    </ImageButton>
+                </AbsoluteLayout>
             </Grid>
 
             <ActivityIndicator IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>

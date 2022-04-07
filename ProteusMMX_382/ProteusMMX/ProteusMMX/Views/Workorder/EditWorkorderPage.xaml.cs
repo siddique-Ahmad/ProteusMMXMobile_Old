@@ -16,7 +16,6 @@ namespace ProteusMMX.Views.Workorder
         public EditWorkorderPage()
         {
             InitializeComponent();
-            NavigationPage.SetBackButtonTitle(this, "");
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
@@ -24,16 +23,16 @@ namespace ProteusMMX.Views.Workorder
             {
                 if (AppSettings.User.RequireSignaturesForValidation == "True")
                 {
-
+                    this.Grid_column2.SetValue(Grid.RowProperty, 4);
                 }
                 else
                 {
-                    this.SaveButton.SetValue(Grid.RowProperty, 4);
+                    this.Grid_column2.SetValue(Grid.RowProperty, 3);
                 }
             }
             else
             {
-                this.SaveButton.SetValue(Grid.RowProperty, 4);
+                this.Grid_column2.SetValue(Grid.RowProperty, 3);
             }
 
         }
