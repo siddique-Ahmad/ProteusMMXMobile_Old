@@ -532,7 +532,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateNonStockroomParts, LogoutTitle });
+                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
 
                 if (response == LogoutTitle)
                 {

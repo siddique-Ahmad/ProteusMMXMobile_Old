@@ -679,7 +679,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 if (AddParts == "E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AddStockroompartTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == AddStockroompartTitle)
                     {

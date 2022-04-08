@@ -51,6 +51,9 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <StackLayout HeightRequest="80">
                 <border:SfBorder HeightRequest="80" Grid.Row="0"  BorderColor="#006de0" CornerRadius="0,0,8,8"                      
                        BackgroundColor="#006de0"  >
@@ -96,12 +99,20 @@
             </StackLayout>
             <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
        
-                <Grid Grid.Row="1"  Padding="10,-5,10,10">
+              
+                <Grid Grid.Row="1" HorizontalOptions="FillAndExpand" Padding="0,-5,0,0">
 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <AbsoluteLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
-            AbsoluteLayout.LayoutFlags="SizeProportional">
-                    <ListView 
+                    <AbsoluteLayout  AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="PositionProportional" >
+                        
+                    <ListView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Margin="0,0,0,0"
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"
@@ -124,8 +135,8 @@
                         </ImageButton.Source>
                     </ImageButton>
                 </AbsoluteLayout>
-
-            </Grid>
+                </Grid>
+           
                
                 <!--<ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 

@@ -872,7 +872,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 if (Create == "E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateServiceRequest, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -881,14 +881,14 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                    if (response == CreateServiceRequest)
-                    {
-                        //TargetNavigationData tnobj = new TargetNavigationData();
+                    //if (response == CreateServiceRequest)
+                    //{
+                    //    //TargetNavigationData tnobj = new TargetNavigationData();
 
-                        //tnobj.WorkOrderId = this.WorkorderID;
-                        await NavigationService.NavigateToAsync<CreateServiceRequestViewModel>();
+                    //    //tnobj.WorkOrderId = this.WorkorderID;
+                    //    await NavigationService.NavigateToAsync<CreateServiceRequestViewModel>();
 
-                    }
+                    //}
                 }
 
                 else if (Create == "V")

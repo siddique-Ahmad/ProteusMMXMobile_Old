@@ -1580,7 +1580,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 await Task.Delay(10);
                 if (CreateWorkorderRights == "E")
                 {
-                    var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1589,11 +1589,11 @@ namespace ProteusMMX.ViewModel.Workorder
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                    if (response == CreateWorkorderTitle)
-                    {
-                        await NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>();
-                        // NavigationPage.BackBarButtonItem.TintColor = UIColor.Red;
-                    }
+                    //if (response == CreateWorkorderTitle)
+                    //{
+                    //    await NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>();
+                    //    // NavigationPage.BackBarButtonItem.TintColor = UIColor.Red;
+                    //}
                 }
                 else if (CreateWorkorderRights == "V")
                 {
