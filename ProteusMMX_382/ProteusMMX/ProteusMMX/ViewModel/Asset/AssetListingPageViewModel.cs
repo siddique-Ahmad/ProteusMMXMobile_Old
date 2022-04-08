@@ -821,7 +821,7 @@ namespace ProteusMMX.ViewModel.Asset
 
                 if (Create=="E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateNewAsset, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -830,15 +830,15 @@ namespace ProteusMMX.ViewModel.Asset
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                    if (response == CreateNewAsset)
-                    {
-                        //TargetNavigationData tnobj = new TargetNavigationData();
+                    //if (response == CreateNewAsset)
+                    //{
+                    //    //TargetNavigationData tnobj = new TargetNavigationData();
 
-                        //tnobj.WorkOrderId = this.WorkorderID;
-                       // UserDialogs.Instance.ShowLoading();
-                        await NavigationService.NavigateToAsync<CreateNewAssetPageViewModel>();
+                    //    //tnobj.WorkOrderId = this.WorkorderID;
+                    //   // UserDialogs.Instance.ShowLoading();
+                    //    await NavigationService.NavigateToAsync<CreateNewAssetPageViewModel>();
 
-                    }
+                    //}
                 }
                 else if (Create == "V")
                 {

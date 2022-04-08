@@ -708,7 +708,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 if (CreateTool == "E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AddTool, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -717,14 +717,14 @@ namespace ProteusMMX.ViewModel.Workorder
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                    if (response == AddTool)
-                    {
-                        TargetNavigationData tnobj = new TargetNavigationData();
+                    //if (response == AddTool)
+                    //{
+                    //    TargetNavigationData tnobj = new TargetNavigationData();
 
-                        tnobj.WorkOrderId = this.WorkorderID;
-                        await NavigationService.NavigateToAsync<AddNewToolViewModel>(tnobj);
+                    //    tnobj.WorkOrderId = this.WorkorderID;
+                    //    await NavigationService.NavigateToAsync<AddNewToolViewModel>(tnobj);
 
-                    }
+                    //}
                 }
                 else if (CreateTool == "V")
                 {
