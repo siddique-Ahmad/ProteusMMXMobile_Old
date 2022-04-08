@@ -76,7 +76,7 @@
                 <!--<Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />-->
                 <AbsoluteLayout Grid.Row="1"  Grid.ColumnSpan="2" AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="SizeProportional">
-                    <ListView Grid.Row="1" Grid.ColumnSpan="2"
+                    <ListView Grid.Row="1" Grid.ColumnSpan="2" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
                          ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"

@@ -97,7 +97,7 @@
                 <Grid Grid.Row="1"  Padding="10,-5,10,10">
                 <AbsoluteLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="SizeProportional">
-                    <ListView 
+                    <ListView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"

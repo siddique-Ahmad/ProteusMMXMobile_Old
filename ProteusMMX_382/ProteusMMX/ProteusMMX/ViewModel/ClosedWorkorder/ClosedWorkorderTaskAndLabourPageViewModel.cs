@@ -1263,15 +1263,34 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         #region **** Hrs and min ****
                         try
                         {
-                            string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate1)).ToString();
-                            var FinalHrs1 = FinalHours.Split('.');
-                            hoursEntry.Text = FinalHrs1[0];
-                            minuteEntry.Text = FinalHrs1[1];
+                            if (item.HoursAtRate1.HasValue)
+                            {
+                                string FinalHours = item.HoursAtRate1.ToString();
+                                var FinalHrs1 = FinalHours.Split('.');
+                                hoursEntry.Text = FinalHrs1[0];
+                                minuteEntry.Text = FinalHrs1[1];
+                            }
+                            else
+                            {
 
-                            string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
-                            var FinalHrs2 = FinalHours2.Split('.');
-                            hoursEntryforRate2.Text = FinalHrs2[0];
-                            minuteEntryforRate2.Text = FinalHrs2[1];
+                                hoursEntry.Text = "0";
+                                minuteEntry.Text = "0";
+                            }
+
+                            // string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
+                            if (item.HoursAtRate2.HasValue)
+                            {
+                                string FinalHours = item.HoursAtRate2.ToString();
+                                var FinalHrs2 = FinalHours.Split('.');
+                                hoursEntryforRate2.Text = FinalHrs2[0];
+                                minuteEntryforRate2.Text = FinalHrs2[1];
+                            }
+                            else
+                            {
+
+                                hoursEntryforRate2.Text = "0";
+                                minuteEntryforRate2.Text = "0";
+                            }
 
                             if (item.CompletionDate != null)
                             {
@@ -1293,106 +1312,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         minuteEntryforRate2.TextChanged += HoursTextChanged;
                         #endregion
 
-                        #endregion
-
-                        #region GlobalTimer Logic
-                        WorkOrderLabor savedWorkOrderLabor = null;
-                        WorkOrderLabor savedWorkOrderLabor2 = null;
-                        WorkOrderLabor savedWorkOrderLabor1 = null;
-                        try
-                        {
-
-                            string k1 = "WorkOrderLabor:" + item.ClosedWorkOrderLaborID;
-                            savedWorkOrderLabor = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k1));
-                        }
-                        catch (Exception)
-                        {
-
-                        }
-
-                        try
-                        {
-
-                            string k2 = "WorkOrderLaborHours2:" + item.ClosedWorkOrderLaborID;
-                            savedWorkOrderLabor2 = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k2));
-                        }
-                        catch (Exception)
-                        {
-
-                        }
-
-                        if (savedWorkOrderLabor != null)
-                        {
-                            //try
-                            //{
-                            //    //set in buttons commands
-
-                            //    startButton.CommandParameter = savedWorkOrderLabor;
-                            //    stopButton.CommandParameter = savedWorkOrderLabor;
-
-                            //    string k3 = "WorkOrderLaborHours1:" + item.HoursAtRate1;
-                            //    savedWorkOrderLabor1 = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k3));
-                            //    //startButtonforRate2.CommandParameter = savedWorkOrderLabor;
-                            //    //stopButtonforRate2.CommandParameter = savedWorkOrderLabor;
-
-
-                            //    startButton.TextColor = Color.Green;
-                            //    startButton.ImageSource = "starticon1.png";
-                            //    //startButtonforRate2.BackgroundColor = Color.Green;
-
-                            //    string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", savedWorkOrderLabor1.HoursAtRate1)).ToString();
-                            //    var FinalHrs1 = FinalHours.Split('.');
-                            //    hoursEntry.Text = FinalHrs1[0];
-                            //    minuteEntry.Text = FinalHrs1[1];
-
-                            //    //string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", savedWorkOrderLabor.HoursAtRate2)).ToString();
-                            //    //var FinalHrs2 = FinalHours2.Split('.');
-                            //    //hoursEntryforRate2.Text = FinalHrs2[0];
-                            //    //minuteEntryforRate2.Text = FinalHrs2[1];
-                            //    if (item.CompletionDate != null)
-                            //    {
-                            //        completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
-                            //    }
-                            //    if (item.StartDate != null)
-                            //    {
-                            //        FromDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
-                            //    }
-                            //}
-                            //catch (Exception ex)
-                            //{
-
-                            //}
-
-                        }
-
-                        if (savedWorkOrderLabor2 != null)
-                        {
-                            //try
-                            //{
-                            //    //set in buttons commands
-
-
-                            //    startButtonforRate2.CommandParameter = savedWorkOrderLabor2;
-                            //    stopButtonforRate2.CommandParameter = savedWorkOrderLabor2;
-
-
-                            //    startButtonforRate2.TextColor = Color.Green;
-                            //    startButtonforRate2.ImageSource = "starticon1.png";
-
-                            //    string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
-                            //    var FinalHrs2 = FinalHours2.Split('.');
-                            //    hoursEntryforRate2.Text = FinalHrs2[0];
-                            //    minuteEntryforRate2.Text = FinalHrs2[1];
-
-                            //    completeDateButton.Text = item.CompletionDate != null ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString() : "";
-
-                            //}
-                            //catch (Exception ex)
-                            //{
-
-                            //}
-
-                        }
                         #endregion
 
                         contentLayout.Children.Add(MasterstackLayout);
