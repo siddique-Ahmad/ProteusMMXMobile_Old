@@ -1439,7 +1439,12 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
                 }
-
+                SortBy = "shortingN.png";
+                FilterBy = "filterN.png";
+                GroupBy = "clearN.png";
+                SortByWin = "Assets/shortingN.png";
+                FilterByWin = "Assets/filterN.png";
+                GroupByWin = "Assets/clearN.png";
 
                 OperationInProgress = false;
 
@@ -2765,12 +2770,13 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                //this.SortBy = "shortingN.png";
-                //this.FilterBy = "filterN.png";
-                //this.GroupBy = "clearN.png";
-                //this.SortByWin = "Assets/shortingN.png";
-                //this.FilterByWin = "Assets/filterN.png";
-                //this.GroupByWin = "Assets/clearN.png";
+             
+                SortBy = "shortingN.png";
+                FilterBy = "filterN.png";
+                GroupBy = "clearN.png";
+                SortByWin = "Assets/shortingN.png";
+                FilterByWin = "Assets/filterN.png";
+                GroupByWin = "Assets/clearN.png";
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
                 await Task.Delay(10);
                 if (string.IsNullOrWhiteSpace(this.SearchText))
