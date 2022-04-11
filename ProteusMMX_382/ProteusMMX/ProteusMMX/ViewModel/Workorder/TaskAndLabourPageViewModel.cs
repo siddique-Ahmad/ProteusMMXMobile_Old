@@ -1116,8 +1116,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
                                 CommandParameter = item,
-                                TextColor = Color.Gray,
-                                ImageSource = "startcomplte.png",
+                                TextColor = Color.Green,
+                                ImageSource = "starticon1.png",
                                 IsEnabled = false,
 
                             };
@@ -1407,8 +1407,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
                                 CommandParameter = item,
-                                TextColor = Color.Gray,
-                                ImageSource = "startcomplte.png",
+                                TextColor = Color.Green,
+                                ImageSource = "starticon1.png",
                                 IsEnabled = false,
                             };
                         }
@@ -1984,7 +1984,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 //Hras4.IsReadOnly = true;
 
                                 // startButtonforRate2.TextColor = Color.Green;
-                                startButtonforRate2.TextColor = Color.Gray;
+                                startButtonforRate2.TextColor = Color.Green;
                                 startButtonforRate2.ImageSource = "starticon1.png";
                                 startButtonforRate2.IsEnabled = false;
                                 stopButtonforRate2.IsEnabled = true;
