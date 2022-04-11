@@ -45,17 +45,17 @@
 
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2"  Text=":" Icon="shortingN.png"  Command="{Binding SortByCommand}" >
+        <ToolbarItem Name="MenuItem2"   Icon="{Binding SortBy}" Text=":" Command="{Binding SortByCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="shortingN.png"/>
+                        <FileImageSource File="{Binding SortBy}"/>
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/shortingN.png"/>
+                        <FileImageSource File="{Binding SortBy}"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/shortingN.png"/>
+                        <FileImageSource File="{Binding SortBy}"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>

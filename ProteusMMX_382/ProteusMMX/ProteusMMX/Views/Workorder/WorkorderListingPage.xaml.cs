@@ -52,7 +52,6 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-
         protected override async void OnAppearing()
         {
             base.OnAppearing();

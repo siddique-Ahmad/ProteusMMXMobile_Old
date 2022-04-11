@@ -1000,8 +1000,8 @@ namespace ProteusMMX.Views.Workorder
 
                 if (item.TimerStatus == "Start")
                 {
-                    startButton.TextColor = Color.Gray;
-                    startButton.ImageSource = "startcomplte.png";
+                    startButton.TextColor = Color.Green;
+                    startButton.ImageSource = "starticon1.png";
                     startButton.IsEnabled = false;
                     startButton.BorderColor = Color.Transparent;
 
@@ -1077,8 +1077,8 @@ namespace ProteusMMX.Views.Workorder
                         {
                             startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                         }
-                        startButton.TextColor = Color.Gray;
-                        startButton.ImageSource = "startcomplte.png";
+                        startButton.TextColor = Color.Green;
+                        startButton.ImageSource = "starticon1.png";
                         startButton.IsEnabled = false;
                         startButton.BorderColor = Color.Transparent;
 
@@ -1115,19 +1115,19 @@ namespace ProteusMMX.Views.Workorder
                         workOrderemp.WorkOrderInspectionDetailsID = Convert.ToInt32(x1.StyleId);
                     }
                     OnAlertYesNoClicked(workOrderemp);
-                    stopButton.TextColor = Color.Gray;
-                    stopButton.ImageSource = "stopcomplate.png";
-                    stopButton.IsEnabled = false;
-                    stopButton.BorderColor = Color.Transparent;
+                    //stopButton.TextColor = Color.Gray;
+                    //stopButton.ImageSource = "stopcomplate.png";
+                    //stopButton.IsEnabled = false;
+                    //stopButton.BorderColor = Color.Transparent;
 
-                    startButton.TextColor = Color.Black;
-                    startButton.ImageSource = "starticon.png";
-                    startButton.IsEnabled = true;
-                    startButton.BorderColor = Color.Transparent;
-                    //this.BackgroundColor = Color.White;
+                    //startButton.TextColor = Color.Black;
+                    //startButton.ImageSource = "starticon.png";
+                    //startButton.IsEnabled = true;
+                    //startButton.BorderColor = Color.Transparent;
+                    ////this.BackgroundColor = Color.White;
 
-                    hoursEntry.IsReadOnly = false;
-                    minuteEntry.IsReadOnly = false;
+                    //hoursEntry.IsReadOnly = false;
+                    //minuteEntry.IsReadOnly = false;
                 };
                 #endregion
                 async void OnAlertYesNoClicked(WorkOrderEmployee workOrderemp)
@@ -1206,6 +1206,19 @@ namespace ProteusMMX.Views.Workorder
                             TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
 
                         }
+                        stopButton.TextColor = Color.Gray;
+                        stopButton.ImageSource = "stopcomplate.png";
+                        stopButton.IsEnabled = false;
+                        stopButton.BorderColor = Color.White;
+
+                        startButton.TextColor = Color.Black;
+                        startButton.ImageSource = "starticon.png";
+                        startButton.IsEnabled = true;
+                        startButton.BorderColor = Color.White;
+                        //this.BackgroundColor = Color.White;
+
+                        hoursEntry.IsReadOnly = false;
+                        minuteEntry.IsReadOnly = false;
                         UserDialogs.Instance.HideLoading();
                     }
                     else
@@ -1325,7 +1338,7 @@ namespace ProteusMMX.Views.Workorder
                     Text = WebControlTitle.GetTargetNameByTitleName("Start"),
                     FontAttributes = FontAttributes.Bold,
                     ShowIcon = true,
-                    BackgroundColor = Color.Transparent,
+                    BackgroundColor = Color.White,
                     TextColor = Color.Black,
                     IsEnabled = true,
                     CommandParameter = item,
@@ -1570,12 +1583,12 @@ namespace ProteusMMX.Views.Workorder
 
                 if (item.TimerStatus == "Start")
                 {
-                    startButton.TextColor = Color.Gray;
-                    startButton.ImageSource = "startcomplte.png";
+                    startButton.TextColor = Color.Green;
+                    startButton.ImageSource = "starticon1.png";
                     startButton.IsEnabled = false;
-                    startButton.BorderColor = Color.Transparent;
+                    startButton.BorderColor = Color.White;
 
-                    stopButton.BorderColor = Color.Transparent;
+                    stopButton.BorderColor = Color.White;
                     stopButton.IsEnabled = true;
                     stopButton.TextColor = Color.Black;
                     stopButton.ImageSource = "stopicon.png";
@@ -1588,12 +1601,12 @@ namespace ProteusMMX.Views.Workorder
                     stopButton.TextColor = Color.Gray;
                     stopButton.ImageSource = "stopcomplate.png";
                     stopButton.IsEnabled = false;
-                    stopButton.BorderColor = Color.Transparent;
+                    stopButton.BorderColor = Color.White;
 
                     startButton.TextColor = Color.Black;
                     startButton.ImageSource = "starticon.png";
                     startButton.IsEnabled = true;
-                    startButton.BorderColor = Color.Transparent;
+                    startButton.BorderColor = Color.White;
                     hoursEntry.IsReadOnly = false;
                     minuteEntry.IsReadOnly = false;
                 }
@@ -1721,8 +1734,8 @@ namespace ProteusMMX.Views.Workorder
                         {
                             startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                         }
-                        startButton.TextColor = Color.Gray;
-                        startButton.ImageSource = "startcomplte.png";
+                        startButton.TextColor = Color.Green;
+                        startButton.ImageSource = "starticon1.png";
                         startButton.IsEnabled = false;
                         startButton.BorderColor = Color.Transparent;
 
