@@ -129,10 +129,10 @@
                 </StackLayout>
 
 
-                <StackLayout Spacing="0" Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HeightRequest="40">
+                <StackLayout Spacing="0"  Grid.Row="2" Grid.ColumnSpan="2" HeightRequest="40">
                     <AbsoluteLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
             AbsoluteLayout.LayoutFlags="SizeProportional">
-                        <ListView  Grid.Row="1" Grid.ColumnSpan="2" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
+                        <ListView   AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
                          ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                                BackgroundColor="White"
