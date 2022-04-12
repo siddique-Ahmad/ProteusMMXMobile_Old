@@ -42,8 +42,8 @@
         </ToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content >
-
-        <Grid  Padding="10,10,10,10" RowSpacing="5">
+        <ScrollView>
+            <Grid  Padding="10,10,10,10" RowSpacing="5">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -52,6 +52,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+           
             <StackLayout Orientation="Vertical" Grid.Row="0" Grid.Column="0">
                 <Label Text="{Binding ReceiverNameTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                     <Label.FontAttributes>
@@ -78,7 +79,7 @@
                     </Label.FontAttributes>
                 </Label>
                 <border:SfBorder Style="{StaticResource SfBorderStyle1}">
-                    <controls:RequiredDateCustomDatePicker SelectedDate="{Binding ReceivedDate}" Padding="0,3,0,0"></controls:RequiredDateCustomDatePicker>
+                    <controls:RequiredDateCustomDatePicker SelectedDate="{Binding ReceivedDate}" Padding="0,3,3,0"></controls:RequiredDateCustomDatePicker>
                 </border:SfBorder>
               
             </StackLayout>
@@ -126,7 +127,9 @@
                         IsEnabled="{Binding ReceivedButtonIsEnabled}"
                         Text="{Binding ReceiveTitle}" >
                 </Button>
-            </StackLayout>
+            </StackLayout>               
+           
         </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

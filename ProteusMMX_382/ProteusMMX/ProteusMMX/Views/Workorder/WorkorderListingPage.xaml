@@ -50,6 +50,7 @@
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
                         <FileImageSource File="shortingN.png"/>
+                        
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
                         <FileImageSource File="Assets/shortingN.png"/>
