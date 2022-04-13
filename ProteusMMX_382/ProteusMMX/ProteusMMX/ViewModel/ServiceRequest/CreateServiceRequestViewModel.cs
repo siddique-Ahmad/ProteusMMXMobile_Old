@@ -1225,8 +1225,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
-        string _estimatedDowntime;
-        public string EstimatedDowntime
+        Int64? _estimatedDowntime;
+        public Int64? EstimatedDowntime
         {
             get
             {
@@ -4882,13 +4882,13 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                             var source = x.ItemsSource as List<ComboDD>;
                             ComboDD item = null;
-                            try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(EstimatedDowntime)); }
+                            try { item = source.FirstOrDefault(s => s.SelectedValue == EstimatedDowntime); }
                             catch (Exception) { }
 
                             if (item != null)
                             {
                                 x.SelectedItem = item;
-                                EstimatedDowntime = item.SelectedValue.ToString();
+                                EstimatedDowntime = item.SelectedValue;
                             }
 
                             x.SelectedIndexChanged += Picker_SelectedIndexChanged;
@@ -4902,12 +4902,12 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                         }
 
-                        else if (control is DatePicker)
-                        {
-                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                            EstimatedDowntime = DateTime.Now.ToString();
-                            control.SetBinding(DatePicker.DateProperty, nameof(this.EstimatedDowntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
+                        //else if (control is DatePicker)
+                        //{
+                        //    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
+                        //    //EstimatedDowntime = DateTime.Now;
+                        //    control.SetBinding(DatePicker.DateProperty, nameof(this.EstimatedDowntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                        //}
 
                         else if (control is CustomDatePicker)
                         {
@@ -7651,8 +7651,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ServiceRequest.MaintenanceCodeID = MaintenanceCodeID;
 
                 ServiceRequest.AdministratorID = this.AdministratorID;
-                ServiceRequest.EstimatedDowntime = !string.IsNullOrEmpty(EstimatedDowntime)? (decimal?)decimal.Parse(EstimatedDowntime.Replace(",", "")): null;
-                ServiceRequest.RequesterEmail = RequesterEmail;
+                // ServiceRequest.EstimatedDowntime = !string.IsNullOrEmpty(EstimatedDowntime)? (decimal?)decimal.Parse(EstimatedDowntime.Replace(",", "")): null;
+                ServiceRequest.EstimatedDowntime = EstimatedDowntime;
                 ServiceRequest.ConfirmEmail = RequesterEmail;
                 ServiceRequest.RequesterFullName = RequesterFullName;
                 ServiceRequest.RequesterPhone = RequesterPhone;
@@ -7812,7 +7812,12 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                         case "EstimatedDowntime":
                             {
-                                validationResult = ValidateValidations(formLoadItem, EstimatedDowntime);
+                                string estimateDowntime = string.Empty;
+                                if (EstimatedDowntime != null)
+                                {
+                                    estimateDowntime = Convert.ToString(EstimatedDowntime);
+                                }
+                                validationResult = ValidateValidations(formLoadItem, estimateDowntime);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;

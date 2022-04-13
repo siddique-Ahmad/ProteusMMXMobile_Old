@@ -3067,8 +3067,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         // EstimstedDowntime
 
-        string _estimstedDowntimeText;
-        public string EstimstedDowntimeText
+        Int64? _estimstedDowntimeText;
+        public Int64? EstimstedDowntimeText
         {
             get
             {
@@ -3123,8 +3123,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         // ActualDowntime
 
-        string _actualDowntimeText;
-        public string ActualDowntimeText
+        Int64? _actualDowntimeText;
+        public Int64? ActualDowntimeText
         {
             get
             {
@@ -10367,8 +10367,11 @@ namespace ProteusMMX.ViewModel.Workorder
                 PriorityID = workorder.PriorityID;
 
 
-                EstimstedDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.EstimatedDowntime) ? 0 : decimal.Parse(workorder.EstimatedDowntime));
-                ActualDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.ActualDowntime) ? 0 : decimal.Parse(workorder.ActualDowntime));
+                //EstimstedDowntimeText = string.Format(StringFormat.NumericZero(),workorder.EstimatedDowntime);
+                //ActualDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.ActualDowntime) ? 0 : decimal.Parse(workorder.ActualDowntime));
+
+                EstimstedDowntimeText = workorder.EstimatedDowntime == null ? 0 : workorder.EstimatedDowntime;
+                ActualDowntimeText = workorder.ActualDowntime == null ? 0 : workorder.ActualDowntime;
                 MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
                 MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);
                 Lottourl = workorder.LOTOUrl;
@@ -11185,14 +11188,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     string expression = @"^(\()?[0-9]+(?>,[0-9]{3})*(?>\.[0-9]{3})?(?<!^[0\.]+)$";
 
+                    string actualDowntimeText = string.Empty;
+                    if (ActualDowntimeText != null)
+                    {
+                        actualDowntimeText = Convert.ToString(ActualDowntimeText);
+                    }
 
-                    if (String.IsNullOrWhiteSpace(EstimstedDowntimeText) || !(Regex.IsMatch(EstimstedDowntimeText, expression)))
+                    string estimstedDowntimeText = string.Empty;
+                    if (EstimstedDowntimeText != null)
+                    {
+                        estimstedDowntimeText = Convert.ToString(EstimstedDowntimeText);
+                    }
+                    if (EstimstedDowntimeText==null || !(Regex.IsMatch(estimstedDowntimeText, expression)))
                     {
 
                         DialogService.ShowToast("EstimatedDowntime Is Required");
                         return;
                     }
-                    if (String.IsNullOrWhiteSpace(ActualDowntimeText) || !(Regex.IsMatch(ActualDowntimeText, expression)))
+                    if (ActualDowntimeText==null || !(Regex.IsMatch(actualDowntimeText, expression)))
                     {
                         DialogService.ShowToast("ActualDowntime Is Required");
                         return;
@@ -11778,17 +11791,17 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.MiscellaneousMaterialsCostID = workorderWrapper.workOrderWrapper.workOrder.MiscellaneousMaterialsCostID;
                 workOrder.InternalNote = InternalNoteText;
 
-                if (string.IsNullOrWhiteSpace(ActualDowntimeText))
+                if (ActualDowntimeText==null)
                 {
-                    ActualDowntimeText = "0";
+                    ActualDowntimeText = 0;
                 }
                 else
                 {
-                    this.ActualDowntimeText = ActualDowntimeText.Replace(',', '.');
+                    this.ActualDowntimeText = ActualDowntimeText;
                 }
-                if (string.IsNullOrWhiteSpace(EstimstedDowntimeText))
+                if (EstimstedDowntimeText==null)
                 {
-                    EstimstedDowntimeText = "0";
+                    EstimstedDowntimeText = 0;
                 }
 
                 if (string.IsNullOrWhiteSpace(MiscellaneousLabourCostText))
@@ -13278,7 +13291,12 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "EstimatedDowntime":
                             {
-                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, EstimstedDowntimeText);
+                                string estimateDowntimeText = string.Empty;
+                                if (EstimstedDowntimeText != null)
+                                {
+                                    estimateDowntimeText = Convert.ToString(EstimstedDowntimeText);
+                                }
+                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, estimateDowntimeText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -13288,7 +13306,12 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "ActualDowntime":
                             {
-                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, ActualDowntimeText);
+                                string actualDowntimeText = string.Empty;
+                                if (ActualDowntimeText != null)
+                                {
+                                    actualDowntimeText = Convert.ToString(ActualDowntimeText);
+                                }
+                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, actualDowntimeText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -13592,7 +13615,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             foreach (var item in workorderLabourWrapper.workOrderWrapper.workOrderLabors)
                             {
 
-                                bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => a.HoursAtRate1 > 0);
+                                bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1));
 
                                 if (AllTaskHours == false)
                                 {

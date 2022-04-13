@@ -64,8 +64,8 @@ namespace ProteusMMX.Model.WorkOrderModel
         public bool? AutoSendToMobile { get; set; }
         public int? KitsRequired { get; set; }
         public int? KitsCompleted { get; set; }
-        public string EstimatedDowntime { get; set; }
-        public string ActualDowntime { get; set; }
+        public Int64? EstimatedDowntime { get; set; }
+        public Int64? ActualDowntime { get; set; }
         /// <summary>
         /// Mandatory
         /// </summary>

@@ -2588,7 +2588,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             foreach (var item in workorderLabourWrapper.workOrderWrapper.workOrderLabors)
                             {
 
-                                bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => a.HoursAtRate1 > 0);
+                                bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1));
 
                                 if (AllTaskHours == false)
                                 {

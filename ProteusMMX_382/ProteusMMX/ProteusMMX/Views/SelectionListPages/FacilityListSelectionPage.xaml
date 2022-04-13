@@ -18,6 +18,9 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
+        <StackLayout>
+            
+      
         <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -26,7 +29,7 @@
 
             <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
 
-            <Grid Grid.Row="1"  Padding="10,10,10,10">
+            <Grid Grid.Row="1"  Padding="10,20,10,10">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -86,7 +89,7 @@
             <ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
 
         </Grid>
-
+        </StackLayout>
 
     </ContentPage.Content>
 </ContentPage>

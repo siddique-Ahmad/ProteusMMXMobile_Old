@@ -1722,10 +1722,10 @@ namespace ProteusMMX.ViewModel.Workorder
                         try
                         {
                             //string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate1)).ToString();
-                            if (item.HoursAtRate1.HasValue)
+                            if (!string.IsNullOrWhiteSpace(item.HoursAtRate1))
                             {
                                 string FinalHours = item.HoursAtRate1.ToString();
-                                var FinalHrs1 = FinalHours.Split('.');
+                                var FinalHrs1 = FinalHours.Split(':');
                                 hoursEntry.Text = FinalHrs1[0];
                                 minuteEntry.Text = FinalHrs1[1];
                             }
@@ -1737,10 +1737,10 @@ namespace ProteusMMX.ViewModel.Workorder
                             }
 
                             // string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
-                            if (item.HoursAtRate2.HasValue)
+                            if (!string.IsNullOrWhiteSpace(item.HoursAtRate2))
                             {
                                 string FinalHours = item.HoursAtRate2.ToString();
-                                var FinalHrs2 = FinalHours.Split('.');
+                                var FinalHrs2 = FinalHours.Split(':');
                                 hoursEntryforRate2.Text = FinalHrs2[0];
                                 minuteEntryforRate2.Text = FinalHrs2[1];
                             }
@@ -2239,7 +2239,7 @@ namespace ProteusMMX.ViewModel.Workorder
             string HrsText = "";
             int? workOrderLaborID = null;
             int? taskID = null;
-            decimal? decHour1 = null;
+            string decHour1 = string.Empty;
 
             if (Application.Current.Properties.ContainsKey("TaskIDkey"))
             {
@@ -2272,7 +2272,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 var decHour = Application.Current.Properties["decHourKey"].ToString();
                 if (!string.IsNullOrEmpty(decHour))
                 {
-                    decHour1 = Convert.ToDecimal(decHour);
+                    decHour1 = decHour;
 
                 }
             }

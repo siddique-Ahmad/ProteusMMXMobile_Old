@@ -449,7 +449,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
 
                     string FinalHours1 = Convert.ToDecimal(string.Format("{0:F2}", timeInspection.TotalHours)).ToString();
-                    var FinalHrs2 = FinalHours1.Split('.');
+                    var FinalHrs2 = FinalHours1.Split(':');
                     hoursEntry.Text = FinalHrs2[0];
                     //hoursEntry.Text = timeInspection.Hours.ToString();
                     minuteEntry.Text = timeInspection.Minutes.ToString();
@@ -457,7 +457,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                     total = total.Add(new TimeSpan(int.Parse(hoursEntry.Text), int.Parse(minuteEntry.Text), 0));
                     string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", total.TotalHours)).ToString();
-                    var FinalHrs1 = FinalHours.Split('.');
+                    var FinalHrs1 = FinalHours.Split(':');
                     string DisplayHours = FinalHrs1[0];
 
                     TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
@@ -754,13 +754,13 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     var timeString = (int)timeInspection.Hours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
 
                     string FinalHours1 = Convert.ToDecimal(string.Format("{0:F2}", timeInspection.TotalHours)).ToString();
-                    var FinalHrs2 = FinalHours1.Split('.');
+                    var FinalHrs2 = FinalHours1.Split(':');
                     hoursEntry.Text = FinalHrs2[0];
                     minuteEntry.Text = timeInspection.Minutes.ToString();
                     total = total.Add(new TimeSpan(int.Parse(hoursEntry.Text), int.Parse(minuteEntry.Text), 0));
 
                     string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", total.TotalHours)).ToString();
-                    var FinalHrs1 = FinalHours.Split('.');
+                    var FinalHrs1 = FinalHours.Split(':');
                     string DisplayHours = FinalHrs1[0];
 
                     TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
