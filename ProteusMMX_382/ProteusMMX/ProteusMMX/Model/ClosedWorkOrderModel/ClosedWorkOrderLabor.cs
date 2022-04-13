@@ -12,7 +12,7 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public int? ClosedWorkOrderID { get; set; }
         public string TaskNumber { get; set; }
         public string Description { get; set; }
-        public decimal? EstimatedHours { get; set; }
+        public string EstimatedHours { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? CompletionDate { get; set; }
         public string EmployeeNumber { get; set; }

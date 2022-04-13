@@ -1,4 +1,5 @@
-﻿using ProteusMMX.Model.CommonModels;
+﻿using Acr.UserDialogs;
+using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
@@ -14,7 +15,7 @@ using Xamarin.Forms.Xaml;
 
 namespace ProteusMMX.Views.Workorder
 {
-     [XamlCompilation(XamlCompilationOptions.Skip)]
+    [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class WorkorderListingPage : ContentPage
     {
         public WorkorderListingPage()
@@ -29,7 +30,7 @@ namespace ProteusMMX.Views.Workorder
         {
             get
             {
-               return this.BindingContext as WorkorderListingPageViewModel;
+                return this.BindingContext as WorkorderListingPageViewModel;
             }
         }
 
@@ -43,7 +44,7 @@ namespace ProteusMMX.Views.Workorder
             }
 
             //hit bottom!
-            if (item == ViewModel.WorkordersCollection[ViewModel.WorkordersCollection.Count -1])
+            if (item == ViewModel.WorkordersCollection[ViewModel.WorkordersCollection.Count - 1])
             {
                 //Add More items to collection
 
@@ -91,28 +92,43 @@ namespace ProteusMMX.Views.Workorder
         int count = 0;
         private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+
             SearchBar searchBar = (SearchBar)sender;
             if (string.IsNullOrEmpty(searchBar.Text))
             {
                 count = count + 1;
-                if (count==1)
+                if (count == 1)
                 {
-                   await ViewModel.searchBoxTextCler();
-                    
+                    await ViewModel.searchBoxTextCler();
+
                 }
                 else
                 {
                     count = 0;
                 }
-               
+
             }
         }
 
         private async void TapGestureRecognizer_Tapped(object sender, EventArgs e)
         {
-            await ViewModel.OnViewDisappearingAsync(null);
-            await ViewModel.RefillWorkorderCollection();
+            try
+            {
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
+                await ViewModel.ClearIconClick();
+                await ViewModel.RefillWorkorderCollection();
+            }
+            catch (Exception ex)
+            {
+
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
         }
     }
 }

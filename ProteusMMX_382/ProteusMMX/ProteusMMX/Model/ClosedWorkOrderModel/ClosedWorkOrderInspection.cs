@@ -33,7 +33,7 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public DateTime? InspectionStartDate { get; set; }
         public DateTime? InspectionCompletionDate { get; set; }
 
-        public Nullable<decimal> EstimatedHours { get; set; }
+        public string EstimatedHours { get; set; }
         public string LaborCraftCode { get; set; }
 
         public Nullable<bool> ResponseSubType { get; set; }

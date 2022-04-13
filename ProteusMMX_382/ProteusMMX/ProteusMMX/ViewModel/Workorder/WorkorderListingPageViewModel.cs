@@ -1407,11 +1407,12 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     //this.KPIDashboardType = navigationParams.Type;
                 }
+                await SetTitlesPropertiesForPage();
                 await GetWorkorderControlRights();
 
                 Application.Current.Properties["gridrowindex"] = 1;
                 //await GetWorkorderControlRights();
-                await SetTitlesPropertiesForPage();
+
                 if (Application.Current.Properties.ContainsKey("CloseWorkorderRightsKey"))
                 {
                     var CloseWorkorderRightsExpression = Application.Current.Properties["CloseWorkorderRightsKey"].ToString();
@@ -1439,12 +1440,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
                 }
-                SortBy = "shortingN.png";
-                FilterBy = "filterN.png";
-                GroupBy = "clearN.png";
-                SortByWin = "Assets/shortingN.png";
-                FilterByWin = "Assets/filterN.png";
-                GroupByWin = "Assets/clearN.png";
 
                 OperationInProgress = false;
 
@@ -1585,7 +1580,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 await Task.Delay(10);
                 if (CreateWorkorderRights == "E")
                 {
-                    var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1983,8 +1978,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
             try
             {
-                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(10);
 
                 SortByLocationpickerTitles.Add(SelectTitle);
                 SortByShiftpickerTitles.Add(SelectTitle);
@@ -2000,7 +1993,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             finally
             {
-                UserDialogs.Instance.HideLoading();
+                // UserDialogs.Instance.HideLoading();
 
             }
         }
@@ -2045,12 +2038,12 @@ namespace ProteusMMX.ViewModel.Workorder
             catch (Exception ex)
             {
 
-                // UserDialogs.Instance.HideLoading();
+                //  UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-                //  UserDialogs.Instance.HideLoading();
+                // UserDialogs.Instance.HideLoading();
             }
         }
 
@@ -2123,7 +2116,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task ClearSearchBox()
         {
+
             await GetWorkorders();
+        }
+
+        public async Task ClearIconClick()
+        {
+            SearchText = null; WorkorderTypeFilterText = null; SelectedSortingText = null; LocationNameFilterText = null; ShiftNameFilterText = null; PriorityNameFilterText = null; SortByDueDate = null; KPIDashboardType = null;
+            await WorkorderCler();
         }
 
         private async Task AddWorkordersInWorkorderCollection(List<workOrders> workorders)
@@ -2770,15 +2770,10 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-             
-                SortBy = "shortingN.png";
-                FilterBy = "filterN.png";
-                GroupBy = "clearN.png";
-                SortByWin = "Assets/shortingN.png";
-                FilterByWin = "Assets/filterN.png";
-                GroupByWin = "Assets/clearN.png";
+
+
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(10);
+                await Task.Delay(3000);
                 if (string.IsNullOrWhiteSpace(this.SearchText))
                 {
                     await RefillWorkorderCollection();
@@ -3164,6 +3159,73 @@ namespace ProteusMMX.ViewModel.Workorder
 
             }
 
+        }
+
+        public async Task WorkorderCler()
+        {
+
+            ////Clear priority///
+            sortByPrioritypickerTitlesitems.Clear();
+            SortByPriorityPickerTitles.Clear();
+            PriorityNameFilterText = null;
+            WorkorderTypeFilterText = null;
+            ////Clear Shift///
+            sortByShiftpickerTitlesitems.Clear();
+            SortByShiftpickerTitles.Clear();
+            ShiftNameFilterText = null;
+
+
+            ////Clear Location///
+            sortByLocationpickerTitlesitems.Clear();
+            SortByLocationpickerTitles.Clear();
+            LocationNameFilterText = null;
+
+            ///Clear RequiredDate////
+            SortByDateText = null;
+            SortByDueDate = null;
+
+            this.SearchText = null;
+
+            if (Application.Current.Properties.ContainsKey("overdue"))
+            {
+                Application.Current.Properties.Remove("overdue");
+            }
+            if (Application.Current.Properties.ContainsKey("weekly"))
+            {
+                Application.Current.Properties.Remove("weekly");
+            }
+            if (Application.Current.Properties.ContainsKey("today"))
+            {
+                Application.Current.Properties.Remove("today");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityID"))
+            {
+                Application.Current.Properties.Remove("PriorityID");
+            }
+            if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
+            {
+                Application.Current.Properties.Remove("LocationFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
+            {
+                Application.Current.Properties.Remove("ShiftFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("ShiftFilterkeyText"))
+            {
+                Application.Current.Properties.Remove("ShiftFilterkeyText");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
+            {
+                Application.Current.Properties.Remove("PriorityFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityFilterkeyText"))
+            {
+                Application.Current.Properties.Remove("PriorityFilterkeyText");
+            }
+            if (Application.Current.Properties.ContainsKey("DateFilterkey"))
+            {
+                Application.Current.Properties.Remove("DateFilterkey");
+            }
         }
         #endregion
 

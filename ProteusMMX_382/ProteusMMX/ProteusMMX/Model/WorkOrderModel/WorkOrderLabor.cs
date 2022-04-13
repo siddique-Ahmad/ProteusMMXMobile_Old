@@ -54,7 +54,7 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string ModifiedUserName { get; set; }
         public string TaskNumber { get; set; }
         public string Description { get; set; }
-        public decimal? EstimatedHours { get; set; }
+        public string EstimatedHours { get; set; }
         public string EmployeeName { get; set; }
         public string LaborCraftCode { get; set; }
         public string ContractorName { get; set; }
