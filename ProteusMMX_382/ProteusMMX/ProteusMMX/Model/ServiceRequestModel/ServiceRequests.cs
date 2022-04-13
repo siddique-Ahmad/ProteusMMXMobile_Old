@@ -34,7 +34,7 @@ namespace ProteusMMX.Model.ServiceRequestModel
         public string EmailCC { get; set; }
         public string EmailSubject { get; set; }
         public string EmailBody { get; set; }
-        public decimal? EstimatedDowntime { get; set; }
+        public Int64? EstimatedDowntime { get; set; }
         public bool? AutoPrint { get; set; }
         public bool? AutoEmail { get; set; }
         public bool? AutoSendToMobile { get; set; }

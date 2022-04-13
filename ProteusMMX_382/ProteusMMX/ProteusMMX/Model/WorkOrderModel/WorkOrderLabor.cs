@@ -29,23 +29,23 @@ namespace ProteusMMX.Model.WorkOrderModel
         /// <summary>
         /// Mandatory
         /// </summary>
-        public decimal? HoursAtRate1 { get; set; }
+        public string HoursAtRate1 { get; set; }
         /// <summary>
         /// Mandatory
         /// </summary>
-        public decimal? HoursAtRate2 { get; set; }
+        public string HoursAtRate2 { get; set; }
         /// <summary>
         /// Mandatory
         /// </summary>
-        public decimal? HoursAtRate3 { get; set; }
+        public string HoursAtRate3 { get; set; }
         /// <summary>
         /// Mandatory
         /// </summary>
-        public decimal? HoursAtRate4 { get; set; }
+        public string HoursAtRate4 { get; set; }
         /// <summary>
         /// Mandatory
         /// </summary>
-        public decimal? HoursAtRate5 { get; set; }
+        public string HoursAtRate5 { get; set; }
         /// <summary>
         /// Mandatory
         /// </summary>

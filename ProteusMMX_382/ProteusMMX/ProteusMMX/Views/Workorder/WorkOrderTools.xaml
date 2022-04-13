@@ -93,7 +93,7 @@
 
             <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
 
-            <Grid Grid.Row="1"  Padding="5,5,5,5">
+            <Grid x:Name="ToolPadding" Grid.Row="1">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -114,6 +114,7 @@
                     <Image.Source>
                         <OnPlatform x:TypeArguments="ImageSource" >
                             <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                            <OnPlatform.iOS>ssbicon.png</OnPlatform.iOS>
                         </OnPlatform>
                     </Image.Source>
                     <Image.GestureRecognizers>

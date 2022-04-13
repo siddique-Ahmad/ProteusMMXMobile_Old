@@ -1263,10 +1263,10 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         #region **** Hrs and min ****
                         try
                         {
-                            if (item.HoursAtRate1.HasValue)
+                            if (!string.IsNullOrWhiteSpace(item.HoursAtRate1))
                             {
                                 string FinalHours = item.HoursAtRate1.ToString();
-                                var FinalHrs1 = FinalHours.Split('.');
+                                var FinalHrs1 = FinalHours.Split(':');
                                 hoursEntry.Text = FinalHrs1[0];
                                 minuteEntry.Text = FinalHrs1[1];
                             }
@@ -1278,10 +1278,10 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                             }
 
                             // string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
-                            if (item.HoursAtRate2.HasValue)
+                            if (!string.IsNullOrWhiteSpace(item.HoursAtRate2))
                             {
                                 string FinalHours = item.HoursAtRate2.ToString();
-                                var FinalHrs2 = FinalHours.Split('.');
+                                var FinalHrs2 = FinalHours.Split(':');
                                 hoursEntryforRate2.Text = FinalHrs2[0];
                                 minuteEntryforRate2.Text = FinalHrs2[1];
                             }
