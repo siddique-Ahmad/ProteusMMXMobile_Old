@@ -735,7 +735,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             try
             {
 
-                  PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
+                 // PageTitle = WebControlTitle.GetTargetNameByTitleName("Attachments");
                     WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                     LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
                     CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");

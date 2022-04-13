@@ -4056,7 +4056,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             try
             {
                 AdministratorTitle = "Administrator";
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("Details");
+               // PageTitle = WebControlTitle.GetTargetNameByTitleName("Details");
                 TagTypeLabelTitle = WebControlTitle.GetTargetNameByTitleName("TagType");
                
                 //PageTitle = WebControlTitle.GetTargetNameByTitleName("ServiceRequest")+" - "+ RequestNumber;

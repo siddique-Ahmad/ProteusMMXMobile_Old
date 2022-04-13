@@ -5,6 +5,7 @@
               xmlns:pages ="clr-namespace:ProteusMMX.Views.ClosedWorkorder;assembly=ProteusMMX"
              BarBackgroundColor="#006de0"
              BarTextColor="White"
+           
              xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
         android:TabbedPage.IsSwipePagingEnabled="False"
              Title="{Binding PageTitle}">

@@ -276,10 +276,10 @@
                                 </StackLayout>
 
                                 <StackLayout Orientation="Horizontal" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}" >
-                                    <buttons:SfRadioButton CheckedColor="DeepSkyBlue" x:Name="RadioButton" IsChecked="{Binding ChildCostDistributed}" Text="{Binding ChargeCostsOnlyToChildAssets}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
+                                        <buttons:SfRadioButton CheckedColor="DeepSkyBlue" x:Name="RadioButton" IsChecked="{Binding ChildCostDistributed}" Text="{Binding ChargeCostsOnlyToChildAssets}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" FontSize="12" LineBreakMode="WordWrap" StateChanged="RadioButton_StateChanged"></buttons:SfRadioButton>
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal" IsVisible="{Binding IsCostDistributed , Mode=TwoWay}">
-                                    <buttons:SfRadioButton CheckedColor="DeepSkyBlue" x:Name="Button1" IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}"  Text="{Binding ParentCostsOnly}" HorizontalOptions="StartAndExpand" VerticalOptions='StartAndExpand' StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
+                                        <buttons:SfRadioButton CheckedColor="DeepSkyBlue" x:Name="Button1" IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}"  Text="{Binding ParentCostsOnly}" HorizontalOptions="StartAndExpand" VerticalOptions='StartAndExpand' FontSize="12" LineBreakMode="WordWrap" StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
                                 </StackLayout>
 
                             </StackLayout>

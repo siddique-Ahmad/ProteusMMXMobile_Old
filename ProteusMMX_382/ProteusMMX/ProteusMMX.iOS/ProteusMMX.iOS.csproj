@@ -378,9 +378,9 @@
     <BundleResource Include="Resources\ThumbsUp.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\addbtn.png" />
     <Content Include="Resources\Adddis.png" />
-    <Content Include="Resources\AddIcon.png" />
+    <Content Include="Resources\addbtn.png" />
+    <BundleResource Include="Resources\AddIcon.png" />
     <Content Include="Resources\addinsp.png" />
     <Content Include="Resources\AscendingIcon.png" />
     <Content Include="Resources\assets.png" />
