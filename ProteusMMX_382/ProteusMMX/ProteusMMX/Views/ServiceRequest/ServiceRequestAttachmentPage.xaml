@@ -4,6 +4,7 @@
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              Title="{Binding PageTitle}" 
               BackgroundColor="{StaticResource BackgroundColor}"
+             IconImageSource="Attachements.png"
              x:Class="ProteusMMX.Views.ServiceRequest.ServiceRequestAttachmentPage">
     
     <ContentPage.ToolbarItems>
