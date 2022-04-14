@@ -3397,8 +3397,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         // EstimstedDowntime
 
-        Int64? _estimstedDowntimeText;
-        public Int64? EstimstedDowntimeText
+        string _estimstedDowntimeText;
+        public string EstimstedDowntimeText
         {
             get
             {
@@ -3453,8 +3453,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         // ActualDowntime
 
-        Int64? _actualDowntimeText;
-        public Int64? ActualDowntimeText
+        string _actualDowntimeText;
+        public string ActualDowntimeText
         {
             get
             {
@@ -6923,11 +6923,11 @@ namespace ProteusMMX.ViewModel.Workorder
                 PriorityID = workorder.PriorityID;
 
 
-                //EstimstedDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.EstimatedDowntime) ? 0 : decimal.Parse(workorder.EstimatedDowntime));
-                //ActualDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.ActualDowntime) ? 0 : decimal.Parse(workorder.ActualDowntime));
+                EstimstedDowntimeText = string.IsNullOrWhiteSpace(workorder.EstimatedDowntime) ? "0" : workorder.EstimatedDowntime;
+                ActualDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.ActualDowntime) ? 0 : decimal.Parse(workorder.ActualDowntime));
 
-                EstimstedDowntimeText = workorder.EstimatedDowntime == null ? 0 : workorder.EstimatedDowntime;
-                ActualDowntimeText = workorder.ActualDowntime == null ? 0 : workorder.ActualDowntime;
+                //EstimstedDowntimeText = workorder.EstimatedDowntime == null ? "0" : workorder.EstimatedDowntime;
+                //ActualDowntimeText = workorder.ActualDowntime == null ? 0 : workorder.ActualDowntime;
                 MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
                 MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);
 
@@ -11359,14 +11359,17 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.AdditionalDetails = AdditionalDetailsText;
                 workOrder.InternalNote = InternalNoteText;
 
-
-                if (ActualDowntimeText==null)
+                if (string.IsNullOrWhiteSpace(ActualDowntimeText))
                 {
-                    ActualDowntimeText = 0;
+                    ActualDowntimeText = "0";
                 }
-                if (EstimstedDowntimeText==null)
+                else
                 {
-                    EstimstedDowntimeText = 0;
+                    this.ActualDowntimeText = ActualDowntimeText;
+                }
+                if (string.IsNullOrWhiteSpace(EstimstedDowntimeText))
+                {
+                    EstimstedDowntimeText = "0";
                 }
                 if (string.IsNullOrWhiteSpace(MiscellaneousLabourCostText))
                 {

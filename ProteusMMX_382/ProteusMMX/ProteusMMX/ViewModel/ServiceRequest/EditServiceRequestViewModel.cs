@@ -1154,8 +1154,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
-        Int64? _estimatedDowntime;
-        public Int64? EstimatedDowntime
+        string _estimatedDowntime;
+        public string EstimatedDowntime
         {
             get
             {
@@ -5062,15 +5062,14 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                             var source = x.ItemsSource as List<ComboDD>;
                             ComboDD item = null;
-                            try { item = source.FirstOrDefault(s => s.SelectedValue == EstimatedDowntime); }
+                            try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(EstimatedDowntime)); }
                             catch (Exception) { }
 
                             if (item != null)
                             {
                                 x.SelectedItem = item;
-                                EstimatedDowntime = item.SelectedValue;
+                                EstimatedDowntime = item.SelectedValue.ToString();
                             }
-
                             x.SelectedIndexChanged += Picker_SelectedIndexChanged;
                         }
 
@@ -7768,7 +7767,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 RequesterConfirmEmail = serviceRequest.RequesterEmail;
                 //EstimatedDowntime = serviceRequest.EstimatedDowntime.ToString();
                 //EstimatedDowntime = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(serviceRequest.EstimatedDowntime.ToString()) ? 0 : decimal.Parse(serviceRequest.EstimatedDowntime.ToString()));
-                EstimatedDowntime = serviceRequest.EstimatedDowntime == null ? 0 : serviceRequest.EstimatedDowntime;
+                EstimatedDowntime = serviceRequest.EstimatedDowntime == null ? "0" : serviceRequest.EstimatedDowntime;
                 RequesterFullName = serviceRequest.RequesterFullName;
                 RequesterPhone = serviceRequest.RequesterPhone;
                 // ActivationDateText = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ActivationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);

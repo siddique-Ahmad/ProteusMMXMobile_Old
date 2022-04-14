@@ -3067,8 +3067,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         // EstimstedDowntime
 
-        Int64? _estimstedDowntimeText;
-        public Int64? EstimstedDowntimeText
+       string _estimstedDowntimeText;
+        public string EstimstedDowntimeText
         {
             get
             {
@@ -3123,8 +3123,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         // ActualDowntime
 
-        Int64? _actualDowntimeText;
-        public Int64? ActualDowntimeText
+        string _actualDowntimeText;
+        public string ActualDowntimeText
         {
             get
             {
@@ -10370,8 +10370,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 //EstimstedDowntimeText = string.Format(StringFormat.NumericZero(),workorder.EstimatedDowntime);
                 //ActualDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.ActualDowntime) ? 0 : decimal.Parse(workorder.ActualDowntime));
 
-                EstimstedDowntimeText = workorder.EstimatedDowntime == null ? 0 : workorder.EstimatedDowntime;
-                ActualDowntimeText = workorder.ActualDowntime == null ? 0 : workorder.ActualDowntime;
+                EstimstedDowntimeText = workorder.EstimatedDowntime == null ? "0" : workorder.EstimatedDowntime;
+                ActualDowntimeText = workorder.ActualDowntime == null ? "0" : workorder.ActualDowntime;
                 MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
                 MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);
                 Lottourl = workorder.LOTOUrl;
@@ -11791,17 +11791,17 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.MiscellaneousMaterialsCostID = workorderWrapper.workOrderWrapper.workOrder.MiscellaneousMaterialsCostID;
                 workOrder.InternalNote = InternalNoteText;
 
-                if (ActualDowntimeText==null)
+                if (string.IsNullOrWhiteSpace(ActualDowntimeText))
                 {
-                    ActualDowntimeText = 0;
+                    ActualDowntimeText = "0";
                 }
                 else
                 {
                     this.ActualDowntimeText = ActualDowntimeText;
                 }
-                if (EstimstedDowntimeText==null)
+                if (string.IsNullOrWhiteSpace(EstimstedDowntimeText))
                 {
-                    EstimstedDowntimeText = 0;
+                    EstimstedDowntimeText = "0";
                 }
 
                 if (string.IsNullOrWhiteSpace(MiscellaneousLabourCostText))

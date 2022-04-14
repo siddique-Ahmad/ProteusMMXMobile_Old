@@ -62,8 +62,8 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public string ModifiedUserName { get; set; }
         public string AssetSystemNumber { get; set; }
         public string AssetSystemName { get; set; }
-        public decimal? EstimatedDowntime { get; set; }
-        public decimal? ActualDowntime { get; set; }
+        public string EstimatedDowntime { get; set; }
+        public string ActualDowntime { get; set; }
         public int? MiscellaneousLaborCostID { get; set; }
         public int? MiscellaneousMaterialsCostID { get; set; }
         public decimal? MiscellaneousLaborCost { get; set; }

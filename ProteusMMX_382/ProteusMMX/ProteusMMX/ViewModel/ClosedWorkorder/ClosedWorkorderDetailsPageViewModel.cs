@@ -5251,10 +5251,10 @@ string _currentRuntime;
                 AssignToEmployeeName = workorder.AssignToEmployee;
 
                 OriginatorName = workorder.Originator;
-                EstimstedDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.EstimatedDowntime == null ? 0 : workorder.EstimatedDowntime));
+                EstimstedDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.EstimatedDowntime == null ? "0" : workorder.EstimatedDowntime));
 
 
-                ActualDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.ActualDowntime == null ? 0 : workorder.ActualDowntime));
+                ActualDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.ActualDowntime == null ? "0" : workorder.ActualDowntime));
 
                 MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
                 MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);
