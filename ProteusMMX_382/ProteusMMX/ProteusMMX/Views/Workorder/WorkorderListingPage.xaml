@@ -45,24 +45,32 @@
 
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2"   Icon="shortingN.png" Text=":" Command="{Binding SortByCommand}" >
-            <ToolbarItem.Icon>
+        <ToolbarItem Name="MenuItem2" IconImageSource="{Binding SortBy}"    Text=":" Command="{Binding SortByCommand}" >
+            <!--<ToolbarItem.IconImageSource >
+                <OnPlatform x:TypeArguments="FileImageSource">
+                  
+                    <On Platform="Android" Value="{Binding SortBy}" />
+                    <On Platform="iOS" Value="{Binding SortBy}"/>
+                </OnPlatform>
+            </ToolbarItem.IconImageSource>-->
+        </ToolbarItem>
+        <!--<ToolbarItem Name="MenuItem2" Icon="{Binding SortBy}"    Text=":" Command="{Binding SortByCommand}" >
+            <ToolbarItem.Icon >
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
-                        <FileImageSource File="shortingN.png"/>
-                        
+                        <FileImageSource File="{Binding SortBy}"/>                        
                     </OnPlatform.iOS>
                     <OnPlatform.Android>
-                        <FileImageSource File="Assets/shortingN.png"/>
+                        <FileImageSource File="{Binding SortBy}"/>
                     </OnPlatform.Android>
                     <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/shortingN.png"/>
+                        <FileImageSource File="{Binding SortByWin}"/>
                     </OnPlatform.WinPhone>
                 </OnPlatform>
             </ToolbarItem.Icon>
-        </ToolbarItem>
-        <ToolbarItem Name="MenuItem2"  Text=":" Icon="filterN.png"   Command="{Binding SortByFilterCommand}" >
-            <ToolbarItem.Icon>
+        </ToolbarItem>-->
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="{Binding FilterBy}"   Command="{Binding SortByFilterCommand}" >
+            <!--<ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
                         <FileImageSource File="filterN.png"/>
@@ -74,7 +82,7 @@
                         <FileImageSource File="Assets/filterN.png"/>  
                     </OnPlatform.WinPhone>
                 </OnPlatform>
-            </ToolbarItem.Icon>
+            </ToolbarItem.Icon>-->
         </ToolbarItem>
         <ToolbarItem Name="MenuItem3" Text=":" Icon="dots.png"   Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon >
@@ -133,15 +141,15 @@
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}"/>
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text=":" Grid.Column="3"/>
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordCount}"/>
-                                <Image HorizontalOptions="End" Margin="20,0,0,5">
-                                    <Image.Source>
+                                    <Image HorizontalOptions="End" Source="{Binding GroupBy}" Margin="20,0,0,5">
+                                    <!--<Image.Source>
                                         <OnPlatform x:TypeArguments="ImageSource" >
                                                 <OnPlatform.Android>searchN.png</OnPlatform.Android>
                                                 <OnPlatform.iOS>
                                                     <FileImageSource File="searchN.png"/>
                                                 </OnPlatform.iOS>
                                             </OnPlatform>
-                                    </Image.Source>
+                                    </Image.Source>-->
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer
                                         Tapped="Button_Clicked"

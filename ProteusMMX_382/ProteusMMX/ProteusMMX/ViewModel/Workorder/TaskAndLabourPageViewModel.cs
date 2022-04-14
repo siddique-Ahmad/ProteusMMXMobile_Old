@@ -952,7 +952,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             Label EstHourseVal = new Label
                             {
                                 TextColor = Color.FromHex("#333333"),
-                                Text = string.Format(StringFormat.NumericZero(), item.EstimatedHours)
+                                Text = item.EstimatedHours,
                             };
 
                             Taskgrid.Children.Add(EstHourseVal, 5, 0);

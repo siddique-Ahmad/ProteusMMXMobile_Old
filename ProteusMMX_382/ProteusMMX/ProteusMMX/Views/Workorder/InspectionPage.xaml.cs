@@ -2753,7 +2753,7 @@ namespace ProteusMMX.Views.Workorder
                     #endregion
 
                     var estimatedHourTitleLabel = WebControlTitle.GetTargetNameByTitleName("EstimatedHours");
-                    var estimatedHourLabel = item.EstimatedHours.ToString();
+                    var estimatedHourLabel = item.EstimatedHours;
 
                     Label Case1lbl = new Label
                     {
@@ -3243,7 +3243,7 @@ namespace ProteusMMX.Views.Workorder
                     #endregion
 
                     var estimatedHourTitleLabel = WebControlTitle.GetTargetNameByTitleName("EstimatedHours");
-                    var estimatedHourLabel = item.EstimatedHours.ToString();
+                    var estimatedHourLabel = item.EstimatedHours;
 
                     Label Case1lbl = new Label
                     {
