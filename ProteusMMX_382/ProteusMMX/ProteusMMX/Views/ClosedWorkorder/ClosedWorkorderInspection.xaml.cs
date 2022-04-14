@@ -110,6 +110,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
         private async Task RetriveAllWorkorderInspectionsAsync()
         {
+
             ClosedWorkorderInspectionList = await ViewModel._inspectionService.GetClosedWorkOrdersInspection(this.ClosedWorkorderID.ToString(), this.UserId);
 
            
@@ -444,24 +445,31 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                 if (!string.IsNullOrWhiteSpace(item.InspectionTime))
                 {
-                    var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(item.InspectionTime));
-                    var timeString = (int)timeInspection.TotalHours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
+                    try
+                    {
 
+                        var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(item.InspectionTime));
+                        var timeString = (int)timeInspection.TotalHours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
 
-                    string FinalHours1 = Convert.ToDecimal(string.Format("{0:F2}", timeInspection.TotalHours)).ToString();
-                    var FinalHrs2 = FinalHours1.Split(':');
-                    hoursEntry.Text = FinalHrs2[0];
-                    //hoursEntry.Text = timeInspection.Hours.ToString();
-                    minuteEntry.Text = timeInspection.Minutes.ToString();
+                        string FinalHours1 = Convert.ToDecimal(string.Format("{0:F2}", timeInspection.TotalHours)).ToString();
+                        var FinalHrs2 = FinalHours1.Split('.');
+                        hoursEntry.Text = FinalHrs2[0];
+                        //hoursEntry.Text = timeInspection.Hours.ToString();
+                        minuteEntry.Text = timeInspection.Minutes.ToString();
 
+                        total = total.Add(new TimeSpan(int.Parse(hoursEntry.Text), int.Parse(minuteEntry.Text), 0));
+                        string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", total.TotalHours)).ToString();
+                        var FinalHrs1 = FinalHours.Split('.');
+                        string DisplayHours = FinalHrs1[0];
 
-                    total = total.Add(new TimeSpan(int.Parse(hoursEntry.Text), int.Parse(minuteEntry.Text), 0));
-                    string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", total.TotalHours)).ToString();
-                    var FinalHrs1 = FinalHours.Split(':');
-                    string DisplayHours = FinalHrs1[0];
+                        TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
 
-                    TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
+                    }
+                    catch (Exception)
+                    {
 
+                        throw;
+                    }
                 }
 
             }
