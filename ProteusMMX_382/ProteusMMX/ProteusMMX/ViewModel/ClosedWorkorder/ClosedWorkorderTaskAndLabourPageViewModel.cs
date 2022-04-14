@@ -797,7 +797,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         Label EstHourseVal = new Label
                         {
                             TextColor = Color.FromHex("#333333"),
-                            Text = string.Format(StringFormat.NumericZero(), item.EstimatedHours),
+                            Text = item.EstimatedHours,
                             
                         };
 
