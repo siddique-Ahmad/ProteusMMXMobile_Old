@@ -2283,8 +2283,8 @@ string _currentRuntime;
 
         // EstimstedDowntime
 
-        decimal? _estimstedDowntimeText;
-        public decimal? EstimstedDowntimeText
+        string _estimstedDowntimeText;
+        public string EstimstedDowntimeText
         {
             get
             {
@@ -2339,8 +2339,8 @@ string _currentRuntime;
 
         // ActualDowntime
 
-        decimal? _actualDowntimeText;
-        public decimal? ActualDowntimeText
+        string _actualDowntimeText;
+        public string ActualDowntimeText
         {
             get
             {
@@ -5251,10 +5251,11 @@ string _currentRuntime;
                 AssignToEmployeeName = workorder.AssignToEmployee;
 
                 OriginatorName = workorder.Originator;
-                EstimstedDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.EstimatedDowntime == null ? "0" : workorder.EstimatedDowntime));
+                EstimstedDowntimeText = workorder.EstimatedDowntime == null ? "0" : workorder.EstimatedDowntime;
 
 
-                ActualDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.ActualDowntime == null ? "0" : workorder.ActualDowntime));
+                ActualDowntimeText = workorder.ActualDowntime == null ? "0" : workorder.ActualDowntime;
+
 
                 MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
                 MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);

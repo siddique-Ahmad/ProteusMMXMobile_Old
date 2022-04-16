@@ -10376,7 +10376,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);
                 Lottourl = workorder.LOTOUrl;
 
-                ///Set Dyanmic Field Properties
+                ///Set Dyanmic Field Propertiesf
                 ///
                 #region Set Dyanmic Field Properties
 

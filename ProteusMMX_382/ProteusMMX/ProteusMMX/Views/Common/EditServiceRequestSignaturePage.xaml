@@ -34,7 +34,7 @@
             </Grid.RowDefinitions>
 
 
-                <Label Grid.Row="0" x:Name="HeaderLabel" FontSize="Medium"  HorizontalOptions="Center" Text="Header" Style="{StaticResource SaveButtonStyle}"  />
+                <Label Grid.Row="0" x:Name="HeaderLabel" FontSize="Medium"  HorizontalOptions="Center" Text="Header" Style="{StaticResource BoldLabelStyle}"  />
 
             <Label Grid.Row="1" Grid.Column="0" x:Name="Username" Style="{StaticResource BoldLabelStyle}"  />
             <border:SfBorder CornerRadius="5"  Grid.Column="0" Grid.Row="2">
