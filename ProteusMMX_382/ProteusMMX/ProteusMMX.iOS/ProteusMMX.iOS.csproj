@@ -411,6 +411,7 @@
     <Content Include="Resources\failredbtn.png" />
     <Content Include="Resources\filtericon.png" />
     <Content Include="Resources\filterN.png" />
+    <BundleResource Include="Resources\filterNs.png" />
     <Content Include="Resources\greencheck.png" />
     <Content Include="Resources\GreenTickMark.png" />
     <Content Include="Resources\icon.png" />
@@ -457,8 +458,10 @@
     <Content Include="Resources\searchicon.png" />
     <Content Include="Resources\searchiconblack.png" />
     <Content Include="Resources\searchN.png" />
+    <BundleResource Include="Resources\searchNs.png" />
     <Content Include="Resources\shfiltericon.png" />
     <Content Include="Resources\shortingN.png" />
+    <BundleResource Include="Resources\shortingNs.png" />
     <Content Include="Resources\signature.png" />
     <Content Include="Resources\sortclosing.png" />
     <Content Include="Resources\SortIcon.png" />

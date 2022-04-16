@@ -1725,7 +1725,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             if (!string.IsNullOrWhiteSpace(item.HoursAtRate1))
                             {
                                 string FinalHours = item.HoursAtRate1.ToString();
-                                var FinalHrs1 = FinalHours.Split(':');
+                                var FinalHrs1 = FinalHours.Split('.');
                                 hoursEntry.Text = FinalHrs1[0];
                                 minuteEntry.Text = FinalHrs1[1];
                             }
@@ -1740,7 +1740,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             if (!string.IsNullOrWhiteSpace(item.HoursAtRate2))
                             {
                                 string FinalHours = item.HoursAtRate2.ToString();
-                                var FinalHrs2 = FinalHours.Split(':');
+                                var FinalHrs2 = FinalHours.Split('.');
                                 hoursEntryforRate2.Text = FinalHrs2[0];
                                 minuteEntryforRate2.Text = FinalHrs2[1];
                             }

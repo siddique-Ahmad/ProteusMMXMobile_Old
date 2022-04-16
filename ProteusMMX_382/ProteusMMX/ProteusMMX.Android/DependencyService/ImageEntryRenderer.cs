@@ -45,7 +45,20 @@ namespace ProteusMMX.Droid.DependencyService
                 this.Control.SetBackgroundDrawable(gd);
                 this.Control.SetRawInputType(InputTypes.TextFlagNoSuggestions);
                 Control.SetHintTextColor(ColorStateList.ValueOf(global::Android.Graphics.Color.White));
-                Control.SetTextCursorDrawable(Resource.Drawable.xml_file_name);
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.Q) //api > 28
+                {
+                    try
+                    {
+                        Control.SetTextCursorDrawable(Resource.Drawable.xml_file_name);
+                    }
+                    catch (Exception ex)
+                    {
+
+                       
+                    }
+                  
+                }
+                
             }
 
             var editText = this.Control;

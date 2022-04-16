@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <SelectedDevice>iPad</SelectedDevice>
-    <DefaultDevice>iPad Pro %2812.9-inch%29 %285th generation%29 iOS 15.2</DefaultDevice>
+    <SelectedDevice>iPhone SE %282nd generation%29 iOS 15.2</SelectedDevice>
+    <DefaultDevice>iPhone SE %282nd generation%29 iOS 15.2</DefaultDevice>
     <TargetiOSDevice>&lt;%3fxml version="1.0" encoding="UTF-8"%3f&gt;
 &lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
 &lt;plist version="1.0"&gt;
@@ -22,7 +22,7 @@
 &lt;/plist&gt;
 </TargetiOSDevice>
     <ProjectView>ProjectFiles</ProjectView>
-    <ActiveDebugProfile>iPad</ActiveDebugProfile>
+    <ActiveDebugProfile>iPhone SE %282nd generation%29 iOS 15.2</ActiveDebugProfile>
     <DeveloperId />
     <DevelopmentTeamId />
   </PropertyGroup>

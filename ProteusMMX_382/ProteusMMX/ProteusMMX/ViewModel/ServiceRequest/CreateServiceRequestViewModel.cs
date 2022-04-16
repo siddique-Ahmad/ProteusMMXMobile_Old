@@ -7653,6 +7653,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ServiceRequest.AdministratorID = this.AdministratorID;
                 // ServiceRequest.EstimatedDowntime = !string.IsNullOrEmpty(EstimatedDowntime)? (decimal?)decimal.Parse(EstimatedDowntime.Replace(",", "")): null;
                 ServiceRequest.EstimatedDowntime = EstimatedDowntime;
+                //ServiceRequest.ConfirmEmail = RequesterEmail;
+                ServiceRequest.RequesterEmail = RequesterEmail;
                 ServiceRequest.ConfirmEmail = RequesterEmail;
                 ServiceRequest.RequesterFullName = RequesterFullName;
                 ServiceRequest.RequesterPhone = RequesterPhone;
