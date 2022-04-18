@@ -1650,7 +1650,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         FromDateStackLayout.Children.Add(FsfBorder);
                         RequiredDateCustomDatePicker1 fromEntry = new RequiredDateCustomDatePicker1
                         {
-                            SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                            //SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                            SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
                             MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
 
                             //FontSize = 11
