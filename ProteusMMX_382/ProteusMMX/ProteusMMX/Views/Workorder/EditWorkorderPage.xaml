@@ -229,7 +229,7 @@
                                     <border:SfBorder Style="{StaticResource SfBorderStyle}">
                                         <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding WorkStartedDate1}" MinimumDate="{Binding MinimumWorkStartedDate}" MaximumDate="{Binding MaximumWorkStartedDate}" IsEnabled="{Binding WorkStartedDateIsEnable}" />
                                     </border:SfBorder>
-                                    <Label Text="{Binding WorkStartedDateWarningText}" IsVisible="{Binding WorkStartedDateWarningTextIsVisible}" TextColor="Red"></Label>
+                                    <!--<Label Text="{Binding WorkStartedDateWarningText}" IsVisible="{Binding WorkStartedDateWarningTextIsVisible}" TextColor="Red"></Label>-->
 
                                 </StackLayout>
 
@@ -245,7 +245,7 @@
                                     <border:SfBorder Style="{StaticResource SfBorderStyle}">
                                         <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding WorkorderCompletionDate}" MinimumDate="{Binding MinimumWorkorderCompletionDate}" MaximumDate="{Binding MaximumWorkorderCompletionDate}" IsEnabled="{Binding WorkorderCompletionDateIsEnable}" />
                                     </border:SfBorder>
-                                    <Label Text="{Binding WorkorderCompletionDateWarningText}" IsVisible="{Binding WorkorderCompletionDateWarningTextIsVisible}" TextColor="Red"></Label>
+                                    <!--<Label Text="{Binding WorkorderCompletionDateWarningText}" IsVisible="{Binding WorkorderCompletionDateWarningTextIsVisible}" TextColor="Red"></Label>-->
                                 </StackLayout>
 
                                 <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="1">
