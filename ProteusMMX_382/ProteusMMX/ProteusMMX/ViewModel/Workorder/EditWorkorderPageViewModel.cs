@@ -1646,23 +1646,23 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        string _workStartedDateWarningText;
-        public string WorkStartedDateWarningText
-        {
-            get
-            {
-                return _workStartedDateWarningText;
-            }
+        //string _workStartedDateWarningText;
+        //public string WorkStartedDateWarningText
+        //{
+        //    get
+        //    {
+        //        return _workStartedDateWarningText;
+        //    }
 
-            set
-            {
-                if (value != _workStartedDateWarningText)
-                {
-                    _workStartedDateWarningText = value;
-                    OnPropertyChanged(nameof(WorkStartedDateWarningText));
-                }
-            }
-        }
+        //    set
+        //    {
+        //        if (value != _workStartedDateWarningText)
+        //        {
+        //            _workStartedDateWarningText = value;
+        //            OnPropertyChanged(nameof(WorkStartedDateWarningText));
+        //        }
+        //    }
+        //}
 
 
         bool _workStartedDateIsEnable = true;
@@ -1792,23 +1792,23 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        string _workorderCompletionDateWarningText;
-        public string WorkorderCompletionDateWarningText
-        {
-            get
-            {
-                return _workorderCompletionDateWarningText;
-            }
+        //string _workorderCompletionDateWarningText;
+        //public string WorkorderCompletionDateWarningText
+        //{
+        //    get
+        //    {
+        //        return _workorderCompletionDateWarningText;
+        //    }
 
-            set
-            {
-                if (value != _workorderCompletionDateWarningText)
-                {
-                    _workorderCompletionDateWarningText = value;
-                    OnPropertyChanged(nameof(WorkorderCompletionDateWarningText));
-                }
-            }
-        }
+        //    set
+        //    {
+        //        if (value != _workorderCompletionDateWarningText)
+        //        {
+        //            _workorderCompletionDateWarningText = value;
+        //            OnPropertyChanged(nameof(WorkorderCompletionDateWarningText));
+        //        }
+        //    }
+        //}
 
         bool _workorderCompletionDateIsEnable = true;
         public bool WorkorderCompletionDateIsEnable
@@ -4257,40 +4257,40 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        bool _WorkorderCompletionDateWarningTextIsVisible = false;
-        public bool WorkorderCompletionDateWarningTextIsVisible
-        {
-            get
-            {
-                return _WorkorderCompletionDateWarningTextIsVisible;
-            }
+        //bool _WorkorderCompletionDateWarningTextIsVisible = false;
+        //public bool WorkorderCompletionDateWarningTextIsVisible
+        //{
+        //    get
+        //    {
+        //        return _WorkorderCompletionDateWarningTextIsVisible;
+        //    }
 
-            set
-            {
-                if (value != _WorkorderCompletionDateWarningTextIsVisible)
-                {
-                    _WorkorderCompletionDateWarningTextIsVisible = value;
-                    OnPropertyChanged(nameof(WorkorderCompletionDateWarningTextIsVisible));
-                }
-            }
-        }
-        bool _WorkStartedDateWarningTextIsVisible = false;
-        public bool WorkStartedDateWarningTextIsVisible
-        {
-            get
-            {
-                return _WorkStartedDateWarningTextIsVisible;
-            }
+        //    set
+        //    {
+        //        if (value != _WorkorderCompletionDateWarningTextIsVisible)
+        //        {
+        //            _WorkorderCompletionDateWarningTextIsVisible = value;
+        //            OnPropertyChanged(nameof(WorkorderCompletionDateWarningTextIsVisible));
+        //        }
+        //    }
+        //}
+        //bool _WorkStartedDateWarningTextIsVisible = false;
+        //public bool WorkStartedDateWarningTextIsVisible
+        //{
+        //    get
+        //    {
+        //        return _WorkStartedDateWarningTextIsVisible;
+        //    }
 
-            set
-            {
-                if (value != _WorkStartedDateWarningTextIsVisible)
-                {
-                    _WorkStartedDateWarningTextIsVisible = value;
-                    OnPropertyChanged(nameof(WorkStartedDateWarningTextIsVisible));
-                }
-            }
-        }
+        //    set
+        //    {
+        //        if (value != _WorkStartedDateWarningTextIsVisible)
+        //        {
+        //            _WorkStartedDateWarningTextIsVisible = value;
+        //            OnPropertyChanged(nameof(WorkStartedDateWarningTextIsVisible));
+        //        }
+        //    }
+        //}
 
 
 
@@ -9683,7 +9683,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         if (InspctionStartDateforNull == "True")
                         {
-                            this.WorkStartedDateWarningTextIsVisible = false;
+                           // this.WorkStartedDateWarningTextIsVisible = false;
                             if (workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate == null)
                             {
                                 WorkStartedDate1 = null;
@@ -9696,14 +9696,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             if (!string.IsNullOrWhiteSpace(MinInspectionStartDate))
                             {
-                                WorkStartedDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalWorkStartedDateisnotfilled");
+                              //  WorkStartedDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalWorkStartedDateisnotfilled");
                                 WorkStartedDate1 = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(MinInspectionStartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                this.WorkStartedDateWarningTextIsVisible = true;
+                                //this.WorkStartedDateWarningTextIsVisible = true;
                             }
                             else
                             {
                                 WorkStartedDate1 = null;
-                                this.WorkStartedDateWarningTextIsVisible = false;
+                                //this.WorkStartedDateWarningTextIsVisible = false;
                             }
                         }
                     }
@@ -9722,7 +9722,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         if (MaxInspectionCompDateforNull == "True")
                         {
-                            this.WorkorderCompletionDateWarningTextIsVisible = false;
+                            //this.WorkorderCompletionDateWarningTextIsVisible = false;
                             if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate == null)
                             {
                                 WorkorderCompletionDate = null;
@@ -9734,15 +9734,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate.GetValueOrDefault().Date < Convert.ToDateTime(MaxInspectionCompDate).Date)
                             {
-                                WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateis") +
-                                                        "  " +
-                                                        DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
-                                this.WorkorderCompletionDateWarningTextIsVisible = true;
+                               //// WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateis") +
+                               //                         "  " +
+                               //                         DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
+                               //// this.WorkorderCompletionDateWarningTextIsVisible = true;
                             }
                             else if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate == null && !string.IsNullOrWhiteSpace(MaxInspectionCompDate))
                             {
-                                WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
-                                this.WorkorderCompletionDateWarningTextIsVisible = true;
+                                //WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
+                                //this.WorkorderCompletionDateWarningTextIsVisible = true;
                             }
 
 
@@ -9779,7 +9779,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     //ShowCompletionDate.IsVisible = true;
                                     //lblAutoText.IsVisible = false;
                                     WorkorderCompletionDate = null;
-                                    WorkorderCompletionDateWarningText = null;
+                                    //WorkorderCompletionDateWarningText = null;
                                 }
 
 
@@ -9811,8 +9811,8 @@ namespace ProteusMMX.ViewModel.Workorder
                     if (workorderLabourWrapper.workOrderWrapper.InitialStartDate != null)
                     {
 
-                        WorkStartedDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalWorkStartedDateisnotfilled");
-                        this.WorkStartedDateWarningTextIsVisible = true;
+                        //WorkStartedDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalWorkStartedDateisnotfilled");
+                        //this.WorkStartedDateWarningTextIsVisible = true;
 
 
                     }
@@ -9862,7 +9862,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 {
 
                                     WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                    WorkorderCompletionDateWarningText = null;
+                                   // WorkorderCompletionDateWarningText = null;
                                     break;
 
 
@@ -9876,8 +9876,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                     {
 
                                         WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderLabourWrapper.workOrderWrapper.FinalCompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                        WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateis") + "  " + DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
-                                        this.WorkorderCompletionDateWarningTextIsVisible = true;
+                                       // WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateis") + "  " + DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
+                                        //this.WorkorderCompletionDateWarningTextIsVisible = true;
                                         break;
 
 
@@ -9887,7 +9887,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     {
                                         WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
 
-                                        WorkorderCompletionDateWarningText = null;
+                                      //  WorkorderCompletionDateWarningText = null;
                                         break;
 
                                     }
@@ -9913,7 +9913,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     //ShowCompletionDate.IsVisible = true;
                                     //lblAutoText.IsVisible = false;
                                     WorkorderCompletionDate = null;
-                                    WorkorderCompletionDateWarningText = null;
+                                   // WorkorderCompletionDateWarningText = null;
                                     break;
                                 }
 
@@ -9923,8 +9923,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                     if (workorderLabourWrapper.workOrderWrapper.FinalCompletionDate != null)
                                     {
                                         WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderLabourWrapper.workOrderWrapper.FinalCompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                        WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
-                                        this.WorkorderCompletionDateWarningTextIsVisible = true;
+                                       // WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
+                                        //this.WorkorderCompletionDateWarningTextIsVisible = true;
                                         break;
 
                                     }
@@ -11904,8 +11904,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         Application.Current.Properties["CauseJson"] = this.Cause;
                         Application.Current.Properties["WorkorderWrapper"] = workOrder;
 
-                        WorkorderCompletionDateWarningTextIsVisible = false;
-                        WorkStartedDateWarningTextIsVisible = false;
+                       // WorkorderCompletionDateWarningTextIsVisible = false;
+                       // WorkStartedDateWarningTextIsVisible = false;
                         var page = new EditWorkorderSignaturePage();
                         await PopupNavigation.PushAsync(page);
 
@@ -12027,8 +12027,8 @@ namespace ProteusMMX.ViewModel.Workorder
                             var response = await _workorderService.UpdateWorkorder(workorder);
                             if (response != null && bool.Parse(response.servicestatus))
                             {
-                                WorkorderCompletionDateWarningTextIsVisible = false;
-                                WorkStartedDateWarningTextIsVisible = false;
+                               // WorkorderCompletionDateWarningTextIsVisible = false;
+                               // WorkStartedDateWarningTextIsVisible = false;
                                 //DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated", 2000);
                                 DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated."), 2000);
                                 //var workorderWrapper1 = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
@@ -12151,8 +12151,8 @@ namespace ProteusMMX.ViewModel.Workorder
                             var response = await _workorderService.UpdateWorkorder(workorder);
                             if (response != null && bool.Parse(response.servicestatus))
                             {
-                                WorkorderCompletionDateWarningTextIsVisible = false;
-                                WorkStartedDateWarningTextIsVisible = false;
+                               // WorkorderCompletionDateWarningTextIsVisible = false;
+                              //  WorkStartedDateWarningTextIsVisible = false;
                                 DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated."), 2000);
                                 //var workorderWrapper1 = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
                                 //await SetControlsPropertiesForPage(workorderWrapper1);
@@ -12276,8 +12276,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         var response = await _workorderService.UpdateWorkorder(workorder);
                         if (response != null && bool.Parse(response.servicestatus))
                         {
-                            WorkorderCompletionDateWarningTextIsVisible = false;
-                            WorkStartedDateWarningTextIsVisible = false;
+                           // WorkorderCompletionDateWarningTextIsVisible = false;
+                           // WorkStartedDateWarningTextIsVisible = false;
                             //DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated", 2000);
                             DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated."), 2000);
                             //var workorderWrapper1 = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
@@ -12400,8 +12400,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         var response = await _workorderService.UpdateWorkorder(workorder);
                         if (response != null && bool.Parse(response.servicestatus))
                         {
-                            WorkorderCompletionDateWarningTextIsVisible = false;
-                            WorkStartedDateWarningTextIsVisible = false;
+                            //WorkorderCompletionDateWarningTextIsVisible = false;
+                           // WorkStartedDateWarningTextIsVisible = false;
                             DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated."), 2000);
                             //var workorderWrapper1 = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
                             //await SetControlsPropertiesForPage(workorderWrapper1);
