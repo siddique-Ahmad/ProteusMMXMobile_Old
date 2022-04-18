@@ -3741,11 +3741,6 @@ namespace ProteusMMX.Views.Workorder
 
                 #endregion
 
-                //if (btnStartTimer.Text == WebControlTitle.GetTargetNameByTitleName("StopTimer"))
-                //{
-                //    Timer_Clicked(btnStartTimer, null);
-                //}
-
 
 
                 #region Save Inspection Time to server
@@ -4055,17 +4050,7 @@ namespace ProteusMMX.Views.Workorder
                     // entmin.Text = "";
                     UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("AnswerSuccessfullySaved"), TimeSpan.FromSeconds(2));
 
-                    //foreach (var item in workOrderInspectionTimeID)
-                    //{
-                    //    string Employeekey = "WorkOrderEmployee:" + item.Value;
-                    //    string Contractorkey = "WorkorderContracator:" + item.Value;
-                    //    WorkorderInspectionStorge.Storage.Delete(Employeekey);
-                    //    WorkorderInspectionStorge.Storage.Delete(Contractorkey);
-
-                    //}
-                    // workOrderInspectionTimeID.Clear();
-
-
+                    
                 }
 
 
