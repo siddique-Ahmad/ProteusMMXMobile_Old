@@ -558,7 +558,7 @@ namespace ProteusMMX.Views.Workorder
                 Navigation.PushAsync(page);
             };
             #endregion
-
+            
             CreateWorkorderButtonSL.IsVisible = false;
 
             //layout1.Children.Clear();
@@ -568,6 +568,7 @@ namespace ProteusMMX.Views.Workorder
             ParentLayout.Children.Remove(FinalLayout);
 
             await RetriveAllWorkorderInspectionsAsync();
+
             StackLayout FrameSL = new StackLayout
             {
                 Padding = new Thickness(3, 25, 3, 0)
@@ -1997,6 +1998,8 @@ namespace ProteusMMX.Views.Workorder
             //};
             //masterGrid.Children.Add(boxView, 0, 3);
 
+           
+
             Label TotalInspectionLal = new Label
             {
                 Text = WebControlTitle.GetTargetNameByTitleName("TotalInspectionTime") + "(HH:MM) " + ":  " + TotalInspectionTime.Text,
@@ -2015,7 +2018,15 @@ namespace ProteusMMX.Views.Workorder
 
             MainBoxView.Children.Add(LineBoxView);
             #endregion
+            if (this.CreateWorkorderButtonSL.IsVisible)
+            {
+                CC = await ViewModel._inspectionService.GetFailedWorkorderInspection(this.WorkorderID.ToString(), "1");
 
+            }
+            else
+            {
+                CC = await ViewModel._inspectionService.GetFailedWorkorderInspection(this.WorkorderID.ToString(), "0");
+            }
             UserDialogs.Instance.HideLoading();
 
         }
@@ -3823,7 +3834,7 @@ namespace ProteusMMX.Views.Workorder
                         // string EmpCntValue = employeecontrcatoridssubstring[1];
 
                         employeecontrcatorids = employeeGrid.Children[1] as Label;
-                        var employeecontrcatoridssubstring = employeecontrcatorids.Text.Split('.');
+                        var employeecontrcatoridssubstring = employeecontrcatorids.Text.Split(':');
                         string EmpCntID = Int32.Parse(employeecontrcatoridssubstring[0]).ToString();
                         string EmpCntValue = employeecontrcatoridssubstring[1];
 
@@ -4308,7 +4319,7 @@ namespace ProteusMMX.Views.Workorder
                     // string EmpCntValue = employeecontrcatoridssubstring[1];
 
                     employeecontrcatorids = employeeGrid.Children[1] as Label;
-                    var employeecontrcatoridssubstring = employeecontrcatorids.Text.Split('.');
+                    var employeecontrcatoridssubstring = employeecontrcatorids.Text.Split(':');
                     string EmpCntID = Int32.Parse(employeecontrcatoridssubstring[0]).ToString();
                     string EmpCntValue = employeecontrcatoridssubstring[1];
 
