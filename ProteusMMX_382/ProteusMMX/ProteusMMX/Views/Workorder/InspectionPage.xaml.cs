@@ -2002,7 +2002,7 @@ namespace ProteusMMX.Views.Workorder
 
             Label TotalInspectionLal = new Label
             {
-                Text = WebControlTitle.GetTargetNameByTitleName("TotalInspectionTime") + "(HH:MM) " + ":  " + TotalInspectionTime.Text,
+                Text = WebControlTitle.GetTargetNameByTitleName("TotalInspectionTime") + "(hh:mm) " + ":  " + TotalInspectionTime.Text,
                 FontSize = 14.75,
                 FontAttributes = FontAttributes.Bold,
                 TextColor = Color.Black
@@ -2348,8 +2348,8 @@ namespace ProteusMMX.Views.Workorder
 
                             var PassFailgrid = new Grid() { HorizontalOptions = LayoutOptions.End, BindingContext = item };
                             PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                            PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
-                            PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
+                            PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 45 });
+                            PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 45 });
                             PassFailSlButton.Children.Add(PassFailgrid);
 
                             // PassFailSl.Children.Add(PassFailSlLavel);
@@ -2365,9 +2365,10 @@ namespace ProteusMMX.Views.Workorder
                                 TextColor = Color.Black,
                                 FontSize = 11,
                                 BackgroundColor = Color.LightGray,
-                                FontAttributes = FontAttributes.Bold,
+                                //FontAttributes = FontAttributes.Bold,
                                 CornerRadius = 70,
-                                HeightRequest = 36
+                                HeightRequest = 40,
+                                WidthRequest = 40
                             };
                             var btnFalsePF = new SfButton()
                             {
@@ -2375,9 +2376,10 @@ namespace ProteusMMX.Views.Workorder
                                 TextColor = Color.Black,
                                 FontSize = 11,
                                 BackgroundColor = Color.LightGray,
-                                FontAttributes = FontAttributes.Bold,
+                                //FontAttributes = FontAttributes.Bold,
                                 CornerRadius = 70,
-                                HeightRequest = 36
+                                HeightRequest = 40,
+                                WidthRequest=40
                             };
                             btnTruePF.Clicked += BtnTrue_Clicked;
                             btnFalsePF.Clicked += BtnFalse_Clicked;
@@ -2421,7 +2423,7 @@ namespace ProteusMMX.Views.Workorder
                             //YesNoSl.Children.Add(YesNoSlLavel);
                             YesNoSl.Children.Add(YesNoSlButton);
                             Question = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, };
-                            Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black };
+                            Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap };
 
                             var btnTrue = new SfButton()
                             {
@@ -2852,21 +2854,23 @@ namespace ProteusMMX.Views.Workorder
                                 {
                                     Text = "Pass",
                                     TextColor = Color.Black,
-                                    FontSize = 11,
+                                    FontSize = 10,
                                     BackgroundColor = Color.LightGray,
                                     FontAttributes = FontAttributes.Bold,
                                     CornerRadius = 70,
-                                    HeightRequest = 36
+                                    HeightRequest = 40,
+                                    WidthRequest = 40
                                 };
                                 var btnFalsePF = new SfButton()
                                 {
                                     Text = "Fail",
                                     TextColor = Color.Black,
-                                    FontSize = 11,
+                                    FontSize = 10,
                                     BackgroundColor = Color.LightGray,
                                     FontAttributes = FontAttributes.Bold,
                                     CornerRadius = 70,
-                                    HeightRequest = 36
+                                    HeightRequest = 40,
+                                    WidthRequest = 40
                                 };
 
 
@@ -2985,8 +2989,6 @@ namespace ProteusMMX.Views.Workorder
                                     CornerRadius = 70,
                                     HeightRequest = 36
                                 };
-
-
 
                                 //Bind the ResponseSubType in Buttons
                                 btnTrue.BindingContext = item1.ResponseSubType;

@@ -11138,14 +11138,17 @@ namespace ProteusMMX.ViewModel.Workorder
                     return;
                 }
 
-                string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
-                if (!string.IsNullOrWhiteSpace(IsCheckedCause))
+                if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
                 {
-                    if (IsCheckedCause == "True" && CauseID == null)
+                    string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
+                    if (!string.IsNullOrWhiteSpace(IsCheckedCause))
                     {
-                        UserDialogs.Instance.HideLoading();
-                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
-                        return;
+                        if (IsCheckedCause == "True" && CauseID == null)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
+                            return;
+                        }
                     }
                 }
 

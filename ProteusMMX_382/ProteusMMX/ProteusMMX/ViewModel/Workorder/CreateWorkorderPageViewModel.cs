@@ -11146,18 +11146,21 @@ namespace ProteusMMX.ViewModel.Workorder
                     DialogService.ShowToast(validationResult.ErrorMessage);
                     return;
                 }
-
-
-                string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
-                if (!string.IsNullOrWhiteSpace(IsCheckedCause))
+               
+                if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
                 {
-                    if (IsCheckedCause == "True" && CauseID == null)
+                    string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
+                    if (!string.IsNullOrWhiteSpace(IsCheckedCause))
                     {
-                        UserDialogs.Instance.HideLoading();
-                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
-                        return;
+                        if (IsCheckedCause == "True" && CauseID == null)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
+                            return;
+                        }
                     }
                 }
+               
 
                 #region Start date and End Date validation
 
@@ -11299,13 +11302,13 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         estimstedDowntimeText = Convert.ToString(EstimstedDowntimeText);
                     }
-                    if (EstimstedDowntimeText==null || !(Regex.IsMatch(estimstedDowntimeText, expression)))
+                    if (EstimstedDowntimeText == null || !(Regex.IsMatch(estimstedDowntimeText, expression)))
                     {
 
                         DialogService.ShowToast("EstimatedDowntime Is Required");
                         return;
                     }
-                    if (ActualDowntimeText==null || !(Regex.IsMatch(actualDowntimeText, expression)))
+                    if (ActualDowntimeText == null || !(Regex.IsMatch(actualDowntimeText, expression)))
                     {
                         DialogService.ShowToast("ActualDowntime Is Required");
                         return;

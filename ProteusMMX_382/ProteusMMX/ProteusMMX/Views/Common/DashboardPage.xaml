@@ -81,6 +81,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel1.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="tel1.png" />
+                                        <On Platform="UWP" Value="Assets/tel1.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="KPIBGColor_Change"
                                          Command="{Binding KPICommand}"
@@ -97,6 +103,12 @@
                                          Command="{Binding KPICommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="KPIIcon.png" />
+                                        <On Platform="UWP" Value="Assets/KPIIcon.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                             </Image>
                             <Label Text="KPI" FontFamily="Ebrima" FontAttributes="Bold" TextColor="Black" Margin="0,35,0,0"  VerticalOptions="Center"
                     HorizontalOptions="Center">
@@ -120,6 +132,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel3.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="tel3.png" />
+                                        <On Platform="UWP" Value="Assets/tel3.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="WorkordersBGColor_Change"
                                          Command="{Binding WorkordersCommand}"
@@ -131,6 +149,12 @@
                     Source="woicon.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="woicon.png" />
+                                        <On Platform="UWP" Value="Assets/woicon.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="WorkordersBGColor_Change"
                                          Command="{Binding WorkordersCommand}"
@@ -164,12 +188,24 @@
                                          Command="{Binding CloseWorkordersCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="tel4.png" />
+                                        <On Platform="UWP" Value="Assets/tel4.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                             </Image>
                             <Image Margin="0,0,0,40" Grid.Row="0" HeightRequest="30"
                     Aspect="AspectFill"
                     Source="cwoicon.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="cwoicon.png" />
+                                        <On Platform="UWP" Value="Assets/cwoicon.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="CloseWorkordersBGColor_Change"
                                          Command="{Binding CloseWorkordersCommand}"
@@ -198,6 +234,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel6.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="tel6.png" />
+                                        <On Platform="UWP" Value="Assets/tel6.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="InventoryBGColor_Change"
                                          Command="{Binding InventoryCommand}"
@@ -209,6 +251,12 @@
                     Source="iticon.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="iticon.png" />
+                                        <On Platform="UWP" Value="Assets/iticon.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="InventoryBGColor_Change"
                                          Command="{Binding InventoryCommand}"
@@ -238,6 +286,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel2.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="tel2.png" />
+                                        <On Platform="UWP" Value="Assets/tel2.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="ServiceRequestBGColor_Change"
                                          Command="{Binding ServiceRequestCommand}"
@@ -249,6 +303,12 @@
                     Source="sricon.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="sricon.png" />
+                                        <On Platform="UWP" Value="Assets/sricon.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="ServiceRequestBGColor_Change"
                                          Command="{Binding ServiceRequestCommand}"
@@ -278,6 +338,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel5.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="tel5.png" />
+                                        <On Platform="UWP" Value="Assets/tel5.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AssetBGColor_Change"
                                          Command="{Binding AssetCommand}"
@@ -289,6 +355,12 @@
                     Source="assets.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="assets.png" />
+                                        <On Platform="UWP" Value="Assets/assets.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AssetBGColor_Change"
                                          Command="{Binding AssetCommand}"
@@ -319,6 +391,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel7.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="tel7.png" />
+                                        <On Platform="UWP" Value="Assets/tel7.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="BarcodeBGColor_Change"
                                          Command="{Binding BarcodeCommand}"
@@ -330,6 +408,12 @@
                     Source="ssbicon.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="ssbicon.png" />
+                                        <On Platform="UWP" Value="Assets/ssbicon.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="BarcodeBGColor_Change"
                                          Command="{Binding BarcodeCommand}"
@@ -361,6 +445,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="tel8.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="tel8.png" />
+                                        <On Platform="UWP" Value="Assets/tel8.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="ReceivingBGColor_Change"
                                          Command="{Binding ReceivingCommand}"
@@ -372,6 +462,12 @@
                     Source="recicon.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="recicon.png" />
+                                        <On Platform="UWP" Value="Assets/recicon.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="ReceivingBGColor_Change"
                                          Command="{Binding ReceivingCommand}"

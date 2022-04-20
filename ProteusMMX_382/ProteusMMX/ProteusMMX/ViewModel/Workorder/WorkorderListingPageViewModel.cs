@@ -2037,7 +2037,10 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         Application.Current.Properties["IsCheckedCauseKey"] = workordersResponse.workOrderWrapper.IsCheckedCause;
                     }
-
+                    else
+                    {
+                        Application.Current.Properties["IsCheckedCauseKey"] = false;
+                    }
 
                     var workorders = workordersResponse.workOrderWrapper.workOrders;
 
