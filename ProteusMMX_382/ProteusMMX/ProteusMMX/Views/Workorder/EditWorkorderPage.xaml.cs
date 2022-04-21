@@ -18,6 +18,7 @@ namespace ProteusMMX.Views.Workorder
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+            
             if (AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation)
             {
                 if (AppSettings.User.RequireSignaturesForValidation == "True")
@@ -134,29 +135,29 @@ namespace ProteusMMX.Views.Workorder
             tnobj.AssetSystemNumber = ViewModel.AssetSystemNumber;
             ViewModel._navigationService.NavigateToAsync<ShowAssetSystemViewModel>(tnobj);
         }
-        private void RadioButton_StateChanged(object sender, StateChangedEventArgs e)
-        {
-            if (RadioButton.IsChecked == false)
-            {
-                return;
-            }
-            else
-            {
-                Button1.IsChecked = false;
-            }
+        //private void RadioButton_StateChanged(object sender, StateChangedEventArgs e)
+        //{
+        //    if (RadioButton.IsChecked == false)
+        //    {
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        Button1.IsChecked = false;
+        //    }
 
-        }
-        private void Button1_StateChanged(object sender, StateChangedEventArgs e)
-        {
-            if (Button1.IsChecked == false)
-            {
-                return;
-            }
-            else
-            {
-                RadioButton.IsChecked = false;
-            }
+        //}
+        //private void Button1_StateChanged(object sender, StateChangedEventArgs e)
+        //{
+        //    if (Button1.IsChecked == false)
+        //    {
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        RadioButton.IsChecked = false;
+        //    }
 
-        }
+        //}
     }
 }

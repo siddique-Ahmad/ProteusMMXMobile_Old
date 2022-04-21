@@ -76,6 +76,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="searchBor1.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="searchBor1.png" />
+                                        <On Platform="UWP" Value="Assets/searchBor1.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AssetBGColor_Change"
                                          Command="{Binding SearchAssetCommand}"
@@ -87,6 +93,12 @@
                     Source="search1.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="search1.png" />
+                                        <On Platform="UWP" Value="Assets/search1.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AssetBGColor_Change"
                                          Command="{Binding SearchAssetCommand}"
@@ -115,6 +127,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="searchBor2.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="searchBor2.png" />
+                                        <On Platform="UWP" Value="Assets/searchBor2.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="WorkorderByAsset_Change"
                                          Command="{Binding SearchWorkorderByAssetCommand}"
@@ -126,6 +144,12 @@
                     Source="search2.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="search2.png" />
+                                        <On Platform="UWP" Value="Assets/search2.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="WorkorderByAsset_Change"
                                          Command="{Binding SearchWorkorderByAssetCommand}"
@@ -155,6 +179,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="searchBor3.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="searchBor3.png" />
+                                        <On Platform="UWP" Value="Assets/searchBor3.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer  Tapped="WorkorderByLocationColor_Change"
                                          Command="{Binding SearchWorkorderByLocationCommand}"
@@ -166,6 +196,12 @@
                     Source="search3.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="search3.png" />
+                                        <On Platform="UWP" Value="Assets/search3.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="WorkorderByLocationColor_Change"
                                          Command="{Binding SearchWorkorderByLocationCommand}"
@@ -195,6 +231,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="searchBor4.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="searchBor4.png" />
+                                        <On Platform="UWP" Value="Assets/searchBor4.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AssetForBillOfMaterialColor_Change"
                                          Command="{Binding SearchAssetForBillOfMaterialCommand}"
@@ -206,6 +248,12 @@
                     Source="search4.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="search4.png" />
+                                        <On Platform="UWP" Value="Assets/search4.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AssetForBillOfMaterialColor_Change"
                                          Command="{Binding SearchAssetForBillOfMaterialCommand}"
@@ -235,6 +283,12 @@
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
                     Source="searchBor5.png">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="searchBor5.png" />
+                                        <On Platform="UWP" Value="Assets/searchBor5.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AssetForAttachmentColor_Change"
                                          Command="{Binding SearchAssetForAttachmentCommand}"
@@ -246,6 +300,12 @@
                     Source="search5.png" 
                     VerticalOptions="Center"
                     HorizontalOptions="Center">
+                                <Image.Source>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="search5.png" />
+                                        <On Platform="UWP" Value="Assets/search5.png" />
+                                    </OnPlatform>
+                                </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AssetForAttachmentColor_Change"
                                          Command="{Binding SearchAssetForAttachmentCommand}"

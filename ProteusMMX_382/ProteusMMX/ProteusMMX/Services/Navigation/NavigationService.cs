@@ -386,78 +386,150 @@ namespace ProteusMMX.Services.Navigation
                 (AttachmentPage.BindingContext as ViewModelBase).InitializeAsync(AttachmentPageParameter);
                 #endregion
 
-                ServiceOutput FormControlsAndRightsForClosedworkorder = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "Closedworkorder", "Dialog");
-                if (FormControlsAndRightsForClosedworkorder != null && FormControlsAndRightsForClosedworkorder.lstModules != null && FormControlsAndRightsForClosedworkorder.lstModules.Count > 0)
+                #region **** old code ***
+                //ServiceOutput FormControlsAndRightsForClosedworkorder = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "Closedworkorder", "Dialog");
+                //if (FormControlsAndRightsForClosedworkorder != null && FormControlsAndRightsForClosedworkorder.lstModules != null && FormControlsAndRightsForClosedworkorder.lstModules.Count > 0)
+                //{
+                //    var ClosedWorkorderModule = FormControlsAndRightsForClosedworkorder.lstModules[0];
+                //    if (ClosedWorkorderModule.ModuleName == "Details") //ModuleName can't be  changed in service 
+                //    {
+                //        if (ClosedWorkorderModule.lstSubModules != null && ClosedWorkorderModule.lstSubModules.Count > 0)
+                //        {
+                //            var ClosedWorkorderSubModule = ClosedWorkorderModule.lstSubModules[0];
+                //            if (ClosedWorkorderSubModule.listControls != null && ClosedWorkorderSubModule.listControls.Count > 0)
+                //            {
+                //                tabbedPage.Children.Add(ClosedWorkOrderDetails);
+                //                var CauseTab = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes");
+                //                var additionalDetailsTab = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails");
+                //                var TaskandLabour = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "TaskandLabor");
+                //                var Inspection = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Inspection");
+                //                var Parts = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Parts");
+                //                var Tools = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Tools");
+                //                var Attachments = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Attachments");
+
+
+
+                //                if (TaskandLabour.Expression == "E" || TaskandLabour.Expression == "V")
+                //                {
+                //                    tabbedPage.Children.Add(TaskandLaborPage);
+                //                }
+                //                if (AppSettings.User.IsInspectionUser == true && (Inspection.Expression == "E" || Inspection.Expression == "V"))
+                //                {
+                //                    tabbedPage.Children.Add(InspectionPage);
+                //                }
+                //                if (Parts.Expression == "E" || Parts.Expression == "V")
+                //                {
+                //                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                //                    {
+
+
+                //                    }
+                //                    else
+                //                    {
+                //                        tabbedPage.Children.Add(ClosedWorkorderTabbed);
+                //                    }
+
+                //                }
+                //                if (Tools.Expression == "E" || Tools.Expression == "V")
+                //                {
+                //                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                //                    {
+
+
+                //                    }
+                //                    else
+                //                    {
+                //                        tabbedPage.Children.Add(ToolsPage);
+                //                    }
+
+                //                }
+                //                if (Attachments.Expression == "E" || Attachments.Expression == "V")
+                //                {
+                //                    tabbedPage.Children.Add(AttachmentPage);
+                //                }
+
+
+
+                //            }
+
+
+
+                //        }
+                //    }
+                //}
+
+                #endregion
+
+                #region ** new code ***
+                tabbedPage.Children.Add(ClosedWorkOrderDetails);
+                if (Application.Current.Properties.ContainsKey("TaskandLabourTabKey"))
                 {
-                    var ClosedWorkorderModule = FormControlsAndRightsForClosedworkorder.lstModules[0];
-                    if (ClosedWorkorderModule.ModuleName == "ClosedWorkOrderDialog") //ModuleName can't be  changed in service 
+                    var TaskLabourTab = Application.Current.Properties["TaskandLabourTabKey"].ToString();
+                    if (TaskLabourTab == "E" || TaskLabourTab == "V")
                     {
-                        if (ClosedWorkorderModule.lstSubModules != null && ClosedWorkorderModule.lstSubModules.Count > 0)
-                        {
-                            var ClosedWorkorderSubModule = ClosedWorkorderModule.lstSubModules[0];
-                            if (ClosedWorkorderSubModule.listControls != null && ClosedWorkorderSubModule.listControls.Count > 0)
-                            {
-                                tabbedPage.Children.Add(ClosedWorkOrderDetails);
-                                var CauseTab = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes");
-                                var additionalDetailsTab = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails");
-                                var TaskandLabour = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "TaskandLabor");
-                                var Inspection = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Inspection");
-                                var Parts = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Parts");
-                                var Tools = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Tools");
-                                var Attachments = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Attachments");
-
-
-
-                                if (TaskandLabour.Expression == "E" || TaskandLabour.Expression == "V")
-                                {
-                                    tabbedPage.Children.Add(TaskandLaborPage);
-                                }
-                                if (AppSettings.User.IsInspectionUser == true && (Inspection.Expression == "E" || Inspection.Expression == "V"))
-                                {
-                                    tabbedPage.Children.Add(InspectionPage);
-                                }
-                                if (Parts.Expression == "E" || Parts.Expression == "V")
-                                {
-                                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
-                                    {
-
-
-                                    }
-                                    else
-                                    {
-                                        tabbedPage.Children.Add(ClosedWorkorderTabbed);
-                                    }
-
-                                }
-                                if (Tools.Expression == "E" || Tools.Expression == "V")
-                                {
-                                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
-                                    {
-
-
-                                    }
-                                    else
-                                    {
-                                        tabbedPage.Children.Add(ToolsPage);
-                                    }
-
-                                }
-                                if (Attachments.Expression == "E" || Attachments.Expression == "V")
-                                {
-                                    tabbedPage.Children.Add(AttachmentPage);
-                                }
-
-
-
-                            }
-
-
-
-                        }
+                        tabbedPage.Children.Add(TaskandLaborPage);
                     }
                 }
 
+                if (Application.Current.Properties.ContainsKey("InspectionTabKey"))
+                {
+                    var InspectionTab = Application.Current.Properties["InspectionTabKey"].ToString();
+                    if (AppSettings.User.IsInspectionUser == true && InspectionTab != null && (InspectionTab == "E" || InspectionTab == "V"))
+                    {
+                        tabbedPage.Children.Add(InspectionPage);
+                    }
+                }
+                if (Application.Current.Properties.ContainsKey("PartsTabKey"))
+                {
+                    var PartsTab = Application.Current.Properties["PartsTabKey"].ToString();
 
+                    if (PartsTab == "E" || PartsTab == "V")
+                    {
+                        if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                        {
+
+
+                        }
+                        else
+                        {
+                            tabbedPage.Children.Add(ClosedWorkorderTabbed);
+                        }
+
+                    }
+
+
+                }
+
+                if (Application.Current.Properties.ContainsKey("ToolsTabKey"))
+                {
+                    var ToolsTab = Application.Current.Properties["ToolsTabKey"].ToString();
+                    if (ToolsTab == "E" || ToolsTab == "V")
+                    {
+                        if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                        {
+
+
+                        }
+                        else
+                        {
+                            tabbedPage.Children.Add(ToolsPage);
+                        }
+
+
+                    }
+                }
+
+                if (Application.Current.Properties.ContainsKey("AttachmentTabKey"))
+                {
+                    var AttachmentTab = Application.Current.Properties["AttachmentTabKey"].ToString();
+
+                    if (AttachmentTab == "E" || AttachmentTab == "V")
+                    {
+                        tabbedPage.Children.Add(AttachmentPage);
+                    }
+                }
+
+                #endregion
 
 
             }

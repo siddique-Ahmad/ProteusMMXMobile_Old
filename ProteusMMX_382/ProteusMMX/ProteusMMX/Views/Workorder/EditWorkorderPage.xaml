@@ -9,8 +9,20 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.SfCalendar.XForms;assembly=Syncfusion.SfCalendar.XForms"
              xmlns:controls1="clr-namespace:Windows.UI.Xaml.Controls;assembly=Windows.Foundation.UniversalApiContract" xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
              x:Class="ProteusMMX.Views.Workorder.EditWorkorderPage"
-             Icon="details.png">
-
+            >
+    <ContentPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="details.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/details.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/details.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </ContentPage.IconImageSource>
     <ContentPage.Resources>
         <ResourceDictionary>
             <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->
@@ -385,11 +397,11 @@
                                     </border:SfBorder>
                                 </StackLayout>
 
-                                <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="9" Grid.ColumnSpan="2">
+                                <!--<StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="9" Grid.ColumnSpan="2">
                                     <StackLayout IsVisible="{Binding DistributeCostforAssetsystemIsVisible}" IsEnabled="{Binding DistributeCostforAssetsystemIsEnable}">
                                         <StackLayout Orientation="Horizontal"   IsEnabled="{Binding IsCostLayoutIsEnable}">
-                                            <!--<dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
-                                    </dependencyinterface:LoginSwitch>-->
+                                            --><!--<dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
+                                    </dependencyinterface:LoginSwitch>--><!--
                                             <buttons:SfSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsOn="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
                                             </buttons:SfSwitch>
                                             <Label  FontAttributes="Bold"  Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
@@ -423,7 +435,7 @@
                                             <buttons:SfRadioButton x:Name="Button1" CheckedColor="DeepSkyBlue"  IsChecked="{Binding ParentCostDistributed,Mode=TwoWay}" FontSize="12" LineBreakMode="WordWrap" Text="{Binding ParentCostsOnly}"    StateChanged="Button1_StateChanged"></buttons:SfRadioButton>
                                         </StackLayout>
                                     </StackLayout>
-                                </StackLayout>
+                                </StackLayout>-->
 
                                 <StackLayout Orientation="Vertical" Grid.Row="10" Grid.Column="0" IsVisible="{Binding WorkorderRequesterIsVisible}">
                                     <Label Text="{Binding WorkorderRequesterTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">

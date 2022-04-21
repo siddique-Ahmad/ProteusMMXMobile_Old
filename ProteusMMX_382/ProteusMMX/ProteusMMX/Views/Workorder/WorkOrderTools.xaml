@@ -3,8 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.WorkOrderTools"
              xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX" xmlns:controls="clr-namespace:ProteusMMX.Controls" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             Icon="tools.png">
-
+             >
+    <ContentPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="tools.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/tools.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/tools.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </ContentPage.IconImageSource>
     <ContentPage.Resources>
         <ResourceDictionary>
             <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->

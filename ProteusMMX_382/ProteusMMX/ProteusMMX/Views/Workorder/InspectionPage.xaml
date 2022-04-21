@@ -2,9 +2,20 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:ProteusMMX.Controls"
-             x:Class="ProteusMMX.Views.Workorder.InspectionPage"
-              Icon="Inspection.png">
-            
+             x:Class="ProteusMMX.Views.Workorder.InspectionPage">
+    <ContentPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="Inspection.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/Inspection.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/Inspection.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </ContentPage.IconImageSource>
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
