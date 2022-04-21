@@ -1318,59 +1318,6 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        string _sortByWin = "";
-        public string SortByWin
-        {
-            get
-            {
-                return _sortByWin;
-            }
-
-            set
-            {
-                if (value != _sortByWin)
-                {
-                    _sortByWin = value;
-                    OnPropertyChanged("SortByWin");
-                }
-            }
-        }
-
-        string _filterByWin = "";
-        public string FilterByWin
-        {
-            get
-            {
-                return _filterByWin;
-            }
-
-            set
-            {
-                if (value != _filterByWin)
-                {
-                    _filterByWin = value;
-                    OnPropertyChanged("FilterByWin");
-                }
-            }
-        }
-
-        string _groupByWin = "";
-        public string GroupByWin
-        {
-            get
-            {
-                return _groupByWin;
-            }
-
-            set
-            {
-                if (value != _groupByWin)
-                {
-                    _groupByWin = value;
-                    OnPropertyChanged("GroupByWin");
-                }
-            }
-        }
         #endregion
         #endregion
 
@@ -1394,12 +1341,19 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                SortBy = "shortingN.png";
-                FilterBy = "filterN.png";
-                GroupBy = "searchN.png";
-                SortByWin = "Assets/shortingN.png";
-                FilterByWin = "Assets/filterN.png";
-                GroupByWin = "Assets/clearN.png";
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    SortBy = "Assets/shortingN.png";
+                    FilterBy = "Assets/filterN.png";
+                    GroupBy = "Assets/searchN.png";
+                }
+                else
+                {
+                    SortBy = "shortingN.png";
+                    FilterBy = "filterN.png";
+                    GroupBy = "searchN.png";
+                }
+
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
                 await Task.Delay(10);
                 if (navigationData != null)
@@ -1582,11 +1536,16 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(10);
+                if (Device.RuntimePlatform != Device.UWP)
+                {
+                    UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                    await Task.Delay(10);
+                }
+
                 if (CreateWorkorderRights == "E")
                 {
-                    var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                    //var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1648,26 +1607,46 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(10);
+                if (Device.RuntimePlatform != Device.UWP)
+                {
+                    UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                    await Task.Delay(10);
+                }
                 var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, PickerTitles);
+
                 if (response == CancelTitle)
                 {
                     this.SelectedSortingText = null;
 
                 }
 
-
                 if (response == PreventiveMaintenenceTitle)
                 {
-                    FilterBy = "filterNs.png";
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
+
                     WorkorderTypeFilterText = "PreventiveMaintenance";
                     await RefillWorkorderCollection();
                 }
 
                 else if (response == DemandMaintenenceTitle)
                 {
-                    FilterBy = "filterNs.png";
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
                     WorkorderTypeFilterText = "DemandMaintenance";
                     await RefillWorkorderCollection();
 
@@ -1675,20 +1654,46 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else if (response == EmergencyMaintenanceTitle)
                 {
-                    FilterBy = "filterNs.png";
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
                     WorkorderTypeFilterText = "EmergencyMaintenance";
                     await RefillWorkorderCollection();
 
                 }
+
                 else if (response == FailedInspectionTitle)
                 {
-                    FilterBy = "filterNs.png";
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
                     WorkorderTypeFilterText = "FailedInspection";
                     await RefillWorkorderCollection();
                 }
+
                 else
                 {
-                    FilterBy = "filterN.png";
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterN.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterN.png";
+                    }
                     WorkorderTypeFilterText = null;
                     await RefillWorkorderCollection();
                 }
@@ -1708,8 +1713,11 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(10);
+                if (Device.RuntimePlatform != Device.UWP)
+                {
+                    UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                    await Task.Delay(10);
+                }
                 var response = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("SortByActivationdate"), SortByActivationdateTitle, CancelTitle, new ObservableCollection<string>() { AscendingTitle, DescendingTitle });
                 if (response == CancelTitle)
                 {
@@ -1718,7 +1726,16 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else if (response == AscendingTitle)
                 {
-                    SortBy = "shortingNs.png";
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        SortBy = "Assets/shortingNs.png";
+
+                    }
+                    else
+                    {
+                        SortBy = "shortingNs.png";
+                    }
+
                     this.SelectedSortingText = "ASC";
                     //reset pageno. and start search again.
                     await RefillWorkorderCollection();
@@ -1726,7 +1743,15 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else if (response == DescendingTitle)
                 {
-                    SortBy = "shortingNs.png";
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        SortBy = "Assets/shortingNs.png";
+
+                    }
+                    else
+                    {
+                        SortBy = "shortingNs.png";
+                    }
                     this.SelectedSortingText = "DESC";
                     //reset pageno. and start search again.
                     await RefillWorkorderCollection();
@@ -1737,7 +1762,16 @@ namespace ProteusMMX.ViewModel.Workorder
                     this.SelectedSortingText = null;
                     //reset pageno. and start search again.
                     await RefillWorkorderCollection();
-                    SortBy = "shortingN.png";
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        SortBy = "Assets/shortingN.png";
+
+                    }
+                    else
+                    {
+                        SortBy = "shortingN.png";
+                    }
+
                 }
 
             }
@@ -2801,7 +2835,16 @@ namespace ProteusMMX.ViewModel.Workorder
                     var Locationfilter = Application.Current.Properties["LocationFilterkey"];
                     if (Locationfilter != null)
                     {
-                        GroupBy = "searchNs.png";
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            GroupBy = "Assets/searchNs.png";
+
+                        }
+                        else
+                        {
+                            GroupBy = "searchNs.png";
+                        }
+
                         filter = true;
                         await RefillLocationFromPicker(Locationfilter.ToString());
 
@@ -2816,7 +2859,16 @@ namespace ProteusMMX.ViewModel.Workorder
                     var Shiftfilter = Application.Current.Properties["ShiftFilterkey"];
                     if (Shiftfilter != null)
                     {
-                        GroupBy = "searchNs.png";
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            GroupBy = "Assets/searchNs.png";
+
+                        }
+                        else
+                        {
+                            GroupBy = "searchNs.png";
+                        }
+
                         filter = true;
                         await RefillShiftFromPicker(Shiftfilter.ToString());
 
@@ -2832,7 +2884,16 @@ namespace ProteusMMX.ViewModel.Workorder
                     var Priorityfilter = Application.Current.Properties["PriorityFilterkey"];
                     if (Priorityfilter != null)
                     {
-                        GroupBy = "searchNs.png";
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            GroupBy = "Assets/searchNs.png";
+
+                        }
+                        else
+                        {
+                            GroupBy = "searchNs.png";
+                        }
+
                         filter = true;
                         await RefillPriorityFromPicker(Priorityfilter.ToString());
 
@@ -2848,7 +2909,16 @@ namespace ProteusMMX.ViewModel.Workorder
                     var datefilter = Application.Current.Properties["DateFilterkey"];
                     if (datefilter != null)
                     {
-                        GroupBy = "searchNs.png";
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            GroupBy = "Assets/searchNs.png";
+
+                        }
+                        else
+                        {
+                            GroupBy = "searchNs.png";
+                        }
+
                         filter = true;
                         await RefillDueDateFromPicker(datefilter.ToString());
 
@@ -2861,7 +2931,16 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 if (filter == false)
                 {
-                    GroupBy = "searchN.png";
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        GroupBy = "Assets/searchN.png";
+
+                    }
+                    else
+                    {
+                        GroupBy = "searchN.png";
+                    }
+
                 }
 
             }
@@ -2952,12 +3031,18 @@ namespace ProteusMMX.ViewModel.Workorder
                     Application.Current.Properties.Remove("DateFilterkey");
                 }
 
-                SortBy = "shortingN.png";
-                FilterBy = "filterN.png";
-                GroupBy = "searchN.png";
-                SortByWin = "Assets/shortingN.png";
-                FilterByWin = "Assets/filterN.png";
-                GroupByWin = "Assets/clearN.png";
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    SortBy = "Assets/shortingN.png";
+                    FilterBy = "Assets/filterN.png";
+                    GroupBy = "Assets/searchN.png";
+                }
+                else
+                {
+                    SortBy = "shortingN.png";
+                    FilterBy = "filterN.png";
+                    GroupBy = "searchN.png";
+                }
 
             }
 
@@ -3266,12 +3351,18 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 Application.Current.Properties.Remove("DateFilterkey");
             }
-            SortBy = "shortingN.png";
-            FilterBy = "filterN.png";
-            GroupBy = "searchN.png";
-            SortByWin = "Assets/shortingN.png";
-            FilterByWin = "Assets/filterN.png";
-            GroupByWin = "Assets/clearN.png";
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                SortBy = "Assets/shortingN.png";
+                FilterBy = "Assets/filterN.png";
+                GroupBy = "Assets/searchN.png";
+            }
+            else
+            {
+                SortBy = "shortingN.png";
+                FilterBy = "filterN.png";
+                GroupBy = "searchN.png";
+            }
         }
         #endregion
 

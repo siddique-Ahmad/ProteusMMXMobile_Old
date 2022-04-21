@@ -11,8 +11,8 @@
     <AssemblyName>ProteusMMX.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -124,6 +124,10 @@
     <None Include="ProteusMMX.UWP_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\addbtn.png" />
+    <Content Include="Assets\Adddis.png" />
+    <Content Include="Assets\AddIcon.png" />
+    <Content Include="Assets\addinsp.png" />
     <Content Include="Assets\ArrowLeft.png" />
     <Content Include="Assets\ArrowRight.png" />
     <Content Include="Assets\AscendingIcon.png" />
@@ -132,28 +136,51 @@
     <Content Include="Assets\Attachements.png" />
     <Content Include="Assets\BackgroundImage.jpg" />
     <Content Include="Assets\Backgroundlogin.png" />
+    <Content Include="Assets\barcerch.png" />
     <Content Include="Assets\Barcode.png" />
     <Content Include="Assets\BarcodeAsset.png" />
     <Content Include="Assets\bottomimg.png" />
+    <Content Include="Assets\Browse.png" />
     <Content Include="Assets\Calander.png" />
     <Content Include="Assets\Camera.png" />
+    <Content Include="Assets\CCalender.png" />
+    <Content Include="Assets\Ccler.png" />
     <Content Include="Assets\Checked.png" />
     <Content Include="Assets\clear.png" />
+    <Content Include="Assets\clearN.png" />
+    <Content Include="Assets\clearsymbol.png" />
     <Content Include="Assets\ClosedWorkorder.png" />
     <Content Include="Assets\complateicon.png" />
+    <Content Include="Assets\complet1.png" />
+    <Content Include="Assets\Cstart.png" />
+    <Content Include="Assets\Cstop.png" />
     <Content Include="Assets\cwoicon.png" />
+    <Content Include="Assets\delbtn.png" />
+    <Content Include="Assets\Deletebtn.png" />
     <Content Include="Assets\delicon.png" />
+    <Content Include="Assets\delIcon1.png" />
     <Content Include="Assets\Descendingicon.png" />
     <Content Include="Assets\details.png" />
     <Content Include="Assets\Dot.png" />
     <Content Include="Assets\dots.png" />
     <Content Include="Assets\eyicon.png" />
+    <Content Include="Assets\fail1.png" />
+    <Content Include="Assets\failbtn.png" />
+    <Content Include="Assets\failredbtn.png" />
     <Content Include="Assets\filter.png" />
     <Content Include="Assets\filtericon.png" />
+    <Content Include="Assets\filterN.png" />
+    <Content Include="Assets\filterNs.png" />
     <Content Include="Assets\greencheck.png" />
     <Content Include="Assets\GreenTickMark.png" />
     <Content Include="Assets\icon.png" />
     <Content Include="Assets\Inspection.png" />
+    <Content Include="Assets\Inspection1.png" />
+    <Content Include="Assets\Inspection12.png" />
+    <Content Include="Assets\Inspection2.png" />
+    <Content Include="Assets\Inspection22.png" />
+    <Content Include="Assets\Inspection3.png" />
+    <Content Include="Assets\Inspection32.png" />
     <Content Include="Assets\InventoryParts.png" />
     <Content Include="Assets\iticon.png" />
     <Content Include="Assets\KPIIcon.png" />
@@ -162,8 +189,14 @@
     <Content Include="Assets\LoginPageBackgroundImage.png" />
     <Content Include="Assets\mic.png" />
     <Content Include="Assets\Morefilter.png" />
+    <Content Include="Assets\na.png" />
+    <Content Include="Assets\no.png" />
     <Content Include="Assets\parts.png" />
+    <Content Include="Assets\Pass.png" />
+    <Content Include="Assets\passbluebtn.png" />
+    <Content Include="Assets\passbtn.png" />
     <Content Include="Assets\passicon.png" />
+    <Content Include="Assets\pdf.png" />
     <Content Include="Assets\pdfword.png" />
     <Content Include="Assets\Priority.png" />
     <Content Include="Assets\ProteusCMMS.png" />
@@ -174,17 +207,44 @@
     <Content Include="Assets\Requester.png" />
     <Content Include="Assets\RoundedEntry.xml" />
     <Content Include="Assets\save.png" />
+    <Content Include="Assets\savebtn.png" />
     <Content Include="Assets\saveicon.png" />
+    <Content Include="Assets\saveicon1.png" />
     <Content Include="Assets\search.png" />
+    <Content Include="Assets\search1.png" />
+    <Content Include="Assets\search2.png" />
+    <Content Include="Assets\search3.png" />
+    <Content Include="Assets\search4.png" />
+    <Content Include="Assets\search5.png" />
+    <Content Include="Assets\searchBor1.png" />
+    <Content Include="Assets\searchBor2.png" />
+    <Content Include="Assets\searchBor3.png" />
+    <Content Include="Assets\searchBor4.png" />
+    <Content Include="Assets\searchBor5.png" />
     <Content Include="Assets\searchicon.png" />
+    <Content Include="Assets\searchiconblack.png" />
+    <Content Include="Assets\searchN.png" />
+    <Content Include="Assets\searchNs.png" />
     <Content Include="Assets\shfiltericon.png" />
+    <Content Include="Assets\shortingN.png" />
+    <Content Include="Assets\shortingNs.png" />
+    <Content Include="Assets\signature.png" />
+    <Content Include="Assets\sortclosing.png" />
     <Content Include="Assets\SortIcon.png" />
+    <Content Include="Assets\sorting1.png" />
+    <Content Include="Assets\sortinganswers.png" />
     <Content Include="Assets\splash_logo.png" />
     <Content Include="Assets\splash_screen.xml" />
     <Content Include="Assets\sricon.png" />
     <Content Include="Assets\ssbicon.png" />
+    <Content Include="Assets\startcomplte.png" />
     <Content Include="Assets\starticon.png" />
+    <Content Include="Assets\starticon1.png" />
+    <Content Include="Assets\startred.png" />
+    <Content Include="Assets\stopcomplate.png" />
     <Content Include="Assets\stopicon.png" />
+    <Content Include="Assets\stopicon1.png" />
+    <Content Include="Assets\stoppending.png" />
     <Content Include="Assets\submitbtn.png" />
     <Content Include="Assets\tasksandlabors.png" />
     <Content Include="Assets\tel1.png" />
@@ -202,14 +262,18 @@
     <Content Include="Assets\unnamed.png" />
     <Content Include="Assets\urlicon.png" />
     <Content Include="Assets\usericon.png" />
+    <Content Include="Assets\Viewicon.png" />
     <Content Include="Assets\woattachment.png" />
     <Content Include="Assets\woicon.png" />
     <Content Include="Assets\workorder location.png" />
     <Content Include="Assets\Workorder.png" />
+    <Content Include="Assets\workorder1.png" />
+    <Content Include="Assets\workorder2.png" />
     <Content Include="Assets\workorderassest.jpg" />
     <None Include="Package.xml" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Assets\workorderlocation.png" />
+    <Content Include="Assets\yes.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-100.png" />
     <Content Include="Assets\LockScreenLogo.scale-125.png" />
@@ -261,6 +325,9 @@
     <PackageReference Include="CarouselView.FormsPlugin">
       <Version>5.2.0</Version>
     </PackageReference>
+    <PackageReference Include="Coding4Fun.Toolkit.Controls">
+      <Version>2.1.8</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
       <Version>1.9.0</Version>
     </PackageReference>
@@ -274,7 +341,10 @@
       <Version>2.0.147</Version>
     </PackageReference>
     <PackageReference Include="Rg.Plugins.Popup">
-      <Version>1.1.3.73-pre</Version>
+      <Version>1.1.4.158-pre</Version>
+    </PackageReference>
+    <PackageReference Include="Splat">
+      <Version>1.6.2</Version>
     </PackageReference>
     <PackageReference Include="sqlite-net-pcl">
       <Version>1.4.118</Version>
@@ -318,7 +388,7 @@
     <PackageReference Include="Xamarin.Controls.SignaturePad.Forms">
       <Version>3.0.0</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2401" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.8" />
     <PackageReference Include="ZXing.Net.Mobile">
       <Version>2.4.1</Version>

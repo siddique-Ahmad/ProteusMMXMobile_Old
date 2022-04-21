@@ -19,7 +19,13 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Push;
-
+using Syncfusion.SfCalendar.XForms.UWP;
+using Syncfusion.SfPicker.XForms.UWP;
+using Syncfusion.XForms.UWP.Buttons;
+using Syncfusion.XForms.UWP.Border;
+using Syncfusion.ListView.XForms.UWP;
+using Syncfusion.XForms.UWP.PopupLayout;
+using Acr.UserDialogs;
 
 namespace ProteusMMX.UWP
 {
@@ -36,8 +42,11 @@ namespace ProteusMMX.UWP
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mjc1MzM3QDMxMzgyZTMxMmUzMEZUNkMzUExDNUxsMHA5WGZLdVVPWktYUkl1UTN0NGNFajdBMFB0RUoyd1k9");
             this.InitializeComponent();
+#if WINDOWS_UWP
+            Windows.ApplicationModel.Resources.Core.ResourceContext.SetGlobalQualifierValue("Assets", "uwp");
+#endif
             this.Suspending += OnSuspending;
-            AppCenter.Start("7529a611-c100-4257-872f-a9315b2161dc", typeof(Analytics));
+          //  AppCenter.Start("7529a611-c100-4257-872f-a9315b2161dc", typeof(Analytics));
            
             //AppCenter.Start("4556bc5f-b45d-41f9-ace8-ecbcba330909", typeof(Analytics));
             //AppCenter.Start("4556bc5f-b45d-41f9-ace8-ecbcba330909", typeof(Push));
@@ -77,18 +86,50 @@ namespace ProteusMMX.UWP
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerPage).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingBarcodeImageViewRenderer).GetTypeInfo().Assembly);
-               // assembliesToInclude.Add(typeof(CarouselView.FormsPlugin.UWP.CarouselViewRenderer).GetTypeInfo().Assembly);
+                // assembliesToInclude.Add(typeof(CarouselView.FormsPlugin.UWP.CarouselViewRenderer).GetTypeInfo().Assembly);
 
                 ///Syncfusion Assembly include/////////////////
-                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfButtonRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfCheckBoxRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Border.SfBorderRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Graphics.SfGradientViewRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(Syncfusion.ListView.XForms.UWP.SfListViewRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.ComboBox.SfComboBoxRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfRadioButtonRenderer).GetTypeInfo().Assembly);
-                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfSegmentedControlRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfButtonRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfBorderRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Expander.SfExpanderRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfCalendarRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.ComboBox.SfComboBoxRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfListViewRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfPickerRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.RichTextEditor.SfRichTextEditorRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.TabView.SfTabViewRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Graphics.SfGradientViewRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Accordion.SfAccordionRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.EffectsView.SfEffectsViewRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfPopupLayoutRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(UserDialogs).GetTypeInfo().Assembly);
+                //IUserDialogs.Init();
+                //assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfButtonRenderer).GetTypeInfo().Assembly);
+                //assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfCheckBoxRenderer).GetTypeInfo().Assembly);
+                //assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfRadioButtonRenderer).GetTypeInfo().Assembly);
+                // assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfSegmentedControlRenderer).GetTypeInfo().Assembly);
+
+                // assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Expander.SfExpanderRenderer).GetTypeInfo().Assembly);
+                //  assembliesToInclude.Add(typeof(SfCalendarRenderer).GetTypeInfo().Assembly);
+                //  assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.ComboBox.SfComboBoxRenderer).GetTypeInfo().Assembly);
+                // assembliesToInclude.Add(typeof(Syncfusion.ListView.XForms.UWP.SfListViewRenderer).GetTypeInfo().Assembly);
+                //assembliesToInclude.Add(typeof(SfPickerRenderer).GetTypeInfo().Assembly);
+                //  assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.RichTextEditor.SfRichTextEditorRenderer).GetTypeInfo().Assembly);
+                // assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.TabView.SfTabViewRenderer).GetTypeInfo().Assembly);
+
+                //assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Border.SfBorderRenderer).GetTypeInfo().Assembly);
+                // assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Graphics.SfGradientViewRenderer).GetTypeInfo().Assembly);
+
+
+
+
+
+
+                // assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Accordion.SfAccordionRenderer).GetTypeInfo().Assembly);
+                //assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.EffectsView.SfEffectsViewRenderer).GetTypeInfo().Assembly);
+                //assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.PopupLayout.SfPopupLayoutRenderer).GetTypeInfo().Assembly);
+
+
 
                 Xamarin.Forms.Forms.Init(e, assembliesToInclude);
                 Xamarin.Forms.DependencyService.Register<PDFViewer>();
