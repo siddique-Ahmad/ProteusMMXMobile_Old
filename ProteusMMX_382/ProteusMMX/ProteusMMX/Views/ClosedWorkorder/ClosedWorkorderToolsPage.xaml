@@ -5,10 +5,23 @@
              xmlns:templates="clr-namespace:ProteusMMX.Views.ClosedWorkorder.Templates;assembly=ProteusMMX"
              xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:viewCells="clr-namespace:ProteusMMX.Views.ClosedWorkorder.Templates.ViewCells;assembly=ProteusMMX"
-             xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-            
-              Icon="tools.png"
+             xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"            
              BackgroundColor="{StaticResource BackgroundColor}">
+
+    <ContentPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="tools.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/tools.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/tools.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </ContentPage.IconImageSource>
+    
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>

@@ -8610,48 +8610,48 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
 
-                case "UserField21":
-                    {
-                        if (control is Picker)
-                        {
-                            var x = control as Picker;
-                            x.ClassId = formControl.ControlName;
+                //case "UserField21":
+                //    {
+                //        if (control is Picker)
+                //        {
+                //            var x = control as Picker;
+                //            x.ClassId = formControl.ControlName;
 
-                            var source = x.ItemsSource as List<ComboDD>;
-                            ComboDD item = null;
-                            try { item = source.FirstOrDefault(s => s.SelectedText.Trim() == UserField21.Trim()); }
-                            catch (Exception) { }
+                //            var source = x.ItemsSource as List<ComboDD>;
+                //            ComboDD item = null;
+                //            try { item = source.FirstOrDefault(s => s.SelectedText.Trim() == UserField21.Trim()); }
+                //            catch (Exception) { }
 
-                            if (item != null)
-                            {
-                                x.SelectedItem = item;
+                //            if (item != null)
+                //            {
+                //                x.SelectedItem = item;
 
-                                UserField21 = item.SelectedText.ToString();
-                            }
+                //                UserField21 = item.SelectedText.ToString();
+                //            }
 
-                            x.SelectedIndexChanged += Picker_SelectedIndexChanged;
+                //            x.SelectedIndexChanged += Picker_SelectedIndexChanged;
 
-                        }
+                //        }
 
-                        else if (control is Entry)
-                        {
-                            control.SetBinding(Entry.TextProperty, nameof(this.UserField21));
-                        }
+                //        else if (control is Entry)
+                //        {
+                //            control.SetBinding(Entry.TextProperty, nameof(this.UserField21));
+                //        }
 
-                        else if (control is DatePicker)
-                        {
-                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                            UserField21 = DateTime.Now.ToString();
-                            control.SetBinding(DatePicker.DateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
+                //        else if (control is DatePicker)
+                //        {
+                //            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
+                //            UserField21 = DateTime.Now.ToString();
+                //            control.SetBinding(DatePicker.DateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
 
-                        else if (control is CustomDatePicker)
-                        {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
-                        break;
+                //        else if (control is CustomDatePicker)
+                //        {
+                //            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
+                //        break;
 
-                    }
+                //    }
 
 
                 case "UserField22":
