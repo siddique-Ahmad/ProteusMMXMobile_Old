@@ -375,9 +375,9 @@ namespace ProteusMMX.ViewModel
                 }
             }
         }
-       static string Year = DateTime.Parse(DateTime.Now.ToString()).Year.ToString();
+        static string Year = DateTime.Parse(DateTime.Now.ToString()).Year.ToString();
         string _copyrightLabel = "Copyright ©" + Year + " Eagle Technology Inc.";
-       
+
         public string CopyrightLabel
         {
             get
@@ -476,9 +476,9 @@ namespace ProteusMMX.ViewModel
                     UserDialogs.Instance.ShowLoading("Please wait..loading all data");
                 }
 
-              
 
-                if (AppSettings.User!=null && AppSettings.User.blackhawkLicValidator.FDAEnable)
+
+                if (AppSettings.User != null && AppSettings.User.blackhawkLicValidator.FDAEnable)
                 {
                     if (AppSettings.User.blackhawkLicValidator.FDAEnable && AppSettings.User.blackhawkLicValidator.Signvalue == "True")
                     {
@@ -498,7 +498,7 @@ namespace ProteusMMX.ViewModel
                     UserName = AppSettings.UserName;
                     Password = AppSettings.Password;
                     SiteUrl = AppSettings.BaseURL;
-                    
+
                     if (string.IsNullOrWhiteSpace(UserName) && string.IsNullOrWhiteSpace(Password))
                     {
                         AppSettings.RememberMeSwitchFlag = false;
@@ -510,52 +510,52 @@ namespace ProteusMMX.ViewModel
                     if (user != null && user.mmxUser != null)
                     {
                         ////Set Company Profile Picture///////
-                        if (!string.IsNullOrWhiteSpace(user.mmxUser.blackhawkLicValidator.CompanyProfileLogo))
-                        {
-                            string newcompanyprofilebase64 = string.Empty;
-                            if (Device.RuntimePlatform == Device.UWP)
-                            {
-                                string companyprofilebase64 = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
-                                newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
-                                if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
-                                {
-                                    newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
-                                }
-                                byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
-                                MemoryStream stream = new MemoryStream(imgUser);
-                                bool isimage = Extension.IsImage(stream);
-                                if (isimage == true)
-                                {
+                        //if (!string.IsNullOrWhiteSpace(user.mmxUser.blackhawkLicValidator.CompanyProfileLogo))
+                        //{
+                        //    string newcompanyprofilebase64 = string.Empty;
+                        //    if (Device.RuntimePlatform == Device.UWP)
+                        //    {
+                        //        string companyprofilebase64 = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
+                        //        newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
+                        //        if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
+                        //        {
+                        //            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
+                        //        }
+                        //        byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
+                        //        MemoryStream stream = new MemoryStream(imgUser);
+                        //        bool isimage = Extension.IsImage(stream);
+                        //        if (isimage == true)
+                        //        {
 
-                                    byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
-                                    AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
-
-
-
-                                }
-                            }
-                            else
-                            {
-                                string companyprofilebase64 = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
-                                newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
-                                if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
-                                {
-                                    newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
-                                }
-                                byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
-                                MemoryStream stream = new MemoryStream(imgUser);
-                                bool isimage = Extension.IsImage(stream);
-                                if (isimage == true)
-                                {
-
-                                  
-                                    AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
+                        //            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
+                        //            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
 
 
 
-                                }
-                            }
-                        }
+                        //        }
+                        //    }
+                        //    else
+                        //    {
+                        //        string companyprofilebase64 = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
+                        //        newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
+                        //        if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
+                        //        {
+                        //            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
+                        //        }
+                        //        byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
+                        //        MemoryStream stream = new MemoryStream(imgUser);
+                        //        bool isimage = Extension.IsImage(stream);
+                        //        if (isimage == true)
+                        //        {
+
+
+                        //            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
+
+
+
+                        //        }
+                        //    }
+                        //}
 
 
 
@@ -615,18 +615,18 @@ namespace ProteusMMX.ViewModel
             _webControlTitlesService = webControlTitlesService;
             _formLoadInputService = formloadservice;
             _workorderService = workorderService;
-           
+
         }
 
 
-       
+
         public async Task OnLoginTapAsync()
         {
             try
             {
-               // Crashes.GenerateTestCrash();
+                // Crashes.GenerateTestCrash();
                 ServiceOutput apiVersion = new ServiceOutput();
-                UserDialogs.Instance.ShowLoading("Please wait..loading all data",MaskType.Gradient);
+                UserDialogs.Instance.ShowLoading("Please wait..loading all data", MaskType.Gradient);
                 await Task.Delay(100);
                 if (string.IsNullOrEmpty(SiteUrl))
                 {
@@ -643,7 +643,7 @@ namespace ProteusMMX.ViewModel
                         SiteUrl = SiteUrl.Replace("https:", "http:");
                         apiVersion = await _authenticationService.GetAPIVersion(SiteUrl);
                     }
-                   
+
                     if (apiVersion == null)
                     {
                         SiteUrl = SiteUrl.Replace("http:", "https:");
@@ -663,7 +663,7 @@ namespace ProteusMMX.ViewModel
 
 
                 var user = await _authenticationService.LoginAsync(AppSettings.BaseURL, UserName, Password);
-                
+
                 if (user == null || user.mmxUser == null || Convert.ToBoolean(user.servicestatus) == false)
                 {
                     UserDialogs.Instance.HideLoading();
@@ -671,6 +671,14 @@ namespace ProteusMMX.ViewModel
                     await DialogService.ShowAlertAsync("Please Enter Valid Credential.", "Alert", "OK");
 
                     return;
+                }
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    user.mmxUser.blackhawkLicValidator.CompanyProfileLogo = null;
+                }
+                else
+                {
+                    AppSettings.User.blackhawkLicValidator.CompanyProfileLogo = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
                 }
                 if (user.mmxUser.UserLicense == "Web")
                 {
@@ -686,15 +694,16 @@ namespace ProteusMMX.ViewModel
                 AppSettings.UserName = UserName;
                 AppSettings.Password = Password;
                 AppSettings.User.blackhawkLicValidator.FDAEnable = user.mmxUser.blackhawkLicValidator.FDAEnable;
-                AppSettings.User.blackhawkLicValidator.Signvalue= user.mmxUser.blackhawkLicValidator.Signvalue;
+                AppSettings.User.blackhawkLicValidator.Signvalue = user.mmxUser.blackhawkLicValidator.Signvalue;               
                 AppSettings.User.blackhawkLicValidator.CompanyProfileLogo = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
+                
 
                 //var FDALicenseKey = await _authenticationService.GetFDAValidationAsync(SiteUrl, null);
                 if (user.mmxUser.blackhawkLicValidator.FDAEnable && user.mmxUser.blackhawkLicValidator.Signvalue == "True")
                 {
 
                 }
-               
+
 
                 // Initialize Translations Property
                 Application.Current.Properties["UserNameType"] = "TextBox";
@@ -704,7 +713,7 @@ namespace ProteusMMX.ViewModel
                 UserDialogs.Instance.HideLoading();
                 await NavigationService.NavigateToAsync<DashboardPageViewModel>();
                 await NavigationService.RemoveLastFromBackStackAsync();
-              
+
                 if (AppSettings.RememberMeSwitchFlag == false)
                 {
                     Settings.Remove(nameof(UserName));
@@ -722,7 +731,7 @@ namespace ProteusMMX.ViewModel
                 UserDialogs.Instance.HideLoading();
                 OperationInProgress = false;
                 Crashes.TrackError(ex);
-               
+
             }
 
             finally
@@ -758,7 +767,6 @@ namespace ProteusMMX.ViewModel
         }
     }
 }
-       
 
 
-   
+

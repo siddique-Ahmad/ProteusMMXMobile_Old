@@ -44,48 +44,12 @@
     </ContentPage.Resources>
 
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Name="MenuItem2" IconImageSource="{Binding SortBy}"    Text=":" Command="{Binding SortByCommand}" >
-            <!--<ToolbarItem.IconImageSource >
-                <OnPlatform x:TypeArguments="FileImageSource">
-                  
-                    <On Platform="Android" Value="{Binding SortBy}" />
-                    <On Platform="iOS" Value="{Binding SortBy}"/>
-                </OnPlatform>
-            </ToolbarItem.IconImageSource>-->
-        </ToolbarItem>
-        <!--<ToolbarItem Name="MenuItem2" Icon="{Binding SortBy}"    Text=":" Command="{Binding SortByCommand}" >
-            <ToolbarItem.Icon >
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <OnPlatform.iOS>
-                        <FileImageSource File="{Binding SortBy}"/>                        
-                    </OnPlatform.iOS>
-                    <OnPlatform.Android>
-                        <FileImageSource File="{Binding SortBy}"/>
-                    </OnPlatform.Android>
-                    <OnPlatform.WinPhone>
-                        <FileImageSource File="{Binding SortByWin}"/>
-                    </OnPlatform.WinPhone>
-                </OnPlatform>
-            </ToolbarItem.Icon>
-        </ToolbarItem>-->
-        <ToolbarItem Name="MenuItem2"  Text=":" Icon="{Binding FilterBy}"   Command="{Binding SortByFilterCommand}" >
-            <!--<ToolbarItem.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <OnPlatform.iOS>
-                        <FileImageSource File="filterN.png"/>
-                    </OnPlatform.iOS>
-                    <OnPlatform.Android>
-                        <FileImageSource File="Assets/filterN.png"/>
-                    </OnPlatform.Android>
-                    <OnPlatform.WinPhone>
-                        <FileImageSource File="Assets/filterN.png"/>  
-                    </OnPlatform.WinPhone>
-                </OnPlatform>
-            </ToolbarItem.Icon>-->
-        </ToolbarItem>
-        <ToolbarItem Name="MenuItem3" Text=":" Icon="dots.png"   Command="{Binding ToolbarCommand}" >
-            <ToolbarItem.Icon >
+    <ContentPage.ToolbarItems >
+        
+        <ToolbarItem Name="MenuItem1" IconImageSource="{Binding SortBy}" Priority="0"   Text=":" Command="{Binding SortByCommand}" />
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="{Binding FilterBy}" Priority="1"  Command="{Binding SortByFilterCommand}" />
+        <ToolbarItem Name="MenuItem3" Order="Primary" Icon="dots.png" Text=":" Priority="2" Command="{Binding ToolbarCommand}" >
+            <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
                     <OnPlatform.iOS>
                         <FileImageSource File="dots.png"/>
@@ -99,6 +63,7 @@
                 </OnPlatform>
             </ToolbarItem.Icon>
         </ToolbarItem>
+        <!--<ToolbarItem Name="MenuItem3" Text=":" Icon="dots.png"  Priority="0" Command="{Binding ToolbarCommand}" />-->
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
@@ -121,21 +86,44 @@
                                 <SearchBar x:Name="filterText" HeightRequest="40" TextChanged="filterText_TextChanged" Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0"/>
                                
                             </border:SfBorder>
-                            <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0">
+
+                                <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0" Source="searchicon.png">
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="ImageSource">
+                                            <On Platform="Android,iOS" Value="searchicon.png" />
+                                            <On Platform="UWP" Value="Assets/searchicon.png" />
+                                            <On Platform="WinPhone" Value="Assets/searchicon.png" />
+                                        </OnPlatform>
+                                    </Image.Source>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                         Command="{Binding ScanCommand}"
+                                         NumberOfTapsRequired="1" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                                <!--<Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0">
                                 <Image.Source>
                                     <OnPlatform x:TypeArguments="ImageSource" >
                                         <OnPlatform.Android>searchicon.png</OnPlatform.Android>
                                             <OnPlatform.iOS>
                                                 <FileImageSource File="searchicon.png"/>
                                             </OnPlatform.iOS>
+                                            <OnPlatform.WinPhone>
+                                                <FileImageSource File="Assets/searchicon.png"/>
+                                            </OnPlatform.WinPhone>
+                                            <OnPlatform.UWP>
+                                                <FileImageSource File="Assets/searchicon.png"/>
+                                            </OnPlatform.UWP>
                                         </OnPlatform>
+                                    
                                 </Image.Source>
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer
                                          Command="{Binding ScanCommand}"
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
-                            </Image>
+                            </Image>-->
 
                             <StackLayout VerticalOptions="Center" Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center">
                                 <Label FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="Center" Text="{Binding TotalRecordTitle}"/>
@@ -156,15 +144,14 @@
                                             NumberOfTapsRequired="1"/>
                                     </Image.GestureRecognizers>
                                 </Image>
-                                <Image HorizontalOptions="End" Margin="20,0,0,5">
-                                    <Image.Source>
-                                        <OnPlatform x:TypeArguments="ImageSource" >
-                                                <OnPlatform.Android>clearN.png</OnPlatform.Android>
-                                                <OnPlatform.iOS>
-                                                    <FileImageSource File="clearN.png"/>
-                                                </OnPlatform.iOS>
+                                    <Image HorizontalOptions="End" Margin="20,0,0,5"  Source="clearN.png">
+                                        <Image.Source>
+                                            <OnPlatform x:TypeArguments="ImageSource">
+                                                <On Platform="Android,iOS" Value="clearN.png" />
+                                                <On Platform="UWP" Value="Assets/clearN.png" />
+                                                <On Platform="WinPhone" Value="Assets/clearN.png" />
                                             </OnPlatform>
-                                    </Image.Source>
+                                        </Image.Source>                                       
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer
                                         Tapped="TapGestureRecognizer_Tapped"
@@ -206,12 +193,19 @@
             AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding NewWorkOrderCommand}"
             BackgroundColor="Transparent" Source="Assets/addbtn.png">
                             <ImageButton.Source>
+                                <OnPlatform x:TypeArguments="ImageSource">
+                                    <On Platform="Android,iOS" Value="addbtn.png" />
+                                    <On Platform="UWP" Value="Assets/addbtn.png" />
+                                </OnPlatform>
+                            </ImageButton.Source>
+                            <!--<ImageButton.Source>
                                 <OnPlatform  x:TypeArguments="ImageSource">
                                     <OnPlatform.iOS>addbtn.png</OnPlatform.iOS>
                                     <OnPlatform.Android>addbtn.png</OnPlatform.Android>
                                     <OnPlatform.WinPhone>Assets/addbtn.png</OnPlatform.WinPhone>
+                                    <OnPlatform.uwp>Assets/addbtn.png</OnPlatform.uwp>
                                 </OnPlatform>
-                            </ImageButton.Source>
+                            </ImageButton.Source>-->
                         </ImageButton>  
                     </AbsoluteLayout>
                     <!--</StackLayout>-->
