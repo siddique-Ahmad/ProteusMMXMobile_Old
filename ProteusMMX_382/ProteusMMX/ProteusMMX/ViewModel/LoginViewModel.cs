@@ -676,10 +676,7 @@ namespace ProteusMMX.ViewModel
                 {
                     user.mmxUser.blackhawkLicValidator.CompanyProfileLogo = null;
                 }
-                else
-                {
-                    AppSettings.User.blackhawkLicValidator.CompanyProfileLogo = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
-                }
+                
                 if (user.mmxUser.UserLicense == "Web")
                 {
                     UserDialogs.Instance.HideLoading();
