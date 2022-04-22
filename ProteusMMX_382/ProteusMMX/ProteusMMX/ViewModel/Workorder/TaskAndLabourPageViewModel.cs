@@ -1117,7 +1117,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.Transparent,
                                 CommandParameter = item,
                                 TextColor = Color.Green,
-                                ImageSource = "starticon1.png",
+                                ImageSource= (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png",
+                                //  ImageSource = "starticon1.png",
                                 IsEnabled = false,
 
                             };
@@ -1132,7 +1133,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.Transparent,
                                 CommandParameter = item,
                                 TextColor = Color.Black,
-                                ImageSource = "starticon.png",
+                                ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon.png" : "starticon.png",
                                 IsEnabled = true,
                             };
                         }
@@ -1163,7 +1164,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.Transparent,
                                 TextColor = Color.Black,
                                 CommandParameter = item,
-                                ImageSource = "stopicon.png",
+                                ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopicon.png" : "stopicon.png",
                                 IsEnabled = true
                             };
                         }
@@ -1178,7 +1179,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.Transparent,
                                 TextColor = Color.Gray,
                                 CommandParameter = item,
-                                ImageSource = "stopcomplate.png",
+                                ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopcomplate.png" : "stopcomplate.png",
                                 IsEnabled = false,
                             };
                         }
@@ -1332,7 +1333,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             AddTimeBtn = new ImageButton
                             {
                                 WidthRequest = 35,
-                                Source = "Adddis.png",
+                                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Adddis.png" : "Adddis.png",
                                 Margin = new Thickness(0, 0, 0, 0),
                                 IsEnabled = false,
                             };
@@ -1342,7 +1343,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             AddTimeBtn = new ImageButton
                             {
                                 WidthRequest = 35,
-                                Source = "AddIcon.png",
+                                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/AddIcon.png" : "AddIcon.png",                             
                                 Margin = new Thickness(0, 0, 0, 0),
                                 IsEnabled = true,
                             };
@@ -1408,7 +1409,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.Transparent,
                                 CommandParameter = item,
                                 TextColor = Color.Green,
-                                ImageSource = "starticon1.png",
+                                ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png",
+                                
                                 IsEnabled = false,
                             };
                         }
@@ -1422,7 +1424,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.Transparent,
                                 CommandParameter = item,
                                 TextColor = Color.Black,
-                                ImageSource = "starticon.png",
+                                ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon.png" : "starticon.png",
                                 IsEnabled = true,
                             };
                         }
@@ -1453,7 +1455,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.Transparent,
                                 TextColor = Color.Black,
                                 CommandParameter = item,
-                                ImageSource = "stopicon.png",
+                                ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopicon.png" : "stopicon.png",
                                 IsEnabled = true
                             };
                         }
@@ -1468,7 +1470,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.Transparent,
                                 TextColor = Color.Gray,
                                 CommandParameter = item,
-                                ImageSource = "stopcomplate.png",
+                                ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopcomplate.png" : "stopcomplate.png",
                                 IsEnabled = false,
                             };
                         }
@@ -1581,7 +1583,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             AddTimeBtn2 = new ImageButton
                             {
                                 WidthRequest = 35,
-                                Source = "Adddis.png",
+                                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Adddis.png" : "Adddis.png",                              
                                 Margin = new Thickness(0, 0, 0, 0),
                                 IsEnabled = false,
                             };
@@ -1591,7 +1593,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             AddTimeBtn2 = new ImageButton
                             {
                                 WidthRequest = 35,
-                                Source = "AddIcon.png",
+                                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/AddIcon.png" : "AddIcon.png",                               
                                 Margin = new Thickness(0, 0, 0, 0),
                                 IsEnabled = true,
                             };
@@ -1712,7 +1714,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             TextColor = Color.Black,
                             WidthRequest = 20,
                             CommandParameter = item,
-                            ImageSource = "saveicon.png"
+                            ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/saveicon.png" : "saveicon.png",
                         };
                         SbtnsfBorder.Content = saveButton;
                         #endregion
@@ -1925,10 +1927,10 @@ namespace ProteusMMX.ViewModel.Workorder
 
                                 //startButton.TextColor = Color.Green;
                                 // startButton.TextColor = Color.Gray;
-                                startButton.ImageSource = "starticon1.png";
-
+                                startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png";
+                                
                                 stopButton.TextColor = Color.FromHex("#87CEFA");
-                                stopButton.ImageSource = "stoppending.png";
+                                stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stoppending.png" : "stoppending.png";
 
                                 startButton.IsEnabled = false;
                                 stopButton.IsEnabled = true;
@@ -1997,11 +1999,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
                                     // startButtonforRate2.TextColor = Color.Green;
                                     startButtonforRate2.TextColor = Color.Green;
-                                    startButtonforRate2.ImageSource = "starticon1.png";
+                                    startButtonforRate2.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png";
                                     startButtonforRate2.IsEnabled = false;
                                     stopButtonforRate2.IsEnabled = true;
                                     stopButtonforRate2.TextColor = Color.FromHex("#87CEFA");
-                                    stopButtonforRate2.ImageSource = "stoppending.png";
+                                    stopButtonforRate2.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stoppending.png" : "stoppending.png";
 
                                     //completeButtonforRate2.TextColor = Color.FromHex("#879afa");
 

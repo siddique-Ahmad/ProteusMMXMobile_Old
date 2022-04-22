@@ -411,7 +411,7 @@ namespace ProteusMMX.Views.Workorder
 
             Image InspectionButtonImage = new Image
             {
-                Source = "Inspection1.png",
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection1.png" : "Inspection1.jpg" ,
                 HeightRequest = 25
             };
 
@@ -447,7 +447,7 @@ namespace ProteusMMX.Views.Workorder
 
             Image EmployeeButtonImage = new Image
             {
-                Source = "Inspection2.png",
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection2.png" : "Inspection2.jpg" ,
                 HeightRequest = 25
             };
 
@@ -484,7 +484,7 @@ namespace ProteusMMX.Views.Workorder
             InspectionButtonGrid.Children.Add(AddContractorButtonSL, 2, 0);
             Image ContractorButtonImage = new Image
             {
-                Source = "Inspection3.png",
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection3.png" : "Inspection3.jpg",
                 HeightRequest = 25
             };
 
@@ -527,7 +527,7 @@ namespace ProteusMMX.Views.Workorder
             InspectionButtonGrid.Children.Add(CreateWorkorderButtonSL, 3, 0);
             Image WorkorderButtonImage = new Image
             {
-                Source = "workorder1.png",
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/workorder1.png" : "workorder1.jpg" ,
                 HeightRequest = 25
             };
 
@@ -682,7 +682,8 @@ namespace ProteusMMX.Views.Workorder
                     TextColor = Color.Black,
                     IsEnabled = true,
                     CommandParameter = item,
-                    ImageSource = "starticon.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon.png" : "starticon.png",
+                    
 
                 };
                 StartBtnGrid.Children.Add(startButton, 0, 0);
@@ -715,7 +716,7 @@ namespace ProteusMMX.Views.Workorder
                     BackgroundColor = Color.White,
                     IsEnabled = false,
                     TextColor = Color.Gray,
-                    ImageSource = "stopcomplate.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopcomplate.png" : "stopcomplate.png",
                     CommandParameter = item,
                     StyleId = WorkOrderInspectionDetailId,
                 };
@@ -804,7 +805,7 @@ namespace ProteusMMX.Views.Workorder
                     ShowIcon = true,
                     BackgroundColor = Color.White,
                     StyleId = item.EmployeeLaborCraftID.ToString(),
-                    ImageSource = "delicon.png"
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/delicon.png" : "delicon.png",
                 };
                 DeleteGrid.Children.Add(btnDelete);
                 btnDelete.Clicked += BtnEmployeeDelete_Clicked;
@@ -1002,14 +1003,14 @@ namespace ProteusMMX.Views.Workorder
                 if (item.TimerStatus == "Start")
                 {
                     startButton.TextColor = Color.Green;
-                    startButton.ImageSource = "starticon1.png";
+                    startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png";
                     startButton.IsEnabled = false;
                     startButton.BorderColor = Color.Transparent;
 
                     stopButton.BorderColor = Color.Transparent;
                     stopButton.IsEnabled = true;
                     stopButton.TextColor = Color.Black;
-                    stopButton.ImageSource = "stopicon.png";
+                    stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopicon.png" : "stopicon.png";
 
                     hoursEntry.IsReadOnly = true;
                     minuteEntry.IsReadOnly = true;
@@ -1017,12 +1018,12 @@ namespace ProteusMMX.Views.Workorder
                 else
                 {
                     stopButton.TextColor = Color.Gray;
-                    stopButton.ImageSource = "stopcomplate.png";
+                    stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopcomplate.png" : "stopcomplate.png";
                     stopButton.IsEnabled = false;
                     stopButton.BorderColor = Color.Transparent;
 
                     startButton.TextColor = Color.Black;
-                    startButton.ImageSource = "starticon.png";
+                    startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopicon.png" : "stopicon.png";
                     startButton.IsEnabled = true;
                     startButton.BorderColor = Color.Transparent;
                     hoursEntry.IsReadOnly = false;
@@ -1079,14 +1080,14 @@ namespace ProteusMMX.Views.Workorder
                             startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                         }
                         startButton.TextColor = Color.Green;
-                        startButton.ImageSource = "starticon1.png";
+                        startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png";
                         startButton.IsEnabled = false;
                         startButton.BorderColor = Color.Transparent;
 
                         stopButton.BorderColor = Color.Transparent;
                         stopButton.IsEnabled = true;
                         stopButton.TextColor = Color.Black;
-                        stopButton.ImageSource = "stopicon.png";
+                        stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopicon.png" : "stopicon.png";
 
                         if (response.WorkOrderInspectionDetailsID != null)
                         {
@@ -1208,12 +1209,12 @@ namespace ProteusMMX.Views.Workorder
 
                         }
                         stopButton.TextColor = Color.Gray;
-                        stopButton.ImageSource = "stopcomplate.png";
+                        stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopcomplate.png" : "stopcomplate.png";
                         stopButton.IsEnabled = false;
                         stopButton.BorderColor = Color.White;
 
                         startButton.TextColor = Color.Black;
-                        startButton.ImageSource = "starticon.png";
+                        startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopicon.png" : "stopicon.png";
                         startButton.IsEnabled = true;
                         startButton.BorderColor = Color.White;
                         //this.BackgroundColor = Color.White;
@@ -1343,7 +1344,7 @@ namespace ProteusMMX.Views.Workorder
                     TextColor = Color.Black,
                     IsEnabled = true,
                     CommandParameter = item,
-                    ImageSource = "starticon.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon.png" : "starticon.png",
                 };
                 StartBtnGrid.Children.Add(startButton, 0, 0);
 
@@ -1378,7 +1379,7 @@ namespace ProteusMMX.Views.Workorder
                     TextColor = Color.Gray,
                     IsEnabled = false,
                     CommandParameter = item,
-                    ImageSource = "stopcomplate.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopcomplate.png" : "stopcomplate.png",
                     StyleId = WorkOrderInspectionDetailId,
                 };
                 StopBtnGrid.Children.Add(stopButton);
@@ -1462,7 +1463,7 @@ namespace ProteusMMX.Views.Workorder
                     WidthRequest = 25,
                     ShowIcon = true,
                     BackgroundColor = Color.White,
-                    ImageSource = "delicon.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/delicon.png" : "delicon.png",
                     StyleId = item.ContractorLaborCraftID.ToString(),
                 };
                 DeleteGrid.Children.Add(btnDelete);
@@ -1585,14 +1586,14 @@ namespace ProteusMMX.Views.Workorder
                 if (item.TimerStatus == "Start")
                 {
                     startButton.TextColor = Color.Green;
-                    startButton.ImageSource = "starticon1.png";
+                    startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png";
                     startButton.IsEnabled = false;
                     startButton.BorderColor = Color.White;
 
                     stopButton.BorderColor = Color.White;
                     stopButton.IsEnabled = true;
                     stopButton.TextColor = Color.Black;
-                    stopButton.ImageSource = "stopicon.png";
+                    stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopicon.png" : "stopicon.png";
 
                     hoursEntry.IsReadOnly = true;
                     minuteEntry.IsReadOnly = true;
@@ -1600,12 +1601,12 @@ namespace ProteusMMX.Views.Workorder
                 else
                 {
                     stopButton.TextColor = Color.Gray;
-                    stopButton.ImageSource = "stopcomplate.png";
+                    stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopcomplate.png" : "stopcomplate.png";
                     stopButton.IsEnabled = false;
                     stopButton.BorderColor = Color.White;
 
                     startButton.TextColor = Color.Black;
-                    startButton.ImageSource = "starticon.png";
+                    startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon.png" : "starticon.png";
                     startButton.IsEnabled = true;
                     startButton.BorderColor = Color.White;
                     hoursEntry.IsReadOnly = false;
@@ -1736,14 +1737,14 @@ namespace ProteusMMX.Views.Workorder
                             startDate.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                         }
                         startButton.TextColor = Color.Green;
-                        startButton.ImageSource = "starticon1.png";
+                        startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png";
                         startButton.IsEnabled = false;
                         startButton.BorderColor = Color.Transparent;
 
                         stopButton.BorderColor = Color.Transparent;
                         stopButton.IsEnabled = true;
                         stopButton.TextColor = Color.Black;
-                        stopButton.ImageSource = "stopicon.png";
+                        stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopicon.png" : "stopicon.png";
 
                         if (response.WorkOrderInspectionDetailsID != null)
                         {
@@ -1952,12 +1953,12 @@ namespace ProteusMMX.Views.Workorder
 
                         }
                         stopButton.TextColor = Color.Gray;
-                        stopButton.ImageSource = "stopcomplate.png";
+                        stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopcomplate.png" : "stopcomplate.png";
                         stopButton.IsEnabled = false;
                         stopButton.BorderColor = Color.Transparent;
 
                         startButton.TextColor = Color.Black;
-                        startButton.ImageSource = "starticon.png";
+                        startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon.png" : "starticon.png";
                         startButton.IsEnabled = true;
                         startButton.BorderColor = Color.Transparent;
                         //this.BackgroundColor = Color.White;
@@ -2650,7 +2651,7 @@ namespace ProteusMMX.Views.Workorder
                             GenerateAnswerText(item);
 
                             MChoiceSlLavel.Children.Add(Label);
-                            Layout = new CustomPicker() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = "unnamed" };
+                            Layout = new CustomPicker() { VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = (Device.RuntimePlatform == Device.UWP) ? "Assets/unnamed" : "unnamed" };
 
                             if (!string.IsNullOrWhiteSpace(item.Option1))
                                 (Layout as CustomPicker).Items.Add(item.Option1);
@@ -2711,10 +2712,10 @@ namespace ProteusMMX.Views.Workorder
                     }
                     #region ***** Buttons ***
 
-                    var btnsave = new Button() { BackgroundColor = Color.White, ImageSource = "saveicon1.png" };
+                    var btnsave = new Button() { BackgroundColor = Color.White, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/saveicon1.png" : "saveicon1.jpg" };
                     btnsave.Clicked += Btnsave_Clicked;
 
-                    var btnDelete = new Button() { BackgroundColor = Color.White, ImageSource = "delIcon1.png", StyleId = item.InspectionID.ToString() };
+                    var btnDelete = new Button() { BackgroundColor = Color.White, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/delIcon1.png" : "delIcon1.jpg", StyleId = item.InspectionID.ToString() };
                     btnDelete.Clicked += BtnDelete_Clicked;
                     if (InspectionRRight == "N")
                     {
@@ -2751,7 +2752,7 @@ namespace ProteusMMX.Views.Workorder
                         {
                             imageView.HeightRequest = 150;
                         }
-                        var addSignatureButton = new Button() { BackgroundColor = Color.White,  ImageSource = "signature.png" };
+                        var addSignatureButton = new Button() { BackgroundColor = Color.White,  ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/signature.png" : "signature.jpg" };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
                         Case1Grid.Children.Add(btnsave, 2, 1);
                         Case1Grid.Children.Add(btnDelete, 3, 1);
@@ -3141,7 +3142,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 GenerateAnswerText(item1);
 
-                                var Layoutm = new CustomPicker() { WidthRequest = 100, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = "unnamed" };
+                                var Layoutm = new CustomPicker() { WidthRequest = 100, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = (Device.RuntimePlatform == Device.UWP) ? "Assets/unnamed.png" : "unnamed.jpg"};
 
                                 if (!string.IsNullOrWhiteSpace(item1.Option1))
                                     (Layoutm as CustomPicker).Items.Add(item1.Option1);
@@ -3198,10 +3199,10 @@ namespace ProteusMMX.Views.Workorder
                         GroupSecSlCase1.Children.Add(GroupSecExpCase1);
                     }
 
-                    var btnsave = new Button() { BackgroundColor = Color.White, HeightRequest = 40, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = "saveicon1.png" };
+                    var btnsave = new Button() { BackgroundColor = Color.White, HeightRequest = 40, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/saveicon1.png" : "saveicon1.jpg" };
                     btnsave.Clicked += BtnSaveSection_Clicked;
                     string Sid = item.SectionID.ToString();
-                    var btnDelete = new Button() { BackgroundColor = Color.White, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = "delIcon1.png", StyleId = Sid };
+                    var btnDelete = new Button() { BackgroundColor = Color.White, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/delIcon1.png" : "delIcon1.jpg", StyleId = Sid };
                     btnDelete.Clicked += BtnSectionDelete_Clicked;
                     if (InspectionRRight == "N")
                     {
@@ -3239,7 +3240,7 @@ namespace ProteusMMX.Views.Workorder
                         }
 
                         //var addSignatureButton = new SfButton() {  BackgroundColor = Color.LightGray, ShowIcon = true, ImageSource = "signature.png"};
-                        var addSignatureButton = new Button() { BackgroundColor = Color.White, ImageSource = "signature.png" };
+                        var addSignatureButton = new Button() { BackgroundColor = Color.White, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/signature.png" : "signature.jpg" };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
                         // layout2.Children.Add(addSignatureButton);
                         Case1Grid.Children.Add(btnsave, 2, 1);
