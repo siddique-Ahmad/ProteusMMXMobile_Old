@@ -6717,19 +6717,19 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 {
                     if (Decline == "N" && Accept == "N")
                     {
-                        response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                        response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
                     }
                     else if (Decline == "N")
                     {
-                        response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AcceptTitle, LogoutTitle });
+                        response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { AcceptTitle, LogoutTitle });
                     }
                     else if (Accept == "N")
                     {
-                        response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { DeclineTitle, LogoutTitle });
+                        response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { DeclineTitle, LogoutTitle });
                     }
                     else
                     {
-                        response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AcceptTitle, DeclineTitle, LogoutTitle });
+                        response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { AcceptTitle, DeclineTitle, LogoutTitle });
                     }
 
                     if (response == LogoutTitle)

@@ -442,6 +442,8 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
         public ICommand DocCommand => new AsyncCommand(OpenDoc);
         public ICommand CameraCommand => new AsyncCommand(OpenMedia);
+
+        public ICommand GalleryCommand => new AsyncCommand(OpenGallery);
         public ICommand DeleteCommand => new AsyncCommand(DeleteAttachment);
         public ICommand SaveCommand => new AsyncCommand(SaveAttachment);
 
@@ -817,7 +819,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -909,47 +911,55 @@ namespace ProteusMMX.ViewModel.Workorder
             }
 
         }
+        public async Task OpenGallery()
+        {
+            IsDataRequested = true;
+            await PickPhoto();
+        }
+            
         public async Task OpenMedia()
         {
-            try
-            {
-                List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery")};
-                var selected = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("ChooseFile"), SelectTitle, CancelTitle, choice.ToArray());
-                if (selected != null && !selected.Equals(WebControlTitle.GetTargetNameByTitleName("Cancel")))
-                {
+            IsDataRequested = true;
+            await TakePhoto();
+            //try
+            //{
+            //    List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery")};
+            //    var selected = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("ChooseFile"), SelectTitle, CancelTitle, choice.ToArray());
+            //    if (selected != null && !selected.Equals(WebControlTitle.GetTargetNameByTitleName("Cancel")))
+            //    {
 
-                    if (selected.Equals(WebControlTitle.GetTargetNameByTitleName("Camera")))
-                    {
-                        IsDataRequested = true;
-                        await TakePhoto();
-                    }
-                    //else
-                    //{
-                    //    IsDataRequested = true;
-                    //    await PickPhoto();
-                    //}
-                    else if (selected.Equals(WebControlTitle.GetTargetNameByTitleName("Gallery")))
-                    {
-                        IsDataRequested = true;
-                        await PickPhoto();
-                    }
-                    else
-                    {
-                        IsDataRequested = true;
-                        await PickFile();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+            //        if (selected.Equals(WebControlTitle.GetTargetNameByTitleName("Camera")))
+            //        {
+            //            IsDataRequested = true;
+            //            await TakePhoto();
+            //        }
+            //        //else
+            //        //{
+            //        //    IsDataRequested = true;
+            //        //    await PickPhoto();
+            //        //}
+            //        else if (selected.Equals(WebControlTitle.GetTargetNameByTitleName("Gallery")))
+            //        {
+            //            IsDataRequested = true;
+            //            await PickPhoto();
+            //        }
+            //        else
+            //        {
+            //            IsDataRequested = true;
+            //            await PickFile();
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
 
-                OperationInProgress = false;
-            }
+            //    OperationInProgress = false;
+            //}
 
-            finally
-            {
-                OperationInProgress = false;
-            }
+            //finally
+            //{
+            //    OperationInProgress = false;
+            //}
 
         }
 

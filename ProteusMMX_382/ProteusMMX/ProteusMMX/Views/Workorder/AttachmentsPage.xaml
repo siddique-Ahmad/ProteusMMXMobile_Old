@@ -113,38 +113,60 @@
                          
 
                             <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                                <Image IsVisible="{Binding AttachmentCameraButtonIsVisible}" IsEnabled="{Binding AttachmentCameraButtonIsEnabled}" x:Name="CameraButton"  >
+                                <Image IsVisible="{Binding AttachmentCameraButtonIsVisible}" IsEnabled="{Binding AttachmentCameraButtonIsEnabled}" HeightRequest="60" WidthRequest="60" x:Name="CameraButton"  >
                                     <Image.Source>
                                         <OnPlatform x:TypeArguments="FileImageSource">
                                             <OnPlatform.iOS>
-                                                <FileImageSource File="Browse.png"/>
+                                                <FileImageSource File="search5.png"/>
                                             </OnPlatform.iOS>
                                             <OnPlatform.Android>
-                                                <FileImageSource File="Browse.png"/>
+                                                <FileImageSource File="search5.png"/>
                                             </OnPlatform.Android>
                                             <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/Browse.png"/>
+                                                <FileImageSource File="Assets/search5.png"/>
                                             </OnPlatform.WinPhone>
                                         </OnPlatform>
                                     </Image.Source>
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer
-                                       Command="{Binding CameraCommand}" 
+                                       Command="{Binding GalleryCommand}" 
                                          NumberOfTapsRequired="1" />
                                     </Image.GestureRecognizers>
                                 </Image>
 
-                                <Image IsVisible="{Binding AttachmentDeleteButtonIsVisible}" IsEnabled="{Binding AttachmentDeleteButtonIsEnabled}" x:Name="DeleteButton" Source="Deletebtn.png">
+                                <Image IsVisible="{Binding AttachmentCameraButtonIsVisible}" IsEnabled="{Binding AttachmentCameraButtonIsEnabled}" HeightRequest="60" WidthRequest="60" Source="Camera.png">
                                     <Image.Source>
                                         <OnPlatform x:TypeArguments="FileImageSource">
                                             <OnPlatform.iOS>
-                                                <FileImageSource File="Deletebtn.png"/>
+                                                <FileImageSource File="Camera.png"/>
                                             </OnPlatform.iOS>
                                             <OnPlatform.Android>
-                                                <FileImageSource File="Deletebtn.png"/>
+                                                <FileImageSource File="Camera.png"/>
                                             </OnPlatform.Android>
                                             <OnPlatform.WinPhone>
-                                                <FileImageSource File="Assets/Deletebtn.png"/>
+                                                <FileImageSource File="Assets/Camera.png"/>
+                                            </OnPlatform.WinPhone>
+                                        </OnPlatform>
+                                    </Image.Source>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            
+                                         Command="{Binding CameraCommand}" 
+                                         NumberOfTapsRequired="1" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                                <Image IsVisible="{Binding AttachmentDeleteButtonIsVisible}" IsEnabled="{Binding AttachmentDeleteButtonIsEnabled}" x:Name="DeleteButton" HeightRequest="60" WidthRequest="60" Source="delIcon1.png">
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="FileImageSource">
+                                            <OnPlatform.iOS>
+                                                <FileImageSource File="delIcon1.png"/>
+                                            </OnPlatform.iOS>
+                                            <OnPlatform.Android>
+                                                <FileImageSource File="delIcon1.png"/>
+                                            </OnPlatform.Android>
+                                            <OnPlatform.WinPhone>
+                                                <FileImageSource File="Assets/delIcon1.png"/>
                                             </OnPlatform.WinPhone>
                                         </OnPlatform>
                                     </Image.Source>
