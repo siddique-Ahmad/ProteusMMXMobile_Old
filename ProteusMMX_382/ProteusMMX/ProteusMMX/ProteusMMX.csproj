@@ -41,7 +41,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NodaTime" Version="1.4.0" />
     <PackageReference Include="PCLCrypto" Version="2.0.147" />
-    <PackageReference Include="Rg.Plugins.Popup" Version="1.0.4" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.0.3" />
     <PackageReference Include="sqlite-net-pcl" Version="1.4.118" />
     <PackageReference Include="Syncfusion.Licensing" Version="19.3.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="19.3.0.48" />
