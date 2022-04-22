@@ -134,8 +134,8 @@
                                 </OnPlatform>
                             </Label.FontAttributes>
                         </Label>
-                        <border:SfBorder CornerRadius="5">
-                            <control1:CustomEntry x:Name="AdjustmentQuantity" Text="{Binding AdjustmentQuantityText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" IsEnabled="{Binding AdjustmentQuantityIsEnabled}" TextChanged="AdjustmentQuantity_TextChanged"></control1:CustomEntry>
+                        <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <control1:CustomEntry HeightRequest="50" x:Name="AdjustmentQuantity" Text="{Binding AdjustmentQuantityText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" IsEnabled="{Binding AdjustmentQuantityIsEnabled}" TextChanged="AdjustmentQuantity_TextChanged"></control1:CustomEntry>
                         </border:SfBorder>
                     </StackLayout>
 

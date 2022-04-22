@@ -234,7 +234,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     BackgroundColor = Color.Transparent,
                     TextColor = Color.Black,
                     CommandParameter = item,
-                    ImageSource = "Cstart.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/Cstart.png" : "Cstart.jpg",
                 };
                 StartBtnGrid.Children.Add(startButton, 0, 0);
 
@@ -261,7 +261,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     ShowIcon = true,
                     BackgroundColor = Color.White,
                     TextColor = Color.Black,
-                    ImageSource = "Cstop.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/Cstop.png" : "Cstop.jpg" ,
                     CommandParameter = item,
                 };
                 StopBtnGrid.Children.Add(stopButton);
@@ -556,7 +556,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     BackgroundColor = Color.Transparent,
                     TextColor = Color.Black,
                     CommandParameter = item,
-                    ImageSource = "Cstart.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/Cstart.png" : "Cstart.jpg",
                 };
                 StartBtnGrid.Children.Add(startButton, 0, 0);
 
@@ -583,7 +583,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     ShowIcon = true,
                     BackgroundColor = Color.White,
                     TextColor = Color.Black,
-                    ImageSource = "Cstop.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/Cstop.png" : "Cstop.jpg" ,
                     CommandParameter = item,
                 };
                 StopBtnGrid.Children.Add(stopButton);

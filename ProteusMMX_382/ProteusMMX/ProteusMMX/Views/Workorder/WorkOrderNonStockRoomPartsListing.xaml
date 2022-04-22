@@ -63,8 +63,10 @@
                 </border:SfBorder>
                 <Image Grid.Column="1" Grid.Row="0" HeightRequest="40">
                     <Image.Source>
-                        <OnPlatform x:TypeArguments="ImageSource" >
-                            <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                        <OnPlatform x:TypeArguments="ImageSource">
+                            <On Platform="Android,iOS" Value="ssbicon.png" />
+                            <On Platform="UWP" Value="Assets/ssbicon.png" />
+                            <On Platform="WinPhone" Value="Assets/ssbicon.png" />
                         </OnPlatform>
                     </Image.Source>
                     <Image.GestureRecognizers>

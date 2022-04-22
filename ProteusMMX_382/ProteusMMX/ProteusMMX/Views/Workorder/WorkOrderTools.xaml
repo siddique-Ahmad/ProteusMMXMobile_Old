@@ -127,6 +127,7 @@
                         <OnPlatform x:TypeArguments="ImageSource" >
                             <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
                             <OnPlatform.iOS>ssbicon.png</OnPlatform.iOS>
+                            <OnPlatform.WinPhone>Assets/ssbicon.png</OnPlatform.WinPhone>
                         </OnPlatform>
                     </Image.Source>
                     <Image.GestureRecognizers>

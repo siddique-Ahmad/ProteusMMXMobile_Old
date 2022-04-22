@@ -83,6 +83,7 @@
                             <OnPlatform x:TypeArguments="ImageSource" >
                                 <OnPlatform.Android>barcerch.png</OnPlatform.Android>
                                 <OnPlatform.iOS>barcerch.png</OnPlatform.iOS>
+                                <OnPlatform.WinPhone>Assets/barcerch.png</OnPlatform.WinPhone>
                             </OnPlatform>
                         </Image.Source>
                         <Image.GestureRecognizers>

@@ -64,7 +64,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                    <control1:CustomEntry
+                    <control1:CustomEntry 
                 Placeholder="{Binding SearchPlaceholder}"  Text="{Binding SearchText}" />
                 </border:SfBorder>
                 <Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource TargetButtonStyle}" Command="{Binding ScanCommand}" />

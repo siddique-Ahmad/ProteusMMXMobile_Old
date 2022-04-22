@@ -74,6 +74,9 @@
                                         <OnPlatform.iOS>
                                             <FileImageSource File="searchicon.png"/>
                                         </OnPlatform.iOS>
+                                        <OnPlatform.WinPhone>
+                                            <FileImageSource File="Assets/searchicon.png"/>
+                                        </OnPlatform.WinPhone>
                                     </OnPlatform>
                                 </Image.Source>
                                 <Image.GestureRecognizers>

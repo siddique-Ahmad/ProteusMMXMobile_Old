@@ -73,6 +73,7 @@
                                             <OnPlatform.iOS>
                                                 <FileImageSource File="searchicon.png"/>
                                             </OnPlatform.iOS>
+                                            <OnPlatform.WinPhone>Assets/searchicon.png</OnPlatform.WinPhone>
                                         </OnPlatform>
                                         
                                     </Image.Source>

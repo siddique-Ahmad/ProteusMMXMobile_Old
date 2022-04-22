@@ -40,6 +40,14 @@
 
                     <border:SfBorder BorderColor="Black" CornerRadius="5" HeightRequest="40" BorderWidth="1" Grid.Row="1"  >
                         <buttons:SfButton BackgroundColor="White" TextColor="Black"  Text="{Binding PriorityName}" ImageSource="unnamed.png" ShowIcon="True" ImageAlignment="End" Command="{Binding PriorityCommand}"  >
+                            <buttons:SfButton.ImageSource>
+                                <OnPlatform x:TypeArguments="FontImageSource">
+                                    <On Platform="Android,iOS" Value="unnamed.png" />
+                                    <On Platform="UWP" Value="Assets/unnamed.png" />
+                                    <On Platform="WinPhone" Value="Assets/unnamed.png" />
+                                </OnPlatform>
+                            </buttons:SfButton.ImageSource>
+
                         </buttons:SfButton>
                     </border:SfBorder>
                     
