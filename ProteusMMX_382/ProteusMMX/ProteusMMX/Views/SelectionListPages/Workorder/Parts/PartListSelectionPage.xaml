@@ -4,7 +4,7 @@
               xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              xmlns:control1="clr-namespace:ProteusMMX.Controls"
-             x:Class="ProteusMMX.Views.SelectionListPages.Workorder.Parts.PartListSelectionPage" NavigationPage.HasNavigationBar="False">
+             x:Class="ProteusMMX.Views.SelectionListPages.Workorder.Parts.PartListSelectionPage" >
     <ContentPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

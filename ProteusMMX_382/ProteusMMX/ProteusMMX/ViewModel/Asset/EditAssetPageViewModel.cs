@@ -6839,7 +6839,7 @@ namespace ProteusMMX.ViewModel.Asset
 
                 if (Issue=="E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -6865,7 +6865,7 @@ namespace ProteusMMX.ViewModel.Asset
                 }
                 else if (Issue == "V")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -6878,7 +6878,7 @@ namespace ProteusMMX.ViewModel.Asset
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
 
                     if (response == LogoutTitle)
                     {

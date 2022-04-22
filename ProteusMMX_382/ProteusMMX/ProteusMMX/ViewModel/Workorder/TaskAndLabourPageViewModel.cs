@@ -628,7 +628,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     DisabledTextIsEnable = true;
                     TaskLabourSearchBoxIsEnable = false;
                     TaskLabourSearchButtonIsEnable = false;
-                    //var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                    //var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
                     //if (response == LogoutTitle)
                     //{
                     //  await _authenticationService.LogoutAsync();
@@ -3122,7 +3122,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     if (CreateTask == "E")
                     {
-                        var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AddTaskTitle, LogoutTitle });
+                        var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { AddTaskTitle, LogoutTitle });
 
                         if (response == LogoutTitle)
                         {
@@ -3139,7 +3139,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
                     else if (CreateTask == "V")
                     {
-                        var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AddTaskTitle, LogoutTitle });
+                        var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { AddTaskTitle, LogoutTitle });
 
                         if (response == LogoutTitle)
                         {
@@ -3151,7 +3151,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
                     else
                     {
-                        var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                        var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                         if (response == LogoutTitle)
                         {
@@ -3165,7 +3165,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
