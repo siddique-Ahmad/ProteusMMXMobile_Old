@@ -3,11 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.ServiceRequest.ServiceRequestListingPage"
               xmlns:templates="clr-namespace:ProteusMMX.Views.ServiceRequest.Templates;assembly=ProteusMMX"
-             xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-             xmlns:viewCells="clr-namespace:ProteusMMX.Views.ServiceRequest.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             xmlns:control1="clr-namespace:ProteusMMX.Controls"
              Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
     <ContentPage.Resources>
@@ -68,13 +65,13 @@
                             </border:SfBorder>
                             <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0">
                                 <Image.Source>
-                                    <OnPlatform x:TypeArguments="ImageSource" >
-                                        <OnPlatform.Android>searchicon.png</OnPlatform.Android>
-                                        <OnPlatform.iOS>
-                                            <FileImageSource File="searchicon.png"/>
-                                        </OnPlatform.iOS>
+                                    <OnPlatform x:TypeArguments="ImageSource">
+                                        <On Platform="Android,iOS" Value="searchicon.png" />
+                                        <On Platform="UWP" Value="Assets/searchicon.png" />
+                                        <On Platform="WinPhone" Value="Assets/searchicon.png" />
                                     </OnPlatform>
                                 </Image.Source>
+                               
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer
                                          Command="{Binding ScanCommand}"
