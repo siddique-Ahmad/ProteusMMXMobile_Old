@@ -178,13 +178,13 @@
                                         </richtexteditor:SfRichTextEditor>
                                             
                                         </StackLayout>
-                                        <Label  IsVisible="{Binding MoreDescriptionTextIsEnable}"  HeightRequest="25" Padding="0,-5,0,0" BackgroundColor="Transparent"  Text="{Binding MoreText}" HorizontalTextAlignment="End" TextColor="#006de0" FontAttributes="Bold" >
+                                        <!--<Label  IsVisible="{Binding MoreDescriptionTextIsEnable}"  HeightRequest="25" Padding="0,-5,0,0" BackgroundColor="Transparent"  Text="{Binding MoreText}" HorizontalTextAlignment="End" TextColor="#006de0" FontAttributes="Bold" >
                                             <Label.GestureRecognizers>
                                                 <TapGestureRecognizer
                                         Command="{Binding TapCommand1}"
                                          NumberOfTapsRequired="1" />
                                             </Label.GestureRecognizers>
-                                        </Label>
+                                        </Label>-->
                                     </StackLayout>
                                 </border:SfBorder>
                                 
