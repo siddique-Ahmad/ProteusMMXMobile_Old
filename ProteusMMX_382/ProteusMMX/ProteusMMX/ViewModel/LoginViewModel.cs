@@ -741,6 +741,7 @@ namespace ProteusMMX.ViewModel
 
         public async Task InitializeTranslations()
         {
+            
             var translations = await _webControlTitlesService.GetWebControlTitles(AppSettings.User.UserID.ToString());
 
             if (translations != null && translations.listWebControlTitles != null)
