@@ -411,7 +411,7 @@ namespace ProteusMMX.Views.Workorder
 
             Image InspectionButtonImage = new Image
             {
-                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection1.png" : "Inspection1.jpg" ,
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection1.png" : "Inspection1.png" ,
                 HeightRequest = 25
             };
 
@@ -447,7 +447,7 @@ namespace ProteusMMX.Views.Workorder
 
             Image EmployeeButtonImage = new Image
             {
-                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection2.png" : "Inspection2.jpg" ,
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection2.png" : "Inspection2.png" ,
                 HeightRequest = 25
             };
 
@@ -484,7 +484,7 @@ namespace ProteusMMX.Views.Workorder
             InspectionButtonGrid.Children.Add(AddContractorButtonSL, 2, 0);
             Image ContractorButtonImage = new Image
             {
-                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection3.png" : "Inspection3.jpg",
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection3.png" : "Inspection3.png",
                 HeightRequest = 25
             };
 
@@ -527,7 +527,7 @@ namespace ProteusMMX.Views.Workorder
             InspectionButtonGrid.Children.Add(CreateWorkorderButtonSL, 3, 0);
             Image WorkorderButtonImage = new Image
             {
-                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/workorder1.png" : "workorder1.jpg" ,
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/workorder1.png" : "workorder1.png" ,
                 HeightRequest = 25
             };
 
@@ -2712,10 +2712,10 @@ namespace ProteusMMX.Views.Workorder
                     }
                     #region ***** Buttons ***
 
-                    var btnsave = new Button() { BackgroundColor = Color.White, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/saveicon1.png" : "saveicon1.jpg" };
+                    var btnsave = new Button() { BackgroundColor = Color.White, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/saveicon1.png" : "saveicon1.png" };
                     btnsave.Clicked += Btnsave_Clicked;
 
-                    var btnDelete = new Button() { BackgroundColor = Color.White, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/delIcon1.png" : "delIcon1.jpg", StyleId = item.InspectionID.ToString() };
+                    var btnDelete = new Button() { BackgroundColor = Color.White, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/delIcon1.png" : "delIcon1.png", StyleId = item.InspectionID.ToString() };
                     btnDelete.Clicked += BtnDelete_Clicked;
                     if (InspectionRRight == "N")
                     {
@@ -2752,7 +2752,7 @@ namespace ProteusMMX.Views.Workorder
                         {
                             imageView.HeightRequest = 150;
                         }
-                        var addSignatureButton = new Button() { BackgroundColor = Color.White,  ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/signature.png" : "signature.jpg" };
+                        var addSignatureButton = new Button() { BackgroundColor = Color.White,  ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/signature.png" : "signature.png" };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
                         Case1Grid.Children.Add(btnsave, 2, 1);
                         Case1Grid.Children.Add(btnDelete, 3, 1);
@@ -3142,7 +3142,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 GenerateAnswerText(item1);
 
-                                var Layoutm = new CustomPicker() { WidthRequest = 100, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = (Device.RuntimePlatform == Device.UWP) ? "Assets/unnamed.png" : "unnamed.jpg"};
+                                var Layoutm = new CustomPicker() { WidthRequest = 100, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = (Device.RuntimePlatform == Device.UWP) ? "Assets/unnamed.png" : "unnamed.png"};
 
                                 if (!string.IsNullOrWhiteSpace(item1.Option1))
                                     (Layoutm as CustomPicker).Items.Add(item1.Option1);
@@ -3199,10 +3199,10 @@ namespace ProteusMMX.Views.Workorder
                         GroupSecSlCase1.Children.Add(GroupSecExpCase1);
                     }
 
-                    var btnsave = new Button() { BackgroundColor = Color.White, HeightRequest = 40, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/saveicon1.png" : "saveicon1.jpg" };
+                    var btnsave = new Button() { BackgroundColor = Color.White, HeightRequest = 40, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/saveicon1.png" : "saveicon1.png" };
                     btnsave.Clicked += BtnSaveSection_Clicked;
                     string Sid = item.SectionID.ToString();
-                    var btnDelete = new Button() { BackgroundColor = Color.White, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/delIcon1.png" : "delIcon1.jpg", StyleId = Sid };
+                    var btnDelete = new Button() { BackgroundColor = Color.White, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/delIcon1.png" : "delIcon1.png", StyleId = Sid };
                     btnDelete.Clicked += BtnSectionDelete_Clicked;
                     if (InspectionRRight == "N")
                     {
@@ -3240,7 +3240,7 @@ namespace ProteusMMX.Views.Workorder
                         }
 
                         //var addSignatureButton = new SfButton() {  BackgroundColor = Color.LightGray, ShowIcon = true, ImageSource = "signature.png"};
-                        var addSignatureButton = new Button() { BackgroundColor = Color.White, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/signature.png" : "signature.jpg" };
+                        var addSignatureButton = new Button() { BackgroundColor = Color.White, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/signature.png" : "signature.png" };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
                         // layout2.Children.Add(addSignatureButton);
                         Case1Grid.Children.Add(btnsave, 2, 1);

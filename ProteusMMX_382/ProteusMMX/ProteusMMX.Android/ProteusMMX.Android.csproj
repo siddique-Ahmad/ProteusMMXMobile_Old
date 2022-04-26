@@ -65,7 +65,7 @@
     <AndroidCreatePackagePerAbi>false</AndroidCreatePackagePerAbi>
     <AndroidDexTool>d8</AndroidDexTool>
     <AndroidLinkTool>r8</AndroidLinkTool>
-    <AndroidPackageFormat>aab</AndroidPackageFormat>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
     <MandroidI18n />
     <AndroidEnableMultiDex>false</AndroidEnableMultiDex>
     <AndroidUseAapt2>true</AndroidUseAapt2>

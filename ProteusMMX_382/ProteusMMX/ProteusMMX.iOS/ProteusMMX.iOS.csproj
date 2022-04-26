@@ -120,9 +120,12 @@
   <ItemGroup>
     <Compile Include="CustomRenderer\CustomPickerRenderer.cs" />
     <Compile Include="CustomRenderer\EditorCustomRenderer.cs" />
+    <Compile Include="CustomRenderer\ExtendedTabbedPageRenderer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CustomRenderer\FontManager.cs" />
     <Compile Include="CustomRenderer\ImageEntryRenderer.cs" />
     <Compile Include="CustomRenderer\PickerWithIconRenderer.cs" />
-    <Compile Include="CustomRenderer\TabbedPageRenderer.cs" />
     <Compile Include="DependencyService\PDFViewer.cs" />
     <Compile Include="DependencyService\SimpleStorage.cs" />
     <Compile Include="Main.cs" />
@@ -479,6 +482,7 @@
     <Content Include="Resources\stopicon1.png" />
     <Content Include="Resources\stoppending.png" />
     <Content Include="Resources\submitbtn.png" />
+    <BundleResource Include="Resources\takephoto.png" />
     <Content Include="Resources\tel1.png" />
     <Content Include="Resources\tel2.png" />
     <Content Include="Resources\tel3.png" />
