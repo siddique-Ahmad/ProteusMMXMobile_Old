@@ -98,7 +98,7 @@
                                     </Label>
                                     <!--<Editor Text="{Binding AssetNameText}" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}"/>-->
                                     <border:SfBorder CornerRadius="5">
-                                        <Control1:UnderLineEditor Text="{Binding AssetNameText}" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}"></Control1:UnderLineEditor>
+                                            <richtexteditor:SfRichTextEditor Text="{Binding AssetNameText}" PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" IsEnabled="{Binding AssetIsEnable , Mode=TwoWay}" HeightRequest="60"></richtexteditor:SfRichTextEditor>
                                     </border:SfBorder>
                                 </StackLayout>
 
@@ -113,13 +113,13 @@
                                     </Label>
                                     <!--<Editor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"/>-->
                                     <border:SfBorder CornerRadius="5">
-                                        <Control1:UnderLineEditor Text="{Binding AssetNumberText}" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}"></Control1:UnderLineEditor>
+                                            <richtexteditor:SfRichTextEditor Text="{Binding AssetNumberText}" PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" IsEnabled="{Binding AssetNumberIsEnable, Mode=TwoWay}" HeightRequest="60"></richtexteditor:SfRichTextEditor>
                                     </border:SfBorder>
                                 </StackLayout>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="1">
-                                <border:SfBorder BorderColor="Black" CornerRadius="5">
+                            <StackLayout  Orientation="Vertical" Spacing="0" Grid.Row="0" Grid.Column="1">
+                                    <border:SfBorder Padding="0,18,0,0" BorderColor="Black" CornerRadius="5">
                                 <Image HeightRequest="160" WidthRequest="100"  Source="{Binding AttachmentImageSource}"/>
                                 </border:SfBorder>
                             </StackLayout>

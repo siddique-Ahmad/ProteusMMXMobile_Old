@@ -96,6 +96,7 @@
                                 <SearchBar HeightRequest="40"  Placeholder="{Binding CloseWorkorderByWorkorderNumberPlaceholderText}" Text="{Binding CloseWorkorderByWorkorderNumberText}"/>
 
                             </border:SfBorder>
+                            
                             <Image Grid.Column="1" Grid.Row="1" HeightRequest="40" Margin="0,5,0,0">
                                 <Image.Source>
                                     <OnPlatform x:TypeArguments="ImageSource">
@@ -111,11 +112,11 @@
                                 </Image.GestureRecognizers>
                             </Image>
                             
-
                             <border:SfBorder CornerRadius="5"  Grid.Row="2" Grid.Column="0">
                                 <SearchBar HeightRequest="40"  Placeholder="{Binding CloseWorkorderByLocationPlaceholderText}" Text="{Binding CloseWorkorderByLocationText}" IsVisible="{Binding LocationPlaceholderLicensingVisibility}"/>
 
                             </border:SfBorder>
+                            
                             <Image Grid.Column="1" Grid.Row="2" HeightRequest="40" Margin="0,5,0,0" IsVisible="{Binding LocationPlaceholderLicensingVisibility}">
                                 <Image.Source>
                                     <OnPlatform x:TypeArguments="ImageSource">
@@ -135,6 +136,7 @@
                                 <SearchBar HeightRequest="40"  Placeholder="{Binding CloseWorkorderByPartNumberPlaceholderText}" Text="{Binding CloseWorkorderByPartNumberText}" IsVisible="{Binding PartPlaceholderLicensingVisibility}"/>
 
                             </border:SfBorder>
+                            
                             <Image Grid.Column="1" Grid.Row="3" HeightRequest="40" Margin="0,5,0,0" IsVisible="{Binding PartPlaceholderLicensingVisibility}">
                                 <Image.Source>
                                     <OnPlatform x:TypeArguments="ImageSource">
@@ -149,8 +151,8 @@
                                          NumberOfTapsRequired="1" />
                                 </Image.GestureRecognizers>
                             </Image>
-                            <border:SfBorder Grid.Row="4"  Grid.ColumnSpan="2">
-                            <StackLayout >
+                            <border:SfBorder Grid.Row="4"   Grid.ColumnSpan="2">
+                            <StackLayout Padding="5,0,0,0">
                             <Grid >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -178,7 +180,7 @@
                                 
 
                            
-                            <Button Grid.Row="5" Grid.Column="0" CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}"  Command="{Binding SearchCloseWorkorderByDateCommand}"/>
+                            <Button Grid.Row="5" Grid.Column="0"  CornerRadius="5" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}"  Command="{Binding SearchCloseWorkorderByDateCommand}"/>
                             </StackLayout>
                             </border:SfBorder>
                         </Grid>
