@@ -42,6 +42,9 @@
                                 <Image.Source>
                                     <OnPlatform x:TypeArguments="ImageSource" >
                                         <OnPlatform.Android>searchicon.png</OnPlatform.Android>
+                                        <OnPlatform.iOS>searchicon.png</OnPlatform.iOS>
+                                        <OnPlatform.WinPhone>Assets/searchicon.png</OnPlatform.WinPhone>
+                                     
                                     </OnPlatform>
                                 </Image.Source>
                                 <Image.GestureRecognizers>
