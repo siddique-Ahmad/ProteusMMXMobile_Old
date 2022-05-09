@@ -51,7 +51,7 @@
                     </Grid.RowDefinitions>
                 
                 <border:SfBorder  Grid.Row="0" BorderColor="#006de0" CornerRadius="0,0,20,20" BackgroundColor="#006de0"  >
-                    <Label  VerticalOptions="CenterAndExpand" FontSize="Medium" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,0" HorizontalOptions="CenterAndExpand" Text="{Binding WelcomeTextTitle}"></Label>
+                    <Label  VerticalOptions="CenterAndExpand" FontSize="Medium"   TextColor="White" Margin="0,0,0,0" HorizontalOptions="CenterAndExpand" Text="{Binding WelcomeTextTitle}"></Label>
                 </border:SfBorder>
             </Grid>            
         </StackLayout>

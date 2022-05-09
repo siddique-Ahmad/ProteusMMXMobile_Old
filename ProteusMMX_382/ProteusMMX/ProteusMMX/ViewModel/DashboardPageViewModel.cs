@@ -689,15 +689,7 @@ namespace ProteusMMX.ViewModel
         public async Task SetTitlesPropertiesForPage()
         {
 
-            if (Device.RuntimePlatform == Device.UWP)
-            {
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("Dashboard") + (WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.User.UserName).PadLeft(90);
-            }
-
-            else
-            {
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("Dashboard");
-            }
+            PageTitle = WebControlTitle.GetTargetNameByTitleName("Dashboard");
             WelcomeTextTitle = AppSettings.User.UserName;
             LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
             CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
