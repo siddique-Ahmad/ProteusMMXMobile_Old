@@ -29,7 +29,7 @@
         </Style>-->
 
         <!--</ResourceDictionary>-->
-
+        <x:Double x:Key="AppBarExpandButtonThemeWidth">0</x:Double>
         <Style x:Key="EllipsisButton" TargetType="Button">
             <Setter Property="MaxWidth" Value="0"/>
         </Style>

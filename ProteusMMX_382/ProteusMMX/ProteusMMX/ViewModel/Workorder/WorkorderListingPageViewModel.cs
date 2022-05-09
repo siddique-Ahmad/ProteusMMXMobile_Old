@@ -40,7 +40,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         #endregion
-
+       
         #region Properties
         string EditRights;
         #region Page Properties
@@ -98,7 +98,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-
+      
         #endregion
 
         #region Title Properties
@@ -1020,6 +1020,59 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        string _inspectionOnlyTitle;
+        public string InspectionOnlyTitle
+        {
+            get
+            {
+                return _inspectionOnlyTitle;
+            }
+
+            set
+            {
+                if (value != _inspectionOnlyTitle)
+                {
+                    _inspectionOnlyTitle = value;
+                    OnPropertyChanged("InspectionOnlyTitle");
+                }
+            }
+        }
+
+        string _taskOnlyTitle;
+        public string TaskOnlyTitle
+        {
+            get
+            {
+                return _taskOnlyTitle;
+            }
+
+            set
+            {
+                if (value != _taskOnlyTitle)
+                {
+                    _taskOnlyTitle = value;
+                    OnPropertyChanged("TaskOnlyTitle");
+                }
+            }
+        }
+
+        string _completionTitle;
+        public string CompletionTitle
+        {
+            get
+            {
+                return _completionTitle;
+            }
+
+            set
+            {
+                if (value != _completionTitle)
+                {
+                    _completionTitle = value;
+                    OnPropertyChanged("CompletionTitle");
+                }
+            }
+        }
 
         string _emergencyMaintenanceTitle;
         public string EmergencyMaintenanceTitle
@@ -1438,8 +1491,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
             PreventiveMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("PreventiveMaintenance");
             DemandMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("DemandMaintenance");
-
             EmergencyMaintenanceTitle = WebControlTitle.GetTargetNameByTitleName("EmergencyMaintenance");
+
+            TaskOnlyTitle = WebControlTitle.GetTargetNameByTitleName("Task") +""+ WebControlTitle.GetTargetNameByTitleName("Only");
+            InspectionOnlyTitle = WebControlTitle.GetTargetNameByTitleName("Inspection") + "" + WebControlTitle.GetTargetNameByTitleName("Only");
+            CompletionTitle = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
 
             SortByActivationdateTitle = WebControlTitle.GetTargetNameByTitleName("SortByActivationdate");
 
@@ -1455,11 +1511,11 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                     {
-                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle,CompletionTitle,TaskOnlyTitle,InspectionOnlyTitle };
                     }
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle, CompletionTitle, TaskOnlyTitle, InspectionOnlyTitle };
                     }
                 }
 
@@ -1471,11 +1527,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                     {
-                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, CompletionTitle, TaskOnlyTitle, InspectionOnlyTitle };
                     }
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle, CompletionTitle, TaskOnlyTitle, InspectionOnlyTitle };
                     }
 
                 }
@@ -1486,11 +1542,11 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                 {
-                    PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                    PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, CompletionTitle, TaskOnlyTitle, InspectionOnlyTitle };
                 }
                 else
                 {
-                    PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
+                    PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle, CompletionTitle, TaskOnlyTitle, InspectionOnlyTitle };
                 }
 
             }
@@ -1602,8 +1658,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 UserDialogs.Instance.HideLoading();
             }
         }
+        
         public async Task SortByFilterAction()
         {
+
             try
             {
                 if (Device.RuntimePlatform != Device.UWP)
@@ -1679,6 +1737,51 @@ namespace ProteusMMX.ViewModel.Workorder
                         FilterBy = "filterNs.png";
                     }
                     WorkorderTypeFilterText = "FailedInspection";
+                    await RefillWorkorderCollection();
+                }
+
+                else if (response == CompletionTitle)
+                {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
+                    WorkorderTypeFilterText = "completiondate";
+                    await RefillWorkorderCollection();
+                }
+
+                else if (response == TaskOnlyTitle)
+                {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
+                    WorkorderTypeFilterText = "taskandlaboronly";
+                    await RefillWorkorderCollection();
+                }
+
+                else if (response == InspectionOnlyTitle)
+                {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
+                    WorkorderTypeFilterText = "inspectiononly";
                     await RefillWorkorderCollection();
                 }
 
@@ -2319,6 +2422,21 @@ namespace ProteusMMX.ViewModel.Workorder
             else if (SelectedPickerText == FailedInspectionTitle)
             {
                 WorkorderTypeFilterText = "FailedInspection";
+                await RefillWorkorderCollection();
+            }
+            else if (SelectedPickerText == CompletionTitle)
+            {
+                WorkorderTypeFilterText = "completiondate";
+                await RefillWorkorderCollection();
+            }
+            else if (SelectedPickerText == TaskOnlyTitle)
+            {
+                WorkorderTypeFilterText = "taskandlaboronly";
+                await RefillWorkorderCollection();
+            }
+            else if (SelectedPickerText == InspectionOnlyTitle)
+            {
+                WorkorderTypeFilterText = "inspectiononly";
                 await RefillWorkorderCollection();
             }
             else
