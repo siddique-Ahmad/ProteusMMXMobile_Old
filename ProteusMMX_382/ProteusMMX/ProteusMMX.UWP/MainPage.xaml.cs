@@ -23,7 +23,7 @@ namespace ProteusMMX.UWP
         public MainPage()
         {
             this.InitializeComponent();
-          //  Rg.Plugins.Popup.Popup.Init();
+            Rg.Plugins.Popup.Popup.Init();
             ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer.Init();
             LoadApplication(new ProteusMMX.App());
         }

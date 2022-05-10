@@ -29,7 +29,7 @@ namespace ProteusMMX.iOS
             UITabBar.Appearance.BarTintColor = UIColor.FromRGB(0, 109, 224);
             // Change the tint of the selected image and text
             UITabBar.Appearance.SelectedImageTintColor = UIColor.White;
-
+            Rg.Plugins.Popup.Popup.Init();
             global::Xamarin.Forms.Forms.Init();
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
             Syncfusion.XForms.iOS.Core.SfAvatarViewRenderer.Init();

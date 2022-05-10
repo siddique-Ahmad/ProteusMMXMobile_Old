@@ -103,7 +103,7 @@ namespace ProteusMMX.Views.Common
                     await DialogService.ShowAlertAsync(WebControlTitle.GetTargetNameByTitleName("InvalidCredentials"), WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("OK"));
                     return;
                 }
-                if (Application.Current.Properties.ContainsKey("CauseID"))
+                if (Application.Current.Properties.ContainsKey("CauseID") && Application.Current.Properties["CauseID"] != null)
                 {
                     try
                     {

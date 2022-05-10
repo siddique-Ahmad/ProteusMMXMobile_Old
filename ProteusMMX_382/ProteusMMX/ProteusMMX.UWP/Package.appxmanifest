@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="EagleTechnology.ProteusMMX38" Publisher="CN=0C36D2BB-E7A1-41A5-94B5-88504BCDB5AB" Version="1.1.37.0" />
+  <Identity Name="EagleTechnology.ProteusMMX38" Publisher="CN=SiddiqueNew" Version="1.1.39.0" />
   <mp:PhoneIdentity PhoneProductId="3b4fe948-13bd-491f-9d0b-c0361ce8bf19" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>ProteusMMX</DisplayName>
