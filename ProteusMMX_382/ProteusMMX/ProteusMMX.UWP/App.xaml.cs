@@ -26,7 +26,7 @@ using Syncfusion.XForms.UWP.Border;
 using Syncfusion.ListView.XForms.UWP;
 using Syncfusion.XForms.UWP.PopupLayout;
 using Acr.UserDialogs;
-
+using Popup = Rg.Plugins.Popup.Popup;
 namespace ProteusMMX.UWP
 {
     /// <summary>
@@ -80,14 +80,16 @@ namespace ProteusMMX.UWP
 
 
                 List<Assembly> assembliesToInclude = new List<Assembly>();
-                assembliesToInclude = Rg.Plugins.Popup.Popup.GetExtraAssemblies().ToList();
-               
+
+                //assembliesToInclude = Rg.Plugins.Popup.Popup.GetExtraAssemblies().ToList();
+                assembliesToInclude.Add(typeof(SfPopupLayoutRenderer).GetTypeInfo().Assembly);
+
                 assembliesToInclude.Add(typeof(SignaturePad.Forms.SignaturePadCanvasRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.ZXingScannerPage).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingBarcodeImageViewRenderer).GetTypeInfo().Assembly);
                 // assembliesToInclude.Add(typeof(CarouselView.FormsPlugin.UWP.CarouselViewRenderer).GetTypeInfo().Assembly);
-
+                assembliesToInclude.Add(typeof(Rg.Plugins.Popup.Windows.Renderers.PopupPageRenderer).GetTypeInfo().Assembly);
                 ///Syncfusion Assembly include/////////////////
                 assembliesToInclude.Add(typeof(SfButtonRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(SfBorderRenderer).GetTypeInfo().Assembly);
@@ -101,8 +103,10 @@ namespace ProteusMMX.UWP
                 assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Graphics.SfGradientViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Accordion.SfAccordionRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.EffectsView.SfEffectsViewRenderer).GetTypeInfo().Assembly);
+                assembliesToInclude.Add(typeof(SfListViewRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(SfPopupLayoutRenderer).GetTypeInfo().Assembly);
                 assembliesToInclude.Add(typeof(UserDialogs).GetTypeInfo().Assembly);
+
                 //IUserDialogs.Init();
                 //assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfButtonRenderer).GetTypeInfo().Assembly);
                 //assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.Buttons.SfCheckBoxRenderer).GetTypeInfo().Assembly);
@@ -129,11 +133,18 @@ namespace ProteusMMX.UWP
                 //assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.EffectsView.SfEffectsViewRenderer).GetTypeInfo().Assembly);
                 //assembliesToInclude.Add(typeof(Syncfusion.XForms.UWP.PopupLayout.SfPopupLayoutRenderer).GetTypeInfo().Assembly);
 
-
-
-                Xamarin.Forms.Forms.Init(e, assembliesToInclude);
-                Xamarin.Forms.DependencyService.Register<PDFViewer>();
                 Rg.Plugins.Popup.Popup.Init();
+                Xamarin.Forms.Forms.Init(e, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
+
+                //Popup.Init();
+
+
+                //Rg.Plugins.Popup.Popup.Init();
+
+                //Xamarin.Forms.Forms.Init(e, assembliesToInclude);
+
+                Xamarin.Forms.DependencyService.Register<PDFViewer>();
+               
                 //Xamarin.Forms.Forms.Init(e, Rg.Plugins.Popup.Popup.GetExtraAssemblies());
 
 

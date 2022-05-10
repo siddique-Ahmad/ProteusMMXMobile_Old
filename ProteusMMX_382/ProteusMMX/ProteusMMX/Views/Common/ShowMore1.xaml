@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
+                 x:Class="ProteusMMX.Views.ShowMore1" CloseWhenBackgroundIsClicked="True">
+
+    <AbsoluteLayout HorizontalOptions="EndAndExpand" VerticalOptions="StartAndExpand" Padding="0,55,20,0">
+        <border:SfBorder CornerRadius="5">
+            <StackLayout VerticalOptions="Center" Spacing="0" HorizontalOptions="Center">
+
+                <Label BackgroundColor="#006de0" HeightRequest="40" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="White" FontSize="Large" FontAttributes="Bold" Text="Sorting"/>
+                
+                <StackLayout Orientation="Vertical" VerticalOptions="Center" HeightRequest="120"  Padding="10,10,10,10" WidthRequest="250" BackgroundColor="White">
+                    <StackLayout.Resources>
+                        <ResourceDictionary Source="Style.xaml" />
+                    </StackLayout.Resources>                    
+                    <ListView x:Name="lst" ItemTapped="lst_ItemTapped"  ></ListView>
+                </StackLayout>
+            </StackLayout>
+        </border:SfBorder>
+    </AbsoluteLayout>
+</pages:PopupPage>

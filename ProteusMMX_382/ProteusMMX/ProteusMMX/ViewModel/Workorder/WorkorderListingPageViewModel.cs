@@ -1664,12 +1664,17 @@ namespace ProteusMMX.ViewModel.Workorder
 
             try
             {
-                if (Device.RuntimePlatform != Device.UWP)
+                //if (Device.RuntimePlatform != Device.UWP)
+                //{
+                //    UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                //    await Task.Delay(10);
+                //}
+                string response = string.Empty;
+                if (Application.Current.Properties.ContainsKey("WorkOFilterTypeKye"))
                 {
-                    UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                    await Task.Delay(10);
+                    response = Application.Current.Properties["WorkOFilterTypeKye"].ToString();
                 }
-                var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, PickerTitles);
+              //  var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, PickerTitles);
 
                 if (response == CancelTitle)
                 {
@@ -1808,19 +1813,25 @@ namespace ProteusMMX.ViewModel.Workorder
 
             finally
             {
-                UserDialogs.Instance.HideLoading();
+               // UserDialogs.Instance.HideLoading();
             }
         }
         public async Task SortByAction()
         {
             try
             {
-                if (Device.RuntimePlatform != Device.UWP)
+                //if (Device.RuntimePlatform != Device.UWP)
+                //{
+                //    UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                //    await Task.Delay(10);
+                //}
+
+                string response = string.Empty;
+                if (Application.Current.Properties.ContainsKey("SortingTypeKye"))
                 {
-                    UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                    await Task.Delay(10);
+                    response = Application.Current.Properties["SortingTypeKye"].ToString();
                 }
-                var response = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("SortByActivationdate"), SortByActivationdateTitle, CancelTitle, new ObservableCollection<string>() { AscendingTitle, DescendingTitle });
+
                 if (response == CancelTitle)
                 {
                     this.SelectedSortingText = null;
@@ -1885,7 +1896,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             finally
             {
-                UserDialogs.Instance.HideLoading();
+              //  UserDialogs.Instance.HideLoading();
                 //OperationInProgress = false;
             }
         }
@@ -2950,6 +2961,29 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
 
+                if (Application.Current.Properties.ContainsKey("SortingTypeKye"))
+                {
+                    var SortingType = Application.Current.Properties["SortingTypeKye"];
+                    if (SortingType != null)
+                    {
+                        await SortByAction();
+
+                    }
+
+                }
+
+                if (Application.Current.Properties.ContainsKey("WorkOFilterTypeKye"))
+                {
+                    var SortingType = Application.Current.Properties["WorkOFilterTypeKye"];
+                    if (SortingType != null)
+                    {
+                        await SortByFilterAction();
+
+                    }
+
+                }
+
+
                 if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
                 {
                     var Locationfilter = Application.Current.Properties["LocationFilterkey"];
@@ -3084,87 +3118,97 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 this.SearchText = null;
             }
-            else
-            {
-                ////Clear priority///
-                sortByPrioritypickerTitlesitems.Clear();
-                SortByPriorityPickerTitles.Clear();
-                PriorityNameFilterText = null;
-                WorkorderTypeFilterText = null;
-                ////Clear Shift///
-                sortByShiftpickerTitlesitems.Clear();
-                SortByShiftpickerTitles.Clear();
-                ShiftNameFilterText = null;
+            //else
+            //{
+            //    ////Clear priority///
+            //    sortByPrioritypickerTitlesitems.Clear();
+            //    SortByPriorityPickerTitles.Clear();
+            //    PriorityNameFilterText = null;
+            //    WorkorderTypeFilterText = null;
+            //    ////Clear Shift///
+            //    sortByShiftpickerTitlesitems.Clear();
+            //    SortByShiftpickerTitles.Clear();
+            //    ShiftNameFilterText = null;
 
 
-                ////Clear Location///
-                sortByLocationpickerTitlesitems.Clear();
-                SortByLocationpickerTitles.Clear();
-                LocationNameFilterText = null;
+            //    ////Clear Location///
+            //    sortByLocationpickerTitlesitems.Clear();
+            //    SortByLocationpickerTitles.Clear();
+            //    LocationNameFilterText = null;
 
-                ///Clear RequiredDate////
-                SortByDateText = null;
-                SortByDueDate = null;
+            //    ///Clear RequiredDate////
+            //    SortByDateText = null;
+            //    SortByDueDate = null;
 
-                this.SearchText = null;
+            //    this.SearchText = null;
 
-                if (Application.Current.Properties.ContainsKey("overdue"))
-                {
-                    Application.Current.Properties.Remove("overdue");
-                }
-                if (Application.Current.Properties.ContainsKey("weekly"))
-                {
-                    Application.Current.Properties.Remove("weekly");
-                }
-                if (Application.Current.Properties.ContainsKey("today"))
-                {
-                    Application.Current.Properties.Remove("today");
-                }
-                if (Application.Current.Properties.ContainsKey("PriorityID"))
-                {
-                    Application.Current.Properties.Remove("PriorityID");
-                }
+            //    //if (Application.Current.Properties.ContainsKey("overdue"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("overdue");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("weekly"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("weekly");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("today"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("today");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("PriorityID"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("PriorityID");
+            //    //}
 
 
-                if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
-                {
-                    Application.Current.Properties.Remove("LocationFilterkey");
-                }
-                if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
-                {
-                    Application.Current.Properties.Remove("ShiftFilterkey");
-                }
-                if (Application.Current.Properties.ContainsKey("ShiftFilterkeyText"))
-                {
-                    Application.Current.Properties.Remove("ShiftFilterkeyText");
-                }
-                if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
-                {
-                    Application.Current.Properties.Remove("PriorityFilterkey");
-                }
-                if (Application.Current.Properties.ContainsKey("PriorityFilterkeyText"))
-                {
-                    Application.Current.Properties.Remove("PriorityFilterkeyText");
-                }
-                if (Application.Current.Properties.ContainsKey("DateFilterkey"))
-                {
-                    Application.Current.Properties.Remove("DateFilterkey");
-                }
+            //    //if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("LocationFilterkey");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("ShiftFilterkey");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("ShiftFilterkeyText"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("ShiftFilterkeyText");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("PriorityFilterkey");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("PriorityFilterkeyText"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("PriorityFilterkeyText");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("DateFilterkey"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("DateFilterkey");
+            //    //}
 
-                if (Device.RuntimePlatform == Device.UWP)
-                {
-                    SortBy = "Assets/shortingN.png";
-                    FilterBy = "Assets/filterN.png";
-                    GroupBy = "Assets/searchN.png";
-                }
-                else
-                {
-                    SortBy = "shortingN.png";
-                    FilterBy = "filterN.png";
-                    GroupBy = "searchN.png";
-                }
+            //    //if (Application.Current.Properties.ContainsKey("SortingTypeKye"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("SortingTypeKye");
+            //    //}
 
-            }
+            //    //if (Application.Current.Properties.ContainsKey("WorkOFilterTypeKye"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("WorkOFilterTypeKye");
+            //    //}
+
+            //    if (Device.RuntimePlatform == Device.UWP)
+            //    {
+            //        SortBy = "Assets/shortingN.png";
+            //        FilterBy = "Assets/filterN.png";
+            //        GroupBy = "Assets/searchN.png";
+            //    }
+            //    else
+            //    {
+            //        SortBy = "shortingN.png";
+            //        FilterBy = "filterN.png";
+            //        GroupBy = "searchN.png";
+            //    }
+
+            //}
 
         }
 
@@ -3249,6 +3293,15 @@ namespace ProteusMMX.ViewModel.Workorder
             if (Application.Current.Properties.ContainsKey("DateFilterkey"))
             {
                 Application.Current.Properties.Remove("DateFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("SortingTypeKye"))
+            {
+                Application.Current.Properties.Remove("SortingTypeKye");
+            }
+
+            if (Application.Current.Properties.ContainsKey("WorkOFilterTypeKye"))
+            {
+                Application.Current.Properties.Remove("WorkOFilterTypeKye");
             }
             if (Device.RuntimePlatform == Device.UWP)
             {
