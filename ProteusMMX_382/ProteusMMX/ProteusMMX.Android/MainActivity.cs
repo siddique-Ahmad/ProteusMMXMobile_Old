@@ -36,7 +36,7 @@ namespace ProteusMMX.Droid
             CrossCurrentActivity.Current.Init(this, bundle);
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             UserDialogs.Init(this);
-            Rg.Plugins.Popup.Popup.Init(this, bundle);
+            Rg.Plugins.Popup.Popup.Init(this);
             LoadApplication(new App());
         }
 
