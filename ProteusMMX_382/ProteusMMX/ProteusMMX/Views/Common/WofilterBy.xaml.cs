@@ -51,10 +51,113 @@ namespace ProteusMMX.Views
 
             lst.ItemsSource = new List<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, TaskOnlyTitle, InspectionOnlyTitle , CompletionTitle , FailedInspectionTitle };
             string response = string.Empty;
+
+
+            List<FilterOrder> list = new List<FilterOrder>();
+
             if (Application.Current.Properties.ContainsKey("WorkOFilterTypeKye"))
             {
                 response = Application.Current.Properties["WorkOFilterTypeKye"].ToString();
-                lst.SelectedItem = response;
+                string SelectIcon = string.Empty;
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    SelectIcon = "Assets/check.png";
+
+                }
+                else
+                {
+                    SelectIcon = "check.png";
+                }
+                if (response== PreventiveMaintenenceTitle)
+                {
+                    list.Add(new FilterOrder { Filters = PreventiveMaintenenceTitle, Images = SelectIcon });
+                    list.Add(new FilterOrder { Filters = DemandMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = EmergencyMaintenanceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
+                    lst.ItemsSource = list;
+                }
+                else if (response == DemandMaintenenceTitle)
+                {
+                    list.Add(new FilterOrder { Filters = PreventiveMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = DemandMaintenenceTitle, Images = SelectIcon });
+                    list.Add(new FilterOrder { Filters = EmergencyMaintenanceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
+                    lst.ItemsSource = list;
+                }
+                else if (response == EmergencyMaintenanceTitle)
+                {
+                    list.Add(new FilterOrder { Filters = PreventiveMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = DemandMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = EmergencyMaintenanceTitle, Images = SelectIcon });
+                    list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
+                    lst.ItemsSource = list;
+                }
+                else if (response == TaskOnlyTitle)
+                {
+                    list.Add(new FilterOrder { Filters = PreventiveMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = DemandMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = EmergencyMaintenanceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = SelectIcon });
+                    list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
+                    lst.ItemsSource = list;
+                }
+                else if (response == InspectionOnlyTitle)
+                {
+                    list.Add(new FilterOrder { Filters = PreventiveMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = DemandMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = EmergencyMaintenanceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = SelectIcon });
+                    list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
+                    lst.ItemsSource = list;
+                }
+                else if (response == CompletionTitle)
+                {
+                    list.Add(new FilterOrder { Filters = PreventiveMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = DemandMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = EmergencyMaintenanceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = CompletionTitle, Images = SelectIcon });
+                    list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
+                    lst.ItemsSource = list;
+                }
+                else if (response == FailedInspectionTitle)
+                {
+
+                    list.Add(new FilterOrder { Filters = PreventiveMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = DemandMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = EmergencyMaintenanceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = SelectIcon });
+                    lst.ItemsSource = list;
+                }
+                //lst.SelectedItem = response;
+            }
+            else
+            {
+                list.Add(new FilterOrder { Filters = PreventiveMaintenenceTitle, Images = "" });
+                list.Add(new FilterOrder { Filters = DemandMaintenenceTitle, Images = "" });
+                list.Add(new FilterOrder { Filters = EmergencyMaintenanceTitle, Images = "" });
+                list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
+                list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
+                list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
+                lst.ItemsSource = list;
             }
 
         }
@@ -214,9 +317,10 @@ namespace ProteusMMX.Views
 
         private async void lst_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item != null)
-            {
-                string item = e.Item.ToString();
+            var data = e.Item as FilterOrder;
+            if (data != null && data.Filters != null)
+            {                
+                string item = data.Filters;
                 Application.Current.Properties["WorkOFilterTypeKye"] = item;
                 await PopupNavigation.PopAllAsync();
                 await ViewModel.OnViewAppearingAsync(null);
@@ -226,6 +330,12 @@ namespace ProteusMMX.Views
                 await PopupNavigation.PopAllAsync();
             }
         }
+    }
+
+    public class FilterOrder
+    {
+        public string Filters { get; set; }
+        public string Images { get; set; }
     }
 }
 

@@ -44,12 +44,38 @@ namespace ProteusMMX.Views
             AscendingTitle = WebControlTitle.GetTargetNameByTitleName("Ascending");
             DescendingTitle = WebControlTitle.GetTargetNameByTitleName("Descending");
 
-            lst.ItemsSource = new List<string>() { AscendingTitle, DescendingTitle, };
+            List<SortingOrder> list = new List<SortingOrder>();
+            //lst.ItemsSource = new List<string>() { AscendingTitle, DescendingTitle, };
             string response = string.Empty;
             if (Application.Current.Properties.ContainsKey("SortingTypeKye"))
             {
                 response = Application.Current.Properties["SortingTypeKye"].ToString();
-                lst.SelectedItem = response;
+                string SelectIcon = string.Empty;
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    SelectIcon = "Assets/check.png";
+                }
+                else
+                {
+                    SelectIcon = "check.png";
+                }
+                if (response == AscendingTitle)
+                {
+                    list.Add(new SortingOrder { Sortings = AscendingTitle, Images = SelectIcon });
+                    list.Add(new SortingOrder { Sortings = DescendingTitle, Images = "" });
+                }
+                else
+                {
+                    list.Add(new SortingOrder { Sortings = AscendingTitle, Images = "" });
+                    list.Add(new SortingOrder { Sortings = DescendingTitle, Images = SelectIcon });
+                }
+                lst.ItemsSource = list;
+            }
+            else
+            {
+                list.Add(new SortingOrder { Sortings = AscendingTitle, Images = "" });
+                list.Add(new SortingOrder { Sortings = DescendingTitle, Images = "" });
+                lst.ItemsSource = list;
             }
 
         }
@@ -144,6 +170,7 @@ namespace ProteusMMX.Views
             }
         }
 
+
         //private async void lst_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         //{
         //    string item = e.SelectedItem.ToString();
@@ -161,9 +188,10 @@ namespace ProteusMMX.Views
         //}
         private async void lst_ItemTapped(object sender, ItemTappedEventArgs e)
         {
-            if (e.Item != null)
+            var data = e.Item as SortingOrder;
+            if (data != null && data.Sortings != null)
             {
-                string item = e.Item.ToString();
+                string item = data.Sortings;
                 Application.Current.Properties["SortingTypeKye"] = item;
                 await PopupNavigation.PopAllAsync();
                 await ViewModel.OnViewAppearingAsync(null);
@@ -173,6 +201,13 @@ namespace ProteusMMX.Views
                 await PopupNavigation.PopAllAsync();
             }
         }
+    }
+
+
+    public class SortingOrder
+    {
+        public string Sortings { get; set; }
+        public string Images { get; set; }
     }
 }
 
