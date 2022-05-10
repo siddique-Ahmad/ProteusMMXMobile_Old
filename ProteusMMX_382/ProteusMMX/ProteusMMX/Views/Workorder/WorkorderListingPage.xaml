@@ -8,7 +8,7 @@
              xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:syncfusion="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
              Title="{Binding PageTitle}"
              BackgroundColor="{StaticResource BackgroundColor}" >
 
@@ -46,8 +46,8 @@
 
     <ContentPage.ToolbarItems >
         
-        <ToolbarItem Name="MenuItem1" IconImageSource="{Binding SortBy}" Priority="0"   Text=":" Command="{Binding SortByCommand}" />
-        <ToolbarItem Name="MenuItem2"  Text=":" Icon="{Binding FilterBy}" Priority="1"  Command="{Binding SortByFilterCommand}" />
+        <ToolbarItem Name="MenuItem1" IconImageSource="{Binding SortBy}" Priority="0" Clicked="MenuItem1_Clicked"   Text=":"  />
+        <ToolbarItem Name="MenuItem2"  Text=":" Icon="{Binding FilterBy}" Priority="1"  Clicked="MenuItem2_Clicked" />
         <ToolbarItem Name="MenuItem3" Order="Primary" Icon="dots.png" Text=":" Priority="2" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">
@@ -229,6 +229,8 @@
                     <Image Source="clearsymbol.png" Grid.Column="3"/>
                 </Grid>
             </StackLayout>-->
+
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>

@@ -3,9 +3,11 @@ using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
+using ProteusMMX.Views.Common;
 using Rg.Plugins.Popup.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +20,17 @@ namespace ProteusMMX.Views.Workorder
     [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class WorkorderListingPage : ContentPage
     {
+        private ObservableCollection<string> _color;
+
+        public ObservableCollection<string> Colors
+
+        {
+
+            get { return _color; }
+
+            set { _color = value; }
+
+        }
         public WorkorderListingPage()
         {
             InitializeComponent();
@@ -131,5 +144,26 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
+        private async void MenuItem1_Clicked(object sender, EventArgs e)
+        {
+            //picker.ItemsSource = Colors;
+            //picker.SelectedItem = "Yellow";
+
+            //picker.IsOpen = true;
+            TargetNavigationData tnobj = new TargetNavigationData();
+            tnobj.ViewModel = ViewModel;
+            tnobj.WorkorderService = ViewModel._workorderService;
+            var Sorting = new ShowMore1(tnobj);
+            await Navigation.PushPopupAsync(Sorting);
+        }
+
+        private async void MenuItem2_Clicked(object sender, EventArgs e)
+        {
+            TargetNavigationData tnobj = new TargetNavigationData();
+            tnobj.ViewModel = ViewModel;
+            tnobj.WorkorderService = ViewModel._workorderService;
+            var Sorting = new WofilterBy(tnobj);
+            await Navigation.PushPopupAsync(Sorting);
+        }
     }
 }

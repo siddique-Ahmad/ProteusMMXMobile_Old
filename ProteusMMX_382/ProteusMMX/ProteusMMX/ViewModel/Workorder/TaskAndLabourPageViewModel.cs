@@ -1120,7 +1120,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.Transparent,
                                 CommandParameter = item,
                                 TextColor = Color.Green,
-                                ImageSource= (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png",
+                                ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png",
                                 //  ImageSource = "starticon1.png",
                                 IsEnabled = false,
 
@@ -1346,7 +1346,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             AddTimeBtn = new ImageButton
                             {
                                 WidthRequest = 35,
-                                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/AddIcon.png" : "AddIcon.png",                             
+                                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/AddIcon.png" : "AddIcon.png",
                                 Margin = new Thickness(0, 0, 0, 0),
                                 IsEnabled = true,
                             };
@@ -1413,7 +1413,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 CommandParameter = item,
                                 TextColor = Color.Green,
                                 ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png",
-                                
+
                                 IsEnabled = false,
                             };
                         }
@@ -1586,7 +1586,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             AddTimeBtn2 = new ImageButton
                             {
                                 WidthRequest = 35,
-                                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Adddis.png" : "Adddis.png",                              
+                                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Adddis.png" : "Adddis.png",
                                 Margin = new Thickness(0, 0, 0, 0),
                                 IsEnabled = false,
                             };
@@ -1596,7 +1596,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             AddTimeBtn2 = new ImageButton
                             {
                                 WidthRequest = 35,
-                                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/AddIcon.png" : "AddIcon.png",                               
+                                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/AddIcon.png" : "AddIcon.png",
                                 Margin = new Thickness(0, 0, 0, 0),
                                 IsEnabled = true,
                             };
@@ -1908,39 +1908,27 @@ namespace ProteusMMX.ViewModel.Workorder
                             if (response != null && bool.Parse(response.servicestatus))
                             {
 
-                                //if (response.workOrderWrapper != null && response.workOrderWrapper.workOrderLabor != null)
-                                //{
-                                //    this.WorkOrderLaborHourID = response.workOrderWrapper.workOrderLabor.WorkOrderLaborHourID;
-                                //    Application.Current.Properties["WorkOrderLaborHourID"] = WorkOrderLaborHourID;
-                                //}
-                                //var data = buttonStart.Parent.Parent.Parent as Grid;
-                                //var Min1 = data.Children[3] as StackLayout;
-                                //var Min2 = Min1.Children[0] as Grid;
-                                //var Min3 = Min2.Children[0] as SfBorder;
-                                //var Min4 = Min3.Content as Entry;
-                                //Min4.IsReadOnly = true;
-                                //var Hras1 = data.Children[2] as StackLayout;
-                                //var Hras2 = Hras1.Children[0] as Grid;
-                                //var Hras3 = Hras2.Children[0] as SfBorder;
-                                //var Hras4 = Hras3.Content as Entry;
-                                //Hras4.IsReadOnly = true;
-
+                                if (response.workOrderWrapper != null && response.workOrderWrapper.workOrderLabor != null)
+                                {
+                                    item.WorkOrderLaborHourID1 = response.workOrderWrapper.workOrderLabor.WorkOrderLaborHourID;
+                                }
                                 var data = buttonStart.Parent.Parent.Parent as Grid;
-                                // var Min1 = data.Children[4] as StackLayout;
 
-                                //startButton.TextColor = Color.Green;
-                                // startButton.TextColor = Color.Gray;
                                 startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png";
-                                
-                                stopButton.TextColor = Color.FromHex("#87CEFA");
-                                stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stoppending.png" : "stoppending.png";
-
+                                startButton.TextColor = Color.Green;
                                 startButton.IsEnabled = false;
+
+                                stopButton.TextColor = Color.Black;
+                                stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopicon.png" : "stopicon.png";
                                 stopButton.IsEnabled = true;
 
-                                await OnViewAppearingAsync(null);
+                                AddTimeBtn.IsEnabled = false;
+                                AddTimeBtn.Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Adddis.png" : "Adddis.png";
+
+
+                                // await OnViewAppearingAsync(null);
                                 UserDialogs.Instance.HideLoading();
-                                DialogService.ShowToast("Timer Successfully Started");
+                                // DialogService.ShowToast("Timer Successfully Started");
                             }
 
                         }
@@ -1983,11 +1971,11 @@ namespace ProteusMMX.ViewModel.Workorder
                                 if (response != null && bool.Parse(response.servicestatus))
                                 {
 
-                                    //if (response.workOrderWrapper != null && response.workOrderWrapper.workOrderLabor != null)
-                                    //{
-                                    //    this.WorkOrderLaborHour2ID = response.workOrderWrapper.workOrderLabor.WorkOrderLaborHourID;
-                                    //    Application.Current.Properties["WorkOrderLaborHour2ID"] = WorkOrderLaborHour2ID;
-                                    //}
+                                    if (response.workOrderWrapper != null && response.workOrderWrapper.workOrderLabor != null)
+                                    {
+
+                                        item.WorkOrderLaborHourID2 = response.workOrderWrapper.workOrderLabor.WorkOrderLaborHourID;
+                                    }
                                     var data = buttonStartforRate2.Parent.Parent.Parent as Grid;
                                     //var Min1 = data.Children[3] as StackLayout;
                                     //var Min2 = Min1.Children[0] as Grid;
@@ -2004,15 +1992,19 @@ namespace ProteusMMX.ViewModel.Workorder
                                     startButtonforRate2.TextColor = Color.Green;
                                     startButtonforRate2.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon1.png" : "starticon1.png";
                                     startButtonforRate2.IsEnabled = false;
+
                                     stopButtonforRate2.IsEnabled = true;
-                                    stopButtonforRate2.TextColor = Color.FromHex("#87CEFA");
-                                    stopButtonforRate2.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stoppending.png" : "stoppending.png";
+                                    stopButtonforRate2.TextColor = Color.Black;
+                                    stopButtonforRate2.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopicon.png" : "stopicon.png";
 
                                     //completeButtonforRate2.TextColor = Color.FromHex("#879afa");
+                                    AddTimeBtn2.IsEnabled = false;
+                                    AddTimeBtn2.Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Adddis.png" : "Adddis.png";
+
 
                                     UserDialogs.Instance.HideLoading();
-                                    await OnViewAppearingAsync(null);
-                                    DialogService.ShowToast("Timer Successfully Started");
+                                    // await OnViewAppearingAsync(null);
+                                    // DialogService.ShowToast("Timer Successfully Started");
                                 }
                             }
                             catch (Exception)
@@ -2058,10 +2050,22 @@ namespace ProteusMMX.ViewModel.Workorder
                                    var response = await _taskAndLabourService.CreateWorkOrderLaborHours(workOrderWrapper);
                                    if (response != null && bool.Parse(response.servicestatus))
                                    {
-                                       OnAlertYesNoClicked(workOrderLabor.TaskID, workOrderLabor.WorkOrderLaborID);
+                                       OnAlertYesNoClicked(workOrderLabor.TaskID, workOrderLabor.WorkOrderLaborID, 1);
+
+                                       startButton.TextColor = Color.Black;
+                                       startButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon.png" : "starticon.png";
+                                       startButton.IsEnabled = true;
+
+                                       stopButton.IsEnabled = false;
+                                       stopButton.TextColor = Color.Gray;
+                                       stopButton.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopcomplate.png" : "stopcomplate.png";
+
+                                       AddTimeBtn.IsEnabled = true;
+                                       AddTimeBtn.Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/AddIcon.png" : "AddIcon.png";
+
                                        UserDialogs.Instance.HideLoading();
-                                       await OnViewAppearingAsync(null);
-                                       DialogService.ShowToast("Timer Successfully Stopped");
+                                       //await OnViewAppearingAsync(null);
+                                       //DialogService.ShowToast("Timer Successfully Stopped");
                                    }
 
                                }
@@ -2105,10 +2109,34 @@ namespace ProteusMMX.ViewModel.Workorder
                                 var response = await _taskAndLabourService.CreateWorkOrderLaborHours(workOrderWrapper);
                                 if (response != null && bool.Parse(response.servicestatus))
                                 {
-                                    OnAlertYesNoClicked(workOrderLabor.TaskID, workOrderLabor.WorkOrderLaborID);
+                                    OnAlertYesNoClicked(workOrderLabor.TaskID, workOrderLabor.WorkOrderLaborID, 2);
+
+                                    //var buttonStartforRate2 = sender as SfButton;
+                                    //var data = buttonStartforRate2.Parent.Parent.Parent as Grid;
+                                    //var Min1 = data.Children[3] as StackLayout;
+                                    //var Min2 = Min1.Children[0] as Grid;
+                                    //var Min3 = Min2.Children[0] as SfBorder;
+                                    //var Min4 = Min3.Content as Entry;
+                                    //Min4.IsReadOnly = false;
+                                    //var Hras1 = data.Children[2] as StackLayout;
+                                    //var Hras2 = Hras1.Children[0] as Grid;
+                                    //var Hras3 = Hras2.Children[0] as SfBorder;
+                                    //var Hras4 = Hras3.Content as Entry;
+                                    //Hras4.IsReadOnly = false;
+                                    startButtonforRate2.TextColor = Color.Black;
+                                    startButtonforRate2.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon.png" : "starticon.png";
+                                    startButtonforRate2.IsEnabled = true;
+
+                                    stopButtonforRate2.IsEnabled = false;
+                                    stopButtonforRate2.TextColor = Color.Gray;
+                                    stopButtonforRate2.ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/stopcomplate.png" : "stopcomplate.png";
+
+                                    AddTimeBtn2.IsEnabled = true;
+                                    AddTimeBtn2.Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/AddIcon.png" : "AddIcon.png";
+
                                     UserDialogs.Instance.HideLoading();
-                                    await OnViewAppearingAsync(null);
-                                    DialogService.ShowToast("Timer Successfully Stopped");
+                                    //await OnViewAppearingAsync(null);
+                                    //DialogService.ShowToast("Timer Successfully Stopped");
                                 }
 
                             }
@@ -2187,7 +2215,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         //};
 
                         #endregion
-                        async void OnAlertYesNoClicked(int? taskID, int? workOrderLaborID)
+                        async void OnAlertYesNoClicked(int? taskID, int? workOrderLaborID, int timer)
                         {
                             try
                             {
@@ -2217,16 +2245,20 @@ namespace ProteusMMX.ViewModel.Workorder
                                     var response = await _taskAndLabourService.UpdateTaskAndLabour(workOrderWrapper);
                                     if (response != null && bool.Parse(response.servicestatus))
                                     {
+                                        
+                                            completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString("MMM d, yyyy");
+
+                                       
                                         //UserDialogs.Instance.HideLoading();
-                                        await this.OnViewAppearingAsync(null);
-                                        DialogService.ShowToast("Timer Successfully Stopped");
+                                        //await this.OnViewAppearingAsync(null);
+                                        //DialogService.ShowToast("Timer Successfully Stopped");
                                     }
                                 }
                                 else
                                 {
                                     // UserDialogs.Instance.HideLoading();
-                                    await this.OnViewAppearingAsync(null);
-                                    DialogService.ShowToast("Timer Successfully Stopped");
+                                    //await this.OnViewAppearingAsync(null);
+                                    //DialogService.ShowToast("Timer Successfully Stopped");
                                 }
                             }
                             catch (Exception)
