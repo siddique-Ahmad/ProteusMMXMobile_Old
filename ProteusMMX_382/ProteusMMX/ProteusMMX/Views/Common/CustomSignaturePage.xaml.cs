@@ -40,7 +40,7 @@ namespace ProteusMMX.Views.Common
         {
             try
             {
-                if (Application.Current.Properties.ContainsKey("CauseID"))
+                if (Application.Current.Properties.ContainsKey("CauseID") && Application.Current.Properties["CauseID"] != null)
                 {
                     CauseID = Application.Current.Properties["CauseID"].ToString();
 
