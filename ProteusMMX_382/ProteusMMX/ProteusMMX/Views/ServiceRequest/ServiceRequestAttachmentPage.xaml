@@ -3,9 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              Title="{Binding PageTitle}" 
-              BackgroundColor="{StaticResource BackgroundColor}"
-             IconImageSource="Attachements.png"
-             x:Class="ProteusMMX.Views.ServiceRequest.ServiceRequestAttachmentPage">
+    x:Class="ProteusMMX.Views.ServiceRequest.ServiceRequestAttachmentPage">
+    <ContentPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="Attachements.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/Attachements.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/Attachements.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </ContentPage.IconImageSource>
     
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
