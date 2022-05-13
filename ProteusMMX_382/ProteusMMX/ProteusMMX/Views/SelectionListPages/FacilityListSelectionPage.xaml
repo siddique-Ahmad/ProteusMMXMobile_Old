@@ -54,8 +54,10 @@
                             <OnPlatform.iOS>
                                 <FileImageSource File="ssbicon.png"/>
                             </OnPlatform.iOS>
-
-                        </OnPlatform>
+                                <OnPlatform.WinPhone>
+                                    <FileImageSource File="Assets/ssbicon.png"/>
+                                </OnPlatform.WinPhone>
+                            </OnPlatform>
                     </Image.Source>
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer

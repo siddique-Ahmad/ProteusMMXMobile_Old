@@ -50,7 +50,9 @@
                             <OnPlatform.iOS>
                                 <FileImageSource File="ssbicon.png"/>
                             </OnPlatform.iOS>
-
+                            <OnPlatform.WinPhone>
+                                <FileImageSource File="Assets/ssbicon.png"/>
+                            </OnPlatform.WinPhone>
                         </OnPlatform>
                     </Image.Source>
                     <Image.GestureRecognizers>

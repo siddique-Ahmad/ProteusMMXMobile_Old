@@ -9,16 +9,11 @@
              BackgroundColor="{StaticResource BackgroundColor}" >
     <ContentPage.Resources>
         <ResourceDictionary>
-
-
-
             <templates:ServiceRequestListingTemplateSelector x:Key="DateTemplateSelector">
             </templates:ServiceRequestListingTemplateSelector>
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
         </ResourceDictionary>
     </ContentPage.Resources>
 

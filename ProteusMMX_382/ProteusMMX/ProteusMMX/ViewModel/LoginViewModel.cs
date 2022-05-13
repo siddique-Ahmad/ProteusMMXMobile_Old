@@ -618,8 +618,6 @@ namespace ProteusMMX.ViewModel
 
         }
 
-
-
         public async Task OnLoginTapAsync()
         {
             try
