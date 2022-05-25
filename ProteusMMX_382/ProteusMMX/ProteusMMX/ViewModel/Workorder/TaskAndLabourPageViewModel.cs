@@ -899,8 +899,9 @@ namespace ProteusMMX.ViewModel.Workorder
                         Taskgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
                         Taskgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                         Taskgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Absolute) });
-                        Taskgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
+                        //Taskgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                        Taskgrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                        Taskgrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                         Label TaskNumber = new Label
                         {
                             FontSize = 13,
@@ -915,17 +916,19 @@ namespace ProteusMMX.ViewModel.Workorder
                             FontSize = 13,
                             FontAttributes = FontAttributes.Bold,
                             TextColor = Color.FromHex("#333333"),
-                            Text = ":"
+                            Text = " "
                         };
                         Taskgrid.Children.Add(TNDot, 1, 0);
 
                         Label TaskNumberVal = new Label
                         {
                             TextColor = Color.FromHex("#333333"),
-                            Text = ShortString.shor17ten(item.TaskNumber)
+                            Text = ShortString.shor17ten(item.TaskNumber),
+                            VerticalTextAlignment=TextAlignment.Start,
+                            Padding=new Thickness(20,0,0,0)
                         };
 
-                        Taskgrid.Children.Add(TaskNumberVal, 2, 0);
+                        Taskgrid.Children.Add(TaskNumberVal, 0, 1);
                         Grid.SetColumnSpan(TaskNumberVal, 3);
 
                         if (LabourEstimatedHours == "N")
@@ -948,7 +951,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 FontSize = 13,
                                 FontAttributes = FontAttributes.Bold,
                                 TextColor = Color.FromHex("#333333"),
-                                Text = ":"
+                                Text = " "
                             };
                             Taskgrid.Children.Add(EstDot, 4, 0);
 
@@ -956,9 +959,11 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
                                 TextColor = Color.FromHex("#333333"),
                                 Text = item.EstimatedHours,
+                                VerticalTextAlignment=TextAlignment.Start,
+                                HorizontalTextAlignment=TextAlignment.Center,
                             };
 
-                            Taskgrid.Children.Add(EstHourseVal, 5, 0);
+                            Taskgrid.Children.Add(EstHourseVal, 3, 1);
                             TaskStackLayout.Children.Add(Taskgrid);
                         }
                         #endregion

@@ -489,12 +489,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
 
-
-
-
-
-
-
                 }
             }
             catch (Exception ex)
