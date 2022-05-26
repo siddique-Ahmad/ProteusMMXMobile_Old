@@ -1,11 +1,15 @@
 ﻿using Acr.UserDialogs;
 
 using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using ProteusMMX.Constants;
 using ProteusMMX.Helpers;
+using ProteusMMX.Helpers.Storage;
 using ProteusMMX.Model;
+using ProteusMMX.Model.CommonModels;
+using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.Barcode;
 using ProteusMMX.Services.Dialog;
@@ -1115,7 +1119,7 @@ namespace ProteusMMX.ViewModel
                 if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
                 {
                     var WorkOrderModule = FormControlsAndRightsForDetails.lstModules[0];
-                    if (WorkOrderModule.ModuleName == "Details") //ModuleName can't be  changed in service 
+                    if (WorkOrderModule.ModuleName == "Details") //ModuleName can't be  changed in service
                     {
                         if (WorkOrderModule.lstSubModules != null && WorkOrderModule.lstSubModules.Count > 0)
                         {
@@ -1124,27 +1128,77 @@ namespace ProteusMMX.ViewModel
                             {
                                 try
                                 {
-                                    Application.Current.Properties["CreateWorkorderRights"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
-                                    Application.Current.Properties["EditRights"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
-                                    Application.Current.Properties["CloseWorkorderRightsKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompleteAndClose").Expression;
+                                    List<workordersRights> workordersDetailsRight = new List<workordersRights>
+                                    {
+                                      new workordersRights {ControlName="New",Expression= WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression },
+                                      new workordersRights {ControlName="Edit",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression },
+                                      new workordersRights {ControlName="CompleteAndClose",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompleteAndClose").Expression },
+                                      ///Set workOrderListing Page Rights
+                                      new workordersRights {ControlName="WorkStartedDate",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkStartedDate").Expression },
+                                      new workordersRights {ControlName="CompletionDate",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression },
+                                      new workordersRights {ControlName="RequestedDate",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "RequestedDate").Expression },
+                                      new workordersRights {ControlName="WorkTypeID",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkTypeID").Expression },
+                                      new workordersRights {ControlName="Description",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression },
+                                      new workordersRights {ControlName="PriorityID",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression },
+                                       ///Set workOrderEdit Page Rights
+                                      new workordersRights {ControlName="AdditionalDetails",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression },
+                                      new workordersRights {ControlName="InternalNote",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "InternalNote").Expression },
+                                      new workordersRights {ControlName="Causes",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes").Expression },
+                                      new workordersRights {ControlName="AssetID",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression },
+                                      new workordersRights {ControlName="DistributeCost",Expression=WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression },
+
+                                    };
+                                    RightsStorage.Storage.Set("WorkOrderSubModules", JsonConvert.SerializeObject(WorkOrderSubModule));
+                                    RightsStorage.Storage.Set("WorkordersDetailsRight", JsonConvert.SerializeObject(workordersDetailsRight));
+
+
+                                    workordersDetailsRight = JsonConvert.DeserializeObject<List<workordersRights>>(RightsStorage.Storage.Get("WorkordersDetailsRight"));
+
+
+                                    Application.Current.Properties["CreateWorkorderRights"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "New").Expression;
+                                    Application.Current.Properties["EditRights"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+                                    Application.Current.Properties["CloseWorkorderRightsKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "CompleteAndClose").Expression;
 
                                     ///Set workOrderListing Page Rights
-                                    Application.Current.Properties["WorkOrderStartedDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkStartedDate").Expression;
-                                    Application.Current.Properties["WorkOrderCompletionDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression;
-                                    Application.Current.Properties["WorkOrderRequestedDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "RequestedDate").Expression;
-                                    Application.Current.Properties["WorkOrderTypeKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkTypeID").Expression;
-                                    Application.Current.Properties["DescriptionKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
-                                    Application.Current.Properties["PriorityKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
+                                    Application.Current.Properties["WorkOrderStartedDateKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "WorkStartedDate").Expression;
+                                    Application.Current.Properties["WorkOrderCompletionDateKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression;
+                                    Application.Current.Properties["WorkOrderRequestedDateKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "RequestedDate").Expression;
+                                    Application.Current.Properties["WorkOrderTypeKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "WorkTypeID").Expression;
+                                    Application.Current.Properties["DescriptionKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "Description").Expression;
+                                    Application.Current.Properties["PriorityKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
 
                                     ///Set workOrderEdit Page Rights
 
 
-                                    Application.Current.Properties["WorkorderAdditionalDetailsKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
-                                    Application.Current.Properties["WorkOrderInternalNoteKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "InternalNote").Expression;
-                                    Application.Current.Properties["WorkorderCauseKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes").Expression;
-                                    Application.Current.Properties["WorkorderTargetKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression;
-                                    Application.Current.Properties["WorkorderDetailsControls"] = WorkOrderSubModule;
-                                    Application.Current.Properties["DistributeCost"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression;
+                                    Application.Current.Properties["WorkorderAdditionalDetailsKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
+                                    Application.Current.Properties["WorkOrderInternalNoteKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "InternalNote").Expression;
+                                    Application.Current.Properties["WorkorderCauseKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "Causes").Expression;
+                                    Application.Current.Properties["WorkorderTargetKey"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "AssetID").Expression;
+                                    Application.Current.Properties["WorkorderDetailsControls"] = JsonConvert.DeserializeObject<SubModule>(RightsStorage.Storage.Get("WorkOrderSubModules")); ;
+                                    Application.Current.Properties["DistributeCost"] = workordersDetailsRight.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression;
+
+
+                                    //Application.Current.Properties["CreateWorkorderRights"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
+                                    //Application.Current.Properties["EditRights"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
+                                    //Application.Current.Properties["CloseWorkorderRightsKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompleteAndClose").Expression;
+
+                                    /////Set workOrderListing Page Rights
+                                    //Application.Current.Properties["WorkOrderStartedDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkStartedDate").Expression;
+                                    //Application.Current.Properties["WorkOrderCompletionDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression;
+                                    //Application.Current.Properties["WorkOrderRequestedDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "RequestedDate").Expression;
+                                    //Application.Current.Properties["WorkOrderTypeKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkTypeID").Expression;
+                                    //Application.Current.Properties["DescriptionKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
+                                    //Application.Current.Properties["PriorityKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
+
+                                    /////Set workOrderEdit Page Rights
+
+
+                                    //Application.Current.Properties["WorkorderAdditionalDetailsKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
+                                    //Application.Current.Properties["WorkOrderInternalNoteKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "InternalNote").Expression;
+                                    //Application.Current.Properties["WorkorderCauseKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes").Expression;
+                                    //Application.Current.Properties["WorkorderTargetKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression;
+                                    //Application.Current.Properties["WorkorderDetailsControls"] = WorkOrderSubModule;
+                                    //Application.Current.Properties["DistributeCost"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression;
 
                                 }
                                 catch (Exception ex)
