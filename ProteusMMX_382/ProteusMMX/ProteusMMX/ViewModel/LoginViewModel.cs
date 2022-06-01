@@ -26,6 +26,12 @@ using Windows.UI.ViewManagement;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using ProteusMMX.Crypto;
+using Plugin.LocalNotification;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
+using Plugin.LocalNotification.EventArgs;
+using System.Text;
+using Plugin.LocalNotification.AndroidOption;
 
 namespace ProteusMMX.ViewModel
 {
@@ -454,12 +460,33 @@ namespace ProteusMMX.ViewModel
 
         public ICommand OnLoginTapCommand => new AsyncCommand(OnLoginTapAsync);
 
+        int UserId;
+        int nid;
 
         #endregion
         public override async Task InitializeAsync(object navigationData)
         {
             try
             {
+                #region Local Notification
+               
+
+                if (AppSettings.User != null)
+                {
+
+                    UserId = AppSettings.User.UserID;
+                    var minutes = TimeSpan.FromSeconds(10);
+                    Xamarin.Forms.Device.StartTimer(minutes, () =>
+                    {
+
+                        //check for notifications
+                        GetUserNotification();
+
+                        // Returning true means repeat this timer
+                        return true;
+                    });
+                }
+                #endregion
                 if (navigationData != null)
                 {
                     var navigationParams = navigationData as TargetNavigationData;
@@ -509,56 +536,7 @@ namespace ProteusMMX.ViewModel
                     var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName, Password);
                     if (user != null && user.mmxUser != null)
                     {
-                        ////Set Company Profile Picture///////
-                        //if (!string.IsNullOrWhiteSpace(user.mmxUser.blackhawkLicValidator.CompanyProfileLogo))
-                        //{
-                        //    string newcompanyprofilebase64 = string.Empty;
-                        //    if (Device.RuntimePlatform == Device.UWP)
-                        //    {
-                        //        string companyprofilebase64 = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
-                        //        newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
-                        //        if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
-                        //        {
-                        //            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
-                        //        }
-                        //        byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
-                        //        MemoryStream stream = new MemoryStream(imgUser);
-                        //        bool isimage = Extension.IsImage(stream);
-                        //        if (isimage == true)
-                        //        {
-
-                        //            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 160, 100);
-                        //            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(byteImage))));
-
-
-
-                        //        }
-                        //    }
-                        //    else
-                        //    {
-                        //        string companyprofilebase64 = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
-                        //        newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/png;base64,", "");
-                        //        if (string.IsNullOrWhiteSpace(newcompanyprofilebase64))
-                        //        {
-                        //            newcompanyprofilebase64 = companyprofilebase64.Replace("data:image/jpeg;base64,", "");
-                        //        }
-                        //        byte[] imgUser = StreamToBase64.StringToByte(newcompanyprofilebase64);
-                        //        MemoryStream stream = new MemoryStream(imgUser);
-                        //        bool isimage = Extension.IsImage(stream);
-                        //        if (isimage == true)
-                        //        {
-
-
-                        //            AttachmentImageSource = Xamarin.Forms.ImageSource.FromStream(() => new MemoryStream(Convert.FromBase64String(Convert.ToBase64String(imgUser))));
-
-
-
-                        //        }
-                        //    }
-                        //}
-
-
-
+                       
                         string signaturevalidated = SignatureStorage.Storage.Get("FDASignatureUserValidated");
                         if (!string.IsNullOrWhiteSpace(signaturevalidated))
                         {
@@ -607,6 +585,187 @@ namespace ProteusMMX.ViewModel
                 UserDialogs.Instance.HideLoading();
                 OperationInProgress = false;
             }
+        }
+     
+        public async void GetUserNotification()
+        {
+            Dictionary<string, string> urlSegment = new Dictionary<string, string>();
+            urlSegment.Add("USERID", UserId.ToString());
+
+            ServiceOutput notifications = await ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/service/GetNotification", "GET", urlSegment, null);
+            if (notifications.servicestatus == "true" && notifications.notificationWrapper.Status)
+            {
+                TestNotification(notifications.notificationWrapper);
+            }
+
+
+        }
+        public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
+        {
+            ServiceOutput responseContent = new ServiceOutput();
+            try
+            {
+
+                if (!string.IsNullOrEmpty(url))
+                {
+                    string segurl = string.Empty;
+                    if (urlSegment != null)
+                    {
+                        foreach (KeyValuePair<string, string> entry in urlSegment)
+                        {
+                            segurl = segurl + "/" + entry.Value;
+                        }
+                    }
+
+                    if (!string.IsNullOrEmpty(segurl))
+                    {
+                        url = url + segurl;
+                    }
+
+
+
+                    if (!string.IsNullOrEmpty(mtype))
+                    {
+                        if (mtype.ToLower().Equals("get"))
+                        {
+
+
+                            HttpClient client = new HttpClient();
+                            client.BaseAddress = new Uri(url);
+
+                            // Add an Accept header for JSON format.
+                            client.DefaultRequestHeaders.Accept.Add(
+                                new MediaTypeWithQualityHeaderValue("application/json"));
+
+                            HttpResponseMessage response = client.GetAsync(url).Result;
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                var content = JsonConvert.DeserializeObject(
+                                        response.Content.ReadAsStringAsync()
+                                        .Result);
+
+
+                                responseContent = JsonConvert.DeserializeObject<ServiceOutput>(content.ToString());
+
+                            }
+
+
+                        }
+                        else if (mtype.ToLower().Equals("post"))
+                        {
+                            try
+                            {
+                                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                                httpWebRequest.ContentType = "application/json";
+                                httpWebRequest.Method = mtype;
+                                var stream = await httpWebRequest.GetRequestStreamAsync();
+                                string Json = JsonConvert.SerializeObject(jsonString);
+                                using (var writer = new StreamWriter(stream))
+                                {
+                                    writer.Write(Json);
+                                    writer.Flush();
+                                    writer.Dispose();
+                                }
+
+                                using (HttpWebResponse response = await httpWebRequest.GetResponseAsync() as HttpWebResponse)
+                                {
+                                    if (response.StatusCode == HttpStatusCode.OK)
+                                    {
+                                        //  Console.Out.WriteLine("Error fetching data. Server returned status code: {0}", response.StatusCode);
+                                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                                        {
+                                            var content = reader.ReadToEnd();
+
+                                            responseContent = JsonConvert.DeserializeObject<ServiceOutput>(content.ToString());
+                                        }
+                                    }
+
+
+                                }
+
+                            }
+                            catch (WebException ex)
+                            {
+
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return responseContent;
+        }
+        public void TestNotification(Notifications notifications)
+        {
+             nid = Convert.ToInt32(notifications.ID);
+            var notification = new NotificationRequest
+            {
+
+                BadgeNumber = nid,
+                Description = notifications.Message,
+                Title = notifications.Title,
+                NotificationId = nid,
+
+
+            };
+            NotificationCenter.Current.NotificationReceived += Current_NotificationReceived;
+            notification.Android.IconSmallName = new AndroidIcon("icon.png");
+            Plugin.LocalNotification.NotificationCenter.Current.Show(notification);
+        }
+
+        private void Current_NotificationReceived(NotificationEventArgs e)
+        {
+           
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                  
+                    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/Service/CreateNotification");
+
+                    var notification = new ServiceInput()
+                    {
+                       UserID=nid
+
+                    };
+
+                    string strPayload = JsonConvert.SerializeObject(notification);
+                    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+                    var t = Task.Run(() => SendURI(posturi, c));
+                });
+            
+        }
+        static async Task SendURI(Uri u, HttpContent c)
+        {
+            var response = string.Empty;
+            using (var client = new HttpClient())
+            {
+                HttpRequestMessage request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = u,
+                    Content = c
+                };
+
+                HttpResponseMessage result = await client.SendAsync(request);
+                if (result.IsSuccessStatusCode)
+                {
+                    response = result.StatusCode.ToString();
+                }
+            }
+
         }
 
         public LoginPageViewModel(IAuthenticationService authenticationService, IWebControlTitlesService webControlTitlesService, IFormLoadInputService formloadservice, IWorkorderService workorderService)
@@ -706,6 +865,24 @@ namespace ProteusMMX.ViewModel
                 Application.Current.Properties["Password"] = Password;
                 await InitializeTranslations();
                 UserDialogs.Instance.HideLoading();
+                #region Local Notification
+
+
+              
+
+                    UserId = user.mmxUser.UserID;
+                    var minutes = TimeSpan.FromSeconds(10);
+                    Xamarin.Forms.Device.StartTimer(minutes, () =>
+                    {
+
+                        //check for notifications
+                        GetUserNotification();
+
+                        // Returning true means repeat this timer
+                        return true;
+                    });
+                
+                #endregion
                 await NavigationService.NavigateToAsync<DashboardPageViewModel>();
                 await NavigationService.RemoveLastFromBackStackAsync();
 
