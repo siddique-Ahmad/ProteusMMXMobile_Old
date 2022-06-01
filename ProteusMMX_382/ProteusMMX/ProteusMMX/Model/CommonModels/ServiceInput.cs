@@ -20,5 +20,7 @@ namespace ProteusMMX.Model.CommonModels
         public string TimeZone { get; set; }
         public string ClientIANATimeZone { get; set; }
 
+        public long UserID { get; set; }
+
     }
 }

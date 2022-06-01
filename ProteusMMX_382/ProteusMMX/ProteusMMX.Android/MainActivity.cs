@@ -14,6 +14,7 @@ using Microsoft.AppCenter.Analytics;
 
 using Android.Content.Res;
 using Microsoft.AppCenter.Crashes;
+using Plugin.LocalNotification;
 
 namespace ProteusMMX.Droid
 {
@@ -37,6 +38,16 @@ namespace ProteusMMX.Droid
             global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             UserDialogs.Init(this);
             Rg.Plugins.Popup.Popup.Init(this);
+            NotificationCenter.CreateNotificationChannel();
+            //if (Android.OS.Build.VERSION.SdkInt >= Build.VERSION_CODES.Lollipop)
+            //{
+            //    //notification.setSmallIcon(R.drawable.icon_transperent);
+            //    //notification.setColor(getResources().getColor(R.color.notification_color));
+            //}
+            //else
+            //{
+            //    notification.SmallIcon(R.Drawable.icon);
+            //}
             LoadApplication(new App());
         }
 
