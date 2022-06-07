@@ -3,7 +3,7 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Plugin.LocalNotification;
-using Plugin.LocalNotification.AndroidOption;
+
 using ProteusMMX.Controls;
 using ProteusMMX.DependencyInterface;
 using ProteusMMX.Model;
@@ -45,15 +45,15 @@ namespace ProteusMMX
                 Locator.Instance.Build();
                 InitNavigation();
 
-                #region Local Notification
-                if (AppSettings.User != null)
-                {
+                //#region Local Notification
+                //if (AppSettings.User != null)
+                //{
 
-                    UserId = AppSettings.User.UserID;
-                    GetUserNotification();
+                //    UserId = AppSettings.User.UserID;
+                //    GetUserNotification();
                     
-                }
-                #endregion
+                //}
+                //#endregion
 
 
             }
@@ -66,19 +66,19 @@ namespace ProteusMMX
           
 
         }
-        public async void GetUserNotification()
-        {
-            Dictionary<string, string> urlSegment = new Dictionary<string, string>();
-            urlSegment.Add("USERID", UserId.ToString());
+        //public async void GetUserNotification()
+        //{
+        //    Dictionary<string, string> urlSegment = new Dictionary<string, string>();
+        //    urlSegment.Add("USERID", UserId.ToString());
 
-            ServiceOutput notifications = await ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/service/GetNotification", "GET", urlSegment, null);
-            if(notifications.servicestatus== "true" && notifications.notificationWrapper.Status)
-            {
-                TestNotification(notifications.notificationWrapper);
-            }
+        //    ServiceOutput notifications = await ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/service/GetNotification", "GET", urlSegment, null);
+        //    if(notifications.servicestatus== "true" && notifications.notificationWrapper.Status)
+        //    {
+        //        TestNotification(notifications.notificationWrapper);
+        //    }
 
 
-        }
+        //}
         public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
         {
             ServiceOutput responseContent = new ServiceOutput();
@@ -203,7 +203,7 @@ namespace ProteusMMX
 
         };
 
-            notification.Android.IconSmallName = new AndroidIcon("icon.png");
+           // notification.Android.IconSmallName = new AndroidIcon("icon.png");
             Plugin.LocalNotification.NotificationCenter.Current.Show(notification);
         }
         
