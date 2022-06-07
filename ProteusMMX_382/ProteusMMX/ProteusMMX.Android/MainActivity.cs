@@ -39,15 +39,15 @@ namespace ProteusMMX.Droid
             UserDialogs.Init(this);
             Rg.Plugins.Popup.Popup.Init(this);
             NotificationCenter.CreateNotificationChannel();
-            //if (Android.OS.Build.VERSION.SdkInt >= Build.VERSION_CODES.Lollipop)
-            //{
-            //    //notification.setSmallIcon(R.drawable.icon_transperent);
-            //    //notification.setColor(getResources().getColor(R.color.notification_color));
-            //}
-            //else
-            //{
-            //    notification.SmallIcon(R.Drawable.icon);
-            //}
+            Android.Support.V4.App.NotificationCompat.Builder builder = new Android.Support.V4.App.NotificationCompat.Builder(this);
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+            {
+                builder.SetSmallIcon(Resource.Drawable.icon);
+            }
+            else
+            {
+                builder.SetSmallIcon(Resource.Drawable.icon);
+            }
             LoadApplication(new App());
         }
 

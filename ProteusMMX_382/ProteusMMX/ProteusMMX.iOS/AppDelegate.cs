@@ -6,7 +6,10 @@ using Foundation;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using ProteusMMX.Controls;
+using ProteusMMX.iOS.DependencyService;
 using UIKit;
+using Xamarin.Forms;
 
 namespace ProteusMMX.iOS
 {
@@ -23,6 +26,7 @@ namespace ProteusMMX.iOS
         //
         // You have 17 seconds to return from this method, or iOS will terminate your application.
         //
+       
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             // The background color of the tab bar
@@ -41,8 +45,21 @@ namespace ProteusMMX.iOS
             Syncfusion.XForms.iOS.TabView.SfTabViewRenderer.Init();
             Syncfusion.XForms.iOS.TextInputLayout.SfTextInputLayoutRenderer.Init();
             LoadApplication(new App());
-            //AppCenter.Start("7edb0700-5702-4890-9beb-3561942dd6f4", typeof(Analytics), typeof(Crashes));
+            #region MyRegion
+
+            #endregion
+            //WireUpLongRunningTask();
+            app.RegisterUserNotificationSettings(UIUserNotificationSettings.GetSettingsForTypes(UIUserNotificationType.Alert
+                        | UIUserNotificationType.Badge
+                        | UIUserNotificationType.Sound,
+                        new NSSet()));
+
+            nint taskID = 111;
+            app.BeginBackgroundTask("showNotification", expirationHandler: () => {
+                UIApplication.SharedApplication.EndBackgroundTask(taskID);
+            });
             return base.FinishedLaunching(app, options);
         }
+       
     }
 }

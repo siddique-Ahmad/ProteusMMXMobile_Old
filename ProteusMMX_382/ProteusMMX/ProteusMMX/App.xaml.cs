@@ -45,17 +45,7 @@ namespace ProteusMMX
                 Locator.Instance.Build();
                 InitNavigation();
 
-                //#region Local Notification
-                //if (AppSettings.User != null)
-                //{
-
-                //    UserId = AppSettings.User.UserID;
-                //    GetUserNotification();
-                    
-                //}
-                //#endregion
-
-
+               
             }
             catch (Exception ex)
             {
@@ -66,147 +56,8 @@ namespace ProteusMMX
           
 
         }
-        //public async void GetUserNotification()
-        //{
-        //    Dictionary<string, string> urlSegment = new Dictionary<string, string>();
-        //    urlSegment.Add("USERID", UserId.ToString());
-
-        //    ServiceOutput notifications = await ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/service/GetNotification", "GET", urlSegment, null);
-        //    if(notifications.servicestatus== "true" && notifications.notificationWrapper.Status)
-        //    {
-        //        TestNotification(notifications.notificationWrapper);
-        //    }
-
-
-        //}
-        public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
-        {
-            ServiceOutput responseContent = new ServiceOutput();
-            try
-            {
-
-                if (!string.IsNullOrEmpty(url))
-                {
-                    string segurl = string.Empty;
-                    if (urlSegment != null)
-                    {
-                        foreach (KeyValuePair<string, string> entry in urlSegment)
-                        {
-                            segurl = segurl + "/" + entry.Value;
-                        }
-                    }
-
-                    if (!string.IsNullOrEmpty(segurl))
-                    {
-                        url = url + segurl;
-                    }
-
-
-
-                    if (!string.IsNullOrEmpty(mtype))
-                    {
-                        if (mtype.ToLower().Equals("get"))
-                        {
-
-
-                            HttpClient client = new HttpClient();
-                            client.BaseAddress = new Uri(url);
-
-                            // Add an Accept header for JSON format.
-                            client.DefaultRequestHeaders.Accept.Add(
-                                new MediaTypeWithQualityHeaderValue("application/json"));
-
-                            HttpResponseMessage response = client.GetAsync(url).Result;
-
-                            if (response.IsSuccessStatusCode)
-                            {
-                                var content = JsonConvert.DeserializeObject(
-                                        response.Content.ReadAsStringAsync()
-                                        .Result);
-
-
-                                responseContent = JsonConvert.DeserializeObject<ServiceOutput>(content.ToString());
-
-                            }
-
-
-                        }
-                        else if (mtype.ToLower().Equals("post"))
-                        {
-                            try
-                            {
-                                var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                                httpWebRequest.ContentType = "application/json";
-                                httpWebRequest.Method = mtype;
-                                var stream = await httpWebRequest.GetRequestStreamAsync();
-                                string Json = JsonConvert.SerializeObject(jsonString);
-                                using (var writer = new StreamWriter(stream))
-                                {
-                                    writer.Write(Json);
-                                    writer.Flush();
-                                    writer.Dispose();
-                                }
-
-                                using (HttpWebResponse response = await httpWebRequest.GetResponseAsync() as HttpWebResponse)
-                                {
-                                    if (response.StatusCode == HttpStatusCode.OK)
-                                    {
-                                        //  Console.Out.WriteLine("Error fetching data. Server returned status code: {0}", response.StatusCode);
-                                        using (StreamReader reader = new StreamReader(response.GetResponseStream()))
-                                        {
-                                            var content = reader.ReadToEnd();
-
-                                            responseContent = JsonConvert.DeserializeObject<ServiceOutput>(content.ToString());
-                                        }
-                                    }
-
-
-                                }
-
-                            }
-                            catch (WebException ex)
-                            {
-
-                            }
-                            catch (Exception ex)
-                            {
-
-                            }
-
-                        }
-                    }
-                }
-            }
-
-
-
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-            return responseContent;
-        }
-        public void TestNotification(Notifications notifications)
-        {
-            int nid =Convert.ToInt32(notifications.ID);
-            var notification = new NotificationRequest
-            {
-
-                BadgeNumber = nid,
-                Description = notifications.Message,
-                Title = notifications.Title,
-                NotificationId = nid,
-                
-
-
-        };
-
-           // notification.Android.IconSmallName = new AndroidIcon("icon.png");
-            Plugin.LocalNotification.NotificationCenter.Current.Show(notification);
-        }
-        
+       
+      
         private Task InitNavigation()
         {
             var navigationService = Locator.Instance.Resolve<INavigationService>();
