@@ -41,7 +41,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NodaTime" Version="1.4.0" />
     <PackageReference Include="PCLCrypto" Version="2.0.147" />
-    <PackageReference Include="Plugin.LocalNotification" Version="9.2.0" />
+    <PackageReference Include="Plugin.LocalNotification" Version="5.2.0" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.13" />
     <PackageReference Include="sqlite-net-pcl" Version="1.4.118" />
     <PackageReference Include="Syncfusion.Licensing" Version="19.3.0.48" />

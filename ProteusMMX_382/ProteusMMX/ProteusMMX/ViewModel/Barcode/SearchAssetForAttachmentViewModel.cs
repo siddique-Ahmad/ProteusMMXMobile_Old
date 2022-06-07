@@ -1064,13 +1064,13 @@ namespace ProteusMMX.ViewModel.Barcode
                                 {
                                     if (Device.RuntimePlatform == Device.UWP)
                                     {
-                                        byte[] imgUser = StreamToBase64.StringToByte(file.Attachment);
-                                        MemoryStream stream = new MemoryStream(imgUser);
-                                        bool isimage = Extension.IsImage(stream);
-                                        if (isimage == true)
+                                        byte[] imgUser1 = StreamToBase64.StringToByte(file.Attachment);
+                                        MemoryStream stream1 = new MemoryStream(imgUser1);
+                                        bool isimage1 = Extension.IsImage(stream1);
+                                        if (isimage1 == true)
                                         {
 
-                                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser, 350, 350);
+                                            byte[] byteImage = await Xamarin.Forms.DependencyService.Get<IResizeImage>().ResizeImageAndroid(imgUser1, 350, 350);
 
 
                                             Attachments.Add(new WorkorderAttachment
@@ -1088,8 +1088,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
                                         }
                                     }
-                                    else if (Device.RuntimePlatform == Device.Android)
-                                    {
+                                  
                                         byte[] imgUser = StreamToBase64.StringToByte(file.Attachment);
                                         MemoryStream stream = new MemoryStream(imgUser);
                                         bool isimage = Extension.IsImage(stream);
@@ -1107,25 +1106,8 @@ namespace ProteusMMX.ViewModel.Barcode
                                             }
                                             );
 
-                                        }
-                                    }
-                                    else
-                                    {
-
-
-                                        Attachments.Add(new WorkorderAttachment
-                                        {
-                                            IsSynced = true,
-                                            attachmentFileExtension = file.AttachmentNameWithExtension,
-                                            //ImageBytes = imgUser, //byteImage,
-                                            WorkOrderAttachmentID = file.AssetAttachmentID,
-                                            AttachmentImageSource = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Inspection/Service/AttachmentItem.ashx?Id=" + file.AssetAttachmentID + "&&Module=workorder"))
-
-                                        }
-                                        );
-
-
-                                    }
+                                       
+                                    }                                  
                                 }
                             }
                         }
