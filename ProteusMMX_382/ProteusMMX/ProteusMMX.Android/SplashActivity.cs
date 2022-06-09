@@ -16,6 +16,13 @@ namespace ProteusMMX.Droid
         public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
         {
             base.OnCreate(savedInstanceState, persistentState);
+            var mainIntent = new Intent(Application.Context, typeof(MainActivity));
+            if (Intent.Extras != null)
+            {
+                mainIntent.PutExtras(Intent.Extras);
+            }
+            mainIntent.SetFlags(ActivityFlags.SingleTop);
+            StartActivity(mainIntent);
             Log.Debug(TAG, "SplashActivity.OnCreate");
         }
 
@@ -25,6 +32,12 @@ namespace ProteusMMX.Droid
             base.OnResume();
             Task startupWork = new Task(() => { SimulateStartup(); });
             startupWork.Start();
+            var mainIntent = new Intent(Application.Context, typeof(MainActivity));
+            if (Intent.Extras != null)
+            {
+                mainIntent.PutExtras(Intent.Extras);
+            }
+            StartActivity(mainIntent);
         }
 
         // Prevent the back button from canceling the startup process

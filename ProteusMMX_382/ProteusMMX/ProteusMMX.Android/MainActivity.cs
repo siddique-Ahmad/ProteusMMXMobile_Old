@@ -15,10 +15,11 @@ using Microsoft.AppCenter.Analytics;
 using Android.Content.Res;
 using Microsoft.AppCenter.Crashes;
 using Plugin.LocalNotification;
+using Android.Content;
 
 namespace ProteusMMX.Droid
 {
-    [Activity(Label = "ProteusMMX", Icon = "@drawable/icon", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.User)]
+    [Activity(Label = "ProteusMMX", Icon = "@drawable/icon", Theme = "@style/MainTheme", LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.User)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -39,6 +40,8 @@ namespace ProteusMMX.Droid
             UserDialogs.Init(this);
             Rg.Plugins.Popup.Popup.Init(this);
             NotificationCenter.CreateNotificationChannel();
+            NotificationCenter.NotifyNotificationTapped(Intent);
+            //var data= NotificationCenter.NotifyNotificationTapped(Intent);
             //if (Android.OS.Build.VERSION.SdkInt >= Build.VERSION_CODES.Lollipop)
             //{
             //    //notification.setSmallIcon(R.drawable.icon_transperent);
@@ -49,6 +52,12 @@ namespace ProteusMMX.Droid
             //    notification.SmallIcon(R.Drawable.icon);
             //}
             LoadApplication(new App());
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            NotificationCenter.NotifyNotificationTapped(intent);
+            base.OnNewIntent(intent);
         }
 
         public override void OnBackPressed()
