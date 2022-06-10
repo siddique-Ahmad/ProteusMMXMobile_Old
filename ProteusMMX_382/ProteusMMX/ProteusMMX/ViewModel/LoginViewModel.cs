@@ -90,6 +90,24 @@ namespace ProteusMMX.ViewModel
             }
         }
 
+        string _notiWorkorderID;
+        public string NotiWorkorderID
+        {
+            get
+            {
+                return _notiWorkorderID;
+            }
+
+            set
+            {
+                if (value != _notiWorkorderID)
+                {
+                    _notiWorkorderID = value;
+                    OnPropertyChanged(nameof(NotiWorkorderID));
+                }
+            }
+        }
+
 
         bool _siteUrlLabelVisibility = true;
         public bool SiteUrlLabelVisibility
@@ -464,18 +482,20 @@ namespace ProteusMMX.ViewModel
         int nid;
 
         #endregion
+
+        string WorkOrderId = null;
         public override async Task InitializeAsync(object navigationData)
         {
             try
             {
                 #region Local Notification
-               
+
 
                 if (AppSettings.User != null)
                 {
 
                     UserId = AppSettings.User.UserID;
-                    var minutes = TimeSpan.FromSeconds(10);
+                    var minutes = TimeSpan.FromSeconds(30);
                     Xamarin.Forms.Device.StartTimer(minutes, () =>
                     {
 
@@ -486,12 +506,17 @@ namespace ProteusMMX.ViewModel
                         return true;
                     });
                 }
-                #endregion
-                if (navigationData != null)
+                if (!string.IsNullOrEmpty(NotiWorkorderID))
                 {
-                    var navigationParams = navigationData as TargetNavigationData;
-                    WorkorderID = navigationParams.WorkOrderId;
+                    Application.Current.Properties["NotificationId"] = NotiWorkorderID;
                 }
+               
+                #endregion
+                //if (navigationData != null)
+                //{
+                //    var navigationParams = navigationData as TargetNavigationData;
+                //    WorkorderID = navigationParams.WorkOrderId;
+                //}
 
                 if (Device.RuntimePlatform == Device.iOS)
                 {
@@ -536,7 +561,7 @@ namespace ProteusMMX.ViewModel
                     var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName, Password);
                     if (user != null && user.mmxUser != null)
                     {
-                       
+
                         string signaturevalidated = SignatureStorage.Storage.Get("FDASignatureUserValidated");
                         if (!string.IsNullOrWhiteSpace(signaturevalidated))
                         {
@@ -558,7 +583,7 @@ namespace ProteusMMX.ViewModel
                         UserDialogs.Instance.HideLoading();
                         OperationInProgress = false;
                         await NavigationService.NavigateToAsync<DashboardPageViewModel>();
-                        await NavigationService.RemoveLastFromBackStackAsync();
+                        //await NavigationService.RemoveLastFromBackStackAsync();
 
                     }
 
@@ -586,7 +611,7 @@ namespace ProteusMMX.ViewModel
                 OperationInProgress = false;
             }
         }
-     
+
         public async void GetUserNotification()
         {
             Dictionary<string, string> urlSegment = new Dictionary<string, string>();
@@ -711,41 +736,57 @@ namespace ProteusMMX.ViewModel
         }
         public void TestNotification(Notifications notifications)
         {
-             nid = Convert.ToInt32(notifications.ID);
+            nid = Convert.ToInt32(notifications.ID);
             var notification = new NotificationRequest
             {
-
                 BadgeNumber = nid,
                 Description = notifications.Message,
                 Title = notifications.Title,
-                NotificationId = nid,
-
-
+                ReturningData = Convert.ToString(notifications.ID),                
+                NotificationId = notifications.WorkOrderId,
+                
             };
             NotificationCenter.Current.NotificationReceived += Current_NotificationReceived;
+            NotificationCenter.Current.NotificationTapped += Current_NotificationTapped; ;
             notification.Android.IconSmallName = new AndroidIcon("icon.png");
             Plugin.LocalNotification.NotificationCenter.Current.Show(notification);
         }
 
+        private void Current_NotificationTapped(NotificationEventArgs e)
+        {
+            if (e.Request != null && e.Request.NotificationId > 0)
+            {
+                NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(e.Request.NotificationId));
+            }
+        }
+
+        //private void Current_NotificationTapped(NotificationTapped e)
+        //{
+        //    if (e.Request != null && e.Request.NotificationId > 0)
+        //    {
+
+        //    }
+        //}
+
         private void Current_NotificationReceived(NotificationEventArgs e)
         {
-           
-                Device.BeginInvokeOnMainThread(() =>
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+
+                Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/Service/CreateNotification");
+
+                var notification = new ServiceInput()
                 {
-                  
-                    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/Service/CreateNotification");
+                    UserID = nid
 
-                    var notification = new ServiceInput()
-                    {
-                       UserID=nid
+                };
 
-                    };
+                string strPayload = JsonConvert.SerializeObject(notification);
+                HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+                var t = Task.Run(() => SendURI(posturi, c));
+            });
 
-                    string strPayload = JsonConvert.SerializeObject(notification);
-                    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                    var t = Task.Run(() => SendURI(posturi, c));
-                });
-            
         }
         static async Task SendURI(Uri u, HttpContent c)
         {
@@ -833,7 +874,7 @@ namespace ProteusMMX.ViewModel
                 {
                     user.mmxUser.blackhawkLicValidator.CompanyProfileLogo = null;
                 }
-                
+
                 if (user.mmxUser.UserLicense == "Web")
                 {
                     UserDialogs.Instance.HideLoading();
@@ -848,9 +889,9 @@ namespace ProteusMMX.ViewModel
                 AppSettings.UserName = UserName;
                 AppSettings.Password = Password;
                 AppSettings.User.blackhawkLicValidator.FDAEnable = user.mmxUser.blackhawkLicValidator.FDAEnable;
-                AppSettings.User.blackhawkLicValidator.Signvalue = user.mmxUser.blackhawkLicValidator.Signvalue;               
+                AppSettings.User.blackhawkLicValidator.Signvalue = user.mmxUser.blackhawkLicValidator.Signvalue;
                 AppSettings.User.blackhawkLicValidator.CompanyProfileLogo = user.mmxUser.blackhawkLicValidator.CompanyProfileLogo;
-                
+
 
                 //var FDALicenseKey = await _authenticationService.GetFDAValidationAsync(SiteUrl, null);
                 if (user.mmxUser.blackhawkLicValidator.FDAEnable && user.mmxUser.blackhawkLicValidator.Signvalue == "True")
@@ -868,20 +909,20 @@ namespace ProteusMMX.ViewModel
                 #region Local Notification
 
 
-              
 
-                    UserId = user.mmxUser.UserID;
-                    var minutes = TimeSpan.FromSeconds(10);
-                    Xamarin.Forms.Device.StartTimer(minutes, () =>
-                    {
 
-                        //check for notifications
-                        GetUserNotification();
+                UserId = user.mmxUser.UserID;
+                var minutes = TimeSpan.FromSeconds(10);
+                Xamarin.Forms.Device.StartTimer(minutes, () =>
+                {
 
-                        // Returning true means repeat this timer
-                        return true;
-                    });
-                
+                    //check for notifications
+                    GetUserNotification();
+
+                    // Returning true means repeat this timer
+                    return true;
+                });
+
                 #endregion
                 await NavigationService.NavigateToAsync<DashboardPageViewModel>();
                 await NavigationService.RemoveLastFromBackStackAsync();
@@ -892,10 +933,6 @@ namespace ProteusMMX.ViewModel
                     Settings.Remove(nameof(Password));
 
                 }
-
-
-
-
 
             }
             catch (Exception ex)
@@ -916,7 +953,7 @@ namespace ProteusMMX.ViewModel
 
         public async Task InitializeTranslations()
         {
-            
+
             var translations = await _webControlTitlesService.GetWebControlTitles(AppSettings.User.UserID.ToString());
 
             if (translations != null && translations.listWebControlTitles != null)

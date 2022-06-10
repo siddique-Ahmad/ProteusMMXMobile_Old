@@ -6,6 +6,7 @@ using Plugin.LocalNotification;
 
 using ProteusMMX.Controls;
 using ProteusMMX.DependencyInterface;
+using ProteusMMX.Helpers.Storage;
 using ProteusMMX.Model;
 using ProteusMMX.Services.Navigation;
 using ProteusMMX.ViewModel;
@@ -45,13 +46,15 @@ namespace ProteusMMX
                 Locator.Instance.Build();
                 InitNavigation();
 
+               
+
                 //#region Local Notification
                 //if (AppSettings.User != null)
                 //{
 
                 //    UserId = AppSettings.User.UserID;
                 //    GetUserNotification();
-                    
+
                 //}
                 //#endregion
 
@@ -66,6 +69,7 @@ namespace ProteusMMX
           
 
         }
+
         //public async void GetUserNotification()
         //{
         //    Dictionary<string, string> urlSegment = new Dictionary<string, string>();

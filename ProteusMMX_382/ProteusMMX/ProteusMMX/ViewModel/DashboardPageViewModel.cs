@@ -669,6 +669,7 @@ namespace ProteusMMX.ViewModel
                 await GetWorkorderControlRights();
                 await SetTitlesPropertiesForPage();
                 await SetDashboardVisibility();
+                await GoToWorkOrderDetils();
                 NavigationPage.SetHasBackButton(this.Page, false);
             }
             catch (Exception ex)
@@ -904,7 +905,38 @@ namespace ProteusMMX.ViewModel
 
         }
 
+        public async Task GoToWorkOrderDetils()
+        {
+            try
+            {
+                var workordersDetailsRight = JsonConvert.DeserializeObject(NotifactionStorage.Storage.Get("Notificationdb"));
+                if (workordersDetailsRight != null && workordersDetailsRight != "")
+                {
+                    UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
 
+                    workOrders item = new workOrders();
+                    item.WorkOrderID = Convert.ToInt32(workordersDetailsRight);
+                    string data = string.Empty;
+                    NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(data));
+                    await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item);
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                string data = string.Empty;
+                NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(data));
+                // OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                //OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+            }
+        }
 
         public async Task ShowKPIDashboard()
         {
