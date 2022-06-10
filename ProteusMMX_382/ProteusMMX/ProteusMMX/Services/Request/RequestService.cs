@@ -15,9 +15,14 @@ namespace ProteusMMX.Services.Request
     {
         public async Task<ServiceOutput> GetAsync(string url)
         {
-            
-            var httpClient = new HttpClient();
-
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
+            {
+                return true;
+            };
+           // var httpClient = new HttpClient();
+           
+            var httpClient = new HttpClient(httpClientHandler) { BaseAddress = new Uri(url) };
             try
             {
 
@@ -49,7 +54,14 @@ namespace ProteusMMX.Services.Request
 
         public async Task<ServiceOutput> PostAsync(string url, object obj)
         {
-            var httpClient = new HttpClient();
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
+            {
+                return true;
+            };
+            // var httpClient = new HttpClient();
+
+            var httpClient = new HttpClient(httpClientHandler) { BaseAddress = new Uri(url) };
 
             try
             {
