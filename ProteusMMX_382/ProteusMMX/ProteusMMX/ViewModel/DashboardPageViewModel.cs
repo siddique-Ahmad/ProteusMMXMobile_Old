@@ -669,7 +669,10 @@ namespace ProteusMMX.ViewModel
                 await GetWorkorderControlRights();
                 await SetTitlesPropertiesForPage();
                 await SetDashboardVisibility();
-                await GoToWorkOrderDetils();
+                if (Device.RuntimePlatform==Device.Android)
+                {
+                    await GoToWorkOrderDetils();
+                }
                 NavigationPage.SetHasBackButton(this.Page, false);
             }
             catch (Exception ex)

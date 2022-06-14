@@ -3,7 +3,7 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
 using Plugin.LocalNotification;
-
+using Plugin.LocalNotification.EventArgs;
 using ProteusMMX.Controls;
 using ProteusMMX.DependencyInterface;
 using ProteusMMX.Helpers.Storage;
@@ -46,7 +46,7 @@ namespace ProteusMMX
                 Locator.Instance.Build();
                 InitNavigation();
 
-               
+                NotificationCenter.Current.NotificationTapped += OnLocalNotificationTapped; 
 
                 //#region Local Notification
                 //if (AppSettings.User != null)
@@ -66,7 +66,15 @@ namespace ProteusMMX
                 throw;
             }
             
-          
+        }
+
+       
+        private async void OnLocalNotificationTapped(NotificationEventArgs e)
+        {
+            if (e.Request != null && e.Request.NotificationId > 0)
+            {
+                NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(e.Request.NotificationId));
+            }
 
         }
 

@@ -747,18 +747,19 @@ namespace ProteusMMX.ViewModel
                 
             };
             NotificationCenter.Current.NotificationReceived += Current_NotificationReceived;
-            NotificationCenter.Current.NotificationTapped += Current_NotificationTapped; ;
+            //NotificationCenter.Current.NotificationTapped += Current_NotificationTapped; ;
             notification.Android.IconSmallName = new AndroidIcon("icon.png");
             Plugin.LocalNotification.NotificationCenter.Current.Show(notification);
         }
 
-        private void Current_NotificationTapped(NotificationEventArgs e)
-        {
-            if (e.Request != null && e.Request.NotificationId > 0)
-            {
-                NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(e.Request.NotificationId));
-            }
-        }
+        //private async void Current_NotificationTapped(NotificationEventArgs e)
+        //{
+        //   // await DialogService.ShowAlertAsync("Tab notifaction login page .", "Alert", "OK");
+        //    if (e.Request != null && e.Request.NotificationId > 0)
+        //    {
+        //        NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(e.Request.NotificationId));
+        //    }
+        //}
 
         //private void Current_NotificationTapped(NotificationTapped e)
         //{
