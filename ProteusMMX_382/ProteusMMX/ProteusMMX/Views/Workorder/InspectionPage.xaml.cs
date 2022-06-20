@@ -3407,12 +3407,15 @@ namespace ProteusMMX.Views.Workorder
                     {
                         if (item.MinRange != null && item.MaxRange != null)
                         {
-                            if (decimal.Parse(item.AnswerDescription) <= item.MinRange && decimal.Parse(item.AnswerDescription) >= item.MaxRange)
+                            if (!string.IsNullOrWhiteSpace(item.AnswerDescription))
                             {
-                                this.AnswerText.Append(item.InspectionDescription);
-                                this.AnswerText.Append(": ");
-                                this.AnswerText.Append(item.AnswerDescription);
-                                this.AnswerText.Append(System.Environment.NewLine);
+                                if (decimal.Parse(item.AnswerDescription) <= item.MinRange && decimal.Parse(item.AnswerDescription) >= item.MaxRange)
+                                {
+                                    this.AnswerText.Append(item.InspectionDescription);
+                                    this.AnswerText.Append(": ");
+                                    this.AnswerText.Append(item.AnswerDescription);
+                                    this.AnswerText.Append(System.Environment.NewLine);
+                                }
                             }
                         }
 
