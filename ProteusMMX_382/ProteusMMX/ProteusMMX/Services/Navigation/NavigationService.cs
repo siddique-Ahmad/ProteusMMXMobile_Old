@@ -108,7 +108,25 @@ namespace ProteusMMX.Services.Navigation
             #endregion
         }
 
+        public async Task DasebordAsync()
+        {
 
+            await NavigateToAsync<DashboardPageViewModel>();
+
+            //For Test purpose only
+            //await NavigateToAsync<ContractorListSelectionPageViewModel>();
+
+            #region Old Code
+            //if (await _authenticationService.UserIsAuthenticatedAndValidAsync())
+            //{
+            //    await NavigateToAsync<MainViewModel>();
+            //}
+            //else
+            //{
+            //    await NavigateToAsync<LoginViewModel>();
+            //} 
+            #endregion
+        }
 
         public Task NavigateToAsync<TViewModel>() where TViewModel : ViewModelBase
         {

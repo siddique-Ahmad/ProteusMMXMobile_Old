@@ -78,19 +78,6 @@ namespace ProteusMMX
 
         }
 
-        //public async void GetUserNotification()
-        //{
-        //    Dictionary<string, string> urlSegment = new Dictionary<string, string>();
-        //    urlSegment.Add("USERID", UserId.ToString());
-
-        //    ServiceOutput notifications = await ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/service/GetNotification", "GET", urlSegment, null);
-        //    if(notifications.servicestatus== "true" && notifications.notificationWrapper.Status)
-        //    {
-        //        TestNotification(notifications.notificationWrapper);
-        //    }
-
-
-        //}
         public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
         {
             ServiceOutput responseContent = new ServiceOutput();
