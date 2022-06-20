@@ -16,10 +16,18 @@ using Android.Content.Res;
 using Microsoft.AppCenter.Crashes;
 using Plugin.LocalNotification;
 using Android.Content;
+using Xamarin.Forms;
+using ProteusMMX.Services.Navigation;
+using System.Threading.Tasks;
+using ProteusMMX.ViewModel;
+using ProteusMMX.Model.WorkOrderModel;
+using ProteusMMX.ViewModel.Workorder;
+using ProteusMMX.Services.Authentication;
+using ProteusMMX.Services.FormLoadInputs;
 
 namespace ProteusMMX.Droid
 {
-    [Activity(Label = "ProteusMMX", Icon = "@drawable/icon", Theme = "@style/MainTheme", LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.User)]
+    [Activity(Label = "ProteusMMX", Icon = "@drawable/icon", MainLauncher =true, Theme = "@style/MainTheme", LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.User)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -51,13 +59,36 @@ namespace ProteusMMX.Droid
             //{
             //    notification.SmallIcon(R.Drawable.icon);
             //}
+
             LoadApplication(new App());
         }
 
+       
         protected override void OnNewIntent(Intent intent)
         {
             NotificationCenter.NotifyNotificationTapped(intent);
             base.OnNewIntent(intent);
+            NavigateTo(intent);
+        }
+
+        
+
+        void NavigateTo(Intent intent)
+        {
+           
+            if (intent.Action == "android.intent.action.MAIN")
+            {
+                InitNavigation();
+               // Xamarin.Forms.Application.Current.MainPage.Navigation.PushModalAsync(NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item));
+            }
+        }
+     
+
+        private Task InitNavigation()
+        {
+            var navigationService = Locator.Instance.Resolve<INavigationService>();
+            //return navigationService.NavigateToAsync<ExtendedSplashViewModel>();  // this page is used for preprocessing work
+            return navigationService.DasebordAsync();
         }
 
         public override void OnBackPressed()

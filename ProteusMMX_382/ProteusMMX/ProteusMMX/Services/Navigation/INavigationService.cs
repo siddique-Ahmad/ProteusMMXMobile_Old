@@ -12,6 +12,8 @@ namespace ProteusMMX.Services.Navigation
     {
         Task InitializeAsync();
 
+        Task DasebordAsync();
+
         Task NavigateToAsync<TViewModel>() where TViewModel : ViewModelBase;
 
         Task NavigateToAsync<TViewModel>(object parameter) where TViewModel : ViewModelBase;
