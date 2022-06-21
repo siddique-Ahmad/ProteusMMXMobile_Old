@@ -68,14 +68,25 @@ namespace ProteusMMX
             
         }
 
-       
+
         private async void OnLocalNotificationTapped(NotificationEventArgs e)
         {
             if (e.Request != null && e.Request.NotificationId > 0)
             {
                 NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(e.Request.NotificationId));
+                if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS)
+                {
+                    await InitDasebordNavigation();
+                }
+
             }
 
+        }
+        private Task InitDasebordNavigation()
+        {
+            var navigationService = Locator.Instance.Resolve<INavigationService>();
+            //return navigationService.NavigateToAsync<ExtendedSplashViewModel>();  // this page is used for preprocessing work
+            return navigationService.InitializeAsync();
         }
 
         public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)

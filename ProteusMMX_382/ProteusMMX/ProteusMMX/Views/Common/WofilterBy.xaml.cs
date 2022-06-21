@@ -47,9 +47,10 @@ namespace ProteusMMX.Views
             TaskOnlyTitle = WebControlTitle.GetTargetNameByTitleName("Task") + "" + WebControlTitle.GetTargetNameByTitleName("Only");
             InspectionOnlyTitle = WebControlTitle.GetTargetNameByTitleName("Inspection") + "" + WebControlTitle.GetTargetNameByTitleName("Only");
             CompletionTitle = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
+            IncompleteTitle = WebControlTitle.GetTargetNameByTitleName("IncompleteWorkorder");
             FailedInspectionTitle = WebControlTitle.GetTargetNameByTitleName("FailedInspection");
-
-            lst.ItemsSource = new List<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, TaskOnlyTitle, InspectionOnlyTitle , CompletionTitle , FailedInspectionTitle };
+            IncompleteTitle = WebControlTitle.GetTargetNameByTitleName("IncompleteWorkorder");
+            lst.ItemsSource = new List<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, TaskOnlyTitle, InspectionOnlyTitle, CompletionTitle, FailedInspectionTitle };
             string response = string.Empty;
 
 
@@ -68,7 +69,7 @@ namespace ProteusMMX.Views
                 {
                     SelectIcon = "check.png";
                 }
-                if (response== PreventiveMaintenenceTitle)
+                if (response == PreventiveMaintenenceTitle)
                 {
                     list.Add(new FilterOrder { Filters = PreventiveMaintenenceTitle, Images = SelectIcon });
                     list.Add(new FilterOrder { Filters = DemandMaintenenceTitle, Images = "" });
@@ -76,6 +77,7 @@ namespace ProteusMMX.Views
                     list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = IncompleteTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
                     lst.ItemsSource = list;
                 }
@@ -87,6 +89,7 @@ namespace ProteusMMX.Views
                     list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = IncompleteTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
                     lst.ItemsSource = list;
                 }
@@ -98,6 +101,7 @@ namespace ProteusMMX.Views
                     list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = IncompleteTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
                     lst.ItemsSource = list;
                 }
@@ -109,6 +113,7 @@ namespace ProteusMMX.Views
                     list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = SelectIcon });
                     list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = IncompleteTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
                     lst.ItemsSource = list;
                 }
@@ -120,6 +125,7 @@ namespace ProteusMMX.Views
                     list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = SelectIcon });
                     list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = IncompleteTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
                     lst.ItemsSource = list;
                 }
@@ -131,6 +137,19 @@ namespace ProteusMMX.Views
                     list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = CompletionTitle, Images = SelectIcon });
+                    list.Add(new FilterOrder { Filters = IncompleteTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
+                    lst.ItemsSource = list;
+                }
+                else if (response == IncompleteTitle)
+                {
+                    list.Add(new FilterOrder { Filters = PreventiveMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = DemandMaintenenceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = EmergencyMaintenanceTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = IncompleteTitle, Images = SelectIcon });
                     list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
                     lst.ItemsSource = list;
                 }
@@ -143,6 +162,7 @@ namespace ProteusMMX.Views
                     list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                    list.Add(new FilterOrder { Filters = IncompleteTitle, Images = "" });
                     list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = SelectIcon });
                     lst.ItemsSource = list;
                 }
@@ -156,6 +176,7 @@ namespace ProteusMMX.Views
                 list.Add(new FilterOrder { Filters = TaskOnlyTitle, Images = "" });
                 list.Add(new FilterOrder { Filters = InspectionOnlyTitle, Images = "" });
                 list.Add(new FilterOrder { Filters = CompletionTitle, Images = "" });
+                list.Add(new FilterOrder { Filters = IncompleteTitle, Images = "" });
                 list.Add(new FilterOrder { Filters = FailedInspectionTitle, Images = "" });
                 lst.ItemsSource = list;
             }
@@ -257,7 +278,23 @@ namespace ProteusMMX.Views
                 }
             }
         }
+        string _incompleteTitle;
+        public string IncompleteTitle
+        {
+            get
+            {
+                return _incompleteTitle;
+            }
 
+            set
+            {
+                if (value != _incompleteTitle)
+                {
+                    _incompleteTitle = value;
+                    OnPropertyChanged("IncompleteTitle");
+                }
+            }
+        }
         string _completionTitle;
         public string CompletionTitle
         {

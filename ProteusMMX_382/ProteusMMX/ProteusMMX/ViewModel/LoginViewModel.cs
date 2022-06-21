@@ -912,7 +912,7 @@ namespace ProteusMMX.ViewModel
 
                 #endregion
                 await NavigationService.NavigateToAsync<DashboardPageViewModel>();
-                await NavigationService.RemoveLastFromBackStackAsync();
+               // await NavigationService.RemoveLastFromBackStackAsync();
 
                 if (AppSettings.RememberMeSwitchFlag == false)
                 {

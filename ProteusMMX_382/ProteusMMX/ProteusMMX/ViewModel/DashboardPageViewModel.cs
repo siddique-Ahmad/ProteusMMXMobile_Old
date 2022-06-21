@@ -669,7 +669,7 @@ namespace ProteusMMX.ViewModel
                 await GetWorkorderControlRights();
                 await SetTitlesPropertiesForPage();
                 await SetDashboardVisibility();
-                if (Device.RuntimePlatform == Device.Android)
+                if (Device.RuntimePlatform == Device.Android|| Device.RuntimePlatform==Device.iOS)
                 {
                     await GoToWorkOrderDetils();
                 }
