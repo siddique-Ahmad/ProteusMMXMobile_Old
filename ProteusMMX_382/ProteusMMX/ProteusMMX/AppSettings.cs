@@ -521,6 +521,24 @@ namespace ProteusMMX
 
         }
 
+        private static string _saveWorkOrderAcknowledgement = "Inspection/service/SaveWorkOrderAcknowledgement";
+        public static string SaveWorkOrderAcknowledgement
+        {
+            get
+            {
+                return _saveWorkOrderAcknowledgement;
+            }
+
+            set
+            {
+                if (value != _saveWorkOrderAcknowledgement)
+                {
+                    _saveWorkOrderAcknowledgement = value;
+                }
+            }
+
+        }
+
         private static string _getIsWorkOrderSignatureRequired = "Inspection/service/IsWorkOrderSignatureRequiredAndEmpty";
         public static string GetIsWorkOrderSignatureRequired
         {

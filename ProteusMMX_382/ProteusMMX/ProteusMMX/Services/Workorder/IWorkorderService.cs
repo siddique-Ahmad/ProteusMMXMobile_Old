@@ -27,6 +27,8 @@ namespace ProteusMMX.Services.Workorder
         Task<ServiceOutput> GetWorkorderInspectionTime(string UserID, string WorkorderID);
         Task<ServiceOutput> CreateWorkorder(object workorder);
         Task<ServiceOutput> UpdateWorkorder(object workorder);
+
+        Task<ServiceOutput> SaveWorkOrderAcknowledgement(object workorder);
         Task<ServiceOutput> IsSignatureRequiredOnInspection(string WorkorderID);
         Task<ServiceOutput> CloseWorkorder(object workorder);
 

@@ -156,6 +156,16 @@ namespace ProteusMMX.Services.Workorder
             return _requestService.PostAsync(uri, workorder);//GetAsync(uri);
         }
 
+        public Task<ServiceOutput> SaveWorkOrderAcknowledgement(object workorder)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.SaveWorkOrderAcknowledgement);
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.PostAsync(uri, workorder);//GetAsync(uri);
+        }
+        
+
         public Task<ServiceOutput> IsSignatureRequiredOnInspection(string WorkorderID)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);

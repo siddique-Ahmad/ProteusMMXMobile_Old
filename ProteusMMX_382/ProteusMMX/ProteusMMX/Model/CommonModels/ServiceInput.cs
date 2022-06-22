@@ -22,5 +22,7 @@ namespace ProteusMMX.Model.CommonModels
 
         public long UserID { get; set; }
 
+        public DateTime? AcknowledgedDate { get; set; }
+
     }
 }

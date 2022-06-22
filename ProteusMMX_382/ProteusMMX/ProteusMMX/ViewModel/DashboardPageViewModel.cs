@@ -6,6 +6,7 @@ using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using ProteusMMX.Constants;
 using ProteusMMX.Helpers;
+using ProteusMMX.Helpers.DateTime;
 using ProteusMMX.Helpers.Storage;
 using ProteusMMX.Model;
 using ProteusMMX.Model.CommonModels;
@@ -915,10 +916,15 @@ namespace ProteusMMX.ViewModel
                 var workordersDetailsRight = JsonConvert.DeserializeObject(NotifactionStorage.Storage.Get("Notificationdb"));
                 if (workordersDetailsRight != null && workordersDetailsRight != "")
                 {
+                  
+
                     UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
 
                     workOrders item = new workOrders();
                     item.WorkOrderID = Convert.ToInt32(workordersDetailsRight);
+                    //Save Acknowledment date
+                    await SaveAcknowledgementDate(item.WorkOrderID);
+
                     string data = string.Empty;
                     NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(data));
                     await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item);
@@ -940,7 +946,24 @@ namespace ProteusMMX.ViewModel
                 UserDialogs.Instance.HideLoading();
             }
         }
+        public async Task SaveAcknowledgementDate(int workorderid)
+        {
+            var workorder = new ServiceInput
+            {
+                UserID = AppSettings.User.UserID,
+                WorkorderID = workorderid,
+                ClientIANATimeZone = AppSettings.ClientIANATimeZone,
+                AcknowledgedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone)
 
+            };
+            var response = await _workorderService.SaveWorkOrderAcknowledgement(workorder);
+            if (response != null && bool.Parse(response.servicestatus))
+            {
+                DialogService.ShowToast("Successfully Acknowledged", 200);
+            }
+
+
+        }
         public async Task ShowKPIDashboard()
         {
 

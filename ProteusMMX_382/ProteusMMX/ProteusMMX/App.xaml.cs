@@ -6,6 +6,7 @@ using Plugin.LocalNotification;
 using Plugin.LocalNotification.EventArgs;
 using ProteusMMX.Controls;
 using ProteusMMX.DependencyInterface;
+using ProteusMMX.Helpers;
 using ProteusMMX.Helpers.Storage;
 using ProteusMMX.Model;
 using ProteusMMX.Services.Navigation;
@@ -48,17 +49,6 @@ namespace ProteusMMX
 
                 NotificationCenter.Current.NotificationTapped += OnLocalNotificationTapped; 
 
-                //#region Local Notification
-                //if (AppSettings.User != null)
-                //{
-
-                //    UserId = AppSettings.User.UserID;
-                //    GetUserNotification();
-
-                //}
-                //#endregion
-
-
             }
             catch (Exception ex)
             {
@@ -85,8 +75,8 @@ namespace ProteusMMX
         private Task InitDasebordNavigation()
         {
             var navigationService = Locator.Instance.Resolve<INavigationService>();
-            //return navigationService.NavigateToAsync<ExtendedSplashViewModel>();  // this page is used for preprocessing work
-            return navigationService.InitializeAsync();
+            return navigationService.DasebordAsync();
+
         }
 
         public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
@@ -200,12 +190,21 @@ namespace ProteusMMX
         }
         public void TestNotification(Notifications notifications)
         {
-            int nid =Convert.ToInt32(notifications.ID);
+            String FinalDescription = string.Empty;
+            int nid = Convert.ToInt32(notifications.ID);
+            if (!String.IsNullOrWhiteSpace(notifications.Message))
+            {
+                FinalDescription = RemoveHTML.StripHtmlTags(notifications.Message);
+            }
+            else
+            {
+                FinalDescription = notifications.Message;
+            }
             var notification = new NotificationRequest
             {
 
                 BadgeNumber = nid,
-                Description = notifications.Message,
+                Description = FinalDescription,
                 Title = notifications.Title,
                 NotificationId = nid,
                 
@@ -213,15 +212,14 @@ namespace ProteusMMX
 
         };
 
-           // notification.Android.IconSmallName = new AndroidIcon("icon.png");
             Plugin.LocalNotification.NotificationCenter.Current.Show(notification);
         }
         
         private Task InitNavigation()
         {
             var navigationService = Locator.Instance.Resolve<INavigationService>();
-            //return navigationService.NavigateToAsync<ExtendedSplashViewModel>();  // this page is used for preprocessing work
             return navigationService.InitializeAsync();
+
         }
 
         protected override void OnStart()

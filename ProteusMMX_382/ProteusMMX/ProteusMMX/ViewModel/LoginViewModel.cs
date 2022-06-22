@@ -32,6 +32,7 @@ using System.Net.Http.Headers;
 using Plugin.LocalNotification.EventArgs;
 using System.Text;
 using Plugin.LocalNotification.AndroidOption;
+using ProteusMMX.Helpers;
 
 namespace ProteusMMX.ViewModel
 {
@@ -744,15 +745,24 @@ namespace ProteusMMX.ViewModel
         }
         public void TestNotification(Notifications notifications)
         {
+            String FinalDescription = string.Empty;
             nid = Convert.ToInt32(notifications.ID);
+            if (!String.IsNullOrWhiteSpace(notifications.Message))
+            {
+                FinalDescription = RemoveHTML.StripHtmlTags(notifications.Message);
+            }
+            else
+            {
+                FinalDescription = notifications.Message;
+            }
             var notification = new NotificationRequest
             {
                 BadgeNumber = nid,
-                Description = notifications.Message,
+                Description = FinalDescription,
                 Title = notifications.Title,
-                ReturningData = Convert.ToString(notifications.ID),                
+                ReturningData = Convert.ToString(notifications.ID),
                 NotificationId = notifications.WorkOrderId,
-                
+
             };
             NotificationCenter.Current.NotificationReceived += Current_NotificationReceived;
             //NotificationCenter.Current.NotificationTapped += Current_NotificationTapped; ;
