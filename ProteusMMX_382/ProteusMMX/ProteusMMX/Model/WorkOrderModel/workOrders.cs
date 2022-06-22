@@ -137,6 +137,9 @@ namespace ProteusMMX.Model.WorkOrderModel
 
         public string RiskQuestion { get; set; }
 
+        public DateTime? AcknowledgedDate { get; set; }
+        public DateTime? ReportedDate { get; set; }
+
         public bool WorkOrderCompleted
         {
             get

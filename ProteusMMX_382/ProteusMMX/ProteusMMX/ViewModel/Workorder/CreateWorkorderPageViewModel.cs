@@ -4305,6 +4305,44 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        //AcknowledgedDate
+        string _acknowledgedDate;
+        public string AcknowledgedDate
+        {
+            get
+            {
+                return _acknowledgedDate;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDate)
+                {
+                    _acknowledgedDate = value;
+                    OnPropertyChanged(nameof(AcknowledgedDate));
+                }
+            }
+        }
+
+        //ReportedDate
+        string _reportedDate;
+        public string ReportedDate
+        {
+            get
+            {
+                return _reportedDate;
+            }
+
+            set
+            {
+                if (value != _reportedDate)
+                {
+                    _reportedDate = value;
+                    OnPropertyChanged(nameof(ReportedDate));
+                }
+            }
+        }
+
         //TotalTime
         string _totalTime;
         public string TotalTime
@@ -8722,7 +8760,97 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
 
 
+                case "ReportedDate":
+                    {
+                        if (control is Picker)
+                        {
+                            //var x = control as Picker;
+                            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
 
+                            var x = control as Picker;
+                            x.ClassId = formControl.ControlName;
+
+                            var source = x.ItemsSource as List<ComboDD>;
+                            ComboDD item = null;
+                            try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(ReportedDate)); }
+                            catch (Exception) { }
+
+                            if (item != null)
+                            {
+                                x.SelectedItem = item;
+                                ReportedDate = item.SelectedValue.ToString();
+                            }
+
+                            x.SelectedIndexChanged += Picker_SelectedIndexChanged;
+
+
+                        }
+
+                        else if (control is Entry)
+                        {
+                            control.SetBinding(Entry.TextProperty, nameof(this.ReportedDate));
+                        }
+
+                        else if (control is DatePicker)
+                        {
+                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
+                            ReportedDate = DateTime.Now.ToString();
+                            control.SetBinding(DatePicker.DateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                        }
+
+                        else if (control is CustomDatePicker)
+                        {
+                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                        }
+                        break;
+
+                    }
+
+                case "AcknowledgedDate":
+                    {
+                        if (control is Picker)
+                        {
+                            //var x = control as Picker;
+                            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
+
+                            var x = control as Picker;
+                            x.ClassId = formControl.ControlName;
+
+                            var source = x.ItemsSource as List<ComboDD>;
+                            ComboDD item = null;
+                            try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(AcknowledgedDate)); }
+                            catch (Exception) { }
+
+                            if (item != null)
+                            {
+                                x.SelectedItem = item;
+                                AcknowledgedDate = item.SelectedValue.ToString();
+                            }
+
+                            x.SelectedIndexChanged += Picker_SelectedIndexChanged;
+
+
+                        }
+
+                        else if (control is Entry)
+                        {
+                            control.SetBinding(Entry.TextProperty, nameof(this.AcknowledgedDate));
+                        }
+
+                        else if (control is DatePicker)
+                        {
+                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
+                            AcknowledgedDate = DateTime.Now.ToString();
+                            control.SetBinding(DatePicker.DateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                        }
+
+                        else if (control is CustomDatePicker)
+                        {
+                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                        }
+                        break;
+
+                    }
 
                 #region User Field Section
 
@@ -9906,6 +10034,18 @@ namespace ProteusMMX.ViewModel.Workorder
                 case "AmStepID":
                     {
                         this.AmStepID = (picker.SelectedItem as ComboDD).SelectedValue.ToString();
+                        break;
+                    }
+
+                case "ReportedDate":
+                    {
+                        this.ReportedDate = (picker.SelectedItem as ComboDD).SelectedValue.ToString();
+                        break;
+                    }
+
+                case "AcknowledgedDate":
+                    {
+                        this.AcknowledgedDate = (picker.SelectedItem as ComboDD).SelectedValue.ToString();
                         break;
                     }
 
@@ -11413,6 +11553,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.RequesterEmail = RequesterEmail;
                 workOrder.RequesterFullName = RequesterFullName;
                 workOrder.RequesterPhone = RequesterPhone;
+                workOrder.AcknowledgedDate = Convert.ToDateTime(AcknowledgedDate);
+                workOrder.ReportedDate = Convert.ToDateTime(ReportedDate);
 
 
                 //UserField21 = UserField21, //UserField21b.Text,
@@ -12361,6 +12503,28 @@ namespace ProteusMMX.ViewModel.Workorder
                         case "StartupTime":
                             {
                                 validationResult = ValidateValidations(formLoadItem, StartupTime);
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
+
+                        case "ReportedDate":
+                            {
+                                validationResult = ValidateValidations(formLoadItem, ReportedDate);
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
+
+                        case "AcknowledgedDate":
+                            {
+                                validationResult = ValidateValidations(formLoadItem, AcknowledgedDate);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
