@@ -614,13 +614,21 @@ namespace ProteusMMX.ViewModel
 
         public async void GetUserNotification()
         {
-            Dictionary<string, string> urlSegment = new Dictionary<string, string>();
-            urlSegment.Add("USERID", UserId.ToString());
-
-            ServiceOutput notifications = await ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/service/GetNotification", "GET", urlSegment, null);
-            if (notifications.servicestatus == "true" && notifications.notificationWrapper.Status)
+            try
             {
-                TestNotification(notifications.notificationWrapper);
+                Dictionary<string, string> urlSegment = new Dictionary<string, string>();
+                urlSegment.Add("USERID", UserId.ToString());
+
+                ServiceOutput notifications = await ServiceCallWebClient(AppSettings.BaseURL + "/Inspection/service/GetNotification", "GET", urlSegment, null);
+                if (notifications.servicestatus == "true" && notifications.notificationWrapper.Status)
+                {
+                    TestNotification(notifications.notificationWrapper);
+                }
+            }
+            catch (Exception)
+            {
+                 DialogService.ShowToast("internet not working properly", 2000);
+
             }
 
 
@@ -772,40 +780,54 @@ namespace ProteusMMX.ViewModel
         private void Current_NotificationReceived(NotificationEventArgs e)
         {
 
-            Device.BeginInvokeOnMainThread(() =>
+            try
             {
+                Device.BeginInvokeOnMainThread(() =>
+                    {
 
-                Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/Service/CreateNotification");
+                        Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/Service/CreateNotification");
 
-                var notification = new ServiceInput()
-                {
-                    UserID = nid
+                        var notification = new ServiceInput()
+                        {
+                            UserID = nid
 
-                };
+                        };
 
-                string strPayload = JsonConvert.SerializeObject(notification);
-                HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
-                var t = Task.Run(() => SendURI(posturi, c));
-            });
+                        string strPayload = JsonConvert.SerializeObject(notification);
+                        HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+                        var t = Task.Run(() => SendURI(posturi, c));
+                    });
+            }
+            catch (Exception)
+            {
+            }
 
         }
         static async Task SendURI(Uri u, HttpContent c)
         {
-            var response = string.Empty;
-            using (var client = new HttpClient())
+            try
             {
-                HttpRequestMessage request = new HttpRequestMessage
+                var response = string.Empty;
+                using (var client = new HttpClient())
                 {
-                    Method = HttpMethod.Post,
-                    RequestUri = u,
-                    Content = c
-                };
+                    HttpRequestMessage request = new HttpRequestMessage
+                    {
+                        Method = HttpMethod.Post,
+                        RequestUri = u,
+                        Content = c
+                    };
 
-                HttpResponseMessage result = await client.SendAsync(request);
-                if (result.IsSuccessStatusCode)
-                {
-                    response = result.StatusCode.ToString();
+                    HttpResponseMessage result = await client.SendAsync(request);
+                    if (result.IsSuccessStatusCode)
+                    {
+                        response = result.StatusCode.ToString();
+                    }
                 }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
 
         }
