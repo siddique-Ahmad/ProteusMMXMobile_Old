@@ -4218,8 +4218,8 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
         //AcknowledgedDate
-        string _acknowledgedDate;
-        public string AcknowledgedDate
+        DateTime? _acknowledgedDate;
+        public DateTime? AcknowledgedDate
         {
             get
             {
@@ -4237,8 +4237,8 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
         //ReportedDate
-        string _reportedDate;
-        public string ReportedDate
+        DateTime? _reportedDate;
+        public DateTime? ReportedDate
         {
             get
             {
@@ -7793,18 +7793,18 @@ namespace ProteusMMX.ViewModel.Workorder
                             var x = control as Picker;
                             x.ClassId = formControl.ControlName;
 
-                            var source = x.ItemsSource as List<ComboDD>;
-                            ComboDD item = null;
-                            try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(ReportedDate)); }
-                            catch (Exception) { }
+                            //var source = x.ItemsSource as List<ComboDD>;
+                            //ComboDD item = null;
+                            //try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(ReportedDate)); }
+                            //catch (Exception) { }
 
-                            if (item != null)
-                            {
-                                x.SelectedItem = item;
-                                ReportedDate = item.SelectedValue.ToString();
-                            }
+                            //if (item != null)
+                            //{
+                            //    x.SelectedItem = item;
+                            //    ReportedDate = item.SelectedValue.ToString();
+                            //}
 
-                            x.SelectedIndexChanged += Picker_SelectedIndexChanged;
+                            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
 
 
                         }
@@ -7817,7 +7817,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         else if (control is DatePicker)
                         {
                             // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                            ReportedDate = DateTime.Now.ToString();
+                          
                             control.SetBinding(DatePicker.DateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
@@ -7839,18 +7839,18 @@ namespace ProteusMMX.ViewModel.Workorder
                             var x = control as Picker;
                             x.ClassId = formControl.ControlName;
 
-                            var source = x.ItemsSource as List<ComboDD>;
-                            ComboDD item = null;
-                            try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(AcknowledgedDate)); }
-                            catch (Exception) { }
+                            //var source = x.ItemsSource as List<ComboDD>;
+                            //ComboDD item = null;
+                            //try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(AcknowledgedDate)); }
+                            //catch (Exception) { }
 
-                            if (item != null)
-                            {
-                                x.SelectedItem = item;
-                                AcknowledgedDate = item.SelectedValue.ToString();
-                            }
+                            //if (item != null)
+                            //{
+                            //    x.SelectedItem = item;
+                            //    AcknowledgedDate = item.SelectedValue.ToString();
+                            //}
 
-                            x.SelectedIndexChanged += Picker_SelectedIndexChanged;
+                            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
 
 
                         }
@@ -7862,8 +7862,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         else if (control is DatePicker)
                         {
-                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                            AcknowledgedDate = DateTime.Now.ToString();
+                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.                          
                             control.SetBinding(DatePicker.DateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
@@ -9167,17 +9166,17 @@ namespace ProteusMMX.ViewModel.Workorder
                         break;
 
                     }
-                case "ReportedDate":
-                    {
-                        this.ReportedDate = (picker.SelectedItem as ComboDD).SelectedValue.ToString();
-                        break;
-                    }
+                //case "ReportedDate":
+                //    {
+                //        this.ReportedDate = (picker.SelectedItem as ComboDD).SelectedValue;
+                //        break;
+                //    }
 
-                case "AcknowledgedDate":
-                    {
-                        this.AcknowledgedDate = (picker.SelectedItem as ComboDD).SelectedValue.ToString();
-                        break;
-                    }
+                //case "AcknowledgedDate":
+                //    {
+                //        this.AcknowledgedDate = (picker.SelectedItem as ComboDD).SelectedValue;
+                //        break;
+                //    }
 
 
                 case "TotalTime":
@@ -10223,11 +10222,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 if(workorder.ReportedDate!=null)
                 {
-                    this.ReportedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ReportedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                    this.ReportedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ReportedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
                 }
                 if (workorder.AcknowledgedDate != null)
                 {
-                    this.AcknowledgedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.AcknowledgedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                    this.AcknowledgedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.AcknowledgedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
 
                 }
 
@@ -11972,9 +11971,12 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.EstimatedDowntime = EstimstedDowntimeText;
                 workOrder.MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture);
                 workOrder.MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture);
-                workOrder.AcknowledgedDate =Convert.ToDateTime(AcknowledgedDate);
-                workOrder.ReportedDate = Convert.ToDateTime(ReportedDate);
-
+                
+                    workOrder.AcknowledgedDate = AcknowledgedDate;
+                
+                    workOrder.ReportedDate = ReportedDate;
+                
+                
                 #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -12109,7 +12111,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                     DistributeCost = IsCostDistributed,
                                     ParentandChildCost = ParentCostDistributed,
                                     ChildCost = ChildCostDistributed,
-
+                                    AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                    ReportedDate = ReportedDate.HasValue ? ReportedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
                                     #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -12234,6 +12237,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                     DistributeCost = IsCostDistributed,
                                     ParentandChildCost = ParentCostDistributed,
                                     ChildCost = ChildCostDistributed,
+                                    AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                    ReportedDate = ReportedDate.HasValue ? ReportedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
                                     #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -12358,7 +12363,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 DistributeCost = IsCostDistributed,
                                 ParentandChildCost = ParentCostDistributed,
                                 ChildCost = ChildCostDistributed,
-
+                                AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                ReportedDate = ReportedDate.HasValue ? ReportedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
                                 #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -12483,6 +12489,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 DistributeCost = IsCostDistributed,
                                 ParentandChildCost = ParentCostDistributed,
                                 ChildCost = ChildCostDistributed,
+                                AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                ReportedDate = ReportedDate.HasValue ? ReportedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
                                 #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -12909,7 +12917,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             }
                         case "ReportedDate":
                             {
-                                validationResult = ValidateValidations(formLoadItem, ReportedDate);
+                                validationResult = ValidateValidations(formLoadItem, Convert.ToString(ReportedDate));
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -12920,7 +12928,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "AcknowledgedDate":
                             {
-                                validationResult = ValidateValidations(formLoadItem, AcknowledgedDate);
+                                validationResult = ValidateValidations(formLoadItem, Convert.ToString(AcknowledgedDate));
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
