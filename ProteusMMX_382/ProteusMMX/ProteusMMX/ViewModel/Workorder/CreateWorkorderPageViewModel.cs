@@ -8793,8 +8793,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         else if (control is DatePicker)
                         {
-                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                            ReportedDate = DateTime.Now.ToString();
+                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.                           
                             control.SetBinding(DatePicker.DateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
@@ -8839,13 +8838,12 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         else if (control is DatePicker)
                         {
-                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                            AcknowledgedDate = DateTime.Now.ToString();
+                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.                           
                             control.SetBinding(DatePicker.DateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
                         else if (control is CustomDatePicker)
-                        {
+                        {                            
                             control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
@@ -11553,9 +11551,15 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.RequesterEmail = RequesterEmail;
                 workOrder.RequesterFullName = RequesterFullName;
                 workOrder.RequesterPhone = RequesterPhone;
-                workOrder.AcknowledgedDate = Convert.ToDateTime(AcknowledgedDate);
-                workOrder.ReportedDate = Convert.ToDateTime(ReportedDate);
-
+                if (!string.IsNullOrEmpty(AcknowledgedDate))
+                {
+                    workOrder.AcknowledgedDate = Convert.ToDateTime(AcknowledgedDate);
+                }
+                
+                if (!string.IsNullOrEmpty(ReportedDate))
+                {
+                    workOrder.ReportedDate = Convert.ToDateTime(ReportedDate);
+                }
 
                 //UserField21 = UserField21, //UserField21b.Text,
                 //WorkOrderNumber
