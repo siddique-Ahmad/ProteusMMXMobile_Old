@@ -192,6 +192,20 @@ namespace ProteusMMX.Model.WorkOrderModel
                 return false;
             }
         }
+
+        public string Acknowledged { get; set; }
+        public bool WorkorderIsAcknowledged
+        {
+            get
+            {
+                if (this.Acknowledged == "true")
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
         public string IsWorkOrderHasFailedInspection { get; set; }
         public bool WorkOrderHasFailedInspection
         {

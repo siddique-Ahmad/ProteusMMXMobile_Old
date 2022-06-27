@@ -671,7 +671,25 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
             }
         }
+        //ReportedDate
+        DateTime? _reportedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+      
+        public DateTime? ReportedDate
+        {
+            get
+            {
+                return _reportedDate;
+            }
 
+            set
+            {
+                if (value != _reportedDate)
+                {
+                    _reportedDate = value;
+                    OnPropertyChanged(nameof(ReportedDate));
+                }
+            }
+        }
 
         // Required Date
         DateTime _requiredDate1 =DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
@@ -4744,7 +4762,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
             else
             {
-                control = new CustomDatePicker();
+                control = new CustomDatePicker2();
             }
 
             SetControlBindingAccordingToControlType(control, formControl);
@@ -5142,6 +5160,51 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         else if (control is CustomDatePicker)
                         {
                             control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequestNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                        }
+                        break;
+
+                    }
+
+                case "ReportedDate":
+                    {
+                        if (control is Picker)
+                        {
+                            //var x = control as Picker;
+                            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
+
+                            var x = control as Picker;
+                            x.ClassId = formControl.ControlName;
+
+                            var source = x.ItemsSource as List<ComboDD>;
+                            ComboDD item = null;
+                            //try { item = source.FirstOrDefault(s => s.SelectedValue == ReportedDate); }
+                            //catch (Exception) { }
+
+                            //if (item != null)
+                            //{
+                            //    x.SelectedItem = item;
+                            //  //  ReportedDate = item.SelectedValue;
+                            //}
+
+                            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
+
+
+                        }
+
+                        else if (control is Entry)
+                        {
+                            control.SetBinding(Entry.TextProperty, nameof(this.ReportedDate));
+                        }
+
+                        else if (control is DatePicker)
+                        {
+                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.                           
+                            control.SetBinding(DatePicker.DateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                        }
+
+                        else if (control is CustomDatePicker2)
+                        {
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -7660,6 +7723,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ServiceRequest.RequesterPhone = RequesterPhone;
                 ServiceRequest.RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay);
                 ServiceRequest.MobileEmployeeID = null;
+                ServiceRequest.ReportedDate = ReportedDate;
+
+
 
                 #region User Fields
 
@@ -7838,7 +7904,16 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                 break;
 
                             }
+                        case "ReportedDate":
+                            {
+                                validationResult = ValidateValidations(formLoadItem,Convert.ToString(ReportedDate));
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
 
+                            }
                         case "RequesterEmail":
                             {
                                 validationResult = ValidateValidations(formLoadItem, RequesterEmail);

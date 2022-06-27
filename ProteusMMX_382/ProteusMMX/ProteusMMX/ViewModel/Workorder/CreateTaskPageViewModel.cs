@@ -822,7 +822,25 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+        
 
+        DateTime? _taskArrivalDate;
+        public DateTime? TaskArrivalDate
+        {
+            get
+            {
+                return _taskArrivalDate;
+            }
+
+            set
+            {
+                if (value != _taskArrivalDate)
+                {
+                    _taskArrivalDate = value;
+                    OnPropertyChanged(nameof(TaskArrivalDate));
+                }
+            }
+        }
         // Task Completion Date
         DateTime? _taskCompletionDate;
         public DateTime? TaskCompletionDate
@@ -896,6 +914,24 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        string _taskArrivalDateTitle;
+        public string TaskArrivalDateTitle
+        {
+            get
+            {
+                return _taskArrivalDateTitle;
+            }
+
+            set
+            {
+                if (value != _taskArrivalDateTitle)
+                {
+                    _taskArrivalDateTitle = value;
+                    OnPropertyChanged(nameof(TaskArrivalDateTitle));
+                }
+            }
+        }
+        
 
         string _taskCompletionDateWarningText;
         public string TaskCompletionDateWarningText
@@ -1138,7 +1174,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     ContractorTitle = WebControlTitle.GetTargetNameByTitleName("Contractor");
                     TaskStartedDateTitle = WebControlTitle.GetTargetNameByTitleName("StartDate");
                     TaskCompletionDateTitle = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
-
+                    TaskArrivalDateTitle = WebControlTitle.GetTargetNameByTitleName("ArrivalDate");
                     SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
 
                 }
@@ -1427,6 +1463,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         EmployeeLaborCraftID = EmployeeID,
                         ContractorLaborCraftID = ContractorID,
                         StartDate = TaskStartedDate.HasValue ? TaskStartedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null, //TaskStartedDate.Date.Add(DateTime.Now.TimeOfDay),
+                        ArrivalDate = TaskArrivalDate.HasValue ? TaskArrivalDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
                         CompletionDate = TaskCompletionDate.HasValue ? TaskCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null, //(ShowCompletionDate.IsVisible == true) ? (DateTime?)null : CompletionDate1.Date.Add(DateTime.Now.TimeOfDay),
                     }
 

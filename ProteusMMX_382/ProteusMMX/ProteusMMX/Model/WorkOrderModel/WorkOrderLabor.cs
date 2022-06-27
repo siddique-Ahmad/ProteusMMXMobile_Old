@@ -62,6 +62,8 @@ namespace ProteusMMX.Model.WorkOrderModel
         public List<EmployeeLookUp> Employees { get; set; }
         public List<ContractorLookUp> Contractors { get; set; }
 
+        public DateTime? ArrivalDate { get; set; }
+
         #region New properties for Timer
 
         public DateTime? EndDate { get; set; }

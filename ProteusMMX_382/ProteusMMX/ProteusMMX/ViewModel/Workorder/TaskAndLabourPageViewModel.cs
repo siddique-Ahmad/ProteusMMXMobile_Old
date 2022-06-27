@@ -825,6 +825,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     foreach (var item in workorderLabour.workOrderWrapper.workOrderLabors)
                     {
+                       
                         if (Application.Current.Properties.ContainsKey("EditTask"))
                         {
                             var TaskLabourTab = Application.Current.Properties["EditTask"].ToString();
@@ -853,6 +854,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             Padding = new Thickness(-10, -10, -15, -10)
                         };
+                        MainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                         MainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                         MainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                         MainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
@@ -1779,6 +1781,17 @@ namespace ProteusMMX.ViewModel.Workorder
                         minuteEntry.TextChanged += HoursTextChanged;
                         hoursEntryforRate2.TextChanged += OnTextChanged1;
                         minuteEntryforRate2.TextChanged += HoursTextChanged;
+                        #endregion
+
+                        #region ***** Arrival Date Bind****
+                        StackLayout ArrivalStackLayout = new StackLayout();
+                        MainGrid.Children.Add(ArrivalStackLayout, 0, 6);
+                        Label ArrivalDatelabel = new Label {TextColor=Color.Black };
+                        if(item.ArrivalDate !=null)
+                        {
+                            ArrivalDatelabel.Text = Convert.ToString(item.ArrivalDate);
+                        }
+                        ArrivalStackLayout.Children.Add(ArrivalDatelabel);
                         #endregion
 
                         #region GlobalTimer Logic
