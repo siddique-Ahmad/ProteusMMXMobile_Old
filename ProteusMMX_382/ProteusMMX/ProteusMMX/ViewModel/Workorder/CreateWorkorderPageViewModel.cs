@@ -6051,41 +6051,86 @@ namespace ProteusMMX.ViewModel.Workorder
                             break;
 
                         case "DateTime":
-                            if (!isItemAddedInFirstColumn)
+                            if (Device.Idiom == TargetIdiom.Phone)
                             {
-                                if (!isItemAddedInSecondColumn)
+                                if (!isItemAddedInFirstColumn)
+                                {
+                                    if (!isItemAddedInSecondColumn)
+                                    {
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        //increment column
+                                        rowCount++;
+                                        //isItemAddedInFirstColumn = true;
+                                        //isItemAddedInSecondColumn = false;
+                                        columnCount = 0;
+                                    }
+                                    else
+                                    {
+                                        //generate new row
+                                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                                        rowCount++;
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        columnCount = 0;
+                                        //isItemAddedInFirstColumn = true;
+                                        //isItemAddedInSecondColumn = false;
+
+                                    }
+                                }
+
+                                else
                                 {
                                     GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
                                     //increment column
-                                    isItemAddedInFirstColumn = true;
-                                    isItemAddedInSecondColumn = false;
-                                    columnCount = 1;
+                                    //isItemAddedInFirstColumn = false;
+                                    //isItemAddedInSecondColumn = true;
+                                    columnCount = 0;
                                 }
-                                else
-                                {
-                                    //generate new row
-                                    contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                                    rowCount++;
-                                    GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
-                                    columnCount = 1;
-                                    isItemAddedInFirstColumn = true;
-                                    isItemAddedInSecondColumn = false;
 
-                                }
                             }
-
                             else
                             {
-                                GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+                                if (!isItemAddedInFirstColumn)
+                                {
+                                    if (!isItemAddedInSecondColumn)
+                                    {
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
-                                //increment column
-                                isItemAddedInFirstColumn = false;
-                                isItemAddedInSecondColumn = true;
-                                columnCount = 0;
+                                        //increment column
+
+                                        isItemAddedInFirstColumn = true;
+                                        isItemAddedInSecondColumn = false;
+                                        columnCount = 1;
+                                    }
+                                    else
+                                    {
+                                        //generate new row
+                                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                                        rowCount++;
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        columnCount = 1;
+                                        isItemAddedInFirstColumn = true;
+                                        isItemAddedInSecondColumn = false;
+
+                                    }
+                                }
+
+                                else
+                                {
+                                    GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                    //increment column
+                                    isItemAddedInFirstColumn = false;
+                                    isItemAddedInSecondColumn = true;
+                                    columnCount = 0;
+                                }
+
+
                             }
-
 
 
 
@@ -6149,524 +6194,6 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             #endregion
 
-            #region Old Code
-
-
-            ///// Remove static controls titles so they won't render twice.
-            ///// Apply visibility according to expression on Overridden controls 
-            //#region Remove Overridden controls from titles
-
-            //if (titles != null && titles.CFLI != null && titles.CFLI.Count > 0)
-            //{
-
-            //    try
-            //    {
-            //        ///WorkOrderNumber
-            //        ///JobNumber
-            //        ///Description
-            //        ///RequiredDate
-            //        ///WorkStartedDate
-            //        ///CompletionDate
-            //        ///AssignedToEmployeeID
-            //        ///WorkOrderRequesterID
-            //        ///CostCenterID
-            //        ///PriorityID
-            //        ///ShiftID
-            //        ///WorkOrderStatusID
-            //        ///WorkTypeID
-            //        ///UserField22
-            //        ///MaintenanceCodeID
-
-
-
-
-            //        var WorkOrderNumber = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkOrderNumber");
-            //        if (WorkOrderNumber != null)
-            //        {
-            //            OverriddenControls.Add(WorkOrderNumber);
-            //            titles.CFLI.Remove(WorkOrderNumber);
-            //        }
-
-            //        var JobNumber = titles.CFLI.FirstOrDefault(x => x.FieldName == "JobNumber");
-            //        if (JobNumber != null)
-            //        {
-            //            OverriddenControls.Add(JobNumber);
-            //            titles.CFLI.Remove(JobNumber);
-            //        }
-
-            //        var description = titles.CFLI.FirstOrDefault(x => x.FieldName == "Description");
-            //        if (description != null)
-            //        {
-            //            OverriddenControls.Add(description);
-            //            titles.CFLI.Remove(description);
-            //        }
-
-            //        var RequiredDate = titles.CFLI.FirstOrDefault(x => x.FieldName == "RequiredDate");
-            //        if (RequiredDate != null)
-            //        {
-            //            OverriddenControls.Add(RequiredDate);
-            //            titles.CFLI.Remove(RequiredDate);
-            //        }
-
-            //        var WorkStartedDate = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkStartedDate");
-            //        if (WorkStartedDate != null)
-            //        {
-            //            OverriddenControls.Add(WorkStartedDate);
-            //            titles.CFLI.Remove(WorkStartedDate);
-            //        }
-
-            //        var CompletionDate = titles.CFLI.FirstOrDefault(x => x.FieldName == "CompletionDate");
-            //        if (CompletionDate != null)
-            //        {
-            //            OverriddenControls.Add(CompletionDate);
-            //            titles.CFLI.Remove(CompletionDate);
-            //        }
-
-            //        var AssignedToEmployeeID = titles.CFLI.FirstOrDefault(x => x.FieldName == "AssignedToEmployeeID");
-            //        if (AssignedToEmployeeID != null)
-            //        {
-            //            OverriddenControls.Add(AssignedToEmployeeID);
-            //            titles.CFLI.Remove(AssignedToEmployeeID);
-            //        }
-
-            //        var WorkOrderRequesterID = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkOrderRequesterID");
-            //        if (WorkOrderRequesterID != null)
-            //        {
-            //            OverriddenControls.Add(WorkOrderRequesterID);
-            //            titles.CFLI.Remove(WorkOrderRequesterID);
-            //        }
-
-            //        var CostCenterID = titles.CFLI.FirstOrDefault(x => x.FieldName == "CostCenterID");
-            //        if (CostCenterID != null)
-            //        {
-            //            OverriddenControls.Add(CostCenterID);
-            //            titles.CFLI.Remove(CostCenterID);
-            //        }
-
-            //        var PriorityID = titles.CFLI.FirstOrDefault(x => x.FieldName == "PriorityID");
-            //        if (PriorityID != null)
-            //        {
-            //            OverriddenControls.Add(PriorityID);
-            //            titles.CFLI.Remove(PriorityID);
-            //        }
-
-            //        var ShiftID = titles.CFLI.FirstOrDefault(x => x.FieldName == "ShiftID");
-            //        if (ShiftID != null)
-            //        {
-            //            OverriddenControls.Add(ShiftID);
-            //            titles.CFLI.Remove(ShiftID);
-            //        }
-
-            //        var WorkOrderStatusID = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkOrderStatusID");
-            //        if (WorkOrderStatusID != null)
-            //        {
-            //            OverriddenControls.Add(WorkOrderStatusID);
-            //            titles.CFLI.Remove(WorkOrderStatusID);
-            //        }
-
-            //        var WorkTypeID = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkTypeID");
-            //        if (WorkTypeID != null)
-            //        {
-            //            OverriddenControls.Add(WorkTypeID);
-            //            titles.CFLI.Remove(WorkTypeID);
-            //        }
-
-            //        var MaintenanceCodeID = titles.CFLI.FirstOrDefault(x => x.FieldName == "MaintenanceCodeID");
-            //        if (MaintenanceCodeID != null)
-            //        {
-            //            OverriddenControls.Add(MaintenanceCodeID);
-            //            titles.CFLI.Remove(MaintenanceCodeID);
-            //        }
-
-
-            //        var EstimatedDowntime = titles.CFLI.FirstOrDefault(x => x.FieldName == "EstimatedDowntime");
-            //        if (EstimatedDowntime != null)
-            //        {
-            //            OverriddenControls.Add(EstimatedDowntime);
-            //            titles.CFLI.Remove(EstimatedDowntime);
-            //        }
-
-            //        var ActualDowntime = titles.CFLI.FirstOrDefault(x => x.FieldName == "ActualDowntime");
-            //        if (ActualDowntime != null)
-            //        {
-            //            OverriddenControls.Add(ActualDowntime);
-            //            titles.CFLI.Remove(ActualDowntime);
-            //        }
-
-            //        var MiscellaneousLaborCostID = titles.CFLI.FirstOrDefault(x => x.FieldName == "MiscellaneousLaborCostID");
-            //        if (MiscellaneousLaborCostID != null)
-            //        {
-            //            OverriddenControls.Add(MiscellaneousLaborCostID);
-            //            titles.CFLI.Remove(MiscellaneousLaborCostID);
-            //        }
-
-            //        var MiscellaneousMaterialsCostID = titles.CFLI.FirstOrDefault(x => x.FieldName == "MiscellaneousMaterialsCostID");
-            //        if (MiscellaneousMaterialsCostID != null)
-            //        {
-            //            OverriddenControls.Add(MiscellaneousMaterialsCostID);
-            //            titles.CFLI.Remove(MiscellaneousMaterialsCostID);
-            //        }
-
-
-
-
-
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-
-            //    }
-
-            //}
-
-            //#endregion
-
-            //#region Apply visibility according to expression on Overridden controls
-
-            //if (OverriddenControls != null && OverriddenControls.Count > 0)
-            //{
-
-            //    try
-            //    {
-            //        ///WorkOrderNumber
-            //        ///JobNumber
-            //        ///Description
-            //        ///RequiredDate
-            //        ///WorkStartedDate
-            //        ///CompletionDate
-            //        ///AssignedToEmployeeID
-            //        ///WorkOrderRequesterID
-            //        ///CostCenterID
-            //        ///PriorityID
-            //        ///ShiftID
-            //        ///WorkOrderStatusID
-            //        ///WorkTypeID
-            //        ///UserField22
-            //        ///MaintenanceCodeID
-
-            //        var formRoles = titles.lstRoles;
-
-            //        foreach (var item in OverriddenControls)
-            //        {
-            //            var finalizedRole = await ParseControlRoleExpressionWithFormsRoles(item.Expression, formRoles);
-
-            //            switch (item.FieldName)
-            //            {
-
-            //                case "WorkOrderNumber":
-            //                    {
-            //                        break;
-            //                    }
-
-
-
-            //                case "JobNumber":
-            //                    {
-            //                        break;
-            //                    }
-
-
-
-            //                case "Description":
-            //                    {
-            //                        DescriptionIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "RequiredDate":
-            //                    {
-            //                        RequiredDateIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-
-            //                case "WorkStartedDate":
-            //                    {
-            //                        WorkStartedDateIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "CompletionDate":
-            //                    {
-            //                        WorkorderCompletionDateIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "AssignedToEmployeeID":
-            //                    {
-            //                        AssignToEmployeeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "WorkOrderRequesterID":
-            //                    {
-            //                        WorkorderRequesterIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "CostCenterID":
-            //                    {
-            //                        CostCenterIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "PriorityID":
-            //                    {
-            //                        PriorityIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "ShiftID":
-            //                    {
-            //                        ShiftIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "WorkOrderStatusID":
-            //                    {
-            //                        WorkorderStatusIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "WorkTypeID":
-            //                    {
-            //                        WorkorderTypeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "UserField22":
-            //                    {
-            //                        CauseIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "MaintenanceCodeID":
-            //                    {
-            //                        MaintenanceCodeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "EstimatedDowntime":
-            //                    {
-            //                        EstimstedDowntimeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "ActualDowntime":
-            //                    {
-            //                        ActualDowntimeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "MiscellaneousLaborCostID":
-            //                    {
-            //                        MiscellaneousLabourCostIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "MiscellaneousMaterialsCostID":
-            //                    {
-            //                        MiscellaneousMaterialCostIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //            }
-
-            //        }
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-
-            //    }
-
-            //}
-
-            //#endregion
-
-            //#region Generate and Bind Dyanmic controls
-            //if (titles != null && titles.CFLI != null && titles.CFLI.Count > 0)
-            //{
-
-            //    #region Test 3
-
-
-
-            //    Grid contentGrid = await GetContentGrid();
-            //    contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //    //contentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            //    //contentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-
-
-            //    int rowCount = 0;
-            //    int columnCount = 0;
-            //    bool isItemAddedInFirstColumn = false;
-            //    bool isItemAddedInSecondColumn = false;
-            //    var formRoles = titles.lstRoles;
-            //    foreach (var item in titles.CFLI)
-            //    {
-            //        var finalizedRole = await ParseControlRoleExpressionWithFormsRoles(item.Expression, formRoles);
-
-            //        switch (item.DisplayFormat)
-            //        {
-
-            //            case "ComboBox":
-            //                if (!isItemAddedInFirstColumn)
-            //                {
-            //                    if (!isItemAddedInSecondColumn)
-            //                    {
-            //                        GenerateComboBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        //increment column
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-            //                        columnCount = 1;
-            //                    }
-            //                    else
-            //                    {
-            //                        //generate new row
-            //                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //                        rowCount++;
-            //                        GenerateComboBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        columnCount = 1;
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-
-            //                    }
-            //                }
-
-            //                else
-            //                {
-            //                    GenerateComboBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                    //increment column
-            //                    isItemAddedInFirstColumn = false;
-            //                    isItemAddedInSecondColumn = true;
-            //                    columnCount = 0;
-            //                }
-
-
-            //                break;
-
-            //            case "DateTime":
-            //                if (!isItemAddedInFirstColumn)
-            //                {
-            //                    if (!isItemAddedInSecondColumn)
-            //                    {
-            //                        GenerateDateTimeLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        //increment column
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-            //                        columnCount = 1;
-            //                    }
-            //                    else
-            //                    {
-            //                        //generate new row
-            //                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //                        rowCount++;
-            //                        GenerateDateTimeLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        columnCount = 1;
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-
-            //                    }
-            //                }
-
-            //                else
-            //                {
-            //                    GenerateDateTimeLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                    //increment column
-            //                    isItemAddedInFirstColumn = false;
-            //                    isItemAddedInSecondColumn = true;
-            //                    columnCount = 0;
-            //                }
-
-
-
-
-            //                break;
-
-            //            case "TextBox":
-            //                if (!isItemAddedInFirstColumn)
-            //                {
-            //                    if (!isItemAddedInSecondColumn)
-            //                    {
-            //                        GenerateTextBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        //increment column
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-            //                        columnCount = 1;
-            //                    }
-            //                    else
-            //                    {
-            //                        //generate new row
-            //                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //                        rowCount++;
-            //                        GenerateTextBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        columnCount = 1;
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-
-            //                    }
-            //                }
-
-            //                else
-            //                {
-            //                    GenerateTextBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                    //increment column
-            //                    isItemAddedInFirstColumn = false;
-            //                    isItemAddedInSecondColumn = true;
-            //                    columnCount = 0;
-            //                }
-
-
-            //                break;
-
-
-            //        }
-
-
-            //    }
-
-
-
-            //    #endregion
-
-
-
-
-
-
-
-            //}
-            //#endregion
-
-
-
-            #endregion
         }
 
         public async Task SetControlsPropertiesForPage()
@@ -7286,6 +6813,10 @@ namespace ProteusMMX.ViewModel.Workorder
             wrapperLayout.Children.Add(control);
 
             contentGrid.Children.Add(wrapperLayout, column, row);
+            if (Device.Idiom == TargetIdiom.Phone && column == 0)
+            {
+                Grid.SetColumnSpan(wrapperLayout, 2);
+            }
         }
 
         private void SetControlBindingAccordingToControlType(View control, FormControl formControl)

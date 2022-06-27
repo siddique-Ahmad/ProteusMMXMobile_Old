@@ -88,6 +88,7 @@ namespace ProteusMMX.Controls
             {
 
                 var dateConfig = new DatePromptConfig();
+                var timeConfig = new TimePromptConfig();
                 dateConfig.MinimumDate = this.MinimumDate;
                 dateConfig.MaximumDate = this.MaximumDate;
                 dateConfig.SelectedDate = this.SelectedDate;
@@ -99,6 +100,7 @@ namespace ProteusMMX.Controls
                     dateConfig.iOSPickerStyle = iOSPickerStyle.Wheels;
                 }
                 var dateResult = await UserDialogs.Instance.DatePromptAsync(dateConfig);
+                var TimeResult = await UserDialogs.Instance.TimePromptAsync(timeConfig);
                 if (dateResult.SelectedDate != null && dateResult.SelectedDate.Year == 0001)
                 {
                     SelectedDate = null;
@@ -174,6 +176,11 @@ namespace ProteusMMX.Controls
                     }
                 }
 
+                if (TimeResult.Ok == true)
+                {
+                    DateTime datetime3 = SelectedDate.Value.Add(TimeResult.SelectedTime);
+                    SelectedDate = datetime3;
+                }
                 //  SelectedDate = dateResult.SelectedDate;
 
 

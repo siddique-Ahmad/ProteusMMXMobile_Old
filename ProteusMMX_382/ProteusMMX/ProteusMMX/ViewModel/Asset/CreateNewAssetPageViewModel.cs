@@ -3865,43 +3865,83 @@ namespace ProteusMMX.ViewModel.Asset
                             break;
 
                         case "DateTime":
-                            if (!isItemAddedInFirstColumn)
+                            if (Device.Idiom==TargetIdiom.Phone)
                             {
-                                if (!isItemAddedInSecondColumn)
+                                if (!isItemAddedInFirstColumn)
+                                {
+                                    if (!isItemAddedInSecondColumn)
+                                    {
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        //increment column
+                                        rowCount++;
+                                        //isItemAddedInFirstColumn = true;
+                                        //isItemAddedInSecondColumn = false;
+                                        columnCount = 0;
+                                    }
+                                    else
+                                    {
+                                        //generate new row
+                                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                                        rowCount++;
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        columnCount = 0;
+                                        //isItemAddedInFirstColumn = true;
+                                        //isItemAddedInSecondColumn = false;
+
+                                    }
+                                }
+
+                                else
                                 {
                                     GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
                                     //increment column
-                                    isItemAddedInFirstColumn = true;
-                                    isItemAddedInSecondColumn = false;
-                                    columnCount = 1;
-                                }
-                                else
-                                {
-                                    //generate new row
-                                    contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                                    rowCount++;
-                                    GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
-
-                                    columnCount = 1;
-                                    isItemAddedInFirstColumn = true;
-                                    isItemAddedInSecondColumn = false;
-
+                                    //isItemAddedInFirstColumn = false;
+                                    //isItemAddedInSecondColumn = true;
+                                    columnCount = 0;
                                 }
                             }
-
                             else
                             {
-                                GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+                                if (!isItemAddedInFirstColumn)
+                                {
+                                    if (!isItemAddedInSecondColumn)
+                                    {
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
-                                //increment column
-                                isItemAddedInFirstColumn = false;
-                                isItemAddedInSecondColumn = true;
-                                columnCount = 0;
+                                        //increment column
+                                        isItemAddedInFirstColumn = true;
+                                        isItemAddedInSecondColumn = false;
+                                        columnCount = 1;
+                                    }
+                                    else
+                                    {
+                                        //generate new row
+                                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                                        rowCount++;
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        columnCount = 1;
+                                        isItemAddedInFirstColumn = true;
+                                        isItemAddedInSecondColumn = false;
+
+                                    }
+                                }
+
+                                else
+                                {
+                                    GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                    //increment column
+                                    isItemAddedInFirstColumn = false;
+                                    isItemAddedInSecondColumn = true;
+                                    columnCount = 0;
+                                }
+
+
                             }
-
-
-
 
                             break;
 
@@ -4116,6 +4156,10 @@ namespace ProteusMMX.ViewModel.Asset
             wrapperLayout.Children.Add(control);
 
             contentGrid.Children.Add(wrapperLayout, column, row);
+            if (Device.Idiom == TargetIdiom.Phone)
+            {
+                Grid.SetColumnSpan(wrapperLayout, 2);
+            }
         }
 
 

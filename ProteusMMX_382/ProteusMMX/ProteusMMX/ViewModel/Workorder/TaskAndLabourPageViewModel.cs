@@ -1636,15 +1636,19 @@ namespace ProteusMMX.ViewModel.Workorder
                         StackLayout FromStackLayout = new StackLayout();
                         MainGrid.Children.Add(buttnoStackLayout, 0, 5);
                         Grid FromMainGrid = new Grid();
-                        FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                        FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });                       
                         FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
                         FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 86 });
+
+                        FromMainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                        FromMainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
                         buttnoStackLayout.Children.Add(FromMainGrid);
 
                         #region **** Start Date ****
                         StackLayout FromDateStackLayout = new StackLayout();
                         FromMainGrid.Children.Add(FromDateStackLayout, 0, 0);
+                        Grid.SetColumnSpan(FromDateStackLayout, 3);
                         Label FDate = new Label
                         {
                             Text = WebControlTitle.GetTargetNameByTitleName("StartDate"),
@@ -1674,7 +1678,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         #region **** CmpDate ****
                         StackLayout CmpDateStackLayout = new StackLayout();
-                        FromMainGrid.Children.Add(CmpDateStackLayout, 1, 0);
+                        FromMainGrid.Children.Add(CmpDateStackLayout, 0, 1);
+                        Grid.SetColumnSpan(CmpDateStackLayout, 2);
                         Label CDate = new Label
                         {
                             Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"),
@@ -1683,13 +1688,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             TextColor = Color.FromHex("#333333")
                         };
                         CmpDateStackLayout.Children.Add(CDate);
-                        //SfBorder CsfBorder = new SfBorder
-                        //{
-                        //    HeightRequest = 35,
-                        //    BorderColor = Color.Black,
-                        //    CornerRadius = 10
-                        //};
-
+                       
                         completeDateButton.BackgroundColor = Color.White;
                         completeDateButton.BorderColor = Color.Black;
                         completeDateButton.BorderWidth = 1;
@@ -1705,7 +1704,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         #region ****** Save Button *****
                         StackLayout SbtnStackLayout = new StackLayout();
-                        FromMainGrid.Children.Add(SbtnStackLayout, 2, 0);
+                        FromMainGrid.Children.Add(SbtnStackLayout, 2, 1);
                         SfBorder SbtnsfBorder = new SfBorder
                         {
                             HeightRequest = 35,
@@ -1766,7 +1765,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             if (item.CompletionDate != null)
                             {
-                                completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy");
+                                completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt");
 
 
                             }
@@ -1787,109 +1786,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         StackLayout ArrivalStackLayout = new StackLayout();
                         MainGrid.Children.Add(ArrivalStackLayout, 0, 6);
                         Label ArrivalDatelabel = new Label {TextColor=Color.Black };
-                        if(item.ArrivalDate !=null)
+                        string ArivalTest = WebControlTitle.GetTargetNameByTitleName("ArrivalDate");
+                        if (item.ArrivalDate !=null)
                         {
-                            ArrivalDatelabel.Text = Convert.ToString(item.ArrivalDate);
+                            ArivalTest = ArivalTest+" : "+ Convert.ToString(item.ArrivalDate);
                         }
                         ArrivalStackLayout.Children.Add(ArrivalDatelabel);
                         #endregion
 
-                        #region GlobalTimer Logic
-                        //WorkOrderLabor savedWorkOrderLabor = null;
-                        //WorkOrderLabor savedWorkOrderLabor2 = null;
-                        //WorkOrderLabor savedWorkOrderLabor1 = null;
-                        //try
-                        //{
-
-                        //    string k1 = "WorkOrderLabor:" + item.WorkOrderLaborID;
-                        //    savedWorkOrderLabor = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k1));
-                        //}
-                        //catch (Exception)
-                        //{
-
-                        //}
-
-                        //try
-                        //{
-
-                        //    string k2 = "WorkOrderLaborHours2:" + item.WorkOrderLaborID;
-                        //    savedWorkOrderLabor2 = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k2));
-                        //}
-                        //catch (Exception)
-                        //{
-
-                        //}
-
-                        //if (savedWorkOrderLabor != null)
-                        //{
-                        //    try
-                        //    {
-                        //        //set in buttons commands
-
-                        //        startButton.CommandParameter = savedWorkOrderLabor;
-                        //        stopButton.CommandParameter = savedWorkOrderLabor;
-
-                        //        string k3 = "WorkOrderLaborHours1:" + item.HoursAtRate1;
-                        //        savedWorkOrderLabor1 = JsonConvert.DeserializeObject<WorkOrderLabor>(WorkOrderLaborStorge.Storage.Get(k3));
-                        //        //startButtonforRate2.CommandParameter = savedWorkOrderLabor;
-                        //        //stopButtonforRate2.CommandParameter = savedWorkOrderLabor;
-
-
-                        //        startButton.TextColor = Color.Green;
-                        //        startButton.ImageSource = "starticon1.png";
-                        //        //startButtonforRate2.BackgroundColor = Color.Green;
-
-                        //        string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", savedWorkOrderLabor1.HoursAtRate1)).ToString();
-                        //        var FinalHrs1 = FinalHours.Split('.');
-                        //        hoursEntry.Text = FinalHrs1[0];
-                        //        minuteEntry.Text = FinalHrs1[1];
-
-                        //        //string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", savedWorkOrderLabor.HoursAtRate2)).ToString();
-                        //        //var FinalHrs2 = FinalHours2.Split('.');
-                        //        //hoursEntryforRate2.Text = FinalHrs2[0];
-                        //        //minuteEntryforRate2.Text = FinalHrs2[1];
-                        //        if (item.CompletionDate != null)
-                        //        {
-                        //            completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
-                        //        }
-                        //    }
-                        //    catch (Exception ex)
-                        //    {
-
-                        //    }
-
-                        //}
-
-                        //if (savedWorkOrderLabor2 != null)
-                        //{
-                        //    try
-                        //    {
-                        //        //set in buttons commands
-
-
-                        //        startButtonforRate2.CommandParameter = savedWorkOrderLabor2;
-                        //        stopButtonforRate2.CommandParameter = savedWorkOrderLabor2;
-
-
-                        //        startButtonforRate2.TextColor = Color.Green;
-                        //        startButtonforRate2.ImageSource = "starticon1.png";
-
-                        //        string FinalHours2 = Convert.ToDecimal(string.Format("{0:F2}", item.HoursAtRate2)).ToString();
-                        //        var FinalHrs2 = FinalHours2.Split('.');
-                        //        hoursEntryforRate2.Text = FinalHrs2[0];
-                        //        minuteEntryforRate2.Text = FinalHrs2[1];
-
-                        //        completeDateButton.Text = item.CompletionDate != null ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString() : "";
-
-                        //    }
-                        //    catch (Exception ex)
-                        //    {
-
-                        //    }
-
-                        //}
-                        #endregion
-
+      
                         #region ***** button Click Event *****
                         /// Start button Click 
                         startButton.Clicked += async (sender, e) =>
@@ -2264,7 +2169,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     if (response != null && bool.Parse(response.servicestatus))
                                     {
                                         
-                                            completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString("MMM d, yyyy");
+                                            completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString("MMM d, yyyy hh:mm tt");
 
                                        
                                         //UserDialogs.Instance.HideLoading();
@@ -2635,7 +2540,20 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             else
             {
-                UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone), });
+                UserDialogs.Instance.DatePrompt(
+                    new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result, sender, e), 
+                    IsCancellable = true, 
+                    MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                });
+
+                //UserDialogs.Instance.TimePrompt(
+                //    new TimePromptConfig
+                //    {
+                //        OnAction = (result) => SetCompletionTimeResult(result, sender, e),
+                //        IsCancellable = true,
+                //    });
+
+
             }
         }
 
@@ -2664,11 +2582,34 @@ namespace ProteusMMX.ViewModel.Workorder
 
             }
             else { }
-            //else
-            //{
-            //    var s = sender as Button;
-            //    s.Text = "";
-            //}
+           
+        }
+
+        private void SetCompletionTimeResult(TimePromptResult result, object sender, EventArgs e)
+        {
+            if (result.Ok)
+            {
+                var s = sender as Button;
+
+                //if (result.Value.Date == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                //{
+                //    s.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date.ToString();
+                //}
+
+                //else
+                //{
+                //    s.Text = result.SelectedDate.ToString();
+                //}
+
+                //if (result.Value.Date.Date > DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date)
+                //{
+                //    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskCompletionDatecannotbefuturedate"));
+                //    s.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date.ToString();
+                //}
+
+
+            }
+            else { }
 
         }
 
@@ -2727,39 +2668,6 @@ namespace ProteusMMX.ViewModel.Workorder
                         var sfBorderMin = GridMin3.Children[0] as SfBorder;
                         Entry minutesEntry = sfBorderMin.Children[0] as CustomEntry; // Minutes
 
-                        #region **** Old Hrs And Min ****
-
-                        //var stackallocHrs10 = GridHrs.Children[3] as StackLayout;
-                        //var GridHrs1 = stackallocHrs1.Children[0] as Grid;
-                        //var sfBorderHrs = GridHrs1.Children[0] as SfBorder;
-                        //Entry hoursEntry = sfBorderHrs.Children[0] as CustomEntry; // Hours
-
-
-                        //var stackallocMin = parentLayout.Children[3] as StackLayout;
-                        //var GridMin = GridHrs.Children[0] as Grid;
-                        //var sfBorderMin = GridMin.Children[0] as SfBorder;
-                        //Entry minutesEntry = sfBorderMin.Children[0] as CustomEntry; // Minutes
-                        //var startAndStopButtonGrid = parentLayout.Children[4] as Grid;
-                        //var hrf = startAndStopButtonGrid.Children[0] as CustomEntry;
-                        //Entry hoursEntry = startAndStopButtonGrid.Children[4] as CustomEntry; // Hours
-                        //Entry minutesEntry = startAndStopButtonGrid.Children[6] as CustomEntry; // Minutes 
-                        #endregion
-
-
-                        //if (minutesEntry.IsReadOnly)
-                        //{
-                        //    hours = "0";
-                        //    minutes = "00";
-                        //}
-                        //else
-                        //{
-
-                        //    hours = hoursEntry.Text;
-                        //    minutes = minutesEntry.Text;
-                        //}
-
-
-
                         //5,7
 
                         var GridHrs21 = GridHrs1.Children[1] as StackLayout;
@@ -2773,23 +2681,6 @@ namespace ProteusMMX.ViewModel.Workorder
                         var GridMin23 = stackallocMin21.Children[0] as Grid;
                         var sfBorderMin2 = GridMin23.Children[0] as SfBorder;
                         Entry minutesEntryforRate1 = sfBorderMin2.Children[0] as CustomEntry; // Minutes
-
-                        //var startAndStopButtonGridforRate1 = parentLayout.Children[5] as Grid;
-                        //Entry hoursEntryforRate1 = startAndStopButtonGridforRate1.Children[4] as CustomEntry; // Hours
-                        //Entry minutesEntryforRate1 = startAndStopButtonGridforRate1.Children[6] as CustomEntry; // Minutes
-
-                        //if (minutesEntryforRate1.IsReadOnly)
-                        //{
-                        //    hoursforRate1 = "0";
-                        //    minutesforRate1 = "00";
-                        //}
-                        //else
-                        //{
-                        //    hoursforRate1 = hoursEntryforRate1.Text;
-                        //    minutesforRate1 = minutesEntryforRate1.Text;
-                        //}
-                        //hoursforRate1 = hoursEntryforRate1.Text;
-                        //minutesforRate1 = minutesEntryforRate1.Text;
 
                         var FindMainGrid1 = buttonSave.Parent.Parent.Parent.Parent;
                     }
@@ -2860,78 +2751,6 @@ namespace ProteusMMX.ViewModel.Workorder
                         var taskID = workorderLabour.TaskID;
                         var workOrderLaborID = workorderLabour.WorkOrderLaborID;
                         var workOrderLaborHours2 = workorderLabour.HoursAtRate2;
-
-                        //if (String.IsNullOrEmpty(hours))
-                        //{
-                        //    hours = "0";
-                        //}
-                        //if (String.IsNullOrEmpty(minutes))
-                        //{
-                        //    minutes = "0";
-                        //}
-
-                        //if (String.IsNullOrEmpty(hoursforRate1))
-                        //{
-                        //    hoursforRate1 = "0";
-                        //}
-                        //if (String.IsNullOrEmpty(minutesforRate1))
-                        //{
-                        //    minutesforRate1 = "0";
-                        //}
-                        //if (minutes.Length == 1)
-                        //{
-                        //    int FormattedHours = Convert.ToInt32(minutes);
-                        //    minutes = string.Format("{0:00}", FormattedHours);
-
-                        //}
-
-                        // if (minutesforRate1.Length == 1)
-                        // {
-                        //     int FormattedHours = Convert.ToInt32(minutesforRate1);
-                        //     minutesforRate1 = string.Format("{0:00}", FormattedHours);
-
-                        // }
-
-                        //// decimal decHour1 = decimal.Parse(hours + "." + minutes);
-
-                        // decimal decHour2 = decimal.Parse(hoursforRate1 + "." + minutesforRate1);
-
-
-                        #region Check Employee Work Hour Flag
-                        //if (workLabourHour.workOrderWrapper.EmployeeWorkHourFlag)
-                        //{
-                        //    if (decHour1 > workLabourHour.workOrderWrapper.EmployeeWorkHourValue)
-                        //    {
-
-                        //        var result = await DialogService.ShowConfirmAsync("Are you sure you want to add " + decHour1 + " hours to this workorder?", WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
-                        //        if (result == true)
-                        //        {
-
-                        //        }
-                        //        else
-                        //        {
-                        //            return;
-                        //        }
-                        //    }
-                        //    if (decHour2 > workLabourHour.workOrderWrapper.EmployeeWorkHourValue)
-                        //    {
-                        //        var result = await DialogService.ShowConfirmAsync("Are you sure you want to add " + decHour2 + " hours to this workorder?", WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
-                        //        if (result == true)
-                        //        {
-
-                        //        }
-                        //        else
-                        //        {
-                        //            return;
-                        //        }
-
-                        //    }
-
-                        //}
-
-
-                        #endregion
-
 
                         var workOrderWrapper = new workOrderWrapper
                         {

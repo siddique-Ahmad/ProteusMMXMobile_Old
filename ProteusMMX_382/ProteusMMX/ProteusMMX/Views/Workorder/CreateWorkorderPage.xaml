@@ -112,7 +112,7 @@
                             </StackLayout>
 
 
-                            <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0"  IsVisible="{Binding RequiredDateIsVisible}">
+                                <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding RequiredDateIsVisible}">
                                 <Label Text="{Binding RequiredDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -126,7 +126,8 @@
                                     <!--<DatePicker Date="{Binding RequiredDate}"  MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}"/>-->
                                 </border:SfBorder>
                             </StackLayout>
-                            <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="1"  IsVisible="{Binding WorkStartedDateIsVisible}">
+                            
+                                <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  IsVisible="{Binding WorkStartedDateIsVisible}">
                                 <Label Text="{Binding WorkStartedDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -135,17 +136,14 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                    <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding WorkStartedDate1}" MinimumDate="{Binding MinimumWorkStartedDate}" MaximumDate="{Binding MaximumWorkStartedDate}" WarningText="{Binding WorkStartedDateWarningText}" IsEnabled="{Binding WorkStartedDateIsEnable}" />
+                                    <border:SfBorder  Style="{StaticResource SfBorderStyle}">
+                                        <controls:CustomDatePicker   Margin="0,8,0,0" SelectedDate="{Binding WorkStartedDate1}" MinimumDate="{Binding MinimumWorkStartedDate}" MaximumDate="{Binding MaximumWorkStartedDate}" WarningText="{Binding WorkStartedDateWarningText}" IsEnabled="{Binding WorkStartedDateIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <!--<StackLayout Orientation="Vertical" Grid.Row="5" Grid.Column="0">
-                                <Label Text="{Binding WorkorderCompletionDateTitle}"/>
-                                <controls:CustomDatePicker SelectedDate="{Binding WorkorderCompletionDate}" MinimumDate="{Binding MinimumWorkorderCompletionDate}" MaximumDate="{Binding MaximumWorkorderCompletionDate}" WarningText="{Binding WorkorderCompletionDateWarningText}" />
-                            </StackLayout>-->
+                          
 
-                            <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0"  IsVisible="{Binding AssetIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="0"  IsVisible="{Binding AssetIsVisible}">
                                 <Label Text="{Binding FacilityTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -165,7 +163,7 @@
                                 <!--</border:SfBorder>-->
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1" IsVisible="{Binding AssetIsVisible}" >
+                            <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="1" IsVisible="{Binding AssetIsVisible}" >
                                 <Label Text="{Binding LocationTitle}" TextColor="Black" IsVisible="{Binding LocationIsVisibleForLicensing}" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -183,7 +181,7 @@
                             </StackLayout>
 
 
-                            <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="0" IsVisible="{Binding AssetIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="5" Grid.Column="0" IsVisible="{Binding AssetIsVisible}">
                                 <Label Text="{Binding AssetsTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -201,7 +199,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="1" IsVisible="{Binding AssetIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="5" Grid.Column="1" IsVisible="{Binding AssetIsVisible}">
                                 <Label Text="{Binding AssetSystemTitle}" TextColor="Black" IsVisible="{Binding AssetSystemIsVisibleForLicensing}" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -219,7 +217,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="5" Grid.Column="0"  IsVisible="{Binding AssignToEmployeeIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="6" Grid.Column="0"  IsVisible="{Binding AssignToEmployeeIsVisible}">
                                 <Label Text="{Binding AssignToEmployeeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -233,7 +231,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="5" Grid.Column="1" >
+                            <StackLayout Orientation="Vertical" Grid.Row="6" Grid.Column="1" >
                                 <Label Text="{Binding OriginatorTitle}" IsEnabled="False" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -247,7 +245,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}"  Grid.Row="6">
+                            <StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}"  Grid.Row="7">
                                 <StackLayout Orientation="Horizontal">
                                     <buttons:SfSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsOn="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" >
                                     </buttons:SfSwitch>
@@ -266,7 +264,7 @@
 
                             </StackLayout>
 
-                            <StackLayout IsVisible="{Binding IsCostLayoutIsVisibleForPhone}" Grid.Row="6" Grid.ColumnSpan="2" >
+                            <StackLayout IsVisible="{Binding IsCostLayoutIsVisibleForPhone}" Grid.Row="7" Grid.ColumnSpan="2" >
                                 <StackLayout Orientation="Horizontal">
                                     <buttons:SfSwitch   IsEnabled="{Binding IsCostLayoutIsEnable}" IsOn="{Binding IsCostDistributed, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand" x:Uid="MySwitch" >
                                     </buttons:SfSwitch>
@@ -285,7 +283,7 @@
                             </StackLayout>
 
 
-                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="0" IsVisible="{Binding WorkorderRequesterIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="8" Grid.Column="0" IsVisible="{Binding WorkorderRequesterIsVisible}">
                                 <Label Text="{Binding WorkorderRequesterTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -302,7 +300,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1" IsVisible="{Binding CostCenterIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="8" Grid.Column="1" IsVisible="{Binding CostCenterIsVisible}">
                                 <Label Text="{Binding CostCenterTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -320,7 +318,7 @@
                             </StackLayout>
 
 
-                            <StackLayout Orientation="Vertical" Grid.Row="8" Grid.Column="0" IsVisible="{Binding PriorityIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="9" Grid.Column="0" IsVisible="{Binding PriorityIsVisible}">
                                 <Label Text="{Binding PriorityTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -337,7 +335,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="8" Grid.Column="1" IsVisible="{Binding ShiftIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="9" Grid.Column="1" IsVisible="{Binding ShiftIsVisible}">
                                 <Label Text="{Binding ShiftTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -354,7 +352,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="9" Grid.Column="0" IsVisible="{Binding WorkorderStatusIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="10" Grid.Column="0" IsVisible="{Binding WorkorderStatusIsVisible}">
                                 <Label Text="{Binding WorkorderStatusTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -371,7 +369,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="9" Grid.Column="1" IsVisible="{Binding WorkorderTypeIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="10" Grid.Column="1" IsVisible="{Binding WorkorderTypeIsVisible}">
                                 <Label Text="{Binding WorkorderTypeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -389,7 +387,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="10" Grid.Column="0" IsVisible="{Binding CauseIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="11" Grid.Column="0" IsVisible="{Binding CauseIsVisible}">
                                 <Label Text="{Binding CauseTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -406,7 +404,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="10" Grid.Column="1" IsVisible="{Binding MaintenanceCodeIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="11" Grid.Column="1" IsVisible="{Binding MaintenanceCodeIsVisible}">
                                 <Label Text="{Binding MaintenanceCodeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -425,7 +423,7 @@
                             </StackLayout>
 
 
-                            <StackLayout Orientation="Vertical" Grid.Row="11" Grid.Column="0"  IsVisible="{Binding EstimstedDowntimeIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="12" Grid.Column="0"  IsVisible="{Binding EstimstedDowntimeIsVisible}">
                                 <Label Text="{Binding EstimstedDowntimeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -449,7 +447,7 @@
 
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="11" Grid.Column="1"  IsVisible="{Binding ActualDowntimeIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="12" Grid.Column="1"  IsVisible="{Binding ActualDowntimeIsVisible}">
                                 <Label Text="{Binding ActualDowntimeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -471,7 +469,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="12" Grid.Column="0" IsVisible="{Binding MiscellaneousLabourCostIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="13" Grid.Column="0" IsVisible="{Binding MiscellaneousLabourCostIsVisible}">
                                 <Label Text="{Binding MiscellaneousLabourCostTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -495,7 +493,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="12" Grid.Column="1" IsVisible="{Binding MiscellaneousMaterialCostIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="13" Grid.Column="1" IsVisible="{Binding MiscellaneousMaterialCostIsVisible}">
                                 <Label Text="{Binding MiscellaneousMaterialCostTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -518,7 +516,7 @@
 
                             </StackLayout>
 
-                            <StackLayout  Orientation="Vertical" Grid.Row="13" Grid.Column="0" IsVisible="{Binding CurrentRuntimeIsVisible}" >
+                            <StackLayout  Orientation="Vertical" Grid.Row="14" Grid.Column="0" IsVisible="{Binding CurrentRuntimeIsVisible}" >
                                 <Label Text="{Binding CurrentRuntimeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
