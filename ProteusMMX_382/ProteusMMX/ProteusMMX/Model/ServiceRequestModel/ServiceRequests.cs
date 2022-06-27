@@ -10,6 +10,7 @@ namespace ProteusMMX.Model.ServiceRequestModel
     {
         public int? ServiceRequestID { get; set; }
 
+        public DateTime? ReportedDate { get; set; }
         public int? FacilityID { get; set; }
         public int? AssetID { get; set; }
         public int? LocationID { get; set; }

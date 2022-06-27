@@ -159,10 +159,24 @@
                             </border:SfBorder>
                         </StackLayout>
 
+                        <StackLayout Orientation="Vertical" Grid.Row="4">
+                            <Label Text="{Binding TaskArrivalDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                <Label.FontAttributes>
+                                    <OnPlatform x:TypeArguments="FontAttributes">
+                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                        <OnPlatform.Android>Bold</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Label.FontAttributes>
+                            </Label>
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                <controls:CustomDatePicker SelectedDate="{Binding TaskArrivalDate}" Margin="0,8,0,0"/>
+                            </border:SfBorder>
+                        </StackLayout>
+
 
                         <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}" />-->
                         <Button
-                        Grid.Row="4"
+                        Grid.Row="5"
                         Grid.ColumnSpan="2"
                         CornerRadius="5"
                             HorizontalOptions="CenterAndExpand" WidthRequest="150"

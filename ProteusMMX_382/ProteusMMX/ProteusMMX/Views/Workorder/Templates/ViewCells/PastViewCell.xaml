@@ -194,6 +194,16 @@
                                 </Image.Source>
 
                             </Image>
+                            <Image  Grid.Column="4"  IsVisible="{Binding WorkorderIsAcknowledged}">
+                                <Image.Source>
+                                    <OnPlatform  x:TypeArguments="ImageSource">
+                                        <OnPlatform.iOS>Acknowledgedsmall.png</OnPlatform.iOS>
+                                        <OnPlatform.Android>Acknowledgedsmall.png</OnPlatform.Android>
+                                        <OnPlatform.WinPhone>Acknowledgedsmall.png</OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Image.Source>
+
+                            </Image>
 
                         </Grid>
 
