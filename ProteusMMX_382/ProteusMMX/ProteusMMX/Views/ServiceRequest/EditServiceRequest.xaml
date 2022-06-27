@@ -210,7 +210,6 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-
                             <StackLayout Orientation="Vertical" Grid.Row="4" Grid.Column="1" IsVisible="{Binding PriorityIsVisible}">
                                 <Label Text="{Binding PriorityTitle}" TextColor="Black">
                                     <Label.FontAttributes>
@@ -267,8 +266,6 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-
-
                             <StackLayout Orientation="Vertical" Grid.Row="6" Grid.Column="1" IsVisible="{Binding MaintenanceCodeIsVisible}">
                                 <Label Text="{Binding MaintenanceCodeTitle}" TextColor="Black">
                                     <Label.FontAttributes>
@@ -283,22 +280,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="0" IsVisible="{Binding RequiredDateIsVisible}">
-                                <Label Text="{Binding RequiredDateTitle}" TextColor="Black">
-                                    <Label.FontAttributes>
-                                        <OnPlatform x:TypeArguments="FontAttributes">
-                                            <OnPlatform.iOS>Bold</OnPlatform.iOS>
-                                            <OnPlatform.Android>Bold</OnPlatform.Android>
-                                        </OnPlatform>
-                                    </Label.FontAttributes>
-                                </Label>
-                                <!--<DatePicker Date="{Binding RequiredDate}"  MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}"/>-->
-                                <border:SfBorder CornerRadius="5" BorderColor="Black">
-                                    <controls:RequiredDateCustomDatePicker Padding="0,3,3,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}" />
-                                </border:SfBorder>
-                            </StackLayout>
-
-                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="1" IsVisible="{Binding AdministratorIsVisible}">
+                            <StackLayout Orientation="Vertical" Grid.Row="7" Grid.Column="0" IsVisible="{Binding AdministratorIsVisible}">
                                 <Label Text="{Binding AdministratorTitle}" TextColor="Black">
                                     <Label.FontAttributes>
                                         <OnPlatform x:TypeArguments="FontAttributes">
@@ -312,7 +294,23 @@
                                 </border:SfBorder>
 
                             </StackLayout>
-                        </Grid>
+                            
+                            <StackLayout Orientation="Vertical" Grid.Row="8" Grid.ColumnSpan="2" Grid.Column="0" IsVisible="{Binding RequiredDateIsVisible}">
+                                    <Label Text="{Binding RequiredDateTitle}" TextColor="Black">
+                                        <Label.FontAttributes>
+                                            <OnPlatform x:TypeArguments="FontAttributes">
+                                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                                            </OnPlatform>
+                                        </Label.FontAttributes>
+                                    </Label>
+                                    <!--<DatePicker Date="{Binding RequiredDate}"  MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}"/>-->
+                                    <border:SfBorder Style="{StaticResource SfBorderStyle1}" CornerRadius="5" BorderColor="Black">
+                                        <controls:RequiredDateCustomDatePicker Padding="0,10,3,0" SelectedDate="{Binding RequiredDate1}" MinimumDate="{Binding MinimumRequiredDate}" IsEnabled="{Binding RequiredDateIsEnable}" />
+                                    </border:SfBorder>
+                                </StackLayout>
+
+                            </Grid>
 
                         <Grid
                 Padding="10,10,10,10"

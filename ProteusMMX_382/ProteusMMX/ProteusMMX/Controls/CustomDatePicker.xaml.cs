@@ -94,6 +94,7 @@ namespace ProteusMMX.Controls
             {
 
                 var dateConfig = new Acr.UserDialogs.DatePromptConfig();
+                var timeConfig = new Acr.UserDialogs.TimePromptConfig();
                 dateConfig.MinimumDate = this.MinimumDate;
                 dateConfig.MaximumDate = this.MaximumDate;
                 dateConfig.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
@@ -105,7 +106,8 @@ namespace ProteusMMX.Controls
 
                 var dateResult = await UserDialogs.Instance.DatePromptAsync(dateConfig);
 
-               
+                var TimeResult = await UserDialogs.Instance.TimePromptAsync(timeConfig);
+
 
                 if (dateResult.SelectedDate != null && dateResult.SelectedDate.Year == 0001)
                 {
@@ -159,7 +161,11 @@ namespace ProteusMMX.Controls
 
                 }
 
-
+                if (TimeResult.Ok == true)
+                {
+                    DateTime datetime3 = SelectedDate.Value.Add(TimeResult.SelectedTime);
+                    SelectedDate = datetime3;
+                }
                 //   SelectedDate = dateResult.SelectedDate;
 
 

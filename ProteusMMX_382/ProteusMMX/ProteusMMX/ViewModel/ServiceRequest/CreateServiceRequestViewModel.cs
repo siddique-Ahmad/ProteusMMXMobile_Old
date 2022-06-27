@@ -673,7 +673,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         }
         //ReportedDate
         DateTime? _reportedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
-      
+
         public DateTime? ReportedDate
         {
             get
@@ -692,7 +692,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         }
 
         // Required Date
-        DateTime _requiredDate1 =DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+        DateTime _requiredDate1 = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
         public DateTime RequiredDate1
         {
             get
@@ -710,7 +710,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
-        DateTime _minimumRequiredDate= DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+        DateTime _minimumRequiredDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
         public DateTime MinimumRequiredDate
         {
             get
@@ -1345,7 +1345,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
             }
         }
-     
+
 
         string _assetsTitle;
         public string AssetsTitle
@@ -3668,11 +3668,11 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         public ICommand ShiftCommand => new AsyncCommand(ShowShift);
         public ICommand WorkorderStatusCommand => new AsyncCommand(ShowWorkorderStatus);
         public ICommand WorkorderTypeCommand => new AsyncCommand(ShowWorkorderType);
-     
+
         public ICommand MaintenanceCodeCommand => new AsyncCommand(ShowMaintenanceCode);
 
         public ICommand AdministratorCommand => new AsyncCommand(ShowAdministrator);
-        
+
         //Save Command
         public ICommand SaveServiceRequestCommand => new AsyncCommand(CreateServiceRequest);
 
@@ -3687,11 +3687,11 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 OperationInProgress = true;
 
-               
+
                 if (navigationData != null)
                 {
                     var navigationParams = navigationData as TargetNavigationData;
-                   // this.ServiceRequestDetailsControlsNew = navigationParams.ServiceRequestDetails;
+                    // this.ServiceRequestDetailsControlsNew = navigationParams.ServiceRequestDetails;
                 }
 
 
@@ -3735,9 +3735,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                     }
                 }
-               
+
                 ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "ServiceRequest", "Details");
-                
+
                 if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
                 {
                     var ServiceRequestModule = FormControlsAndRightsForDetails.lstModules[0];
@@ -3828,7 +3828,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
-        public CreateServiceRequestViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IServiceRequestModuleService serviceRequestService,IWorkorderService workorderService, IFacilityService facilityService)
+        public CreateServiceRequestViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IServiceRequestModuleService serviceRequestService, IWorkorderService workorderService, IFacilityService facilityService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
@@ -4029,7 +4029,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
             }
             #endregion
-          
+
             #region Remove Overridden controls from titles New
             if (ServiceRequestControlsNew != null && ServiceRequestControlsNew.Count > 0)
             {
@@ -4125,7 +4125,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         ServiceRequestControlsNew.Remove(description);
                     }
 
-                  
+
 
                     var AssignedToEmployeeID = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "AssignedToEmployeeID");
                     if (AssignedToEmployeeID != null)
@@ -4206,8 +4206,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     if (EstimatedDowntime != null)
                     {
                         EstimstedDowntimeTitle = EstimatedDowntime.TargetName;
-                       // OverriddenControlsNew.Add(EstimatedDowntime);
-                       // ServiceRequestControlsNew.Remove(EstimatedDowntime);
+                        // OverriddenControlsNew.Add(EstimatedDowntime);
+                        // ServiceRequestControlsNew.Remove(EstimatedDowntime);
                     }
 
                     var ActualDowntime = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "ActualDowntime");
@@ -4245,7 +4245,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     var administrator = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "AdministratorID");
                     if (administrator != null)
                     {
-                        
+
                         AdministratorTitle = administrator.TargetName;
                         OverriddenControlsNew.Add(administrator);
                         ServiceRequestControlsNew.Remove(administrator);
@@ -4306,7 +4306,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     ///ShiftID
                     ///WorkOrderStatusID
                     ///WorkTypeID
-                   
+
                     ///MaintenanceCodeID
 
                     //var formRoles = titles.lstRoles;
@@ -4416,7 +4416,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             case "Causes":
                                 {
                                     CauseIsEnable = ApplyIsEnable(item.Expression);
-                                   
+
                                     break;
                                 }
 
@@ -4475,7 +4475,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
 
-                 contentGrid = await GetContentGrid();
+                contentGrid = await GetContentGrid();
                 //Grid children = contentGrid.Children as Grid;
                 //contentGrid.Children.Remove(children);
                 contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
@@ -4535,42 +4535,74 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             break;
 
                         case "DateTime":
-                            if (!isItemAddedInFirstColumn)
+                            if (Device.Idiom == TargetIdiom.Phone)
                             {
-                                if (!isItemAddedInSecondColumn)
+                                isItemAddedInFirstColumn = false;
+                                isItemAddedInSecondColumn = false;
+                                if (!isItemAddedInFirstColumn)
+                                {
+                                    if (!isItemAddedInSecondColumn)
+                                    {
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        //increment column
+                                        rowCount++;
+                                        columnCount = 0;
+                                    }
+                                    else
+                                    {
+                                        //generate new row
+                                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                                        rowCount++;
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        columnCount = 0;
+
+                                    }
+                                }
+
+                                
+                            }
+                            else
+                            {
+
+
+                                if (!isItemAddedInFirstColumn)
+                                {
+                                    if (!isItemAddedInSecondColumn)
+                                    {
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        //increment column
+                                        isItemAddedInFirstColumn = true;
+                                        isItemAddedInSecondColumn = false;
+                                        columnCount = 1;
+                                    }
+                                    else
+                                    {
+                                        //generate new row
+                                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                                        rowCount++;
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        columnCount = 1;
+                                        isItemAddedInFirstColumn = true;
+                                        isItemAddedInSecondColumn = false;
+
+                                    }
+                                }
+
+                                else
                                 {
                                     GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
                                     //increment column
-                                    isItemAddedInFirstColumn = true;
-                                    isItemAddedInSecondColumn = false;
-                                    columnCount = 1;
+                                    isItemAddedInFirstColumn = false;
+                                    isItemAddedInSecondColumn = true;
+                                    columnCount = 0;
                                 }
-                                else
-                                {
-                                    //generate new row
-                                    contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                                    rowCount++;
-                                    GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
-                                    columnCount = 1;
-                                    isItemAddedInFirstColumn = true;
-                                    isItemAddedInSecondColumn = false;
-
-                                }
                             }
-
-                            else
-                            {
-                                GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
-
-                                //increment column
-                                isItemAddedInFirstColumn = false;
-                                isItemAddedInSecondColumn = true;
-                                columnCount = 0;
-                            }
-
-
 
 
                             break;
@@ -4674,7 +4706,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
             title.Text = formControl.TargetName;
             SetControlBindingAccordingToControlType(control, formControl);
-          
+
             if (formControl.Expression == "E")
             {
                 control.IsEnabled = true;
@@ -4684,8 +4716,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 control.IsEnabled = false;
 
             }
-       
-            
+
+
 
             var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
             wrapperLayout.Children.Add(title);
@@ -4720,7 +4752,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
             control.ItemsSource = NEWCOMBO;
             control.ItemDisplayBinding = new Binding(nameof(ComboDD.SelectedText));
-          
+
 
             SetControlBindingAccordingToControlType(control, formControl);
             /// bind with its value associative property.
@@ -4785,6 +4817,10 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             wrapperLayout.Children.Add(control);
 
             contentGrid.Children.Add(wrapperLayout, column, row);
+            if (Device.Idiom == TargetIdiom.Phone)
+            {
+                Grid.SetColumnSpan(wrapperLayout, 2);
+            }
         }
 
 
@@ -4900,7 +4936,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                             var source = x.ItemsSource as List<ComboDD>;
                             ComboDD item = null;
-                            try { item = source.FirstOrDefault(s => s.SelectedValue ==Int32.Parse(EstimatedDowntime)); }
+                            try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(EstimatedDowntime)); }
                             catch (Exception) { }
 
                             if (item != null)
@@ -5007,7 +5043,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                         else if (control is Entry)
                         {
-                            
+
                             control.SetBinding(Entry.TextProperty, nameof(this.RequesterEmail));
                         }
 
@@ -5229,7 +5265,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             if (item != null)
                             {
                                 x.SelectedItem = item;
-                                RequiredDate1 =Convert.ToDateTime(item.SelectedValue.ToString());
+                                RequiredDate1 = Convert.ToDateTime(item.SelectedValue.ToString());
                             }
 
                             x.SelectedIndexChanged += Picker_SelectedIndexChanged;
@@ -5244,7 +5280,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         else if (control is DatePicker)
                         {
                             // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                            RequiredDate1 =Convert.ToDateTime(DateTime.Now.ToString());
+                            RequiredDate1 = Convert.ToDateTime(DateTime.Now.ToString());
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RequiredDate1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
@@ -6354,7 +6390,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             switch (picker.ClassId)
             {
 
-               
+
                 #region User Field Section
 
 
@@ -6587,7 +6623,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 var scrollView = Abslut.Children[0] as ScrollView;
                 var scrollViewGrid = scrollView.Content as Grid;
                 var contentGrid = scrollViewGrid.Children[1] as Grid;
-               
+
                 return contentGrid;
             }
 
@@ -6643,7 +6679,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     MessagingCenter.Subscribe<object>(this, MessengerKeys.AssetRequested, OnAssetRequested);
 
                     //Retrive Administrator
-                     MessagingCenter.Subscribe<object>(this, MessengerKeys.AdministerRequested, OnAdministratorRequested);
+                    MessagingCenter.Subscribe<object>(this, MessengerKeys.AdministerRequested, OnAdministratorRequested);
 
                     //Retrive Asset System
                     MessagingCenter.Subscribe<object>(this, MessengerKeys.AssetSyastemRequested, OnAssetSystemRequested);
@@ -6672,7 +6708,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     //Retrive WorkorderType
                     MessagingCenter.Subscribe<object>(this, MessengerKeys.WorkorderTypeRequested, OnWorkorderTypeRequested);
 
-                   
+
 
                     //Retrive WorkorderType
                     MessagingCenter.Subscribe<object>(this, MessengerKeys.MaintenanceCodeRequested, OnMaintenanceCodeRequested);
@@ -6729,7 +6765,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
         }
@@ -6738,7 +6774,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         {
             try
             {
-               //OperationInProgress = true;
+                //OperationInProgress = true;
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
 
                 IsPickerDataRequested = true;
@@ -6755,7 +6791,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
 
@@ -6788,7 +6824,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
 
@@ -6821,7 +6857,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
 
@@ -6829,7 +6865,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
         }
@@ -6883,7 +6919,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
         }
@@ -6910,7 +6946,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
         }
@@ -6929,7 +6965,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
 
@@ -6956,7 +6992,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-              //  OperationInProgress = false;
+                //  OperationInProgress = false;
 
             }
 
@@ -6983,7 +7019,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
 
@@ -6991,7 +7027,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
         }
@@ -7018,12 +7054,12 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
         }
 
-        
+
         public async Task ShowAdministrator()
         {
             try
@@ -7064,7 +7100,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
 
@@ -7072,7 +7108,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-              //  OperationInProgress = false;
+                //  OperationInProgress = false;
 
             }
         }
@@ -7132,10 +7168,10 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                 var asset = obj as TAsset;
                 this.AssetID = asset.AssetID;
-                this.AssetName = ShortString.shorten( asset.AssetName);
+                this.AssetName = ShortString.shorten(asset.AssetName);
 
                 // if Asset is selected reset the   Asset System
-                
+
             }
 
 
@@ -7162,7 +7198,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
         }
-        
+
         private void OnAssetSystemRequested(object obj)
         {
 
@@ -7174,7 +7210,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 this.AssetSystemName = ShortString.shorten(assetSystem.AssetSystemName);
 
                 // if AssetSystem is selected reset the   Asset
-               
+
             }
 
 
@@ -7202,7 +7238,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                 var requester = obj as ComboDD;
                 this.WorkorderRequesterID = requester.SelectedValue;
-                this.WorkorderRequesterName = ShortString.shorten( requester.SelectedText);
+                this.WorkorderRequesterName = ShortString.shorten(requester.SelectedText);
                 //  ServiceRequestControlsNew.RemoveAll(i => i.DisplayFormat == "TextBox");
                 //int rowCount = 0;
                 //int columnCount = 0;
@@ -7573,7 +7609,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                 //OperationInProgress = true;
 
-              
+
                 ///TODO: Check the IsRequired Fields for OverridenControls
                 ///
                 var validationResultForOverriddenControls = await ValidateOverriddenControlsIsRequired(OverriddenControlsNew);
@@ -7693,8 +7729,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ServiceRequest.Description = String.IsNullOrEmpty(DescriptionText) ? null : DescriptionText.Trim();
                 ServiceRequest.AdditionalDetails = AdditionalDetailsText;
                 ServiceRequest.FacilityID = FacilityID;
-               
-                if (this.AssetID == null && AssetSystemID==null)
+
+                if (this.AssetID == null && AssetSystemID == null)
                 {
                     ServiceRequest.LocationID = LocationID;
                 }
@@ -7757,7 +7793,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                 bool fdasignatureKey = AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation;
 
-                if (fdasignatureKey==true)
+                if (fdasignatureKey == true)
                 {
                     if (AppSettings.User.RequireSignaturesForValidation == "True")
                     {
@@ -7823,7 +7859,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
 
 
@@ -7832,12 +7868,12 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
             }
 
             finally
             {
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
         }
@@ -7906,7 +7942,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             }
                         case "ReportedDate":
                             {
-                                validationResult = ValidateValidations(formLoadItem,Convert.ToString(ReportedDate));
+                                validationResult = ValidateValidations(formLoadItem, Convert.ToString(ReportedDate));
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -7968,7 +8004,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                 break;
                             }
 
-                      
+
 
                         #region User Fields
 
@@ -8296,7 +8332,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     switch (formLoadItem.ControlName)
                     {
 
-                      
+
                         case "Description":
                             {
                                 validationResult = ValidateValidationsForOverriddennControls(formLoadItem, DescriptionText);
@@ -8321,10 +8357,10 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
 
 
-                     
 
 
-                       
+
+
 
                         case "AssignedToEmployeeID":
                             {
@@ -8403,7 +8439,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                             }
 
 
-                     
+
 
 
                         case "MaintenanceCodeID":
@@ -8427,9 +8463,9 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                 break;
                             }
 
-                      
 
-                       
+
+
 
 
                     }
@@ -8533,7 +8569,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
             }
         }
-     
+
         public static bool IsPhoneNumber(string number)
         {
             if (string.IsNullOrWhiteSpace(number))
@@ -8542,6 +8578,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
             return number.All(char.IsDigit);
         }
-       
+
     }
 }

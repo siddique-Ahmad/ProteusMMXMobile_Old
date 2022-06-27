@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Label Padding="2,0,0,0" TextColor="Black" FontAttributes="None"  BindingContext="{x:Reference Name=Control}" Text="{Binding SelectedDate , Mode=TwoWay, StringFormat='{0:MMM d, yyyy}'}" WidthRequest="150" VerticalTextAlignment="Center"/>
+            <Label Padding="2,0,0,0" TextColor="Black" FontAttributes="None"  BindingContext="{x:Reference Name=Control}" Text="{Binding SelectedDate , Mode=TwoWay, StringFormat='{0:MMM d, yyyy hh:mm tt}'}" WidthRequest="150" VerticalTextAlignment="Center"/>
             <Image Grid.Column="1" Margin="0,0,0,0">
                 <Image.Source>
                     <OnPlatform x:TypeArguments="FileImageSource">
