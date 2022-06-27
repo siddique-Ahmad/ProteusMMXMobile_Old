@@ -826,8 +826,10 @@ namespace ProteusMMX.Views.Workorder
                 StackLayout DateButoonSL = new StackLayout();
                 AssociateSL.Children.Add(DateButoonSL);
                 Grid dateFromCompGrid = new Grid();
+                //dateFromCompGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
                 dateFromCompGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                dateFromCompGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                dateFromCompGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                dateFromCompGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                 DateButoonSL.Children.Add(dateFromCompGrid);
 
                 StackLayout FromDateSL = new StackLayout();
@@ -865,14 +867,16 @@ namespace ProteusMMX.Views.Workorder
                     {
                         Margin = new Thickness(0, 5, 3, 0),
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                        HeightRequest = 2,
+                       // HeightRequest = 2,
+                        SelectedDate = null,
                         HorizontalOptions = LayoutOptions.Start,
                     };
                     dateFromBo.Content = startDate;
                 }
 
                 StackLayout CompDateSL = new StackLayout();
-                dateFromCompGrid.Children.Add(CompDateSL, 1, 0);
+                dateFromCompGrid.Children.Add(CompDateSL, 0, 1);
+
                 Label CompDateLbl = new Label
                 {
                     Text = "Completion Date",
@@ -907,7 +911,8 @@ namespace ProteusMMX.Views.Workorder
                     CompletionDate = new CustomDatePicker1
                     {
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                        HeightRequest = 2,
+                       // HeightRequest = 2,
+                        SelectedDate=null,
                         HorizontalOptions = LayoutOptions.Start,
                         Margin = new Thickness(0, 5, 3, 0),
                     };
@@ -1485,7 +1490,9 @@ namespace ProteusMMX.Views.Workorder
                 AssociateSL.Children.Add(DateButoonSL);
                 Grid dateFromCompGrid = new Grid();
                 dateFromCompGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                dateFromCompGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                //dateFromCompGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                dateFromCompGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                dateFromCompGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                 DateButoonSL.Children.Add(dateFromCompGrid);
 
                 StackLayout FromDateSL = new StackLayout();
@@ -1530,7 +1537,7 @@ namespace ProteusMMX.Views.Workorder
                 }
 
                 StackLayout CompDateSL = new StackLayout();
-                dateFromCompGrid.Children.Add(CompDateSL, 1, 0);
+                dateFromCompGrid.Children.Add(CompDateSL, 0, 1);
                 Label CompDateLbl = new Label
                 {
                     Text = "Completion Date",

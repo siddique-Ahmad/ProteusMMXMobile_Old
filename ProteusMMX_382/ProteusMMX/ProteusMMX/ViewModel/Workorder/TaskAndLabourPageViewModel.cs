@@ -825,7 +825,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     foreach (var item in workorderLabour.workOrderWrapper.workOrderLabors)
                     {
-                       
+
                         if (Application.Current.Properties.ContainsKey("EditTask"))
                         {
                             var TaskLabourTab = Application.Current.Properties["EditTask"].ToString();
@@ -926,8 +926,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             TextColor = Color.FromHex("#333333"),
                             Text = ShortString.shor17ten(item.TaskNumber),
-                            VerticalTextAlignment=TextAlignment.Start,
-                            Padding=new Thickness(20,0,0,0)
+                            VerticalTextAlignment = TextAlignment.Start,
+                            Padding = new Thickness(20, 0, 0, 0)
                         };
 
                         Taskgrid.Children.Add(TaskNumberVal, 0, 1);
@@ -961,8 +961,8 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
                                 TextColor = Color.FromHex("#333333"),
                                 Text = item.EstimatedHours,
-                                VerticalTextAlignment=TextAlignment.Start,
-                                HorizontalTextAlignment=TextAlignment.Center,
+                                VerticalTextAlignment = TextAlignment.Start,
+                                HorizontalTextAlignment = TextAlignment.Center,
                             };
 
                             Taskgrid.Children.Add(EstHourseVal, 3, 1);
@@ -1636,7 +1636,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         StackLayout FromStackLayout = new StackLayout();
                         MainGrid.Children.Add(buttnoStackLayout, 0, 5);
                         Grid FromMainGrid = new Grid();
-                        FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });                       
+                        FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
                         FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
                         FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 86 });
 
@@ -1688,7 +1688,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             TextColor = Color.FromHex("#333333")
                         };
                         CmpDateStackLayout.Children.Add(CDate);
-                       
+
                         completeDateButton.BackgroundColor = Color.White;
                         completeDateButton.BorderColor = Color.Black;
                         completeDateButton.BorderWidth = 1;
@@ -1785,16 +1785,17 @@ namespace ProteusMMX.ViewModel.Workorder
                         #region ***** Arrival Date Bind****
                         StackLayout ArrivalStackLayout = new StackLayout();
                         MainGrid.Children.Add(ArrivalStackLayout, 0, 6);
-                        Label ArrivalDatelabel = new Label {TextColor=Color.Black };
+                        Label ArrivalDatelabel = new Label { TextColor = Color.Black };
                         string ArivalTest = WebControlTitle.GetTargetNameByTitleName("ArrivalDate");
-                        if (item.ArrivalDate !=null)
+                        if (item.ArrivalDate != null)
                         {
-                            ArivalTest = ArivalTest+" : "+ Convert.ToString(item.ArrivalDate);
+                            ArivalTest = ArivalTest + " : " + Convert.ToString(item.ArrivalDate);
                         }
+                        ArrivalDatelabel.Text = ArivalTest;
                         ArrivalStackLayout.Children.Add(ArrivalDatelabel);
                         #endregion
 
-      
+
                         #region ***** button Click Event *****
                         /// Start button Click 
                         startButton.Clicked += async (sender, e) =>
@@ -2168,10 +2169,10 @@ namespace ProteusMMX.ViewModel.Workorder
                                     var response = await _taskAndLabourService.UpdateTaskAndLabour(workOrderWrapper);
                                     if (response != null && bool.Parse(response.servicestatus))
                                     {
-                                        
-                                            completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString("MMM d, yyyy hh:mm tt");
 
-                                       
+                                        completeDateButton.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString("MMM d, yyyy hh:mm tt");
+
+
                                         //UserDialogs.Instance.HideLoading();
                                         //await this.OnViewAppearingAsync(null);
                                         //DialogService.ShowToast("Timer Successfully Stopped");
@@ -2534,28 +2535,75 @@ namespace ProteusMMX.ViewModel.Workorder
 
         private async void CompletionDate_Clicked(object sender, EventArgs e)
         {
+            DateTime? SelectedDate = null;
+            var dateConfig = new Acr.UserDialogs.DatePromptConfig();
+            var timeConfig = new Acr.UserDialogs.TimePromptConfig();
+            dateConfig.MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+            dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
             if (Device.RuntimePlatform == Device.iOS)
             {
-                UserDialogs.Instance.DatePrompt(new DatePromptConfig { iOSPickerStyle = iOSPickerStyle.Wheels, OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone) });
+                dateConfig.iOSPickerStyle = iOSPickerStyle.Wheels;
             }
-            else
+
+            var dateResult = await UserDialogs.Instance.DatePromptAsync(dateConfig);
+
+            var TimeResult = await UserDialogs.Instance.TimePromptAsync(timeConfig);
+            var s = sender as Button;
+            if (dateResult.Ok)
             {
-                UserDialogs.Instance.DatePrompt(
-                    new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result, sender, e), 
-                    IsCancellable = true, 
-                    MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                });
 
-                //UserDialogs.Instance.TimePrompt(
-                //    new TimePromptConfig
-                //    {
-                //        OnAction = (result) => SetCompletionTimeResult(result, sender, e),
-                //        IsCancellable = true,
-                //    });
 
+                if (dateResult.Value.Date == DateTime.Parse("1/1/0001 12:00:00 AM"))
+                {
+                    SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date;
+                }
+
+                else
+                {
+                    SelectedDate = dateResult.SelectedDate;
+                }
+
+                if (dateResult.Value.Date.Date > DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date)
+                {
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskCompletionDatecannotbefuturedate"));
+                    SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date;
+                }
 
             }
+
+            if (TimeResult.Ok == true)
+            {
+                DateTime datetime3 = SelectedDate.Value.Add(TimeResult.SelectedTime);
+                SelectedDate = datetime3;
+            }
+            if (SelectedDate != null)
+            {
+                s.Text = SelectedDate.ToString();
+            }
+
+            //if (Device.RuntimePlatform == Device.iOS)
+            //{
+            //    UserDialogs.Instance.DatePrompt(new DatePromptConfig { iOSPickerStyle = iOSPickerStyle.Wheels, OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone) });
+            //}
+            //else
+            //{
+
+            //    UserDialogs.Instance.DatePrompt(
+            //        new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result, sender, e), 
+            //        IsCancellable = true, 
+            //        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+            //    });
+
+            //UserDialogs.Instance.TimePrompt(
+            //    new TimePromptConfig
+            //    {
+            //        OnAction = (result) => SetCompletionTimeResult(result, sender, e),
+            //        IsCancellable = true,
+            //    });
+
+
         }
+
 
         private void SetCompletionDateResult(DatePromptResult result, object sender, EventArgs e)
         {
@@ -2582,36 +2630,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
             }
             else { }
-           
-        }
-
-        private void SetCompletionTimeResult(TimePromptResult result, object sender, EventArgs e)
-        {
-            if (result.Ok)
-            {
-                var s = sender as Button;
-
-                //if (result.Value.Date == DateTime.Parse("1/1/0001 12:00:00 AM"))
-                //{
-                //    s.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date.ToString();
-                //}
-
-                //else
-                //{
-                //    s.Text = result.SelectedDate.ToString();
-                //}
-
-                //if (result.Value.Date.Date > DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date)
-                //{
-                //    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskCompletionDatecannotbefuturedate"));
-                //    s.Text = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date.ToString();
-                //}
-
-
-            }
-            else { }
 
         }
+
 
         public async Task SaveTaskAndLabour(object sender, EventArgs e)
         {
@@ -2687,7 +2708,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     catch (Exception ex)
                     {
 
-
+                        UserDialogs.Instance.HideLoading();
                     }
 
                     try
