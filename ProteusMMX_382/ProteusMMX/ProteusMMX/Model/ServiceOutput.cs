@@ -127,5 +127,7 @@ namespace ProteusMMX.Model
         public DateTime? InspectionCompleteDate { get; set; }
         
         public string InspectionStatus { get; set; }
+
+        public DefaultEmployees employeeWrappers { get; set; }
     }
 }
