@@ -130,7 +130,7 @@
                             </border:SfBorder>
                         </StackLayout>
 
-                        <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" IsVisible="{Binding TaskStartedDateIsVisible}">
+                        <StackLayout Orientation="Vertical" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" IsVisible="{Binding TaskStartedDateIsVisible}">
                             <Label Text="{Binding TaskStartedDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
@@ -145,7 +145,7 @@
                         </StackLayout>
 
 
-                        <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1" IsVisible="{Binding TaskCompletionDateIsVisible}">
+                        <StackLayout Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" IsVisible="{Binding TaskCompletionDateIsVisible}">
                             <Label Text="{Binding TaskCompletionDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
@@ -159,7 +159,7 @@
                             </border:SfBorder>
                         </StackLayout>
 
-                        <StackLayout Orientation="Vertical" Grid.Row="4">
+                        <StackLayout Orientation="Vertical" Grid.ColumnSpan="2" Grid.Row="5">
                             <Label Text="{Binding TaskArrivalDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
@@ -175,15 +175,8 @@
 
 
                         <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}" />-->
-                        <Button
-                        Grid.Row="5"
-                        Grid.ColumnSpan="2"
-                        CornerRadius="5"
-                            HorizontalOptions="CenterAndExpand" WidthRequest="150"
-                        Command="{Binding SaveCommand}"
-                        Style="{StaticResource SaveButtonStyle}"
-                        
-                        Text="{Binding SaveTitle}" >
+                        <Button Grid.Row="6" Grid.ColumnSpan="2" CornerRadius="5" HorizontalOptions="CenterAndExpand" WidthRequest="150"
+                        Command="{Binding SaveCommand}" Style="{StaticResource SaveButtonStyle}" Text="{Binding SaveTitle}" >
                         </Button>
                     </Grid>
 
