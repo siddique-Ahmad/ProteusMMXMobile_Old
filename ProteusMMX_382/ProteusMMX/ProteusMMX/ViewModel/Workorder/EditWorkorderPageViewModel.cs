@@ -9678,50 +9678,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else if (IsPickerDataRequested)
                 {
-                    ////Retrive Facility
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.FacilityRequested, OnFacilityRequested);
-
-                    ////Retrive Location
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.LocationRequested, OnLocationRequested);
-
-
-                    ////Retrive Asset
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.AssetRequested, OnAssetRequested);
-
-
-                    ////Retrive Asset System
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.AssetSyastemRequested, OnAssetSystemRequested);
-
-
-                    ////Retrive AssignTo
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.AssignToRequested, OnAssignToRequested);
-
-                    ////Retrive WorkorderRequester
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.WorkorderRequesterRequested, OnWorkorderRequesterRequested);
-
-
-                    ////Retrive Cost Center
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.CostCenterRequested, OnCostCenterRequested);
-
-
-                    ////Retrive Priority
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.PriorityRequested, OnPriorityRequested);
-
-                    ////Retrive Shifts
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.ShiftRequested, OnShiftRequested);
-
-                    ////Retrive WorkorderStatus
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.WorkorderStatusRequested, OnWorkorderStatusRequested);
-
-                    ////Retrive WorkorderType
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.WorkorderTypeRequested, OnWorkorderTypeRequested);
-
-                    ////Retrive WorkorderType
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.CauseRequested, OnCauseRequested);
-
-                    ////Retrive WorkorderType
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.MaintenanceCodeRequested, OnMaintenanceCodeRequested);
-
+                    
                     IsPickerDataRequested = false;
                     return;
                 }
@@ -9786,65 +9743,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     MaxInspectionCompDateforNull = string.Empty;
                     InspctionStartDateforNull = string.Empty;
                 }
-                /////TODO: Get Inspection Start and Completiondate
-                //// var InspectionTime = await _workorderService.GetWorkorderInspectionTime(UserID, WorkorderID.ToString());
-
-                ////if (Application.Current.Properties.ContainsKey("MinimumInspectionStartDate"))
-                ////{
-                ////    try
-                ////    {
-                ////        var minInspectionStartDate = Application.Current.Properties["MinimumInspectionStartDate"].ToString();
-                ////        if (minInspectionStartDate != null)
-                ////        {
-                ////            MinInspectionStartDate = minInspectionStartDate.ToString();
-
-                ////        }
-                ////    }
-                ////    catch (Exception ex)
-                ////    {
-
-                ////        MinInspectionStartDate = null;
-                ////    }
-
-                ////}
-                ////if (Application.Current.Properties.ContainsKey("MaximumInspectionCompletionDate"))
-                ////{
-                ////    try
-                ////    {
-                ////        var maxInspectionCompDate = Application.Current.Properties["MaximumInspectionCompletionDate"].ToString();
-                ////        if (maxInspectionCompDate != null)
-                ////        {
-                ////            MaxInspectionCompDate = maxInspectionCompDate.ToString();
-
-                ////        }
-                ////    }
-                ////    catch (Exception ex)
-                ////    {
-
-                ////        MaxInspectionCompDate = null;
-                ////    }
-
-                ////}
-                //if (Application.Current.Properties.ContainsKey("MaximumInspectionCompletionDateforNull"))
-                //{
-                //    try
-                //    {
-                //        var maxInspectionCompDate = Application.Current.Properties["MaximumInspectionCompletionDateforNull"].ToString();
-                //        if (maxInspectionCompDate != null)
-                //        {
-                //            MaxInspectionCompDateforNull = maxInspectionCompDate.ToString();
-
-                //        }
-                //    }
-                //    catch (Exception ex)
-                //    {
-
-                //        MaxInspectionCompDateforNull = null;
-                //    }
-
-                //}
-
-
+               
                 //TODO:
                 #region Auto Fill Start Date and completion date from inspection
 
@@ -10147,12 +10046,6 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                     }
                 }
-
-
-
-
-
-
 
             }
             catch (Exception ex)
@@ -11011,10 +10904,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
             }
         }
-
-
-
-
 
         #endregion
 
@@ -11958,9 +11847,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 workOrder.ModifiedUserName = AppSettings.User.UserName;
                 workOrder.Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim();
-                workOrder.RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay);
-                workOrder.WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null;
-                workOrder.CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null;
+                workOrder.RequiredDate = RequiredDate1;
+                workOrder.WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null;
+                workOrder.CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null;
                 workOrder.FacilityID = FacilityID;
                 workOrder.LocationID = LocationID;
                 workOrder.AssetID = AssetID;
@@ -12122,9 +12011,9 @@ namespace ProteusMMX.ViewModel.Workorder
                                 {
                                     ModifiedUserName = AppSettings.User.UserName,
                                     Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim(),
-                                    RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay),
-                                    WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                    CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                    RequiredDate = RequiredDate1,
+                                    WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null,
+                                    CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null,
                                     FacilityID = FacilityID,
                                     LocationID = LocationID,
                                     AssetID = AssetID,
@@ -12153,8 +12042,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                     DistributeCost = IsCostDistributed,
                                     ParentandChildCost = ParentCostDistributed,
                                     ChildCost = ChildCostDistributed,
-                                    AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                    ReportedDate = ReportedDate.HasValue ? ReportedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                    AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate : (DateTime?)null,
+                                    ReportedDate = ReportedDate.HasValue ? ReportedDate : (DateTime?)null,
                                     #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -12248,9 +12137,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
                                     ModifiedUserName = AppSettings.User.UserName,
                                     Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim(),
-                                    RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay),
-                                    WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                    CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                    RequiredDate = RequiredDate1,
+                                    WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null,
+                                    CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null,
                                     FacilityID = FacilityID,
                                     LocationID = LocationID,
                                     AssetID = AssetID,
@@ -12279,8 +12168,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                     DistributeCost = IsCostDistributed,
                                     ParentandChildCost = ParentCostDistributed,
                                     ChildCost = ChildCostDistributed,
-                                    AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                    ReportedDate = ReportedDate.HasValue ? ReportedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                    AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate: (DateTime?)null,
+                                    ReportedDate = ReportedDate.HasValue ? ReportedDate : (DateTime?)null,
                                     #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -12374,9 +12263,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
                                 ModifiedUserName = AppSettings.User.UserName,
                                 Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim(),
-                                RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay),
-                                WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                RequiredDate = RequiredDate1,
+                                WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null,
+                                CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null,
                                 FacilityID = FacilityID,
                                 LocationID = LocationID,
                                 AssetID = AssetID,
@@ -12405,8 +12294,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 DistributeCost = IsCostDistributed,
                                 ParentandChildCost = ParentCostDistributed,
                                 ChildCost = ChildCostDistributed,
-                                AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                ReportedDate = ReportedDate.HasValue ? ReportedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate : (DateTime?)null,
+                                ReportedDate = ReportedDate.HasValue ? ReportedDate : (DateTime?)null,
                                 #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -12500,9 +12389,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
                                 ModifiedUserName = AppSettings.User.UserName,
                                 Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim(),
-                                RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay),
-                                WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                RequiredDate = RequiredDate1,
+                                WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null,
+                                CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null,
                                 FacilityID = FacilityID,
                                 LocationID = LocationID,
                                 AssetID = AssetID,
@@ -12531,8 +12420,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 DistributeCost = IsCostDistributed,
                                 ParentandChildCost = ParentCostDistributed,
                                 ChildCost = ChildCostDistributed,
-                                AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                ReportedDate = ReportedDate.HasValue ? ReportedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate : (DateTime?)null,
+                                ReportedDate = ReportedDate.HasValue ? ReportedDate : (DateTime?)null,
                                 #region Dynamic Field need to add in model so it can save on server.
 
 

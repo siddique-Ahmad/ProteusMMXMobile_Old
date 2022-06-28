@@ -11013,9 +11013,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 workOrder.CurrentRuntime = CurrentRuntimeText;
                 workOrder.Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim();
-                workOrder.RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay);
-                workOrder.WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null;
-                workOrder.CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null;
+                workOrder.RequiredDate = RequiredDate1;
+                workOrder.WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null;
+                workOrder.CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null;
                 workOrder.FacilityID = FacilityID;
                 workOrder.LocationID = LocationID;
                 workOrder.AssetID = AssetID;
