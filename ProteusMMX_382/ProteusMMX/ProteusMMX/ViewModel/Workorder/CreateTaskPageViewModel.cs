@@ -472,9 +472,43 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+        // Location
+        string _locationID;
+        public string LocationID
+        {
+            get
+            {
+                return _locationID;
+            }
 
+            set
+            {
+                if (value != _locationID)
+                {
+                    _locationID = value;
+                    OnPropertyChanged(nameof(LocationID));
+                }
+            }
+        }
 
+        // Asset
+      string _assetID;
+        public string AssetID
+        {
+            get
+            {
+                return _assetID;
+            }
 
+            set
+            {
+                if (value != _assetID)
+                {
+                    _assetID = value;
+                    OnPropertyChanged(nameof(AssetID));
+                }
+            }
+        }
 
         //Employee
         int? _employeeID;
@@ -1110,18 +1144,38 @@ namespace ProteusMMX.ViewModel.Workorder
 
                                   
                 ServiceOutput taskResponse = null;
-
-                taskResponse = await _taskService.GetEmployee(UserID,"0","0", AppSettings.User.EmployeeName, "TaskAndLabor",this.WorkorderID);
-
-                if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
+                
+                if (Application.Current.Properties.ContainsKey("AssetDefaultEmployee"))
                 {
-                    var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
-                    if (assingedToEmployees != null)
-                    {
-                        this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
-                        this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName)+"("+ assingedToEmployees.First().LaborCraftCode+")";
-                    }
+                   var Asset = Application.Current.Properties["AssetDefaultEmployee"];
+                    AssetID = Convert.ToString(Asset);
+                }
+                if (Application.Current.Properties.ContainsKey("LocationDefaultEmployee"))
+                {
+                  var Location = Application.Current.Properties["LocationDefaultEmployee"];
+                  LocationID =Convert.ToString(Location);
+                }
+                taskResponse = await _taskService.GetDefaultEmployee(AssetID, LocationID);
+                if (taskResponse.employeeWrappers != null)
+                {
+                    this.EmployeeID = taskResponse.employeeWrappers.EmployeeLaborCraftID;
+                    this.EmployeeName= taskResponse.employeeWrappers.EmployeeName + "(" + taskResponse.employeeWrappers.LaborCraftCode + ")";
+                }
+                else
+                {
 
+                    taskResponse = await _taskService.GetEmployee(UserID, "0", "0", AppSettings.User.EmployeeName, "TaskAndLabor", this.WorkorderID);
+
+                    if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
+                    {
+                        var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
+                        if (assingedToEmployees != null)
+                        {
+                            this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
+                            this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName) + "(" + assingedToEmployees.First().LaborCraftCode + ")";
+                        }
+
+                    }
                 }
 
               

@@ -13909,7 +13909,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public Task OnViewDisappearingAsync(VisualElement view)
         {
-
+            Application.Current.Properties["AssetDefaultEmployee"] = this.AssetID;
+            Application.Current.Properties["LocationDefaultEmployee"] = this.LocationID;
             return Task.FromResult(true);
 
         }

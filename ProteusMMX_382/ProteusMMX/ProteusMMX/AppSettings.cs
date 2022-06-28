@@ -2367,7 +2367,23 @@ namespace ProteusMMX
             }
 
         }
+        private static string _getDefaultEmployee = "Inspection/service/GetDefaultEmployee";
+        public static string GetDefaultEmployee
+        {
+            get
+            {
+                return _getDefaultEmployee;
+            }
 
+            set
+            {
+                if (value != _getDefaultEmployee)
+                {
+                    _getDefaultEmployee = value;
+                }
+            }
+
+        }
 
         private static string _getMaintenanceCodes = "Inspection/service/ComboListMaintenanceCodes";
         public static string GetMaintenanceCodes

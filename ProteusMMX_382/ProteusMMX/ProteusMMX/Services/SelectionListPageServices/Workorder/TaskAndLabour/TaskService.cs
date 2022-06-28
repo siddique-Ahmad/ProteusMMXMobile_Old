@@ -37,8 +37,33 @@ namespace ProteusMMX.Services.SelectionListPageServices.Workorder.TaskAndLabour
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.GetAsync(uri);
         }
-
-        public Task<ServiceOutput> GetEmployee(string UserID, string PageNumber, string RowCount, string SearchEmployeeName,string Type, int workorderid)
+        
+        public Task<ServiceOutput> GetDefaultEmployee(string AssetID, string LocationID)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.GetDefaultEmployee);
+            if(String.IsNullOrEmpty(AssetID))
+            {
+                builder.AppendToPath("null");
+            }
+            else
+            {
+                builder.AppendToPath(AssetID);
+            }
+            if (String.IsNullOrEmpty(LocationID))
+            {
+                builder.AppendToPath("null");
+            }
+            else
+            {
+                builder.AppendToPath(LocationID);
+            }
+            
+          
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.GetAsync(uri);
+        }
+            public Task<ServiceOutput> GetEmployee(string UserID, string PageNumber, string RowCount, string SearchEmployeeName,string Type, int workorderid)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetWorkOrderLaborLookUp);
