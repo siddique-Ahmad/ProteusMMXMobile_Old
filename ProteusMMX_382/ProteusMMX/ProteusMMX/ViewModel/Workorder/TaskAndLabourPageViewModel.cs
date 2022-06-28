@@ -2679,12 +2679,12 @@ namespace ProteusMMX.ViewModel.Workorder
                         var GridHrs1 = parentLayout.Children[0] as Grid;
                         var stackallocHrs1 = GridHrs1.Children[0] as StackLayout;
                         var GridHrs2 = stackallocHrs1.Children[1] as Grid;
-                        var stackallocHrs2 = GridHrs2.Children[3] as StackLayout;
+                        var stackallocHrs2 = GridHrs2.Children[2] as StackLayout;
                         var GridHrs3 = stackallocHrs2.Children[0] as Grid;
                         var sfBorderHrs = GridHrs3.Children[0] as SfBorder;
                         Entry hoursEntry = sfBorderHrs.Children[0] as CustomEntry; // Hours
 
-                        var stackallocMin1 = GridHrs2.Children[4] as StackLayout;
+                        var stackallocMin1 = GridHrs2.Children[3] as StackLayout;
                         var GridMin3 = stackallocMin1.Children[0] as Grid;
                         var sfBorderMin = GridMin3.Children[0] as SfBorder;
                         Entry minutesEntry = sfBorderMin.Children[0] as CustomEntry; // Minutes
@@ -2693,12 +2693,12 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         var GridHrs21 = GridHrs1.Children[1] as StackLayout;
                         var GridHrs22 = GridHrs21.Children[1] as Grid;
-                        var stackallocHrs22 = GridHrs22.Children[3] as StackLayout;
+                        var stackallocHrs22 = GridHrs22.Children[2] as StackLayout;
                         var GridHrs23 = stackallocHrs22.Children[0] as Grid;
                         var sfBorderHrs2 = GridHrs23.Children[0] as SfBorder;
                         Entry hoursEntryforRate1 = sfBorderHrs2.Children[0] as CustomEntry; // Hours
 
-                        var stackallocMin21 = GridHrs22.Children[4] as StackLayout;
+                        var stackallocMin21 = GridHrs22.Children[3] as StackLayout;
                         var GridMin23 = stackallocMin21.Children[0] as Grid;
                         var sfBorderMin2 = GridMin23.Children[0] as SfBorder;
                         Entry minutesEntryforRate1 = sfBorderMin2.Children[0] as CustomEntry; // Minutes
@@ -2792,9 +2792,6 @@ namespace ProteusMMX.ViewModel.Workorder
                             },
 
                         };
-
-
-
 
                         var response = await _taskAndLabourService.UpdateTaskAndLabour(workOrderWrapper);
                         if (response != null && bool.Parse(response.servicestatus))
