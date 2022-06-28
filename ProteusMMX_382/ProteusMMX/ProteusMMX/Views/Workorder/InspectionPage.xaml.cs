@@ -3149,7 +3149,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 GenerateAnswerText(item1);
 
-                                var Layoutm = new CustomPicker() { WidthRequest = 100, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = (Device.RuntimePlatform == Device.UWP) ? "Assets/unnamed.png" : "unnamed.png"};
+                                var Layoutm = new CustomPicker() { WidthRequest = 100, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = (Device.RuntimePlatform == Device.UWP) ? "Assets/unnamed" : "unnamed"};
 
                                 if (!string.IsNullOrWhiteSpace(item1.Option1))
                                     (Layoutm as CustomPicker).Items.Add(item1.Option1);
@@ -3913,8 +3913,8 @@ namespace ProteusMMX.Views.Workorder
                             {
                                 WorkOrderID = WorkorderID,
                                 InspectionTime = ((int)totalTime).ToString(),
-                                StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate : (DateTime?)null,
+                                CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate : (DateTime?)null,
                                 EmployeeLaborCraftid = EmpLaborCraftID,
                                 ContractorLaborCraftId = ContLaborCraftID,
                                 ModifiedUserName = AppSettings.UserName,
@@ -3924,13 +3924,13 @@ namespace ProteusMMX.Views.Workorder
                             liststartAnswer.Add(new InspectionTOAnswers()
                             {
 
-                                StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate : (DateTime?)null,
 
                             });
                             listcompletionAnswer.Add(new InspectionTOAnswers()
                             {
 
-                                CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate : (DateTime?)null,
 
                             });
                         }
@@ -4408,8 +4408,8 @@ namespace ProteusMMX.Views.Workorder
                         {
                             WorkOrderID = WorkorderID,
                             InspectionTime = ((int)totalTime).ToString(),
-                            StartDate = this.InspectionStartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
-                            CompletionDate = this.InspectionCompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
+                            StartDate = this.InspectionStartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionStartDate.Value.Date.ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
+                            CompletionDate = this.InspectionCompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionCompletionDate.Value.Date.ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
                             EmployeeLaborCraftid = EmpLaborCraftID,
                             ContractorLaborCraftId = ContLaborCraftID,
                             ModifiedUserName = AppSettings.UserName,
@@ -4419,13 +4419,13 @@ namespace ProteusMMX.Views.Workorder
                         liststartAnswer.Add(new InspectionTOAnswers()
                         {
 
-                            StartDate = this.InspectionStartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionStartDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
+                            StartDate = this.InspectionStartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionStartDate.Value.Date.ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
 
                         });
                         listcompletionAnswer.Add(new InspectionTOAnswers()
                         {
 
-                            CompletionDate = this.InspectionCompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
+                            CompletionDate = this.InspectionCompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionCompletionDate.Value.Date.ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
 
                         });
                     }

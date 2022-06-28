@@ -1516,9 +1516,9 @@ namespace ProteusMMX.ViewModel.Workorder
                         TaskID = TaskID,
                         EmployeeLaborCraftID = EmployeeID,
                         ContractorLaborCraftID = ContractorID,
-                        StartDate = TaskStartedDate.HasValue ? TaskStartedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null, //TaskStartedDate.Date.Add(DateTime.Now.TimeOfDay),
-                        ArrivalDate = TaskArrivalDate.HasValue ? TaskArrivalDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                        CompletionDate = TaskCompletionDate.HasValue ? TaskCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null, //(ShowCompletionDate.IsVisible == true) ? (DateTime?)null : CompletionDate1.Date.Add(DateTime.Now.TimeOfDay),
+                        StartDate = TaskStartedDate.HasValue ? TaskStartedDate : (DateTime?)null, //TaskStartedDate.Date.Add(DateTime.Now.TimeOfDay),
+                        ArrivalDate = TaskArrivalDate.HasValue ? TaskArrivalDate : (DateTime?)null,
+                        CompletionDate = TaskCompletionDate.HasValue ? TaskCompletionDate : (DateTime?)null, //(ShowCompletionDate.IsVisible == true) ? (DateTime?)null : CompletionDate1.Date.Add(DateTime.Now.TimeOfDay),
                     }
 
                 };

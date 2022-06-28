@@ -2756,7 +2756,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         if (!string.IsNullOrWhiteSpace(completeDate))
                         {
                             dateComp = DateTime.Parse(completeDate);
-                            FinaldateComp = dateComp.GetValueOrDefault().Date.Add(DateTime.Now.TimeOfDay);
+                            FinaldateComp = dateComp.GetValueOrDefault().Date;
 
                             if (startDate.Date > DateTime.Parse(completeDate).Date)
                             {
@@ -2787,7 +2787,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 //HoursAtRate1 = decHour1,
                                 // HoursAtRate2 = decHour2,
                                 TaskID = taskID,
-                                StartDate = startDate.Date.Add(DateTime.Now.TimeOfDay),
+                                StartDate = startDate,
                                 WorkOrderLaborID = workOrderLaborID
                             },
 
