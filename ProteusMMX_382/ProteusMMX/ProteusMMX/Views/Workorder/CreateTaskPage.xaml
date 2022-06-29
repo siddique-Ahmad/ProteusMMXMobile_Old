@@ -38,7 +38,7 @@
 
 
     <ContentPage.Content>
-        <Grid  Padding="10,10,10,10">
+        <Grid>
             <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -46,7 +46,7 @@
 
                 <ScrollView Grid.Row="0">
                     <Grid
-                        Padding="0,0,0,0"
+                        Padding="10,10,10,10"
                         RowSpacing="5"
                         VerticalOptions="Fill">
 

@@ -95,6 +95,10 @@ namespace ProteusMMX.Controls
                 dateConfig.MaximumDate = this.MaximumDate;
                 dateConfig.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                 dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
+
+                var times = Helpers.DateTime.DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                timeConfig.SelectedTime = times.TimeOfDay;
+
                 if (Device.RuntimePlatform == Device.iOS)
                 {
                     dateConfig.iOSPickerStyle = iOSPickerStyle.Wheels;
