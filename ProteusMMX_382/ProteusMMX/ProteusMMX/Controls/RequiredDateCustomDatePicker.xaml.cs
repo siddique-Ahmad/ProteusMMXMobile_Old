@@ -92,6 +92,9 @@ namespace ProteusMMX.Controls
                 dateConfig.MinimumDate = this.MinimumDate;
                 dateConfig.MaximumDate = this.MaximumDate;
                 dateConfig.SelectedDate = this.SelectedDate;
+                var times = Helpers.DateTime.DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                timeConfig.SelectedTime = times.TimeOfDay;
+
                 dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
 
 
