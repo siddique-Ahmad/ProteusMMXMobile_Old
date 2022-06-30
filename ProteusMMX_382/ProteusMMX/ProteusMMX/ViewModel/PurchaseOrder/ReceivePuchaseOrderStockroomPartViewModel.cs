@@ -1124,7 +1124,7 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
                     InvoiceNumber = String.IsNullOrEmpty(InvoiceNumberText) ? null : InvoiceNumberText.Trim(),
                     PurchaseOrderPartID = this.PurchaseOrderStockroomPartID,
                     QuantityReceived =int.Parse(QuantityReceivedText),
-                    ReceivedDate = ReceivedDate.Date.Add(DateTime.Now.TimeOfDay),
+                    ReceivedDate = ReceivedDate,
                     PackingSlipNumber = String.IsNullOrEmpty(PackagingSlipNumberText) ? null : PackagingSlipNumberText.Trim(),
                     ReceiverID = this.ReceiverID,
                     ShelfBinID=this.ShelfBinID,

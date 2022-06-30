@@ -29,6 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -1121,7 +1122,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             startButton = new SfButton
                             {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Start"),
+                                Text = ShortString.short5(WebControlTitle.GetTargetNameByTitleName("Start")),
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
@@ -1137,7 +1138,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             startButton = new SfButton
                             {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Start"),
+                                Text = ShortString.short5(WebControlTitle.GetTargetNameByTitleName("Start")),
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
@@ -1157,7 +1158,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         StackLayout StopButtonStackLayout = new StackLayout
                         {
-                            Margin = new Thickness(-15, 0, 0, 0)
+                            Margin = new Thickness(-10, 0, 0, 0)
                         };
                         BMainGrid.Children.Add(StopButtonStackLayout, 1, 0);
                         Grid StopButtonGrid = new Grid();
@@ -1168,7 +1169,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             stopButton = new SfButton
                             {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
+                                Text = ShortString.short5(WebControlTitle.GetTargetNameByTitleName("Stop")),
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
@@ -1183,7 +1184,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             stopButton = new SfButton
                             {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
+                                Text = ShortString.short5(WebControlTitle.GetTargetNameByTitleName("Stop")),
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
@@ -1413,7 +1414,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             startButtonforRate2 = new SfButton
                             {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Start"),
+                                Text = ShortString.short5(WebControlTitle.GetTargetNameByTitleName("Start")),
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
@@ -1428,7 +1429,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             startButtonforRate2 = new SfButton
                             {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Start"),
+                                Text = ShortString.short5(WebControlTitle.GetTargetNameByTitleName("Start")),
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
@@ -1447,7 +1448,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         StackLayout StopButtonStackLayoutforRate2 = new StackLayout
                         {
-                            Margin = new Thickness(-20, 0, 0, 0)
+                            Margin = new Thickness(-10, 0, 0, 0)
                         };
                         BMainGridforRate2.Children.Add(StopButtonStackLayoutforRate2, 1, 0);
                         Grid StopButtonGridforRate2 = new Grid();
@@ -1459,7 +1460,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             stopButtonforRate2 = new SfButton
                             {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
+                                Text = ShortString.short5(WebControlTitle.GetTargetNameByTitleName("Stop")),
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
@@ -1474,7 +1475,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         {
                             stopButtonforRate2 = new SfButton
                             {
-                                Text = WebControlTitle.GetTargetNameByTitleName("Stop"),
+                                Text = ShortString.short5(WebControlTitle.GetTargetNameByTitleName("Stop")),
                                 FontAttributes = FontAttributes.Bold,
                                 ShowIcon = true,
                                 BackgroundColor = Color.Transparent,
@@ -1765,7 +1766,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             if (item.CompletionDate != null)
                             {
-                                completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt");
+                                completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
 
 
                             }
@@ -1789,7 +1790,10 @@ namespace ProteusMMX.ViewModel.Workorder
                         string ArivalTest = WebControlTitle.GetTargetNameByTitleName("ArrivalDate");
                         if (item.ArrivalDate != null)
                         {
-                            ArivalTest = ArivalTest + " : " + Convert.ToString(item.ArrivalDate);
+
+                            ArivalTest = ArivalTest + " : ";
+                            ArivalTest = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.ArrivalDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+
                         }
                         ArrivalDatelabel.Text = ArivalTest;
                         ArrivalStackLayout.Children.Add(ArrivalDatelabel);
@@ -1850,7 +1854,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 AddTimeBtn.Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Adddis.png" : "Adddis.png";
 
 
-                                // await OnViewAppearingAsync(null);
+                                await OnViewAppearingAsync(null);
                                 UserDialogs.Instance.HideLoading();
                                 // DialogService.ShowToast("Timer Successfully Started");
                             }
@@ -1927,7 +1931,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                                     UserDialogs.Instance.HideLoading();
-                                    // await OnViewAppearingAsync(null);
+                                     await OnViewAppearingAsync(null);
                                     // DialogService.ShowToast("Timer Successfully Started");
                                 }
                             }
@@ -2174,14 +2178,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                                         //UserDialogs.Instance.HideLoading();
-                                        //await this.OnViewAppearingAsync(null);
+                                        await this.OnViewAppearingAsync(null);
                                         //DialogService.ShowToast("Timer Successfully Stopped");
                                     }
                                 }
                                 else
                                 {
                                     // UserDialogs.Instance.HideLoading();
-                                    //await this.OnViewAppearingAsync(null);
+                                    await this.OnViewAppearingAsync(null);
                                     //DialogService.ShowToast("Timer Successfully Stopped");
                                 }
                             }
@@ -2539,6 +2543,8 @@ namespace ProteusMMX.ViewModel.Workorder
             var dateConfig = new Acr.UserDialogs.DatePromptConfig();
             var timeConfig = new Acr.UserDialogs.TimePromptConfig();
             dateConfig.MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+            var times = Helpers.DateTime.DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+            timeConfig.SelectedTime = times.TimeOfDay;
             dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
             if (Device.RuntimePlatform == Device.iOS)
             {
@@ -2756,7 +2762,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         if (!string.IsNullOrWhiteSpace(completeDate))
                         {
                             dateComp = DateTime.Parse(completeDate);
-                            FinaldateComp = dateComp.GetValueOrDefault().Date;
+                            FinaldateComp = dateComp.GetValueOrDefault();
 
                             if (startDate.Date > DateTime.Parse(completeDate).Date)
                             {
