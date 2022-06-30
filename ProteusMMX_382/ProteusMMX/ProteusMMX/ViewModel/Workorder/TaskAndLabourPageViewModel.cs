@@ -1790,9 +1790,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         string ArivalTest = WebControlTitle.GetTargetNameByTitleName("ArrivalDate");
                         if (item.ArrivalDate != null)
                         {
-
-                            ArivalTest = ArivalTest + " : ";
-                            ArivalTest = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.ArrivalDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                            ArivalTest = ArivalTest + " : " + DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.ArrivalDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt");
 
                         }
                         ArrivalDatelabel.Text = ArivalTest;
@@ -1931,7 +1929,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                                     UserDialogs.Instance.HideLoading();
-                                     await OnViewAppearingAsync(null);
+                                    await OnViewAppearingAsync(null);
                                     // DialogService.ShowToast("Timer Successfully Started");
                                 }
                             }
