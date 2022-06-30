@@ -8065,7 +8065,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ServiceRequest.ConfirmEmail = RequesterEmail;
                 ServiceRequest.RequesterFullName = RequesterFullName;
                 ServiceRequest.RequesterPhone = RequesterPhone;
-                ServiceRequest.RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay);
+                ServiceRequest.RequiredDate = RequiredDate1;
                 ServiceRequest.MobileEmployeeID = null;
                 ServiceRequest.ReportedDate = ReportedDate;
 
