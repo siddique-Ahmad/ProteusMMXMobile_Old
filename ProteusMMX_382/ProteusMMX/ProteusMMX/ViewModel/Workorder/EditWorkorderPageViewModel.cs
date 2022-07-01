@@ -4991,7 +4991,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
 
-                if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
+                if (AppSettings.User != null && AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
                 {
                     if (Application.Current.Properties.ContainsKey("WorkOrderRequestedDateKey"))
                     {
@@ -13725,8 +13725,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             foreach (var item in workorderLabourWrapper.workOrderWrapper.workOrderLabors)
                             {
-
-                                bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1));
+                                bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1.Replace("00.00","")));
 
                                 if (AllTaskHours == false)
                                 {
