@@ -743,7 +743,9 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         Taskgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
                         Taskgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
                         Taskgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(2, GridUnitType.Absolute) });
-                        Taskgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                        //Taskgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                        Taskgrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                        Taskgrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
                         Label TaskNumber = new Label
                         {
@@ -766,19 +768,13 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         Label TaskNumberVal = new Label
                         {
                             TextColor = Color.FromHex("#333333"),
-                            Text = ShortString.shor17ten(item.TaskNumber)
-
+                            Text = item.TaskNumber,
+                            Padding = new Thickness(5, 0, 0, 0)
                         };
 
-                        Taskgrid.Children.Add(TaskNumberVal, 2, 0);
+                        Taskgrid.Children.Add(TaskNumberVal, 0, 1);
                         Grid.SetColumnSpan(TaskNumberVal, 3);
 
-                        //if (LabourEstimatedHours == "N")
-                        //{
-
-                        //}
-                        //else
-                        //{
                         Label EstHourse = new Label
                         {
                             FontSize = 13,
@@ -795,18 +791,19 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                             TextColor = Color.FromHex("#333333"),
                             Text = ":"
                         };
-                        Taskgrid.Children.Add(EstDot, 4, 0);
+                        
+                        Taskgrid.Children.Add(EstDot, 3, 0);
 
                         Label EstHourseVal = new Label
                         {
                             TextColor = Color.FromHex("#333333"),
                             Text = item.EstimatedHours,
-                            
+                            HorizontalTextAlignment=TextAlignment.Center
                         };
 
-                        Taskgrid.Children.Add(EstHourseVal, 5, 0);
+                        Taskgrid.Children.Add(EstHourseVal, 3, 1);
                         TaskStackLayout.Children.Add(Taskgrid);
-                        //}
+
                         #endregion
 
                         #region **** Description ****
@@ -1157,8 +1154,11 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         MainGrid.Children.Add(buttnoStackLayout, 0, 5);
                         Grid FromMainGrid = new Grid();
                         FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                        FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                        FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+                       // FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                       FromMainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+                        FromMainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
+                        FromMainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
 
                         buttnoStackLayout.Children.Add(FromMainGrid);
 
@@ -1189,7 +1189,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
                         #region **** CmpDate ****
                         StackLayout CmpDateStackLayout = new StackLayout();
-                        FromMainGrid.Children.Add(CmpDateStackLayout, 1, 0);
+                        FromMainGrid.Children.Add(CmpDateStackLayout, 0, 1);
                         Label CDate = new Label
                         {
                             Text = WebControlTitle.GetTargetNameByTitleName("CompletionDate"),
@@ -1216,9 +1216,9 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         if (AppSettings.User.EnableHoursAtRate == false)
                         {
                             StackLayout SbtnStackLayout = new StackLayout();
-                            FromMainGrid.Children.Add(SbtnStackLayout, 2, 0);
+                            FromMainGrid.Children.Add(SbtnStackLayout, 1, 1);
 
-                           
+
                             SbtnStackLayout.Children.Add(Hrs1);
 
                             Grid CmpHrsMin = new Grid();
@@ -1239,7 +1239,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                             };
                             HrsStackLayout1.Children.Add(HrsGrid1);
                             HrsGrid1.Children.Add(HrsBorderq, 0, 0);
-                           
+
                             HrsBorderq.Content = hoursEntry;
                             #endregion
 
@@ -1256,7 +1256,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                             };
                             MinStackLayout1.Children.Add(MinGrid1);
                             MinGrid1.Children.Add(MinBorder1, 0, 0);
-                          
+
                             MinBorder1.Content = minuteEntry;
                             #endregion
                         }
@@ -1297,11 +1297,11 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
                             if (item.CompletionDate != null)
                             {
-                                completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                                completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MM/dd/yyyy hh:mm tt");
                             }
                             if (item.StartDate != null)
                             {
-                                FromDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                                FromDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MM/dd/yyyy hh:mm tt");
                             }
 
                         }

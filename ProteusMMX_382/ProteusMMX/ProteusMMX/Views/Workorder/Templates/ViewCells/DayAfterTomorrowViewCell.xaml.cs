@@ -204,7 +204,7 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             {
                 WorkOrderRequestedDateKeyValue = Application.Current.Properties["WorkOrderRequestedDateKey"].ToString();
             }
-            if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
+            if (AppSettings.User!=null && AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
             {
                 if (WorkOrderRequestedDateKeyValue == "E" || WorkOrderRequestedDateKeyValue == "V")
                 {

@@ -4918,7 +4918,6 @@ string _currentRuntime;
                 }
             }
 
-
             if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(false))
             {
 
@@ -4942,13 +4941,6 @@ string _currentRuntime;
                 this.RequestedDateIsVisible = false;
                 this.RequestedNumberIsVisible = false;
             }
-
-
-
-
-
-
-
 
             #endregion
         }

@@ -1246,13 +1246,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
             }
         }
 
-         
-
-
-
-
-        
-
         private async void OnSelectClosedWokrorderAssetsync(ClosedWorkOrder item)
         {
             if (item != null)
@@ -1270,7 +1263,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 // OperationInProgress = false;
             }
         }
-        
         
         public async Task GetCloseWorkorderByAssetNumber()
         {
