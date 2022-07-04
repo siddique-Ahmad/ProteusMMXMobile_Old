@@ -9910,20 +9910,19 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
                 }
 
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor) && workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate != null)
+                {
+                    if (workorderLabourWrapper.workOrderWrapper.InitialStartDate != null)
+                    {
+
+                        WorkStartedDate1 = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderLabourWrapper.workOrderWrapper.InitialStartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                        
+                    }
+                }
+
 
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
                 {
-
-                    //if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
-                    //{
-
-                    //}
-                    //else
-                    //{
-
-                    //}
-
-
                     if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor) && workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
                     {
 

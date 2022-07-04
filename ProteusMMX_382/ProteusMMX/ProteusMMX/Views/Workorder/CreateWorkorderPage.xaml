@@ -440,7 +440,7 @@
                                     x:Name="EstimstedDowntime"
                                            
                                         TextChanged="NumericEntry_TextChanged"    
-                            Text="{Binding EstimstedDowntimeText}" FontFamily="{Binding EstimstedDowntimeIsRequred}"
+                            Text="{Binding EstimstedDowntimeText}" Placeholder="hh.mm" FontFamily="{Binding EstimstedDowntimeIsRequred}"
                                         IsEnabled="{Binding EstimstedDowntimeIsEnable , Mode=TwoWay}"
                             TextColor="{DynamicResource Gray-900}" />
                                 </border:SfBorder>
@@ -464,7 +464,7 @@
                                        
                             Text="{Binding ActualDowntimeText}"
                                         IsEnabled="{Binding ActualDowntimeIsEnable , Mode=TwoWay}"
-                                        TextChanged="NumericEntry_TextChanged_1" FontFamily="{Binding ActualDowntimeIsRequred}"
+                                        TextChanged="NumericEntry_TextChanged_1" Placeholder="hh.mm" FontFamily="{Binding ActualDowntimeIsRequred}"
                             TextColor="{DynamicResource Gray-900}" />
                                 </border:SfBorder>
                             </StackLayout>
