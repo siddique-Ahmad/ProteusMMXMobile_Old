@@ -603,7 +603,7 @@
                                     Style="{StaticResource SfBorderStyle}">
                                         <control1:CustomEntry
                                     x:Name="EstimstedDowntime"      
-                            Text="{Binding EstimstedDowntimeText}"
+                            Text="{Binding EstimstedDowntimeText}" Placeholder="hh.mm"
                                         IsEnabled="{Binding EstimstedDowntimeIsEnable , Mode=TwoWay}"
                             TextColor="{DynamicResource Gray-900}"
                                     TextChanged="NumericEntry_TextChanged"/>
@@ -628,7 +628,7 @@
                                        
                             Text="{Binding ActualDowntimeText}"
                                         IsEnabled="{Binding ActualDowntimeIsEnable , Mode=TwoWay}"
-                                        TextChanged="NumericEntry_TextChanged_1"
+                                        TextChanged="NumericEntry_TextChanged_1" Placeholder="hh.mm"
                             TextColor="{DynamicResource Gray-900}" />
                                     </border:SfBorder>
                                 </StackLayout>
