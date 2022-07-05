@@ -6825,6 +6825,8 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+
+
         private void SetControlBindingAccordingToControlType(View control, FormControl formControl)
         {
             switch (formControl.ControlName)
