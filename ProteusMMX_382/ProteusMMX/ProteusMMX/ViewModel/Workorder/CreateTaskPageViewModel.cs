@@ -1455,13 +1455,11 @@ namespace ProteusMMX.ViewModel.Workorder
                         return;
                     }
                 }
-
-
-                if (TaskCompletionDate != null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
+                if (TaskCompletionDate != null)
                 {
-                    var workorderComletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                    var completePickerDate = DateTime.Parse(TaskCompletionDate.Value.ToString("d"));
-                    var startPickerDate = DateTime.Parse(TaskStartedDate.Value.ToString("d"));
+                    
+                    var completePickerDate = DateTime.Parse(TaskCompletionDate.ToString());
+                    var startPickerDate = DateTime.Parse(TaskStartedDate.ToString());
 
                     if (completePickerDate < startPickerDate)
                     {
@@ -1471,7 +1469,16 @@ namespace ProteusMMX.ViewModel.Workorder
                         DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Completiondatecannotbelessthanstartdate"), 2000);
                         return;
                     }
-                  
+                }
+                
+
+                if (TaskCompletionDate != null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
+                {
+                    var workorderComletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    var completePickerDate = DateTime.Parse(TaskCompletionDate.Value.ToString("d"));
+                    var startPickerDate = DateTime.Parse(TaskStartedDate.Value.ToString("d"));
+
+                    
                     if (!Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
                     {
                         if (completePickerDate > DateTime.Parse(workorderComletionDate.ToString("d")))
