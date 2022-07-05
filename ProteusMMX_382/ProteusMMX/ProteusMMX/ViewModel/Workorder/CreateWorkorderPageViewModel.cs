@@ -6783,7 +6783,13 @@ namespace ProteusMMX.ViewModel.Workorder
             View control;
             if (formControl.IsRequired ?? false)
             {
-                control = new DatePicker();
+
+                var data= new CustomDatePicker2();
+                data.IsRequired = true;
+                var test1 = data.Content as SfBorder;
+                test1.BorderColor = Color.Red;
+                control = data;
+               
             }
             else
             {

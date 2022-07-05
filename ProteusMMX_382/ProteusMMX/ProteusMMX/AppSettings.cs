@@ -82,6 +82,7 @@ namespace ProteusMMX
             {
                 RememberMeSwitchValue = Application.Current.Properties["RememberMeSwitchKey"].ToString();
             }
+            Application.Current.Properties.Clear();
             //Application.Current.Properties["RememberMeSwitchKey"] = false;
 
             if (RememberMeSwitchValue == "false")
