@@ -11655,7 +11655,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 if (WorkStartedDate1 != null && WorkorderCompletionDate != null)
                 {
-                    if (WorkorderCompletionDate.Value.Date < WorkStartedDate1.Value.Date)
+                    if (WorkorderCompletionDate < WorkStartedDate1)
                     {
                         UserDialogs.Instance.HideLoading();
 

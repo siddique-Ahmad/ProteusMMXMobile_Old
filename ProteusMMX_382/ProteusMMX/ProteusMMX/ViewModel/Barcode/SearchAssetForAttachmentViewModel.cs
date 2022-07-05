@@ -992,7 +992,7 @@ namespace ProteusMMX.ViewModel.Barcode
                         {
                             Attachments.RemoveAt(count - i);
                         }
-                        PDFImageText = null;
+                       
                     }
 
                     if (DocumentAttachments != null && DocumentAttachments.Count > 0)
@@ -1002,7 +1002,7 @@ namespace ProteusMMX.ViewModel.Barcode
                         {
                             DocumentAttachments.RemoveAt(count - i);
                         }
-                        PDFImageText = null;
+                       
                     }
                     #endregion
 
@@ -1032,7 +1032,7 @@ namespace ProteusMMX.ViewModel.Barcode
                         if (attachment.assetWrapper.attachments.Count > 0)
                         {
                             var FirstattachmentName = attachment.assetWrapper.attachments.First();
-                            PDFImageText = FirstattachmentName.AttachmentNameWithExtension;
+                           
                             ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.assetWrapper.attachments.Count;
                             foreach (var file in attachment.assetWrapper.attachments)
                             {

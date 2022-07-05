@@ -420,6 +420,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
         public ICommand DocCommand => new AsyncCommand(OpenDoc);
         public ICommand CameraCommand => new AsyncCommand(OpenMedia);
+
+        public ICommand GalleryCommand => new AsyncCommand(OpenGallery);
         public ICommand DeleteCommand => new AsyncCommand(DeleteAttachment);
         public ICommand SaveCommand => new AsyncCommand(SaveAttachment);
         public bool IsAutoAnimationRunning { get; set; }
@@ -833,44 +835,50 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 OperationInProgress = false;
             }
         }
-
+        public async Task OpenGallery()
+        {
+            IsDataRequested = true;
+            await PickPhoto();
+        }
         public async Task OpenMedia()
         {
-            try
-            {
-                List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery")};
-                var selected = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("ChooseFile"), SelectTitle, CancelTitle, choice.ToArray());
-                if (selected != null && !selected.Equals(WebControlTitle.GetTargetNameByTitleName("Cancel")))
-                {
+            IsDataRequested = true;
+            await TakePhoto();
+            //try
+            //{
+            //    List<string> choice = new List<string>() { WebControlTitle.GetTargetNameByTitleName("Camera"), WebControlTitle.GetTargetNameByTitleName("Gallery")};
+            //    var selected = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("ChooseFile"), SelectTitle, CancelTitle, choice.ToArray());
+            //    if (selected != null && !selected.Equals(WebControlTitle.GetTargetNameByTitleName("Cancel")))
+            //    {
 
-                    if (selected.Equals(WebControlTitle.GetTargetNameByTitleName("Camera")))
-                    {
-                        IsDataRequested = true;
-                        await TakePhoto();
-                    }
-                   
-                    else if (selected.Equals(WebControlTitle.GetTargetNameByTitleName("Gallery")))
-                    {
-                        IsDataRequested = true;
-                        await PickPhoto();
-                    }
-                    else
-                    {
-                        IsDataRequested = true;
-                        await PickFile();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
+            //        if (selected.Equals(WebControlTitle.GetTargetNameByTitleName("Camera")))
+            //        {
+            //            IsDataRequested = true;
+            //            await TakePhoto();
+            //        }
 
-                OperationInProgress = false;
-            }
+            //        else if (selected.Equals(WebControlTitle.GetTargetNameByTitleName("Gallery")))
+            //        {
+            //            IsDataRequested = true;
+            //            await PickPhoto();
+            //        }
+            //        else
+            //        {
+            //            IsDataRequested = true;
+            //            await PickFile();
+            //        }
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
 
-            finally
-            {
-                OperationInProgress = false;
-            }
+            //    OperationInProgress = false;
+            //}
+
+            //finally
+            //{
+            //    OperationInProgress = false;
+            //}
 
         }
 
