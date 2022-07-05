@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using ProteusMMX.Helpers.DateTime;
+using Syncfusion.XForms.Border;
 
 namespace ProteusMMX.Controls
 {
@@ -58,7 +59,22 @@ namespace ProteusMMX.Controls
             set { SetValue(MaximumDateProperty, value); }
         }
 
+
+        public static readonly BindableProperty IsRequiredProperty =
+           BindableProperty.Create("IsRequired", typeof(bool), typeof(CustomDatePicker), null, defaultBindingMode: BindingMode.TwoWay, propertyChanged: IsRequiredPropertyChanged);
+
+        public bool IsRequired
+        {
+            get { return (bool)GetValue(IsRequiredProperty); }
+            set { SetValue(IsRequiredProperty, value); }
+        }
+
         private static void MaximumDatePropertyChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+
+        }
+
+        private static void IsRequiredPropertyChanged(BindableObject bindable, object oldValue, object newValue)
         {
 
         }
@@ -97,7 +113,7 @@ namespace ProteusMMX.Controls
                 dateConfig.MaximumDate = this.MaximumDate;
                 dateConfig.SelectedDate = Helpers.DateTime.DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                 var times = Helpers.DateTime.DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
-                timeConfig.SelectedTime = times.TimeOfDay; 
+                timeConfig.SelectedTime = times.TimeOfDay;
 
                 dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
                 if (Device.RuntimePlatform == Device.iOS)
@@ -166,6 +182,22 @@ namespace ProteusMMX.Controls
                     DateTime datetime3 = SelectedDate.Value.Add(TimeResult.SelectedTime);
                     SelectedDate = datetime3;
                 }
+                if (IsRequired)
+                {
+                    if (SelectedDate != null)
+                    {
+                        var stest = sender as Image;
+                        var stest1 = stest.Parent.Parent as SfBorder;
+                        stest1.BorderColor = Color.Black;
+                    }
+                    else
+                    {
+                        var stest = sender as Image;
+                        var stest1 = stest.Parent.Parent as SfBorder;
+                        stest1.BorderColor = Color.Red;
+                    }
+                }
+                
                 //   SelectedDate = dateResult.SelectedDate;
 
 
@@ -181,6 +213,14 @@ namespace ProteusMMX.Controls
 
         private void ClearDate_Clicked(object sender, EventArgs e)
         {
+            if (IsRequired)
+            {
+                var stest = sender as Image;
+                var stest1 = stest.Parent.Parent as SfBorder;
+                stest1.BorderColor = Color.Red;
+
+            }
+
             SelectedDate = null;
         }
     }

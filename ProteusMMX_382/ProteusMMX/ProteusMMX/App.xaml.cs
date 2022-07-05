@@ -45,6 +45,7 @@ namespace ProteusMMX
             try
             {
                 Locator.Instance.Build();
+
                 InitNavigation();
 
                 NotificationCenter.Current.NotificationTapped += OnLocalNotificationTapped; 
