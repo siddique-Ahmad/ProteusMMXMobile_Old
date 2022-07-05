@@ -4962,7 +4962,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             View control;
             if (formControl.IsRequired ?? false)
             {
-                control = new DatePicker();
+                control = new CustomDatePicker2();
             }
             else
             {
@@ -8237,6 +8237,16 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         case "SendSMSToEmployee":
                             {
                                 validationResult = ValidateValidations(formLoadItem, SendSMSToEmployee);
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
+                        case "ReportedDate":
+                            {
+                                validationResult = ValidateValidations(formLoadItem, Convert.ToString(ReportedDate));
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;

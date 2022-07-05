@@ -6326,7 +6326,7 @@ namespace ProteusMMX.ViewModel.Workorder
             View control;
             if (formControl.IsRequired ?? false)
             {
-                control = new DatePicker();
+                control = new CustomDatePicker2();
             }
             else
             {
