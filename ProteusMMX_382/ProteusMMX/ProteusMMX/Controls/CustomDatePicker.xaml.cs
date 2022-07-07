@@ -105,6 +105,7 @@ namespace ProteusMMX.Controls
                 if (Device.RuntimePlatform == Device.iOS)
                 {
                     dateConfig.iOSPickerStyle = iOSPickerStyle.Wheels;
+                    timeConfig.iOSPickerStyle = iOSPickerStyle.Wheels;
                 }
 
                 var dateResult = await UserDialogs.Instance.DatePromptAsync(dateConfig);
