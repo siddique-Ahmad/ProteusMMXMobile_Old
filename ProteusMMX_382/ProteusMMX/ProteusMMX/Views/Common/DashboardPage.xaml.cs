@@ -34,7 +34,7 @@ namespace ProteusMMX.Views.Common
 
             Device.BeginInvokeOnMainThread(async () =>
             {
-                var result = await DisplayAlert("Alert!", "Please Logout from app if you really want to exit","OK","");
+                var result = await DisplayAlert("Alert!", "Please Logout from app if you really want to exit","OK","Cancel");
               //  if (result) await Navigation.PopToRootAsync(); // or anything else
             });
 

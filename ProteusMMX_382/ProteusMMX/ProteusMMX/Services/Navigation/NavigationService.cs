@@ -112,7 +112,7 @@ namespace ProteusMMX.Services.Navigation
         {
 
             await NavigateToAsync<DashboardPageViewModel>();
-
+            
             //For Test purpose only
             //await NavigateToAsync<ContractorListSelectionPageViewModel>();
 
