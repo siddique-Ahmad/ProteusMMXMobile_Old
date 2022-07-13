@@ -183,7 +183,8 @@ namespace ProteusMMX.Controls
 
                 if (TimeResult.Ok == true)
                 {
-                    DateTime datetime3 = SelectedDate.Value.Add(TimeResult.SelectedTime);
+                    DateTime datetime4 = SelectedDate.Value.Date;
+                    DateTime datetime3 = datetime4.Add(TimeResult.SelectedTime);
                     SelectedDate = datetime3;
                 }
                 //  SelectedDate = dateResult.SelectedDate;

@@ -897,6 +897,7 @@ namespace ProteusMMX.ViewModel.Inventory
             {
                 foreach (var item in stkroomparts)
                 {
+                   
                     bool checkDuplicate = StockroomPartsCollection.Any(sp => sp.StockroomPartID == item.StockroomPartID);
                     if (checkDuplicate == true)
                     {
