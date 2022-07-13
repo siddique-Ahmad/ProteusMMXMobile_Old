@@ -10967,18 +10967,33 @@ namespace ProteusMMX.ViewModel.Workorder
                 var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.WorkOrderIdentifiedThroughBreakdownFlag) && MaintenanceCodeName == "IDENTIFIED THROUGH BREAKDOWN")
                 {
-                    string expression = @"^(\()?[0-9]+(?>,[0-9]{3})*(?>\.[0-9]{3})?(?<!^[0\.]+)$";
-
+                    // string expression = @"^(\()?[0-9]+(?>,[0-9]{3})*(?>\.[0-9]{3})?(?<!^[0\.]+)$";
+                    string expression = @"[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)";
                     string actualDowntimeText = string.Empty;
                     if (ActualDowntimeText != null)
                     {
                         actualDowntimeText = Convert.ToString(ActualDowntimeText);
+                        string actDowntime = actualDowntimeText.Replace(".", "");
+                        string actDowntime1 = actDowntime.Replace("0", "");
+                        if (string.IsNullOrEmpty(actDowntime1))
+                        {
+                            DialogService.ShowToast("ActualDowntime Is Required");
+                            return;
+                        }
                     }
 
                     string estimstedDowntimeText = string.Empty;
                     if (EstimstedDowntimeText != null)
                     {
                         estimstedDowntimeText = Convert.ToString(EstimstedDowntimeText);
+
+                        string estDowntime = estimstedDowntimeText.Replace(".", "");
+                        string estDowntime1 = estDowntime.Replace("0", "");
+                        if (string.IsNullOrEmpty(estDowntime1))
+                        {
+                            DialogService.ShowToast("EstimatedDowntime Is Required");
+                            return;
+                        }
                     }
                     if (EstimstedDowntimeText == null || !(Regex.IsMatch(estimstedDowntimeText, expression)))
                     {
