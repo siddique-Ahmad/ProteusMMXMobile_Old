@@ -68,7 +68,7 @@
 
                 <Label x:Name="TotalQuantityAvailable"  />
                 <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding TotalQuantityAvailable}" Grid.Column="2"  />
+                    <Label Text="{Binding TotalQuantityAvailable, StringFormat='{0:0}'}" Grid.Column="2"  />
 
 
             </Grid>

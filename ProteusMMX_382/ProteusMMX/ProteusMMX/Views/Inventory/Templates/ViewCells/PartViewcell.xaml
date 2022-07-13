@@ -102,7 +102,7 @@
 
                     <Label x:Name="QuantityAllocated"  />
                     <Label Text=":" Grid.Column="1"  />
-                    <Label Text="{Binding QuantityAllocated}" Grid.Column="2"  />
+                    <Label Text="{Binding QuantityAllocated,StringFormat='{0:0}'}" Grid.Column="2"  />
                 </Grid>
 
             </Grid>
