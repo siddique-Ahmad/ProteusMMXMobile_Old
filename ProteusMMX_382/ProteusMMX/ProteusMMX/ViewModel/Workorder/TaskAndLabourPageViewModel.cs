@@ -2765,7 +2765,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             dateComp = DateTime.Parse(completeDate);
                             FinaldateComp = dateComp.GetValueOrDefault();
 
-                            if (startDate.Date > DateTime.Parse(completeDate).Date)
+                            if (startDate > DateTime.Parse(completeDate))
                             {
                                 //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "TaskCompletionDatedatecannotbelessthanTaskStartDate").TargetName, formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
                                 DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TaskCompletionDatedatecannotbelessthanTaskStartDate"));

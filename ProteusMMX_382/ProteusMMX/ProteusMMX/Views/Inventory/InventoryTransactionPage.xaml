@@ -84,7 +84,7 @@
 
                     <StackLayout  Grid.Row="1" Grid.Column="1">
                         <Label  Text="{Binding QuantityAllocatedTitle}"  TextColor="Black" FontAttributes="Bold"/>
-                        <Label  Text="{Binding QuantityAllocatedText}"/>
+                        <Label  Text="{Binding QuantityAllocatedText ,StringFormat='{0:0}'}"/>
                     </StackLayout>
 
                     

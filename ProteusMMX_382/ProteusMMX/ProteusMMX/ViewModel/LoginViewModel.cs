@@ -762,8 +762,13 @@ namespace ProteusMMX.ViewModel
                 Title = notifications.Title,
                 ReturningData = Convert.ToString(notifications.ID),
                 NotificationId = notifications.WorkOrderId,
-
+                iOS = new Plugin.LocalNotification.iOSOption.iOSOptions
+                {
+                    PlayForegroundSound = true,
+                },
+                
             };
+           
             NotificationCenter.Current.NotificationReceived += Current_NotificationReceived;
             //NotificationCenter.Current.NotificationTapped += Current_NotificationTapped; ;
             notification.Android.IconSmallName = new AndroidIcon("icon.png");

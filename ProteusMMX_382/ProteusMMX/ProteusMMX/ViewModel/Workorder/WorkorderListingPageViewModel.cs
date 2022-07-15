@@ -3142,22 +3142,22 @@ namespace ProteusMMX.ViewModel.Workorder
 
             //    this.SearchText = null;
 
-            //    //if (Application.Current.Properties.ContainsKey("overdue"))
-            //    //{
-            //    //    Application.Current.Properties.Remove("overdue");
-            //    //}
-            //    //if (Application.Current.Properties.ContainsKey("weekly"))
-            //    //{
-            //    //    Application.Current.Properties.Remove("weekly");
-            //    //}
-            //    //if (Application.Current.Properties.ContainsKey("today"))
-            //    //{
-            //    //    Application.Current.Properties.Remove("today");
-            //    //}
-            //    //if (Application.Current.Properties.ContainsKey("PriorityID"))
-            //    //{
-            //    //    Application.Current.Properties.Remove("PriorityID");
-            //    //}
+            if (Application.Current.Properties.ContainsKey("overdue"))
+            {
+                Application.Current.Properties.Remove("overdue");
+            }
+            if (Application.Current.Properties.ContainsKey("weekly"))
+            {
+                Application.Current.Properties.Remove("weekly");
+            }
+            if (Application.Current.Properties.ContainsKey("today"))
+            {
+                Application.Current.Properties.Remove("today");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityID"))
+            {
+                Application.Current.Properties.Remove("PriorityID");
+            }
 
 
             //    //if (Application.Current.Properties.ContainsKey("LocationFilterkey"))

@@ -7364,7 +7364,7 @@ namespace ProteusMMX.ViewModel.Asset
                 }
                 if (asset.WarrantyDate != null && asset.InstallationDate != null)
                 {
-                    if (asset.WarrantyDate.GetValueOrDefault().Date < asset.InstallationDate.GetValueOrDefault().Date)
+                    if (asset.WarrantyDate.GetValueOrDefault() < asset.InstallationDate.GetValueOrDefault())
                     {
                         UserDialogs.Instance.HideLoading();
                         DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WarrantyDatecannotbelessthanInstallationDate"), 2000);
