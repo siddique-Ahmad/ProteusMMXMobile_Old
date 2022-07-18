@@ -2227,11 +2227,11 @@ namespace ProteusMMX.ViewModel.Inventory
                 }
             }
         }
-                                   
-                                
 
-                                    
-                               
+
+
+
+
 
         public async Task ShowActions()
         {
@@ -2451,7 +2451,7 @@ namespace ProteusMMX.ViewModel.Inventory
                             }
                         }
                     }
-                   
+
 
 
 
@@ -2499,7 +2499,7 @@ namespace ProteusMMX.ViewModel.Inventory
                     return;
 
                 }
-                if (Convert.ToInt32(AdjustmentQuantityText) <= 0)
+                if (Convert.ToInt32(AdjustmentQuantityText) <= -1)
                 {
                     UserDialogs.Instance.HideLoading();
 
@@ -2592,7 +2592,7 @@ namespace ProteusMMX.ViewModel.Inventory
                 {
                     Application.Current.Properties["CallfromTransactionPage"] = "true";
                     //DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Transactionissuccessfullysaved"), 2000);
-                    DialogService.ShowAlertAsync(WebControlTitle.GetTargetNameByTitleName("Transactionissuccessfullysaved"), response.TransactionNumber, "OK");
+                    await DialogService.ShowAlertAsync(WebControlTitle.GetTargetNameByTitleName("Transactionissuccessfullysaved"), response.TransactionNumber, "OK");
                     await NavigationService.NavigateBackAsync();
 
                 }
