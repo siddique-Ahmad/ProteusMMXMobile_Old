@@ -14,6 +14,7 @@ using ProteusMMX.Services.Asset;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
 using ProteusMMX.Services.SelectionListPageServices;
+using ProteusMMX.Services.SelectionListPageServices.MaintenanceCode;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Services.Workorder.TaskAndLabour;
 using ProteusMMX.Utils;
@@ -54,6 +55,8 @@ namespace ProteusMMX.ViewModel.Workorder
         protected readonly ITaskAndLabourService _taskAndLabourService;
 
         protected readonly IFacilityService _facilityService;
+
+        protected readonly IMaintenanceCodeService _maintenanceCodeService;
 
 
         #endregion
@@ -5054,7 +5057,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 OperationInProgress = false;
             }
         }
-        public CreateWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService, IFacilityService facilityService, IAssetModuleService assetService, ITaskAndLabourService taskAndLabourService)
+        public CreateWorkorderPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService, IFacilityService facilityService, IAssetModuleService assetService, ITaskAndLabourService taskAndLabourService, IMaintenanceCodeService maintenanceCodeService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
@@ -5062,6 +5065,7 @@ namespace ProteusMMX.ViewModel.Workorder
             _facilityService = facilityService;
             _assetService = assetService;
             _taskAndLabourService = taskAndLabourService;
+            _maintenanceCodeService = maintenanceCodeService;
         }
 
         public async Task SetTitlesPropertiesForPage()
@@ -6234,6 +6238,33 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 if (this.WorkorderID > 0)
                 {
+                    try
+                    {
+                        //OperationInProgress = true;
+                        ServiceOutput maintenanceCodeResponse = null;
+                        maintenanceCodeResponse = await _maintenanceCodeService.GetMaintenanceCode("0", "0", null);
+                        if (maintenanceCodeResponse != null && maintenanceCodeResponse.MaintenanceCodesDD != null)
+                        {
+                            var maintenanceCodes = maintenanceCodeResponse.MaintenanceCodesDD;
+                            workorder.MaintenanceCodeName = "IDENTIFIED THROUGH PM";
+                            var data = maintenanceCodes.Where(a => a.SelectedText == "IDENTIFIED THROUGH PM").FirstOrDefault();
+                            if (data != null)
+                            {
+                                workorder.MaintenanceCodeID = data.SelectedValue;
+                            }
+                            else
+                            {
+                                workorder.MaintenanceCodeID = 0;
+                            }
+                        }
+
+
+                    }
+                    catch (Exception)
+                    {
+
+
+                    }
 
                     this.DescriptionText = "Due to PM WorkOrder" + "(" + WorkorderNumberText + ")";
                 }
@@ -6241,6 +6272,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     this.DescriptionText = workorder.Description;
                 }
+
 
 
 
@@ -6784,12 +6816,12 @@ namespace ProteusMMX.ViewModel.Workorder
             if (formControl.IsRequired ?? false)
             {
 
-                var data= new CustomDatePicker2();
+                var data = new CustomDatePicker2();
                 data.IsRequired = true;
                 var test1 = data.Content as SfBorder;
                 test1.BorderColor = Color.Red;
                 control = data;
-               
+
             }
             else
             {
@@ -10824,7 +10856,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     DialogService.ShowToast(validationResult.ErrorMessage);
                     return;
                 }
-               
+
                 if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
                 {
                     string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
@@ -10838,7 +10870,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                     }
                 }
-               
+
 
                 #region Start date and End Date validation
 
@@ -11110,7 +11142,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     workOrder.AcknowledgedDate = Convert.ToDateTime(AcknowledgedDate);
                 }
-                
+
                 if (!string.IsNullOrEmpty(ReportedDate))
                 {
                     workOrder.ReportedDate = Convert.ToDateTime(ReportedDate);
