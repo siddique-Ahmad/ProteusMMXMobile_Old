@@ -4236,6 +4236,25 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        string _acknowledgedDateTitel;
+        public string AcknowledgedDateTitel
+        {
+            get
+            {
+                return _acknowledgedDateTitel;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDateTitel)
+                {
+                    _acknowledgedDateTitel = value;
+                    OnPropertyChanged(nameof(AcknowledgedDateTitel));
+                }
+            }
+        }
+
+
         //ReportedDate
         DateTime? _reportedDate;
         public DateTime? ReportedDate
@@ -4251,6 +4270,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _reportedDate = value;
                     OnPropertyChanged(nameof(ReportedDate));
+                }
+            }
+        }
+
+        string _reportedDateTitel;
+        public string ReportedDateTitel
+        {
+            get
+            {
+                return _reportedDateTitel;
+            }
+
+            set
+            {
+                if (value != _reportedDateTitel)
+                {
+                    _reportedDateTitel = value;
+                    OnPropertyChanged(nameof(ReportedDateTitel));
                 }
             }
         }
@@ -5113,7 +5150,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
 
-
                 }
             }
             catch (Exception ex)
@@ -5477,6 +5513,20 @@ namespace ProteusMMX.ViewModel.Workorder
                         WorkorderNumbeTitle = WorkOrderNumber.TargetName;
                         OverriddenControlsNew.Add(WorkOrderNumber);
                         WorkorderControlsNew.Remove(WorkOrderNumber);
+                    }
+
+                    var AcknowledgedDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "AcknowledgedDate");
+                    if (AcknowledgedDate != null)
+                    {
+                        AcknowledgedDateTitel = AcknowledgedDate.TargetName;
+                      
+                    }
+
+                    var ReportedDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "ReportedDate");
+                    if (ReportedDate != null)
+                    {
+                        ReportedDateTitel = ReportedDate.TargetName;
+                        
                     }
 
                     var CurrentRuntime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "CurrentRuntime");
@@ -5932,6 +5982,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "CurrentRuntime"));
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequestedDate"));
+                WorkorderControlsNew.RemoveAll((i => i.ControlName == "AcknowledgedDate"));
+                WorkorderControlsNew.RemoveAll((i => i.ControlName == "ReportedDate"));
                 if (AppSettings.User.blackhawkLicValidator.RiskAssasment.Equals(false))
                 {
                     WorkorderControlsNew.RemoveAll((i => i.ControlName == "RiskQuestion"));
@@ -7825,98 +7877,98 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
 
-                case "ReportedDate":
-                    {
-                        if (control is Picker)
-                        {
-                            //var x = control as Picker;
-                            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
+                //case "ReportedDate":
+                //    {
+                //        if (control is Picker)
+                //        {
+                //            //var x = control as Picker;
+                //            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
 
-                            var x = control as Picker;
-                            x.ClassId = formControl.ControlName;
+                //            var x = control as Picker;
+                //            x.ClassId = formControl.ControlName;
 
-                            //var source = x.ItemsSource as List<ComboDD>;
-                            //ComboDD item = null;
-                            //try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(ReportedDate)); }
-                            //catch (Exception) { }
+                //            //var source = x.ItemsSource as List<ComboDD>;
+                //            //ComboDD item = null;
+                //            //try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(ReportedDate)); }
+                //            //catch (Exception) { }
 
-                            //if (item != null)
-                            //{
-                            //    x.SelectedItem = item;
-                            //    ReportedDate = item.SelectedValue.ToString();
-                            //}
+                //            //if (item != null)
+                //            //{
+                //            //    x.SelectedItem = item;
+                //            //    ReportedDate = item.SelectedValue.ToString();
+                //            //}
 
-                            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
-
-
-                        }
-
-                        else if (control is Entry)
-                        {
-                            control.SetBinding(Entry.TextProperty, nameof(this.ReportedDate));
-                        }
-
-                        else if (control is DatePicker)
-                        {
-                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-
-                            control.SetBinding(DatePicker.DateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
-
-                        else if (control is CustomDatePicker2)
-                        {
-                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
-                        break;
-
-                    }
-
-                case "AcknowledgedDate":
-                    {
-                        if (control is Picker)
-                        {
-                            //var x = control as Picker;
-                            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
-
-                            var x = control as Picker;
-                            x.ClassId = formControl.ControlName;
-
-                            //var source = x.ItemsSource as List<ComboDD>;
-                            //ComboDD item = null;
-                            //try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(AcknowledgedDate)); }
-                            //catch (Exception) { }
-
-                            //if (item != null)
-                            //{
-                            //    x.SelectedItem = item;
-                            //    AcknowledgedDate = item.SelectedValue.ToString();
-                            //}
-
-                            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
+                //            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
 
 
-                        }
+                //        }
 
-                        else if (control is Entry)
-                        {
-                            control.SetBinding(Entry.TextProperty, nameof(this.AcknowledgedDate));
-                        }
+                //        else if (control is Entry)
+                //        {
+                //            control.SetBinding(Entry.TextProperty, nameof(this.ReportedDate));
+                //        }
 
-                        else if (control is DatePicker)
-                        {
-                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.                          
-                            control.SetBinding(DatePicker.DateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
+                //        else if (control is DatePicker)
+                //        {
+                //            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
 
-                        else if (control is CustomDatePicker2)
-                        {
-                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
-                        break;
+                //            control.SetBinding(DatePicker.DateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
 
-                    }
+                //        else if (control is CustomDatePicker2)
+                //        {
+                //            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
+                //        break;
+
+                //    }
+
+                //case "AcknowledgedDate":
+                //    {
+                //        if (control is Picker)
+                //        {
+                //            //var x = control as Picker;
+                //            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
+
+                //            var x = control as Picker;
+                //            x.ClassId = formControl.ControlName;
+
+                //            //var source = x.ItemsSource as List<ComboDD>;
+                //            //ComboDD item = null;
+                //            //try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(AcknowledgedDate)); }
+                //            //catch (Exception) { }
+
+                //            //if (item != null)
+                //            //{
+                //            //    x.SelectedItem = item;
+                //            //    AcknowledgedDate = item.SelectedValue.ToString();
+                //            //}
+
+                //            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
 
 
+                //        }
+
+                //        else if (control is Entry)
+                //        {
+                //            control.SetBinding(Entry.TextProperty, nameof(this.AcknowledgedDate));
+                //        }
+
+                //        else if (control is DatePicker)
+                //        {
+                //            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.                          
+                //            control.SetBinding(DatePicker.DateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
+
+                //        else if (control is CustomDatePicker2)
+                //        {
+                //            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
+                //        break;
+
+                //    }
+
+                        
                 #region User Field Section
 
                 case "UserField1":
@@ -11916,7 +11968,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture);
                 workOrder.MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture);
 
-                workOrder.AcknowledgedDate = AcknowledgedDate;
+                workOrder.AcknowledgedDate = this.AcknowledgedDate;
 
                 workOrder.ReportedDate = ReportedDate;
 
