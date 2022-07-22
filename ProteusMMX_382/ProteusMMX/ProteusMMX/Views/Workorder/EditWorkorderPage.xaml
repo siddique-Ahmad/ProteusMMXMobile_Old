@@ -703,7 +703,7 @@
                                     </border:SfBorder>
                                 </StackLayout>
 
-                                <StackLayout Orientation="Vertical" Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="2" >
+                                <StackLayout Orientation="Vertical" Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding ReportedDateIsVisible}">
                                     <Label Text="{Binding ReportedDateTitel}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                         <Label.FontAttributes>
                                             <OnPlatform x:TypeArguments="FontAttributes">
@@ -713,13 +713,13 @@
                                         </Label.FontAttributes>
                                     </Label>
                                     <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                        <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding ReportedDate}"   />
+                                        <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding ReportedDate}"  IsEnabled="{Binding ReportedDateIsEnable}" />
                                     </border:SfBorder>
                                     <!--<Label Text="{Binding WorkStartedDateWarningText}" IsVisible="{Binding WorkStartedDateWarningTextIsVisible}" TextColor="Red"></Label>-->
 
                                 </StackLayout>
-                               
-                                <StackLayout Orientation="Vertical" Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="2" >
+
+                                <StackLayout Orientation="Vertical" Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding AcknowledgedDateIsVisible}">
                                     <Label Text="{Binding AcknowledgedDateTitel}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                         <Label.FontAttributes>
                                             <OnPlatform x:TypeArguments="FontAttributes">
@@ -729,7 +729,7 @@
                                         </Label.FontAttributes>
                                     </Label>
                                     <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                        <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding AcknowledgedDate}"   />
+                                        <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding AcknowledgedDate}" IsEnabled="{Binding AcknowledgedDateIsEnable}"  />
                                     </border:SfBorder>
                                     <!--<Label Text="{Binding WorkStartedDateWarningText}" IsVisible="{Binding WorkStartedDateWarningTextIsVisible}" TextColor="Red"></Label>-->
 
