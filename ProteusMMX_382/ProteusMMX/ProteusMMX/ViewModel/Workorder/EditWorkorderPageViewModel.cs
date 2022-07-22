@@ -4236,6 +4236,8 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        
+
         string _acknowledgedDateTitel;
         public string AcknowledgedDateTitel
         {
@@ -4254,6 +4256,41 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        bool _acknowledgedDateIsVisible = true;
+        public bool AcknowledgedDateIsVisible
+        {
+            get
+            {
+                return _acknowledgedDateIsVisible;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDateIsVisible)
+                {
+                    _acknowledgedDateIsVisible = value;
+                    OnPropertyChanged(nameof(AcknowledgedDateIsVisible));
+                }
+            }
+        }
+
+        bool _acknowledgedDateIsEnable = true;
+        public bool AcknowledgedDateIsEnable
+        {
+            get
+            {
+                return _acknowledgedDateIsEnable;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDateIsEnable)
+                {
+                    _acknowledgedDateIsEnable = value;
+                    OnPropertyChanged(nameof(AcknowledgedDateIsEnable));
+                }
+            }
+        }
 
         //ReportedDate
         DateTime? _reportedDate;
@@ -4288,6 +4325,42 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _reportedDateTitel = value;
                     OnPropertyChanged(nameof(ReportedDateTitel));
+                }
+            }
+        }
+
+        bool _reportedDateIsVisible = true;
+        public bool ReportedDateIsVisible
+        {
+            get
+            {
+                return _reportedDateIsVisible;
+            }
+
+            set
+            {
+                if (value != _reportedDateIsVisible)
+                {
+                    _reportedDateIsVisible = value;
+                    OnPropertyChanged(nameof(ReportedDateIsVisible));
+                }
+            }
+        }
+
+        bool _reportedDateIsEnable = true;
+        public bool ReportedDateIsEnable
+        {
+            get
+            {
+                return _reportedDateIsEnable;
+            }
+
+            set
+            {
+                if (value != _reportedDateIsEnable)
+                {
+                    _reportedDateIsEnable = value;
+                    OnPropertyChanged(nameof(ReportedDateIsEnable));
                 }
             }
         }
@@ -5519,14 +5592,16 @@ namespace ProteusMMX.ViewModel.Workorder
                     if (AcknowledgedDate != null)
                     {
                         AcknowledgedDateTitel = AcknowledgedDate.TargetName;
-                      
+                        OverriddenControlsNew.Add(AcknowledgedDate);
+                        WorkorderControlsNew.Remove(AcknowledgedDate);
                     }
 
                     var ReportedDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "ReportedDate");
                     if (ReportedDate != null)
                     {
                         ReportedDateTitel = ReportedDate.TargetName;
-                        
+                        OverriddenControlsNew.Add(ReportedDate);
+                        WorkorderControlsNew.Remove(ReportedDate);
                     }
 
                     var CurrentRuntime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "CurrentRuntime");
@@ -5733,7 +5808,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     ///WorkOrderNumber
                     ///JobNumber
-                    ///Description
+                    ///Descriptionf
                     ///RequiredDate
                     ///WorkStartedDate
                     ///CompletionDate
@@ -5901,6 +5976,20 @@ namespace ProteusMMX.ViewModel.Workorder
                                 {
                                     MaintenanceCodeIsEnable = ApplyIsEnable(item.Expression);
                                     MaintenanceCodeIsVisible = ApplyIsVisible(item.Expression);
+                                    break;
+                                }
+
+                            case "ReportedDate":
+                                {
+                                    ReportedDateIsEnable = ApplyIsEnable(item.Expression);
+                                    ReportedDateIsVisible = ApplyIsVisible(item.Expression);
+                                    break;
+                                }
+
+                            case "AcknowledgedDate":
+                                {
+                                    AcknowledgedDateIsEnable = ApplyIsEnable(item.Expression);
+                                    AcknowledgedDateIsVisible = ApplyIsVisible(item.Expression);
                                     break;
                                 }
 
@@ -12911,27 +13000,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 break;
 
                             }
-                        case "ReportedDate":
-                            {
-                                validationResult = ValidateValidations(formLoadItem, Convert.ToString(ReportedDate));
-                                if (validationResult.FailedItem != null)
-                                {
-                                    return validationResult;
-                                }
-                                break;
-
-                            }
-
-                        case "AcknowledgedDate":
-                            {
-                                validationResult = ValidateValidations(formLoadItem, Convert.ToString(AcknowledgedDate));
-                                if (validationResult.FailedItem != null)
-                                {
-                                    return validationResult;
-                                }
-                                break;
-
-                            }
+                       
 
                         case "TotalTime":
                             {
@@ -13515,6 +13584,27 @@ namespace ProteusMMX.ViewModel.Workorder
                                 break;
                             }
 
+                        case "ReportedDate":
+                            {
+                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, Convert.ToString(ReportedDate));
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
+
+                        case "AcknowledgedDate":
+                            {
+                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, Convert.ToString(AcknowledgedDate));
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
 
                     }
 
