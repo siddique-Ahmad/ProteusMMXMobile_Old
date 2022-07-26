@@ -1459,7 +1459,23 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
             }
         }
+        string _reportedDateTitel;
+        public string ReportedDateTitel
+        {
+            get
+            {
+                return _reportedDateTitel;
+            }
 
+            set
+            {
+                if (value != _reportedDateTitel)
+                {
+                    _reportedDateTitel = value;
+                    OnPropertyChanged(nameof(ReportedDateTitel));
+                }
+            }
+        }
         string _assetSystemTitle;
         public string AssetSystemTitle
         {
@@ -3864,6 +3880,42 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
             }
         }
+        
+        bool _reportedDateIsVisible = true;
+        public bool ReportedDateIsVisible
+        {
+            get
+            {
+                return _reportedDateIsVisible;
+            }
+
+            set
+            {
+                if (value != _reportedDateIsVisible)
+                {
+                    _reportedDateIsVisible = value;
+                    OnPropertyChanged(nameof(ReportedDateIsVisible));
+                }
+            }
+        }
+
+        bool _reportedDateIsEnable = true;
+        public bool ReportedDateIsEnable
+        {
+            get
+            {
+                return _reportedDateIsEnable;
+            }
+
+            set
+            {
+                if (value != _reportedDateIsEnable)
+                {
+                    _reportedDateIsEnable = value;
+                    OnPropertyChanged(nameof(ReportedDateIsEnable));
+                }
+            }
+        }
 
         bool _requiredDateIsVisible = true;
         public bool RequiredDateIsVisible
@@ -4300,7 +4352,13 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                     //    OverriddenControlsNew.Add(MaintenanceCodeID);
                     //    ServiceRequestControlsNew.Remove(MaintenanceCodeID);
                     //}
-
+                    var ReportedDate = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "ReportedDate");
+                    if (ReportedDate != null)
+                    {
+                        ReportedDateTitel = ReportedDate.TargetName;
+                        OverriddenControlsNew.Add(ReportedDate);
+                        ServiceRequestControlsNew.Remove(ReportedDate);
+                    }
 
                     var description = ServiceRequestControlsNew.FirstOrDefault(x => x.ControlName == "Description");
                     if (description != null)
@@ -4467,6 +4525,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "MaintenanceCodeID");
                 ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "RequiredDate");
                 ServiceRequestControlsNew.RemoveAll(i => i.ControlName == "AdministratorID");
+                ServiceRequestControlsNew.RemoveAll((i => i.ControlName == "ReportedDate"));
             }
 
             #endregion
@@ -4516,6 +4575,14 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                     RequiredDateIsEnable = ApplyIsEnable(item.Expression);
                                     RequiredDateIsVisible = ApplyIsVisible(item.Expression);
                                     break;
+                                }
+
+                            case "ReportedDate":
+                                {
+                                    ReportedDateIsEnable = ApplyIsEnable(item.Expression);
+                                    ReportedDateIsVisible = ApplyIsVisible(item.Expression);
+                                    break;
+
                                 }
 
                             case "AdministratorID":
@@ -5369,50 +5436,50 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         break;
 
                     }
-                case "ReportedDate":
-                    {
-                        if (control is Picker)
-                        {
-                            //var x = control as Picker;
-                            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
+                //case "ReportedDate":
+                //    {
+                //        if (control is Picker)
+                //        {
+                //            //var x = control as Picker;
+                //            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
 
-                            var x = control as Picker;
-                            x.ClassId = formControl.ControlName;
+                //            var x = control as Picker;
+                //            x.ClassId = formControl.ControlName;
 
-                            var source = x.ItemsSource as List<ComboDD>;
-                            ComboDD item = null;
-                            //try { item = source.FirstOrDefault(s => s.SelectedValue == ReportedDate); }
-                            //catch (Exception) { }
+                //            var source = x.ItemsSource as List<ComboDD>;
+                //            ComboDD item = null;
+                //            //try { item = source.FirstOrDefault(s => s.SelectedValue == ReportedDate); }
+                //            //catch (Exception) { }
 
-                            //if (item != null)
-                            //{
-                            //    x.SelectedItem = item;
-                            //  //  ReportedDate = item.SelectedValue;
-                            //}
+                //            //if (item != null)
+                //            //{
+                //            //    x.SelectedItem = item;
+                //            //  //  ReportedDate = item.SelectedValue;
+                //            //}
 
-                            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
+                //            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
 
 
-                        }
+                //        }
 
-                        else if (control is Entry)
-                        {
-                            control.SetBinding(Entry.TextProperty, nameof(this.ReportedDate));
-                        }
+                //        else if (control is Entry)
+                //        {
+                //            control.SetBinding(Entry.TextProperty, nameof(this.ReportedDate));
+                //        }
 
-                        else if (control is DatePicker)
-                        {
-                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.                           
-                            control.SetBinding(DatePicker.DateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
+                //        else if (control is DatePicker)
+                //        {
+                //            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.                           
+                //            control.SetBinding(DatePicker.DateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
 
-                        else if (control is CustomDatePicker2)
-                        {
-                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
-                        break;
+                //        else if (control is CustomDatePicker2)
+                //        {
+                //            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
+                //        break;
 
-                    }
+                //    }
                 case "RequiredDate":
                     {
                         if (control is Picker)
@@ -8244,16 +8311,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                 break;
 
                             }
-                        case "ReportedDate":
-                            {
-                                validationResult = ValidateValidations(formLoadItem, Convert.ToString(ReportedDate));
-                                if (validationResult.FailedItem != null)
-                                {
-                                    return validationResult;
-                                }
-                                break;
-
-                            }
+                       
 
                         case "RequesterEmail":
                             {
@@ -8648,7 +8706,16 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                 break;
 
                             }
+                        case "ReportedDate":
+                            {
+                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, Convert.ToString(ReportedDate));
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
 
+                            }
 
                         case "RequiredDate":
                             {
