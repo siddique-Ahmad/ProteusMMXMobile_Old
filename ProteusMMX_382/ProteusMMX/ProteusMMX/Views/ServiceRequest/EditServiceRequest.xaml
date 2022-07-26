@@ -310,6 +310,22 @@
                                     </border:SfBorder>
                                 </StackLayout>
 
+                                <StackLayout Orientation="Vertical" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding ReportedDateIsVisible}">
+                                    <Label Text="{Binding ReportedDateTitel}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                        <Label.FontAttributes>
+                                            <OnPlatform x:TypeArguments="FontAttributes">
+                                                <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                                <OnPlatform.Android>Bold</OnPlatform.Android>
+                                            </OnPlatform>
+                                        </Label.FontAttributes>
+                                    </Label>
+                                    <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                        <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding ReportedDate}"   IsEnabled="{Binding ReportedDateIsEnable}" />
+                                    </border:SfBorder>
+                                    <!--<Label Text="{Binding WorkStartedDateWarningText}" IsVisible="{Binding WorkStartedDateWarningTextIsVisible}" TextColor="Red"></Label>-->
+
+                                </StackLayout>
+
                             </Grid>
 
                         <Grid

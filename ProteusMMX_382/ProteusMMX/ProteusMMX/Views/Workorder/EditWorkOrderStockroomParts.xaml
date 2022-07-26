@@ -54,7 +54,7 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                <border:SfBorder>
                     <control1:CustomEntry x:Name="StockroomName"  IsEnabled="False" Text="{Binding StockroomNameText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></control1:CustomEntry>
                 </border:SfBorder>
             </StackLayout>
@@ -68,7 +68,7 @@
                         </OnPlatform>
                     </Label.FontAttributes>
                 </Label>
-                <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                <border:SfBorder>
                     <control1:CustomEntry x:Name="PartNumber" IsEnabled="False" Text="{Binding PartNumberText}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center"></control1:CustomEntry>
                 </border:SfBorder>
             </StackLayout>

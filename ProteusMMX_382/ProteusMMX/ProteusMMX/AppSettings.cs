@@ -27,7 +27,7 @@ namespace ProteusMMX
 
         public static string APPVersion
         {
-            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.15.2.0");
+            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.15.2.2");
         }
         public static string UserName
         {
@@ -89,7 +89,7 @@ namespace ProteusMMX
             {
                 Settings.Remove(nameof(UserName));
                 Settings.Remove(nameof(Password));
-                //Settings.Remove(nameof(BaseURL));
+                //Settings.Remove(nameof(BaseU RL));
                 //Settings.Remove(nameof(RememberMeSwitch));
             }
         

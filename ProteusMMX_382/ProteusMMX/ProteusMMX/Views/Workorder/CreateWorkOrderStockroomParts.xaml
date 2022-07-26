@@ -137,7 +137,7 @@
                             </OnPlatform>
                         </Label.FontAttributes>
                     </Label>
-                    <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                    <border:SfBorder>
                         <control1:CustomEntry
                       x:Name="QuantityRequired" Keyboard="Numeric" Text="{Binding QuantityRequiredText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" TextChanged="QuantityRequired_TextChanged" />
                     </border:SfBorder>

@@ -1062,7 +1062,7 @@ namespace ProteusMMX.ViewModel.Barcode
                                 }
                                 else
                                 {
-                                    if (Device.RuntimePlatform == Device.UWP)
+                                    if (Device.RuntimePlatform == Device.UWP )
                                     {
                                         byte[] imgUser = StreamToBase64.StringToByte(file.Attachment);
                                         MemoryStream stream = new MemoryStream(imgUser);
@@ -1088,7 +1088,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
                                         }
                                     }
-                                    else if (Device.RuntimePlatform == Device.Android)
+                                    else
                                     {
                                         byte[] imgUser = StreamToBase64.StringToByte(file.Attachment);
                                         MemoryStream stream = new MemoryStream(imgUser);
@@ -1109,23 +1109,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
                                         }
                                     }
-                                    else
-                                    {
-
-
-                                        Attachments.Add(new WorkorderAttachment
-                                        {
-                                            IsSynced = true,
-                                            attachmentFileExtension = file.AttachmentNameWithExtension,
-                                            //ImageBytes = imgUser, //byteImage,
-                                            WorkOrderAttachmentID = file.AssetAttachmentID,
-                                            AttachmentImageSource = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Inspection/Service/AttachmentItem.ashx?Id=" + file.AssetAttachmentID + "&&Module=workorder"))
-
-                                        }
-                                        );
-
-
-                                    }
+                                   
                                 }
                             }
                         }
