@@ -168,9 +168,9 @@
                             <Label Text="" Grid.Row="9"></Label>
                             <Label Text="" Grid.Row="12"></Label>
                             <Label IsVisible="{Binding SupportLabelVisibility}" Grid.Row="10" Text="{Binding SupportLabel}" HorizontalOptions="Center"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black"  Grid.ColumnSpan="2" />
+                        <Label  Grid.Row="11" Text="{Binding APIVersion}" HorizontalOptions="Center"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black"  Grid.ColumnSpan="2"/>
 
-                          
-                        </StackLayout>
+                    </StackLayout>
                     
                     <ActivityIndicator Grid.Row="0" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
 
