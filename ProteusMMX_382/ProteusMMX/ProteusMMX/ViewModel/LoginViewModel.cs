@@ -1,4 +1,16 @@
 ﻿using Acr.UserDialogs;
+using Microsoft.AppCenter.Crashes;
+using Newtonsoft.Json;
+//using Windows.UI.ViewManagement;
+//using Windows.ApplicationModel.Core;
+//using Windows.UI;
+using Plugin.LocalNotification;
+using Plugin.LocalNotification.AndroidOption;
+using Plugin.LocalNotification.EventArgs;
+using Plugin.Settings;
+using Plugin.Settings.Abstractions;
+using ProteusMMX.Helpers;
+using ProteusMMX.Helpers.Storage;
 using ProteusMMX.Model;
 using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Services.Authentication;
@@ -7,32 +19,15 @@ using ProteusMMX.Services.Translations;
 using ProteusMMX.Services.Workorder;
 using ProteusMMX.Utils;
 using System;
-using System.Linq;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Plugin.Settings;
-using Plugin.Settings.Abstractions;
-using System.Text.RegularExpressions;
-using ProteusMMX.Helpers.Storage;
-using System.Net.Http;
-using Newtonsoft.Json;
-using System.Net;
-using Microsoft.AppCenter.Crashes;
-using ProteusMMX.Helpers.Attachment;
-using System.IO;
-using ProteusMMX.DependencyInterface;
-using Windows.UI.ViewManagement;
-using Windows.ApplicationModel.Core;
-using Windows.UI;
-using ProteusMMX.Crypto;
-using Plugin.LocalNotification;
-using System.Collections.Generic;
-using System.Net.Http.Headers;
-using Plugin.LocalNotification.EventArgs;
-using System.Text;
-using Plugin.LocalNotification.AndroidOption;
-using ProteusMMX.Helpers;
 
 namespace ProteusMMX.ViewModel
 {
@@ -473,6 +468,24 @@ namespace ProteusMMX.ViewModel
             }
         }
 
+        string _aPIVersion = "App: v " + AppSettings.APPVersion ;
+        public string APIVersion
+        {
+            get
+            {
+                return _aPIVersion;
+            }
+
+            set
+            {
+                if (value != _aPIVersion)
+                {
+                    _aPIVersion = value;
+                    OnPropertyChanged("APIVersion");
+                }
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -511,7 +524,7 @@ namespace ProteusMMX.ViewModel
                 {
                     Application.Current.Properties["NotificationId"] = NotiWorkorderID;
                 }
-               
+
                 #endregion
                 //if (navigationData != null)
                 //{
@@ -628,7 +641,7 @@ namespace ProteusMMX.ViewModel
             }
             catch (Exception)
             {
-                 DialogService.ShowToast("internet not working properly", 2000);
+                DialogService.ShowToast("internet not working properly", 2000);
 
             }
 
@@ -766,9 +779,9 @@ namespace ProteusMMX.ViewModel
                 {
                     PlayForegroundSound = true,
                 },
-                
+
             };
-           
+
             NotificationCenter.Current.NotificationReceived += Current_NotificationReceived;
             //NotificationCenter.Current.NotificationTapped += Current_NotificationTapped; ;
             notification.Android.IconSmallName = new AndroidIcon("icon.png");
@@ -874,11 +887,11 @@ namespace ProteusMMX.ViewModel
 
                 if (apiVersion == null)
                 {
-                   
-                        UserDialogs.Instance.HideLoading();
-                        await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
-                        return;
-                    
+
+                    UserDialogs.Instance.HideLoading();
+                    await DialogService.ShowAlertAsync("Please verify the site URL.", "Alert", "OK");
+                    return;
+
                 }
 
                 AppSettings.BaseURL = SiteUrl;
@@ -949,7 +962,7 @@ namespace ProteusMMX.ViewModel
 
                 #endregion
                 await NavigationService.NavigateToAsync<DashboardPageViewModel>();
-               // await NavigationService.RemoveLastFromBackStackAsync();
+                // await NavigationService.RemoveLastFromBackStackAsync();
 
                 if (AppSettings.RememberMeSwitchFlag == false)
                 {

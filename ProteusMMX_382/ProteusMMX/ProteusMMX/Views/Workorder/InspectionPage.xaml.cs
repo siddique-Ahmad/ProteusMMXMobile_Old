@@ -316,7 +316,7 @@ namespace ProteusMMX.Views.Workorder
                 this.EmployeeContratorRRight = EmployeeContratorRRight;
             }
 
-            
+
             base.OnAppearing();
 
             this.WorkorderID = ViewModel.WorkorderID;
@@ -411,7 +411,7 @@ namespace ProteusMMX.Views.Workorder
 
             Image InspectionButtonImage = new Image
             {
-                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection1.png" : "Inspection1.png" ,
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection1.png" : "Inspection1.png",
                 HeightRequest = 25
             };
 
@@ -447,7 +447,7 @@ namespace ProteusMMX.Views.Workorder
 
             Image EmployeeButtonImage = new Image
             {
-                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection2.png" : "Inspection2.png" ,
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/Inspection2.png" : "Inspection2.png",
                 HeightRequest = 25
             };
 
@@ -527,7 +527,7 @@ namespace ProteusMMX.Views.Workorder
             InspectionButtonGrid.Children.Add(CreateWorkorderButtonSL, 3, 0);
             Image WorkorderButtonImage = new Image
             {
-                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/workorder1.png" : "workorder1.png" ,
+                Source = (Device.RuntimePlatform == Device.UWP) ? "Assets/workorder1.png" : "workorder1.png",
                 HeightRequest = 25
             };
 
@@ -558,7 +558,7 @@ namespace ProteusMMX.Views.Workorder
                 Navigation.PushAsync(page);
             };
             #endregion
-            
+
             CreateWorkorderButtonSL.IsVisible = false;
 
             //layout1.Children.Clear();
@@ -608,14 +608,14 @@ namespace ProteusMMX.Views.Workorder
                     BorderColor = Color.Black,
                     StyleId = workImpId,
                 };
-               
+
                 FramesSL.Children.Add(Associateframe);
 
                 StackLayout AssociateSL = new StackLayout
                 {
                     Margin = new Thickness(-15, -10, -15, -10)
                 };
-               
+
                 Associateframe.Content = AssociateSL;
                 #region **** Start Stop Hrs Min Delete Icon *****
 
@@ -683,7 +683,7 @@ namespace ProteusMMX.Views.Workorder
                     IsEnabled = true,
                     CommandParameter = item,
                     ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/starticon.png" : "starticon.png",
-                    
+
 
                 };
                 StartBtnGrid.Children.Add(startButton, 0, 0);
@@ -867,7 +867,7 @@ namespace ProteusMMX.Views.Workorder
                     {
                         Margin = new Thickness(0, 5, 3, 0),
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                       // HeightRequest = 2,
+                        // HeightRequest = 2,
                         SelectedDate = null,
                         HorizontalOptions = LayoutOptions.Start,
                     };
@@ -911,8 +911,8 @@ namespace ProteusMMX.Views.Workorder
                     CompletionDate = new CustomDatePicker1
                     {
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                       // HeightRequest = 2,
-                        SelectedDate=null,
+                        // HeightRequest = 2,
+                        SelectedDate = null,
                         HorizontalOptions = LayoutOptions.Start,
                         Margin = new Thickness(0, 5, 3, 0),
                     };
@@ -1001,8 +1001,8 @@ namespace ProteusMMX.Views.Workorder
 
                 #region **** data base Button  working ****
 
-              //  startDate.SelectedDate = item.StartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(item.StartDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
-                startDate.SelectedDate = item.StartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone): (DateTime?)null;
+                //  startDate.SelectedDate = item.StartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(item.StartDate.Value.Date.Add(DateTime.Now.TimeOfDay).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
+                startDate.SelectedDate = item.StartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
                 CompletionDate.SelectedDate = item.CompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null;
 
                 if (item.TimerStatus == "Start")
@@ -2006,7 +2006,7 @@ namespace ProteusMMX.Views.Workorder
             //};
             //masterGrid.Children.Add(boxView, 0, 3);
 
-           
+
 
             Label TotalInspectionLal = new Label
             {
@@ -2387,7 +2387,7 @@ namespace ProteusMMX.Views.Workorder
                                 //FontAttributes = FontAttributes.Bold,
                                 CornerRadius = 70,
                                 HeightRequest = 40,
-                                WidthRequest=40
+                                WidthRequest = 40
                             };
                             btnTruePF.Clicked += BtnTrue_Clicked;
                             btnFalsePF.Clicked += BtnFalse_Clicked;
@@ -2759,7 +2759,7 @@ namespace ProteusMMX.Views.Workorder
                         {
                             imageView.HeightRequest = 150;
                         }
-                        var addSignatureButton = new Button() { BackgroundColor = Color.White,  ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/signature.png" : "signature.png" };
+                        var addSignatureButton = new Button() { BackgroundColor = Color.White, ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/signature.png" : "signature.png" };
                         addSignatureButton.Clicked += AddSignatureButton_Clicked;
                         Case1Grid.Children.Add(btnsave, 2, 1);
                         Case1Grid.Children.Add(btnDelete, 3, 1);
@@ -3149,7 +3149,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 GenerateAnswerText(item1);
 
-                                var Layoutm = new CustomPicker() { WidthRequest = 100, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = (Device.RuntimePlatform == Device.UWP) ? "Assets/unnamed" : "unnamed"};
+                                var Layoutm = new CustomPicker() { WidthRequest = 100, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = (Device.RuntimePlatform == Device.UWP) ? "Assets/unnamed" : "unnamed" };
 
                                 if (!string.IsNullOrWhiteSpace(item1.Option1))
                                     (Layoutm as CustomPicker).Items.Add(item1.Option1);
@@ -3822,11 +3822,20 @@ namespace ProteusMMX.Views.Workorder
                         // var CompletionDateValue1 = DateTime.Parse(CompletionDateValue.SelectedDate.ToString());
                         if (StartdateValue != null)
                         {
+                            if (StartdateValue.SelectedDate == null)
+                            {
+                                UserDialogs.Instance.Toast("From Date is required!", TimeSpan.FromSeconds(2));
+                                UserDialogs.Instance.HideLoading();
+                                return;
+                            }
                             this.InspectionStartDate = StartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(StartdateValue.SelectedDate.ToString()) : (DateTime?)null;
                         }
                         else
                         {
-                            this.InspectionStartDate = null;
+                            UserDialogs.Instance.Toast("From Date is required!", TimeSpan.FromSeconds(2));
+                            UserDialogs.Instance.HideLoading();
+                            return;
+
                         }
                         if (CompletionDateValue != null)
                         {
@@ -4074,7 +4083,7 @@ namespace ProteusMMX.Views.Workorder
                     // entmin.Text = "";
                     UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("AnswerSuccessfullySaved"), TimeSpan.FromSeconds(2));
 
-                    
+
                 }
 
 
@@ -4307,11 +4316,20 @@ namespace ProteusMMX.Views.Workorder
 
                     if (StartdateValue != null)
                     {
+                        if (StartdateValue.SelectedDate == null)
+                        {
+                            UserDialogs.Instance.Toast("From Date is required!", TimeSpan.FromSeconds(2));
+                            UserDialogs.Instance.HideLoading();
+                            return;
+                        }
                         this.InspectionStartDate = StartdateValue.SelectedDate.HasValue ? Convert.ToDateTime(StartdateValue.SelectedDate.ToString()) : (DateTime?)null;
                     }
                     else
                     {
-                        this.InspectionStartDate = null;
+                        UserDialogs.Instance.Toast("From Date is required!", TimeSpan.FromSeconds(2));
+                        UserDialogs.Instance.HideLoading();
+                        return;
+
                     }
                     if (CompletionDateValue != null)
                     {
@@ -4453,6 +4471,11 @@ namespace ProteusMMX.Views.Workorder
             if (abc.workOrderWrapper.workOrder.CompletionDate != null)
                 workordercompDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
 
+            if (abc.workOrderWrapper.workOrder.WorkStartedDate == null)
+            {
+                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("AnswerSuccessfullySaved"), TimeSpan.FromSeconds(2));
+
+            }
             if (listtoAnswer != null && listtoAnswer.Count > 0)
             {
                 MinimumInspectionStartDate = listtoAnswer.Min(i => i.StartDate);
