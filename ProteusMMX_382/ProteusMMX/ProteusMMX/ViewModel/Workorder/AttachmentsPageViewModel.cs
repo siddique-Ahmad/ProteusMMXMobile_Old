@@ -34,6 +34,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 namespace ProteusMMX.ViewModel.Workorder
 {
@@ -444,6 +445,7 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand CameraCommand => new AsyncCommand(OpenMedia);
 
         public ICommand GalleryCommand => new AsyncCommand(OpenGallery);
+        public ICommand FileCommand => new AsyncCommand(OpenFile);
         public ICommand DeleteCommand => new AsyncCommand(DeleteAttachment);
         public ICommand SaveCommand => new AsyncCommand(SaveAttachment);
 
@@ -914,9 +916,15 @@ namespace ProteusMMX.ViewModel.Workorder
         public async Task OpenGallery()
         {
             IsDataRequested = true;
-            await PickPhoto();
+            await TakePhoto();
         }
-            
+
+        public async Task OpenFile()
+        {
+            IsDataRequested = true;
+            await PickFile();
+        }
+
         public async Task OpenMedia()
         {
             IsDataRequested = true;
@@ -1194,12 +1202,8 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 OperationInProgress = true;
-                string[] fileTypes = null;
-                if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
-                {
-                    fileTypes = new string[] { "com.adobe.pdf", "public.rft", "com.microsoft.word.doc", "org.openxmlformats.wordprocessingml.document" };
-                }
-                await PickAndShow(fileTypes);
+               
+                await PickAndShow1();
             }
             catch (Exception ex)
             {
@@ -1214,11 +1218,72 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        private async Task PickAndShow(string[] fileTypes)
+        async Task<FileResult> PickAndShow1()
+        {
+            try
+            {
+                var customFileType =
+                                new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+                                {
+                                    { DevicePlatform.iOS, new[] { "com.microsoft.word.doc","org.openxmlformats.wordprocessingml.document" } }, // or general UTType values
+                                    { DevicePlatform.Android, new[] { "application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/pdf" } },
+                                    { DevicePlatform.UWP, new[] { ".docx" } },
+                                    { DevicePlatform.Tizen, new[] { "*/*" } },
+                                    { DevicePlatform.macOS, new[] { "doc" } }, // or general UTType values
+                                });
+
+               
+                var result = await FilePicker.PickAsync(new PickOptions
+                {
+                    FileTypes = customFileType,
+                    PickerTitle = "Please select a file"
+                });
+
+                if (result != null)
+                {
+                    var stream = await result.OpenReadAsync();
+                    var fdata2 = result.FullPath;
+                    var rdata = System.IO.File.ReadAllBytes(fdata2);
+                    string base64String = Convert.ToBase64String(rdata);
+                    workOrderWrapper workorderWrapper = new workOrderWrapper();
+                    workorderWrapper.attachments = new List<WorkOrderAttachment>();
+                    WorkOrderAttachment woattachment = new WorkOrderAttachment();
+                    woattachment.WorkOrderID = WorkorderID;
+                    woattachment.attachmentFile = base64String;
+                    woattachment.attachmentFileExtension = result.FileName;
+                    workorderWrapper.attachments.Add(woattachment);
+                    //FinalLogstring = FinalLogstring + "Rady CreateWorkorderAttachment userId :" + UserID;
+                    var status = await _attachmentService.CreateWorkorderAttachment(UserID, workorderWrapper);
+
+                    if (Boolean.Parse(status.servicestatus))
+                    {
+                        //FinalLogstring = FinalLogstring + "If status.servicestatus   " + status.servicestatus;
+                        IsDataRequested = false;
+                        await this.OnViewAppearingAsync(null);
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("AttachmentSuccessfullySaved"), 2000);
+                    }
+
+
+                }
+
+                //return result;
+            }
+            catch (Exception ex)
+            {
+                // The user canceled or something went wrong
+            }
+
+            return null;
+        }
+
+        private async Task<FileData> PickAndShow(string[] fileTypes)
         {
             string FinalLogstring = string.Empty;
             try
             {
+                //var data=await 
+
+                // FileData filedata = await CrossFilePicker.Current.PickFile();
 
                 var file = await CrossFilePicker.Current.PickFile(fileTypes);
                 if (file != null)
@@ -1226,7 +1291,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     if (file == null)
                     {
 
-                        return;
+                        // return null;
                     }
 
                     FinalLogstring = FinalLogstring + " file await  " + file.FilePath;
@@ -1240,7 +1305,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         await App.Current.MainPage.DisplayAlert("Alert", "File too large File must be less than 1 Mb", "OK");
                         //UserDialogs.Instance.Toast("File too large File must be less than 1 Mb");
-                        return;
+                        // return;
                         //filelength = filelength / 1024;
                         //strfilesize = Convert.ToString(filelength) + "MB";
                     }
@@ -1282,6 +1347,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 LogMessage(FinalLogstring + " finally : ");
                 OperationInProgress = false;
             }
+            return null;
         }
         public async Task PickPhoto()
         {
