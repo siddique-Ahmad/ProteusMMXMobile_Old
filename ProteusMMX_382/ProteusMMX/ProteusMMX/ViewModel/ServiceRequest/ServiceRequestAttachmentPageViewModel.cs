@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace ProteusMMX.ViewModel.ServiceRequest
@@ -422,6 +423,8 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         public ICommand CameraCommand => new AsyncCommand(OpenMedia);
 
         public ICommand GalleryCommand => new AsyncCommand(OpenGallery);
+
+        public ICommand FileCommand => new AsyncCommand(OpenFile);
         public ICommand DeleteCommand => new AsyncCommand(DeleteAttachment);
         public ICommand SaveCommand => new AsyncCommand(SaveAttachment);
         public bool IsAutoAnimationRunning { get; set; }
@@ -835,6 +838,11 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 OperationInProgress = false;
             }
         }
+        public async Task OpenFile()
+        {
+            IsDataRequested = true;
+            await PickFile();
+        }
         public async Task OpenGallery()
         {
             IsDataRequested = true;
@@ -1017,52 +1025,12 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         }
         public async Task PickFile()
         {
+
             try
             {
-
-
                 OperationInProgress = true;
-                int count = 0;
-                foreach (var item in Attachments)
-                {
+                await PickAndShow1();
 
-                    if (item.IsSynced == false)
-                    {
-                        count++;
-                    }
-
-
-                }
-
-                var file = await CrossFilePicker.Current.PickFile();
-
-
-                if (file == null)
-                {
-
-                    return;
-                }
-
-
-                string filepath = file.FilePath;
-                string base64String = Convert.ToBase64String(file.DataArray);
-
-               ServiceRequestWrapper SRWrapper = new ServiceRequestWrapper();
-                SRWrapper.attachments = new List<ServiceRequestAttachment>();
-             ServiceRequestAttachment SRattachment = new ServiceRequestAttachment();
-                SRattachment.ServiceRequestID = ServiceRequestID;
-                SRattachment.attachmentFile = base64String;
-                SRattachment.attachmentFileExtension = file.FileName;
-                SRWrapper.attachments.Add(SRattachment);
-                var status = await _attachmentService.CreateServiceRequestAttachment(UserID, SRWrapper);
-
-                if (Boolean.Parse(status.servicestatus))
-                {
-
-                    IsDataRequested = false;
-                    await this.OnViewAppearingAsync(null);
-                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("AttachmentSuccessfullySaved"), 2000);
-                }
             }
             catch (Exception ex)
             {
@@ -1070,12 +1038,69 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                 OperationInProgress = false;
             }
-
             finally
             {
 
                 OperationInProgress = false;
             }
+        }
+
+        async Task<FileResult> PickAndShow1()
+        {
+            try
+            {
+                var customFileType =
+                                new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+                                {
+                                    { DevicePlatform.iOS, new[] { "com.microsoft.word.doc","org.openxmlformats.wordprocessingml.document", "org.openxmlformats.spreadsheetml.sheet", "com.adobe.pdf" } }, // or general UTType values
+                                    { DevicePlatform.Android, new[] { "application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/pdf" } },
+                                    { DevicePlatform.UWP, new[] { ".docx" } },
+                                    { DevicePlatform.Tizen, new[] { "*/*" } },
+                                    { DevicePlatform.macOS, new[] { "doc" } }, // or general UTType values
+                                });
+
+
+                var result = await FilePicker.PickAsync(new PickOptions
+                {
+                    FileTypes = customFileType,
+                    PickerTitle = "Please select a file"
+                });
+
+                if (result != null)
+                {
+                    var stream = await result.OpenReadAsync();
+                    var fdata2 = result.FullPath;
+                    var rdata = System.IO.File.ReadAllBytes(fdata2);
+                    string base64String = Convert.ToBase64String(rdata);
+                    ServiceRequestWrapper serviceRequestWrapper = new ServiceRequestWrapper();
+                    serviceRequestWrapper.attachments = new List<ServiceRequestAttachment>();
+                    ServiceRequestAttachment Serviceattachment = new ServiceRequestAttachment();
+                    Serviceattachment.ServiceRequestID = ServiceRequestID;
+                    Serviceattachment.attachmentFile = base64String;
+                    Serviceattachment.attachmentFileExtension = result.FileName;
+                    serviceRequestWrapper.attachments.Add(Serviceattachment);
+                    //FinalLogstring = FinalLogstring + "Rady CreateWorkorderAttachment userId :" + UserID;
+                    var status = await _attachmentService.CreateServiceRequestAttachment(UserID, serviceRequestWrapper);
+
+                    if (Boolean.Parse(status.servicestatus))
+                    {
+                        //FinalLogstring = FinalLogstring + "If status.servicestatus   " + status.servicestatus;
+                        IsDataRequested = false;
+                        await this.OnViewAppearingAsync(null);
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("AttachmentSuccessfullySaved"), 2000);
+                    }
+
+
+                }
+
+                //return result;
+            }
+            catch (Exception ex)
+            {
+                // The user canceled or something went wrong
+            }
+
+            return null;
         }
         public async Task PickPhoto()
         {
