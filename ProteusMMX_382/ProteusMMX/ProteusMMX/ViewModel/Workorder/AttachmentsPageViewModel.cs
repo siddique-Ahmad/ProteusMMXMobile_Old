@@ -916,7 +916,7 @@ namespace ProteusMMX.ViewModel.Workorder
         public async Task OpenGallery()
         {
             IsDataRequested = true;
-            await TakePhoto();
+            await PickPhoto();
         }
 
         public async Task OpenFile()
@@ -1198,22 +1198,22 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task PickFile()
         {
-            string FinalLogstring = string.Empty;
+          
             try
             {
                 OperationInProgress = true;
-               
                 await PickAndShow1();
+
             }
             catch (Exception ex)
             {
 
-                LogMessage(FinalLogstring + " catch PickFile1 " + ex.ToString() + " StackTrace " + ex.StackTrace + " InnerException  " + ex.InnerException);
+               
                 OperationInProgress = false;
             }
             finally
             {
-                LogMessage(FinalLogstring + " finally PickFile1 : ");
+              
                 OperationInProgress = false;
             }
         }
@@ -1225,7 +1225,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 var customFileType =
                                 new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
                                 {
-                                    { DevicePlatform.iOS, new[] { "com.microsoft.word.doc","org.openxmlformats.wordprocessingml.document" } }, // or general UTType values
+                                    { DevicePlatform.iOS, new[] { "com.microsoft.word.doc","org.openxmlformats.wordprocessingml.document", "org.openxmlformats.spreadsheetml.sheet", "com.adobe.pdf" } }, // or general UTType values
                                     { DevicePlatform.Android, new[] { "application/vnd.openxmlformats-officedocument.wordprocessingml.document","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/pdf" } },
                                     { DevicePlatform.UWP, new[] { ".docx" } },
                                     { DevicePlatform.Tizen, new[] { "*/*" } },

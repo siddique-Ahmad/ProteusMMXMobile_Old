@@ -157,6 +157,28 @@
                                     </Image.GestureRecognizers>
                                 </Image>
 
+                                <Image IsVisible="{Binding AttachmentCameraButtonIsVisible}" IsEnabled="{Binding AttachmentCameraButtonIsEnabled}" HeightRequest="60" WidthRequest="60" Source="fileicon.png">
+                                    <Image.Source>
+                                        <OnPlatform x:TypeArguments="FileImageSource">
+                                            <OnPlatform.iOS>
+                                                <FileImageSource File="fileicon.png"/>
+                                            </OnPlatform.iOS>
+                                            <OnPlatform.Android>
+                                                <FileImageSource File="fileicon.png"/>
+                                            </OnPlatform.Android>
+                                            <OnPlatform.WinPhone>
+                                                <FileImageSource File="Assets/fileicon.png"/>
+                                            </OnPlatform.WinPhone>
+                                        </OnPlatform>
+                                    </Image.Source>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            
+                                         Command="{Binding FileCommand}" 
+                                         NumberOfTapsRequired="1" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+
                                 <Image IsVisible="{Binding AttachmentDeleteButtonIsVisible}" IsEnabled="{Binding AttachmentDeleteButtonIsEnabled}" x:Name="DeleteButton" HeightRequest="60" WidthRequest="60" Source="delIcon1.png">
                                     <Image.Source>
                                         <OnPlatform x:TypeArguments="FileImageSource">
