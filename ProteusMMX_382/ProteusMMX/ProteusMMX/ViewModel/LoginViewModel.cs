@@ -468,7 +468,7 @@ namespace ProteusMMX.ViewModel
             }
         }
 
-        string _aPIVersion = "App: v " + AppSettings.APPVersion ;
+        string _aPIVersion = "App: v " + AppSettings.APPVersion;
         public string APIVersion
         {
             get
@@ -494,7 +494,7 @@ namespace ProteusMMX.ViewModel
 
         int UserId;
         int nid;
-
+        string TockenNumber = string.Empty;
         #endregion
 
         string WorkOrderId = null;
@@ -502,30 +502,7 @@ namespace ProteusMMX.ViewModel
         {
             try
             {
-                #region Local Notification
 
-
-                if (AppSettings.User != null)
-                {
-
-                    UserId = AppSettings.User.UserID;
-                    var minutes = TimeSpan.FromSeconds(30);
-                    Xamarin.Forms.Device.StartTimer(minutes, () =>
-                    {
-
-                        //check for notifications
-                        GetUserNotification();
-
-                        // Returning true means repeat this timer
-                        return true;
-                    });
-                }
-                if (!string.IsNullOrEmpty(NotiWorkorderID))
-                {
-                    Application.Current.Properties["NotificationId"] = NotiWorkorderID;
-                }
-
-                #endregion
                 //if (navigationData != null)
                 //{
                 //    var navigationParams = navigationData as TargetNavigationData;
@@ -575,6 +552,57 @@ namespace ProteusMMX.ViewModel
                     var user = await _authenticationService.UserIsAuthenticatedAndValidAsync(SiteUrl, UserName, Password);
                     if (user != null && user.mmxUser != null)
                     {
+                        #region Local Notification
+
+
+                        if (user.mmxUser != null && user.mmxUser.NotificationMode == "Intranet")
+                        {
+
+                            UserId = AppSettings.User.UserID;
+                            var minutes = TimeSpan.FromSeconds(30);
+                            Xamarin.Forms.Device.StartTimer(minutes, () =>
+                            {
+
+                                //check for notifications
+                                GetUserNotification();
+
+                                // Returning true means repeat this timer
+                                return true;
+                            });
+                        }
+                        if (!string.IsNullOrEmpty(NotiWorkorderID))
+                        {
+                            Application.Current.Properties["NotificationId"] = NotiWorkorderID;
+                        }
+
+
+
+                        if (user.mmxUser.NotificationMode == "Internet")
+                        {
+                            if (Application.Current.Properties.ContainsKey("TockenNumberKey"))
+                            {
+                                string TockenNumbers = Application.Current.Properties["TockenNumberKey"].ToString();
+
+                                if (string.IsNullOrWhiteSpace(TockenNumber))
+                                {
+                                    TockenNumber = TockenNumbers;
+                                }
+                            }
+                            if (string.IsNullOrWhiteSpace(user.mmxUser.FCMToken) && !string.IsNullOrEmpty(TockenNumber))
+                            {
+                                await PostToken(user.mmxUser.UserID, TockenNumber);
+                            }
+                            else
+                            {
+                                if (user.mmxUser.FCMToken != TockenNumber)
+                                {
+                                    await PostToken(user.mmxUser.UserID, TockenNumber);
+                                }
+                            }
+
+                        }
+
+                        #endregion
 
                         string signaturevalidated = SignatureStorage.Storage.Get("FDASignatureUserValidated");
                         if (!string.IsNullOrWhiteSpace(signaturevalidated))
@@ -912,6 +940,35 @@ namespace ProteusMMX.ViewModel
                     user.mmxUser.blackhawkLicValidator.CompanyProfileLogo = null;
                 }
 
+                UserId = user.mmxUser.UserID;
+
+
+                if (user.mmxUser.NotificationMode == "Internet")
+                {
+                    if (Application.Current.Properties.ContainsKey("TockenNumberKey"))
+                    {
+                        var TockenNumbers = Application.Current.Properties["TockenNumberKey"].ToString();
+
+                        if (!string.IsNullOrWhiteSpace(TockenNumber))
+                        {
+                            TockenNumber = TockenNumbers;
+                        }
+                    }
+
+                    if (string.IsNullOrWhiteSpace(user.mmxUser.FCMToken) && !string.IsNullOrEmpty(TockenNumber))
+                    {
+                        await PostToken(user.mmxUser.UserID, TockenNumber);
+                    }
+                    else
+                    {
+                        if (user.mmxUser.FCMToken != TockenNumber)
+                        {
+                            await PostToken(user.mmxUser.UserID, TockenNumber);
+                        }
+                    }
+
+                }
+
                 if (user.mmxUser.UserLicense == "Web")
                 {
                     UserDialogs.Instance.HideLoading();
@@ -946,19 +1003,19 @@ namespace ProteusMMX.ViewModel
                 #region Local Notification
 
 
-
-
-                UserId = user.mmxUser.UserID;
-                var minutes = TimeSpan.FromSeconds(10);
-                Xamarin.Forms.Device.StartTimer(minutes, () =>
+                if (user.mmxUser.NotificationMode == "Intranet")
                 {
+                    var minutes = TimeSpan.FromSeconds(10);
+                    Xamarin.Forms.Device.StartTimer(minutes, () =>
+                    {
+                        //check for notifications
+                        GetUserNotification();
 
-                    //check for notifications
-                    GetUserNotification();
+                        // Returning true means repeat this timer
+                        return true;
+                    });
+                }
 
-                    // Returning true means repeat this timer
-                    return true;
-                });
 
                 #endregion
                 await NavigationService.NavigateToAsync<DashboardPageViewModel>();
@@ -985,6 +1042,32 @@ namespace ProteusMMX.ViewModel
                 UserDialogs.Instance.HideLoading();
                 OperationInProgress = false;
 
+            }
+        }
+
+        private async Task PostToken(long UserId, string Token)
+        {
+            try
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+
+                    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/Service/FCMTokenCreate");
+
+                    var notificationToken = new ServiceInput()
+                    {
+                        UserID = UserId,
+                        FCMToken = Token,
+
+                    };
+
+                    string strPayload = JsonConvert.SerializeObject(notificationToken);
+                    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+                    var t = Task.Run(() => SendURI(posturi, c));
+                });
+            }
+            catch (Exception)
+            {
             }
         }
 

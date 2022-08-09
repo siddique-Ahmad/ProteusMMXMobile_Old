@@ -2,6 +2,7 @@
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
+using Plugin.FirebasePushNotification;
 using Plugin.LocalNotification;
 using Plugin.LocalNotification.EventArgs;
 using ProteusMMX.Controls;
@@ -37,19 +38,53 @@ namespace ProteusMMX
 
 
         }
-       
+        string TockenNumber = string.Empty;
         public App()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTc4MDAzQDMxMzkyZTMzMmUzMGVuNXozMzdmdEE5RVd6c3ZMeDZVR2lvWkg0UHB4YkZ2SXpER3JxdjBXUDA9");
             InitializeComponent();
+
+            #region **** FirebasePushNotification ****
+            CrossFirebasePushNotification.Current.Subscribe(topic: "all");
+            TockenNumber = CrossFirebasePushNotification.Current.Token;
+            //CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
+            //{
+            //    var data = p;
+            //    var data1 = data.Data;
+            //    var Titel = data1["title"];
+            //    var Body = data1["body"];
+            //    // System.Diagnostics.Debug.WriteLine("Received");
+            //};
+            CrossFirebasePushNotification.Current.OnNotificationOpened += (s, p) =>
+            {
+                var data = p;
+                var data1 = data.Data;
+                var Titel = data1["title"];
+                var Body = data1["body"];                
+                var Key = data1["key1"];
+                NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(Key));
+               // InitDasebordNavigation();
+                // System.Diagnostics.Debug.WriteLine("Received");
+            };
+            if (!string.IsNullOrEmpty(TockenNumber))
+            {
+                Application.Current.Properties["TockenNumberKey"] = TockenNumber;
+                // NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(TockenNumber));
+                CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
+                //CrossFirebasePushNotification.Current.OnNotificationReceived += Current_OnNotificationReceived;
+                //CrossFirebasePushNotification.Current.OnNotificationAction += Current_OnNotificationAction; 
+            }
+
+            #endregion
+
+            NotificationCenter.Current.NotificationTapped += OnLocalNotificationTapped;
+
             try
             {
                 Locator.Instance.Build();
 
                 InitNavigation();
-
-                NotificationCenter.Current.NotificationTapped += OnLocalNotificationTapped; 
-
+               
             }
             catch (Exception ex)
             {
@@ -58,7 +93,12 @@ namespace ProteusMMX
             }
             
         }
-
+        private void Current_OnTokenRefresh(object source, FirebasePushNotificationTokenEventArgs e)
+        {
+            TockenNumber = e.Token;
+            System.Diagnostics.Debug.WriteLine($"Token: {e.Token}");
+            //NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(e.Token));
+        }
 
         private async void OnLocalNotificationTapped(NotificationEventArgs e)
         {

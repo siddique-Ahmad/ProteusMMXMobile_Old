@@ -24,10 +24,13 @@ using ProteusMMX.Model.WorkOrderModel;
 using ProteusMMX.ViewModel.Workorder;
 using ProteusMMX.Services.Authentication;
 using ProteusMMX.Services.FormLoadInputs;
+using ProteusMMX.Helpers.Storage;
+using Plugin.FirebasePushNotification;
 
 namespace ProteusMMX.Droid
 {
-    [Activity(Label = "ProteusMMX", Icon = "@drawable/icon", MainLauncher =true, Theme = "@style/MainTheme", LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.User)]
+  //  MainLauncher = true, 
+    [Activity(Label = "ProteusMMX", Icon = "@drawable/icon", Theme = "@style/MainTheme", LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, ScreenOrientation = ScreenOrientation.User)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -38,7 +41,7 @@ namespace ProteusMMX.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-           
+            Xamarin.Essentials.Platform.Init(this, bundle);
 
             //  AppCenter.Start("24b17e2f-b607-4143-abd0-60877acd4676", typeof(Analytics), typeof(Crashes));
 
@@ -49,6 +52,7 @@ namespace ProteusMMX.Droid
             Rg.Plugins.Popup.Popup.Init(this);
             NotificationCenter.CreateNotificationChannel();
             NotificationCenter.NotifyNotificationTapped(Intent);
+
             //var data= NotificationCenter.NotifyNotificationTapped(Intent);
             //if (Android.OS.Build.VERSION.SdkInt >= Build.VERSION_CODES.Lollipop)
             //{
@@ -59,8 +63,9 @@ namespace ProteusMMX.Droid
             //{
             //    notification.SmallIcon(R.Drawable.icon);
             //}
-
+            FirebasePushNotificationManager.ProcessIntent(this, Intent);
             LoadApplication(new App());
+            
         }
 
        
@@ -75,11 +80,11 @@ namespace ProteusMMX.Droid
 
         void NavigateTo(Intent intent)
         {
-           
+
             if (intent.Action == "android.intent.action.MAIN")
             {
                 InitNavigation();
-               // Xamarin.Forms.Application.Current.MainPage.Navigation.PushModalAsync(NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item));
+                // Xamarin.Forms.Application.Current.MainPage.Navigation.PushModalAsync(NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item));
             }
         }
      

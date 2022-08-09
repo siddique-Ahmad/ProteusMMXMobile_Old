@@ -914,6 +914,9 @@ namespace ProteusMMX.ViewModel
             try
             {
                 var workordersDetailsRight = JsonConvert.DeserializeObject(NotifactionStorage.Storage.Get("Notificationdb"));
+
+                DialogService.ShowToast(workordersDetailsRight.ToString(), 200);
+
                 if (workordersDetailsRight != null && workordersDetailsRight != "")
                 {
                   

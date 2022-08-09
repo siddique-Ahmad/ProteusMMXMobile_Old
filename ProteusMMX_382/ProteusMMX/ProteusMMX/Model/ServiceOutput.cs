@@ -129,5 +129,7 @@ namespace ProteusMMX.Model
         public string InspectionStatus { get; set; }
 
         public DefaultEmployees employeeWrappers { get; set; }
+
+        public string FCMToken { get; set; }
     }
 }

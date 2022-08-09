@@ -24,5 +24,7 @@ namespace ProteusMMX.Model.CommonModels
 
         public DateTime? AcknowledgedDate { get; set; }
 
+        public string FCMToken { get; set; }
+
     }
 }
