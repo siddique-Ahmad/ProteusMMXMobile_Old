@@ -41,6 +41,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NodaTime" Version="1.4.0" />
     <PackageReference Include="PCLCrypto" Version="2.0.147" />
+    <PackageReference Include="Plugin.FirebasePushNotification" Version="3.3.16-beta" />
     <PackageReference Include="Plugin.LocalNotification" Version="9.2.0" />
     <PackageReference Include="Rg.Plugins.Popup" Version="2.0.0.13" />
     <PackageReference Include="sqlite-net-pcl" Version="1.4.118" />
@@ -59,6 +60,7 @@
     <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.1" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.0.1" />
     <PackageReference Include="Xamarin.Controls.SignaturePad.Forms" Version="3.0.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2196" />
     <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.41" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
@@ -96,6 +98,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\CustomDatePicker.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\CustomDatePicker2.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Asset\Style.xaml">
@@ -329,6 +334,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Controls\CustomDatePicker2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
     <None Update="Views\Common\ManualTimer.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
