@@ -942,9 +942,11 @@ namespace ProteusMMX.ViewModel
 
                 UserId = user.mmxUser.UserID;
 
+                NotifactionStorage.Storage.Set("NotificationModedb", JsonConvert.SerializeObject(user.mmxUser.NotificationMode));
 
                 if (user.mmxUser.NotificationMode == "Internet")
                 {
+                    
                     if (Application.Current.Properties.ContainsKey("TockenNumberKey"))
                     {
                         var TockenNumbers = Application.Current.Properties["TockenNumberKey"].ToString();

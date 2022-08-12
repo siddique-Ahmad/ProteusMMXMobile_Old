@@ -39,45 +39,50 @@ namespace ProteusMMX
 
         }
         string TockenNumber = string.Empty;
+        string NotificationMode= string.Empty;
         public App()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTc4MDAzQDMxMzkyZTMzMmUzMGVuNXozMzdmdEE5RVd6c3ZMeDZVR2lvWkg0UHB4YkZ2SXpER3JxdjBXUDA9");
             InitializeComponent();
-
+            try
+            {
+               NotificationMode = JsonConvert.DeserializeObject(NotifactionStorage.Storage.Get("NotificationModedb")).ToString();
+                
+            }
+            catch (Exception)
+            {
+                NotifactionStorage.Storage.Set("NotificationModedb", JsonConvert.SerializeObject("Internet"));
+                NotificationMode = JsonConvert.DeserializeObject(NotifactionStorage.Storage.Get("NotificationModedb")).ToString();
+            }
             #region **** FirebasePushNotification ****
             CrossFirebasePushNotification.Current.Subscribe(topic: "all");
             TockenNumber = CrossFirebasePushNotification.Current.Token;
-            //CrossFirebasePushNotification.Current.OnNotificationReceived += (s, p) =>
-            //{
-            //    var data = p;
-            //    var data1 = data.Data;
-            //    var Titel = data1["title"];
-            //    var Body = data1["body"];
-            //    // System.Diagnostics.Debug.WriteLine("Received");
-            //};
-            CrossFirebasePushNotification.Current.OnNotificationOpened += (s, p) =>
+            
+            if (NotificationMode == "Internet")
             {
-                var data = p;
-                var data1 = data.Data;
-                var Titel = data1["title"];
-                var Body = data1["body"];                
-                var Key = data1["key1"];
-                NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(Key));
-               // InitDasebordNavigation();
-                // System.Diagnostics.Debug.WriteLine("Received");
-            };
-            if (!string.IsNullOrEmpty(TockenNumber))
-            {
-                Application.Current.Properties["TockenNumberKey"] = TockenNumber;
-                // NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(TockenNumber));
-                CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
-                //CrossFirebasePushNotification.Current.OnNotificationReceived += Current_OnNotificationReceived;
-                //CrossFirebasePushNotification.Current.OnNotificationAction += Current_OnNotificationAction; 
+                CrossFirebasePushNotification.Current.OnNotificationOpened += (s, p) =>
+                {
+                    var data = p;
+                    var data1 = data.Data;
+                    var Titel = data1["title"];
+                    var Body = data1["body"];
+                    var Key = data1["key1"];
+                    NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(Key));
+                    
+                };
+                if (!string.IsNullOrEmpty(TockenNumber))
+                {
+                    Application.Current.Properties["TockenNumberKey"] = TockenNumber;
+                    CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;                    
+                }
             }
-
+            else
+            {
+                NotificationCenter.Current.NotificationTapped += OnLocalNotificationTapped;
+            }
             #endregion
 
-            NotificationCenter.Current.NotificationTapped += OnLocalNotificationTapped;
+           
 
             try
             {
