@@ -13880,7 +13880,17 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             foreach (var item in workorderLabourWrapper.workOrderWrapper.workOrderLabors)
                             {
-                                bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1.Replace("00.00","")));
+                                bool AllTaskNumber = workorderLabourWrapper.workOrderWrapper.workOrderLabors.Any(a => string.IsNullOrWhiteSpace(a.TaskNumber));
+                                if (AllTaskNumber == true)
+                                {
+
+                                    UserDialogs.Instance.HideLoading();
+                                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TasksandLaborOrInspectionIsRequiredForCloseWO"), 2000);
+                                    return;
+
+                                }
+
+                                    bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1.Replace("00.00","")));
 
                                 if (AllTaskHours == false)
                                 {

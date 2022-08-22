@@ -14,6 +14,7 @@ namespace ProteusMMX.Model
 {
     public class ServiceOutput
     {
+        public string NotificationMode { get; set; }
         public string CompanyProfileLogo { get; set; }
         public workOrderWrapper workOrderWrapper { get; set; }
 
