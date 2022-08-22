@@ -7293,13 +7293,13 @@ namespace ProteusMMX.ViewModel.Asset
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Selectthefacilityfield"), 2000);
                     return;
                 }
-                else if (LocationID == null)
-                {
-                    UserDialogs.Instance.HideLoading();
-                    string LocationTitle = WebControlTitle.GetTargetNameByTitleName("Select")+" " + WebControlTitle.GetTargetNameByTitleName("Location");
-                    DialogService.ShowToast(LocationTitle, 2000);
-                    return;
-                }
+                //else if (LocationID == null)
+                //{
+                //    UserDialogs.Instance.HideLoading();
+                //    string LocationTitle = WebControlTitle.GetTargetNameByTitleName("Select")+" " + WebControlTitle.GetTargetNameByTitleName("Location");
+                //    DialogService.ShowToast(LocationTitle, 2000);
+                //    return;
+                //}
 
                 
                 #endregion

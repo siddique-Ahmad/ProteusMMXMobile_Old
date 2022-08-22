@@ -114,13 +114,13 @@ namespace ProteusMMX.Views.Common
                 }
                 //var workorder = new workOrderWrapper
                 //{
-                   
+
                 //    TimeZone = AppSettings.UserTimeZone,
                 //    CultureName = AppSettings.UserCultureName,
                 //    UserId = Convert.ToInt32(AppSettings.User.UserID),
                 //    ClientIANATimeZone = DateTimeZoneProviders.Serialization.GetSystemDefault().ToString(),
                 //    workOrder = wowrapper,
-                  
+
 
 
                 //};
@@ -132,7 +132,8 @@ namespace ProteusMMX.Views.Common
                     ClientIANATimeZone = DateTimeZoneProviders.Serialization.GetSystemDefault().ToString(),
                     workOrder = new workOrders
                     {
-                        RequiredDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
+                        RequiredDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        
                         Description = String.IsNullOrWhiteSpace(wowrapper.Description) ? null : wowrapper.Description.Trim(),
                         AdditionalDetails = wowrapper.AdditionalDetails,
                         LocationID =wowrapper.LocationID,
@@ -174,7 +175,7 @@ namespace ProteusMMX.Views.Common
 
                             TaskID = null,
 
-                            StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
+                            //StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
 
                             EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
 
