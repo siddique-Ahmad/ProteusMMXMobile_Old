@@ -2,6 +2,7 @@
 
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
+using PCLStorage;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using ProteusMMX.Constants;
@@ -658,19 +659,25 @@ namespace ProteusMMX.ViewModel
         public ICommand BarcodeCommand => new AsyncCommand(ShowBarcode);
         public ICommand ReceivingCommand => new AsyncCommand(ShowReceiving);
         #endregion
+        String folderName = "ProteusMMXDasebord";
 
         #region Methods
         public override async Task InitializeAsync(object navigationData)
         {
             try
             {
-
+                var IsExitPCLDetails = Helpers.PCLStorage.PCLCreateFIle("Details");
+                var IsExitPCLTasks = Helpers.PCLStorage.PCLCreateFIle("Tasks");
+                var IsExitPCLInspections = Helpers.PCLStorage.PCLCreateFIle("Inspections");
+                var IsExitPCLTools = Helpers.PCLStorage.PCLCreateFIle("Tools");
+                var IsExitPCLParts = Helpers.PCLStorage.PCLCreateFIle("Parts");
+                var IsExitPCLAttachments = Helpers.PCLStorage.PCLCreateFIle("Attachments");
 
                 OperationInProgress = true;
                 await GetWorkorderControlRights();
                 await SetTitlesPropertiesForPage();
                 await SetDashboardVisibility();
-                if (Device.RuntimePlatform == Device.Android|| Device.RuntimePlatform==Device.iOS)
+                if (Device.RuntimePlatform == Device.Android || Device.RuntimePlatform == Device.iOS)
                 {
                     await GoToWorkOrderDetils();
                 }
@@ -919,7 +926,7 @@ namespace ProteusMMX.ViewModel
 
                 if (workordersDetailsRight != null && workordersDetailsRight != "")
                 {
-                  
+
 
                     UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
 
@@ -1166,7 +1173,7 @@ namespace ProteusMMX.ViewModel
                 UserDialogs.Instance.HideLoading();
             }
         }
-
+        IFolder folder = FileSystem.Current.LocalStorage;
         public async Task GetWorkorderControlRights()
         {
             try
@@ -1203,6 +1210,7 @@ namespace ProteusMMX.ViewModel
 
                     }
                 }
+
                 int WOToolslistCount = 0;
                 if (Application.Current.Properties.ContainsKey("WOToolslistControlsCount"))
                 {
@@ -1238,12 +1246,105 @@ namespace ProteusMMX.ViewModel
 
                 if (WOlistCount == 0 && WOTasklistCount == 0 && WOInspectionlistCount == 0 && WOToolslistCount == 0 && WOPartslistCount == 0 && WOAttalistCount == 0)
                 {
-                    ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Details");
-                    ServiceOutput FormControlsAndRightsForTask = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tasks");
-                    ServiceOutput FormControlsAndRightsForInspection = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Inspections");
-                    ServiceOutput FormControlsAndRightsForTools = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tools");
-                    ServiceOutput FormControlsAndRightsForParts = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Parts");
-                    ServiceOutput FormControlsAndRightsForAttachments = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Attachments");
+                    ServiceOutput FormControlsAndRightsForDetails;
+                    var DetailsSerializer = await PCLHelper.ReadAllTextAsync("Details", folder);
+                    if (DetailsSerializer == null || DetailsSerializer == "")
+                    {
+                        FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Details");
+
+                        string serialized = await Helpers.PCLStorage.PostPCLAsync(FormControlsAndRightsForDetails);
+                        bool WriteText = await PCLHelper.WriteTextAllAsync("Details", serialized, folder);
+
+                    }
+                    else
+                    {
+                        var PClFormControlsAndRightsForDetails = Helpers.PCLStorage.GetPCLAsync(DetailsSerializer);
+                        FormControlsAndRightsForDetails = PClFormControlsAndRightsForDetails;
+                    }
+
+                    ServiceOutput FormControlsAndRightsForTask;
+                    var TasksSerializer = await PCLHelper.ReadAllTextAsync("Tasks", folder);
+                    if (TasksSerializer == null || TasksSerializer == "")
+                    {
+                         FormControlsAndRightsForTask = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tasks");
+
+
+                        string serialized = await Helpers.PCLStorage.PostPCLAsync(FormControlsAndRightsForTask);
+                        bool WriteText = await PCLHelper.WriteTextAllAsync("Tasks", serialized, folder);
+
+                    }
+                    else
+                    {
+                        var PClFormControlsAndRightsForTask = Helpers.PCLStorage.GetPCLAsync(DetailsSerializer);
+                        FormControlsAndRightsForTask = PClFormControlsAndRightsForTask;
+                    }
+
+                    ServiceOutput FormControlsAndRightsForInspection;
+                    var InspectionSerializer = await PCLHelper.ReadAllTextAsync("Inspections", folder);
+                    if (InspectionSerializer == null || InspectionSerializer == "")
+                    {
+                        FormControlsAndRightsForInspection = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Inspections");
+
+
+                        string serialized = await Helpers.PCLStorage.PostPCLAsync(FormControlsAndRightsForInspection);
+                        bool WriteText = await PCLHelper.WriteTextAllAsync("Inspections", serialized, folder);
+
+                    }
+                    else
+                    {
+                        var PClFormControlsAndRightsForInspection = Helpers.PCLStorage.GetPCLAsync(InspectionSerializer);
+                        FormControlsAndRightsForInspection = PClFormControlsAndRightsForInspection;
+                    }
+
+                    ServiceOutput FormControlsAndRightsForTools;
+                    var ToolsSerializer = await PCLHelper.ReadAllTextAsync("Tools", folder);
+                    if (ToolsSerializer == null || ToolsSerializer == "")
+                    {
+                        FormControlsAndRightsForTools = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tools");
+
+
+                        string serialized = await Helpers.PCLStorage.PostPCLAsync(FormControlsAndRightsForTools);
+                        bool WriteText = await PCLHelper.WriteTextAllAsync("Tools", serialized, folder);
+
+                    }
+                    else
+                    {
+                        var PClFormControlsAndRightsForTools = Helpers.PCLStorage.GetPCLAsync(ToolsSerializer);
+                        FormControlsAndRightsForTools = PClFormControlsAndRightsForTools;
+                    }
+
+
+                    ServiceOutput FormControlsAndRightsForParts;
+                    var PartsSerializer = await PCLHelper.ReadAllTextAsync("Parts", folder);
+                    if (PartsSerializer == null || PartsSerializer == "")
+                    {
+                        FormControlsAndRightsForParts = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Parts");
+
+                        string serialized = await Helpers.PCLStorage.PostPCLAsync(FormControlsAndRightsForParts);
+                        bool WriteText = await PCLHelper.WriteTextAllAsync("Parts", serialized, folder);
+
+                    }
+                    else
+                    {
+                        var PClFormControlsAndRightsForParts = Helpers.PCLStorage.GetPCLAsync(ToolsSerializer);
+                        FormControlsAndRightsForParts = PClFormControlsAndRightsForParts;
+                    }
+
+                    ServiceOutput FormControlsAndRightsForAttachments;
+                    var AttachmentsSerializer = await PCLHelper.ReadAllTextAsync("Attachments", folder);
+                    if (AttachmentsSerializer == null || AttachmentsSerializer == "")
+                    {
+                        FormControlsAndRightsForAttachments = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Attachments");
+
+                        string serialized = await Helpers.PCLStorage.PostPCLAsync(FormControlsAndRightsForAttachments);
+                        bool WriteText = await PCLHelper.WriteTextAllAsync("Attachments", serialized, folder);
+
+                    }
+                    else
+                    {
+                        var PClFormControlsAndRightsForAttachments = Helpers.PCLStorage.GetPCLAsync(ToolsSerializer);
+                        FormControlsAndRightsForAttachments = PClFormControlsAndRightsForAttachments;
+                    }
 
                     if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
                     {
@@ -1295,6 +1396,7 @@ namespace ProteusMMX.ViewModel
                             }
                         }
                     }
+
                     if (FormControlsAndRightsForTask != null && FormControlsAndRightsForTask.lstModules != null && FormControlsAndRightsForTask.lstModules.Count > 0)
                     {
                         var WorkOrderTaskModule = FormControlsAndRightsForTask.lstModules[0];
@@ -1339,6 +1441,7 @@ namespace ProteusMMX.ViewModel
                             }
                         }
                     }
+
                     if (FormControlsAndRightsForInspection != null && FormControlsAndRightsForInspection.lstModules != null && FormControlsAndRightsForInspection.lstModules.Count > 0)
                     {
                         var WorkOrderInspectionModule = FormControlsAndRightsForInspection.lstModules[0];
@@ -1371,6 +1474,7 @@ namespace ProteusMMX.ViewModel
                             }
                         }
                     }
+
                     if (FormControlsAndRightsForTools != null && FormControlsAndRightsForTools.lstModules != null && FormControlsAndRightsForTools.lstModules.Count > 0)
                     {
                         var WorkOrderToolsModule = FormControlsAndRightsForTools.lstModules[0];
@@ -1399,6 +1503,7 @@ namespace ProteusMMX.ViewModel
                             }
                         }
                     }
+
                     if (FormControlsAndRightsForParts != null && FormControlsAndRightsForParts.lstModules != null && FormControlsAndRightsForParts.lstModules.Count > 0)
                     {
                         var WorkOrderPartsModule = FormControlsAndRightsForParts.lstModules[0];
@@ -1428,6 +1533,7 @@ namespace ProteusMMX.ViewModel
                             }
                         }
                     }
+
                     if (FormControlsAndRightsForAttachments != null && FormControlsAndRightsForAttachments.lstModules != null && FormControlsAndRightsForAttachments.lstModules.Count > 0)
                     {
                         var WorkOrderAttachmentModule = FormControlsAndRightsForAttachments.lstModules[0];

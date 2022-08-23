@@ -2,6 +2,7 @@
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
+using PCLStorage;
 using Plugin.FirebasePushNotification;
 using Plugin.LocalNotification;
 using Plugin.LocalNotification.EventArgs;
@@ -32,22 +33,24 @@ namespace ProteusMMX
         int UserId;
         public static int ScreenWidth { get; set; }
         public static int ScreenHeight { get; set; }
-
+        IFolder folder = FileSystem.Current.LocalStorage;
+        String folderName = "ProteusMMX";
+        String filename = "TitelAll.txt";
         public static void Logout()
         {
 
 
         }
         string TockenNumber = string.Empty;
-        string NotificationMode= string.Empty;
+        string NotificationMode = string.Empty;
         public App()
         {
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NTc4MDAzQDMxMzkyZTMzMmUzMGVuNXozMzdmdEE5RVd6c3ZMeDZVR2lvWkg0UHB4YkZ2SXpER3JxdjBXUDA9");
             InitializeComponent();
             try
             {
-               NotificationMode = JsonConvert.DeserializeObject(NotifactionStorage.Storage.Get("NotificationModedb")).ToString();
-                
+                NotificationMode = JsonConvert.DeserializeObject(NotifactionStorage.Storage.Get("NotificationModedb")).ToString();
+
             }
             catch (Exception)
             {
@@ -57,7 +60,7 @@ namespace ProteusMMX
             #region **** FirebasePushNotification ****
             CrossFirebasePushNotification.Current.Subscribe(topic: "all");
             TockenNumber = CrossFirebasePushNotification.Current.Token;
-            
+
             if (NotificationMode == "Internet")
             {
                 CrossFirebasePushNotification.Current.OnNotificationOpened += (s, p) =>
@@ -68,12 +71,12 @@ namespace ProteusMMX
                     var Body = data1["body"];
                     var Key = data1["key1"];
                     NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(Key));
-                    
+
                 };
                 if (!string.IsNullOrEmpty(TockenNumber))
                 {
                     Application.Current.Properties["TockenNumberKey"] = TockenNumber;
-                    CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;                    
+                    CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
                 }
             }
             else
@@ -82,21 +85,27 @@ namespace ProteusMMX
             }
             #endregion
 
-           
+
 
             try
             {
                 Locator.Instance.Build();
 
                 InitNavigation();
-               
+                test();
             }
             catch (Exception ex)
             {
 
                 throw;
             }
-            
+
+        }
+        public async void test()
+        {
+            var IsExitPCLCreateFolder = await Helpers.PCLStorage.PCLCreateFolder(folderName);
+            var IsExitPCLCreateFile = await Helpers.PCLStorage.PCLCreateFIle(filename);
+
         }
         private void Current_OnTokenRefresh(object source, FirebasePushNotificationTokenEventArgs e)
         {
@@ -104,6 +113,8 @@ namespace ProteusMMX
             System.Diagnostics.Debug.WriteLine($"Token: {e.Token}");
             //NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(e.Token));
         }
+
+
 
         private async void OnLocalNotificationTapped(NotificationEventArgs e)
         {
@@ -253,14 +264,12 @@ namespace ProteusMMX
                 Description = FinalDescription,
                 Title = notifications.Title,
                 NotificationId = nid,
-                
 
-
-        };
+            };
 
             Plugin.LocalNotification.NotificationCenter.Current.Show(notification);
         }
-        
+
         private Task InitNavigation()
         {
             var navigationService = Locator.Instance.Resolve<INavigationService>();
@@ -275,18 +284,18 @@ namespace ProteusMMX
             //        "android=7edb0700-5702-4890-9beb-3561942dd6f4",
             //      // "android= 24b17e2f-b607-4143-abd0-60877acd4676",
 
-                  
+
             //       typeof(Analytics), typeof(Crashes));
         }
 
         protected override void OnSleep()
         {
-            
+
         }
 
         protected override void OnResume()
         {
-           
+
         }
     }
 }

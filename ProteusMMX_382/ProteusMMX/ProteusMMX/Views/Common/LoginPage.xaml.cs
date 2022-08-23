@@ -38,6 +38,15 @@ namespace ProteusMMX.Views.Common
                 Phone.IsVisible = false;
                 //Tablet.IsVisible = true;
             }
+            bool RememberMeSwitch = AppSettings.RememberMeSwitchFlag;
+            if (RememberMeSwitch)
+            {
+                LoginSwitch1.IsOn = true;
+            }
+            else
+            {
+                LoginSwitch1.IsOn = false;
+            }
             //((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#85C1E9");
             //((NavigationPage)Application.Current.MainPage).BarTextColor = Color.Black;
             Xamarin.Forms.NavigationPage.SetHasBackButton(this, false);
