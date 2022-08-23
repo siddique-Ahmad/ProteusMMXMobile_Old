@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using Microsoft.AppCenter.Crashes;
 using Newtonsoft.Json;
+using PCLStorage;
 //using Windows.UI.ViewManagement;
 //using Windows.ApplicationModel.Core;
 //using Windows.UI;
@@ -498,6 +499,10 @@ namespace ProteusMMX.ViewModel
         #endregion
 
         string WorkOrderId = null;
+
+        IFolder folder = FileSystem.Current.LocalStorage;
+        String filename = "TitelAll.txt";
+
         public override async Task InitializeAsync(object navigationData)
         {
             try
@@ -519,7 +524,7 @@ namespace ProteusMMX.ViewModel
                     UserDialogs.Instance.ShowLoading("Please wait..loading all data");
                 }
 
-
+               
 
                 if (AppSettings.User != null && AppSettings.User.blackhawkLicValidator.FDAEnable)
                 {
@@ -576,7 +581,7 @@ namespace ProteusMMX.ViewModel
                         }
 
 
-
+                        NotifactionStorage.Storage.Set("NotificationModedb", JsonConvert.SerializeObject(user.mmxUser.NotificationMode));
                         if (user.mmxUser.NotificationMode == "Internet")
                         {
                             if (Application.Current.Properties.ContainsKey("TockenNumberKey"))
@@ -946,7 +951,7 @@ namespace ProteusMMX.ViewModel
 
                 if (user.mmxUser.NotificationMode == "Internet")
                 {
-                    
+
                     if (Application.Current.Properties.ContainsKey("TockenNumberKey"))
                     {
                         var TockenNumbers = Application.Current.Properties["TockenNumberKey"].ToString();
@@ -1075,28 +1080,63 @@ namespace ProteusMMX.ViewModel
 
         public async Task InitializeTranslations()
         {
-
-            var translations = await _webControlTitlesService.GetWebControlTitles(AppSettings.User.UserID.ToString());
-
-            if (translations != null && translations.listWebControlTitles != null)
+            var AllTitelserializer = await PCLHelper.ReadAllTextAsync(filename, folder);
+            if (AllTitelserializer == null || AllTitelserializer == "")
             {
-                var translationDictionary = AppSettings.Translations;
-                translationDictionary.Clear();
-                foreach (var item in translations.listWebControlTitles)
+                var translations = await _webControlTitlesService.GetWebControlTitles(AppSettings.User.UserID.ToString());
+
+                string serialized = await Helpers.PCLStorage.PostPCLAsync(translations);
+
+                bool WriteText = await PCLHelper.WriteTextAllAsync(filename, serialized, folder);
+                //if (WriteText == true)
+                //{
+                //    var reads = await PCLHelper.ReadAllTextAsync(filename, folder);
+                //    data = reads;
+                //    var test = DeserializeObject(reads, _serializerSettings);
+                //}
+
+                if (translations != null && translations.listWebControlTitles != null)
                 {
-                    try
+                    var translationDictionary = AppSettings.Translations;
+                    translationDictionary.Clear();
+                    foreach (var item in translations.listWebControlTitles)
                     {
-                        translationDictionary.Add(item.TitleName, item.TargetName);
-                    }
-                    catch (Exception ex)
-                    {
+                        try
+                        {
+                            translationDictionary.Add(item.TitleName, item.TargetName);
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+
                     }
 
                 }
-
             }
+            else
+            {
+                var translations = Helpers.PCLStorage.GetPCLAsync(AllTitelserializer);
 
+                if (translations != null && translations.listWebControlTitles != null)
+                {
+                    var translationDictionary = AppSettings.Translations;
+                    translationDictionary.Clear();
+                    foreach (var item in translations.listWebControlTitles)
+                    {
+                        try
+                        {
+                            translationDictionary.Add(item.TitleName, item.TargetName);
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+
+                    }
+
+                }
+            }
         }
+
     }
 }
 
