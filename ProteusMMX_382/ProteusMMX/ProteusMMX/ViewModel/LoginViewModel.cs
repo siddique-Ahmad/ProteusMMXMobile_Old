@@ -954,26 +954,31 @@ namespace ProteusMMX.ViewModel
 
                     if (Application.Current.Properties.ContainsKey("TockenNumberKey"))
                     {
-                        var TockenNumbers = Application.Current.Properties["TockenNumberKey"].ToString();
+                        string TockenNumbers = Application.Current.Properties["TockenNumberKey"].ToString();
 
-                        if (!string.IsNullOrWhiteSpace(TockenNumber))
+                        if (string.IsNullOrWhiteSpace(TockenNumber))
                         {
                             TockenNumber = TockenNumbers;
                         }
                     }
-
-                    if (string.IsNullOrWhiteSpace(user.mmxUser.FCMToken) && !string.IsNullOrEmpty(TockenNumber))
+                    if (!string.IsNullOrWhiteSpace(TockenNumber))
                     {
-                        await PostToken(user.mmxUser.UserID, TockenNumber);
-                    }
-                    else
-                    {
-                        if (user.mmxUser.FCMToken != TockenNumber)
+                        if (string.IsNullOrWhiteSpace(user.mmxUser.FCMToken) && !string.IsNullOrEmpty(TockenNumber))
                         {
                             await PostToken(user.mmxUser.UserID, TockenNumber);
                         }
+                        else
+                        {
+                            if (user.mmxUser.FCMToken != TockenNumber)
+                            {
+                                await PostToken(user.mmxUser.UserID, TockenNumber);
+                            }
+                        }
                     }
+                    else
+                    {
 
+                    }
                 }
 
                 if (user.mmxUser.UserLicense == "Web")
@@ -1088,12 +1093,7 @@ namespace ProteusMMX.ViewModel
                 string serialized = await Helpers.PCLStorage.PostPCLAsync(translations);
 
                 bool WriteText = await PCLHelper.WriteTextAllAsync(filename, serialized, folder);
-                //if (WriteText == true)
-                //{
-                //    var reads = await PCLHelper.ReadAllTextAsync(filename, folder);
-                //    data = reads;
-                //    var test = DeserializeObject(reads, _serializerSettings);
-                //}
+               
 
                 if (translations != null && translations.listWebControlTitles != null)
                 {
