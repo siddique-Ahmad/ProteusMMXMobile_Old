@@ -54,6 +54,38 @@ namespace ProteusMMX.Services.Authentication
 
         }
 
+        public Task<ServiceOutput> PostTokenAsync(string url, int userid, string TockenNumber)
+        {
+
+            try
+            {
+               
+                UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+                builder.Path += AppSettings.MMXLogin;
+                var uri = builder.Uri.AbsoluteUri;
+
+                var user = new MMXUser()
+                {
+                    UserID = userid,
+                    FCMToken = TockenNumber
+
+                };
+
+                return _requestService.PostAsync(uri, user);
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+
+                return null;
+
+            }
+
+        }
+
 
         public Task<bool> LogoutAsync()
         {
