@@ -1275,7 +1275,7 @@ namespace ProteusMMX.ViewModel
                     }
                     else
                     {
-                        var PClFormControlsAndRightsForTask = Helpers.PCLStorage.GetPCLAsync(DetailsSerializer);
+                        var PClFormControlsAndRightsForTask = Helpers.PCLStorage.GetPCLAsync(TasksSerializer);
                         FormControlsAndRightsForTask = PClFormControlsAndRightsForTask;
                     }
 
@@ -1326,7 +1326,7 @@ namespace ProteusMMX.ViewModel
                     }
                     else
                     {
-                        var PClFormControlsAndRightsForParts = Helpers.PCLStorage.GetPCLAsync(ToolsSerializer);
+                        var PClFormControlsAndRightsForParts = Helpers.PCLStorage.GetPCLAsync(PartsSerializer);
                         FormControlsAndRightsForParts = PClFormControlsAndRightsForParts;
                     }
 
@@ -1342,7 +1342,7 @@ namespace ProteusMMX.ViewModel
                     }
                     else
                     {
-                        var PClFormControlsAndRightsForAttachments = Helpers.PCLStorage.GetPCLAsync(ToolsSerializer);
+                        var PClFormControlsAndRightsForAttachments = Helpers.PCLStorage.GetPCLAsync(AttachmentsSerializer);
                         FormControlsAndRightsForAttachments = PClFormControlsAndRightsForAttachments;
                     }
 

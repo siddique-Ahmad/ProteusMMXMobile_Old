@@ -949,37 +949,7 @@ namespace ProteusMMX.ViewModel
 
                 NotifactionStorage.Storage.Set("NotificationModedb", JsonConvert.SerializeObject(user.mmxUser.NotificationMode));
 
-                if (user.mmxUser.NotificationMode == "Internet")
-                {
-
-                    if (Application.Current.Properties.ContainsKey("TockenNumberKey"))
-                    {
-                        string TockenNumbers = Application.Current.Properties["TockenNumberKey"].ToString();
-
-                        if (string.IsNullOrWhiteSpace(TockenNumber))
-                        {
-                            TockenNumber = TockenNumbers;
-                        }
-                    }
-                    if (!string.IsNullOrWhiteSpace(TockenNumber))
-                    {
-                        if (string.IsNullOrWhiteSpace(user.mmxUser.FCMToken) && !string.IsNullOrEmpty(TockenNumber))
-                        {
-                            await PostToken(user.mmxUser.UserID, TockenNumber);
-                        }
-                        else
-                        {
-                            if (user.mmxUser.FCMToken != TockenNumber)
-                            {
-                                await PostToken(user.mmxUser.UserID, TockenNumber);
-                            }
-                        }
-                    }
-                    else
-                    {
-
-                    }
-                }
+              
 
                 if (user.mmxUser.UserLicense == "Web")
                 {
@@ -1010,6 +980,49 @@ namespace ProteusMMX.ViewModel
                 Application.Current.Properties["UserNameType"] = "TextBox";
                 SignatureStorage.Storage.Set("FDASignatureUserValidated", "False");
                 Application.Current.Properties["Password"] = Password;
+                
+                if (user.mmxUser.NotificationMode == "Internet")
+                {
+
+                    if (Application.Current.Properties.ContainsKey("TockenNumberKey"))
+                    {
+                        string TockenNumbers = Application.Current.Properties["TockenNumberKey"].ToString();
+
+                        if (string.IsNullOrWhiteSpace(TockenNumber))
+                        {
+                            TockenNumber = TockenNumbers;
+                        }
+                    }
+                    if (!string.IsNullOrWhiteSpace(TockenNumber))
+                    {
+                        if (string.IsNullOrWhiteSpace(user.mmxUser.FCMToken) && !string.IsNullOrEmpty(TockenNumber))
+                        {
+                            await PostToken(user.mmxUser.UserID, TockenNumber);
+                            //var Tokens = await _authenticationService.PostTokenAsync(AppSettings.BaseURL + "/Inspection/Service/FCMTokenCreate", user.mmxUser.UserID, TockenNumber);
+
+                            //if (Convert.ToBoolean(Tokens.servicestatus) == false)
+                            //{
+
+                            //}
+                        }
+                        else
+                        {
+                            if (user.mmxUser.FCMToken != TockenNumber)
+                            {
+                                await PostToken(user.mmxUser.UserID, TockenNumber);
+                                //var Tokens = await _authenticationService.PostTokenAsync(AppSettings.BaseURL + "/Inspection/Service/FCMTokenCreate", user.mmxUser.UserID, TockenNumber);
+                                //if (Convert.ToBoolean(Tokens.servicestatus) == false)
+                                //{
+
+                                //}
+                            }
+                        }
+                    }
+                    else
+                    {
+
+                    }
+                }
                 await InitializeTranslations();
                 UserDialogs.Instance.HideLoading();
                 #region Local Notification
@@ -1061,10 +1074,10 @@ namespace ProteusMMX.ViewModel
         {
             try
             {
-                Device.BeginInvokeOnMainThread(() =>
+                Device.BeginInvokeOnMainThread(async () =>
                 {
 
-                    Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/Service/FCMTokenCreate");
+                    Uri posturi =  new  Uri(AppSettings.BaseURL + "/Inspection/Service/FCMTokenCreate");
 
                     var notificationToken = new ServiceInput()
                     {
@@ -1074,7 +1087,7 @@ namespace ProteusMMX.ViewModel
                     };
 
                     string strPayload = JsonConvert.SerializeObject(notificationToken);
-                    HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+                    HttpContent c =  new StringContent(strPayload, Encoding.UTF8, "application/json");
                     var t = Task.Run(() => SendURI(posturi, c));
                 });
             }
