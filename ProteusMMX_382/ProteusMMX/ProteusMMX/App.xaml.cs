@@ -76,16 +76,18 @@ namespace ProteusMMX
                 if (!string.IsNullOrEmpty(TockenNumber))
                 {
                     Application.Current.Properties["TockenNumberKey"] = TockenNumber;
+                   // CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
+                }
+                else
+                {
                     CrossFirebasePushNotification.Current.OnTokenRefresh += Current_OnTokenRefresh;
                 }
             }
             else
-            {
+            { 
                 NotificationCenter.Current.NotificationTapped += OnLocalNotificationTapped;
             }
             #endregion
-
-
 
             try
             {
@@ -111,10 +113,9 @@ namespace ProteusMMX
         {
             TockenNumber = e.Token;
             System.Diagnostics.Debug.WriteLine($"Token: {e.Token}");
+            Application.Current.Properties["TockenNumberKey"] = TockenNumber;
             //NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(e.Token));
         }
-
-
 
         private async void OnLocalNotificationTapped(NotificationEventArgs e)
         {
