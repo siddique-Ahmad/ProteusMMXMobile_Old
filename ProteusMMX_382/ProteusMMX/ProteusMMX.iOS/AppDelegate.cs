@@ -6,18 +6,21 @@ using Foundation;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Plugin.FirebasePushNotification;
 using UIKit;
+using UserNotifications;
+using Xamarin.Forms;
 
 namespace ProteusMMX.iOS
 {
-    // The UIApplicationDelegate for the application. This class is responsible for launching the 
-    // User Interface of the application, as well as listening (and optionally responding) to 
+    // The UIApplicationDelegate for the application. This class is responsible for launching the
+    // User Interface of the application, as well as listening (and optionally responding) to
     // application events from iOS.
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
         //
-        // This method is invoked when the application has loaded and is ready to run. In this 
+        // This method is invoked when the application has loaded and is ready to run. In this
         // method you should instantiate the window, load the UI into it and then make the window
         // visible.
         //
@@ -40,9 +43,24 @@ namespace ProteusMMX.iOS
             Syncfusion.XForms.iOS.RichTextEditor.SfRichTextEditorRenderer.Init();
             Syncfusion.XForms.iOS.TabView.SfTabViewRenderer.Init();
             Syncfusion.XForms.iOS.TextInputLayout.SfTextInputLayoutRenderer.Init();
+            FirebasePushNotificationManager.Initialize(options, true);
+            var settings = UIUserNotificationSettings.GetSettingsForTypes(UIUserNotificationType.Badge, null);
+            UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
+            UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
             LoadApplication(new App());
+
+
+
             //AppCenter.Start("7edb0700-5702-4890-9beb-3561942dd6f4", typeof(Analytics), typeof(Crashes));
             return base.FinishedLaunching(app, options);
         }
+      
+        public override void OnActivated(UIApplication uiApplication)
+        {
+            UIApplication.SharedApplication.ApplicationIconBadgeNumber = 0;
+            //base.OnActivated(uiApplication);
+        }
     }
+
+
 }
