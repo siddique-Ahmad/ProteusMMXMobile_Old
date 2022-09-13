@@ -469,8 +469,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
         #endregion
 
-
-
         #region CreateAsset Properties
 
 
@@ -3651,8 +3649,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
         #endregion
 
-
-
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
 
@@ -3679,6 +3675,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         public ICommand TapCommand => new AsyncCommand(SpeechtoText);
 
         #endregion
+
         string Create;
         #region Methods
         public override async Task InitializeAsync(object navigationData)
@@ -4669,7 +4666,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
         }
 
-
         private bool ApplyIsEnable(String Expression)
         {
             if (Expression == "E")
@@ -4822,8 +4818,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 Grid.SetColumnSpan(wrapperLayout, 2);
             }
         }
-
-
 
         private void SetControlBindingAccordingToControlType(View control, FormControl formControl)
         {
@@ -6380,7 +6374,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
-
         private void Picker_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -6607,7 +6600,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
         }
 
-
         public async Task<Grid> GetContentGrid()
         {
 
@@ -6657,7 +6649,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 OperationInProgress = false;
             }
         }
-
 
         public async Task OnViewAppearingAsync(VisualElement view)
         {
@@ -6738,9 +6729,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 OperationInProgress = false;
             }
         }
-
-
-
 
         #region Show Selection List Pages Methods
         public async Task ShowFacilities()
@@ -7992,8 +7980,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                 break;
                             }
 
-
-
                         case "RequiredDate":
                             {
                                 validationResult = ValidateValidations(formLoadItem, RequiredDate1.ToString());
@@ -8003,8 +7989,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                 }
                                 break;
                             }
-
-
 
                         #region User Fields
 
@@ -8302,10 +8286,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
                             #endregion
 
-
-
-
-
                     }
                 }
 
@@ -8540,8 +8520,6 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             return validationResult;
 
         }
-
-
 
         public Task OnViewDisappearingAsync(VisualElement view)
         {

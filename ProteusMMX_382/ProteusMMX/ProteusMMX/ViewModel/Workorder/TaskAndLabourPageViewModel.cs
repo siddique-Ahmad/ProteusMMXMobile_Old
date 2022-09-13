@@ -1010,6 +1010,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.White,
                                 DefaultFontColor = Color.Black,
                                 Text = item.Description,
+                                ReadOnly=false,
                                 DefaultFontSize = 11,
                                 //  Margin = new Thickness(0, -10, 0, 0),
                                 ShowToolbar = false
@@ -1025,6 +1026,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                 BackgroundColor = Color.White,
                                 DefaultFontColor = Color.Black,
                                 Text = result,
+                                ReadOnly = false,
+                              
                                 DefaultFontSize = 11,
                                 Margin = new Thickness(0, 0, 0, 0),
                                 ShowToolbar = false
@@ -1766,7 +1769,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             if (item.CompletionDate != null)
                             {
-                                completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                                completeDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt");
 
 
                             }
