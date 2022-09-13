@@ -132,7 +132,7 @@
 
                         <Label x:Name="RequiredDateLabel" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333" />
                         <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
-                        <Label Text="{Binding RequiredDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" TextColor="Red"   LineBreakMode="TailTruncation" />
+                        <Label Text="{Binding RequiredDate , Converter={StaticResource DateTimeConverterXaml},StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" TextColor="Red"   LineBreakMode="TailTruncation" />
                         <Label Text="" Grid.Column="3" TextColor="LightGreen" />
 
                     </Grid>
@@ -221,7 +221,7 @@
 
                             <Label x:Name="ActivationDateLabel" FontSize="13" FontAttributes="Bold" TextColor="#333333" />
                             <Label Text=":" Grid.Column="1" FontSize="13" FontAttributes="Bold" TextColor="#333333" />
-                            <Label Text="{Binding ActivationDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding ActivationDate , Converter={StaticResource DateTimeConverterXaml},StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
                             <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
 
                         </Grid>
@@ -235,7 +235,7 @@
 
                             <Label x:Name="WorkStartedDateLabel" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                             <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
-                            <Label Text="{Binding WorkStartedDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}"  LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding WorkStartedDate , Converter={StaticResource DateTimeConverterXaml},StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}"  LineBreakMode="TailTruncation"/>
                             <Label Text="" Grid.Column="3" />
 
                         </Grid>
@@ -249,7 +249,7 @@
 
                             <Label x:Name="WorkCompletionDateLabel" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                             <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
-                            <Label Text="{Binding CompletionDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding CompletionDate , Converter={StaticResource DateTimeConverterXaml},StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
                             <Label Text="" Grid.Column="3" />
 
                         </Grid>
@@ -262,7 +262,7 @@
 
                             <Label x:Name="WorkRequestedDateLabel"  Style="{StaticResource ItemDescriptionStyle}"  FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                             <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
-                            <Label Text="{Binding RequestedDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding RequestedDate , Converter={StaticResource DateTimeConverterXaml},StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  LineBreakMode="TailTruncation"/>
                             <Label Text="" Grid.Column="3" />
 
                         </Grid>
