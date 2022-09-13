@@ -1098,6 +1098,24 @@ namespace ProteusMMX.ViewModel
 
         public async Task InitializeTranslations()
         {
+
+            #region Set Badge to 0 in IOS
+            
+            Uri posturi = new Uri(AppSettings.BaseURL + "/inspection/service/BadgeUpdate");
+
+            var payload = new Dictionary<string, string>
+            {
+
+              {"UserID ", AppSettings.User.UserID.ToString()}
+
+            };
+
+            string strPayload = JsonConvert.SerializeObject(payload);
+            HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            var t = Task.Run(() => SendURI(posturi, c));
+
+            #endregion
+
             var AllTitelserializer = await PCLHelper.ReadAllTextAsync(filename, folder);
             if (AllTitelserializer == null || AllTitelserializer == "")
             {
