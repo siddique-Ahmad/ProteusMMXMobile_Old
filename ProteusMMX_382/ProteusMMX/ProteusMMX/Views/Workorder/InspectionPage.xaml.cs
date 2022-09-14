@@ -4426,8 +4426,10 @@ namespace ProteusMMX.Views.Workorder
                         {
                             WorkOrderID = WorkorderID,
                             InspectionTime = ((int)totalTime).ToString(),
-                            StartDate = this.InspectionStartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionStartDate.Value.Date.ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
-                            CompletionDate = this.InspectionCompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionCompletionDate.Value.Date.ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
+                            StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate : (DateTime?)null,
+                            CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate : (DateTime?)null,
+                            //StartDate = this.InspectionStartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionStartDate.Value.Date.ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
+                            //CompletionDate = this.InspectionCompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionCompletionDate.Value.Date.ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
                             EmployeeLaborCraftid = EmpLaborCraftID,
                             ContractorLaborCraftId = ContLaborCraftID,
                             ModifiedUserName = AppSettings.UserName,
