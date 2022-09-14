@@ -41,6 +41,8 @@ namespace ProteusMMX.ViewModel.Workorder
         string CurrentRuntimeVisiblevalue = string.Empty;
         #region Fields
         ServiceOutput workorderWrapper;
+        ServiceOutput workorderLabourWrapper;
+        ServiceOutput Inspection;
 
         protected readonly IAuthenticationService _authenticationService;
 
@@ -5278,31 +5280,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
             }
-            //if (Application.Current.Properties.ContainsKey("workorderSubModuleListDialogues"))
-            //{
-            //    SubModule workorderSubModule = Application.Current.Properties["workorderSubModuleListDialogues"] as SubModule;
-            //    if (workorderSubModule.listDialoges != null && workorderSubModule.listDialoges.Count > 0)
-            //    {
-            //        var WorkorderDialog = workorderSubModule.listDialoges.FirstOrDefault(i => i.DialogName == "WorkOrderDialog");
-            //        if (WorkorderDialog != null && WorkorderDialog.listTab != null && WorkorderDialog.listTab.Count > 0)
-            //        {
-            //var TaskLabourTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "TasksandLabor");
-            //var InspectionTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "WorkOrderInspections");
-            //var ToolsTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Tools");
-            //var PartsTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Parts");
-            //var AttachmentTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Attachments");
-            //Application.Current.Properties["TaskandLabourTabKey"] = TaskLabourTab.Expression;
-            //Application.Current.Properties["InspectionTabKey"] = InspectionTab.Expression;
-            //Application.Current.Properties["ToolsTabKey"] = ToolsTab.Expression;
-            //Application.Current.Properties["PartsTabKey"] = PartsTab.Expression;
-            //Application.Current.Properties["AttachmentTabKey"] = AttachmentTab.Expression;
-
-            //var DetailsTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Details");
-            //var WorkStartDateDetails = DetailsTab.listControls.FirstOrDefault(i => i.ControlName == "WorkStartedDate");
-            //var WorkCompletionDateDetails = DetailsTab.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate");
-            //var AdditionalDetailsTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "AdditionalDetails");
-            //var CauseTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Causes");
-
 
             if (Application.Current.Properties.ContainsKey("WorkorderTargetKey"))
             {
@@ -5460,23 +5437,6 @@ namespace ProteusMMX.ViewModel.Workorder
                     this.IsCostLayoutIsVisible = false;
                 }
             }
-            //Because showing sometimes on page, That's why initializing in Initialize component
-            //if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
-            //{
-            //    if (Application.Current.Properties.ContainsKey("WorkOrderRequestedDateKey"))
-            //    {
-            //        var WorkOrderRequestedDate = Application.Current.Properties["WorkOrderRequestedDateKey"].ToString();
-            //        if (WorkOrderRequestedDate != null && (WorkOrderRequestedDate == "E" || WorkOrderRequestedDate == "V"))
-            //        {
-
-            //            this.RequestedDateIsVisible = true;
-            //        }
-            //        else
-            //        {
-            //            this.RequestedDateIsVisible = false;
-            //        }
-            //    }
-            //}
 
 
 
@@ -6078,7 +6038,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     WorkorderControlsNew.RemoveAll((i => i.ControlName == "RiskQuestion"));
                 }
 
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+                //var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
                 if (workorderWrapper != null && workorderWrapper.workOrderWrapper != null && workorderWrapper.workOrderWrapper.workOrder != null)
                 {
@@ -9830,18 +9790,14 @@ namespace ProteusMMX.ViewModel.Workorder
              //   await SetControlsPropertiesForPage(workOrderWra);
 
                 ///TODO: Get Workorder Labour data 
-                var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
+              workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
 
 
-                ///TODO: Get Workorder data 
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+                // TODO: Get Workorder data
+                
 
+               Inspection = await _workorderService.GetWorkorderInspection(this.WorkorderID.ToString(), UserID);
 
-
-                ///TODO: Get Inspection 
-                //var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString());
-
-                var Inspection = await _workorderService.GetWorkorderInspection(this.WorkorderID.ToString(), UserID);
                 List<InspectionTOAnswers> listtoAnswer = new List<InspectionTOAnswers>();
                 foreach (var item in Inspection.workOrderEmployee)
                 {
@@ -11371,37 +11327,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 ///TODO: Get Workorder Labour data 
-                var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
-
-
-                ///TODO: Get Workorder data 
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
-
-
-                //#region check if all answers of a sections are required
-
-                //// check if all answers of a sections are required///////
-                //if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null && WorkorderCompletionDate != null))
-                //{
-                //    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.sections != null && workorderWrapper.workOrderWrapper.sections.Count > 0))
-                //    {
-                //        StringBuilder RequiredSection = new StringBuilder();
-
-                //        foreach (var item in workorderWrapper.workOrderWrapper.sections)
-                //        {
-                //            RequiredSection.Append(item.SectionName);
-                //            RequiredSection.Append(",");
-                //        }
-
-                //        await DialogService.ShowAlertAsync(RequiredSection.ToString().TrimEnd(','), WebControlTitle.GetTargetNameByTitleName("PleaseProvideFollowingSectionQuestionAnswer"), "OK");
-                //        return;
-
-
-                //    }
-                //}
-
-                //#endregion
-
+                //var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
 
                 #region Check WorkOrder Identified through Breakdown
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.WorkOrderIdentifiedThroughBreakdownFlag) && MaintenanceCodeName == "IDENTIFIED THROUGH BREAKDOWN")
@@ -11550,7 +11476,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 ///TODO: Get Inspection 
-                var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(), AppSettings.User.UserID.ToString());
+                //var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(), AppSettings.User.UserID.ToString());
 
                 List<InspectionTOAnswers> liststartAnswer = new List<InspectionTOAnswers>();
                 List<InspectionTOAnswers> listcompletionAnswer = new List<InspectionTOAnswers>();
@@ -13729,17 +13655,17 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
 
-                ///TODO: Get Workorder Labour data 
-                var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
+                /////TODO: Get Workorder Labour data 
+                //var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
 
 
-                ///TODO: Get Workorder data 
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+                /////TODO: Get Workorder data 
+                //var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
 
 
-                ///TODO: Get Inspection 
-                var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(), UserID);
+                /////TODO: Get Inspection 
+                //var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(), UserID);
 
 
                 ///TODO: Get Inspection Time 
@@ -13778,6 +13704,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 ///TODO: Get Inspection InspectionSignatureResponse
                 var InspectionSignatureResponse = await _workorderService.IsSignatureRequiredOnInspection(WorkorderID.ToString());
+
                 if (InspectionSignatureResponse.IsSignatureRequiredAndEmpty)
                 {
                     UserDialogs.Instance.HideLoading();

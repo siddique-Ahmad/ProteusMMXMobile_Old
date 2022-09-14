@@ -672,6 +672,7 @@ namespace ProteusMMX.ViewModel
                 var IsExitPCLTools = Helpers.PCLStorage.PCLCreateFIle("Tools");
                 var IsExitPCLParts = Helpers.PCLStorage.PCLCreateFIle("Parts");
                 var IsExitPCLAttachments = Helpers.PCLStorage.PCLCreateFIle("Attachments");
+                var IsExitFormControlsAndRights = Helpers.PCLStorage.PCLCreateFIle("Dasebord");
 
                 OperationInProgress = true;
                 await GetWorkorderControlRights();
@@ -763,8 +764,21 @@ namespace ProteusMMX.ViewModel
         public async Task SetDashboardVisibility()
         {
             Thread.Sleep(2000);
-            FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.DashBoardName);
+           
+            var DasebordSerializer = await PCLHelper.ReadAllTextAsync("Dasebord", folder);
+            if (DasebordSerializer == null || DasebordSerializer == "")
+            {
+                FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.DashBoardName);
 
+                string serialized = await Helpers.PCLStorage.PostPCLAsync(FormControlsAndRights);
+                bool WriteText = await PCLHelper.WriteTextAllAsync("Dasebord", serialized, folder);
+
+            }
+            else
+            {
+                var PClFormControlsAndRightsForDasebord = Helpers.PCLStorage.GetPCLAsync(DasebordSerializer);
+                FormControlsAndRights = PClFormControlsAndRightsForDasebord;
+            }
 
             //Set Asset Visibility
             if (FormControlsAndRights != null && FormControlsAndRights.lstModules != null && FormControlsAndRights.lstModules.Count > 0)
@@ -810,9 +824,6 @@ namespace ProteusMMX.ViewModel
                     }
                 }
             }
-
-
-
 
             //Set Inventory Visibility
             if (FormControlsAndRights != null && FormControlsAndRights.lstModules != null && FormControlsAndRights.lstModules.Count > 0)
@@ -893,6 +904,7 @@ namespace ProteusMMX.ViewModel
                     }
                 }
             }
+
             //Set ClosedWo Visibility//
             if (FormControlsAndRights != null && FormControlsAndRights.lstModules != null && FormControlsAndRights.lstModules.Count > 0)
             {
@@ -913,7 +925,6 @@ namespace ProteusMMX.ViewModel
                 }
             }
 
-
         }
 
         public async Task GoToWorkOrderDetils()
@@ -922,7 +933,7 @@ namespace ProteusMMX.ViewModel
             {
                 var workordersDetailsRight = JsonConvert.DeserializeObject(NotifactionStorage.Storage.Get("Notificationdb"));
 
-                DialogService.ShowToast(workordersDetailsRight.ToString(), 200);
+               // DialogService.ShowToast(workordersDetailsRight.ToString(), 200);
 
                 if (workordersDetailsRight != null && workordersDetailsRight != "")
                 {
@@ -939,7 +950,6 @@ namespace ProteusMMX.ViewModel
                     NotifactionStorage.Storage.Set("Notificationdb", JsonConvert.SerializeObject(data));
                     await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item);
                 }
-
 
             }
             catch (Exception ex)
@@ -1173,6 +1183,7 @@ namespace ProteusMMX.ViewModel
                 UserDialogs.Instance.HideLoading();
             }
         }
+
         IFolder folder = FileSystem.Current.LocalStorage;
         public async Task GetWorkorderControlRights()
         {
