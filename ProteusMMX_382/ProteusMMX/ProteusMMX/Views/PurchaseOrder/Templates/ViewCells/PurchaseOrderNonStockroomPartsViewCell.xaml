@@ -106,7 +106,7 @@
 
                 <Label x:Name="ReceivedDate"  />
                 <Label Text=":" Grid.Column="1"  />
-                <Label Text="{Binding ReceivedDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2"  />
+                        <Label Text="{Binding ReceivedDate , Converter={StaticResource DateTimeConverterXaml}, StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Grid.Column="2"  />
 
 
             </Grid>

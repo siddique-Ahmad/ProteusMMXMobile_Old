@@ -7,7 +7,8 @@
              xmlns:control1="clr-namespace:ProteusMMX.Controls"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
              xmlns:syncfusion="clr-namespace:Syncfusion.SfCalendar.XForms;assembly=Syncfusion.SfCalendar.XForms"
-             xmlns:controls1="clr-namespace:Windows.UI.Xaml.Controls;assembly=Windows.Foundation.UniversalApiContract" xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
+             xmlns:controls1="clr-namespace:Windows.UI.Xaml.Controls;assembly=Windows.Foundation.UniversalApiContract"
+             xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
              x:Class="ProteusMMX.Views.Workorder.EditWorkorderPage"
             >
     <ContentPage.IconImageSource>
@@ -393,7 +394,7 @@
                                         </Label.FontAttributes>
                                     </Label>
                                     <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                        <control1:CustomEntry FontSize="12" TextColor="Black" FontAttributes="Bold"  Text="{Binding RequestedDate}" IsEnabled="False" ></control1:CustomEntry>
+                                        <control1:CustomEntry FontSize="12" TextColor="Black" FontAttributes="Bold"  Text="{Binding RequestedDate, StringFormat='{0:MMM d, yyyy hh:mm tt}'}" IsEnabled="False" ></control1:CustomEntry>
                                     </border:SfBorder>
                                 </StackLayout>
 
@@ -773,11 +774,11 @@
                                 </StackLayout>
 
 
-                                <Image Grid.Column="1" Grid.Row="0" Source="Assets/mic.png">
+                                <!--<Image Grid.Column="1" Grid.Row="0" Source="Assets/mic.png">
                                     <Image.Source>
                                         <OnPlatform  x:TypeArguments="ImageSource">
-                                            <OnPlatform.iOS>mic.png</OnPlatform.iOS>
-                                            <OnPlatform.Android>mic.png</OnPlatform.Android>
+                                            --><!--<OnPlatform.iOS>mic.png</OnPlatform.iOS>-->
+                                            <!--<OnPlatform.Android>mic.png</OnPlatform.Android>--><!--
                                             <OnPlatform.WinPhone>Assets/mic.png</OnPlatform.WinPhone>
                                         </OnPlatform>
                                     </Image.Source>
@@ -786,7 +787,7 @@
                                         Command="{Binding TapCommand}"
                                          NumberOfTapsRequired="1" />
                                     </Image.GestureRecognizers>
-                                </Image>
+                                </Image>-->
 
                             </Grid>
 

@@ -190,35 +190,35 @@
                             <StackLayout IsVisible="{Binding RequiredDateLayout}" Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="2">
                                 <Label Text="{Binding RequiredDateTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <border:SfBorder CornerRadius="5" IsEnabled="False">
-                                    <control1:CustomEntry Text="{Binding RequiredDate}" BackgroundColor="LightGray" ></control1:CustomEntry>
+                                    <control1:CustomEntry Text="{Binding RequiredDate, StringFormat='{0:MMM d, yyyy hh:mm tt}'}" BackgroundColor="LightGray" ></control1:CustomEntry>
                                 </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding WorkStartedDateLayout}" Orientation="Vertical" Grid.Row="5" Grid.ColumnSpan="2">
                                 <Label Text="{Binding WorkStartedDateTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <border:SfBorder CornerRadius="5" IsEnabled="False">
-                                    <control1:CustomEntry Text="{Binding WorkStartedDate}"  BackgroundColor="LightGray" ></control1:CustomEntry>
+                                    <control1:CustomEntry Text="{Binding WorkStartedDate, StringFormat='{0:MMM d, yyyy hh:mm tt}'}"  BackgroundColor="LightGray" ></control1:CustomEntry>
                                 </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding WorkorderCompletionDateLayout}" Orientation="Vertical" Grid.Row="6" Grid.ColumnSpan="2">
                                 <Label Text="{Binding WorkorderCompletionDateTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <border:SfBorder CornerRadius="5"  IsEnabled="False">
-                                    <control1:CustomEntry Text="{Binding WorkorderCompletionDate}"  BackgroundColor="LightGray"></control1:CustomEntry>
+                                    <control1:CustomEntry Text="{Binding WorkorderCompletionDate, StringFormat='{0:MMM d, yyyy hh:mm tt}'}"  BackgroundColor="LightGray"></control1:CustomEntry>
                                 </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout IsVisible="{Binding ActivationDateLayout}" Orientation="Vertical" Grid.Row="7" Grid.ColumnSpan="2">
                                 <Label Text="{Binding ActivationDateTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <border:SfBorder CornerRadius="5"  IsEnabled="False">
-                                    <control1:CustomEntry Text="{Binding ActivationDateText}"  BackgroundColor="LightGray"></control1:CustomEntry>
+                                    <control1:CustomEntry Text="{Binding ActivationDateText, StringFormat='{0:MMM d, yyyy hh:mm tt}'}"  BackgroundColor="LightGray"></control1:CustomEntry>
                                 </border:SfBorder>
                             </StackLayout>
 
                             <StackLayout Orientation="Vertical" Grid.Row="8" Grid.Column="0" IsVisible="{Binding RequestedDateIsVisible}">
                                 <Label Text="{Binding WorkRequestedDateTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <border:SfBorder CornerRadius="5"  IsEnabled="False">
-                                    <control1:CustomEntry Text="{Binding RequestedDate}"  BackgroundColor="LightGray"></control1:CustomEntry>
+                                    <control1:CustomEntry Text="{Binding RequestedDate, StringFormat='{0:MMM d, yyyy hh:mm tt}'}"  BackgroundColor="LightGray"></control1:CustomEntry>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -366,7 +366,7 @@
                             <StackLayout IsVisible="{Binding ClosedDateLayout}" Orientation="Vertical" Grid.Row="19" Grid.ColumnSpan="2">
                                 <Label Text="{Binding ClosedDateTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <border:SfBorder CornerRadius="5"  IsEnabled="False">
-                                    <control1:CustomEntry Text="{Binding ClosedDateText}" BackgroundColor="LightGray"></control1:CustomEntry>
+                                    <control1:CustomEntry Text="{Binding ClosedDateText, StringFormat='{0:MMM d, yyyy hh:mm tt}'}" BackgroundColor="LightGray"></control1:CustomEntry>
                                 </border:SfBorder>
                             </StackLayout>
                             
