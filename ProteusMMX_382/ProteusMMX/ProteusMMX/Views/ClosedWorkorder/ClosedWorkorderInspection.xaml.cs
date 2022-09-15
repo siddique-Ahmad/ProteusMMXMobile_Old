@@ -366,10 +366,11 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                 if (item.StartDate != null)
                 {
+                    string sdate = Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt"));
                     startDate = new Label
                     {
                         Margin = new Thickness(0, 5, 0, 0),
-                        Text = Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone)),
+                        Text = sdate,
                        // MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
                         BackgroundColor = Color.LightGray,
@@ -417,8 +418,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                 {
                     CompletionDate = new Label
                     {
-                        Text =Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone)),
-                        //MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        Text =Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt")),                        
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
                         Margin = new Thickness(0, 5, 0, 0),
@@ -692,7 +692,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     startDate = new Label
                     {
                         Margin = new Thickness(0, 5, 0, 0),
-                        Text = Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone)),
+                        Text = Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt")),
                         //MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
                         BackgroundColor = Color.LightGray,
@@ -738,8 +738,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                 {
                     CompletionDate = new Label
                     {
-                        Text = Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone)),
-                        //MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        Text = Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt")),
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
                         Margin = new Thickness(0, 5, 0, 0),
