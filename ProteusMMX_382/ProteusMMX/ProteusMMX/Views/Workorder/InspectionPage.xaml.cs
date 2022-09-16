@@ -1078,7 +1078,7 @@ namespace ProteusMMX.Views.Workorder
                                                                                      //btnStopLocal.CommandParameter = workorderemployee; //reassign to
                         if (response.InspectionStartedDate != null)
                         {
-                            startDate.SelectedDate = response.InspectionStartedDate;
+                            startDate.SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(response.InspectionStartedDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
                         }
                         else
                         {
@@ -1737,7 +1737,8 @@ namespace ProteusMMX.Views.Workorder
                                                                                      //btnStopLocal.CommandParameter = workorderemployee; //reassign to
                         if (response.InspectionStartedDate != null)
                         {
-                            startDate.SelectedDate = response.InspectionStartedDate;
+                            startDate.SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(response.InspectionStartedDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                            //startDate.SelectedDate = response.InspectionStartedDate;
                         }
                         else
                         {
@@ -1999,14 +2000,6 @@ namespace ProteusMMX.Views.Workorder
                 }
 
             }
-
-            //BoxView boxView = new BoxView
-            //{
-            //    BackgroundColor = Color.Black,
-            //};
-            //masterGrid.Children.Add(boxView, 0, 3);
-
-
 
             Label TotalInspectionLal = new Label
             {

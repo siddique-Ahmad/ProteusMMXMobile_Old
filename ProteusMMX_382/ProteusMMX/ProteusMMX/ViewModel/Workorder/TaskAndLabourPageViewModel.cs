@@ -2588,28 +2588,12 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             if (SelectedDate != null)
             {
-                s.Text = SelectedDate.ToString();
+                DateTime datew = Convert.ToDateTime(SelectedDate);
+                var testa= datew.ToString("MMM d, yyyy hh:mm tt");
+                s.Text = testa;
             }
 
-            //if (Device.RuntimePlatform == Device.iOS)
-            //{
-            //    UserDialogs.Instance.DatePrompt(new DatePromptConfig { iOSPickerStyle = iOSPickerStyle.Wheels, OnAction = (result) => SetCompletionDateResult(result, sender, e), IsCancellable = true, MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone) });
-            //}
-            //else
-            //{
-
-            //    UserDialogs.Instance.DatePrompt(
-            //        new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result, sender, e), 
-            //        IsCancellable = true, 
-            //        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-            //    });
-
-            //UserDialogs.Instance.TimePrompt(
-            //    new TimePromptConfig
-            //    {
-            //        OnAction = (result) => SetCompletionTimeResult(result, sender, e),
-            //        IsCancellable = true,
-            //    });
+            
 
 
         }
@@ -2943,6 +2927,7 @@ namespace ProteusMMX.ViewModel.Workorder
         private async Task<StackLayout> GetContentLayout()
         {
             var page = this.Page as ContentPage;
+          
             if (page != null)
             {
 
@@ -3111,11 +3096,13 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
                     if (!string.IsNullOrEmpty(HrsText))
                     {
+                       
                         SaveManualHrs();
                     }
                     if (string.IsNullOrWhiteSpace(SearchText))
                     {
                         await GenerateTaskAndLabourLayout();
+                       
                     }
                 }
                 catch (Exception ex)
