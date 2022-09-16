@@ -620,8 +620,19 @@
                                     <control1:CustomEntry BackgroundColor="LightGray" Text="{Binding CurrentRuntimeText}"/>
                                 </border:SfBorder>
                             </StackLayout>
-
-                            <StackLayout Orientation="Vertical" Grid.Row="38" IsVisible="{Binding  AdditionalDetailsIsVisible }" Grid.ColumnSpan="2">
+                            <StackLayout Orientation="Vertical" Grid.Row="38" Grid.ColumnSpan="2">
+                                <Label Text="{Binding ReportedDateTitel}" TextColor="Black" FontAttributes="Bold"/>
+                                <border:SfBorder CornerRadius="5" IsEnabled="False">
+                                    <control1:CustomEntry Text="{Binding ReportedDate, StringFormat='{0:MMM d, yyyy hh:mm tt}'}"  BackgroundColor="LightGray" ></control1:CustomEntry>
+                                </border:SfBorder>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="39" Grid.ColumnSpan="2">
+                                <Label Text="{Binding AcknowledgedDateTitel}" TextColor="Black" FontAttributes="Bold"/>
+                                <border:SfBorder CornerRadius="5" IsEnabled="False">
+                                    <control1:CustomEntry Text="{Binding AcknowledgedDate, StringFormat='{0:MMM d, yyyy hh:mm tt}'}"  BackgroundColor="LightGray" ></control1:CustomEntry>
+                                </border:SfBorder>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Grid.Row="40" IsVisible="{Binding  AdditionalDetailsIsVisible }" Grid.ColumnSpan="2">
                                 <Label Text="{Binding AdditionalDetailsTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding AdditionalDetailsText}" IsEnabled="False" HeightRequest="150" />-->
                                 <border:SfBorder CornerRadius="5">
@@ -639,7 +650,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout Orientation="Vertical" Grid.Row="39" IsVisible="{Binding  InternalNoteIsVisible }" Grid.ColumnSpan="2">
+                            <StackLayout Orientation="Vertical" Grid.Row="41" IsVisible="{Binding  InternalNoteIsVisible }" Grid.ColumnSpan="2">
                                 <Label Text="{Binding InternalNoteTitle}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
                                 <border:SfBorder CornerRadius="5" BackgroundColor="LightGray" >
@@ -657,7 +668,7 @@
                                 </border:SfBorder>
                             </StackLayout>
 
-                            <StackLayout x:Name="SignatureLayout" Grid.Row="40" Orientation="Vertical" IsVisible="{Binding  SignaturesIsVisible }" Grid.ColumnSpan="2">
+                            <StackLayout x:Name="SignatureLayout" Grid.Row="42" Orientation="Vertical" IsVisible="{Binding  SignaturesIsVisible }" Grid.ColumnSpan="2">
                                 <Label Text="{Binding Signatures}" TextColor="Black" FontAttributes="Bold"/>
                                 <!--<Editor Text="{Binding InternalNoteText}" IsEnabled="False" HeightRequest="150" />-->
                                 <border:SfBorder CornerRadius="5" HeightRequest="150" BackgroundColor="LightGray" >

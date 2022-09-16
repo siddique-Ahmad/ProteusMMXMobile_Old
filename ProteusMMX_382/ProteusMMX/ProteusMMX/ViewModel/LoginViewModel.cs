@@ -1116,7 +1116,8 @@ namespace ProteusMMX.ViewModel
 
             #endregion
 
-            var AllTitelserializer = await PCLHelper.ReadAllTextAsync(filename, folder);
+            //var AllTitelserializer = await PCLHelper.ReadAllTextAsync(filename, folder);
+            var AllTitelserializer = "";
             if (AllTitelserializer == null || AllTitelserializer == "")
             {
                 var translations = await _webControlTitlesService.GetWebControlTitles(AppSettings.User.UserID.ToString());

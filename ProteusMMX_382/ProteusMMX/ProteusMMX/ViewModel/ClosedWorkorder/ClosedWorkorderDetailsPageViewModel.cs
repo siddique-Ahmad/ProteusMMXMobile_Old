@@ -74,7 +74,81 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
+        //ReportedDate
+        DateTime? _reportedDate;
+        public DateTime? ReportedDate
+        {
+            get
+            {
+                return _reportedDate;
+            }
 
+            set
+            {
+                if (value != _reportedDate)
+                {
+                    _reportedDate = value;
+                    OnPropertyChanged(nameof(ReportedDate));
+                }
+            }
+        }
+
+        string _reportedDateTitel;
+        public string ReportedDateTitel
+        {
+            get
+            {
+                return _reportedDateTitel;
+            }
+
+            set
+            {
+                if (value != _reportedDateTitel)
+                {
+                    _reportedDateTitel = value;
+                    OnPropertyChanged(nameof(ReportedDateTitel));
+                }
+            }
+        }
+
+        //AcknowledgedDate
+        DateTime? _acknowledgedDate;
+        public DateTime? AcknowledgedDate
+        {
+            get
+            {
+                return _acknowledgedDate;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDate)
+                {
+                    _acknowledgedDate = value;
+                    OnPropertyChanged(nameof(AcknowledgedDate));
+                }
+            }
+        }
+
+
+
+        string _acknowledgedDateTitel;
+        public string AcknowledgedDateTitel
+        {
+            get
+            {
+                return _acknowledgedDateTitel;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDateTitel)
+                {
+                    _acknowledgedDateTitel = value;
+                    OnPropertyChanged(nameof(AcknowledgedDateTitel));
+                }
+            }
+        }
         string _WorkRequestedDateTitle;
         public string WorkRequestedDateTitle
         {
@@ -4802,6 +4876,10 @@ string _currentRuntime;
                 RequiredDateTitle = WebControlTitle.GetTargetNameByTitleName("RequiredDate");
                 WorkRequestedDateTitle = WebControlTitle.GetTargetNameByTitleName("RequestedDate");
 
+                ReportedDateTitel = WebControlTitle.GetTargetNameByTitleName("ReportedDate");
+
+                AcknowledgedDateTitel = WebControlTitle.GetTargetNameByTitleName("AcknowledgedDate");
+
                 UserField1Title = WebControlTitle.GetTargetNameByTitleName("UserField1");
                 UserField2Title = WebControlTitle.GetTargetNameByTitleName("UserField2");
                 UserField3Title = WebControlTitle.GetTargetNameByTitleName("UserField3");
@@ -5030,6 +5108,16 @@ string _currentRuntime;
                 this.WorkorderNumberText = workorder.WorkOrderNumber;
                 this.JobNumberText = workorder.JobNumber;
                 this.DescriptionText = workorder.Description;
+
+                if (workorder.ReportedDate != null)
+                {
+                    this.ReportedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ReportedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                }
+                if (workorder.AcknowledgedDate != null)
+                {
+                    this.AcknowledgedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.AcknowledgedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                }
+              
 
                 if (!string.IsNullOrWhiteSpace(workorder.Description) && workorder.Description.Length >= 150)
                 {
