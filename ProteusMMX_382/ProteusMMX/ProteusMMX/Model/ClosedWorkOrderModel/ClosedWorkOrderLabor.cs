@@ -33,5 +33,7 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public int? LaborCraftRate3ID { get; set; }
         public int? LaborCraftRate4ID { get; set; }
         public int? LaborCraftRate5ID { get; set; }
+
+        public DateTime? ArrivalDate { get; set; }
     }
 }

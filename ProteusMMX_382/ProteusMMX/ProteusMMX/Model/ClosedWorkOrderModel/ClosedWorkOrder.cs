@@ -117,5 +117,9 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         
         public bool? ParentandChildCost { get; set; }
         public bool? ChildCost { get; set; }
+
+        public DateTime? AcknowledgedDate { get; set; }
+        public DateTime? ReportedDate { get; set; }
+        public DateTime? ArrivalDate { get; set; }
     }
 }

@@ -1212,6 +1212,8 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         // CsfBorder.Content = completeDateButton;
                         #endregion
 
+
+
                         #region ****** Save Button *****
                         if (AppSettings.User.EnableHoursAtRate == false)
                         {
