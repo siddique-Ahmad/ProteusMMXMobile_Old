@@ -1149,6 +1149,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         #region ***** From Date And Button ******
                         var completeDateButton = new Button();
                         var FromDateButton = new Button();
+                        var ArriDateButton = new Button();
 
                         StackLayout FromStackLayout = new StackLayout();
                         MainGrid.Children.Add(buttnoStackLayout, 0, 5);
@@ -1159,7 +1160,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
                         FromMainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                         FromMainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-
+                        FromMainGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
                         buttnoStackLayout.Children.Add(FromMainGrid);
 
                         #region **** Start Date ****
@@ -1212,13 +1213,36 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                         // CsfBorder.Content = completeDateButton;
                         #endregion
 
+                        #region **** ArriDate ****
+                        StackLayout ArriDateStackLayout = new StackLayout();
+                        FromMainGrid.Children.Add(ArriDateStackLayout, 0, 2);
+                        Label AriDate = new Label
+                        {
+                            Text = WebControlTitle.GetTargetNameByTitleName("ArrivalDate"),
+                            FontSize = 13,
+                            FontAttributes = FontAttributes.Bold,
+                            TextColor = Color.FromHex("#333333")
+                        };
+                        ArriDateStackLayout.Children.Add(AriDate);
 
+                        ArriDateButton.BackgroundColor = Color.LightGray;
+                        ArriDateButton.BorderColor = Color.Black;
+                        ArriDateButton.BorderWidth = 1;
+                        ArriDateButton.CornerRadius = 10;
+                        ArriDateButton.TextColor = Color.Black;
+                        ArriDateButton.FontSize = 13;
+                        ArriDateButton.HeightRequest = 35;
+                        ArriDateButton.Margin = new Thickness(0, 0, 0, 0);
+                        ArriDateStackLayout.IsEnabled = false;
+                        ArriDateStackLayout.Children.Add(ArriDateButton);
+                        // CsfBorder.Content = completeDateButton;
+                        #endregion
 
                         #region ****** Save Button *****
                         if (AppSettings.User.EnableHoursAtRate == false)
                         {
                             StackLayout SbtnStackLayout = new StackLayout();
-                            FromMainGrid.Children.Add(SbtnStackLayout, 1, 1);
+                            FromMainGrid.Children.Add(SbtnStackLayout, 1, 2);
 
 
                             SbtnStackLayout.Children.Add(Hrs1);
@@ -1305,7 +1329,10 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                             {
                                 FromDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt");
                             }
-
+                            if (item.ArrivalDate != null)
+                            {
+                                ArriDateButton.Text = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.ArrivalDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt");
+                            }
                         }
                         catch (Exception ex)
                         {

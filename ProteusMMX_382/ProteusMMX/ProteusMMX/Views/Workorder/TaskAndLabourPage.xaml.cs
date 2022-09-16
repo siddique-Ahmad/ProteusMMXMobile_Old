@@ -100,7 +100,7 @@ namespace ProteusMMX.Views.Workorder
             base.OnAppearing();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
-
+            test1.Children.Clear();
             ServiceOutput InspectionList = await ViewModel._inspectionService.GetWorkorderInspection(ViewModel.WorkorderID.ToString(),AppSettings.User.UserID.ToString());
             if (InspectionList.listInspection != null && InspectionList.listInspection.Count > 0)
             {
@@ -160,7 +160,7 @@ namespace ProteusMMX.Views.Workorder
         protected override async void OnDisappearing()
         {
             base.OnDisappearing();
-
+            test1.Children.Clear();
             if (BindingContext is IHandleViewDisappearing viewAware)
             {
                 await viewAware.OnViewDisappearingAsync(this);

@@ -91,7 +91,7 @@
                 <ScrollView Grid.Row="1" Padding="0,0,0,0">
 
                     <!--This is gonna be content grid-->
-                    <StackLayout >
+                    <StackLayout x:Name="test1">
 
 
                     </StackLayout>
