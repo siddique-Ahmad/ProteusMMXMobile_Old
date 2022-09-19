@@ -813,7 +813,15 @@ namespace ProteusMMX.ViewModel.Workorder
                 ///TODO: Get Workorder data 
                 if (!string.IsNullOrWhiteSpace(SearchText))
                 {
+
                     workorderLabour = await _taskAndLabourService.WorkOrderLaborsByWorkOrderIDAndTaskNumber(UserID, WorkorderID.ToString(), SearchText);
+                    if(workorderLabour.workOrderWrapper.workOrderLabors == null && workorderLabour.workOrderWrapper.workOrderLabors.Count == 0)
+                    {
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Thistaskdoesnotexist"), 2000);
+                        return;
+
+                    }
+                      
                 }
                 else
                 {
@@ -2221,6 +2229,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         contentLayout.Children.Add(MasterstackLayout);
                     }
                 }
+                
 
             }
             catch (Exception ex)

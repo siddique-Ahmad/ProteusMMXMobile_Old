@@ -834,6 +834,12 @@ namespace ProteusMMX.ViewModel.Workorder
                     TotalRecordCount = workordersResponse.workOrderWrapper.tools.Count;
 
                 }
+                else
+                {
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Thistoolnumberdoesnotexist"), 2000);
+                    TotalRecordCount = 0;
+                    return;
+                }
             }
             catch (Exception ex)
             {
