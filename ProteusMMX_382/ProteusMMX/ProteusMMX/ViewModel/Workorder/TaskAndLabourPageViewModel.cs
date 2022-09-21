@@ -815,7 +815,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
 
                     workorderLabour = await _taskAndLabourService.WorkOrderLaborsByWorkOrderIDAndTaskNumber(UserID, WorkorderID.ToString(), SearchText);
-                    if(workorderLabour.workOrderWrapper.workOrderLabors == null && workorderLabour.workOrderWrapper.workOrderLabors.Count == 0)
+                    if(workorderLabour.workOrderWrapper.workOrderLabors.Count == 0)
                     {
                         DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Thistaskdoesnotexist"), 2000);
                         return;

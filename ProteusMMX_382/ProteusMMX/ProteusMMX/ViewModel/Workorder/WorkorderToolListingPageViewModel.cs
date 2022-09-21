@@ -984,7 +984,10 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
-            this.SearchText = "";
+            if (!String.IsNullOrEmpty(this.SearchText))
+            {
+                this.SearchText = "";
+            }
         }
 
 
