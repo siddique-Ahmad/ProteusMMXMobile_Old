@@ -303,7 +303,7 @@
                             </Grid>
 
                         <Grid
-                Padding="10,10,10,10"
+                Padding="10,13,10,10"
                 RowSpacing="5"
                 VerticalOptions="Fill" Grid.Row="1">
 

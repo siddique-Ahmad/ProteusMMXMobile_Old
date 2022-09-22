@@ -1258,7 +1258,8 @@ namespace ProteusMMX.ViewModel
                 if (WOlistCount == 0 && WOTasklistCount == 0 && WOInspectionlistCount == 0 && WOToolslistCount == 0 && WOPartslistCount == 0 && WOAttalistCount == 0)
                 {
                     ServiceOutput FormControlsAndRightsForDetails;
-                    var DetailsSerializer = await PCLHelper.ReadAllTextAsync("Details", folder);
+                    //  var DetailsSerializer = await PCLHelper.ReadAllTextAsync("Details", folder);
+                    var DetailsSerializer = "";
                     if (DetailsSerializer == null || DetailsSerializer == "")
                     {
                         FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Details");
@@ -1274,7 +1275,8 @@ namespace ProteusMMX.ViewModel
                     }
 
                     ServiceOutput FormControlsAndRightsForTask;
-                    var TasksSerializer = await PCLHelper.ReadAllTextAsync("Tasks", folder);
+                    //var TasksSerializer = await PCLHelper.ReadAllTextAsync("Tasks", folder);
+                    var TasksSerializer = "";
                     if (TasksSerializer == null || TasksSerializer == "")
                     {
                          FormControlsAndRightsForTask = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tasks");
@@ -1291,7 +1293,8 @@ namespace ProteusMMX.ViewModel
                     }
 
                     ServiceOutput FormControlsAndRightsForInspection;
-                    var InspectionSerializer = await PCLHelper.ReadAllTextAsync("Inspections", folder);
+                    //var InspectionSerializer = await PCLHelper.ReadAllTextAsync("Inspections", folder);
+                    var InspectionSerializer = "";
                     if (InspectionSerializer == null || InspectionSerializer == "")
                     {
                         FormControlsAndRightsForInspection = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Inspections");
@@ -1308,7 +1311,8 @@ namespace ProteusMMX.ViewModel
                     }
 
                     ServiceOutput FormControlsAndRightsForTools;
-                    var ToolsSerializer = await PCLHelper.ReadAllTextAsync("Tools", folder);
+                    //var ToolsSerializer = await PCLHelper.ReadAllTextAsync("Tools", folder);
+                    var ToolsSerializer = "";
                     if (ToolsSerializer == null || ToolsSerializer == "")
                     {
                         FormControlsAndRightsForTools = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tools");
@@ -1326,7 +1330,8 @@ namespace ProteusMMX.ViewModel
 
 
                     ServiceOutput FormControlsAndRightsForParts;
-                    var PartsSerializer = await PCLHelper.ReadAllTextAsync("Parts", folder);
+                    //var PartsSerializer = await PCLHelper.ReadAllTextAsync("Parts", folder);
+                    var PartsSerializer = "";
                     if (PartsSerializer == null || PartsSerializer == "")
                     {
                         FormControlsAndRightsForParts = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Parts");
@@ -1342,7 +1347,8 @@ namespace ProteusMMX.ViewModel
                     }
 
                     ServiceOutput FormControlsAndRightsForAttachments;
-                    var AttachmentsSerializer = await PCLHelper.ReadAllTextAsync("Attachments", folder);
+                    //var AttachmentsSerializer = await PCLHelper.ReadAllTextAsync("Attachments", folder);
+                    var AttachmentsSerializer = "";
                     if (AttachmentsSerializer == null || AttachmentsSerializer == "")
                     {
                         FormControlsAndRightsForAttachments = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Attachments");
