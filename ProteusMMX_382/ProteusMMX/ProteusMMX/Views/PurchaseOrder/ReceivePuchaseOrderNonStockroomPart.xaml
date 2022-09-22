@@ -51,6 +51,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -87,7 +88,7 @@
                 </StackLayout>
 
 
-                <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="0">
+                <StackLayout Orientation="Vertical" Grid.Row="2">
                     <Label Text="{Binding ReceiverNameTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                         <Label.FontAttributes>
                             <OnPlatform x:TypeArguments="FontAttributes">
@@ -101,7 +102,7 @@
                     </border:SfBorder>
                 </StackLayout>
 
-                <StackLayout Orientation="Vertical" Grid.Row="2" Grid.Column="1">
+                <StackLayout Orientation="Vertical" Grid.Row="3" Grid.ColumnSpan="2">
                     <Label Text="{Binding ReceivedDateTitle}" TextColor="Black">
                         <Label.FontAttributes>
                             <OnPlatform x:TypeArguments="FontAttributes">
@@ -115,7 +116,7 @@
                     </border:SfBorder>
                 </StackLayout>
 
-                <StackLayout  Grid.Row="3" Grid.Column="0" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <StackLayout  Grid.Row="4" Grid.Column="0" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                     <Label x:Name="INumber" TextColor="Black" Text="{Binding InvoiceNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
                         <Label.FontAttributes>
                             <OnPlatform x:TypeArguments="FontAttributes">
@@ -130,7 +131,7 @@
                     </border:SfBorder>
                 </StackLayout>
 
-                <StackLayout  Grid.Row="3" Grid.Column="1" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
+                <StackLayout  Grid.Row="4" Grid.Column="1" Orientation="Vertical" HorizontalOptions="FillAndExpand" VerticalOptions="Start">
                     <Label x:Name="PackNumber" TextColor="Black"  Text="{Binding PackagingSlipNumber}"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" Style="{StaticResource LabelStyle}">
                         <Label.FontAttributes>
                             <OnPlatform x:TypeArguments="FontAttributes">
@@ -145,7 +146,7 @@
                     </border:SfBorder>
                 </StackLayout>
 
-                <StackLayout   HorizontalOptions="CenterAndExpand" WidthRequest="100" Padding="0,10,0,0" Grid.ColumnSpan="2" Grid.Row="4">
+                <StackLayout   HorizontalOptions="CenterAndExpand" WidthRequest="100" Padding="0,10,0,0" Grid.ColumnSpan="2" Grid.Row="5">
                     <!--<Button Text="{Binding ReceiveTitle}" TextColor="Black"  BackgroundColor="{Binding ColorBackground}" IsEnabled="{Binding ReceivedButtonIsEnabled}" IsVisible="{Binding ReceivedButtonIsVisible}" Command="{Binding ReceivePurchaseOrderPartCommand}"  />-->
                     <Button
                         CornerRadius="5"
