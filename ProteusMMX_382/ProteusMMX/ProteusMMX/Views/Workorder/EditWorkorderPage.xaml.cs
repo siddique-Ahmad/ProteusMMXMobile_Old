@@ -1,4 +1,5 @@
-﻿using ProteusMMX.Model.CommonModels;
+﻿using ProteusMMX.Helpers;
+using ProteusMMX.Model.CommonModels;
 using ProteusMMX.ViewModel;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
@@ -72,6 +73,10 @@ namespace ProteusMMX.Views.Workorder
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
             }
+            if (!string.IsNullOrWhiteSpace(e1.Text))
+            {
+                e1.Text = ShortString.ConverthhmmTime(e1.Text);
+            }
         }
 
         private void NumericEntry_TextChanged_1(object sender, TextChangedEventArgs e)
@@ -88,6 +93,10 @@ namespace ProteusMMX.Views.Workorder
             {
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
+            }
+            if (!string.IsNullOrWhiteSpace(e1.Text))
+            {
+                e1.Text = ShortString.ConverthhmmTime(e1.Text);
             }
         }
 
