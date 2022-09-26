@@ -6615,6 +6615,10 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
             }
+            if (!string.IsNullOrEmpty(e1.Text))
+            {
+                e1.Text = ShortString.ConverthhmmTime(e1.Text);
+            }
         }
 
         private void Picker_SelectedIndexChanged(object sender, EventArgs e)
