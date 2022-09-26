@@ -134,6 +134,7 @@ namespace ProteusMMX.Views.Workorder
 
             if (BindingContext is IHandleViewAppearing viewAware)
             {
+                test1.Children.Clear();
                 await viewAware.OnViewAppearingAsync(this);
             }
         }

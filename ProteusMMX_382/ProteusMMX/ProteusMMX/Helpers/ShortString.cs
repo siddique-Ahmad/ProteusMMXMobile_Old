@@ -174,5 +174,39 @@ namespace ProteusMMX.Helpers
                 toView = yourStr;
             return toView;
         }
+
+        public static String ConverthhmmTime(string time)
+        {
+            string fulltime = string.Empty;
+            if (time.Contains("."))
+            {
+               
+                string hh = string.Empty;
+                string mm = string.Empty;
+
+                string[] sString = time.Split('.');
+                hh = sString[0];
+                mm = sString[1];
+
+                string firstTwoHHChar = !String.IsNullOrWhiteSpace(hh) && hh.Length >= 2 ? hh.Substring(0, 2) : hh;
+                string firstTwoMMChar = !String.IsNullOrWhiteSpace(mm) && mm.Length >= 2 ? mm.Substring(0, 2) : mm;
+
+                if (!string.IsNullOrWhiteSpace(firstTwoMMChar))
+                {
+                    int mms = Convert.ToInt32(firstTwoMMChar);
+                    if (mms > 59)
+                    {
+                        firstTwoMMChar = "00";
+                    }
+                }
+                fulltime = firstTwoHHChar + "." + firstTwoMMChar;
+            }
+            else
+            {
+                string firstTwoHHChar = !String.IsNullOrWhiteSpace(time) && time.Length >= 2 ? time.Substring(0, 2) : time;
+                fulltime = firstTwoHHChar;
+            }
+            return fulltime;
+        }
     }
 }

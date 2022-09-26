@@ -1,4 +1,5 @@
 ﻿using ProteusMMX.DependencyInterface;
+using ProteusMMX.Helpers;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
 using Syncfusion.XForms.Border;
@@ -72,7 +73,10 @@ namespace ProteusMMX.Views.Workorder
                 e1.Text = val; //Set the Old value
             }
 
-
+            if (!string.IsNullOrEmpty(e1.Text))
+            {
+                e1.Text = ShortString.ConverthhmmTime(e1.Text);
+            }
             string requred = e1.FontFamily;
             if (requred == "true")
             {
@@ -103,7 +107,12 @@ namespace ProteusMMX.Views.Workorder
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
             }
+            if (!string.IsNullOrEmpty(e1.Text))
+            {
+                e1.Text = ShortString.ConverthhmmTime(e1.Text);
+            }
             string requred = e1.FontFamily;
+            
             if (requred == "true")
             {
                 var BorderColor = e1.Parent as SfBorder;

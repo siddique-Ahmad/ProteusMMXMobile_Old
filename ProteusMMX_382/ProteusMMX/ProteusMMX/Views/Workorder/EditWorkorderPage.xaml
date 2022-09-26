@@ -393,8 +393,8 @@
                                             </OnPlatform>
                                         </Label.FontAttributes>
                                     </Label>
-                                    <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                        <control1:CustomEntry FontSize="12" TextColor="Black" FontAttributes="Bold"  Text="{Binding RequestedDate, StringFormat='{0:MMM d, yyyy hh:mm tt}'}" IsEnabled="False" ></control1:CustomEntry>
+                                    <border:SfBorder Style="{StaticResource SfBorderStyle}" IsEnabled="False">
+                                        <control1:CustomEntry BackgroundColor="LightGray" FontSize="12" TextColor="Black" FontAttributes="Bold"  Text="{Binding RequestedDate, StringFormat='{0:MMM d, yyyy hh:mm tt}'}" ></control1:CustomEntry>
                                     </border:SfBorder>
                                 </StackLayout>
 
@@ -592,7 +592,7 @@
 
                                 </StackLayout>
 
-                                <StackLayout Orientation="Vertical" Grid.Row="15" Grid.Column="0" IsVisible="{Binding EstimstedDowntimeIsVisible}">
+                                <StackLayout Orientation="Vertical" Grid.Row="15"  Grid.Column="0" IsVisible="{Binding EstimstedDowntimeIsVisible}">
                                     <Label Text="{Binding EstimstedDowntimeTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                         <Label.FontAttributes>
                                             <OnPlatform x:TypeArguments="FontAttributes">
@@ -602,11 +602,8 @@
                                         </Label.FontAttributes>
                                     </Label>
 
-                                    <border:SfBorder
-                                    Style="{StaticResource SfBorderStyle}">
-                                        <control1:CustomEntry
-                                    x:Name="EstimstedDowntime"      
-                            Text="{Binding EstimstedDowntimeText}" Placeholder="hh.mm"
+                                    <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                        <control1:CustomEntry x:Name="EstimstedDowntime" Text="{Binding EstimstedDowntimeText}" Placeholder="hh.mm"
                                         IsEnabled="{Binding EstimstedDowntimeIsEnable , Mode=TwoWay}"
                             TextColor="{DynamicResource Gray-900}"
                                     TextChanged="NumericEntry_TextChanged"/>
