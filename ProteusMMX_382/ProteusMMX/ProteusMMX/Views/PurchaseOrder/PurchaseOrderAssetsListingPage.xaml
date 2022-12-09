@@ -39,9 +39,9 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <Label TextColor="Red"  Grid.Row="1" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}" />
+            <Label TextColor="Red" HorizontalOptions="Center" Grid.Row="1" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}" />
 
-            <Grid Grid.Row="1"  Padding="5,0,5,0">
+            <Grid Grid.Row="1"  Padding="10,10,10,10">
                 <ListView Grid.ColumnSpan="2"
                           ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"

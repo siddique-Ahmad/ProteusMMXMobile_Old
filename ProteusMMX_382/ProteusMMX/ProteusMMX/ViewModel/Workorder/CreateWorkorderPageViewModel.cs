@@ -1028,7 +1028,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-
+        ServiceOutput workorderWrapper = new ServiceOutput();
         string _workOrderStatusIsRequred;
         public string WorkOrderStatusIsRequred
         {
@@ -5038,6 +5038,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 // await GetWorkorderControlRights();
                 OriginatorName = AppSettings.User.UserName;
                 await SetTitlesPropertiesForPage();
+                 workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
                 await CreateControlsForPage();
                 if (this.WorkorderID > 0)
                 {
@@ -6204,7 +6205,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
 
 
-            var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+            //var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
             if (workorderWrapper != null && workorderWrapper.workOrderWrapper != null && workorderWrapper.workOrderWrapper.workOrder != null)
             {
                 bool fdasignatureKey = AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation;
@@ -10996,7 +10997,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 #endregion
 
                 #region Check WorkOrder Identified through Breakdown
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+                //var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.WorkOrderIdentifiedThroughBreakdownFlag) && MaintenanceCodeName == "IDENTIFIED THROUGH BREAKDOWN")
                 {
                     // string expression = @"^(\()?[0-9]+(?>,[0-9]{3})*(?>\.[0-9]{3})?(?<!^[0\.]+)$";

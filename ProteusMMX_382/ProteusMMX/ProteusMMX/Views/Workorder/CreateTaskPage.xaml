@@ -155,7 +155,7 @@
                                 </Label.FontAttributes>
                             </Label>
                             <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                <controls:CustomDatePicker SelectedDate="{Binding TaskCompletionDate}" Margin="0,8,0,0" MinimumDate="{Binding MinimumTaskCompletionDate}" MaximumDate="{Binding MaximumTaskCompletionDate}" IsEnabled="{Binding TaskCompletionDateIsEnable}" />
+                                <controls:AddTaskCustomDatePicker SelectedDate="{Binding TaskCompletionDate}" Margin="0,8,0,0" MinimumDate="{Binding MinimumTaskCompletionDate}" MaximumDate="{Binding MaximumTaskCompletionDate}" IsEnabled="{Binding TaskCompletionDateIsEnable}" />
                             </border:SfBorder>
                         </StackLayout>
 

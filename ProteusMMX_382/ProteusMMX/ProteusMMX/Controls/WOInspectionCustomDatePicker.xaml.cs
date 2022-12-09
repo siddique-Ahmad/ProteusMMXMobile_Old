@@ -1,4 +1,6 @@
 ﻿using Acr.UserDialogs;
+using ProteusMMX.Helpers;
+using ProteusMMX.Helpers.DateTime;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ using Xamarin.Forms.Xaml;
 namespace ProteusMMX.Controls
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CloseCustomeDatePicker : ContentView
+    public partial class WOInspectionCustomDatePicker : ContentView
     {
 
         #region Selected Date Bindable Property
@@ -78,23 +80,30 @@ namespace ProteusMMX.Controls
 
         }
         #endregion
-
-        public CloseCustomeDatePicker()
+        public WOInspectionCustomDatePicker()
         {
             InitializeComponent();
         }
-
         private async void SelectDate_Clicked(object sender, EventArgs e)
         {
             try
             {
-
-                var dateConfig = new DatePromptConfig();
+                
+                string AutoFillCompleteOnTaskAndLabor = string.Empty;
+                string IsAnyInspectionHoursFilled = string.Empty;
+                string IsHoursRequiredForCompletionDate = string.Empty;
+                string IsInspectionAnswerRequiredforCompletionDate = string.Empty;
+                string IsAllAnswersFilled = string.Empty;
+                
+                var dateConfig = new Acr.UserDialogs.DatePromptConfig();
                 var timeConfig = new Acr.UserDialogs.TimePromptConfig();
                 dateConfig.MinimumDate = this.MinimumDate;
                 dateConfig.MaximumDate = this.MaximumDate;
-                dateConfig.SelectedDate = this.SelectedDate;
+                dateConfig.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
                 dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
+
+                var times = Helpers.DateTime.DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                timeConfig.SelectedTime = times.TimeOfDay;
 
                 if (Device.RuntimePlatform == Device.iOS)
                 {
@@ -103,33 +112,85 @@ namespace ProteusMMX.Controls
                 }
 
                 var dateResult = await UserDialogs.Instance.DatePromptAsync(dateConfig);
+
+                var TimeResult = await UserDialogs.Instance.TimePromptAsync(timeConfig);
+
                 if (dateResult.SelectedDate != null && dateResult.SelectedDate.Year == 0001)
                 {
                     SelectedDate = null;
                 }
+
                 if (dateResult.Ok == false)
                 {
-                    if (Application.Current.Properties.ContainsKey("ModuleName"))
-                    {
-                        var Modulename = Application.Current.Properties["ModuleName"].ToString();
-                        if (Modulename == "PO")
-                        {
-                            if (SelectedDate == null)
-                            {
-                                SelectedDate = dateConfig.SelectedDate;
-                            }
-                        }
-
-                    }
                     return;
                 }
-                //if (dateResult != null && dateResult.SelectedDate != null && dateResult.SelectedDate.Year == 0001)
-                //{
-                //    return;
-                //}
 
                 if (dateResult.Ok == true)
                 {
+                    #region Check Hours Required Completion Inspection
+
+                    if (Application.Current.Properties.ContainsKey("AutoFillCompleteOnTaskAndLabor"))
+                    {
+                        AutoFillCompleteOnTaskAndLabor = Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"].ToString();
+                    }
+                    if (Application.Current.Properties.ContainsKey("IsAnyInspectionHoursFilled"))
+                    {
+                        IsAnyInspectionHoursFilled = Application.Current.Properties["IsAnyInspectionHoursFilled"].ToString();
+                    }
+                    if (Application.Current.Properties.ContainsKey("IsHoursRequiredForCompletionDate"))
+                    {
+                        IsHoursRequiredForCompletionDate = Application.Current.Properties["IsHoursRequiredForCompletionDate"].ToString();
+                    }
+                    if (!string.IsNullOrWhiteSpace(AutoFillCompleteOnTaskAndLabor))
+                    {
+                        if (AutoFillCompleteOnTaskAndLabor == "True" && IsAnyInspectionHoursFilled == "False" && IsHoursRequiredForCompletionDate=="True")
+                        {
+
+                            UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"));
+                            return;
+
+                        }
+                    }
+
+                    #endregion
+                    #region Check All Answers filled for Inspection
+
+                    if (Application.Current.Properties.ContainsKey("AutoFillCompleteOnTaskAndLabor"))
+                    {
+                        AutoFillCompleteOnTaskAndLabor = Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"].ToString();
+                    }
+                  
+                    if (Application.Current.Properties.ContainsKey("IsInspectionAnswerRequiredforCompletionDate"))
+                    {
+                        IsInspectionAnswerRequiredforCompletionDate = Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"].ToString();
+                    }
+                    if (Application.Current.Properties.ContainsKey("IsAllAnswersFilled"))
+                    {
+                        try
+                        {
+                            IsAllAnswersFilled = Application.Current.Properties["IsAllAnswersFilled"].ToString();
+                        }
+                        catch (Exception ex)
+                        {
+
+                            IsAllAnswersFilled = "";
+                        }
+
+                    }
+                    if (!string.IsNullOrWhiteSpace(AutoFillCompleteOnTaskAndLabor))
+                    {
+                        if (AutoFillCompleteOnTaskAndLabor == "True" && IsInspectionAnswerRequiredforCompletionDate == "True" && IsAllAnswersFilled=="False")
+                        {
+
+                            UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleaseProvideRequiredSectionQuestionAnswer"));
+                            return;
+
+                        }
+                    }
+
+                    #endregion
+
+
                     if (dateResult.SelectedDate != null && dateResult.SelectedDate.Year != 0001)
                     {
                         SelectedDate = dateResult.SelectedDate;
@@ -138,7 +199,6 @@ namespace ProteusMMX.Controls
                     {
                         SelectedDate = dateResult.SelectedDate;
                     }
-
                     if (MinimumDate != null)
                     {
 
@@ -164,21 +224,21 @@ namespace ProteusMMX.Controls
                         }
 
                     }
-                    if (Application.Current.Properties.ContainsKey("ModuleName"))
+                    if (MaximumDate == null && SelectedDate == null && MinimumDate == null && dateResult.SelectedDate.Year == 0001)
                     {
-                        var Modulename = Application.Current.Properties["ModuleName"].ToString();
-                        if (Modulename == "PO")
-                        {
-                            if (SelectedDate == null)
-                            {
-                                SelectedDate = dateConfig.SelectedDate;
-                            }
-                        }
-
+                        SelectedDate = DateTime.Now;
                     }
+
                 }
 
-                //  SelectedDate = dateResult.SelectedDate;
+                if (TimeResult.Ok == true)
+                {
+                    DateTime datetime4 = SelectedDate.Value.Date;
+                    DateTime datetime3 = datetime4.Add(TimeResult.SelectedTime);
+                    SelectedDate = datetime3;
+                }
+
+                //   SelectedDate = dateResult.SelectedDate;
 
 
             }
@@ -186,7 +246,14 @@ namespace ProteusMMX.Controls
             {
 
             }
+
+
+
         }
 
+        private void ClearDate_Clicked(object sender, EventArgs e)
+        {
+            SelectedDate = null;
+        }
     }
 }

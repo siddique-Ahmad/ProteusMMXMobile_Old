@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.proteusMMX.MMX" android:installLocation="auto" android:versionName="3.15.12" android:versionCode="13">
-	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="30" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.proteusMMX.MMX" android:installLocation="auto" android:versionName="3.15.15" android:versionCode="76">
+	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="31" />
 	<uses-permission android:name="android.permission.INTERNET" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.FLASHLIGHT" />
@@ -10,10 +10,12 @@
 	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
 	<uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
 	<application android:label="ProteusMMX" android:hardwareAccelerated="true" android:largeHeap="true" android:requestLegacyExternalStorage="true" android:icon="@drawable/icon">
-		<!--<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.proteusMMX.MMS.fileprovider" android:exported="false" android:grantUriPermissions="true">
-			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
-		</provider>-->
-		<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.proteusMMX.MMX.fileprovider" android:exported="false" android:grantUriPermissions="true">
+		<receiver android:name="crc6494e14b9856016c30.PNFirebaseMessagingService" android:exported="false">
+			<intent-filter>
+				<action android:name="com.google.firebase.MESSAGING_EVENT" />
+			</intent-filter>
+		</receiver>
+		<provider android:name="android.support.v4.content.FileProvider" android:authorities="com.proteusMMX.MMX.fileprovider" android:grantUriPermissions="true">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
 		</provider>
 	</application>

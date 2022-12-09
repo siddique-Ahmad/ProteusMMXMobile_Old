@@ -5140,6 +5140,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     this.Cause = workorderWrapper.workOrderWrapper.Cause[0];
 
                 }
+               
                 if (workorderWrapper.workOrderWrapper.WorkorderCreatedfromSchedule)
                 {
                     IsWorkorderFromSchedule = true;
@@ -9787,10 +9788,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 /// Retrive Workorder Data and Set Control properties
                 /// 
-             //   await SetControlsPropertiesForPage(workOrderWra);
+               // await SetControlsPropertiesForPage(workOrderWra);
+                workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
                 ///TODO: Get Workorder Labour data 
-              workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
+                workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
 
 
                 // TODO: Get Workorder data
@@ -9976,8 +9978,108 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 #endregion
 
+                #region Set IsAllAnswersFilled property
 
+                if (workorderWrapper.workOrderWrapper.IsAllAnswersFilled == "False")
+                {
+                    Application.Current.Properties["IsAllAnswersFilled"] = "False";
 
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllAnswersFilled"] = workorderWrapper.workOrderWrapper.IsAllAnswersFilled;
+                }
+                #endregion
+                #region Set IsAllTaskHoursFilled property
+
+                if (workorderWrapper.workOrderWrapper.IsAllTaskHousFilled == "False")
+                {
+                    Application.Current.Properties["IsAllTaskHousFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllTaskHousFilled"] = workorderWrapper.workOrderWrapper.IsAllTaskHousFilled;
+                }
+                #endregion
+                #region Set IsAllInspectionHoursFilled property
+                if (workorderWrapper.workOrderWrapper.IsAllInspectionHousFilled == "False")
+                {
+                    Application.Current.Properties["IsAllInspectionHousFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllInspectionHousFilled"] = workorderWrapper.workOrderWrapper.IsAllInspectionHousFilled;
+                }
+                #endregion
+
+                #region Set HoursRequiredService Flag
+                if (workorderWrapper.workOrderWrapper.IsHoursRequiredForCompletionDate == "True")
+                {
+                    Application.Current.Properties["IsHoursRequiredForCompletionDate"] = workorderWrapper.workOrderWrapper.IsHoursRequiredForCompletionDate;
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsHoursRequiredForCompletionDate"] = "False";
+
+                }
+                #endregion
+
+                #region Set AllAnswersRequiredService Flag
+                if (workorderWrapper.workOrderWrapper.IsInspectionAnswerRequiredforCompletionDate == "True")
+                {
+                    Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"] = workorderWrapper.workOrderWrapper.IsInspectionAnswerRequiredforCompletionDate;
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"] = "False";
+
+                }
+                #endregion
+
+                #region Check for Task/Inspection
+
+                if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Task")
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Task";
+
+                }
+                else if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspection")
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Inspection";
+                }
+                else
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "";
+                }
+                #endregion
+
+                #region Check for Autocomplete Task/Inspection
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
+                {
+                  Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"] = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
+                }
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyTaskHoursFilled))
+                {
+                    Application.Current.Properties["IsAnyTaskHoursFilled"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsAnyTaskHoursFilled"] = "False";
+                }
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyInspectionHoursFilled))
+                {
+                    Application.Current.Properties["IsAnyInspectionHoursFilled"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsAnyInspectionHoursFilled"] = "False";
+                }
+
+                #endregion
 
 
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor) && workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate == null)
@@ -10469,6 +10571,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
                     CauseID = workorderWrapper.workOrderWrapper.Cause[0].CauseID;
+                    Application.Current.Properties["CauseID"] = CauseID;
+
                 }
 
                 if (!string.IsNullOrEmpty(workorder.WorkOrderRequesterName))
@@ -11226,6 +11330,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 this.CauseName = ShortString.shorten(cause.CauseNumber);
 
                 this.Cause = cause;
+                Application.Current.Properties["CauseID"] = this.CauseID;
             }
 
 
@@ -14002,6 +14107,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             Application.Current.Properties["AssetDefaultEmployee"] = this.AssetID;
             Application.Current.Properties["LocationDefaultEmployee"] = this.LocationID;
+            Application.Current.Properties["CauseID"] = "";
             return Task.FromResult(true);
 
         }

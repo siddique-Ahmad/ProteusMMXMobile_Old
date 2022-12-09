@@ -55,6 +55,16 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string IsCheckedCause { get; set; }
         public string IsCheckedAutoFillCompleteOnTaskAndLabor { get; set; }
 
+        public string IsHoursRequiredForCompletionDate { get; set; }
+        public string IsInspectionAnswerRequiredforCompletionDate { get; set; }
+
+        public string IsAllAnswersFilled { get; set; }
+        public string IsAllTaskHousFilled { get; set; }
+        public string IsAllInspectionHousFilled { get; set; }
+
+        public string IsAnyTaskHoursFilled { get; set; }
+        public string IsAnyInspectionHoursFilled { get; set; }
+
         public List<Sections> sections { get; set; }
 
         public DateTime? InitialStartDate { get; set; }

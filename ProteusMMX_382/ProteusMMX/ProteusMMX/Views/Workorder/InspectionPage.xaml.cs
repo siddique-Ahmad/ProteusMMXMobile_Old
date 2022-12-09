@@ -234,6 +234,10 @@ namespace ProteusMMX.Views.Workorder
         public DateTime? InspectionCompletionDate { get; set; }
         public DateTime? InspectionStartDate { get; set; }
 
+        public DateTime? SelectedStartDate { get; set; }
+
+        public DateTime? SelectedCompDate { get; set; }
+
         public DateTime? MinimumInspectionStartDate { get; set; }
 
         public DateTime? MaximumInspectionStartDate { get; set; }
@@ -320,6 +324,16 @@ namespace ProteusMMX.Views.Workorder
             base.OnAppearing();
 
             this.WorkorderID = ViewModel.WorkorderID;
+            ServiceOutput wodetails = await ViewModel._workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+            if (wodetails.workOrderWrapper.IsAllAnswersFilled == "False")
+            {
+                Application.Current.Properties["IsAllAnswersFilled"] = "False";
+
+            }
+            else
+            {
+                Application.Current.Properties["IsAllAnswersFilled"] = wodetails.workOrderWrapper.IsAllAnswersFilled;
+            }
             ServiceOutput taskandlabourList = await ViewModel._taskAndLabourService.WorkOrderLaborsByWorkOrderID(UserID, WorkorderID.ToString());
             if (taskandlabourList != null && taskandlabourList.workOrderWrapper != null && taskandlabourList.workOrderWrapper.workOrderLabors != null && taskandlabourList.workOrderWrapper.workOrderLabors.Count > 0)
             {
@@ -332,7 +346,7 @@ namespace ProteusMMX.Views.Workorder
                 return;
             }
             UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-            await Task.Delay(3000);
+            //await Task.Delay(3000);
             if (!IsPickerDataSubscribed)
             {
 
@@ -833,6 +847,21 @@ namespace ProteusMMX.Views.Workorder
                 DateButoonSL.Children.Add(dateFromCompGrid);
 
                 StackLayout FromDateSL = new StackLayout();
+                //dateFromCompGrid.Children.Add(FromDateSL, 0, 0);
+                //Label FromDateLbl = new Label
+                //{
+                //    Text = "From Date",
+                //    FontSize = 13,
+                //    FontAttributes = FontAttributes.Bold,
+                //    TextColor = Color.FromHex("#333333")
+                //};
+                //FromDateSL.Children.Add(FromDateLbl);
+                Grid dateFromCompGrid1 = new Grid();
+                dateFromCompGrid1.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                dateFromCompGrid1.ColumnDefinitions.Add(new ColumnDefinition { Width = 50 });
+
+                FromDateSL.Children.Add(dateFromCompGrid1);
+
                 dateFromCompGrid.Children.Add(FromDateSL, 0, 0);
                 Label FromDateLbl = new Label
                 {
@@ -841,7 +870,19 @@ namespace ProteusMMX.Views.Workorder
                     FontAttributes = FontAttributes.Bold,
                     TextColor = Color.FromHex("#333333")
                 };
-                FromDateSL.Children.Add(FromDateLbl);
+                dateFromCompGrid1.Children.Add(FromDateLbl, 0, 0);
+
+                SfButton btnSave = new SfButton
+                {
+                    HeightRequest = 35,
+                    WidthRequest = 50,
+                    BackgroundColor = Color.FromHex("#87CEFA"),
+                    Text = "Save",
+                    BindingContext = item as WorkOrderEmployee,
+
+                };
+                dateFromCompGrid1.Children.Add(btnSave, 1, 0);
+                btnSave.Clicked += BtnEmployeeSave_Clicked;
                 SfBorder dateFromBo = new SfBorder
                 {
                     HeightRequest = 35,
@@ -892,10 +933,10 @@ namespace ProteusMMX.Views.Workorder
                     CornerRadius = 10
                 };
                 CompDateSL.Children.Add(dateCompBo);
-                CustomDatePicker1 CompletionDate;
+                WOInspectionCustomDatePicker CompletionDate;
                 if (item.CompletionDate != null)
                 {
-                    CompletionDate = new CustomDatePicker1
+                    CompletionDate = new WOInspectionCustomDatePicker
                     {
                         SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
@@ -905,10 +946,11 @@ namespace ProteusMMX.Views.Workorder
                     };
                     dateCompBo.Content = CompletionDate;
                 }
+              
 
                 else
                 {
-                    CompletionDate = new CustomDatePicker1
+                    CompletionDate = new WOInspectionCustomDatePicker
                     {
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         // HeightRequest = 2,
@@ -1496,6 +1538,21 @@ namespace ProteusMMX.Views.Workorder
                 DateButoonSL.Children.Add(dateFromCompGrid);
 
                 StackLayout FromDateSL = new StackLayout();
+                //dateFromCompGrid.Children.Add(FromDateSL, 0, 0);
+                //Label FromDateLbl = new Label
+                //{
+                //    Text = "From Date",
+                //    FontSize = 13,
+                //    FontAttributes = FontAttributes.Bold,
+                //    TextColor = Color.FromHex("#333333")
+                //};
+                //FromDateSL.Children.Add(FromDateLbl);
+                Grid dateFromCompGrid1 = new Grid();
+                dateFromCompGrid1.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
+                dateFromCompGrid1.ColumnDefinitions.Add(new ColumnDefinition { Width = 50 });
+
+                FromDateSL.Children.Add(dateFromCompGrid1);
+
                 dateFromCompGrid.Children.Add(FromDateSL, 0, 0);
                 Label FromDateLbl = new Label
                 {
@@ -1503,8 +1560,20 @@ namespace ProteusMMX.Views.Workorder
                     FontSize = 13,
                     FontAttributes = FontAttributes.Bold,
                     TextColor = Color.FromHex("#333333")
+
                 };
-                FromDateSL.Children.Add(FromDateLbl);
+                dateFromCompGrid1.Children.Add(FromDateLbl, 0, 0);
+
+                SfButton btnSave = new SfButton
+                {
+                    HeightRequest = 35,
+                    WidthRequest = 50,
+                    BackgroundColor = Color.FromHex("#87CEFA"),
+                    Text = "Save",
+                    BindingContext = item as WorkorderContractor,
+                };
+                dateFromCompGrid1.Children.Add(btnSave, 1, 0);
+                btnSave.Clicked += BtnContractorSave_Clicked;
                 SfBorder dateFromBo = new SfBorder
                 {
                     HeightRequest = 35,
@@ -1553,10 +1622,11 @@ namespace ProteusMMX.Views.Workorder
                     CornerRadius = 10
                 };
                 CompDateSL.Children.Add(dateCompBo);
-                CustomDatePicker1 CompletionDate;
+                WOInspectionCustomDatePicker CompletionDate;
+                
                 if (item.CompletionDate != null)
                 {
-                    CompletionDate = new CustomDatePicker1
+                    CompletionDate = new WOInspectionCustomDatePicker
                     {
                         SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
@@ -1569,7 +1639,7 @@ namespace ProteusMMX.Views.Workorder
 
                 else
                 {
-                    CompletionDate = new CustomDatePicker1
+                    CompletionDate = new WOInspectionCustomDatePicker
                     {
                         MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
@@ -3811,7 +3881,7 @@ namespace ProteusMMX.Views.Workorder
 
                         var DateSLt2 = DateGrid1.Children[1] as StackLayout;
                         var DateBodder2 = DateSLt2.Children[1] as SfBorder;
-                        var CompletionDateValue = DateBodder2.Children[0] as CustomDatePicker1;
+                        var CompletionDateValue = DateBodder2.Children[0] as WOInspectionCustomDatePicker;
                         // var CompletionDateValue1 = DateTime.Parse(CompletionDateValue.SelectedDate.ToString());
                         if (StartdateValue != null)
                         {
@@ -4304,7 +4374,7 @@ namespace ProteusMMX.Views.Workorder
 
                     var DateSLt2 = DateGrid1.Children[1] as StackLayout;
                     var DateBodder2 = DateSLt2.Children[1] as SfBorder;
-                    var CompletionDateValue = DateBodder2.Children[0] as CustomDatePicker1;
+                    var CompletionDateValue = DateBodder2.Children[0] as WOInspectionCustomDatePicker;
                     // var CompletionDateValue1 = DateTime.Parse(CompletionDateValue.SelectedDate.ToString());
 
                     if (StartdateValue != null)
@@ -4733,6 +4803,247 @@ namespace ProteusMMX.Views.Workorder
             OnAppearing();
 
         }
+        private async void BtnContractorSave_Clicked(object sender, EventArgs e)
+        {
+            UserDialogs.Instance.ShowLoading();
+            var Contractor = (sender as SfButton);
+            var Contractoritem = Contractor.BindingContext as WorkorderContractor;
+            var dateFromCompGrid1 = Contractor.Parent as Grid;
+            var FromDateSL = dateFromCompGrid1.Parent as StackLayout;
+            var dateFromCompGrid = FromDateSL.Parent as Grid;
+
+            var DateButoonSL = dateFromCompGrid.Parent as StackLayout;
+            var AssociateSL = DateButoonSL.Parent as StackLayout;
+
+            var data = AssociateSL.Children[0] as StackLayout;
+            var datas = data.Children[0] as Grid;
+
+            var data1 = datas.Children[3] as StackLayout;
+            var data2 = data1.Children[0] as Grid;
+            var data3 = data2.Children[0] as SfBorder;
+            var data4 = data3.Content as Entry;
+            var HH = data4.Text;
+            int FinalHours;
+
+            if (String.IsNullOrWhiteSpace(HH))
+            {
+                FinalHours = 0;
+            }
+            else
+            {
+                FinalHours = int.Parse(HH);
+            }
+
+            var datam1 = datas.Children[4] as StackLayout;
+            var datam2 = datam1.Children[0] as Grid;
+            var datam3 = datam2.Children[0] as SfBorder;
+            var datam4 = datam3.Content as Entry;
+            var MM = datam4.Text;
+            int FinalMinutes;
+            if (String.IsNullOrWhiteSpace(MM))
+            {
+                FinalMinutes = 0;
+            }
+            else
+            {
+                FinalMinutes = int.Parse(MM);
+            }
+
+            #region ***  Date start and compl*****
+
+            var FromDateSL1 = dateFromCompGrid.Children[0] as StackLayout;
+            var sfBorder = FromDateSL1.Children[1] as SfBorder;
+            var statedate = sfBorder.Content as CustomDatePicker1;
+            var SdateValue = statedate.SelectedDate.ToString();
+            if (String.IsNullOrWhiteSpace(SdateValue))
+            {
+                SelectedStartDate = null;
+            }
+            else
+            {
+                SelectedStartDate = Convert.ToDateTime(SdateValue);
+            }
+
+            var cmpDateSL1 = dateFromCompGrid.Children[1] as StackLayout;
+            var sfBorder1 = cmpDateSL1.Children[1] as SfBorder;
+            var cmpDateSL = sfBorder1.Content as WOInspectionCustomDatePicker;
+            var CdateValue = cmpDateSL.SelectedDate.ToString();
+            if (String.IsNullOrWhiteSpace(CdateValue))
+            {
+                SelectedCompDate = null;
+            }
+            else
+            {
+                SelectedCompDate = Convert.ToDateTime(CdateValue);
+            }
+            #endregion
+            try
+            {
+                List<InspectionTOAnswers> listtoAnswer = new List<InspectionTOAnswers>();
+                var result = new TimeSpan(FinalHours, FinalMinutes, 0);
+                totalTime = result.TotalSeconds;
+                listtoAnswer.Add(new InspectionTOAnswers()
+                {
+                    WorkOrderID = this.WorkorderID,
+                    InspectionTime = ((int)totalTime).ToString(),
+                    StartDate = SelectedStartDate,
+                    CompletionDate = SelectedCompDate,
+                    ContractorLaborCraftId = Contractoritem.ContractorLaborCraftID.ToString(),
+                    ModifiedUserName = AppSettings.UserName,
+                    WorkOrderInspectionTimeID = Contractoritem.WorkOrderInspectionTimeID
+
+
+                });
+                var yourobject1 = new InspectionTOAnswers
+                {
+                    inspectionToAnswers = listtoAnswer,
+                    ClientIANATimeZone = DateTimeZoneProviders.Serialization.GetSystemDefault().ToString(),
+                    UserID = long.Parse(this.UserId),
+
+                };
+
+
+                ServiceOutput serviceStatus1 = await ViewModel._inspectionService.SaveWorkorderInspectionTime(yourobject1);
+                if (serviceStatus1.servicestatus == "true")
+                {
+
+                    UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("AnswerSuccessfullySaved"), TimeSpan.FromSeconds(2));
+                }
+                UserDialogs.Instance.HideLoading();
+                total = total.Subtract(total);
+                MainLayout.Children.Clear();
+                ParentLayout.Children.Clear();
+                OnAppearing();
+            }
+            catch (Exception ex)
+            {
+
+                
+            }
+           
+        }
+
+
+        private async void BtnEmployeeSave_Clicked(object sender, EventArgs e)
+        {
+            UserDialogs.Instance.ShowLoading();
+            var Employee = (sender as SfButton);
+            var Employeeitem = Employee.BindingContext as WorkOrderEmployee;
+
+            var dateFromCompGrid1 = Employee.Parent as Grid;
+            var FromDateSL = dateFromCompGrid1.Parent as StackLayout;
+            var dateFromCompGrid = FromDateSL.Parent as Grid;
+
+            var DateButoonSL = dateFromCompGrid.Parent as StackLayout;
+            var AssociateSL = DateButoonSL.Parent as StackLayout;
+
+            var data = AssociateSL.Children[0] as StackLayout;
+            var datas = data.Children[0] as Grid;
+
+            var data1 = datas.Children[3] as StackLayout;
+            var data2 = data1.Children[0] as Grid;
+            var data3 = data2.Children[0] as SfBorder;
+            var data4 = data3.Content as Entry;
+            var HH = data4.Text;
+            int FinalHours;
+         
+            if (String.IsNullOrWhiteSpace(HH))
+            {
+                FinalHours = 0;
+            }
+            else
+            {
+                FinalHours =int.Parse(HH);
+            }
+
+            var datam1 = datas.Children[4] as StackLayout;
+            var datam2 = datam1.Children[0] as Grid;
+            var datam3 = datam2.Children[0] as SfBorder;
+            var datam4 = datam3.Content as Entry;
+            var MM = datam4.Text;
+            int FinalMinutes;
+            if (String.IsNullOrWhiteSpace(MM))
+            {
+                FinalMinutes = 0;
+            }
+            else
+            {
+                FinalMinutes = int.Parse(MM);
+            }
+            #region ***  Date start and compl*****
+
+            var FromDateSL1 = dateFromCompGrid.Children[0] as StackLayout;
+            var sfBorder = FromDateSL1.Children[1] as SfBorder;
+            var statedate = sfBorder.Content as CustomDatePicker1;
+            var StartdateValue = statedate.SelectedDate.ToString();
+            if(String.IsNullOrWhiteSpace(StartdateValue))
+            {
+                SelectedStartDate = null;
+            }
+            else
+            {
+                SelectedStartDate =Convert.ToDateTime(StartdateValue);
+            }
+
+            var cmpDateSL1 = dateFromCompGrid.Children[1] as StackLayout;
+            var sfBorder1 = cmpDateSL1.Children[1] as SfBorder;
+            var cmpDateSL = sfBorder1.Content as WOInspectionCustomDatePicker;
+            var CompdateValue = cmpDateSL.SelectedDate.ToString();
+            if (String.IsNullOrWhiteSpace(CompdateValue))
+            {
+                SelectedCompDate = null;
+            }
+            else
+            {
+                SelectedCompDate = Convert.ToDateTime(CompdateValue);
+            }
+            #endregion
+
+            List<InspectionTOAnswers> listtoAnswer = new List<InspectionTOAnswers>();
+            var result = new TimeSpan(FinalHours,FinalMinutes, 0);
+            totalTime = result.TotalSeconds;
+            listtoAnswer.Add(new InspectionTOAnswers()
+            {
+                WorkOrderID = this.WorkorderID,
+                InspectionTime = ((int)totalTime).ToString(),
+                StartDate = SelectedStartDate,
+                CompletionDate =SelectedCompDate,
+                EmployeeLaborCraftid = Employeeitem.EmployeeLaborCraftID.ToString(),
+                ModifiedUserName = AppSettings.UserName,
+                WorkOrderInspectionTimeID = Employeeitem.WorkOrderInspectionTimeID
+
+
+            });
+            var yourobject1 = new InspectionTOAnswers
+            {
+                inspectionToAnswers = listtoAnswer,
+                ClientIANATimeZone = DateTimeZoneProviders.Serialization.GetSystemDefault().ToString(),
+                UserID = long.Parse(this.UserId),
+
+            };
+
+
+            ServiceOutput serviceStatus1 = await ViewModel._inspectionService.SaveWorkorderInspectionTime(yourobject1);
+            if (serviceStatus1.servicestatus == "true")
+            {
+
+                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("AnswerSuccessfullySaved"), TimeSpan.FromSeconds(2));
+            }
+            UserDialogs.Instance.HideLoading();
+            total = total.Subtract(total);
+            MainLayout.Children.Clear();
+            ParentLayout.Children.Clear();
+            OnAppearing();
+        }
+
+
+
+
+
+
+        
+
+
         private async void BtnContractorDelete_Clicked(object sender, EventArgs e)
         {
 

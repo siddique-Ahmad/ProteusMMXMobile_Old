@@ -60,7 +60,7 @@
                 </Grid.RowDefinitions>
                 <AbsoluteLayout>
                     <!--<ScrollView>-->
-                        <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
+                    <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="SizeProportional">
 
                         <Grid >
                             <Grid.RowDefinitions>
@@ -103,7 +103,7 @@
                                     <ColumnDefinition  Width="*" />
                                     <ColumnDefinition  Width="*" />
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <StackLayout Grid.Row="0" Grid.ColumnSpan="2">
                                     <StackLayout Orientation="Vertical" Grid.Row="0"  IsVisible="{Binding WorkorderNumberIsVisible}" >
                                         <Grid>
@@ -256,7 +256,7 @@
                                         </Label.FontAttributes>
                                     </Label>
                                     <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                        <controls:CustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding WorkorderCompletionDate}" MinimumDate="{Binding MinimumWorkorderCompletionDate}" MaximumDate="{Binding MaximumWorkorderCompletionDate}" IsEnabled="{Binding WorkorderCompletionDateIsEnable}" />
+                                        <controls:WOCustomDatePicker Margin="0,8,0,0" SelectedDate="{Binding WorkorderCompletionDate}" MinimumDate="{Binding MinimumWorkorderCompletionDate}" MaximumDate="{Binding MaximumWorkorderCompletionDate}" IsEnabled="{Binding WorkorderCompletionDateIsEnable}" />
                                     </border:SfBorder>
                                     <!--<Label Text="{Binding WorkorderCompletionDateWarningText}" IsVisible="{Binding WorkorderCompletionDateWarningTextIsVisible}" TextColor="Red"></Label>-->
                                 </StackLayout>
@@ -401,8 +401,10 @@
                                 <!--<StackLayout  IsVisible="{Binding IsCostLayoutIsVisibleForTab}" Grid.Row="9" Grid.ColumnSpan="2">
                                     <StackLayout IsVisible="{Binding DistributeCostforAssetsystemIsVisible}" IsEnabled="{Binding DistributeCostforAssetsystemIsEnable}">
                                         <StackLayout Orientation="Horizontal"   IsEnabled="{Binding IsCostLayoutIsEnable}">
-                                            --><!--<dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
-                                    </dependencyinterface:LoginSwitch>--><!--
+                                            -->
+                                <!--<dependencyinterface:LoginSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsToggled="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
+                                    </dependencyinterface:LoginSwitch>-->
+                                <!--
                                             <buttons:SfSwitch  IsEnabled="{Binding IsCostLayoutIsEnable}" IsOn="{Binding IsCostDistributed, Mode=TwoWay}"   VerticalOptions="Start" x:Uid="MySwitch" Grid.Row="7">
                                             </buttons:SfSwitch>
                                             <Label  FontAttributes="Bold"  Text="{Binding DistributeCostforAssetsystem}" VerticalTextAlignment="Start" HorizontalTextAlignment="Start" TextColor="Black" >
@@ -774,8 +776,10 @@
                                 <!--<Image Grid.Column="1" Grid.Row="0" Source="Assets/mic.png">
                                     <Image.Source>
                                         <OnPlatform  x:TypeArguments="ImageSource">
-                                            --><!--<OnPlatform.iOS>mic.png</OnPlatform.iOS>-->
-                                            <!--<OnPlatform.Android>mic.png</OnPlatform.Android>--><!--
+                                            -->
+                                <!--<OnPlatform.iOS>mic.png</OnPlatform.iOS>-->
+                                <!--<OnPlatform.Android>mic.png</OnPlatform.Android>-->
+                                <!--
                                             <OnPlatform.WinPhone>Assets/mic.png</OnPlatform.WinPhone>
                                         </OnPlatform>
                                     </Image.Source>
@@ -905,7 +909,7 @@
                                 <OnPlatform.Android>save.png</OnPlatform.Android>
                                 <OnPlatform.WinPhone>Assets/save.png</OnPlatform.WinPhone>
                             </OnPlatform>
-                        </ImageButton.Source>                        
+                        </ImageButton.Source>
                     </ImageButton>
                 </AbsoluteLayout>
             </Grid>

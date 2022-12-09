@@ -562,7 +562,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-                await Task.Delay(1000);
+               // await Task.Delay(1000);
                 await NavigationService.NavigateToAsync<CreateNonStockroomPartsPageViewModel>(this.WorkorderID);
             }
             catch (Exception ex)

@@ -1935,7 +1935,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(10);
+                //await Task.Delay(10);
                 await OnViewDisappearingAsync(null);
                 await RefillWorkorderCollection();
             }
@@ -1964,7 +1964,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(10);
+                //await Task.Delay(10);
 
                 UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result), IsCancellable = true });
             }
@@ -1989,7 +1989,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(10);
+              //  await Task.Delay(10);
 
 
                 #region Barcode Section and Search Section
@@ -2073,7 +2073,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(10);
+                //await Task.Delay(10);
                 if (CreateWorkorderRights == "E")
                 {
                     await NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>();
@@ -2169,7 +2169,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        async Task GetWorkorders()
+        public async Task GetWorkorders()
         {
             try
             {
@@ -2241,12 +2241,12 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        async Task GetWorkordersFromSearchBar()
+        public async Task GetWorkordersFromSearchBar()
         {
             try
             {
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(10);
+               // await Task.Delay(10);
                 string WorkorderType = GetPickerType();
                 var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate, KPIDashboardType);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
@@ -2257,11 +2257,11 @@ namespace ProteusMMX.ViewModel.Workorder
                     await RemoveAllWorkorderFromCollection();
                     await AddWorkordersInWorkorderCollection(workorders);
                     TotalRecordCount = workordersResponse.workOrderWrapper.workOrders.Count;
-
+                   
 
 
                 }
-                else
+                else 
                 {
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("ThisWorkOrderdoesnotexist"));
                     return;
@@ -2275,6 +2275,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             finally
             {
+                
                 UserDialogs.Instance.HideLoading();
             }
         }
@@ -2508,7 +2509,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-                await Task.Delay(10);
+                //await Task.Delay(10);
                 if (item.WorkOrderApproved == "true" && item.CompletionDate != null)
                 {
                     return;
@@ -2963,11 +2964,15 @@ namespace ProteusMMX.ViewModel.Workorder
                 bool filter = false;
 
                 UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
-                await Task.Delay(3000);
+               // await Task.Delay(3000);
                 if (string.IsNullOrWhiteSpace(this.SearchText))
                 {
                     await RefillWorkorderCollection();
 
+                }
+                else
+                {
+                   await GetWorkordersFromSearchBar();
                 }
 
                 if (Application.Current.Properties.ContainsKey("SortingTypeKye"))

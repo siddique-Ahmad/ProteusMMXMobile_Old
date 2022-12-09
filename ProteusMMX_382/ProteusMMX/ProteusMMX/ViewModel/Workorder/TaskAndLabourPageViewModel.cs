@@ -2549,6 +2549,10 @@ namespace ProteusMMX.ViewModel.Workorder
 
         private async void CompletionDate_Clicked(object sender, EventArgs e)
         {
+            string AutoFillCompleteOnTaskAndLabor = string.Empty;
+            string IsHoursRequiredForCompletionDate = string.Empty;
+            string IsAnyTaskHoursFilled = string.Empty;
+            
             DateTime? SelectedDate = null;
             var dateConfig = new Acr.UserDialogs.DatePromptConfig();
             var timeConfig = new Acr.UserDialogs.TimePromptConfig();
@@ -2569,7 +2573,32 @@ namespace ProteusMMX.ViewModel.Workorder
             var s = sender as Button;
             if (dateResult.Ok)
             {
+                #region Check Autofill Completion for Task
+             
+                if (Application.Current.Properties.ContainsKey("AutoFillCompleteOnTaskAndLabor"))
+                {
+                    AutoFillCompleteOnTaskAndLabor = Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"].ToString();
+                }
+                if (Application.Current.Properties.ContainsKey("IsAnyTaskHoursFilled"))
+                {
+                    IsAnyTaskHoursFilled = Application.Current.Properties["IsAnyTaskHoursFilled"].ToString();
+                }
+              
+                if (Application.Current.Properties.ContainsKey("IsHoursRequiredForCompletionDate"))
+                {
+                    IsHoursRequiredForCompletionDate = Application.Current.Properties["IsHoursRequiredForCompletionDate"].ToString();
+                }
+                if (!string.IsNullOrWhiteSpace(AutoFillCompleteOnTaskAndLabor))
+                {
+                    if (AutoFillCompleteOnTaskAndLabor == "True" && IsAnyTaskHoursFilled=="False" && IsHoursRequiredForCompletionDate=="True")
+                    {
+                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"));
+                        return;
 
+                    }
+                }
+
+                #endregion
 
                 if (dateResult.Value.Date == DateTime.Parse("1/1/0001 12:00:00 AM"))
                 {

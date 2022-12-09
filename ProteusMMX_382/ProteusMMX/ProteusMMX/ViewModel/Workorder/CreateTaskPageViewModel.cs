@@ -1007,7 +1007,7 @@ namespace ProteusMMX.ViewModel.Workorder
         #endregion
 
 
-
+        ServiceOutput workorderWrapper = new ServiceOutput();
 
 
         #region Commands
@@ -1039,6 +1039,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
                 await SetTitlesPropertiesForPage();
+                 workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
                 OperationInProgress = false;
 
                 if (Application.Current.Properties.ContainsKey("TaskTabDetails"))
@@ -1384,7 +1385,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 ///TODO: Get Workorder data 
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+               
 
 
                 if (this.TaskStartedDate == null)
