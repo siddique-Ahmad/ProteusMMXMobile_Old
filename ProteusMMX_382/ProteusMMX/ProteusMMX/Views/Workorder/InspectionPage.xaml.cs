@@ -30,6 +30,7 @@ using Syncfusion.XForms.TabView;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -1445,7 +1446,7 @@ namespace ProteusMMX.Views.Workorder
                 HrsStackLayout.Children.Add(HrsGrid);
                 SfBorder HrsBorder = new SfBorder
                 {
-                    HeightRequest = 40,
+                    HeightRequest = 35,
                     WidthRequest = 50,
                     BorderColor = Color.Black,
                     CornerRadius = 10
@@ -1453,7 +1454,7 @@ namespace ProteusMMX.Views.Workorder
                 HrsGrid.Children.Add(HrsBorder);
                 Entry hoursEntry = new Entry
                 {
-                    HeightRequest = 40,
+                    HeightRequest = 35,
                     Placeholder = "hh",
                     FontSize = 12,
                     Margin = new Thickness(3, 0, 0, 0)
@@ -1473,7 +1474,7 @@ namespace ProteusMMX.Views.Workorder
                 MinStackLayout.Children.Add(MinGrid);
                 SfBorder MinBorder = new SfBorder
                 {
-                    HeightRequest = 40,
+                    HeightRequest = 35,
                     WidthRequest = 50,
                     BorderColor = Color.Black,
                     CornerRadius = 10,
@@ -1482,7 +1483,7 @@ namespace ProteusMMX.Views.Workorder
                 MinGrid.Children.Add(MinBorder);
                 Entry minuteEntry = new Entry
                 {
-                    HeightRequest = 40,
+                    HeightRequest = 35,
                     Placeholder = "mm",
                     FontSize = 12,
                     Margin = new Thickness(3, 0, 0, 0)
@@ -1576,7 +1577,7 @@ namespace ProteusMMX.Views.Workorder
                 btnSave.Clicked += BtnContractorSave_Clicked;
                 SfBorder dateFromBo = new SfBorder
                 {
-                    HeightRequest = 35,
+                    HeightRequest = 30,
                     BorderColor = Color.Black,
                     CornerRadius = 10
                 };
@@ -2374,7 +2375,7 @@ namespace ProteusMMX.Views.Workorder
 
             #region **** GroupSection ***
 
-            Grid GroupSectionsGrid = new Grid { BackgroundColor = Color.White, HeightRequest = 550, Padding = 2 };
+            Grid GroupSectionsGrid = new Grid { BackgroundColor = Color.White, Padding = 2};
             GroupSectionsGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
             StackLayout GroupSecSl = new StackLayout();
             GroupSectionsGrid.Children.Add(GroupSecSl);
@@ -3391,10 +3392,11 @@ namespace ProteusMMX.Views.Workorder
             };
 
             var MiscellGrid = MiscellaneousGrid.Height;
-            layout2Test.HeightRequest = MinimumHeightRequest = 1000;
+            layout2Test.HeightRequest = MinimumHeightRequest = 2000;
 
             var GroupSGrid = MiscellaneousGrid.Height;
-            GroupSecSlCaseTest1.HeightRequest = 2000;
+            //GroupSecSlCaseTest1.HeightRequest = 2000;
+
 
             tabView.Items = tabItems;
             MainLayout.Children.Add(tabView);
@@ -3964,7 +3966,7 @@ namespace ProteusMMX.Views.Workorder
                         {
                             if (!String.IsNullOrWhiteSpace(this.InspectionStartDate.ToString()) && !String.IsNullOrWhiteSpace(this.InspectionCompletionDate.ToString()))
                             {
-                                if (this.InspectionStartDate.GetValueOrDefault().Date > this.InspectionCompletionDate.GetValueOrDefault().Date)
+                                if (this.InspectionStartDate > this.InspectionCompletionDate)
                                 {
                                     //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, "Inspection", formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
                                     //await DisplayAlert("Alert", WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), "OK");
@@ -3996,13 +3998,13 @@ namespace ProteusMMX.Views.Workorder
                             liststartAnswer.Add(new InspectionTOAnswers()
                             {
 
-                                StartDate = this.InspectionStartDate.HasValue ? this.InspectionStartDate : (DateTime?)null,
+                                StartDate = this.InspectionStartDate.HasValue ? (this.InspectionStartDate.Value) : (DateTime?)null,
 
                             });
                             listcompletionAnswer.Add(new InspectionTOAnswers()
                             {
 
-                                CompletionDate = this.InspectionCompletionDate.HasValue ? this.InspectionCompletionDate : (DateTime?)null,
+                                CompletionDate = this.InspectionCompletionDate.HasValue ? (this.InspectionCompletionDate.Value) : (DateTime?)null,
 
                             });
                         }
@@ -4029,9 +4031,9 @@ namespace ProteusMMX.Views.Workorder
 
 
                 if (abc.workOrderWrapper.workOrder.WorkStartedDate != null)
-                    workorderstartDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.WorkStartedDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
+                    workorderstartDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.WorkStartedDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
                 if (abc.workOrderWrapper.workOrder.CompletionDate != null)
-                    workordercompDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
+                    workordercompDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
 
                 if (listtoAnswer != null && listtoAnswer.Count > 0)
                 {
@@ -4055,7 +4057,7 @@ namespace ProteusMMX.Views.Workorder
                     //// if inspection start date is before than wo start date the give alert >>> Inspection start date can not lesser than WO start date
                     if (!string.IsNullOrWhiteSpace(workorderstartDate))
                     {
-                        if (workorderstartDate != null && liststartAnswer.Any(x => x.StartDate.Value.Date < DateTime.Parse(workorderstartDate)))
+                        if (workorderstartDate != null && liststartAnswer.Any(x => x.StartDate.Value < DateTime.Parse(workorderstartDate)))
                         {
                             // await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotlesserthanWOstartdate"), WebControlTitle.GetTargetNameByTitleName("OK"));
 
@@ -4071,7 +4073,7 @@ namespace ProteusMMX.Views.Workorder
                     //// if inspection start date is after than wo completion date the give alert >>> Inspection start date can not greater than WO completion date
                     if (!string.IsNullOrWhiteSpace(workordercompDate))
                     {
-                        if (workordercompDate != null && liststartAnswer.Any(x => x.StartDate.Value.Date > DateTime.Parse(workordercompDate)))
+                        if (workordercompDate != null && liststartAnswer.Any(x => x.StartDate.Value > DateTime.Parse(workordercompDate)))
                         {
                             //await DisplayAlert(flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(flInput, "InspectionstartdatecannotgreaterthanWOcompletiondate"), flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
                             //await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotgreaterthanWOcompletiondate"), WebControlTitle.GetTargetNameByTitleName("OK"));
@@ -4093,7 +4095,7 @@ namespace ProteusMMX.Views.Workorder
                     //// if inspection completion date is before than wo start date the give alert >>> Inspection completion date can not lesser than WO start date
                     if (!string.IsNullOrWhiteSpace(workorderstartDate))
                     {
-                        if (workorderstartDate != null && listcompletionAnswer.Any(x => x.CompletionDate.Value.Date < DateTime.Parse(workorderstartDate)))
+                        if (workorderstartDate != null && listcompletionAnswer.Any(x => x.CompletionDate.Value < DateTime.Parse(workorderstartDate)))
                         {
 
                             UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotlesserthanWOstartdate"), TimeSpan.FromSeconds(2));
@@ -4113,7 +4115,7 @@ namespace ProteusMMX.Views.Workorder
 
                     if (!string.IsNullOrWhiteSpace(workordercompDate) && !IsAutoFillOnCompletionDate)
                     {
-                        if (workordercompDate != null && listcompletionAnswer.Any(x => x.CompletionDate.Value.Date > DateTime.Parse(workordercompDate)))
+                        if (workordercompDate != null && listcompletionAnswer.Any(x => x.CompletionDate.Value > DateTime.Parse(workordercompDate)))
                         {
                             UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotgreaterthanWOcompletiondate"), TimeSpan.FromSeconds(2));
                             // await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotgreaterthanWOcompletiondate"), WebControlTitle.GetTargetNameByTitleName("OK"));
@@ -4458,7 +4460,7 @@ namespace ProteusMMX.Views.Workorder
                     {
                         if (!String.IsNullOrWhiteSpace(this.InspectionStartDate.ToString()) && !String.IsNullOrWhiteSpace(this.InspectionCompletionDate.ToString()))
                         {
-                            if (this.InspectionStartDate.GetValueOrDefault().Date > this.InspectionCompletionDate.GetValueOrDefault().Date)
+                            if (this.InspectionStartDate > this.InspectionCompletionDate)
                             {
                                 //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, "Inspection", formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
                                 //await DisplayAlert("Alert", WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), "OK");
@@ -4502,13 +4504,13 @@ namespace ProteusMMX.Views.Workorder
                         liststartAnswer.Add(new InspectionTOAnswers()
                         {
 
-                            StartDate = this.InspectionStartDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionStartDate.Value.Date.ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
+                            StartDate = this.InspectionStartDate.HasValue ? (this.InspectionStartDate.Value) : (DateTime?)null,
 
                         });
                         listcompletionAnswer.Add(new InspectionTOAnswers()
                         {
 
-                            CompletionDate = this.InspectionCompletionDate.HasValue ? DateTimeConverter.ConvertDateTimeToDifferentTimeZone(this.InspectionCompletionDate.Value.Date.ToUniversalTime(), AppSettings.User.ServerIANATimeZone) : (DateTime?)null,
+                            CompletionDate = this.InspectionCompletionDate.HasValue ? (this.InspectionCompletionDate.Value) : (DateTime?)null,
 
                         });
                     }
@@ -4532,9 +4534,9 @@ namespace ProteusMMX.Views.Workorder
 
 
             if (abc.workOrderWrapper.workOrder.WorkStartedDate != null)
-                workorderstartDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.WorkStartedDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
+                workorderstartDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.WorkStartedDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
             if (abc.workOrderWrapper.workOrder.CompletionDate != null)
-                workordercompDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
+                workordercompDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
 
             if (abc.workOrderWrapper.workOrder.WorkStartedDate == null)
             {
@@ -4563,7 +4565,7 @@ namespace ProteusMMX.Views.Workorder
                 //// if inspection start date is before than wo start date the give alert >>> Inspection start date can not lesser than WO start date
                 if (!string.IsNullOrWhiteSpace(workorderstartDate))
                 {
-                    if (workorderstartDate != null && liststartAnswer.Any(x => x.StartDate.Value.Date < DateTime.Parse(workorderstartDate)))
+                    if (workorderstartDate != null && liststartAnswer.Any(x => x.StartDate.Value < DateTime.Parse(workorderstartDate)))
                     {
                         // await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotlesserthanWOstartdate"), WebControlTitle.GetTargetNameByTitleName("OK"));
 
@@ -4579,7 +4581,7 @@ namespace ProteusMMX.Views.Workorder
                 //// if inspection start date is after than wo completion date the give alert >>> Inspection start date can not greater than WO completion date
                 if (!string.IsNullOrWhiteSpace(workordercompDate))
                 {
-                    if (workordercompDate != null && liststartAnswer.Any(x => x.StartDate.Value.Date > DateTime.Parse(workordercompDate)))
+                    if (workordercompDate != null && liststartAnswer.Any(x => x.StartDate > DateTime.Parse(workordercompDate)))
                     {
                         //await DisplayAlert(flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(flInput, "InspectionstartdatecannotgreaterthanWOcompletiondate"), flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
                         //await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotgreaterthanWOcompletiondate"), WebControlTitle.GetTargetNameByTitleName("OK"));
@@ -4601,7 +4603,7 @@ namespace ProteusMMX.Views.Workorder
                 //// if inspection completion date is before than wo start date the give alert >>> Inspection completion date can not lesser than WO start date
                 if (!string.IsNullOrWhiteSpace(workorderstartDate))
                 {
-                    if (workorderstartDate != null && listcompletionAnswer.Any(x => x.CompletionDate.Value.Date < DateTime.Parse(workorderstartDate)))
+                    if (workorderstartDate != null && listcompletionAnswer.Any(x => x.CompletionDate.Value < DateTime.Parse(workorderstartDate)))
                     {
 
                         UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotlesserthanWOstartdate"), TimeSpan.FromSeconds(2));
@@ -4621,7 +4623,7 @@ namespace ProteusMMX.Views.Workorder
 
                 if (!string.IsNullOrWhiteSpace(workordercompDate) && !IsAutoFillOnCompletionDate)
                 {
-                    if (workordercompDate != null && listcompletionAnswer.Any(x => x.CompletionDate.Value.Date > DateTime.Parse(workordercompDate)))
+                    if (workordercompDate != null && listcompletionAnswer.Any(x => x.CompletionDate.Value > DateTime.Parse(workordercompDate)))
                     {
                         UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotgreaterthanWOcompletiondate"), TimeSpan.FromSeconds(2));
                         // await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotgreaterthanWOcompletiondate"), WebControlTitle.GetTargetNameByTitleName("OK"));
@@ -4649,28 +4651,9 @@ namespace ProteusMMX.Views.Workorder
 
             if (serviceStatus1.servicestatus == "true")
             {
-                //enthour.Text = "";
-                //entmin.Text = "";
-
                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("AnswerSuccessfullySaved"), TimeSpan.FromSeconds(2));
 
-                // Delete Employee and Contrcator Timer/////
-                //var buttonSave = sender as Button;
-                //var parent = buttonSave.Parent;
-                //var parentLayout = parent.Parent as StackLayout;
-
-                //var workorderemp = buttonSave.CommandParameter as WorkOrderEmployee;
-                //var workordercnt = buttonSave.CommandParameter as WorkorderContractor;
-
-                //foreach (var item in workOrderInspectionTimeID)
-                //{
-                //    string Employeekey = "WorkOrderEmployee:" + item.Value;
-                //    string Contractorkey = "WorkorderContracator:" + item.Value;
-                //    WorkorderInspectionStorge.Storage.Delete(Employeekey);
-                //    WorkorderInspectionStorge.Storage.Delete(Contractorkey);
-
-                //}
-                // workOrderInspectionTimeID.Clear();
+               
 
             }
 
@@ -4680,8 +4663,7 @@ namespace ProteusMMX.Views.Workorder
             if (string.IsNullOrWhiteSpace(value))
             {
                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("Pleasemakesureallfieldsarefilled"), TimeSpan.FromSeconds(2));
-                //await DisplayAlert("", WebControlTitle.GetTargetNameByTitleName("Pleasemakesureallfieldsarefilled"), WebControlTitle.GetTargetNameByTitleName("OK"));
-
+               
             }
 
             total = total.Subtract(total);
@@ -4848,7 +4830,47 @@ namespace ProteusMMX.Views.Workorder
             {
                 FinalMinutes = int.Parse(MM);
             }
+            List<InspectionTOAnswers> listtoAnswer = new List<InspectionTOAnswers>();
+            #region Check Employee Work Hour Flag
+            var workLabourHour = await ViewModel._taskAndLabourService.WorkOrderLaborsByWorkOrderID(UserID, WorkorderID.ToString());
+            if (workLabourHour.workOrderWrapper.EmployeeWorkHourFlag)
+            {
+                decimal ExactEmployeeHours = 0;
+                string employeeHours = workLabourHour.workOrderWrapper.EmployeeWorkHourValue;
+                if (employeeHours.Contains(":"))
+                {
+                    string FinalemployeeHours = employeeHours.Replace(":", ".");
+                    ExactEmployeeHours = decimal.Parse(FinalemployeeHours, CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    ExactEmployeeHours = decimal.Parse(employeeHours, CultureInfo.InvariantCulture);
+                }
+                string FinalDisplayHours = FinalHours + "." + FinalMinutes;
+                decimal currentEmployeeHours = decimal.Parse(FinalDisplayHours, CultureInfo.InvariantCulture);
+                Decimal value = Decimal.Compare(currentEmployeeHours, ExactEmployeeHours);
 
+
+                if (value > 0)
+                {
+
+                    var result1 = await UserDialogs.Instance.PromptAsync("Are you sure you want to add " + FinalDisplayHours + " hours to this workorder?", WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
+                    if (result1.Ok)
+                    {
+
+                    }
+                    else
+                    {
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+
+
+            }
+
+
+            #endregion
             #region ***  Date start and compl*****
 
             var FromDateSL1 = dateFromCompGrid.Children[0] as StackLayout;
@@ -4877,9 +4899,139 @@ namespace ProteusMMX.Views.Workorder
                 SelectedCompDate = Convert.ToDateTime(CdateValue);
             }
             #endregion
+            #region Local Validation
+
+            if (SelectedStartDate != null && SelectedCompDate != null)
+            {
+                if (SelectedStartDate > SelectedCompDate)
+                {
+
+                    UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), TimeSpan.FromSeconds(2));
+                    UserDialogs.Instance.HideLoading();
+                    return;
+                }
+            }
+
+
+
+
+            #endregion
+            #region Validation from workorder
+
+            ServiceOutput abc = await ViewModel._workorderService.GetWorkorderByWorkorderID(UserId, WorkorderID.ToString());
+
+            string workordercompDate = string.Empty;
+            string workorderstartDate = string.Empty;
+
+
+            if (abc.workOrderWrapper.workOrder.WorkStartedDate != null)
+                workorderstartDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.WorkStartedDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+            if (abc.workOrderWrapper.workOrder.CompletionDate != null)
+                workordercompDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+
+            if (listtoAnswer != null && listtoAnswer.Count > 0)
+            {
+                MinimumInspectionStartDate = listtoAnswer.Min(i => i.StartDate);
+                MaximumInspectionCompletionDate = listtoAnswer.Max(i => i.CompletionDate);
+
+            }
+            else
+            {
+                MinimumInspectionStartDate = null;
+                MaximumInspectionCompletionDate = null;
+            }
+
+
+            #region Start date picker validation
+
+            //replace this.PickerInspectionStartDate.Date with this.InspectionStartDate
+            if (!string.IsNullOrWhiteSpace(this.MinimumInspectionStartDate.ToString()))
+            {
+                //// if inspection start date is before than wo start date the give alert >>> Inspection start date can not lesser than WO start date
+                if (!string.IsNullOrWhiteSpace(workorderstartDate))
+                {
+                    if (workorderstartDate != null && SelectedStartDate < DateTime.Parse(workorderstartDate))
+                    {
+                        // await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotlesserthanWOstartdate"), WebControlTitle.GetTargetNameByTitleName("OK"));
+
+                        // await DisplayAlert(flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(flInput, "InspectionstartdatecannotlesserthanWOstartdate"), flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+
+                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotlesserthanWOstartdate"), TimeSpan.FromSeconds(2));
+
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+
+                //// if inspection start date is after than wo completion date the give alert >>> Inspection start date can not greater than WO completion date
+                if (!string.IsNullOrWhiteSpace(workordercompDate))
+                {
+                    if (workordercompDate != null && SelectedStartDate > DateTime.Parse(workordercompDate))
+                    {
+                        //await DisplayAlert(flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(flInput, "InspectionstartdatecannotgreaterthanWOcompletiondate"), flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                        //await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotgreaterthanWOcompletiondate"), WebControlTitle.GetTargetNameByTitleName("OK"));
+
+                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotgreaterthanWOcompletiondate"), TimeSpan.FromSeconds(2));
+
+
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+
+            }
+            #endregion
+
+            #region Completion Date picker validation
+            if (!string.IsNullOrWhiteSpace(this.MaximumInspectionCompletionDate.ToString()))
+            {
+                //// if inspection completion date is before than wo start date the give alert >>> Inspection completion date can not lesser than WO start date
+                if (!string.IsNullOrWhiteSpace(workorderstartDate))
+                {
+                    if (workorderstartDate != null && SelectedCompDate < DateTime.Parse(workorderstartDate))
+                    {
+
+                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotlesserthanWOstartdate"), TimeSpan.FromSeconds(2));
+
+                        //await DisplayAlert(flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(flInput, "InspectioncompletiondatecannotlesserthanWOstartdate"), flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                        //await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotlesserthanWOstartdate"), WebControlTitle.GetTargetNameByTitleName("OK"));
+
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+
+                //// if inspection completion date is after than wo completion date the give alert >>> Inspection completion date can not greater than WO completion date
+
+                // Bypass this validation if auto fill completion date is "ON"
+                var IsAutoFillOnCompletionDate = Convert.ToBoolean(abc.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor);
+
+                if (!string.IsNullOrWhiteSpace(workordercompDate) && !IsAutoFillOnCompletionDate)
+                {
+                    if (workordercompDate != null && SelectedCompDate > DateTime.Parse(workordercompDate))
+                    {
+                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotgreaterthanWOcompletiondate"), TimeSpan.FromSeconds(2));
+                        // await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotgreaterthanWOcompletiondate"), WebControlTitle.GetTargetNameByTitleName("OK"));
+
+                        //await DisplayAlert(flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(flInput, "InspectioncompletiondatecannotgreaterthanWOcompletiondate"), flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+            }
+            #endregion
+
+            #endregion
+            if (SelectedStartDate == null)
+            {
+                UserDialogs.Instance.Toast("From Date is required!", TimeSpan.FromSeconds(2));
+                UserDialogs.Instance.HideLoading();
+                return;
+            }
+
             try
             {
-                List<InspectionTOAnswers> listtoAnswer = new List<InspectionTOAnswers>();
+               
                 var result = new TimeSpan(FinalHours, FinalMinutes, 0);
                 totalTime = result.TotalSeconds;
                 listtoAnswer.Add(new InspectionTOAnswers()
@@ -4922,8 +5074,6 @@ namespace ProteusMMX.Views.Workorder
             }
            
         }
-
-
         private async void BtnEmployeeSave_Clicked(object sender, EventArgs e)
         {
             UserDialogs.Instance.ShowLoading();
@@ -4970,6 +5120,9 @@ namespace ProteusMMX.Views.Workorder
             {
                 FinalMinutes = int.Parse(MM);
             }
+            List<InspectionTOAnswers> listtoAnswer = new List<InspectionTOAnswers>();
+            var result = new TimeSpan(FinalHours, FinalMinutes, 0);
+            totalTime = result.TotalSeconds;
             #region ***  Date start and compl*****
 
             var FromDateSL1 = dateFromCompGrid.Children[0] as StackLayout;
@@ -4998,10 +5151,177 @@ namespace ProteusMMX.Views.Workorder
                 SelectedCompDate = Convert.ToDateTime(CompdateValue);
             }
             #endregion
+            #region Check Employee Work Hour Flag
+            var workLabourHour = await ViewModel._taskAndLabourService.WorkOrderLaborsByWorkOrderID(UserID, WorkorderID.ToString());
+            if (workLabourHour.workOrderWrapper.EmployeeWorkHourFlag)
+            {
+                decimal ExactEmployeeHours = 0;
+                string employeeHours = workLabourHour.workOrderWrapper.EmployeeWorkHourValue;
+                if (employeeHours.Contains(":"))
+                {
+                    string FinalemployeeHours = employeeHours.Replace(":", ".");
+                    ExactEmployeeHours = decimal.Parse(FinalemployeeHours, CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    ExactEmployeeHours = decimal.Parse(employeeHours, CultureInfo.InvariantCulture);
+                }
+                string FinalDisplayHours = FinalHours + "." + FinalMinutes;
+                decimal currentEmployeeHours = decimal.Parse(FinalDisplayHours, CultureInfo.InvariantCulture);
+                Decimal value = Decimal.Compare(currentEmployeeHours, ExactEmployeeHours);
 
-            List<InspectionTOAnswers> listtoAnswer = new List<InspectionTOAnswers>();
-            var result = new TimeSpan(FinalHours,FinalMinutes, 0);
-            totalTime = result.TotalSeconds;
+
+                if (value > 0)
+                {
+
+                    var result1 = await UserDialogs.Instance.PromptAsync("Are you sure you want to add " + FinalDisplayHours + " hours to this workorder?", WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
+                    if (result1.Ok)
+                    {
+
+                    }
+                    else
+                    {
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+
+
+            }
+
+
+            #endregion
+            #region Local Validation
+
+            
+                if (SelectedStartDate != null && SelectedCompDate != null)
+                {
+                    if (SelectedStartDate > SelectedCompDate)
+                    {
+                        
+                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionStartDatecannotgreaterthanInspectionEnddate"), TimeSpan.FromSeconds(2));
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+            
+
+
+
+
+            #endregion
+            #region Validation from workorder
+         
+            ServiceOutput abc = await ViewModel._workorderService.GetWorkorderByWorkorderID(UserId, WorkorderID.ToString());
+
+            string workordercompDate = string.Empty;
+            string workorderstartDate = string.Empty;
+
+
+            if (abc.workOrderWrapper.workOrder.WorkStartedDate != null)
+                workorderstartDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.WorkStartedDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+            if (abc.workOrderWrapper.workOrder.CompletionDate != null)
+                workordercompDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(abc.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+
+            if (listtoAnswer != null && listtoAnswer.Count > 0)
+            {
+                MinimumInspectionStartDate = listtoAnswer.Min(i => i.StartDate);
+                MaximumInspectionCompletionDate = listtoAnswer.Max(i => i.CompletionDate);
+
+            }
+            else
+            {
+                MinimumInspectionStartDate = null;
+                MaximumInspectionCompletionDate = null;
+            }
+
+           
+            #region Start date picker validation
+
+           
+                //// if inspection start date is before than wo start date the give alert >>> Inspection start date can not lesser than WO start date
+                if (!string.IsNullOrWhiteSpace(workorderstartDate))
+                {
+                    if (workorderstartDate != null && SelectedStartDate < DateTime.Parse(workorderstartDate))
+                    {
+                        // await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotlesserthanWOstartdate"), WebControlTitle.GetTargetNameByTitleName("OK"));
+
+                        // await DisplayAlert(flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(flInput, "InspectionstartdatecannotlesserthanWOstartdate"), flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+
+                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotlesserthanWOstartdate"), TimeSpan.FromSeconds(2));
+
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+
+                //// if inspection start date is after than wo completion date the give alert >>> Inspection start date can not greater than WO completion date
+                if (!string.IsNullOrWhiteSpace(workordercompDate))
+                {
+                    if (workordercompDate != null && SelectedStartDate > DateTime.Parse(workordercompDate))
+                    {
+                        //await DisplayAlert(flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(flInput, "InspectionstartdatecannotgreaterthanWOcompletiondate"), flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                        //await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotgreaterthanWOcompletiondate"), WebControlTitle.GetTargetNameByTitleName("OK"));
+
+                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectionstartdatecannotgreaterthanWOcompletiondate"), TimeSpan.FromSeconds(2));
+
+
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+
+            
+            #endregion
+
+            #region Completion Date picker validation
+              //// if inspection completion date is before than wo start date the give alert >>> Inspection completion date can not lesser than WO start date
+                if (!string.IsNullOrWhiteSpace(workorderstartDate))
+                {
+                    if (workorderstartDate != null && SelectedCompDate < DateTime.Parse(workorderstartDate))
+                    {
+
+                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotlesserthanWOstartdate"), TimeSpan.FromSeconds(2));
+
+                        //await DisplayAlert(flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(flInput, "InspectioncompletiondatecannotlesserthanWOstartdate"), flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                        //await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotlesserthanWOstartdate"), WebControlTitle.GetTargetNameByTitleName("OK"));
+
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+
+                //// if inspection completion date is after than wo completion date the give alert >>> Inspection completion date can not greater than WO completion date
+
+                // Bypass this validation if auto fill completion date is "ON"
+                var IsAutoFillOnCompletionDate = Convert.ToBoolean(abc.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor);
+
+                if (!string.IsNullOrWhiteSpace(workordercompDate) && !IsAutoFillOnCompletionDate)
+                {
+                    if (workordercompDate != null && SelectedCompDate > DateTime.Parse(workordercompDate))
+                    {
+                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotgreaterthanWOcompletiondate"), TimeSpan.FromSeconds(2));
+                        // await DisplayAlert(WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("InspectioncompletiondatecannotgreaterthanWOcompletiondate"), WebControlTitle.GetTargetNameByTitleName("OK"));
+
+                        //await DisplayAlert(flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(flInput, "InspectioncompletiondatecannotgreaterthanWOcompletiondate"), flInput.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                        UserDialogs.Instance.HideLoading();
+                        return;
+                    }
+                }
+            
+            #endregion
+
+            #endregion
+           
+                if (SelectedStartDate == null)
+                {
+                    UserDialogs.Instance.Toast("From Date is required!", TimeSpan.FromSeconds(2));
+                    UserDialogs.Instance.HideLoading();
+                    return;
+                }
+               
+            
+           
             listtoAnswer.Add(new InspectionTOAnswers()
             {
                 WorkOrderID = this.WorkorderID,
@@ -5035,14 +5355,6 @@ namespace ProteusMMX.Views.Workorder
             ParentLayout.Children.Clear();
             OnAppearing();
         }
-
-
-
-
-
-
-        
-
 
         private async void BtnContractorDelete_Clicked(object sender, EventArgs e)
         {

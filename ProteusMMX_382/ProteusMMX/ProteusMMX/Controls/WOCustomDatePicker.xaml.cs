@@ -92,6 +92,16 @@ namespace ProteusMMX.Controls
                 string IsAllAnswersFilled = string.Empty;
                 string IsAllInspectionHousFilled = string.Empty;
                 string IsWorkOrderHasTaskORInspection = string.Empty;
+                string IsHoursRequiredForCompletionDate = string.Empty;
+                if (Application.Current.Properties.ContainsKey("IsHoursRequiredForCompletionDate"))
+                {
+                    IsHoursRequiredForCompletionDate = Application.Current.Properties["IsHoursRequiredForCompletionDate"].ToString();
+                }
+                string IsInspectionAnswerRequiredforCompletionDate = string.Empty;
+                if (Application.Current.Properties.ContainsKey("IsInspectionAnswerRequiredforCompletionDate"))
+                {
+                    IsInspectionAnswerRequiredforCompletionDate = Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"].ToString();
+                }
 
                 var dateConfig = new Acr.UserDialogs.DatePromptConfig();
                 var timeConfig = new Acr.UserDialogs.TimePromptConfig();
@@ -125,37 +135,39 @@ namespace ProteusMMX.Controls
 
                 if (dateResult.Ok == true)
                 {
+                    
+                    
 
-                    #region Check Cause Required
-                    string IsCheckedCause = string.Empty;
-                    string CauseID = string.Empty;
-                    if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
-                    {
-                        IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
-                    }
-                    if (Application.Current.Properties.ContainsKey("CauseID"))
-                    {
-                        CauseID = Application.Current.Properties["CauseID"].ToString();
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(IsCheckedCause))
-                    {
-                        if (IsCheckedCause == "True" && string.IsNullOrWhiteSpace(CauseID))
+                        #region Check Cause Required
+                        string IsCheckedCause = string.Empty;
+                        string CauseID = string.Empty;
+                        if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
                         {
-
-                            UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
-
-                            return;
+                            IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
                         }
-                    }
-                    #endregion
+                        if (Application.Current.Properties.ContainsKey("CauseID"))
+                        {
+                            CauseID = Application.Current.Properties["CauseID"].ToString();
+                        }
 
-                    #region Check Task/Inspection
+                        if (!string.IsNullOrWhiteSpace(IsCheckedCause))
+                        {
+                            if (IsCheckedCause == "True" && string.IsNullOrWhiteSpace(CauseID))
+                            {
 
-                    if (Application.Current.Properties.ContainsKey("IsWorkOrderHasTaskORInspection"))
-                    {
-                        IsWorkOrderHasTaskORInspection = Application.Current.Properties["IsWorkOrderHasTaskORInspection"].ToString();
-                    }
+                                UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
+
+                                return;
+                            }
+                        }
+                        #endregion
+
+                        #region Check Task/Inspection
+
+                        if (Application.Current.Properties.ContainsKey("IsWorkOrderHasTaskORInspection"))
+                        {
+                            IsWorkOrderHasTaskORInspection = Application.Current.Properties["IsWorkOrderHasTaskORInspection"].ToString();
+                        }
                     if (IsWorkOrderHasTaskORInspection == "Task")
                     {
                         #region Check  All Task and Labour Hours filled
@@ -173,18 +185,15 @@ namespace ProteusMMX.Controls
                                 IsAllTaskHousFilled = "";
                             }
                         }
-                        string IsHoursRequiredForCompletionDate = string.Empty;
-                        if (Application.Current.Properties.ContainsKey("IsHoursRequiredForCompletionDate"))
-                        {
-                            IsHoursRequiredForCompletionDate = Application.Current.Properties["IsHoursRequiredForCompletionDate"].ToString();
-                        }
+                     
+                       
 
                         if (string.IsNullOrWhiteSpace(IsAllTaskHousFilled) && IsHoursRequiredForCompletionDate == "True")
                         {
 
                             UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"));
                             return;
-                        
+
 
                         }
 
@@ -216,11 +225,8 @@ namespace ProteusMMX.Controls
                             }
 
                         }
-                        string IsInspectionAnswerRequiredforCompletionDate = string.Empty;
-                        if (Application.Current.Properties.ContainsKey("IsInspectionAnswerRequiredforCompletionDate"))
-                        {
-                            IsInspectionAnswerRequiredforCompletionDate = Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"].ToString();
-                        }
+                      
+                      
 
 
 
@@ -257,7 +263,7 @@ namespace ProteusMMX.Controls
                                 IsAllInspectionHousFilled = "";
                             }
                         }
-                        string IsHoursRequiredForCompletionDate = string.Empty;
+                    
                         if (Application.Current.Properties.ContainsKey("IsHoursRequiredForCompletionDate"))
                         {
                             IsHoursRequiredForCompletionDate = Application.Current.Properties["IsHoursRequiredForCompletionDate"].ToString();
@@ -284,19 +290,32 @@ namespace ProteusMMX.Controls
                     }
                     else
                     {
-                        UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("NoTaskAndInspection"));
+                        string IsCheckedLaborHours = string.Empty;
+                        if (Application.Current.Properties.ContainsKey("IsCheckedLaborHours"))
+                        {
+                            IsCheckedLaborHours = Application.Current.Properties["IsCheckedLaborHours"].ToString();
+                        }
+                        if (IsCheckedLaborHours == "True" && IsHoursRequiredForCompletionDate=="False" && IsInspectionAnswerRequiredforCompletionDate=="False")
+                        {
 
-                        return;
+                        }
+                        else if(IsCheckedLaborHours == "False" && IsHoursRequiredForCompletionDate == "False" && IsInspectionAnswerRequiredforCompletionDate == "False")
+                        {
+
+                        }
+                        else
+                        {
+                            UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("NoTaskAndInspection"));
+
+                            return;
+                        }
                     }
+                        
 
 
-                    #endregion
-
+                        #endregion
+                 
                    
-
-
-
-
                     if (dateResult.SelectedDate != null && dateResult.SelectedDate.Year != 0001)
                     {
                         SelectedDate = dateResult.SelectedDate;

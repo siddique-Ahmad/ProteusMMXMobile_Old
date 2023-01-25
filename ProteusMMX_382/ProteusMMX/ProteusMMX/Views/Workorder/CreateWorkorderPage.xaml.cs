@@ -486,7 +486,7 @@ namespace ProteusMMX.Views.Workorder
                 var BorderColor = Cause.Parent.Parent as SfBorder;
                 if (string.IsNullOrEmpty(Cause.Text))
                 {
-                    BorderColor.BorderColor = Color.Red;
+                    BorderColor.BorderColor = Color.Black;
                 }
                 else
                 {

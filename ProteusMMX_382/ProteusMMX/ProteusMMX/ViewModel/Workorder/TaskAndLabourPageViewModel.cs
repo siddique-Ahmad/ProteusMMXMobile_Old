@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using ProteusMMX.Constants;
 using ProteusMMX.Controls;
 using ProteusMMX.Converters;
@@ -35,8 +36,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using ZXing;
 using ZXing.Mobile;
 using ZXing.Net.Mobile.Forms;
+using static SQLite.SQLite3;
 
 
 namespace ProteusMMX.ViewModel.Workorder
@@ -1804,6 +1807,10 @@ namespace ProteusMMX.ViewModel.Workorder
                             ArivalTest = ArivalTest + " : " + DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.ArrivalDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt");
 
                         }
+                        else
+                        {
+                            ArivalTest = ArivalTest + " : ";
+                        }
                         ArrivalDatelabel.Text = ArivalTest;
                         ArrivalStackLayout.Children.Add(ArrivalDatelabel);
                         #endregion
@@ -2296,7 +2303,43 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
             }
+            #region Check Employee Work Hour Flag
+            var workLabourHour = await _taskAndLabourService.WorkOrderLaborsByWorkOrderID(UserID, WorkorderID.ToString());
+            if (workLabourHour.workOrderWrapper.EmployeeWorkHourFlag)
+            {
+                decimal ExactEmployeeHours = 0;
+                string employeeHours = workLabourHour.workOrderWrapper.EmployeeWorkHourValue;
+                if (employeeHours.Contains(":"))
+                {
+                    string FinalemployeeHours = employeeHours.Replace(":", ".");
+                     ExactEmployeeHours = decimal.Parse(FinalemployeeHours, CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                     ExactEmployeeHours = decimal.Parse(employeeHours, CultureInfo.InvariantCulture);
+                }
+                decimal currentEmployeeHours = decimal.Parse(decHour1, CultureInfo.InvariantCulture);
+                Decimal value = Decimal.Compare(currentEmployeeHours, ExactEmployeeHours);
 
+                if (value >  0)
+                {
+
+                    var result = await DialogService.ShowConfirmAsync("Are you sure you want to add " + decHour1 + " hours to this workorder?", WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("Yes"), WebControlTitle.GetTargetNameByTitleName("No"));
+                    if (result == true)
+                    {
+
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                
+
+            }
+
+
+            #endregion
             if (!string.IsNullOrEmpty(HrsText) && HrsText == "HoursAtRate1")
             {
                 try
@@ -2670,6 +2713,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
+               
                 ///TODO: Get Workorder data 
                 var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
@@ -2736,6 +2780,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         Entry minutesEntryforRate1 = sfBorderMin2.Children[0] as CustomEntry; // Minutes
 
                         var FindMainGrid1 = buttonSave.Parent.Parent.Parent.Parent;
+
+                       
                     }
                     catch (Exception ex)
                     {
@@ -2798,6 +2844,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 return;
                             }
                         }
+                      
 
 
                         var workorderLabour = (WorkOrderLabor)((SfButton)sender).CommandParameter;

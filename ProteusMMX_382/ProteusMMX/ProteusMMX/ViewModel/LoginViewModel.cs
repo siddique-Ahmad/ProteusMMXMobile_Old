@@ -949,9 +949,19 @@ namespace ProteusMMX.ViewModel
 
                 NotifactionStorage.Storage.Set("NotificationModedb", JsonConvert.SerializeObject(user.mmxUser.NotificationMode));
 
-              
+                if (!String.IsNullOrEmpty(user.mmxUser.UserLicense))
+                {
 
-                if (user.mmxUser.UserLicense == "Web")
+                    if (user.mmxUser.UserLicense.ToLower() == "web")
+                    {
+                        UserDialogs.Instance.HideLoading();
+
+                        DialogService.ShowToast("Current User Doesnot have Mobile License", 2000);
+
+                        return;
+                    }
+                }
+                else if(String.IsNullOrEmpty(user.mmxUser.UserLicense))
                 {
                     UserDialogs.Instance.HideLoading();
 

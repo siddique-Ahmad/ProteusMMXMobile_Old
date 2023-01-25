@@ -9725,7 +9725,22 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 ///TODO: Need to check on Appearing editWorkorder page whether picker data is requested or wokorder data need to refresh 
                 /// In Every ShowFacility or other picker page we have to true this flag and on its callback we have to false it.
+                if (workorderWrapper.workOrderWrapper.Cause != null && workorderWrapper.workOrderWrapper.Cause.Count > 0)
+                {
+                    if (!string.IsNullOrEmpty(workorderWrapper.workOrderWrapper.Cause[0].CauseNumber))
+                    {
+                        CauseName = ShortString.shorten(workorderWrapper.workOrderWrapper.Cause[0].CauseNumber);
 
+                    }
+                    else
+                    {
+                        CauseName = workorderWrapper.workOrderWrapper.Cause[0].CauseNumber;
+
+                    }
+                    CauseID = workorderWrapper.workOrderWrapper.Cause[0].CauseID;
+                    Application.Current.Properties["CauseID"] = CauseID;
+
+                }
 
                 OperationInProgress = true;
 
@@ -10047,7 +10062,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Task";
 
                 }
-                else if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspection")
+                else if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspections" || workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspection") 
                 {
                     Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Inspection";
                 }
@@ -10081,6 +10096,17 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 #endregion
 
+                #region Check Required Task/Inspection Hours
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedLaborHours))
+                {
+                    Application.Current.Properties["IsCheckedLaborHours"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsCheckedLaborHours"] = "False";
+                }
+
+                #endregion
 
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor) && workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate == null)
                 {
@@ -11411,7 +11437,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (validationResult.FailedItem != null)
                 {
                     UserDialogs.Instance.HideLoading();
-
+                    if (validationResult.ErrorMessage == "Additional Details is required field.")
+                    {
+                        validationResult.ErrorMessage = AdditionalDetailsTitle + " is required field";
+                    }
                     DialogService.ShowToast(validationResult.ErrorMessage);
                     return;
                 }
@@ -12749,6 +12778,27 @@ namespace ProteusMMX.ViewModel.Workorder
                                 break;
 
                             }
+                        case "InternalNote":
+                            {
+                                validationResult = ValidateValidations(formLoadItem, InternalNoteText);
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
+
+                        case "AdditionalDetails":
+                            {
+                                validationResult = ValidateValidations(formLoadItem, AdditionalDetailsText);
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
 
                         case "ActualDowntime":
                             {
@@ -13869,14 +13919,23 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         bool InspectionEmployeeHours = false;
                         bool InspectionContractorHours = false;
-                        if (!Inspection.workOrderEmployee.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+
+                        #region  Check all Employee Whose start date is not null
+                        List<WorkOrderEmployee> EmpStartdateNotNull = Inspection.workOrderEmployee.Where(x => x.StartDate != null).ToList();
+                        #endregion
+
+                       if (!EmpStartdateNotNull.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
                         {
-                            InspectionEmployeeHours = Inspection.workOrderEmployee.All(a => int.Parse((a.InspectionTime)) > 0);
+                            InspectionEmployeeHours = EmpStartdateNotNull.All(a => int.Parse((a.InspectionTime)) > 0);
                         }
 
-                        if (!Inspection.workorderContractor.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+                        #region Check all Contractor Whose start date is not null
+                        List<WorkorderContractor> ContractStartdateNotNull = Inspection.workorderContractor.Where(x => x.StartDate != null).ToList();
+                        #endregion
+
+                      if (!ContractStartdateNotNull.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
                         {
-                            InspectionContractorHours = Inspection.workorderContractor.All(a => int.Parse(a.InspectionTime) > 0);
+                            InspectionContractorHours = ContractStartdateNotNull.All(a => int.Parse(a.InspectionTime) > 0);
                         }
 
 
@@ -13921,8 +13980,10 @@ namespace ProteusMMX.ViewModel.Workorder
                                     return;
 
                                 }
-
-                                    bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1.Replace("00.00","")));
+                                #region  Check all Employee Whose start date is not null
+                                List<WorkOrderLabor> EmpStartdateNotNull = workorderLabourWrapper.workOrderWrapper.workOrderLabors.Where(x => x.StartDate != null).ToList();
+                                #endregion
+                                bool AllTaskHours = EmpStartdateNotNull.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1.Replace("00.00","")));
 
                                 if (AllTaskHours == false)
                                 {

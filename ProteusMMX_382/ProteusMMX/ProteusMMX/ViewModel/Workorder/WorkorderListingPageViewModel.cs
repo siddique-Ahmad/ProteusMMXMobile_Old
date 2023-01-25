@@ -2717,7 +2717,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 #endregion
 
 
-                #region Check Task and Labour data
+                #region Check Task and Labour/Inspection data
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedLaborHours))
                 {
 
@@ -2726,14 +2726,23 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         bool InspectionEmployeeHours = false;
                         bool InspectionContractorHours = false;
-                        if (!Inspection.workOrderEmployee.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+
+                        #region  Check all Employee Whose start date is not null
+                        List<WorkOrderEmployee> EmpStartdateNotNull = Inspection.workOrderEmployee.Where(x => x.StartDate != null).ToList();
+                        #endregion
+
+                        if (!EmpStartdateNotNull.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
                         {
-                            InspectionEmployeeHours = Inspection.workOrderEmployee.All(a => int.Parse((a.InspectionTime)) > 0);
+                            InspectionEmployeeHours = EmpStartdateNotNull.All(a => int.Parse((a.InspectionTime)) > 0);
                         }
 
-                        if (!Inspection.workorderContractor.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+                        #region Check all Contractor Whose start date is not null
+                        List<WorkorderContractor> ContractStartdateNotNull = Inspection.workorderContractor.Where(x => x.StartDate != null).ToList();
+                        #endregion
+
+                        if (!ContractStartdateNotNull.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
                         {
-                            InspectionContractorHours = Inspection.workorderContractor.All(a => int.Parse(a.InspectionTime) > 0);
+                            InspectionContractorHours = ContractStartdateNotNull.All(a => int.Parse(a.InspectionTime) > 0);
                         }
 
 
@@ -2751,6 +2760,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"), 2000);
                             return;
                         }
+
                     }
                     else
                     {
@@ -2777,8 +2787,10 @@ namespace ProteusMMX.ViewModel.Workorder
                                     return;
 
                                 }
-
-                                bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1.Replace("00.00", "")));
+                                #region  Check all Employee Whose start date is not null
+                                List<WorkOrderLabor> EmpStartdateNotNull = workorderLabourWrapper.workOrderWrapper.workOrderLabors.Where(x => x.StartDate != null).ToList();
+                                #endregion
+                                bool AllTaskHours = EmpStartdateNotNull.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1.Replace("00.00", "")));
 
                                 if (AllTaskHours == false)
                                 {

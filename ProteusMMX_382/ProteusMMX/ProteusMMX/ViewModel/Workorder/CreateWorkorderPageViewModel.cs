@@ -5578,7 +5578,7 @@ namespace ProteusMMX.ViewModel.Workorder
                         if (IsCheckedCause == "True")
                         {
                             CauseIsRequred = "true";
-                            CauseColor = "Red";
+                            CauseColor = "Black";
                         }
                         else
                         {
@@ -10854,23 +10854,27 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (validationResult.FailedItem != null)
                 {
                     UserDialogs.Instance.HideLoading();
+                    if(validationResult.ErrorMessage== "Additional Details is required field.")
+                    {
+                        validationResult.ErrorMessage = AdditionalDetailsTitle + " is required field";
+                    }
                     DialogService.ShowToast(validationResult.ErrorMessage);
                     return;
                 }
 
-                if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
-                {
-                    string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
-                    if (!string.IsNullOrWhiteSpace(IsCheckedCause))
-                    {
-                        if (IsCheckedCause == "True" && CauseID == null)
-                        {
-                            UserDialogs.Instance.HideLoading();
-                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
-                            return;
-                        }
-                    }
-                }
+                //if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
+                //{
+                //    string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
+                //    if (!string.IsNullOrWhiteSpace(IsCheckedCause))
+                //    {
+                //        if (IsCheckedCause == "True" && CauseID == null)
+                //        {
+                //            UserDialogs.Instance.HideLoading();
+                //            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
+                //            return;
+                //        }
+                //    }
+                //}
 
 
                 #region Start date and End Date validation
@@ -11798,6 +11802,27 @@ namespace ProteusMMX.ViewModel.Workorder
                                 break;
 
                             }
+                        case "InternalNote":
+                            {
+                                validationResult = ValidateValidations(formLoadItem, InternalNoteText);
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
+
+                        case "AdditionalDetails":
+                            {
+                                validationResult = ValidateValidations(formLoadItem, AdditionalDetailsText);
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
 
                         case "ClosedDate":
                             {
@@ -12714,6 +12739,7 @@ namespace ProteusMMX.ViewModel.Workorder
             if ((formControl.IsRequired ?? false) && string.IsNullOrWhiteSpace(PropertyValue))
             {
                 validationResult.FailedItem = formControl;
+                
                 validationResult.ErrorMessage = formControl.TargetName + " " + ConstantStrings.IsRequiredField;
                 return validationResult;
             }
