@@ -2633,7 +2633,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 if (!string.IsNullOrWhiteSpace(AutoFillCompleteOnTaskAndLabor))
                 {
-                    if (AutoFillCompleteOnTaskAndLabor == "True" && IsAnyTaskHoursFilled=="False" && IsHoursRequiredForCompletionDate=="True")
+                    if (AutoFillCompleteOnTaskAndLabor.ToLower() == "true" && IsAnyTaskHoursFilled.ToLower()=="false" && IsHoursRequiredForCompletionDate.ToLower()=="true")
                     {
                         UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"));
                         return;

@@ -143,7 +143,7 @@ namespace ProteusMMX.Controls
                     }
                     if (!string.IsNullOrWhiteSpace(AutoFillCompleteOnTaskAndLabor))
                     {
-                        if (AutoFillCompleteOnTaskAndLabor == "True" && IsAnyInspectionHoursFilled == "False" && IsHoursRequiredForCompletionDate=="True")
+                        if (AutoFillCompleteOnTaskAndLabor.ToLower() == "true" && IsAnyInspectionHoursFilled.ToLower() == "false" && IsHoursRequiredForCompletionDate.ToLower()=="true")
                         {
 
                             UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"));
@@ -179,7 +179,7 @@ namespace ProteusMMX.Controls
                     }
                     if (!string.IsNullOrWhiteSpace(AutoFillCompleteOnTaskAndLabor))
                     {
-                        if (AutoFillCompleteOnTaskAndLabor == "True" && IsInspectionAnswerRequiredforCompletionDate == "True" && IsAllAnswersFilled=="False")
+                        if (AutoFillCompleteOnTaskAndLabor.ToLower() == "true" && IsInspectionAnswerRequiredforCompletionDate.ToLower() == "true" && IsAllAnswersFilled.ToLower() == "false")
                         {
 
                             UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleaseProvideRequiredSectionQuestionAnswer"));

@@ -152,7 +152,7 @@ namespace ProteusMMX.Controls
 
                         if (!string.IsNullOrWhiteSpace(IsCheckedCause))
                         {
-                            if (IsCheckedCause == "True" && string.IsNullOrWhiteSpace(CauseID))
+                            if (IsCheckedCause.ToLower() == "true" && string.IsNullOrWhiteSpace(CauseID))
                             {
 
                                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
@@ -188,7 +188,7 @@ namespace ProteusMMX.Controls
                      
                        
 
-                        if (string.IsNullOrWhiteSpace(IsAllTaskHousFilled) && IsHoursRequiredForCompletionDate == "True")
+                        if (string.IsNullOrWhiteSpace(IsAllTaskHousFilled) && IsHoursRequiredForCompletionDate.ToLower() == "true")
                         {
 
                             UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"));
@@ -197,7 +197,7 @@ namespace ProteusMMX.Controls
 
                         }
 
-                        if (IsAllTaskHousFilled == "False" && IsHoursRequiredForCompletionDate == "True")
+                        if (IsAllTaskHousFilled.ToLower() == "false" && IsHoursRequiredForCompletionDate.ToLower() == "true")
                         {
 
                             UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"));
@@ -232,13 +232,13 @@ namespace ProteusMMX.Controls
 
                         if (!string.IsNullOrWhiteSpace(IsInspectionAnswerRequiredforCompletionDate))
                         {
-                            if (String.IsNullOrWhiteSpace(IsAllAnswersFilled) && IsInspectionAnswerRequiredforCompletionDate == "True")
+                            if (String.IsNullOrWhiteSpace(IsAllAnswersFilled) && IsInspectionAnswerRequiredforCompletionDate.ToLower() == "true")
                             {
                                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleaseProvideRequiredSectionQuestionAnswer"));
                                 return;
 
                             }
-                            if (IsAllAnswersFilled == "False" && IsInspectionAnswerRequiredforCompletionDate == "True")
+                            if (IsAllAnswersFilled.ToLower() == "false" && IsInspectionAnswerRequiredforCompletionDate.ToLower() == "true")
                             {
 
                                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleaseProvideRequiredSectionQuestionAnswer"));
@@ -271,13 +271,13 @@ namespace ProteusMMX.Controls
 
                         if (!string.IsNullOrWhiteSpace(IsHoursRequiredForCompletionDate))
                         {
-                            if (String.IsNullOrWhiteSpace(IsAllInspectionHousFilled) && IsHoursRequiredForCompletionDate == "True")
+                            if (String.IsNullOrWhiteSpace(IsAllInspectionHousFilled) && IsHoursRequiredForCompletionDate.ToLower() == "true")
                             {
                                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"));
                                 return;
 
                             }
-                            if (IsAllInspectionHousFilled == "False" && IsHoursRequiredForCompletionDate == "True")
+                            if (IsAllInspectionHousFilled.ToLower() == "false" && IsHoursRequiredForCompletionDate.ToLower() == "true")
                             {
 
                                 UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"));
@@ -295,11 +295,11 @@ namespace ProteusMMX.Controls
                         {
                             IsCheckedLaborHours = Application.Current.Properties["IsCheckedLaborHours"].ToString();
                         }
-                        if (IsCheckedLaborHours == "True" && IsHoursRequiredForCompletionDate=="False" && IsInspectionAnswerRequiredforCompletionDate=="False")
+                        if (IsCheckedLaborHours.ToLower() == "true" && IsHoursRequiredForCompletionDate.ToLower() == "false" && IsInspectionAnswerRequiredforCompletionDate.ToLower() == "false")
                         {
 
                         }
-                        else if(IsCheckedLaborHours == "False" && IsHoursRequiredForCompletionDate == "False" && IsInspectionAnswerRequiredforCompletionDate == "False")
+                        else if(IsCheckedLaborHours.ToLower() == "false" && IsHoursRequiredForCompletionDate.ToLower() == "false" && IsInspectionAnswerRequiredforCompletionDate.ToLower() == "false")
                         {
 
                         }

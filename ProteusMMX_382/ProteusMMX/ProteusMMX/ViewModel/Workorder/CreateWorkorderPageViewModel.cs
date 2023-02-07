@@ -11478,7 +11478,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
             finally
             {
-
+                //workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(AppSettings.User.UserID, response.workOrderWrapper.workOrder.WorkOrderID.ToString());
                 UserDialogs.Instance.HideLoading();
                 //  OperationInProgress = false;
 

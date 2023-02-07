@@ -9721,7 +9721,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-
+              
 
                 ///TODO: Need to check on Appearing editWorkorder page whether picker data is requested or wokorder data need to refresh 
                 /// In Every ShowFacility or other picker page we have to true this flag and on its callback we have to false it.
@@ -9804,7 +9804,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 /// Retrive Workorder Data and Set Control properties
                 /// 
                // await SetControlsPropertiesForPage(workOrderWra);
+                //Application.Current.Properties["WorkorderIDafterCreation"] = this.WorkorderID;
                 workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+
+                
 
                 ///TODO: Get Workorder Labour data 
                 workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
@@ -9814,6 +9817,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 
 
                Inspection = await _workorderService.GetWorkorderInspection(this.WorkorderID.ToString(), UserID);
+
+                await SetControlsPropertiesForPage(workorderWrapper);
 
                 List<InspectionTOAnswers> listtoAnswer = new List<InspectionTOAnswers>();
                 foreach (var item in Inspection.workOrderEmployee)
