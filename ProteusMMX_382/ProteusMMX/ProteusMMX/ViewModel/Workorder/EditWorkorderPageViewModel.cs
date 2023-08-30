@@ -5145,6 +5145,123 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     IsWorkorderFromSchedule = true;
                 }
+                #region Set All Flag Properties
+
+                #region Set IsAllAnswersFilled property
+
+                if (workorderWrapper.workOrderWrapper.IsAllAnswersFilled == "False")
+                {
+                    Application.Current.Properties["IsAllAnswersFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllAnswersFilled"] = workorderWrapper.workOrderWrapper.IsAllAnswersFilled;
+                }
+                #endregion
+                #region Set IsAllTaskHoursFilled property
+
+                if (workorderWrapper.workOrderWrapper.IsAllTaskHousFilled == "False")
+                {
+                    Application.Current.Properties["IsAllTaskHousFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllTaskHousFilled"] = workorderWrapper.workOrderWrapper.IsAllTaskHousFilled;
+                }
+                #endregion
+                #region Set IsAllInspectionHoursFilled property
+                if (workorderWrapper.workOrderWrapper.IsAllInspectionHousFilled == "False")
+                {
+                    Application.Current.Properties["IsAllInspectionHousFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllInspectionHousFilled"] = workorderWrapper.workOrderWrapper.IsAllInspectionHousFilled;
+                }
+                #endregion
+
+                #region Set HoursRequiredService Flag
+                if (workorderWrapper.workOrderWrapper.IsHoursRequiredForCompletionDate == "True")
+                {
+                    Application.Current.Properties["IsHoursRequiredForCompletionDate"] = workorderWrapper.workOrderWrapper.IsHoursRequiredForCompletionDate;
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsHoursRequiredForCompletionDate"] = "False";
+
+                }
+                #endregion
+
+                #region Set AllAnswersRequiredService Flag
+                if (workorderWrapper.workOrderWrapper.IsInspectionAnswerRequiredforCompletionDate == "True")
+                {
+                    Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"] = workorderWrapper.workOrderWrapper.IsInspectionAnswerRequiredforCompletionDate;
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"] = "False";
+
+                }
+                #endregion
+
+                #region Check for Task/Inspection
+
+                if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Task")
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Task";
+
+                }
+                else if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspections" || workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspection")
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Inspection";
+                }
+                else
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "";
+                }
+                #endregion
+
+                #region Check for Autocomplete Task/Inspection
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
+                {
+                    Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"] = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
+                }
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyTaskHoursFilled))
+                {
+                    Application.Current.Properties["IsAnyTaskHoursFilled"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsAnyTaskHoursFilled"] = "False";
+                }
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyInspectionHoursFilled))
+                {
+                    Application.Current.Properties["IsAnyInspectionHoursFilled"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsAnyInspectionHoursFilled"] = "False";
+                }
+
+                #endregion
+
+                #region Check Required Task/Inspection Hours
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedLaborHours))
+                {
+                    Application.Current.Properties["IsCheckedLaborHours"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsCheckedLaborHours"] = "False";
+                }
+
+                #endregion
+                #endregion
                 await SetControlsPropertiesForPage(workorderWrapper);
                 await CreateControlsForPage();
 
@@ -9721,7 +9838,8 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-              
+                workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+
 
                 ///TODO: Need to check on Appearing editWorkorder page whether picker data is requested or wokorder data need to refresh 
                 /// In Every ShowFacility or other picker page we have to true this flag and on its callback we have to false it.
@@ -9805,7 +9923,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 /// 
                // await SetControlsPropertiesForPage(workOrderWra);
                 //Application.Current.Properties["WorkorderIDafterCreation"] = this.WorkorderID;
-                workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+              
 
                 
 
@@ -9908,85 +10026,85 @@ namespace ProteusMMX.ViewModel.Workorder
                     #endregion
 
 
-                    #region Auto Fill Completion date from inspection
+                    //#region Auto Fill Completion date from inspection
 
-                    var inspectionCompletionDate = MaxInspectionCompDate;
-                    var workorderCompletiontDate = workorderWrapper.workOrderWrapper.workOrder.CompletionDate;
-                    var IsAutoFillOnCompletionDate = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
-
-
-                    if (Convert.ToBoolean(IsAutoFillOnCompletionDate))
-                    {
-                        if (MaxInspectionCompDateforNull == "True")
-                        {
-                            //this.WorkorderCompletionDateWarningTextIsVisible = false;
-                            if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate == null)
-                            {
-                                WorkorderCompletionDate = null;
-                            }
+                    //var inspectionCompletionDate = MaxInspectionCompDate;
+                    //var workorderCompletiontDate = workorderWrapper.workOrderWrapper.workOrder.CompletionDate;
+                    //var IsAutoFillOnCompletionDate = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
 
 
-                        }
-                        else
-                        {
-                            if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate.GetValueOrDefault().Date < Convert.ToDateTime(MaxInspectionCompDate).Date)
-                            {
-                                //// WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateis") +
-                                //                         "  " +
-                                //                         DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
-                                //// this.WorkorderCompletionDateWarningTextIsVisible = true;
-                            }
-                            else if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate == null && !string.IsNullOrWhiteSpace(MaxInspectionCompDate))
-                            {
-                                //WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
-                                //this.WorkorderCompletionDateWarningTextIsVisible = true;
-                            }
+                    //if (Convert.ToBoolean(IsAutoFillOnCompletionDate))
+                    //{
+                    //    if (MaxInspectionCompDateforNull == "True")
+                    //    {
+                    //        this.WorkorderCompletionDateWarningTextIsVisible = false;
+                    //        if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate == null)
+                    //        {
+                    //            WorkorderCompletionDate = null;
+                    //        }
 
 
-                            if (Convert.ToBoolean(IsAutoFillOnCompletionDate) && workorderCompletiontDate != null)
-                            {
-                                if (inspectionCompletionDate != null)
-                                {
-                                    //// If inspection completion and wo completion date are not null than mask the wo completion date when inspection completion
-                                    //// date is greater than wo completion date.      
-                                    if (Convert.ToDateTime(MaxInspectionCompDate).Date > workorderCompletiontDate.GetValueOrDefault().Date.Date)
-                                    {
-                                        WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                        //CompletionDate1.IsVisible = true;
-                                        //ShowCompletionDate.IsVisible = false;
-                                        //lblAutoText.IsVisible = true;
-                                    }
-                                }
+                    //    }
+                    //    else
+                    //    {
+                    //        if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate.GetValueOrDefault().Date < Convert.ToDateTime(MaxInspectionCompDate).Date)
+                    //        {
+                    //            // WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateis") +
+                    //            "  " +
+                    //            DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
+                    //            // this.WorkorderCompletionDateWarningTextIsVisible = true;
+                    //        }
+                    //        else if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate == null && !string.IsNullOrWhiteSpace(MaxInspectionCompDate))
+                    //        {
+                    //            WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
+                    //            this.WorkorderCompletionDateWarningTextIsVisible = true;
+                    //        }
 
 
-                            }
-                            if (Convert.ToBoolean(IsAutoFillOnCompletionDate) && workorderCompletiontDate == null)
-                            {
-                                //// If wo completion date is null than fill the inspection completion date.
-                                if (!string.IsNullOrWhiteSpace(inspectionCompletionDate))
-                                {
-                                    WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                    //CompletionDate1.IsVisible = true;
-                                    //ShowCompletionDate.IsVisible = false;
-                                    //lblAutoText.IsVisible = true;
-                                }
-                                else ////If wo completion date and inspection completion date are null than null the wo completion date.
-                                {
-                                    //CompletionDate1.IsVisible = false;
-                                    //ShowCompletionDate.IsVisible = true;
-                                    //lblAutoText.IsVisible = false;
-                                    WorkorderCompletionDate = null;
-                                    //WorkorderCompletionDateWarningText = null;
-                                }
+                    //        if (Convert.ToBoolean(IsAutoFillOnCompletionDate) && workorderCompletiontDate != null)
+                    //        {
+                    //            if (inspectionCompletionDate != null)
+                    //            {
+                    //                // If inspection completion and wo completion date are not null than mask the wo completion date when inspection completion
+                    //                // date is greater than wo completion date.      
+                    //                if (Convert.ToDateTime(MaxInspectionCompDate).Date > workorderCompletiontDate.GetValueOrDefault().Date.Date)
+                    //                {
+                    //                    WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    //                    CompletionDate1.IsVisible = true;
+                    //                    ShowCompletionDate.IsVisible = false;
+                    //                    lblAutoText.IsVisible = true;
+                    //                }
+                    //            }
+
+
+                    //        }
+                    //        if (Convert.ToBoolean(IsAutoFillOnCompletionDate) && workorderCompletiontDate == null)
+                    //        {
+                    //            // If wo completion date is null than fill the inspection completion date.
+                    //            if (!string.IsNullOrWhiteSpace(inspectionCompletionDate))
+                    //            {
+                    //                WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    //                CompletionDate1.IsVisible = true;
+                    //                ShowCompletionDate.IsVisible = false;
+                    //                lblAutoText.IsVisible = true;
+                    //            }
+                    //            else ////If wo completion date and inspection completion date are null than null the wo completion date.
+                    //            {
+                    //                CompletionDate1.IsVisible = false;
+                    //                ShowCompletionDate.IsVisible = true;
+                    //                lblAutoText.IsVisible = false;
+                    //                WorkorderCompletionDate = null;
+                    //                WorkorderCompletionDateWarningText = null;
+                    //            }
 
 
 
-                            }
-                        }
+                    //        }
+                    //    }
 
-                    }
+                    //}
 
-                    #endregion
+                    //#endregion
 
 
 
@@ -9997,7 +10115,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 #endregion
-
+                #region Set All Flag Properties
                 #region Set IsAllAnswersFilled property
 
                 if (workorderWrapper.workOrderWrapper.IsAllAnswersFilled == "False")
@@ -10067,7 +10185,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Task";
 
                 }
-                else if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspections" || workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspection") 
+                else if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspections" || workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspection")
                 {
                     Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Inspection";
                 }
@@ -10080,7 +10198,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 #region Check for Autocomplete Task/Inspection
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
                 {
-                  Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"] = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
+                    Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"] = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
                 }
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyTaskHoursFilled))
                 {
@@ -10112,6 +10230,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
 
                 #endregion
+                #endregion
+
 
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor) && workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate == null)
                 {
@@ -10227,14 +10347,14 @@ namespace ProteusMMX.ViewModel.Workorder
                                 else
                                 {
 
-                                    if (workorderLabourWrapper.workOrderWrapper.FinalCompletionDate != null)
-                                    {
-                                        WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderLabourWrapper.workOrderWrapper.FinalCompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                        // WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
-                                        //this.WorkorderCompletionDateWarningTextIsVisible = true;
-                                        break;
+                                    //if (workorderLabourWrapper.workOrderWrapper.FinalCompletionDate != null)
+                                    //{
+                                    //    WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderLabourWrapper.workOrderWrapper.FinalCompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                                    //    // WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
+                                    //    //this.WorkorderCompletionDateWarningTextIsVisible = true;
+                                    //    break;
 
-                                    }
+                                    //}
                                 }
                             }
                         }
@@ -11450,12 +11570,13 @@ namespace ProteusMMX.ViewModel.Workorder
                     return;
                 }
 
+                #region Check Cause if required
                 if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
                 {
                     string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
                     if (!string.IsNullOrWhiteSpace(IsCheckedCause))
                     {
-                        if (IsCheckedCause == "True" && CauseID == null)
+                        if (IsCheckedCause.ToLower() == "true" && CauseID == null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
                         {
                             UserDialogs.Instance.HideLoading();
                             DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
@@ -11463,6 +11584,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                     }
                 }
+                #endregion
+
 
 
                 ///TODO: Get Workorder Labour data 
@@ -14011,22 +14134,21 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 #region Check Cause if required
-                if (workorderWrapper.workOrderWrapper.workOrder.WorkOrderType == "DemandMaintenance")
+                if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
                 {
-                    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedCause))
+                    string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
+                    if (!string.IsNullOrWhiteSpace(IsCheckedCause))
                     {
-
-                        if (workorderWrapper.workOrderWrapper.Cause == null || workorderWrapper.workOrderWrapper.Cause.Count == 0)
+                        if (IsCheckedCause.ToLower() == "true" && CauseID == null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
                         {
                             UserDialogs.Instance.HideLoading();
-
-                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"), 2000);
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
                             return;
                         }
                     }
-
                 }
                 #endregion
+
 
 
                 #region Check Cost Center and Worktype if required
@@ -14174,6 +14296,7 @@ namespace ProteusMMX.ViewModel.Workorder
             Application.Current.Properties["AssetDefaultEmployee"] = this.AssetID;
             Application.Current.Properties["LocationDefaultEmployee"] = this.LocationID;
             Application.Current.Properties["CauseID"] = "";
+           // WorkorderCompletionDate = null;
             return Task.FromResult(true);
 
         }

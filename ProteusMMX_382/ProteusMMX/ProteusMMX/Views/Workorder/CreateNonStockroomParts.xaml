@@ -74,7 +74,7 @@
                 <border:SfBorder Style="{StaticResource SfBorderStyle}">
 
                     <control1:CustomEntry
-                        x:Name="PartNumber" Keyboard="Numeric" Text="{Binding PartNumberText}"  IsEnabled="{Binding PartNumberIsEnable , Mode=TwoWay}"/>
+                        x:Name="PartNumber"  Text="{Binding PartNumberText}"  IsEnabled="{Binding PartNumberIsEnable , Mode=TwoWay}"/>
                 </border:SfBorder>
             </StackLayout>
 

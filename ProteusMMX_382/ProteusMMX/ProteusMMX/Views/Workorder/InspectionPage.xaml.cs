@@ -295,6 +295,7 @@ namespace ProteusMMX.Views.Workorder
 
                 }
             }
+            
 
         }
 
@@ -303,8 +304,20 @@ namespace ProteusMMX.Views.Workorder
 
         protected override async void OnAppearing()
         {
-           ServiceOutput workorderWrapper = await ViewModel._workorderService.GetWorkorderByWorkorderID(AppSettings.User.UserID.ToString(),WorkorderID.ToString());
+           ServiceOutput workorderWrapper = await ViewModel._workorderService.GetWorkorderByWorkorderID(AppSettings.User.UserID.ToString(), ViewModel.WorkorderID.ToString());
+            #region Set All Flag Properties
+            #region Set IsAllAnswersFilled property
 
+            if (workorderWrapper.workOrderWrapper.IsAllAnswersFilled == "False")
+            {
+                Application.Current.Properties["IsAllAnswersFilled"] = "False";
+
+            }
+            else
+            {
+                Application.Current.Properties["IsAllAnswersFilled"] = workorderWrapper.workOrderWrapper.IsAllAnswersFilled;
+            }
+            #endregion
             #region Set IsAllTaskHoursFilled property
 
             if (workorderWrapper.workOrderWrapper.IsAllTaskHousFilled == "False")
@@ -407,6 +420,8 @@ namespace ProteusMMX.Views.Workorder
             }
 
             #endregion
+            #endregion
+           
 
             total = TimeSpan.Zero;
             // for disscoson 

@@ -2617,7 +2617,89 @@ namespace ProteusMMX.ViewModel.Workorder
             if (dateResult.Ok)
             {
                 #region Check Autofill Completion for Task
-             
+
+                ServiceOutput workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(AppSettings.User.UserID.ToString(), this.WorkorderID.ToString());
+                #region Set All Flag Properties
+
+
+                #region Set IsAllTaskHoursFilled property
+
+                if (workorderWrapper.workOrderWrapper.IsAllTaskHousFilled == "False")
+                {
+                    Application.Current.Properties["IsAllTaskHousFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllTaskHousFilled"] = workorderWrapper.workOrderWrapper.IsAllTaskHousFilled;
+                }
+                #endregion
+                #region Set HoursRequiredService Flag
+                if (workorderWrapper.workOrderWrapper.IsHoursRequiredForCompletionDate == "True")
+                {
+                    Application.Current.Properties["IsHoursRequiredForCompletionDate"] = workorderWrapper.workOrderWrapper.IsHoursRequiredForCompletionDate;
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsHoursRequiredForCompletionDate"] = "False";
+
+                }
+                #endregion
+                #region Check for Task/Inspection
+
+                if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Task")
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Task";
+
+                }
+                else if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspections" || workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspection")
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Inspection";
+                }
+                else
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "";
+                }
+                #endregion
+                #region Check for Autocomplete Task/Inspection
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
+                {
+                    Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"] = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
+                }
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyTaskHoursFilled))
+                {
+                    Application.Current.Properties["IsAnyTaskHoursFilled"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsAnyTaskHoursFilled"] = "False";
+                }
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyInspectionHoursFilled))
+                {
+                    Application.Current.Properties["IsAnyInspectionHoursFilled"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsAnyInspectionHoursFilled"] = "False";
+                }
+
+                #endregion
+
+                #region Check Required Task/Inspection Hours
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedLaborHours))
+                {
+                    Application.Current.Properties["IsCheckedLaborHours"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsCheckedLaborHours"] = "False";
+                }
+
+                #endregion
+
+                #endregion
+
                 if (Application.Current.Properties.ContainsKey("AutoFillCompleteOnTaskAndLabor"))
                 {
                     AutoFillCompleteOnTaskAndLabor = Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"].ToString();
@@ -2631,11 +2713,14 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     IsHoursRequiredForCompletionDate = Application.Current.Properties["IsHoursRequiredForCompletionDate"].ToString();
                 }
+            
                 if (!string.IsNullOrWhiteSpace(AutoFillCompleteOnTaskAndLabor))
                 {
                     if (AutoFillCompleteOnTaskAndLabor.ToLower() == "true" && IsAnyTaskHoursFilled.ToLower()=="false" && IsHoursRequiredForCompletionDate.ToLower()=="true")
                     {
                         UserDialogs.Instance.Toast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"));
+
+                        
                         return;
 
                     }

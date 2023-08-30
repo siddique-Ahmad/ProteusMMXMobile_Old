@@ -11,6 +11,7 @@ using Plugin.LocalNotification.EventArgs;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using ProteusMMX.Helpers;
+using ProteusMMX.Helpers.DateTime;
 using ProteusMMX.Helpers.Storage;
 using ProteusMMX.Model;
 using ProteusMMX.Model.CommonModels;
@@ -966,6 +967,19 @@ namespace ProteusMMX.ViewModel
                     UserDialogs.Instance.HideLoading();
 
                     DialogService.ShowToast("Current User Doesnot have Mobile License", 2000);
+
+                    return;
+                }
+                //DateTime expirationDate = DateTime.Parse(user.mmxUser.blackhawkLicValidator.ProductKeyExpirationDate);
+
+                DateTime expirationDate = DateTime.ParseExact(user.mmxUser.blackhawkLicValidator.ProductKeyExpirationDate, "MM/dd/yyyy", null);
+
+                DateTime userCurrentDate = DateTimeConverter.ClientCurrentDateTimeByZone(user.mmxUser.TimeZone).Date;
+                if (userCurrentDate > expirationDate.Date)
+                {
+                    UserDialogs.Instance.HideLoading();
+
+                    DialogService.ShowToast("Product Key is Expire", 2000);
 
                     return;
                 }
