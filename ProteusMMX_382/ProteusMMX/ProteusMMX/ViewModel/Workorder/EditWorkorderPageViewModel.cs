@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Newtonsoft.Json;
 using ProteusMMX.Constants;
 using ProteusMMX.Controls;
 using ProteusMMX.Converters;
@@ -26,6 +27,7 @@ using System.Collections.ObjectModel;
 using System.Dynamic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -11536,7 +11538,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-
+                LogMessage(AppSettings.UserName, AppSettings.APPVersion);
                 //OperationInProgress = true;
 
 
@@ -14300,8 +14302,43 @@ namespace ProteusMMX.ViewModel.Workorder
             return Task.FromResult(true);
 
         }
+        public void LogMessage(string Username,string AppVersion)
+        {
+          string FinalLogstring = "Mobile Version: " + AppVersion + ";" + " UserName: " + Username+"; " + " Action Date: " + DateTime.UtcNow.ToString() + " Action Method: " + "Edit/Update Workorder";
+            Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/Service/CreateLogs");
 
+            var payload = new LogModel()
+            {
+                Message = FinalLogstring,
+                FileName = "CompletionDateWithoutCause.txt"
 
+            };
+
+            string strPayload = JsonConvert.SerializeObject(payload);
+            HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            var t = Task.Run(() => SendURI(posturi, c));
+
+        }
+        static async Task SendURI(Uri u, HttpContent c)
+        {
+            var response = string.Empty;
+            using (var client = new HttpClient())
+            {
+                HttpRequestMessage request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = u,
+                    Content = c
+                };
+
+                HttpResponseMessage result = await client.SendAsync(request);
+                if (result.IsSuccessStatusCode)
+                {
+                    response = result.StatusCode.ToString();
+                }
+            }
+
+        }
         public Task IssueWorkorder()
         {
             try
