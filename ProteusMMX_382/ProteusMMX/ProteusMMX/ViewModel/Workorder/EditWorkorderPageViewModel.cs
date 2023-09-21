@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Newtonsoft.Json;
 using ProteusMMX.Constants;
 using ProteusMMX.Controls;
 using ProteusMMX.Converters;
@@ -24,7 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -40,6 +43,8 @@ namespace ProteusMMX.ViewModel.Workorder
         string CurrentRuntimeVisiblevalue = string.Empty;
         #region Fields
         ServiceOutput workorderWrapper;
+        ServiceOutput workorderLabourWrapper;
+        ServiceOutput Inspection;
 
         protected readonly IAuthenticationService _authenticationService;
 
@@ -114,7 +119,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-        
+
         string _moreText;
         public string MoreText
         {
@@ -744,6 +749,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        #region ***** DistributeCost *****
         string _distributeCostforAssetsystem;
         public string DistributeCostforAssetsystem
         {
@@ -761,6 +767,43 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+
+        bool _distributeCostforAssetsystemIsVisible = true;
+        public bool DistributeCostforAssetsystemIsVisible
+        {
+            get
+            {
+                return _distributeCostforAssetsystemIsVisible;
+            }
+
+            set
+            {
+                if (value != _distributeCostforAssetsystemIsVisible)
+                {
+                    _distributeCostforAssetsystemIsVisible = value;
+                    OnPropertyChanged(nameof(DistributeCostforAssetsystemIsVisible));
+                }
+            }
+        }
+
+        bool _distributeCostforAssetsystemIsEnable = true;
+        public bool DistributeCostforAssetsystemIsEnable
+        {
+            get
+            {
+                return _distributeCostforAssetsystemIsEnable;
+            }
+
+            set
+            {
+                if (value != _distributeCostforAssetsystemIsEnable)
+                {
+                    _distributeCostforAssetsystemIsEnable = value;
+                    OnPropertyChanged(nameof(DistributeCostforAssetsystemIsEnable));
+                }
+            }
+        }
+        #endregion
 
         string _chargeCostsOnlyToChildAssets;
         public string ChargeCostsOnlyToChildAssets
@@ -811,8 +854,6 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-
-
 
         List<FormControl> _overriddenControlsNew = new List<FormControl>();
         public List<FormControl> OverriddenControlsNew
@@ -1098,6 +1139,78 @@ namespace ProteusMMX.ViewModel.Workorder
 
         #region EditWorkorder Properties
 
+        //Originator
+        string _originatorTitle;
+        public string OriginatorTitle
+        {
+            get
+            {
+                return _originatorTitle;
+            }
+
+            set
+            {
+                if (value != _originatorTitle)
+                {
+                    _originatorTitle = value;
+                    OnPropertyChanged(nameof(OriginatorTitle));
+                }
+            }
+        }
+
+        string _originatorName;
+        public string OriginatorName
+        {
+            get
+            {
+                return _originatorName;
+            }
+
+            set
+            {
+                if (value != _originatorName)
+                {
+                    _originatorName = value;
+                    OnPropertyChanged(nameof(OriginatorName));
+                }
+            }
+        }
+
+        bool _originatorIsVisible = true;
+        public bool OriginatorIsVisible
+        {
+            get
+            {
+                return _originatorIsVisible;
+            }
+
+            set
+            {
+                if (value != _originatorIsVisible)
+                {
+                    _originatorIsVisible = value;
+                    OnPropertyChanged(nameof(OriginatorIsVisible));
+                }
+            }
+        }
+
+        bool _originatorIsEnable = true;
+        public bool OriginatorIsEnable
+        {
+            get
+            {
+                return _originatorIsEnable;
+            }
+
+            set
+            {
+                if (value != _originatorIsEnable)
+                {
+                    _originatorIsEnable = value;
+                    OnPropertyChanged(nameof(OriginatorIsEnable));
+                }
+            }
+        }
 
         Page _page;
         public Page Page
@@ -1352,6 +1465,24 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
+
+        bool _isWorkorderFromSchedule = false;
+        public bool IsWorkorderFromSchedule
+        {
+            get
+            {
+                return _isWorkorderFromSchedule;
+            }
+
+            set
+            {
+                if (value != _isWorkorderFromSchedule)
+                {
+                    _isWorkorderFromSchedule = value;
+                    OnPropertyChanged(nameof(IsWorkorderFromSchedule));
+                }
+            }
+        }
         // Required Date
         DateTime _requiredDate1;
         public DateTime RequiredDate1
@@ -1519,23 +1650,23 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        string _workStartedDateWarningText;
-        public string WorkStartedDateWarningText
-        {
-            get
-            {
-                return _workStartedDateWarningText;
-            }
+        //string _workStartedDateWarningText;
+        //public string WorkStartedDateWarningText
+        //{
+        //    get
+        //    {
+        //        return _workStartedDateWarningText;
+        //    }
 
-            set
-            {
-                if (value != _workStartedDateWarningText)
-                {
-                    _workStartedDateWarningText = value;
-                    OnPropertyChanged(nameof(WorkStartedDateWarningText));
-                }
-            }
-        }
+        //    set
+        //    {
+        //        if (value != _workStartedDateWarningText)
+        //        {
+        //            _workStartedDateWarningText = value;
+        //            OnPropertyChanged(nameof(WorkStartedDateWarningText));
+        //        }
+        //    }
+        //}
 
 
         bool _workStartedDateIsEnable = true;
@@ -1665,23 +1796,23 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        string _workorderCompletionDateWarningText;
-        public string WorkorderCompletionDateWarningText
-        {
-            get
-            {
-                return _workorderCompletionDateWarningText;
-            }
+        //string _workorderCompletionDateWarningText;
+        //public string WorkorderCompletionDateWarningText
+        //{
+        //    get
+        //    {
+        //        return _workorderCompletionDateWarningText;
+        //    }
 
-            set
-            {
-                if (value != _workorderCompletionDateWarningText)
-                {
-                    _workorderCompletionDateWarningText = value;
-                    OnPropertyChanged(nameof(WorkorderCompletionDateWarningText));
-                }
-            }
-        }
+        //    set
+        //    {
+        //        if (value != _workorderCompletionDateWarningText)
+        //        {
+        //            _workorderCompletionDateWarningText = value;
+        //            OnPropertyChanged(nameof(WorkorderCompletionDateWarningText));
+        //        }
+        //    }
+        //}
 
         bool _workorderCompletionDateIsEnable = true;
         public bool WorkorderCompletionDateIsEnable
@@ -1897,6 +2028,25 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        bool _totalTimeIsEnable = true;
+        public bool TotalTimeIsEnable
+        {
+            get
+            {
+                return _totalTimeIsEnable;
+            }
+
+            set
+            {
+                if (value != _totalTimeIsEnable)
+                {
+                    _totalTimeIsEnable = value;
+                    OnPropertyChanged(nameof(TotalTimeIsEnable));
+                }
+            }
+        }
+
+
         bool _locationIsEnable = true;
         public bool LocationIsEnable
         {
@@ -1934,7 +2084,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-       
+
 
         string _CurrentRuntimeText;
         public string CurrentRuntimeText
@@ -1954,8 +2104,8 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-      
-      
+
+
 
         string _assetName;
         public string AssetName
@@ -4071,7 +4221,153 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+        //AcknowledgedDate
+        DateTime? _acknowledgedDate;
+        public DateTime? AcknowledgedDate
+        {
+            get
+            {
+                return _acknowledgedDate;
+            }
 
+            set
+            {
+                if (value != _acknowledgedDate)
+                {
+                    _acknowledgedDate = value;
+                    OnPropertyChanged(nameof(AcknowledgedDate));
+                }
+            }
+        }
+
+        
+
+        string _acknowledgedDateTitel;
+        public string AcknowledgedDateTitel
+        {
+            get
+            {
+                return _acknowledgedDateTitel;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDateTitel)
+                {
+                    _acknowledgedDateTitel = value;
+                    OnPropertyChanged(nameof(AcknowledgedDateTitel));
+                }
+            }
+        }
+
+        bool _acknowledgedDateIsVisible = true;
+        public bool AcknowledgedDateIsVisible
+        {
+            get
+            {
+                return _acknowledgedDateIsVisible;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDateIsVisible)
+                {
+                    _acknowledgedDateIsVisible = value;
+                    OnPropertyChanged(nameof(AcknowledgedDateIsVisible));
+                }
+            }
+        }
+
+        bool _acknowledgedDateIsEnable = true;
+        public bool AcknowledgedDateIsEnable
+        {
+            get
+            {
+                return _acknowledgedDateIsEnable;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDateIsEnable)
+                {
+                    _acknowledgedDateIsEnable = value;
+                    OnPropertyChanged(nameof(AcknowledgedDateIsEnable));
+                }
+            }
+        }
+
+        //ReportedDate
+        DateTime? _reportedDate;
+        public DateTime? ReportedDate
+        {
+            get
+            {
+                return _reportedDate;
+            }
+
+            set
+            {
+                if (value != _reportedDate)
+                {
+                    _reportedDate = value;
+                    OnPropertyChanged(nameof(ReportedDate));
+                }
+            }
+        }
+
+        string _reportedDateTitel;
+        public string ReportedDateTitel
+        {
+            get
+            {
+                return _reportedDateTitel;
+            }
+
+            set
+            {
+                if (value != _reportedDateTitel)
+                {
+                    _reportedDateTitel = value;
+                    OnPropertyChanged(nameof(ReportedDateTitel));
+                }
+            }
+        }
+
+        bool _reportedDateIsVisible = true;
+        public bool ReportedDateIsVisible
+        {
+            get
+            {
+                return _reportedDateIsVisible;
+            }
+
+            set
+            {
+                if (value != _reportedDateIsVisible)
+                {
+                    _reportedDateIsVisible = value;
+                    OnPropertyChanged(nameof(ReportedDateIsVisible));
+                }
+            }
+        }
+
+        bool _reportedDateIsEnable = true;
+        public bool ReportedDateIsEnable
+        {
+            get
+            {
+                return _reportedDateIsEnable;
+            }
+
+            set
+            {
+                if (value != _reportedDateIsEnable)
+                {
+                    _reportedDateIsEnable = value;
+                    OnPropertyChanged(nameof(ReportedDateIsEnable));
+                }
+            }
+        }
         //UnsafeConditionID
         string _unsafeConditionID;
         public string UnsafeConditionID
@@ -4111,40 +4407,40 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        bool _WorkorderCompletionDateWarningTextIsVisible = false;
-        public bool WorkorderCompletionDateWarningTextIsVisible
-        {
-            get
-            {
-                return _WorkorderCompletionDateWarningTextIsVisible;
-            }
+        //bool _WorkorderCompletionDateWarningTextIsVisible = false;
+        //public bool WorkorderCompletionDateWarningTextIsVisible
+        //{
+        //    get
+        //    {
+        //        return _WorkorderCompletionDateWarningTextIsVisible;
+        //    }
 
-            set
-            {
-                if (value != _WorkorderCompletionDateWarningTextIsVisible)
-                {
-                    _WorkorderCompletionDateWarningTextIsVisible = value;
-                    OnPropertyChanged(nameof(WorkorderCompletionDateWarningTextIsVisible));
-                }
-            }
-        }
-        bool _WorkStartedDateWarningTextIsVisible = false;
-        public bool WorkStartedDateWarningTextIsVisible
-        {
-            get
-            {
-                return _WorkStartedDateWarningTextIsVisible;
-            }
+        //    set
+        //    {
+        //        if (value != _WorkorderCompletionDateWarningTextIsVisible)
+        //        {
+        //            _WorkorderCompletionDateWarningTextIsVisible = value;
+        //            OnPropertyChanged(nameof(WorkorderCompletionDateWarningTextIsVisible));
+        //        }
+        //    }
+        //}
+        //bool _WorkStartedDateWarningTextIsVisible = false;
+        //public bool WorkStartedDateWarningTextIsVisible
+        //{
+        //    get
+        //    {
+        //        return _WorkStartedDateWarningTextIsVisible;
+        //    }
 
-            set
-            {
-                if (value != _WorkStartedDateWarningTextIsVisible)
-                {
-                    _WorkStartedDateWarningTextIsVisible = value;
-                    OnPropertyChanged(nameof(WorkStartedDateWarningTextIsVisible));
-                }
-            }
-        }
+        //    set
+        //    {
+        //        if (value != _WorkStartedDateWarningTextIsVisible)
+        //        {
+        //            _WorkStartedDateWarningTextIsVisible = value;
+        //            OnPropertyChanged(nameof(WorkStartedDateWarningTextIsVisible));
+        //        }
+        //    }
+        //}
 
 
 
@@ -4630,8 +4926,121 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         #endregion
+        #region Show More Text
 
+        string _descriptionMoreText;
+        public string DescriptionMoreText
+        {
+            get
+            {
+                return _descriptionMoreText;
+            }
+
+            set
+            {
+                if (value != _descriptionMoreText)
+                {
+                    _descriptionMoreText = value;
+                    OnPropertyChanged(nameof(DescriptionMoreText));
+                }
+            }
+        }
+
+        bool _moreDescriptionTextIsEnable = false;
+        public bool MoreDescriptionTextIsEnable
+        {
+            get
+            {
+                return _moreDescriptionTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreDescriptionTextIsEnable)
+                {
+                    _moreDescriptionTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreDescriptionTextIsEnable));
+                }
+            }
+        }
+
+
+        string _internalNoteMoreText;
+        public string InternalNoteMoreText
+        {
+            get
+            {
+                return _internalNoteMoreText;
+            }
+
+            set
+            {
+                if (value != _internalNoteMoreText)
+                {
+                    _internalNoteMoreText = value;
+                    OnPropertyChanged(nameof(InternalNoteMoreText));
+                }
+            }
+        }
+
+        bool _moreInternalNoteTextIsEnable = false;
+        public bool MoreInternalNoteTextIsEnable
+        {
+            get
+            {
+                return _moreInternalNoteTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreInternalNoteTextIsEnable)
+                {
+                    _moreInternalNoteTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreInternalNoteTextIsEnable));
+                }
+            }
+        }
+
+
+
+        string _additionalDetailsMoreText;
+        public string AdditionalDetailsMoreText
+        {
+            get
+            {
+                return _additionalDetailsMoreText;
+            }
+
+            set
+            {
+                if (value != _additionalDetailsMoreText)
+                {
+                    _additionalDetailsMoreText = value;
+                    OnPropertyChanged(nameof(AdditionalDetailsMoreText));
+                }
+            }
+        }
+
+        bool _moreAdditionalDetailsTextIsEnable = false;
+        public bool MoreAdditionalDetailsTextIsEnable
+        {
+            get
+            {
+                return _moreAdditionalDetailsTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreAdditionalDetailsTextIsEnable)
+                {
+                    _moreAdditionalDetailsTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreAdditionalDetailsTextIsEnable));
+                }
+            }
+        }
         #endregion
+        #endregion
+
 
 
 
@@ -4653,6 +5062,8 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand CauseCommand => new AsyncCommand(ShowCause);
         public ICommand MaintenanceCodeCommand => new AsyncCommand(ShowMaintenanceCode);
 
+        public ICommand DescriptionCommand => new AsyncCommand(ShowMore1Description);
+
         public ICommand TapCommand1 => new AsyncCommand(ShowMoreDescription);
 
         public ICommand TapCommand2 => new AsyncCommand(ShowMoreAdditionalDetails);
@@ -4666,6 +5077,10 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand SaveWorkorderCommand => new AsyncCommand(SaveWorkorder);
 
         public ICommand TapCommand => new AsyncCommand(SpeechtoText);
+
+        public ICommand IssueWorkorderCommand => new AsyncCommand(IssueWorkorder);
+
+
         #endregion
 
         #region Methods
@@ -4690,7 +5105,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
 
-                if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
+                if (AppSettings.User != null && AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
                 {
                     if (Application.Current.Properties.ContainsKey("WorkOrderRequestedDateKey"))
                     {
@@ -4714,7 +5129,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     this.IsCostLayoutIsVisibleForTab = true;
                 }
-                //FormLoadInputForWorkorder = await _formLoadInputService.GetFormLoadInputForBarcode(UserID, AppSettings.WorkorderDetailFormName);
+
                 await SetTitlesPropertiesForPage();
 
                 workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
@@ -4725,22 +5140,134 @@ namespace ProteusMMX.ViewModel.Workorder
                 else
                 {
                     this.Cause = workorderWrapper.workOrderWrapper.Cause[0];
-                    //OnCauseRequested(workorderWrapper.Cause[0].SelectedValue);
+
+                }
+               
+                if (workorderWrapper.workOrderWrapper.WorkorderCreatedfromSchedule)
+                {
+                    IsWorkorderFromSchedule = true;
+                }
+                #region Set All Flag Properties
+
+                #region Set IsAllAnswersFilled property
+
+                if (workorderWrapper.workOrderWrapper.IsAllAnswersFilled == "False")
+                {
+                    Application.Current.Properties["IsAllAnswersFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllAnswersFilled"] = workorderWrapper.workOrderWrapper.IsAllAnswersFilled;
+                }
+                #endregion
+                #region Set IsAllTaskHoursFilled property
+
+                if (workorderWrapper.workOrderWrapper.IsAllTaskHousFilled == "False")
+                {
+                    Application.Current.Properties["IsAllTaskHousFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllTaskHousFilled"] = workorderWrapper.workOrderWrapper.IsAllTaskHousFilled;
+                }
+                #endregion
+                #region Set IsAllInspectionHoursFilled property
+                if (workorderWrapper.workOrderWrapper.IsAllInspectionHousFilled == "False")
+                {
+                    Application.Current.Properties["IsAllInspectionHousFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllInspectionHousFilled"] = workorderWrapper.workOrderWrapper.IsAllInspectionHousFilled;
+                }
+                #endregion
+
+                #region Set HoursRequiredService Flag
+                if (workorderWrapper.workOrderWrapper.IsHoursRequiredForCompletionDate == "True")
+                {
+                    Application.Current.Properties["IsHoursRequiredForCompletionDate"] = workorderWrapper.workOrderWrapper.IsHoursRequiredForCompletionDate;
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsHoursRequiredForCompletionDate"] = "False";
+
+                }
+                #endregion
+
+                #region Set AllAnswersRequiredService Flag
+                if (workorderWrapper.workOrderWrapper.IsInspectionAnswerRequiredforCompletionDate == "True")
+                {
+                    Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"] = workorderWrapper.workOrderWrapper.IsInspectionAnswerRequiredforCompletionDate;
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"] = "False";
+
+                }
+                #endregion
+
+                #region Check for Task/Inspection
+
+                if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Task")
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Task";
+
+                }
+                else if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspections" || workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspection")
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Inspection";
+                }
+                else
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "";
+                }
+                #endregion
+
+                #region Check for Autocomplete Task/Inspection
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
+                {
+                    Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"] = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
+                }
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyTaskHoursFilled))
+                {
+                    Application.Current.Properties["IsAnyTaskHoursFilled"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsAnyTaskHoursFilled"] = "False";
+                }
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyInspectionHoursFilled))
+                {
+                    Application.Current.Properties["IsAnyInspectionHoursFilled"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsAnyInspectionHoursFilled"] = "False";
                 }
 
-                await SetControlsPropertiesForPage(workorderWrapper);
-                // FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(AppSettings.User.UserID.ToString(), AppSettings.WorkorderModuleName);
+                #endregion
 
-                //  FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.WorkorderModuleName);
+                #region Check Required Task/Inspection Hours
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedLaborHours))
+                {
+                    Application.Current.Properties["IsCheckedLaborHours"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsCheckedLaborHours"] = "False";
+                }
+
+                #endregion
+                #endregion
+                await SetControlsPropertiesForPage(workorderWrapper);
                 await CreateControlsForPage();
 
-               
-                //await SetTitlesPropertiesForPage(FormLoadInputForWorkorder);
-                //await CreateControlsForPage(FormLoadInputForWorkorder);
-
-                ///// Retrive Workorder Data and Set Control properties
-                ///// 
-                //await SetControlsPropertiesForPage();
+                
 
             }
             catch (Exception ex)
@@ -4771,7 +5298,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 {
-
+                    OriginatorTitle = "Originator";
                     CurrentRuntimeTitle = WebControlTitle.GetTargetNameByTitleName("CurrentRuntime");
                     PageTitle = WebControlTitle.GetTargetNameByTitleName("Details");
                     WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
@@ -4781,7 +5308,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     TotalTimeTilte = WebControlTitle.GetTargetNameByTitleName("TotalTime");
 
                     WorkorderTitle = WebControlTitle.GetTargetNameByTitleName("WorkOrder");
-                    CloseWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("ClosedWorkOrder");
+                    CloseWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("CloseWorkOrder");
                     InventoryTransactionTitle = WebControlTitle.GetTargetNameByTitleName("InventoryTransaction");
                     ServiceRequestTitle = WebControlTitle.GetTargetNameByTitleName("ServiceRequest");
                     AssetsTitle = WebControlTitle.GetTargetNameByTitleName("Assets");
@@ -4799,7 +5326,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     AssetsTitle = WebControlTitle.GetTargetNameByTitleName("Asset");
                     AssetSystemTitle = WebControlTitle.GetTargetNameByTitleName("AssetSystem");
                     InternalNotesTitle = WebControlTitle.GetTargetNameByTitleName("InternalNote");
-                    AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
+                    AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("Notes");
                     MoreText = WebControlTitle.GetTargetNameByTitleName("More");
                     Signatures = WebControlTitle.GetTargetNameByTitleName("Signatures");
                     AssociatedAssets = (WebControlTitle.GetTargetNameByTitleName("AssociatedAssets"));
@@ -4818,7 +5345,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
 
-                    //ParentCostDistributed = WebControlTitle.GetTargetNameByTitleName("ParentCostDistributed");
                 }
             }
             catch (Exception ex)
@@ -4874,31 +5400,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
             }
-            //if (Application.Current.Properties.ContainsKey("workorderSubModuleListDialogues"))
-            //{
-            //    SubModule workorderSubModule = Application.Current.Properties["workorderSubModuleListDialogues"] as SubModule;
-            //    if (workorderSubModule.listDialoges != null && workorderSubModule.listDialoges.Count > 0)
-            //    {
-            //        var WorkorderDialog = workorderSubModule.listDialoges.FirstOrDefault(i => i.DialogName == "WorkOrderDialog");
-            //        if (WorkorderDialog != null && WorkorderDialog.listTab != null && WorkorderDialog.listTab.Count > 0)
-            //        {
-            //var TaskLabourTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "TasksandLabor");
-            //var InspectionTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "WorkOrderInspections");
-            //var ToolsTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Tools");
-            //var PartsTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Parts");
-            //var AttachmentTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Attachments");
-            //Application.Current.Properties["TaskandLabourTabKey"] = TaskLabourTab.Expression;
-            //Application.Current.Properties["InspectionTabKey"] = InspectionTab.Expression;
-            //Application.Current.Properties["ToolsTabKey"] = ToolsTab.Expression;
-            //Application.Current.Properties["PartsTabKey"] = PartsTab.Expression;
-            //Application.Current.Properties["AttachmentTabKey"] = AttachmentTab.Expression;
-
-            //var DetailsTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Details");
-            //var WorkStartDateDetails = DetailsTab.listControls.FirstOrDefault(i => i.ControlName == "WorkStartedDate");
-            //var WorkCompletionDateDetails = DetailsTab.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate");
-            //var AdditionalDetailsTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "AdditionalDetails");
-            //var CauseTab = WorkorderDialog.listTab.FirstOrDefault(i => i.DialogTabName == "Causes");
-
 
             if (Application.Current.Properties.ContainsKey("WorkorderTargetKey"))
             {
@@ -5056,23 +5557,6 @@ namespace ProteusMMX.ViewModel.Workorder
                     this.IsCostLayoutIsVisible = false;
                 }
             }
-            //Because showing sometimes on page, That's why initializing in Initialize component
-            //if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
-            //{
-            //    if (Application.Current.Properties.ContainsKey("WorkOrderRequestedDateKey"))
-            //    {
-            //        var WorkOrderRequestedDate = Application.Current.Properties["WorkOrderRequestedDateKey"].ToString();
-            //        if (WorkOrderRequestedDate != null && (WorkOrderRequestedDate == "E" || WorkOrderRequestedDate == "V"))
-            //        {
-
-            //            this.RequestedDateIsVisible = true;
-            //        }
-            //        else
-            //        {
-            //            this.RequestedDateIsVisible = false;
-            //        }
-            //    }
-            //}
 
 
 
@@ -5184,6 +5668,22 @@ namespace ProteusMMX.ViewModel.Workorder
                         WorkorderControlsNew.Remove(WorkOrderNumber);
                     }
 
+                    var AcknowledgedDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "AcknowledgedDate");
+                    if (AcknowledgedDate != null)
+                    {
+                        AcknowledgedDateTitel = AcknowledgedDate.TargetName;
+                        OverriddenControlsNew.Add(AcknowledgedDate);
+                        WorkorderControlsNew.Remove(AcknowledgedDate);
+                    }
+
+                    var ReportedDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "ReportedDate");
+                    if (ReportedDate != null)
+                    {
+                        ReportedDateTitel = ReportedDate.TargetName;
+                        OverriddenControlsNew.Add(ReportedDate);
+                        WorkorderControlsNew.Remove(ReportedDate);
+                    }
+
                     var CurrentRuntime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "CurrentRuntime");
                     if (CurrentRuntime != null)
                     {
@@ -5208,6 +5708,30 @@ namespace ProteusMMX.ViewModel.Workorder
                         DescriptionTitle = description.TargetName;
                         OverriddenControlsNew.Add(description);
                         WorkorderControlsNew.Remove(description);
+                    }
+
+                    var TotalTime = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "TotalTime");
+                    if (TotalTime != null)
+                    {
+                        TotalTimeTilte = TotalTime.TargetName;
+                        OverriddenControlsNew.Add(TotalTime);
+                        WorkorderControlsNew.Remove(TotalTime);
+                    }
+
+                    var Originator = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "Originator");
+                    if (Originator != null)
+                    {
+                        OriginatorTitle = Originator.TargetName;
+                        OverriddenControlsNew.Add(Originator);
+                        WorkorderControlsNew.Remove(Originator);
+                    }
+
+                    var DistributeCost = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "DistributeCost");
+                    if (DistributeCost != null)
+                    {
+                        DistributeCostforAssetsystem = DistributeCost.TargetName;
+                        OverriddenControlsNew.Add(DistributeCost);
+                        WorkorderControlsNew.Remove(DistributeCost);
                     }
 
                     var RequiredDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "RequiredDate");
@@ -5364,7 +5888,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     ///WorkOrderNumber
                     ///JobNumber
-                    ///Description
+                    ///Descriptionf
                     ///RequiredDate
                     ///WorkStartedDate
                     ///CompletionDate
@@ -5401,8 +5925,6 @@ namespace ProteusMMX.ViewModel.Workorder
                                     JobNumberIsVisible = ApplyIsVisible(item.Expression);
                                     break;
                                 }
-
-
 
                             case "Description":
                                 {
@@ -5537,6 +6059,20 @@ namespace ProteusMMX.ViewModel.Workorder
                                     break;
                                 }
 
+                            case "ReportedDate":
+                                {
+                                    ReportedDateIsEnable = ApplyIsEnable(item.Expression);
+                                    ReportedDateIsVisible = ApplyIsVisible(item.Expression);
+                                    break;
+                                }
+
+                            case "AcknowledgedDate":
+                                {
+                                    AcknowledgedDateIsEnable = ApplyIsEnable(item.Expression);
+                                    AcknowledgedDateIsVisible = ApplyIsVisible(item.Expression);
+                                    break;
+                                }
+
 
                             case "EstimatedDowntime":
                                 {
@@ -5572,6 +6108,20 @@ namespace ProteusMMX.ViewModel.Workorder
                                     break;
                                 }
 
+                            case "DistributeCost":
+                                {
+                                    DistributeCostforAssetsystemIsVisible = ApplyIsVisible(item.Expression);
+                                    DistributeCostforAssetsystemIsEnable = ApplyIsEnable(item.Expression);
+                                    break;
+                                }
+
+                            case "Originator":
+                                {
+                                    DistributeCostforAssetsystemIsVisible = ApplyIsVisible(item.Expression);
+                                    DistributeCostforAssetsystemIsEnable = ApplyIsEnable(item.Expression);
+                                    break;
+                                }
+
                         }
 
                     }
@@ -5601,12 +6151,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "CurrentRuntime"));
                 WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequestedDate"));
+                WorkorderControlsNew.RemoveAll((i => i.ControlName == "AcknowledgedDate"));
+                WorkorderControlsNew.RemoveAll((i => i.ControlName == "ReportedDate"));
                 if (AppSettings.User.blackhawkLicValidator.RiskAssasment.Equals(false))
                 {
                     WorkorderControlsNew.RemoveAll((i => i.ControlName == "RiskQuestion"));
                 }
 
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+                //var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
                 if (workorderWrapper != null && workorderWrapper.workOrderWrapper != null && workorderWrapper.workOrderWrapper.workOrder != null)
                 {
@@ -5640,6 +6192,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequestNumber"));
                             this.RequestedDateIsVisible = false;
+                        }
+                        if (workorder.RequesterFullName == null)
+                        {
+                            WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequesterFullName"));
+                        }
+                        if (workorder.RequesterPhone == null)
+                        {
+                            WorkorderControlsNew.RemoveAll((i => i.ControlName == "RequesterPhone"));
                         }
                         if (string.IsNullOrWhiteSpace(workorder.RequesterEmail))
                         {
@@ -5719,43 +6279,82 @@ namespace ProteusMMX.ViewModel.Workorder
                             break;
 
                         case "DateTime":
-                            if (!isItemAddedInFirstColumn)
+                            if (Device.Idiom == TargetIdiom.Phone)
                             {
-                                if (!isItemAddedInSecondColumn)
+                                if (!isItemAddedInFirstColumn)
+                                {
+                                    if (!isItemAddedInSecondColumn)
+                                    {
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        //increment column
+                                        rowCount++;
+                                        //isItemAddedInFirstColumn = true;
+                                        //isItemAddedInSecondColumn = false;
+                                        columnCount = 0;
+                                    }
+                                    else
+                                    {
+                                        //generate new row
+                                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                                        rowCount++;
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        columnCount = 0;
+                                        //isItemAddedInFirstColumn = true;
+                                        //isItemAddedInSecondColumn = false;
+
+                                    }
+                                }
+
+                                else
                                 {
                                     GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
                                     //increment column
-                                    isItemAddedInFirstColumn = true;
-                                    isItemAddedInSecondColumn = false;
-                                    columnCount = 1;
-                                }
-                                else
-                                {
-                                    //generate new row
-                                    contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                                    rowCount++;
-                                    GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
-
-                                    columnCount = 1;
-                                    isItemAddedInFirstColumn = true;
-                                    isItemAddedInSecondColumn = false;
-
+                                    //isItemAddedInFirstColumn = false;
+                                    //isItemAddedInSecondColumn = true;
+                                    columnCount = 0;
                                 }
                             }
-
                             else
                             {
-                                GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+                                if (!isItemAddedInFirstColumn)
+                                {
+                                    if (!isItemAddedInSecondColumn)
+                                    {
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
-                                //increment column
-                                isItemAddedInFirstColumn = false;
-                                isItemAddedInSecondColumn = true;
-                                columnCount = 0;
+                                        //increment column
+                                        isItemAddedInFirstColumn = true;
+                                        isItemAddedInSecondColumn = false;
+                                        columnCount = 1;
+                                    }
+                                    else
+                                    {
+                                        //generate new row
+                                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                                        rowCount++;
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        columnCount = 1;
+                                        isItemAddedInFirstColumn = true;
+                                        isItemAddedInSecondColumn = false;
+
+                                    }
+                                }
+
+                                else
+                                {
+                                    GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                    //increment column
+                                    isItemAddedInFirstColumn = false;
+                                    isItemAddedInSecondColumn = true;
+                                    columnCount = 0;
+                                }
+
                             }
-
-
-
 
                             break;
 
@@ -5817,524 +6416,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             #endregion
 
-            #region Old Code
 
-
-            ///// Remove static controls titles so they won't render twice.
-            ///// Apply visibility according to expression on Overridden controls 
-            //#region Remove Overridden controls from titles
-
-            //if (titles != null && titles.CFLI != null && titles.CFLI.Count > 0)
-            //{
-
-            //    try
-            //    {
-            //        ///WorkOrderNumber
-            //        ///JobNumber
-            //        ///Description
-            //        ///RequiredDate
-            //        ///WorkStartedDate
-            //        ///CompletionDate
-            //        ///AssignedToEmployeeID
-            //        ///WorkOrderRequesterID
-            //        ///CostCenterID
-            //        ///PriorityID
-            //        ///ShiftID
-            //        ///WorkOrderStatusID
-            //        ///WorkTypeID
-            //        ///UserField22
-            //        ///MaintenanceCodeID
-
-
-
-
-            //        var WorkOrderNumber = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkOrderNumber");
-            //        if (WorkOrderNumber != null)
-            //        {
-            //            OverriddenControls.Add(WorkOrderNumber);
-            //            titles.CFLI.Remove(WorkOrderNumber);
-            //        }
-
-            //        var JobNumber = titles.CFLI.FirstOrDefault(x => x.FieldName == "JobNumber");
-            //        if (JobNumber != null)
-            //        {
-            //            OverriddenControls.Add(JobNumber);
-            //            titles.CFLI.Remove(JobNumber);
-            //        }
-
-            //        var description = titles.CFLI.FirstOrDefault(x => x.FieldName == "Description");
-            //        if (description != null)
-            //        {
-            //            OverriddenControls.Add(description);
-            //            titles.CFLI.Remove(description);
-            //        }
-
-            //        var RequiredDate = titles.CFLI.FirstOrDefault(x => x.FieldName == "RequiredDate");
-            //        if (RequiredDate != null)
-            //        {
-            //            OverriddenControls.Add(RequiredDate);
-            //            titles.CFLI.Remove(RequiredDate);
-            //        }
-
-            //        var WorkStartedDate = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkStartedDate");
-            //        if (WorkStartedDate != null)
-            //        {
-            //            OverriddenControls.Add(WorkStartedDate);
-            //            titles.CFLI.Remove(WorkStartedDate);
-            //        }
-
-            //        var CompletionDate = titles.CFLI.FirstOrDefault(x => x.FieldName == "CompletionDate");
-            //        if (CompletionDate != null)
-            //        {
-            //            OverriddenControls.Add(CompletionDate);
-            //            titles.CFLI.Remove(CompletionDate);
-            //        }
-
-            //        var AssignedToEmployeeID = titles.CFLI.FirstOrDefault(x => x.FieldName == "AssignedToEmployeeID");
-            //        if (AssignedToEmployeeID != null)
-            //        {
-            //            OverriddenControls.Add(AssignedToEmployeeID);
-            //            titles.CFLI.Remove(AssignedToEmployeeID);
-            //        }
-
-            //        var WorkOrderRequesterID = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkOrderRequesterID");
-            //        if (WorkOrderRequesterID != null)
-            //        {
-            //            OverriddenControls.Add(WorkOrderRequesterID);
-            //            titles.CFLI.Remove(WorkOrderRequesterID);
-            //        }
-
-            //        var CostCenterID = titles.CFLI.FirstOrDefault(x => x.FieldName == "CostCenterID");
-            //        if (CostCenterID != null)
-            //        {
-            //            OverriddenControls.Add(CostCenterID);
-            //            titles.CFLI.Remove(CostCenterID);
-            //        }
-
-            //        var PriorityID = titles.CFLI.FirstOrDefault(x => x.FieldName == "PriorityID");
-            //        if (PriorityID != null)
-            //        {
-            //            OverriddenControls.Add(PriorityID);
-            //            titles.CFLI.Remove(PriorityID);
-            //        }
-
-            //        var ShiftID = titles.CFLI.FirstOrDefault(x => x.FieldName == "ShiftID");
-            //        if (ShiftID != null)
-            //        {
-            //            OverriddenControls.Add(ShiftID);
-            //            titles.CFLI.Remove(ShiftID);
-            //        }
-
-            //        var WorkOrderStatusID = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkOrderStatusID");
-            //        if (WorkOrderStatusID != null)
-            //        {
-            //            OverriddenControls.Add(WorkOrderStatusID);
-            //            titles.CFLI.Remove(WorkOrderStatusID);
-            //        }
-
-            //        var WorkTypeID = titles.CFLI.FirstOrDefault(x => x.FieldName == "WorkTypeID");
-            //        if (WorkTypeID != null)
-            //        {
-            //            OverriddenControls.Add(WorkTypeID);
-            //            titles.CFLI.Remove(WorkTypeID);
-            //        }
-
-            //        var MaintenanceCodeID = titles.CFLI.FirstOrDefault(x => x.FieldName == "MaintenanceCodeID");
-            //        if (MaintenanceCodeID != null)
-            //        {
-            //            OverriddenControls.Add(MaintenanceCodeID);
-            //            titles.CFLI.Remove(MaintenanceCodeID);
-            //        }
-
-
-            //        var EstimatedDowntime = titles.CFLI.FirstOrDefault(x => x.FieldName == "EstimatedDowntime");
-            //        if (EstimatedDowntime != null)
-            //        {
-            //            OverriddenControls.Add(EstimatedDowntime);
-            //            titles.CFLI.Remove(EstimatedDowntime);
-            //        }
-
-            //        var ActualDowntime = titles.CFLI.FirstOrDefault(x => x.FieldName == "ActualDowntime");
-            //        if (ActualDowntime != null)
-            //        {
-            //            OverriddenControls.Add(ActualDowntime);
-            //            titles.CFLI.Remove(ActualDowntime);
-            //        }
-
-            //        var MiscellaneousLaborCostID = titles.CFLI.FirstOrDefault(x => x.FieldName == "MiscellaneousLaborCostID");
-            //        if (MiscellaneousLaborCostID != null)
-            //        {
-            //            OverriddenControls.Add(MiscellaneousLaborCostID);
-            //            titles.CFLI.Remove(MiscellaneousLaborCostID);
-            //        }
-
-            //        var MiscellaneousMaterialsCostID = titles.CFLI.FirstOrDefault(x => x.FieldName == "MiscellaneousMaterialsCostID");
-            //        if (MiscellaneousMaterialsCostID != null)
-            //        {
-            //            OverriddenControls.Add(MiscellaneousMaterialsCostID);
-            //            titles.CFLI.Remove(MiscellaneousMaterialsCostID);
-            //        }
-
-
-
-
-
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-
-            //    }
-
-            //}
-
-            //#endregion
-
-            //#region Apply visibility according to expression on Overridden controls
-
-            //if (OverriddenControls != null && OverriddenControls.Count > 0)
-            //{
-
-            //    try
-            //    {
-            //        ///WorkOrderNumber
-            //        ///JobNumber
-            //        ///Description
-            //        ///RequiredDate
-            //        ///WorkStartedDate
-            //        ///CompletionDate
-            //        ///AssignedToEmployeeID
-            //        ///WorkOrderRequesterID
-            //        ///CostCenterID
-            //        ///PriorityID
-            //        ///ShiftID
-            //        ///WorkOrderStatusID
-            //        ///WorkTypeID
-            //        ///UserField22
-            //        ///MaintenanceCodeID
-
-            //        var formRoles = titles.lstRoles;
-
-            //        foreach (var item in OverriddenControls)
-            //        {
-            //            var finalizedRole = await ParseControlRoleExpressionWithFormsRoles(item.Expression, formRoles);
-
-            //            switch (item.FieldName)
-            //            {
-
-            //                case "WorkOrderNumber":
-            //                    {
-            //                        break;
-            //                    }
-
-
-
-            //                case "JobNumber":
-            //                    {
-            //                        break;
-            //                    }
-
-
-
-            //                case "Description":
-            //                    {
-            //                        DescriptionIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "RequiredDate":
-            //                    {
-            //                        RequiredDateIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-
-            //                case "WorkStartedDate":
-            //                    {
-            //                        WorkStartedDateIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "CompletionDate":
-            //                    {
-            //                        WorkorderCompletionDateIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "AssignedToEmployeeID":
-            //                    {
-            //                        AssignToEmployeeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "WorkOrderRequesterID":
-            //                    {
-            //                        WorkorderRequesterIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "CostCenterID":
-            //                    {
-            //                        CostCenterIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "PriorityID":
-            //                    {
-            //                        PriorityIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "ShiftID":
-            //                    {
-            //                        ShiftIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "WorkOrderStatusID":
-            //                    {
-            //                        WorkorderStatusIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "WorkTypeID":
-            //                    {
-            //                        WorkorderTypeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "UserField22":
-            //                    {
-            //                        CauseIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "MaintenanceCodeID":
-            //                    {
-            //                        MaintenanceCodeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-
-            //                case "EstimatedDowntime":
-            //                    {
-            //                        EstimstedDowntimeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "ActualDowntime":
-            //                    {
-            //                        ActualDowntimeIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "MiscellaneousLaborCostID":
-            //                    {
-            //                        MiscellaneousLabourCostIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //                case "MiscellaneousMaterialsCostID":
-            //                    {
-            //                        MiscellaneousMaterialCostIsEnable = ApplyIsEnable(finalizedRole);
-            //                        break;
-            //                    }
-
-            //            }
-
-            //        }
-
-            //    }
-            //    catch (Exception ex)
-            //    {
-
-
-            //    }
-
-            //}
-
-            //#endregion
-
-            //#region Generate and Bind Dyanmic controls
-            //if (titles != null && titles.CFLI != null && titles.CFLI.Count > 0)
-            //{
-
-            //    #region Test 3
-
-
-
-            //    Grid contentGrid = await GetContentGrid();
-            //    contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //    //contentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            //    //contentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-
-
-
-            //    int rowCount = 0;
-            //    int columnCount = 0;
-            //    bool isItemAddedInFirstColumn = false;
-            //    bool isItemAddedInSecondColumn = false;
-            //    var formRoles = titles.lstRoles;
-            //    foreach (var item in titles.CFLI)
-            //    {
-            //        var finalizedRole = await ParseControlRoleExpressionWithFormsRoles(item.Expression, formRoles);
-
-            //        switch (item.DisplayFormat)
-            //        {
-
-            //            case "ComboBox":
-            //                if (!isItemAddedInFirstColumn)
-            //                {
-            //                    if (!isItemAddedInSecondColumn)
-            //                    {
-            //                        GenerateComboBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        //increment column
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-            //                        columnCount = 1;
-            //                    }
-            //                    else
-            //                    {
-            //                        //generate new row
-            //                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //                        rowCount++;
-            //                        GenerateComboBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        columnCount = 1;
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-
-            //                    }
-            //                }
-
-            //                else
-            //                {
-            //                    GenerateComboBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                    //increment column
-            //                    isItemAddedInFirstColumn = false;
-            //                    isItemAddedInSecondColumn = true;
-            //                    columnCount = 0;
-            //                }
-
-
-            //                break;
-
-            //            case "DateTime":
-            //                if (!isItemAddedInFirstColumn)
-            //                {
-            //                    if (!isItemAddedInSecondColumn)
-            //                    {
-            //                        GenerateDateTimeLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        //increment column
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-            //                        columnCount = 1;
-            //                    }
-            //                    else
-            //                    {
-            //                        //generate new row
-            //                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //                        rowCount++;
-            //                        GenerateDateTimeLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        columnCount = 1;
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-
-            //                    }
-            //                }
-
-            //                else
-            //                {
-            //                    GenerateDateTimeLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                    //increment column
-            //                    isItemAddedInFirstColumn = false;
-            //                    isItemAddedInSecondColumn = true;
-            //                    columnCount = 0;
-            //                }
-
-
-
-
-            //                break;
-
-            //            case "TextBox":
-            //                if (!isItemAddedInFirstColumn)
-            //                {
-            //                    if (!isItemAddedInSecondColumn)
-            //                    {
-            //                        GenerateTextBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        //increment column
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-            //                        columnCount = 1;
-            //                    }
-            //                    else
-            //                    {
-            //                        //generate new row
-            //                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            //                        rowCount++;
-            //                        GenerateTextBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                        columnCount = 1;
-            //                        isItemAddedInFirstColumn = true;
-            //                        isItemAddedInSecondColumn = false;
-
-            //                    }
-            //                }
-
-            //                else
-            //                {
-            //                    GenerateTextBoxLayout(finalizedRole, item, contentGrid, rowCount, columnCount);
-
-            //                    //increment column
-            //                    isItemAddedInFirstColumn = false;
-            //                    isItemAddedInSecondColumn = true;
-            //                    columnCount = 0;
-            //                }
-
-
-            //                break;
-
-
-            //        }
-
-
-            //    }
-
-
-
-            //    #endregion
-
-
-
-
-
-
-
-            //}
-            //#endregion
-
-
-
-            #endregion
         }
 
         private bool ApplyIsEnable(ControlRole finalizedRole)
@@ -6465,15 +6547,14 @@ namespace ProteusMMX.ViewModel.Workorder
             View control;
             if (formControl.IsRequired ?? false)
             {
-                control = new DatePicker();
+                control = new CustomDatePicker2();
             }
             else
             {
-                control = new CustomDatePicker();
+                control = new CustomDatePicker2();
             }
 
             SetControlBindingAccordingToControlType(control, formControl);
-            //new CustomDatePicker(); //new DatePicker();
 
             title.Text = formControl.TargetName;// + "<<>>" + formControl.ControlName;
 
@@ -6492,1132 +6573,11 @@ namespace ProteusMMX.ViewModel.Workorder
             wrapperLayout.Children.Add(control);
 
             contentGrid.Children.Add(wrapperLayout, column, row);
+            if (Device.Idiom == TargetIdiom.Phone && column == 0)
+            {
+                Grid.SetColumnSpan(wrapperLayout, 2);
+            }
         }
-
-
-        #region Old Code
-        //private void GenerateTextBoxLayout(ControlRole finalizedRole, WorkOrderFormLoad formLoadItem, Grid contentGrid, int row, int column)
-        //{
-        //    var title = new Label();
-        //    var control = new Entry();
-
-        //    title.Text = formLoadItem.FieldLabel;
-        //    SetControlBindingAccordingToControlType(control, formLoadItem);
-        //    if (finalizedRole.RoleRight == ControlRight.Edit)
-        //    {
-        //        control.IsEnabled = true;
-        //    }
-        //    else
-        //    {
-        //        control.IsEnabled = false;
-
-        //    }
-
-        //    var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
-        //    wrapperLayout.Children.Add(title);
-        //    wrapperLayout.Children.Add(control);
-
-        //    contentGrid.Children.Add(wrapperLayout, column, row);
-        //}
-        //private void GenerateComboBoxLayout(ControlRole finalizedRole, WorkOrderFormLoad formLoadItem, Grid contentGrid, int row, int column)
-        //{
-        //    var title = new Label();
-        //    var control = new Picker();
-
-        //    title.Text = formLoadItem.FieldLabel;
-        //    control.ItemsSource = formLoadItem.listCombo;
-
-        //    SetControlBindingAccordingToControlType(control, formLoadItem);
-        //    /// bind with its value associative property.
-        //    /// 
-
-        //    //control.SetBinding(Picker.SelectedItemProperty);
-
-        //    if (finalizedRole.RoleRight == ControlRight.Edit)
-        //    {
-        //        control.IsEnabled = true;
-        //    }
-        //    else
-        //    {
-        //        control.IsEnabled = false;
-
-        //    }
-
-        //    var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
-        //    wrapperLayout.Children.Add(title);
-        //    wrapperLayout.Children.Add(control);
-
-        //    contentGrid.Children.Add(wrapperLayout, column, row);
-
-        //}
-        //private void GenerateDateTimeLayout(ControlRole finalizedRole, WorkOrderFormLoad formLoadItem, Grid contentGrid, int row, int column)
-        //{
-        //    var title = new Label();
-
-        //    View control;
-        //    if (formLoadItem.IsRequired)
-        //    {
-        //        control = new DatePicker();
-        //    }
-        //    else
-        //    {
-        //        control = new CustomDatePicker();
-        //    }
-
-        //    SetControlBindingAccordingToControlType(control, formLoadItem);
-        //    //new CustomDatePicker(); //new DatePicker();
-
-        //    title.Text = formLoadItem.FieldLabel;
-
-        //    if (finalizedRole.RoleRight == ControlRight.Edit)
-        //    {
-        //        control.IsEnabled = true;
-        //    }
-        //    else
-        //    {
-        //        control.IsEnabled = false;
-
-        //    }
-
-        //    var wrapperLayout = new StackLayout() { Orientation = StackOrientation.Vertical };
-        //    wrapperLayout.Children.Add(title);
-        //    wrapperLayout.Children.Add(control);
-
-        //    contentGrid.Children.Add(wrapperLayout, column, row);
-        //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //private void SetControlBindingAccordingToControlType(View control, WorkOrderFormLoad formLoadItem)
-        //{
-        //    switch (formLoadItem.FieldName)
-        //    {
-
-        //        case "ActivationDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ActivationDateText));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ActivationDateText));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ActivationDateText = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ActivationDateText));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ActivationDateText));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "ClosedDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ClosedDateText));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ClosedDateText));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ClosedDateText = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ClosedDateText));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ClosedDateText));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "AbnormalityID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.AbnormalityText));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.AbnormalityText));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    AbnormalityText = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.AbnormalityText));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AbnormalityText));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "ActualDowntime":
-        //            {
-        //                //if (control is Picker)
-        //                //{
-        //                //    var x = control as Picker;
-        //                //    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ActualDowntimeText));
-        //                //}
-
-        //                //else if (control is Entry)
-        //                //{
-        //                //    control.SetBinding(Entry.TextProperty, nameof(this.ActualDowntimeText));
-        //                //}
-
-        //                //else if (control is DatePicker)
-        //                //{
-        //                //    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                //    ActualDowntimeText = DateTime.Now.ToString();
-        //                //    control.SetBinding(DatePicker.DateProperty, nameof(this.ActualDowntimeText));
-        //                //}
-
-        //                //else if (control is CustomDatePicker)
-        //                //{
-        //                //    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ActualDowntimeText));
-        //                //}
-        //                break;
-
-        //            }
-
-        //        case "AmStepID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.AmStepID));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.AmStepID));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    AmStepID = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.AmStepID));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AmStepID));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "AnalysisPerformedDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.AnalysisPerformedDate));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.AnalysisPerformedDate));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    AnalysisPerformedDate = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.AnalysisPerformedDate));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AnalysisPerformedDate));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "ConfirmEmail":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ConfirmEmail));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ConfirmEmail));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ConfirmEmail = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ConfirmEmail));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ConfirmEmail));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "CountermeasuresDefinedDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.CountermeasuresDefinedDate));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.CountermeasuresDefinedDate));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    CountermeasuresDefinedDate = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.CountermeasuresDefinedDate));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.CountermeasuresDefinedDate));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "CurrentRuntime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.CurrentRuntime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.CurrentRuntime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    CurrentRuntime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.CurrentRuntime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.CurrentRuntime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "DiagnosticTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.DiagnosticTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.DiagnosticTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    DiagnosticTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.DiagnosticTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.DiagnosticTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "DigitalSignatures":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.DigitalSignatures));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.DigitalSignatures));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    DigitalSignatures = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.DigitalSignatures));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.DigitalSignatures));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "EstimatedDowntime":
-        //            {
-        //                //if (control is Picker)
-        //                //{
-        //                //    var x = control as Picker;
-        //                //    control.SetBinding(Picker.SelectedItemProperty, nameof(this.EstimatedDowntime));
-        //                //}
-
-        //                //else if (control is Entry)
-        //                //{
-        //                //    control.SetBinding(Entry.TextProperty, nameof(this.EstimatedDowntime));
-        //                //}
-
-        //                //else if (control is DatePicker)
-        //                //{
-        //                //    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                //    EstimatedDowntime = DateTime.Now.ToString();
-        //                //    control.SetBinding(DatePicker.DateProperty, nameof(this.EstimatedDowntime));
-        //                //}
-
-        //                //else if (control is CustomDatePicker)
-        //                //{
-        //                //    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.EstimatedDowntime));
-        //                //}
-        //                break;
-
-        //            }
-
-        //        case "ImplementationValidatedDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ImplementationValidatedDate));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ImplementationValidatedDate));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ImplementationValidatedDate = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ImplementationValidatedDate));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ImplementationValidatedDate));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "InitialWaitTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.InitialWaitTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.InitialWaitTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    InitialWaitTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.InitialWaitTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.InitialWaitTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "JobNumber":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.JobNumber));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.JobNumber));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    JobNumber = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.JobNumber));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.JobNumber));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "NotificationTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.NotificationTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.NotificationTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    NotificationTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.NotificationTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.NotificationTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "PartWaitingTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.PartWaitingTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.PartWaitingTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    PartWaitingTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.PartWaitingTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.PartWaitingTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "ProblemID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ProblemID));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ProblemID));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ProblemID = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ProblemID));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ProblemID));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "project":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.Project));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.Project));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    Project = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.Project));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Project));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RelatedToID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RelatedToID));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RelatedToID));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RelatedToID = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RelatedToID));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RelatedToID));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RepairingOrReplacementTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RepairingOrReplacementTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RepairingOrReplacementTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RepairingOrReplacementTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RepairingOrReplacementTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RepairingOrReplacementTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RequestedDate":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RequestedDate));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RequestedDate));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RequestedDate = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RequestedDate));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequestedDate));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RequesterEmail":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RequesterEmail));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RequesterEmail));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RequesterEmail = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterEmail));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterEmail));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RequesterFullName":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RequesterFullName));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RequesterFullName));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RequesterFullName = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterFullName));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterFullName));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RequesterPhone":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RequesterPhone));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RequesterPhone));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RequesterPhone = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterPhone));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterPhone));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "RequestNumber":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.RequestNumber));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.RequestNumber));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    RequestNumber = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.RequestNumber));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequestNumber));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "ServiceRequestModeID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.ServiceRequestModeID));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.ServiceRequestModeID));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    ServiceRequestModeID = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.ServiceRequestModeID));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ServiceRequestModeID));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "StartupTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.StartupTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.StartupTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    StartupTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.StartupTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.StartupTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "TotalTime":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.TotalTime));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.TotalTime));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    TotalTime = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.TotalTime));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.TotalTime));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UnsafeConditionID":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UnsafeConditionID));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UnsafeConditionID = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UnsafeConditionID));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UnsafeConditionID));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UserField15":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UserField15));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UserField15));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UserField15 = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UserField15));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField15));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UserField18":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UserField18));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UserField18));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UserField18 = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UserField18));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField18));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UserField2":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UserField2));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UserField2));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UserField2 = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UserField2));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField2));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UserField21":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UserField21));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UserField21));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UserField21 = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UserField21));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField21));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "UserField24":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.UserField24));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.UserField24));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    UserField24 = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.UserField24));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField24));
-        //                }
-        //                break;
-
-        //            }
-
-        //        case "WorkOrderNumber":
-        //            {
-        //                if (control is Picker)
-        //                {
-        //                    var x = control as Picker;
-        //                    control.SetBinding(Picker.SelectedItemProperty, nameof(this.WorkOrderNumber));
-        //                }
-
-        //                else if (control is Entry)
-        //                {
-        //                    control.SetBinding(Entry.TextProperty, nameof(this.WorkOrderNumber));
-        //                }
-
-        //                else if (control is DatePicker)
-        //                {
-        //                    // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-        //                    WorkOrderNumber = DateTime.Now.ToString();
-        //                    control.SetBinding(DatePicker.DateProperty, nameof(this.WorkOrderNumber));
-        //                }
-
-        //                else if (control is CustomDatePicker)
-        //                {
-        //                    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.WorkOrderNumber));
-        //                }
-        //                break;
-
-        //            }
-
-
-        //        default:
-        //            break;
-        //    }
-
-        //}
-
-
-        #endregion
 
 
 
@@ -7627,54 +6587,6 @@ namespace ProteusMMX.ViewModel.Workorder
             switch (formControl.ControlName)
             {
 
-                //case "ActivationDate":
-                //    {
-                //        if (control is Picker)
-                //        {
-                //            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.ActivationDateText));
-
-                //            var x = control as Picker;
-                //            x.ClassId = formControl.ControlName;
-                //            x.IsEnabled = false;
-                //            x.InputTransparent = true;
-                //            var source = x.ItemsSource as List<ComboDD>;
-                //            ComboDD item = null;
-                //            try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(ActivationDateText)); }
-                //            catch (Exception) { }
-
-                //            if (item != null)
-                //            {
-                //                x.SelectedItem = item;
-                //                ActivationDateText = item.SelectedValue.ToString();
-                //            }
-
-                //            x.SelectedIndexChanged += Picker_SelectedIndexChanged;
-
-                //        }
-
-                //        else if (control is Entry)
-                //        {
-                //            control.SetBinding(Entry.TextProperty, nameof(this.ActivationDateText));
-                //            control.IsEnabled = false;
-                //            control.InputTransparent = true;
-
-                //        }
-
-                //        else if (control is DatePicker)
-                //        {
-                //            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                //            ActivationDateText = DateTime.Now.ToString();
-                //            //control.SetBinding(Entry.TextProperty, nameof(this.ActivationDateText));
-                //            control.SetBinding(DatePicker.DateProperty, nameof(this.ActivationDateText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                //        }
-
-                //        else if (control is CustomDatePicker)
-                //        {
-                //            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ActivationDateText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                //        }
-                //        break;
-
-                //    }
                 case "LOTOUrl":
                     {
                         if (control is Picker)
@@ -7715,9 +6627,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.Lottourl), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Lottourl), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.Lottourl), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -7761,9 +6673,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.ClosedDateText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ClosedDateText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ClosedDateText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -7805,9 +6717,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.AbnormalityText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AbnormalityText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.AbnormalityText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -7833,9 +6745,9 @@ namespace ProteusMMX.ViewModel.Workorder
                         //    control.SetBinding(DatePicker.DateProperty, nameof(this.ActualDowntimeText));
                         //}
 
-                        //else if (control is CustomDatePicker)
+                        //else if (control is CustomDatePicker2)
                         //{
-                        //    control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ActualDowntimeText));
+                        //    control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ActualDowntimeText));
                         //}
                         break;
 
@@ -7877,9 +6789,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.AmStepID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AmStepID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.AmStepID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -7924,9 +6836,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.AnalysisPerformedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AnalysisPerformedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.AnalysisPerformedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -7968,9 +6880,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.ConfirmEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ConfirmEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ConfirmEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8014,9 +6926,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.CountermeasuresDefinedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.CountermeasuresDefinedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.CountermeasuresDefinedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8058,9 +6970,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.CurrentRuntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.CurrentRuntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.CurrentRuntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8103,9 +7015,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.DiagnosticTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.DiagnosticTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.DiagnosticTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8149,9 +7061,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.DigitalSignatures), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.DigitalSignatures), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.DigitalSignatures), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8206,9 +7118,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RiskQuestion), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RiskQuestion), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.RiskQuestion), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8250,9 +7162,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.ImplementationValidatedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ImplementationValidatedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ImplementationValidatedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8296,9 +7208,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.InitialWaitTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.InitialWaitTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.InitialWaitTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8342,9 +7254,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.JobNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.JobNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.JobNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8389,9 +7301,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.ApprovalLevel), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ApprovalLevel), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ApprovalLevel), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8434,9 +7346,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.ApprovalNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ApprovalNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ApprovalNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8480,9 +7392,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.NotificationTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.NotificationTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.NotificationTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8526,9 +7438,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.PartWaitingTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.PartWaitingTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.PartWaitingTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8571,9 +7483,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.ProblemID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ProblemID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ProblemID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8615,9 +7527,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.Project), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Project), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.Project), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8660,9 +7572,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RelatedToID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RelatedToID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.RelatedToID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8706,9 +7618,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RepairingOrReplacementTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RepairingOrReplacementTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.RepairingOrReplacementTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8753,9 +7665,9 @@ namespace ProteusMMX.ViewModel.Workorder
                 //            control.BackgroundColor = Color.Gray;
                 //        }
 
-                //        else if (control is CustomDatePicker)
+                //        else if (control is CustomDatePicker2)
                 //        {
-                //            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequestedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.RequestedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                 //            control.IsEnabled = false;
                 //            control.BackgroundColor = Color.Gray;
                 //        }
@@ -8800,9 +7712,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.RequesterEmail), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8845,9 +7757,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterFullName), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterFullName), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.RequesterFullName), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8895,9 +7807,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RequesterPhone), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequesterPhone), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.RequesterPhone), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8945,9 +7857,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RequestNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RequestNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.RequestNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -8990,9 +7902,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.ServiceRequestModeID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ServiceRequestModeID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ServiceRequestModeID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9035,9 +7947,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.StartupTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.StartupTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.StartupTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9080,9 +7992,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.TotalTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.TotalTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.TotalTime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9126,17 +8038,106 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UnsafeConditionID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UnsafeConditionID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UnsafeConditionID), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
                     }
 
+                //case "ReportedDate":
+                //    {
+                //        if (control is Picker)
+                //        {
+                //            //var x = control as Picker;
+                //            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
+
+                //            var x = control as Picker;
+                //            x.ClassId = formControl.ControlName;
+
+                //            //var source = x.ItemsSource as List<ComboDD>;
+                //            //ComboDD item = null;
+                //            //try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(ReportedDate)); }
+                //            //catch (Exception) { }
+
+                //            //if (item != null)
+                //            //{
+                //            //    x.SelectedItem = item;
+                //            //    ReportedDate = item.SelectedValue.ToString();
+                //            //}
+
+                //            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
 
 
+                //        }
 
+                //        else if (control is Entry)
+                //        {
+                //            control.SetBinding(Entry.TextProperty, nameof(this.ReportedDate));
+                //        }
+
+                //        else if (control is DatePicker)
+                //        {
+                //            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
+
+                //            control.SetBinding(DatePicker.DateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
+
+                //        else if (control is CustomDatePicker2)
+                //        {
+                //            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.ReportedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
+                //        break;
+
+                //    }
+
+                //case "AcknowledgedDate":
+                //    {
+                //        if (control is Picker)
+                //        {
+                //            //var x = control as Picker;
+                //            //control.SetBinding(Picker.SelectedItemProperty, nameof(this.UnsafeConditionID));
+
+                //            var x = control as Picker;
+                //            x.ClassId = formControl.ControlName;
+
+                //            //var source = x.ItemsSource as List<ComboDD>;
+                //            //ComboDD item = null;
+                //            //try { item = source.FirstOrDefault(s => s.SelectedValue == Int32.Parse(AcknowledgedDate)); }
+                //            //catch (Exception) { }
+
+                //            //if (item != null)
+                //            //{
+                //            //    x.SelectedItem = item;
+                //            //    AcknowledgedDate = item.SelectedValue.ToString();
+                //            //}
+
+                //            //x.SelectedIndexChanged += Picker_SelectedIndexChanged;
+
+
+                //        }
+
+                //        else if (control is Entry)
+                //        {
+                //            control.SetBinding(Entry.TextProperty, nameof(this.AcknowledgedDate));
+                //        }
+
+                //        else if (control is DatePicker)
+                //        {
+                //            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.                          
+                //            control.SetBinding(DatePicker.DateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
+
+                //        else if (control is CustomDatePicker2)
+                //        {
+                //            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.AcknowledgedDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
+                //        break;
+
+                //    }
+
+                        
                 #region User Field Section
 
                 case "UserField1":
@@ -9173,9 +8174,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9215,9 +8216,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField2), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField2), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField2), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9258,9 +8259,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField3), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField3), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField3), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9301,9 +8302,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField4), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField4), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField4), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9344,9 +8345,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField5), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField5), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField5), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9387,9 +8388,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField6), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField6), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField6), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9431,9 +8432,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField7), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField7), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9474,9 +8475,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField8), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField8), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField8), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9517,9 +8518,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField9), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField9), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField9), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9560,9 +8561,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField10), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField10), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField10), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9603,9 +8604,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField11), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField11), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField11), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9646,9 +8647,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField12), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField12), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField12), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9689,9 +8690,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField13), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField13), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField13), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9732,9 +8733,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField14), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField14), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField14), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9775,9 +8776,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField15), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField15), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField15), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9818,9 +8819,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField16), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField16), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField16), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9861,9 +8862,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField17), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField17), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField17), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9904,9 +8905,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField18), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField18), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField18), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9947,9 +8948,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField19), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField19), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField19), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -9989,56 +8990,56 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField20), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField20), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField20), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
                     }
 
-                case "UserField21":
-                    {
-                        if (control is Picker)
-                        {
-                            var x = control as Picker;
-                            x.ClassId = formControl.ControlName;
+                //case "UserField21":
+                //    {
+                //        if (control is Picker)
+                //        {
+                //            var x = control as Picker;
+                //            x.ClassId = formControl.ControlName;
 
-                            var source = x.ItemsSource as List<ComboDD>;
-                            ComboDD item = null;
-                            try { item = source.FirstOrDefault(s => s.SelectedText.Trim() == UserField21.Trim()); }
-                            catch (Exception) { }
+                //            var source = x.ItemsSource as List<ComboDD>;
+                //            ComboDD item = null;
+                //            try { item = source.FirstOrDefault(s => s.SelectedText.Trim() == UserField21.Trim()); }
+                //            catch (Exception) { }
 
-                            if (item != null)
-                            {
-                                x.SelectedItem = item;
+                //            if (item != null)
+                //            {
+                //                x.SelectedItem = item;
 
-                                UserField21 = item.SelectedText.ToString();
-                            }
+                //                UserField21 = item.SelectedText.ToString();
+                //            }
 
-                            x.SelectedIndexChanged += Picker_SelectedIndexChanged;
+                //            x.SelectedIndexChanged += Picker_SelectedIndexChanged;
 
-                        }
+                //        }
 
-                        else if (control is Entry)
-                        {
-                            control.SetBinding(Entry.TextProperty, nameof(this.UserField21));
-                        }
+                //        else if (control is Entry)
+                //        {
+                //            control.SetBinding(Entry.TextProperty, nameof(this.UserField21));
+                //        }
 
-                        else if (control is DatePicker)
-                        {
-                            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
-                            UserField21 = DateTime.Now.ToString();
-                            control.SetBinding(DatePicker.DateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
+                //        else if (control is DatePicker)
+                //        {
+                //            // because DatePicker Doesn't bind with blank or null.then initialize it with current date.
+                //            UserField21 = DateTime.Now.ToString();
+                //            control.SetBinding(DatePicker.DateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
 
-                        else if (control is CustomDatePicker)
-                        {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
-                        }
-                        break;
+                //        else if (control is CustomDatePicker2)
+                //        {
+                //            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                //        }
+                //        break;
 
-                    }
+                //    }
 
 
                 case "UserField22":
@@ -10078,9 +9079,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField22), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField22), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField22), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -10123,9 +9124,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField23), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField23), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField23), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -10170,9 +9171,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField24), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField24), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.UserField24), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -10223,9 +9224,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             control.SetBinding(DatePicker.DateProperty, nameof(this.WorkOrderNumber));
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker2)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.WorkOrderNumber));
+                            control.SetBinding(CustomDatePicker2.SelectedDateProperty, nameof(this.WorkOrderNumber));
                         }
                         break;
 
@@ -10428,6 +9429,18 @@ namespace ProteusMMX.ViewModel.Workorder
                         break;
 
                     }
+                //case "ReportedDate":
+                //    {
+                //        this.ReportedDate = (picker.SelectedItem as ComboDD).SelectedValue;
+                //        break;
+                //    }
+
+                //case "AcknowledgedDate":
+                //    {
+                //        this.AcknowledgedDate = (picker.SelectedItem as ComboDD).SelectedValue;
+                //        break;
+                //    }
+
 
                 case "TotalTime":
                     {
@@ -10743,9 +9756,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 var parentGrid = page.Content as Grid;
                 var grid = parentGrid.Children[0] as Grid;
-
+                var Abslut = grid.Children[0] as AbsoluteLayout;
                 //var grid = page.Content as Grid;
-                var scrollView = grid.Children[0] as ScrollView;
+                var scrollView = Abslut.Children[0] as ScrollView;
                 var scrollViewGrid = scrollView.Content as Grid;
                 var contentGrid = scrollViewGrid.Children[1] as Grid;
 
@@ -10761,7 +9774,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 if (CloseWorkorderRights == "E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CloseWorkorderTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { CloseWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -10780,7 +9793,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else if (CloseWorkorderRights == "V")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CloseWorkorderTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { CloseWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -10796,7 +9809,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -10827,11 +9840,27 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
+                workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
 
                 ///TODO: Need to check on Appearing editWorkorder page whether picker data is requested or wokorder data need to refresh 
                 /// In Every ShowFacility or other picker page we have to true this flag and on its callback we have to false it.
+                if (workorderWrapper.workOrderWrapper.Cause != null && workorderWrapper.workOrderWrapper.Cause.Count > 0)
+                {
+                    if (!string.IsNullOrEmpty(workorderWrapper.workOrderWrapper.Cause[0].CauseNumber))
+                    {
+                        CauseName = ShortString.shorten(workorderWrapper.workOrderWrapper.Cause[0].CauseNumber);
 
+                    }
+                    else
+                    {
+                        CauseName = workorderWrapper.workOrderWrapper.Cause[0].CauseNumber;
+
+                    }
+                    CauseID = workorderWrapper.workOrderWrapper.Cause[0].CauseID;
+                    Application.Current.Properties["CauseID"] = CauseID;
+
+                }
 
                 OperationInProgress = true;
 
@@ -10886,50 +9915,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else if (IsPickerDataRequested)
                 {
-                    ////Retrive Facility
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.FacilityRequested, OnFacilityRequested);
-
-                    ////Retrive Location
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.LocationRequested, OnLocationRequested);
-
-
-                    ////Retrive Asset
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.AssetRequested, OnAssetRequested);
-
-
-                    ////Retrive Asset System
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.AssetSyastemRequested, OnAssetSystemRequested);
-
-
-                    ////Retrive AssignTo
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.AssignToRequested, OnAssignToRequested);
-
-                    ////Retrive WorkorderRequester
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.WorkorderRequesterRequested, OnWorkorderRequesterRequested);
-
-
-                    ////Retrive Cost Center
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.CostCenterRequested, OnCostCenterRequested);
-
-
-                    ////Retrive Priority
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.PriorityRequested, OnPriorityRequested);
-
-                    ////Retrive Shifts
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.ShiftRequested, OnShiftRequested);
-
-                    ////Retrive WorkorderStatus
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.WorkorderStatusRequested, OnWorkorderStatusRequested);
-
-                    ////Retrive WorkorderType
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.WorkorderTypeRequested, OnWorkorderTypeRequested);
-
-                    ////Retrive WorkorderType
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.CauseRequested, OnCauseRequested);
-
-                    ////Retrive WorkorderType
-                    //MessagingCenter.Subscribe<object>(this, MessengerKeys.MaintenanceCodeRequested, OnMaintenanceCodeRequested);
-
+                    
                     IsPickerDataRequested = false;
                     return;
                 }
@@ -10937,21 +9923,23 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 /// Retrive Workorder Data and Set Control properties
                 /// 
-             //   await SetControlsPropertiesForPage(workOrderWra);
+               // await SetControlsPropertiesForPage(workOrderWra);
+                //Application.Current.Properties["WorkorderIDafterCreation"] = this.WorkorderID;
+              
+
+                
 
                 ///TODO: Get Workorder Labour data 
-                var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
+                workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
 
 
-                ///TODO: Get Workorder data 
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+                // TODO: Get Workorder data
+                
 
+               Inspection = await _workorderService.GetWorkorderInspection(this.WorkorderID.ToString(), UserID);
 
+                await SetControlsPropertiesForPage(workorderWrapper);
 
-                ///TODO: Get Inspection 
-                //var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString());
-
-                var Inspection = await _workorderService.GetWorkorderInspection(this.WorkorderID.ToString(), UserID);
                 List<InspectionTOAnswers> listtoAnswer = new List<InspectionTOAnswers>();
                 foreach (var item in Inspection.workOrderEmployee)
                 {
@@ -10994,202 +9982,257 @@ namespace ProteusMMX.ViewModel.Workorder
                     MaxInspectionCompDateforNull = string.Empty;
                     InspctionStartDateforNull = string.Empty;
                 }
-                /////TODO: Get Inspection Start and Completiondate
-                //// var InspectionTime = await _workorderService.GetWorkorderInspectionTime(UserID, WorkorderID.ToString());
-
-                ////if (Application.Current.Properties.ContainsKey("MinimumInspectionStartDate"))
-                ////{
-                ////    try
-                ////    {
-                ////        var minInspectionStartDate = Application.Current.Properties["MinimumInspectionStartDate"].ToString();
-                ////        if (minInspectionStartDate != null)
-                ////        {
-                ////            MinInspectionStartDate = minInspectionStartDate.ToString();
-
-                ////        }
-                ////    }
-                ////    catch (Exception ex)
-                ////    {
-
-                ////        MinInspectionStartDate = null;
-                ////    }
-
-                ////}
-                ////if (Application.Current.Properties.ContainsKey("MaximumInspectionCompletionDate"))
-                ////{
-                ////    try
-                ////    {
-                ////        var maxInspectionCompDate = Application.Current.Properties["MaximumInspectionCompletionDate"].ToString();
-                ////        if (maxInspectionCompDate != null)
-                ////        {
-                ////            MaxInspectionCompDate = maxInspectionCompDate.ToString();
-
-                ////        }
-                ////    }
-                ////    catch (Exception ex)
-                ////    {
-
-                ////        MaxInspectionCompDate = null;
-                ////    }
-
-                ////}
-                //if (Application.Current.Properties.ContainsKey("MaximumInspectionCompletionDateforNull"))
-                //{
-                //    try
-                //    {
-                //        var maxInspectionCompDate = Application.Current.Properties["MaximumInspectionCompletionDateforNull"].ToString();
-                //        if (maxInspectionCompDate != null)
-                //        {
-                //            MaxInspectionCompDateforNull = maxInspectionCompDate.ToString();
-
-                //        }
-                //    }
-                //    catch (Exception ex)
-                //    {
-
-                //        MaxInspectionCompDateforNull = null;
-                //    }
-
-                //}
-
-
+               
                 //TODO:
                 #region Auto Fill Start Date and completion date from inspection
 
 
                 //if (InspectionUser == true) //checks whether User have inspection role or not
                 //{
-                    if (Inspection.listInspection != null && Inspection.listInspection.Count > 0) //checks whether inspection present in workorder or not
+                if (Inspection.listInspection != null && Inspection.listInspection.Count > 0) //checks whether inspection present in workorder or not
+                {
+
+
+                    #region Auto Fill Start Date from inspection
+
+                    //TODO: if the wo start date is null and inspection start date is not null than mask the wo start date with inspection start date.
+                    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor) && workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate == null)
                     {
-
-
-                        #region Auto Fill Start Date from inspection
-
-                        //TODO: if the wo start date is null and inspection start date is not null than mask the wo start date with inspection start date.
-                        if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor) && workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate == null)
+                        if (InspctionStartDateforNull == "True")
                         {
-                            if (InspctionStartDateforNull == "True")
+                            // this.WorkStartedDateWarningTextIsVisible = false;
+                            if (workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate == null)
                             {
-                                this.WorkStartedDateWarningTextIsVisible = false;
-                                if (workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate == null)
-                                {
-                                    WorkStartedDate1 = null;
-                                }
+                                WorkStartedDate1 = null;
+                            }
 
 
+                        }
+                        else
+                        {
+
+                            if (!string.IsNullOrWhiteSpace(MinInspectionStartDate))
+                            {
+                                //  WorkStartedDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalWorkStartedDateisnotfilled");
+                                WorkStartedDate1 = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(MinInspectionStartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                                //this.WorkStartedDateWarningTextIsVisible = true;
                             }
                             else
                             {
-
-                                if (!string.IsNullOrWhiteSpace(MinInspectionStartDate))
-                                {
-                                    WorkStartedDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalWorkStartedDateisnotfilled");
-                                    WorkStartedDate1 = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(MinInspectionStartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                    this.WorkStartedDateWarningTextIsVisible = true;
-                                }
-                                else
-                                {
-                                    WorkStartedDate1 = null;
-                                    this.WorkStartedDateWarningTextIsVisible = false;
-                                }
+                                WorkStartedDate1 = null;
+                                //this.WorkStartedDateWarningTextIsVisible = false;
                             }
                         }
-
-                        #endregion
-
-
-                        #region Auto Fill Completion date from inspection
-
-                        var inspectionCompletionDate = MaxInspectionCompDate;
-                        var workorderCompletiontDate = workorderWrapper.workOrderWrapper.workOrder.CompletionDate;
-                        var IsAutoFillOnCompletionDate = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
-
-
-                        if (Convert.ToBoolean(IsAutoFillOnCompletionDate))
-                        {
-                            if (MaxInspectionCompDateforNull == "True")
-                            {
-                                this.WorkorderCompletionDateWarningTextIsVisible = false;
-                                if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate == null)
-                                {
-                                    WorkorderCompletionDate = null;
-                                }
-
-
-                            }
-                            else
-                            {
-                                if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate.GetValueOrDefault().Date < Convert.ToDateTime(MaxInspectionCompDate).Date)
-                                {
-                                    WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateis") +
-                                                            "  " +
-                                                            DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
-                                    this.WorkorderCompletionDateWarningTextIsVisible = true;
-                                }
-                                else if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate == null && !string.IsNullOrWhiteSpace(MaxInspectionCompDate))
-                                {
-                                    WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
-                                    this.WorkorderCompletionDateWarningTextIsVisible = true;
-                                }
-
-
-                                if (Convert.ToBoolean(IsAutoFillOnCompletionDate) && workorderCompletiontDate != null)
-                                {
-                                    if (inspectionCompletionDate != null)
-                                    {
-                                        //// If inspection completion and wo completion date are not null than mask the wo completion date when inspection completion
-                                        //// date is greater than wo completion date.      
-                                        if (Convert.ToDateTime(MaxInspectionCompDate).Date > workorderCompletiontDate.GetValueOrDefault().Date.Date)
-                                        {
-                                            WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                            //CompletionDate1.IsVisible = true;
-                                            //ShowCompletionDate.IsVisible = false;
-                                            //lblAutoText.IsVisible = true;
-                                        }
-                                    }
-
-
-                                }
-                                if (Convert.ToBoolean(IsAutoFillOnCompletionDate) && workorderCompletiontDate == null)
-                                {
-                                    //// If wo completion date is null than fill the inspection completion date.
-                                    if (!string.IsNullOrWhiteSpace(inspectionCompletionDate))
-                                    {
-                                        WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                        //CompletionDate1.IsVisible = true;
-                                        //ShowCompletionDate.IsVisible = false;
-                                        //lblAutoText.IsVisible = true;
-                                    }
-                                    else ////If wo completion date and inspection completion date are null than null the wo completion date.
-                                    {
-                                        //CompletionDate1.IsVisible = false;
-                                        //ShowCompletionDate.IsVisible = true;
-                                        //lblAutoText.IsVisible = false;
-                                        WorkorderCompletionDate = null;
-                                        WorkorderCompletionDateWarningText = null;
-                                    }
-
-
-
-                                }
-                            }
-
-                        }
-
-                        #endregion
-
-
-
                     }
 
+                    #endregion
 
-               // }
+
+                    //#region Auto Fill Completion date from inspection
+
+                    //var inspectionCompletionDate = MaxInspectionCompDate;
+                    //var workorderCompletiontDate = workorderWrapper.workOrderWrapper.workOrder.CompletionDate;
+                    //var IsAutoFillOnCompletionDate = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
+
+
+                    //if (Convert.ToBoolean(IsAutoFillOnCompletionDate))
+                    //{
+                    //    if (MaxInspectionCompDateforNull == "True")
+                    //    {
+                    //        this.WorkorderCompletionDateWarningTextIsVisible = false;
+                    //        if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate == null)
+                    //        {
+                    //            WorkorderCompletionDate = null;
+                    //        }
+
+
+                    //    }
+                    //    else
+                    //    {
+                    //        if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate.GetValueOrDefault().Date < Convert.ToDateTime(MaxInspectionCompDate).Date)
+                    //        {
+                    //            // WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateis") +
+                    //            "  " +
+                    //            DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
+                    //            // this.WorkorderCompletionDateWarningTextIsVisible = true;
+                    //        }
+                    //        else if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate == null && !string.IsNullOrWhiteSpace(MaxInspectionCompDate))
+                    //        {
+                    //            WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
+                    //            this.WorkorderCompletionDateWarningTextIsVisible = true;
+                    //        }
+
+
+                    //        if (Convert.ToBoolean(IsAutoFillOnCompletionDate) && workorderCompletiontDate != null)
+                    //        {
+                    //            if (inspectionCompletionDate != null)
+                    //            {
+                    //                // If inspection completion and wo completion date are not null than mask the wo completion date when inspection completion
+                    //                // date is greater than wo completion date.      
+                    //                if (Convert.ToDateTime(MaxInspectionCompDate).Date > workorderCompletiontDate.GetValueOrDefault().Date.Date)
+                    //                {
+                    //                    WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    //                    CompletionDate1.IsVisible = true;
+                    //                    ShowCompletionDate.IsVisible = false;
+                    //                    lblAutoText.IsVisible = true;
+                    //                }
+                    //            }
+
+
+                    //        }
+                    //        if (Convert.ToBoolean(IsAutoFillOnCompletionDate) && workorderCompletiontDate == null)
+                    //        {
+                    //            // If wo completion date is null than fill the inspection completion date.
+                    //            if (!string.IsNullOrWhiteSpace(inspectionCompletionDate))
+                    //            {
+                    //                WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    //                CompletionDate1.IsVisible = true;
+                    //                ShowCompletionDate.IsVisible = false;
+                    //                lblAutoText.IsVisible = true;
+                    //            }
+                    //            else ////If wo completion date and inspection completion date are null than null the wo completion date.
+                    //            {
+                    //                CompletionDate1.IsVisible = false;
+                    //                ShowCompletionDate.IsVisible = true;
+                    //                lblAutoText.IsVisible = false;
+                    //                WorkorderCompletionDate = null;
+                    //                WorkorderCompletionDateWarningText = null;
+                    //            }
+
+
+
+                    //        }
+                    //    }
+
+                    //}
+
+                    //#endregion
+
+
+
+                }
+
+
+                // }
 
 
                 #endregion
+                #region Set All Flag Properties
+                #region Set IsAllAnswersFilled property
 
+                if (workorderWrapper.workOrderWrapper.IsAllAnswersFilled == "False")
+                {
+                    Application.Current.Properties["IsAllAnswersFilled"] = "False";
 
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllAnswersFilled"] = workorderWrapper.workOrderWrapper.IsAllAnswersFilled;
+                }
+                #endregion
+                #region Set IsAllTaskHoursFilled property
 
+                if (workorderWrapper.workOrderWrapper.IsAllTaskHousFilled == "False")
+                {
+                    Application.Current.Properties["IsAllTaskHousFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllTaskHousFilled"] = workorderWrapper.workOrderWrapper.IsAllTaskHousFilled;
+                }
+                #endregion
+                #region Set IsAllInspectionHoursFilled property
+                if (workorderWrapper.workOrderWrapper.IsAllInspectionHousFilled == "False")
+                {
+                    Application.Current.Properties["IsAllInspectionHousFilled"] = "False";
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsAllInspectionHousFilled"] = workorderWrapper.workOrderWrapper.IsAllInspectionHousFilled;
+                }
+                #endregion
+
+                #region Set HoursRequiredService Flag
+                if (workorderWrapper.workOrderWrapper.IsHoursRequiredForCompletionDate == "True")
+                {
+                    Application.Current.Properties["IsHoursRequiredForCompletionDate"] = workorderWrapper.workOrderWrapper.IsHoursRequiredForCompletionDate;
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsHoursRequiredForCompletionDate"] = "False";
+
+                }
+                #endregion
+
+                #region Set AllAnswersRequiredService Flag
+                if (workorderWrapper.workOrderWrapper.IsInspectionAnswerRequiredforCompletionDate == "True")
+                {
+                    Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"] = workorderWrapper.workOrderWrapper.IsInspectionAnswerRequiredforCompletionDate;
+
+                }
+                else
+                {
+                    Application.Current.Properties["IsInspectionAnswerRequiredforCompletionDate"] = "False";
+
+                }
+                #endregion
+
+                #region Check for Task/Inspection
+
+                if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Task")
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Task";
+
+                }
+                else if (workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspections" || workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection == "Inspection")
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "Inspection";
+                }
+                else
+                {
+                    Application.Current.Properties["IsWorkOrderHasTaskORInspection"] = "";
+                }
+                #endregion
+
+                #region Check for Autocomplete Task/Inspection
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
+                {
+                    Application.Current.Properties["AutoFillCompleteOnTaskAndLabor"] = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
+                }
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyTaskHoursFilled))
+                {
+                    Application.Current.Properties["IsAnyTaskHoursFilled"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsAnyTaskHoursFilled"] = "False";
+                }
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsAnyInspectionHoursFilled))
+                {
+                    Application.Current.Properties["IsAnyInspectionHoursFilled"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsAnyInspectionHoursFilled"] = "False";
+                }
+
+                #endregion
+
+                #region Check Required Task/Inspection Hours
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedLaborHours))
+                {
+                    Application.Current.Properties["IsCheckedLaborHours"] = "True";
+                }
+                else
+                {
+                    Application.Current.Properties["IsCheckedLaborHours"] = "False";
+                }
+
+                #endregion
+                #endregion
 
 
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor) && workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate == null)
@@ -11198,8 +10241,8 @@ namespace ProteusMMX.ViewModel.Workorder
                     if (workorderLabourWrapper.workOrderWrapper.InitialStartDate != null)
                     {
 
-                        WorkStartedDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalWorkStartedDateisnotfilled");
-                        this.WorkStartedDateWarningTextIsVisible = true;
+                        //WorkStartedDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalWorkStartedDateisnotfilled");
+                        //this.WorkStartedDateWarningTextIsVisible = true;
 
 
                     }
@@ -11219,20 +10262,19 @@ namespace ProteusMMX.ViewModel.Workorder
                     }
                 }
 
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor) && workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate != null)
+                {
+                    if (workorderLabourWrapper.workOrderWrapper.InitialStartDate != null)
+                    {
+
+                        WorkStartedDate1 = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderLabourWrapper.workOrderWrapper.InitialStartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                        
+                    }
+                }
+
 
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
                 {
-
-                    //if (workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
-                    //{
-
-                    //}
-                    //else
-                    //{
-
-                    //}
-
-
                     if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor) && workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
                     {
 
@@ -11249,7 +10291,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 {
 
                                     WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                    WorkorderCompletionDateWarningText = null;
+                                    // WorkorderCompletionDateWarningText = null;
                                     break;
 
 
@@ -11263,8 +10305,8 @@ namespace ProteusMMX.ViewModel.Workorder
                                     {
 
                                         WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderLabourWrapper.workOrderWrapper.FinalCompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                        WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateis") + "  " + DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
-                                        this.WorkorderCompletionDateWarningTextIsVisible = true;
+                                        // WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateis") + "  " + DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("d");
+                                        //this.WorkorderCompletionDateWarningTextIsVisible = true;
                                         break;
 
 
@@ -11274,7 +10316,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                     {
                                         WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
 
-                                        WorkorderCompletionDateWarningText = null;
+                                        //  WorkorderCompletionDateWarningText = null;
                                         break;
 
                                     }
@@ -11300,21 +10342,21 @@ namespace ProteusMMX.ViewModel.Workorder
                                     //ShowCompletionDate.IsVisible = true;
                                     //lblAutoText.IsVisible = false;
                                     WorkorderCompletionDate = null;
-                                    WorkorderCompletionDateWarningText = null;
+                                    // WorkorderCompletionDateWarningText = null;
                                     break;
                                 }
 
                                 else
                                 {
 
-                                    if (workorderLabourWrapper.workOrderWrapper.FinalCompletionDate != null)
-                                    {
-                                        WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderLabourWrapper.workOrderWrapper.FinalCompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                                        WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
-                                        this.WorkorderCompletionDateWarningTextIsVisible = true;
-                                        break;
+                                    //if (workorderLabourWrapper.workOrderWrapper.FinalCompletionDate != null)
+                                    //{
+                                    //    WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderLabourWrapper.workOrderWrapper.FinalCompletionDate.GetValueOrDefault()).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                                    //    // WorkorderCompletionDateWarningText = WebControlTitle.GetTargetNameByTitleName("OriginalCompletionDateisnotfilled");
+                                    //    //this.WorkorderCompletionDateWarningTextIsVisible = true;
+                                    //    break;
 
-                                    }
+                                    //}
                                 }
                             }
                         }
@@ -11355,12 +10397,6 @@ namespace ProteusMMX.ViewModel.Workorder
                         }
                     }
                 }
-
-
-
-
-
-
 
             }
             catch (Exception ex)
@@ -11422,7 +10458,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 var workorder = workorderWrapper.workOrderWrapper.workOrder;
 
-                //var workorderWrapper = workorderWrapper;
+                Application.Current.Properties["TaskOrInspection"] = workorderWrapper.workOrderWrapper._IsWorkOrderHasTaskORInspection;
+
 
                 if (workorder.DistributeCost == true)
                 {
@@ -11459,6 +10496,26 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
 
                 this.DescriptionText = workorder.Description;
+
+                if (!string.IsNullOrWhiteSpace(workorder.Description) && workorder.Description.Length >= 150)
+                {
+                    MoreDescriptionTextIsEnable = true;
+                }
+
+                OriginatorName = workorder.Originator;
+                this.DescriptionMoreText = workorder.Description;
+                this.DescriptionText = workorder.Description;
+
+                if (workorder.ReportedDate != null)
+                {
+                    this.ReportedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ReportedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                }
+                if (workorder.AcknowledgedDate != null)
+                {
+                    this.AcknowledgedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.AcknowledgedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+
+                }
+
                 if (!string.IsNullOrWhiteSpace(workorder.AdditionalDetails))
                 {
                     //if (Device.Idiom == TargetIdiom.Phone)
@@ -11468,8 +10525,14 @@ namespace ProteusMMX.ViewModel.Workorder
                     //}
                     //else
                     //{
-                        this.AdditionalDetailsText = RemoveHTML.StripHTML(workorder.AdditionalDetails);
-                   // }
+                    this.AdditionalDetailsText = RemoveHTML.StripHTML(workorder.AdditionalDetails);
+                    if (workorder.AdditionalDetails.Length >= 150)
+                    {
+                        MoreAdditionalDetailsTextIsEnable = true;
+                    }
+                    this.AdditionalDetailsMoreText = this.AdditionalDetailsText;
+                    this.AdditionalDetailsText = this.AdditionalDetailsText;
+                    // }
 
                 }
 
@@ -11513,7 +10576,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
 
-                InternalNoteText = workorder.InternalNote;
+
+                if (!string.IsNullOrEmpty(workorder.Description) && workorder.Description.Length >= 150)
+                {
+                    MoreInternalNoteTextIsEnable = true;
+                }
+                InternalNoteMoreText = workorder.InternalNote;
+                this.InternalNoteText = workorder.InternalNote;
+
                 /// Set Targets and Other
                 /// 
                 if (!string.IsNullOrEmpty(workorder.FacilityName))
@@ -11551,19 +10621,20 @@ namespace ProteusMMX.ViewModel.Workorder
                 AssetID = workorder.AssetID;
                 if (AssetID != null)
                 {
-                    var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString());
+                    var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString(), AppSettings.User.UserID);
 
 
                     if (string.IsNullOrWhiteSpace(AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString()))
                     {
                         this.CurrentRuntimeText = "0.0";
-                       
+
 
                     }
                     else
                     {
-                        this.CurrentRuntimeText = AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString();
-                       
+                        this.CurrentRuntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString()) ? 0 : decimal.Parse(AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString()));
+                        // this.CurrentRuntimeText = string.Format(StringFormat.NumericZero(), AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString());
+
                     }
                 }
                 else
@@ -11622,6 +10693,10 @@ namespace ProteusMMX.ViewModel.Workorder
                 //Set Target String/////////
                 TargetName = "(" + targetname + ")" + " " + AppSettings.User.CompanyName + " " + ">>" + " " + workorder.FacilityName + ">>" + workorder.LocationName;
                 ActivationDateText = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ActivationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                //if (!string.IsNullOrEmpty(ActivationDateText.ToString()))
+                //{
+                //   ActivationDateText = Convert.ToDateTime(ActivationDateText.ToString("0:MMM d, yyyy"));
+                //}
 
                 if (!string.IsNullOrEmpty(workorder.CostCenterName))
                 {
@@ -11649,6 +10724,8 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
                     CauseID = workorderWrapper.workOrderWrapper.Cause[0].CauseID;
+                    Application.Current.Properties["CauseID"] = CauseID;
+
                 }
 
                 if (!string.IsNullOrEmpty(workorder.WorkOrderRequesterName))
@@ -11724,13 +10801,16 @@ namespace ProteusMMX.ViewModel.Workorder
                 PriorityID = workorder.PriorityID;
 
 
-                EstimstedDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.EstimatedDowntime) ? 0 : decimal.Parse(workorder.EstimatedDowntime));
-                ActualDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.ActualDowntime) ? 0 : decimal.Parse(workorder.ActualDowntime));
+                //EstimstedDowntimeText = string.Format(StringFormat.NumericZero(),workorder.EstimatedDowntime);
+                //ActualDowntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(workorder.ActualDowntime) ? 0 : decimal.Parse(workorder.ActualDowntime));
+
+                EstimstedDowntimeText = workorder.EstimatedDowntime == null ? "0" : workorder.EstimatedDowntime;
+                ActualDowntimeText = workorder.ActualDowntime == null ? "0" : workorder.ActualDowntime;
                 MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
                 MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);
                 Lottourl = workorder.LOTOUrl;
 
-                ///Set Dyanmic Field Properties
+                ///Set Dyanmic Field Propertiesf
                 ///
                 #region Set Dyanmic Field Properties
 
@@ -12178,10 +11258,6 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-
-
-
-
         #endregion
 
 
@@ -12243,7 +11319,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else
                 {
-                    var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString());
+                    var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString(), AppSettings.User.UserID);
 
                     if (string.IsNullOrWhiteSpace(AssetWrapper.assetWrapper.asset.CurrentRuntime.ToString()))
                     {
@@ -12274,10 +11350,10 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
             }
-        
 
 
-    }
+
+        }
 
         private void OnAssetSystemRequested(object obj)
         {
@@ -12407,6 +11483,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 this.CauseName = ShortString.shorten(cause.CauseNumber);
 
                 this.Cause = cause;
+                Application.Current.Properties["CauseID"] = this.CauseID;
             }
 
 
@@ -12461,15 +11538,12 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-
+                LogMessage(AppSettings.UserName, AppSettings.APPVersion);
                 //OperationInProgress = true;
 
 
                 ///TODO: Apply Requester Email Validation. 
                 ///Its a dynamic field Validations can't be applied or Need type information to apply validation.
-
-
-
 
                 ///TODO: Check the IsRequired Fields for OverridenControls
                 ///
@@ -12482,10 +11556,6 @@ namespace ProteusMMX.ViewModel.Workorder
                     return;
                 }
 
-
-
-
-
                 ///TODO: Check the IsRequired Fields According to field rights
                 ///on button save we will call formload and check all WorkOrderFormLoad with Its associative Property
                 ///in ViewModel if any WorkOrderFormLoad is required than its Associative property can't be null.
@@ -12494,46 +11564,88 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (validationResult.FailedItem != null)
                 {
                     UserDialogs.Instance.HideLoading();
-
+                    if (validationResult.ErrorMessage == "Additional Details is required field.")
+                    {
+                        validationResult.ErrorMessage = AdditionalDetailsTitle + " is required field";
+                    }
                     DialogService.ShowToast(validationResult.ErrorMessage);
                     return;
                 }
 
+                #region Check Cause if required
+                if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
+                {
+                    string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
+                    if (!string.IsNullOrWhiteSpace(IsCheckedCause))
+                    {
+                        if (IsCheckedCause.ToLower() == "true" && CauseID == null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
+                        {
+                            UserDialogs.Instance.HideLoading();
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
+                            return;
+                        }
+                    }
+                }
+                #endregion
 
 
 
                 ///TODO: Get Workorder Labour data 
-                var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
+                //var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
 
-
-                ///TODO: Get Workorder data 
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
-
-
-                #region check if all answers of a sections are required
-
-                // check if all answers of a sections are required///////
-                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null))
+                #region Check WorkOrder Identified through Breakdown
+                if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.WorkOrderIdentifiedThroughBreakdownFlag) && MaintenanceCodeName == "IDENTIFIED THROUGH BREAKDOWN")
                 {
-                    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.sections != null && workorderWrapper.workOrderWrapper.sections.Count>0))
+                    string expression = @"[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)";
+
+                    string actualDowntimeText = string.Empty;
+                    if (ActualDowntimeText != null)
                     {
-                        StringBuilder RequiredSection = new StringBuilder();
-
-                        foreach (var item in workorderWrapper.workOrderWrapper.sections)
+                        actualDowntimeText = Convert.ToString(ActualDowntimeText);
+                        string actDowntime = actualDowntimeText.Replace(".", "");
+                        string actDowntime1 = actDowntime.Replace("0", "");
+                        if (string.IsNullOrEmpty(actDowntime1))
                         {
-                            RequiredSection.Append(item.SectionName);
-                            RequiredSection.Append(",");
+                            DialogService.ShowToast("ActualDowntime Is Required");
+                            return;
                         }
+                    }
 
-                        await DialogService.ShowAlertAsync(RequiredSection.ToString().TrimEnd(','), WebControlTitle.GetTargetNameByTitleName("PleaseProvideFollowingSectionQuestionAnswer"), "OK");
+                    string estimstedDowntimeText = string.Empty;
+                    if (EstimstedDowntimeText != null)
+                    {
+                        estimstedDowntimeText = Convert.ToString(EstimstedDowntimeText);
+                        string estDowntime = estimstedDowntimeText.Replace(".", "");
+                        string estDowntime1 = estDowntime.Replace("0", "");
+                        if (string.IsNullOrEmpty(estDowntime1))
+                        {
+                            DialogService.ShowToast("EstimatedDowntime Is Required");
+                            return;
+                        }
+                    }
+                    if (EstimstedDowntimeText == null || !(Regex.IsMatch(estimstedDowntimeText, expression)))
+                    {
+
+                        DialogService.ShowToast("EstimatedDowntime Is Required");
                         return;
-
-
+                    }
+                    if (ActualDowntimeText == null || !(Regex.IsMatch(actualDowntimeText, expression)))
+                    {
+                        DialogService.ShowToast("ActualDowntime Is Required");
+                        return;
+                    }
+                    if (String.IsNullOrWhiteSpace(UserField21))
+                    {
+                        DialogService.ShowToast("UserField21 Is Required");
+                        return;
+                    }
+                    if (String.IsNullOrWhiteSpace(PriorityName))
+                    {
+                        DialogService.ShowToast("PriorityName Is Required");
+                        return;
                     }
                 }
-
                 #endregion
-
 
                 ///TODO: Get Workorder data and check IsCheckedAutoFillStartdateOnTaskAndLabor
                 ///If True and Workorder startdate is  null and the initial start date of Task and labour is not null
@@ -12628,7 +11740,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 ///TODO: Get Inspection 
-                var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(), AppSettings.User.UserID.ToString());
+                //var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(), AppSettings.User.UserID.ToString());
 
                 List<InspectionTOAnswers> liststartAnswer = new List<InspectionTOAnswers>();
                 List<InspectionTOAnswers> listcompletionAnswer = new List<InspectionTOAnswers>();
@@ -12730,156 +11842,156 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
                 ///TODO: Get Inspection Time 
-              //  var InspectionTime = await _workorderService.GetWorkorderInspectionTime(UserID, WorkorderID.ToString());
+                //  var InspectionTime = await _workorderService.GetWorkorderInspectionTime(UserID, WorkorderID.ToString());
 
 
 
                 //TODO: apply the time zone. (Done)
                 //if (InspectionUser ?? false) //checks whether User have inspection role or not
                 //{
-                    string inspectionStartDate = null;
-                    string inspectionCompletionDate = null;
-                    if (Inspection.listInspection != null && Inspection.listInspection.Count > 0) //checks whether inspection present in workorder or not
+                string inspectionStartDate = null;
+                string inspectionCompletionDate = null;
+                if (Inspection.listInspection != null && Inspection.listInspection.Count > 0) //checks whether inspection present in workorder or not
+                {
+
+
+                    //if (!string.IsNullOrWhiteSpace(MaxInspectionStartDate))
+                    //{
+                    //    inspectionStartDate = Convert.ToDateTime(MinInspectionStartDate).ToString();
+                    //}
+
+                    //if (!string.IsNullOrWhiteSpace(MinInspectionCompDate))
+                    //{
+                    //    inspectionCompletionDate = Convert.ToDateTime(Max).ToString();
+                    //}
+
+
+
+                    var IsAutoFillOnCompletionDate = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
+
+                    DateTime? workorderCompletiontDate = null;
+                    DateTime? workorderStartDate = null;
+
+                    if (WorkorderCompletionDate != null)
                     {
+                        workorderCompletiontDate = Convert.ToDateTime(WorkorderCompletionDate);
+                    }
+                    if (WorkStartedDate1 != null)
+                    {
+                        workorderStartDate = Convert.ToDateTime(WorkStartedDate1);
+                    }
 
 
-                        //if (!string.IsNullOrWhiteSpace(MaxInspectionStartDate))
-                        //{
-                        //    inspectionStartDate = Convert.ToDateTime(MinInspectionStartDate).ToString();
-                        //}
+                    #region General validation with inspection
 
-                        //if (!string.IsNullOrWhiteSpace(MinInspectionCompDate))
-                        //{
-                        //    inspectionCompletionDate = Convert.ToDateTime(Max).ToString();
-                        //}
-
-
-
-                        var IsAutoFillOnCompletionDate = workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor;
-
-                        DateTime? workorderCompletiontDate = null;
-                        DateTime? workorderStartDate = null;
-
-                        if (WorkorderCompletionDate != null)
+                    // for start date picker 
+                    if (WorkStartedDate1 != null)  //(!string.IsNullOrWhiteSpace(WorkStartedDate1.Text))//if (ShowCompletionDate1.IsVisible == false) //if start date picker is visible
+                    {
+                        if (workorderStartDate != null && liststartAnswer != null && liststartAnswer.Count > 0)
                         {
-                            workorderCompletiontDate = Convert.ToDateTime(WorkorderCompletionDate);
-                        }
-                        if (WorkStartedDate1 != null)
-                        {
-                            workorderStartDate = Convert.ToDateTime(WorkStartedDate1);
-                        }
-
-
-                        #region General validation with inspection
-
-                        // for start date picker 
-                        if (WorkStartedDate1 != null)  //(!string.IsNullOrWhiteSpace(WorkStartedDate1.Text))//if (ShowCompletionDate1.IsVisible == false) //if start date picker is visible
-                        {
-                            if (workorderStartDate != null && liststartAnswer != null && liststartAnswer.Count > 0)
+                            //inspectionStartDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionStartDate).ToUniversalTime(), ServerTimeZone).ToString();
+                            if (liststartAnswer.Any(x => x.StartDate.Value.Date < workorderStartDate.Value.Date))
                             {
-                                //inspectionStartDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionStartDate).ToUniversalTime(), ServerTimeZone).ToString();
-                                if (liststartAnswer.Any(x => x.StartDate.Value.Date < workorderStartDate.Value.Date))
-                                {
 
-                                    //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(formLoadInputs, "WOstartdatecannotgreaterthanInpectionstartdate"), formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WOstartdatecannotgreaterthanInpectionstartdate"), 2000);
-                                    UserDialogs.Instance.HideLoading();
+                                //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(formLoadInputs, "WOstartdatecannotgreaterthanInpectionstartdate"), formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                                DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WOstartdatecannotgreaterthanInpectionstartdate"), 2000);
+                                UserDialogs.Instance.HideLoading();
 
-                                    return;
-                                }
-                            }
-
-
-                            if (workorderStartDate != null && listcompletionAnswer != null && listcompletionAnswer.Count > 0)
-                            {
-                                //inspectionCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), ServerTimeZone).ToString();
-                                if (listcompletionAnswer.Any(x => x.CompletionDate.Value.Date < workorderStartDate.Value.Date))
-                                {
-
-                                    //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(formLoadInputs, "WOstartdatecannotgreaterthanInpectioncompletiondate"), formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WOstartdatecannotgreaterthanInpectioncompletiondate"), 2000);
-                                    UserDialogs.Instance.HideLoading();
-
-                                    return;
-                                }
-                            }
-
-
-
-                        }
-
-
-                        //for end date picker
-                        if (workorderCompletiontDate != null) //(!string.IsNullOrWhiteSpace(CompletionDate1.Text))  //if (ShowCompletionDate.IsVisible == false)
-                        {
-                            if (workorderCompletiontDate != null && liststartAnswer != null && liststartAnswer.Count > 0)
-                            {
-                                //inspectionStartDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionStartDate).ToUniversalTime(), ServerTimeZone).ToString();
-                                if (liststartAnswer.Any(x => x.StartDate.Value.Date > workorderCompletiontDate.Value.Date))
-                                {
-
-                                    //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(formLoadInputs, "WOcompletiondatecannotlessthanInpectionstartdate"), formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WOcompletiondatecannotlessthanInpectionstartdate"), 2000);
-                                    UserDialogs.Instance.HideLoading();
-
-                                    return;
-                                }
-                            }
-
-                            if (listcompletionAnswer != null && listcompletionAnswer.Count > 0 && workorderCompletiontDate != null)
-                            {
-                                //inspectionCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), ServerTimeZone).ToString();
-                                if (listcompletionAnswer.Any(x => x.CompletionDate.Value.Date > workorderCompletiontDate.Value.Date))
-                                {
-
-                                    //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(formLoadInputs, "WOcompletiondatecannotlessthanInpectioncompletiondate"), formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WOcompletiondatecannotlessthanInpectioncompletiondate"), 2000);
-                                    UserDialogs.Instance.HideLoading();
-
-                                    return;
-                                }
+                                return;
                             }
                         }
 
-                        #endregion
 
-
-
-                        #region Start date clear validation on autofilltask&Labour
-                        if (bool.Parse(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor))
+                        if (workorderStartDate != null && listcompletionAnswer != null && listcompletionAnswer.Count > 0)
                         {
-                            var workorder = workorderWrapper.workOrderWrapper.workOrder;
-
-                            if (workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate != null)
+                            //inspectionCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), ServerTimeZone).ToString();
+                            if (listcompletionAnswer.Any(x => x.CompletionDate.Value.Date < workorderStartDate.Value.Date))
                             {
-                                // If inspection start date is filled than prevent user to remove wo start date
-                                if (liststartAnswer != null && liststartAnswer.Any(x => x.StartDate != null) && WorkStartedDate1 == null)//ShowCompletionDate1.IsVisible == true)
-                                {
-                                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefirstclearInspectionstartdatetoclearWorkorderstartdate"), 2000);
 
-                                    //await DisplayAlert("", WebControlTitle.GetTargetNameByTitleName(formLoadInputs, "PleasefirstclearInspectionstartdatetoclearWorkorderstartdate"), formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
-                                    UserDialogs.Instance.HideLoading();
+                                //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(formLoadInputs, "WOstartdatecannotgreaterthanInpectioncompletiondate"), formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                                DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WOstartdatecannotgreaterthanInpectioncompletiondate"), 2000);
+                                UserDialogs.Instance.HideLoading();
 
-                                    return;
-                                }
+                                return;
                             }
                         }
 
-                        #endregion
-
-                        #region Completion date clear validation on autofilltask&Labour                       
-                        if (bool.Parse(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
-                        {
-
-                        }
-
-                        #endregion
 
 
                     }
 
 
-               // }
+                    //for end date picker
+                    if (workorderCompletiontDate != null) //(!string.IsNullOrWhiteSpace(CompletionDate1.Text))  //if (ShowCompletionDate.IsVisible == false)
+                    {
+                        if (workorderCompletiontDate != null && liststartAnswer != null && liststartAnswer.Count > 0)
+                        {
+                            //inspectionStartDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionStartDate).ToUniversalTime(), ServerTimeZone).ToString();
+                            if (liststartAnswer.Any(x => x.StartDate.Value.Date > workorderCompletiontDate.Value.Date))
+                            {
+
+                                //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(formLoadInputs, "WOcompletiondatecannotlessthanInpectionstartdate"), formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                                DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WOcompletiondatecannotlessthanInpectionstartdate"), 2000);
+                                UserDialogs.Instance.HideLoading();
+
+                                return;
+                            }
+                        }
+
+                        if (listcompletionAnswer != null && listcompletionAnswer.Count > 0 && workorderCompletiontDate != null)
+                        {
+                            //inspectionCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(inspectionCompletionDate).ToUniversalTime(), ServerTimeZone).ToString();
+                            if (listcompletionAnswer.Any(x => x.CompletionDate.Value.Date > workorderCompletiontDate.Value.Date))
+                            {
+
+                                //await DisplayAlert(formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "Alert").TargetName, WebControlTitle.GetTargetNameByTitleName(formLoadInputs, "WOcompletiondatecannotlessthanInpectioncompletiondate"), formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                                DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("WOcompletiondatecannotlessthanInpectioncompletiondate"), 2000);
+                                UserDialogs.Instance.HideLoading();
+
+                                return;
+                            }
+                        }
+                    }
+
+                    #endregion
+
+
+
+                    #region Start date clear validation on autofilltask&Labour
+                    if (bool.Parse(workorderWrapper.workOrderWrapper.IsCheckedAutoFillStartdateOnTaskAndLabor))
+                    {
+                        var workorder = workorderWrapper.workOrderWrapper.workOrder;
+
+                        if (workorderWrapper.workOrderWrapper.workOrder.WorkStartedDate != null)
+                        {
+                            // If inspection start date is filled than prevent user to remove wo start date
+                            if (liststartAnswer != null && liststartAnswer.Any(x => x.StartDate != null) && WorkStartedDate1 == null)//ShowCompletionDate1.IsVisible == true)
+                            {
+                                DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefirstclearInspectionstartdatetoclearWorkorderstartdate"), 2000);
+
+                                //await DisplayAlert("", WebControlTitle.GetTargetNameByTitleName(formLoadInputs, "PleasefirstclearInspectionstartdatetoclearWorkorderstartdate"), formLoadInputs.Result.listWebControlTitles.FirstOrDefault(i => i.TitleName == "OK").TargetName);
+                                UserDialogs.Instance.HideLoading();
+
+                                return;
+                            }
+                        }
+                    }
+
+                    #endregion
+
+                    #region Completion date clear validation on autofilltask&Labour                       
+                    if (bool.Parse(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
+                    {
+
+                    }
+
+                    #endregion
+
+
+                }
+
+
+                // }
 
                 #endregion
 
@@ -12888,7 +12000,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 if (WorkStartedDate1 != null && WorkorderCompletionDate != null)
                 {
-                    if (WorkorderCompletionDate.Value.Date < WorkStartedDate1.Value.Date)
+                    if (WorkorderCompletionDate < WorkStartedDate1)
                     {
                         UserDialogs.Instance.HideLoading();
 
@@ -13072,14 +12184,16 @@ namespace ProteusMMX.ViewModel.Workorder
                 if (string.IsNullOrWhiteSpace(CurrentRuntimeText))
                 {
                     this.CurrentRuntimeText = "0.00";
-
-
+                }
+                else
+                {
+                    this.CurrentRuntimeText = CurrentRuntimeText.Replace(',', '.');
                 }
                 workOrder.ModifiedUserName = AppSettings.User.UserName;
                 workOrder.Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim();
-                workOrder.RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay);
-                workOrder.WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null;
-                workOrder.CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null;
+                workOrder.RequiredDate = RequiredDate1;
+                workOrder.WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null;
+                workOrder.CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null;
                 workOrder.FacilityID = FacilityID;
                 workOrder.LocationID = LocationID;
                 workOrder.AssetID = AssetID;
@@ -13105,10 +12219,15 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     ActualDowntimeText = "0";
                 }
+                else
+                {
+                    this.ActualDowntimeText = ActualDowntimeText;
+                }
                 if (string.IsNullOrWhiteSpace(EstimstedDowntimeText))
                 {
                     EstimstedDowntimeText = "0";
                 }
+
                 if (string.IsNullOrWhiteSpace(MiscellaneousLabourCostText))
                 {
                     MiscellaneousLabourCostText = "0.0";
@@ -13125,8 +12244,12 @@ namespace ProteusMMX.ViewModel.Workorder
                 workOrder.ChildCost = ChildCostDistributed;
                 workOrder.ActualDowntime = ActualDowntimeText;
                 workOrder.EstimatedDowntime = EstimstedDowntimeText;
-                workOrder.MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText);
-                workOrder.MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText);
+                workOrder.MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture);
+                workOrder.MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture);
+
+                workOrder.AcknowledgedDate = this.AcknowledgedDate;
+
+                workOrder.ReportedDate = ReportedDate;
 
 
                 #region Dynamic Field need to add in model so it can save on server.
@@ -13209,8 +12332,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         Application.Current.Properties["CauseJson"] = this.Cause;
                         Application.Current.Properties["WorkorderWrapper"] = workOrder;
 
-                        WorkorderCompletionDateWarningTextIsVisible = false;
-                        WorkStartedDateWarningTextIsVisible = false;
+                        // WorkorderCompletionDateWarningTextIsVisible = false;
+                        // WorkStartedDateWarningTextIsVisible = false;
                         var page = new EditWorkorderSignaturePage();
                         await PopupNavigation.PushAsync(page);
 
@@ -13232,9 +12355,9 @@ namespace ProteusMMX.ViewModel.Workorder
                                 {
                                     ModifiedUserName = AppSettings.User.UserName,
                                     Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim(),
-                                    RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay),
-                                    WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                    CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                    RequiredDate = RequiredDate1,
+                                    WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null,
+                                    CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null,
                                     FacilityID = FacilityID,
                                     LocationID = LocationID,
                                     AssetID = AssetID,
@@ -13255,15 +12378,16 @@ namespace ProteusMMX.ViewModel.Workorder
                                     InternalNote = InternalNoteText,
                                     ActualDowntime = ActualDowntimeText,
                                     EstimatedDowntime = EstimstedDowntimeText,
-                                    MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText),
-                                    MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText),
+                                    MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture),
+                                    MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture),
                                     ApprovalLevel = this.ApprovalLevel,
                                     ApprovalNumber = this.ApprovalNumber,
                                     IsSignatureValidated = false,
                                     DistributeCost = IsCostDistributed,
                                     ParentandChildCost = ParentCostDistributed,
                                     ChildCost = ChildCostDistributed,
-
+                                    AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate : (DateTime?)null,
+                                    ReportedDate = ReportedDate.HasValue ? ReportedDate : (DateTime?)null,
                                     #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -13332,8 +12456,8 @@ namespace ProteusMMX.ViewModel.Workorder
                             var response = await _workorderService.UpdateWorkorder(workorder);
                             if (response != null && bool.Parse(response.servicestatus))
                             {
-                                WorkorderCompletionDateWarningTextIsVisible = false;
-                                WorkStartedDateWarningTextIsVisible = false;
+                                // WorkorderCompletionDateWarningTextIsVisible = false;
+                                // WorkStartedDateWarningTextIsVisible = false;
                                 //DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated", 2000);
                                 DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated."), 2000);
                                 //var workorderWrapper1 = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
@@ -13357,9 +12481,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
                                     ModifiedUserName = AppSettings.User.UserName,
                                     Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim(),
-                                    RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay),
-                                    WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                    CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                    RequiredDate = RequiredDate1,
+                                    WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null,
+                                    CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null,
                                     FacilityID = FacilityID,
                                     LocationID = LocationID,
                                     AssetID = AssetID,
@@ -13380,14 +12504,16 @@ namespace ProteusMMX.ViewModel.Workorder
                                     InternalNote = InternalNoteText,
                                     ActualDowntime = ActualDowntimeText,
                                     EstimatedDowntime = EstimstedDowntimeText,
-                                    MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText),
-                                    MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText),
+                                    MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture),
+                                    MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture),
                                     ApprovalLevel = this.ApprovalLevel,
                                     ApprovalNumber = this.ApprovalNumber,
                                     IsSignatureValidated = false,
                                     DistributeCost = IsCostDistributed,
                                     ParentandChildCost = ParentCostDistributed,
                                     ChildCost = ChildCostDistributed,
+                                    AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate: (DateTime?)null,
+                                    ReportedDate = ReportedDate.HasValue ? ReportedDate : (DateTime?)null,
                                     #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -13456,8 +12582,8 @@ namespace ProteusMMX.ViewModel.Workorder
                             var response = await _workorderService.UpdateWorkorder(workorder);
                             if (response != null && bool.Parse(response.servicestatus))
                             {
-                                WorkorderCompletionDateWarningTextIsVisible = false;
-                                WorkStartedDateWarningTextIsVisible = false;
+                                // WorkorderCompletionDateWarningTextIsVisible = false;
+                                //  WorkStartedDateWarningTextIsVisible = false;
                                 DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated."), 2000);
                                 //var workorderWrapper1 = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
                                 //await SetControlsPropertiesForPage(workorderWrapper1);
@@ -13481,9 +12607,9 @@ namespace ProteusMMX.ViewModel.Workorder
                             {
                                 ModifiedUserName = AppSettings.User.UserName,
                                 Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim(),
-                                RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay),
-                                WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                RequiredDate = RequiredDate1,
+                                WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null,
+                                CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null,
                                 FacilityID = FacilityID,
                                 LocationID = LocationID,
                                 AssetID = AssetID,
@@ -13504,15 +12630,16 @@ namespace ProteusMMX.ViewModel.Workorder
                                 InternalNote = InternalNoteText,
                                 ActualDowntime = ActualDowntimeText,
                                 EstimatedDowntime = EstimstedDowntimeText,
-                                MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText),
-                                MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText),
+                                MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture),
+                                MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture),
                                 ApprovalLevel = this.ApprovalLevel,
                                 ApprovalNumber = this.ApprovalNumber,
                                 IsSignatureValidated = false,
                                 DistributeCost = IsCostDistributed,
                                 ParentandChildCost = ParentCostDistributed,
                                 ChildCost = ChildCostDistributed,
-
+                                AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate : (DateTime?)null,
+                                ReportedDate = ReportedDate.HasValue ? ReportedDate : (DateTime?)null,
                                 #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -13581,8 +12708,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         var response = await _workorderService.UpdateWorkorder(workorder);
                         if (response != null && bool.Parse(response.servicestatus))
                         {
-                            WorkorderCompletionDateWarningTextIsVisible = false;
-                            WorkStartedDateWarningTextIsVisible = false;
+                            // WorkorderCompletionDateWarningTextIsVisible = false;
+                            // WorkStartedDateWarningTextIsVisible = false;
                             //DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated", 2000);
                             DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated."), 2000);
                             //var workorderWrapper1 = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
@@ -13606,9 +12733,9 @@ namespace ProteusMMX.ViewModel.Workorder
 
                                 ModifiedUserName = AppSettings.User.UserName,
                                 Description = String.IsNullOrEmpty(DescriptionText.Trim()) ? null : DescriptionText.Trim(),
-                                RequiredDate = RequiredDate1.Date.Add(DateTime.Now.TimeOfDay),
-                                WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
-                                CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null,
+                                RequiredDate = RequiredDate1,
+                                WorkStartedDate = WorkStartedDate1.HasValue ? WorkStartedDate1 : (DateTime?)null,
+                                CompletionDate = WorkorderCompletionDate.HasValue ? WorkorderCompletionDate : (DateTime?)null,
                                 FacilityID = FacilityID,
                                 LocationID = LocationID,
                                 AssetID = AssetID,
@@ -13629,14 +12756,16 @@ namespace ProteusMMX.ViewModel.Workorder
                                 InternalNote = InternalNoteText,
                                 ActualDowntime = ActualDowntimeText,
                                 EstimatedDowntime = EstimstedDowntimeText,
-                                MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText),
-                                MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText),
+                                MiscellaneousLaborCost = decimal.Parse(MiscellaneousLabourCostText, CultureInfo.InvariantCulture),
+                                MiscellaneousMaterialsCost = decimal.Parse(MiscellaneousMaterialCostText, CultureInfo.InvariantCulture),
                                 ApprovalLevel = this.ApprovalLevel,
                                 ApprovalNumber = this.ApprovalNumber,
                                 IsSignatureValidated = false,
                                 DistributeCost = IsCostDistributed,
                                 ParentandChildCost = ParentCostDistributed,
                                 ChildCost = ChildCostDistributed,
+                                AcknowledgedDate = AcknowledgedDate.HasValue ? AcknowledgedDate : (DateTime?)null,
+                                ReportedDate = ReportedDate.HasValue ? ReportedDate : (DateTime?)null,
                                 #region Dynamic Field need to add in model so it can save on server.
 
 
@@ -13705,8 +12834,8 @@ namespace ProteusMMX.ViewModel.Workorder
                         var response = await _workorderService.UpdateWorkorder(workorder);
                         if (response != null && bool.Parse(response.servicestatus))
                         {
-                            WorkorderCompletionDateWarningTextIsVisible = false;
-                            WorkStartedDateWarningTextIsVisible = false;
+                            //WorkorderCompletionDateWarningTextIsVisible = false;
+                            // WorkStartedDateWarningTextIsVisible = false;
                             DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Workordersuccessfullyupdated."), 2000);
                             //var workorderWrapper1 = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
                             //await SetControlsPropertiesForPage(workorderWrapper1);
@@ -13772,6 +12901,27 @@ namespace ProteusMMX.ViewModel.Workorder
                         case "AbnormalityID":
                             {
                                 validationResult = ValidateValidations(formLoadItem, AbnormalityText);
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
+                        case "InternalNote":
+                            {
+                                validationResult = ValidateValidations(formLoadItem, InternalNoteText);
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
+
+                        case "AdditionalDetails":
+                            {
+                                validationResult = ValidateValidations(formLoadItem, AdditionalDetailsText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -14061,6 +13211,7 @@ namespace ProteusMMX.ViewModel.Workorder
                                 break;
 
                             }
+                       
 
                         case "TotalTime":
                             {
@@ -14596,7 +13747,12 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "EstimatedDowntime":
                             {
-                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, EstimstedDowntimeText);
+                                string estimateDowntimeText = string.Empty;
+                                if (EstimstedDowntimeText != null)
+                                {
+                                    estimateDowntimeText = Convert.ToString(EstimstedDowntimeText);
+                                }
+                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, estimateDowntimeText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -14606,7 +13762,12 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "ActualDowntime":
                             {
-                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, ActualDowntimeText);
+                                string actualDowntimeText = string.Empty;
+                                if (ActualDowntimeText != null)
+                                {
+                                    actualDowntimeText = Convert.ToString(ActualDowntimeText);
+                                }
+                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, actualDowntimeText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -14616,7 +13777,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "MiscellaneousLaborCostID":
                             {
-                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, MiscellaneousLabourCostText);
+                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, MiscellaneousLabourCostText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -14626,7 +13787,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         case "MiscellaneousMaterialsCostID":
                             {
-                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, MiscellaneousMaterialCostText);
+                                validationResult = ValidateValidationsForOverriddennControls1(formLoadItem, MiscellaneousMaterialCostText);
                                 if (validationResult.FailedItem != null)
                                 {
                                     return validationResult;
@@ -14634,6 +13795,27 @@ namespace ProteusMMX.ViewModel.Workorder
                                 break;
                             }
 
+                        case "ReportedDate":
+                            {
+                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, Convert.ToString(ReportedDate));
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
+
+                        case "AcknowledgedDate":
+                            {
+                                validationResult = ValidateValidationsForOverriddennControls(formLoadItem, Convert.ToString(AcknowledgedDate));
+                                if (validationResult.FailedItem != null)
+                                {
+                                    return validationResult;
+                                }
+                                break;
+
+                            }
 
                     }
 
@@ -14708,6 +13890,37 @@ namespace ProteusMMX.ViewModel.Workorder
 
         }
 
+        private ValidationResult ValidateValidationsForOverriddennControls1(FormControl formControl, string PropertyValue)
+        {
+            var validationResult = new ValidationResult();
+            if ((formControl.IsRequired ?? false) && string.IsNullOrWhiteSpace(PropertyValue))
+            {
+
+                validationResult.FailedItem = formControl;
+                validationResult.ErrorMessage = formControl.TargetName + " " + ConstantStrings.IsRequiredField;
+                return validationResult;
+            }
+            else
+            {
+                if ((formControl.IsRequired ?? false) && !string.IsNullOrWhiteSpace(PropertyValue))
+                {
+                    string Val = PropertyValue.Trim('0', '.', ',');
+                    if (string.IsNullOrWhiteSpace(Val))
+                    {
+                        validationResult.FailedItem = formControl;
+                        validationResult.ErrorMessage = formControl.TargetName + " " + ConstantStrings.IsRequiredField;
+                        return validationResult;
+                    }
+                }
+
+            }
+
+            return validationResult;
+
+        }
+
+
+
         public async Task CloseWorkorder()
         {
             try
@@ -14727,17 +13940,17 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
 
-                ///TODO: Get Workorder Labour data 
-                var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
+                /////TODO: Get Workorder Labour data 
+                //var workorderLabourWrapper = await _workorderService.GetWorkorderLabour(UserID, WorkorderID.ToString());
 
 
-                ///TODO: Get Workorder data 
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+                /////TODO: Get Workorder data 
+                //var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
 
 
 
-                ///TODO: Get Inspection 
-                var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(), UserID);
+                /////TODO: Get Inspection 
+                //var Inspection = await _workorderService.GetWorkorderInspection(WorkorderID.ToString(), UserID);
 
 
                 ///TODO: Get Inspection Time 
@@ -14746,7 +13959,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 #region check if all answers of a sections are required
 
-               // check if all answers of a sections are required///////
+                // check if all answers of a sections are required///////
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper != null))
                 {
                     if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.sections != null && workorderWrapper.workOrderWrapper.sections.Count > 0))
@@ -14758,7 +13971,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             RequiredSection.Append(item.SectionName);
                             RequiredSection.Append(",");
                         }
-                       
+
                         await DialogService.ShowAlertAsync(RequiredSection.ToString().TrimEnd(','), WebControlTitle.GetTargetNameByTitleName("PleaseProvideFollowingSectionQuestionAnswer"), "OK");
                         return;
 
@@ -14768,7 +13981,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 #endregion
 
-                
+
 
 
                 #region Check signature required in inspection
@@ -14776,6 +13989,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 ///TODO: Get Inspection InspectionSignatureResponse
                 var InspectionSignatureResponse = await _workorderService.IsSignatureRequiredOnInspection(WorkorderID.ToString());
+
                 if (InspectionSignatureResponse.IsSignatureRequiredAndEmpty)
                 {
                     UserDialogs.Instance.HideLoading();
@@ -14835,14 +14049,23 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         bool InspectionEmployeeHours = false;
                         bool InspectionContractorHours = false;
-                        if (!Inspection.workOrderEmployee.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+
+                        #region  Check all Employee Whose start date is not null
+                        List<WorkOrderEmployee> EmpStartdateNotNull = Inspection.workOrderEmployee.Where(x => x.StartDate != null).ToList();
+                        #endregion
+
+                       if (!EmpStartdateNotNull.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
                         {
-                             InspectionEmployeeHours = Inspection.workOrderEmployee.All(a => int.Parse((a.InspectionTime)) > 0);
+                            InspectionEmployeeHours = EmpStartdateNotNull.All(a => int.Parse((a.InspectionTime)) > 0);
                         }
 
-                        if (!Inspection.workorderContractor.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+                        #region Check all Contractor Whose start date is not null
+                        List<WorkorderContractor> ContractStartdateNotNull = Inspection.workorderContractor.Where(x => x.StartDate != null).ToList();
+                        #endregion
+
+                      if (!ContractStartdateNotNull.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
                         {
-                             InspectionContractorHours = Inspection.workorderContractor.All(a => int.Parse(a.InspectionTime) > 0);
+                            InspectionContractorHours = ContractStartdateNotNull.All(a => int.Parse(a.InspectionTime) > 0);
                         }
 
 
@@ -14878,8 +14101,19 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             foreach (var item in workorderLabourWrapper.workOrderWrapper.workOrderLabors)
                             {
+                                bool AllTaskNumber = workorderLabourWrapper.workOrderWrapper.workOrderLabors.Any(a => string.IsNullOrWhiteSpace(a.TaskNumber));
+                                if (AllTaskNumber == true)
+                                {
 
-                                bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => a.HoursAtRate1 > 0);
+                                    UserDialogs.Instance.HideLoading();
+                                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TasksandLaborOrInspectionIsRequiredForCloseWO"), 2000);
+                                    return;
+
+                                }
+                                #region  Check all Employee Whose start date is not null
+                                List<WorkOrderLabor> EmpStartdateNotNull = workorderLabourWrapper.workOrderWrapper.workOrderLabors.Where(x => x.StartDate != null).ToList();
+                                #endregion
+                                bool AllTaskHours = EmpStartdateNotNull.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1.Replace("00.00","")));
 
                                 if (AllTaskHours == false)
                                 {
@@ -14902,22 +14136,21 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
                 #region Check Cause if required
-                if (workorderWrapper.workOrderWrapper.workOrder.WorkOrderType == "DemandMaintenance")
+                if (Application.Current.Properties.ContainsKey("IsCheckedCauseKey"))
                 {
-                    if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedCause))
+                    string IsCheckedCause = Application.Current.Properties["IsCheckedCauseKey"].ToString();
+                    if (!string.IsNullOrWhiteSpace(IsCheckedCause))
                     {
-
-                        if (workorderWrapper.workOrderWrapper.Cause == null || workorderWrapper.workOrderWrapper.Cause.Count == 0)
+                        if (IsCheckedCause.ToLower() == "true" && CauseID == null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
                         {
                             UserDialogs.Instance.HideLoading();
-
-                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"), 2000);
+                            DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefilltheCause"));
                             return;
                         }
                     }
-
                 }
                 #endregion
+
 
 
                 #region Check Cost Center and Worktype if required
@@ -15062,9 +14295,74 @@ namespace ProteusMMX.ViewModel.Workorder
 
         public Task OnViewDisappearingAsync(VisualElement view)
         {
-
+            Application.Current.Properties["AssetDefaultEmployee"] = this.AssetID;
+            Application.Current.Properties["LocationDefaultEmployee"] = this.LocationID;
+            Application.Current.Properties["CauseID"] = "";
+           // WorkorderCompletionDate = null;
             return Task.FromResult(true);
 
+        }
+        public void LogMessage(string Username,string AppVersion)
+        {
+          string FinalLogstring = "Mobile Version: " + AppVersion + ";" + " UserName: " + Username+"; " + " Action Date: " + DateTime.UtcNow.ToString() + " Action Method: " + "Edit/Update Workorder";
+            Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/Service/CreateLogs");
+
+            var payload = new LogModel()
+            {
+                Message = FinalLogstring,
+                FileName = "CompletionDateWithoutCause.txt"
+
+            };
+
+            string strPayload = JsonConvert.SerializeObject(payload);
+            HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
+            var t = Task.Run(() => SendURI(posturi, c));
+
+        }
+        static async Task SendURI(Uri u, HttpContent c)
+        {
+            var response = string.Empty;
+            using (var client = new HttpClient())
+            {
+                HttpRequestMessage request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = u,
+                    Content = c
+                };
+
+                HttpResponseMessage result = await client.SendAsync(request);
+                if (result.IsSuccessStatusCode)
+                {
+                    response = result.StatusCode.ToString();
+                }
+            }
+
+        }
+        public Task IssueWorkorder()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading("", MaskType.Gradient);
+                Task.Delay(100);
+                TargetNavigationData tnobj = new TargetNavigationData();
+                tnobj.WorkOrderId = WorkorderID;
+                NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>(tnobj);
+
+            }
+            catch (Exception ex)
+            {
+
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+
+            }
+
+            return Task.CompletedTask;
         }
 
         public async Task SpeechtoText()
@@ -15138,7 +14436,36 @@ namespace ProteusMMX.ViewModel.Workorder
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                tnobj.Description = DescriptionText;
+                tnobj.Description = DescriptionMoreText;
+                await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
+                // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+
+                //OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+
+                // OperationInProgress = false;
+
+            }
+        }
+
+        public async Task ShowMore1Description()
+        {
+
+            try
+            {
+                UserDialogs.Instance.HideLoading();
+
+                TargetNavigationData tnobj = new TargetNavigationData();
+                tnobj.Description = DescriptionMoreText;
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
             }
@@ -15172,8 +14499,8 @@ namespace ProteusMMX.ViewModel.Workorder
                 //}
                 //else
                 //{
-                    tnobj.Description = AdditionalDetailsText;
-               // }
+                tnobj.Description = AdditionalDetailsMoreText;
+                // }
 
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
@@ -15203,14 +14530,13 @@ namespace ProteusMMX.ViewModel.Workorder
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                if (Device.Idiom == TargetIdiom.Phone)
-                {
-                    tnobj.Description = InternalNotesTextForMobile;
-                }
-                else
-                {
-                    tnobj.Description = InternalNoteText;
-                }
+                //if (Device.Idiom == TargetIdiom.Phone)
+                //{
+                //    tnobj.Description = InternalNotesTextForMobile;
+                //}
+
+                tnobj.Description = InternalNoteMoreText;
+
 
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 

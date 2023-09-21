@@ -77,15 +77,15 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
 
             /// For workordernumber////
             var workorderNumber = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkOrderNumber");
-            //if (workorderNumber != null)
-            //{
-            //    this.WorkorderNumberLabel.Text = workorderNumber.TargetName;
+            if (workorderNumber != null)
+            {
+                this.WorkorderNumberLabel.Text = workorderNumber.TargetName;
 
-            //}
-            //else
-            //{
-            //    this.WorkorderNumberLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkorderNumber");
-            //}
+            }
+            else
+            {
+                this.WorkorderNumberLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkorderNumber");
+            }
 
             /// For Requireddate////
             var requiredDate = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "RequiredDate");
@@ -138,16 +138,17 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             }
 
             ////For Workordertype////
-            var workOrderType = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkTypeID");
-            if (workOrderType != null)
-            {
-                this.WorkorderTypeLabel.Text = workOrderType.TargetName;
+            this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
+            //var workOrderType = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkTypeID");
+            //if (workOrderType != null)
+            //{
+            //    this.WorkorderTypeLabel.Text = workOrderType.TargetName;
 
-            }
-            else
-            {
-                this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
-            }
+            //}
+            //else
+            //{
+            //    this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
+            //}
            
             this.WorkorderTypeColon.IsVisible = true;
            
@@ -203,7 +204,7 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             {
                 WorkOrderRequestedDateKeyValue = Application.Current.Properties["WorkOrderRequestedDateKey"].ToString();
             }
-            if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
+            if (AppSettings.User!=null && AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
             {
                 if (WorkOrderRequestedDateKeyValue == "E" || WorkOrderRequestedDateKeyValue == "V")
                 {

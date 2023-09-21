@@ -10,8 +10,10 @@ namespace ProteusMMX.Services.Workorder.TaskAndLabour
     {
         Task<ServiceOutput> WorkOrderLaborsByWorkOrderIDAndTaskNumber(string UserID, string WorkorderID , string TaskID);
         Task<ServiceOutput> WorkOrderLaborsByWorkOrderID(string UserID, string WorkorderID);
-
+        
         Task<ServiceOutput> UpdateTaskAndLabour(object workorder);
+
+        Task<ServiceOutput> CreateWorkOrderLaborHours(object workorder);
         Task<ServiceOutput> CreateWorkOrderLabor(object workorder);
 
         Task<ServiceOutput> ClosedWorkOrdersLaborByClosedWorkorderID(string CLOSEDWORKORDERID, string UserID);

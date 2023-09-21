@@ -34,7 +34,7 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
         Color rowcolor = Color.White;
         public PastViewCell()
         {
-            
+
             InitializeComponent();
 
         }
@@ -140,17 +140,17 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             }
 
             ////For Workordertype////
-            var workOrderType = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkTypeID");
-            if (workOrderType != null)
-            {
-                this.WorkorderTypeLabel.Text = workOrderType.TargetName;
+            //var workOrderType = WorkorderControlsNew.FirstOrDefault(x => x.ControlName == "WorkTypeID");
+            //if (workOrderType != null)
+            //{
+            //    this.WorkorderTypeLabel.Text = workOrderType.TargetName;
 
-            }
-            else
-            {
-                this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
-            }
-
+            //}
+            //else
+            //{
+            //    this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
+            //}
+            this.WorkorderTypeLabel.Text = WebControlTitle.GetTargetNameByTitleName("WorkOrderType");
             this.WorkorderTypeColon.IsVisible = true;
 
 
@@ -205,7 +205,8 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
             {
                 WorkOrderRequestedDateKeyValue = Application.Current.Properties["WorkOrderRequestedDateKey"].ToString();
             }
-            if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
+
+            if (AppSettings.User != null && AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(true))
             {
                 if (WorkOrderRequestedDateKeyValue == "E" || WorkOrderRequestedDateKeyValue == "V")
                 {
@@ -354,4 +355,4 @@ namespace ProteusMMX.Views.Workorder.Templates.ViewCells
 }
 
 
-        
+

@@ -88,6 +88,7 @@ namespace ProteusMMX.Views.Workorder
         public TaskAndLabourPage ()
 		{
 			InitializeComponent ();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
@@ -99,7 +100,7 @@ namespace ProteusMMX.Views.Workorder
             base.OnAppearing();
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
-
+            test1.Children.Clear();
             ServiceOutput InspectionList = await ViewModel._inspectionService.GetWorkorderInspection(ViewModel.WorkorderID.ToString(),AppSettings.User.UserID.ToString());
             if (InspectionList.listInspection != null && InspectionList.listInspection.Count > 0)
             {
@@ -119,7 +120,7 @@ namespace ProteusMMX.Views.Workorder
                 //DisabledTextIsEnable = true;
                 //TaskLabourSearchBoxIsEnable = false;
                 //TaskLabourSearchButtonIsEnable = false;
-                //var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                //var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
                 //if (response == LogoutTitle)
                 //{
                 //  await _authenticationService.LogoutAsync();
@@ -133,14 +134,34 @@ namespace ProteusMMX.Views.Workorder
 
             if (BindingContext is IHandleViewAppearing viewAware)
             {
+                test1.Children.Clear();
                 await viewAware.OnViewAppearingAsync(this);
             }
         }
 
+        private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                //count = count + 1;
+                //if (count == 1)
+                //{
+                    await ViewModel.OnViewDisappearingAsync(null);
+                    await ViewModel.GenerateTaskAndLabourLayout();
+                //}
+                //else
+                //{
+                //    count = 0;
+                //}
+
+            }
+        }
         protected override async void OnDisappearing()
         {
             base.OnDisappearing();
-
+            test1.Children.Clear();
             if (BindingContext is IHandleViewDisappearing viewAware)
             {
                 await viewAware.OnViewDisappearingAsync(this);

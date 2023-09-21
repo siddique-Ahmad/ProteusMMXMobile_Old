@@ -75,10 +75,20 @@
                 <StackLayout HorizontalOptions="CenterAndExpand" WidthRequest="170" HeightRequest="170" Grid.Row="1"  Padding="0,30,0,0" >
                     <Image>
                         <Image.Source>
-                            <OnPlatform x:TypeArguments="ImageSource" >
-                                <OnPlatform.Android>barcerch.png</OnPlatform.Android>
+                            <OnPlatform x:TypeArguments="ImageSource">
+                                <On Platform="Android,iOS" Value="barcerch.png" />
+                                <On Platform="UWP" Value="Assets/barcerch.png" />
+                                <On Platform="WinPhone" Value="Assets/barcerch.png" />
                             </OnPlatform>
                         </Image.Source>
+                        <!--<Image.Source>
+                            <OnPlatform x:TypeArguments="ImageSource" >
+                                <OnPlatform.Android>barcerch.png</OnPlatform.Android>
+                                <OnPlatform.iOS>
+                                    <FileImageSource File="barcerch.png"/>
+                                </OnPlatform.iOS>
+                            </OnPlatform>
+                        </Image.Source>-->
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer
                                          Command="{Binding ScanCommand}"

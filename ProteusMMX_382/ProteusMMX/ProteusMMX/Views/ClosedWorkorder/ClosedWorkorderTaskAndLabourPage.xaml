@@ -4,9 +4,22 @@
              x:Class="ProteusMMX.Views.ClosedWorkorder.ClosedWorkorderTaskAndLabourPage"
              xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:control1="clr-namespace:ProteusMMX.Controls"
-            
-              Icon="tasksandlabors.png"
              BackgroundColor="{StaticResource BackgroundColor}" >
+
+    <ContentPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="tasksandlabors.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/tasksandlabors.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/tasksandlabors.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </ContentPage.IconImageSource>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
@@ -52,11 +65,12 @@
 
 
                 </Grid>
-
+               
                 <ScrollView Grid.Row="1">
-
+                    
                     <!--This is gonna be content grid-->
                     <StackLayout >
+                        <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}"/>
                         <control1:CustomEntry Text="{Binding entryHours }" x:Name="hh" IsEnabled="False"></control1:CustomEntry>
                     </StackLayout>
                 </ScrollView>

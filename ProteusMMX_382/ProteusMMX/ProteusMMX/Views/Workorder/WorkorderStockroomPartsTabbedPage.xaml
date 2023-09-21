@@ -2,7 +2,21 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:Pages="clr-namespace:ProteusMMX.Views.Workorder" xmlns:viewModels="clr-namespace:ProteusMMX.ViewModel.Workorder"
             x:Class="ProteusMMX.Views.Workorder.WorkorderStockroomPartsTabbedPage"
-             Icon="parts.png">
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+        android:TabbedPage.IsSwipePagingEnabled="False">
+    <TabbedPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="parts.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/parts.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/parts.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </TabbedPage.IconImageSource>
   <!--Pages can be added as references or inline-->
     <!--<TabbedPage.Children>
         <Pages:WorkOrderStockRoomPartsListing BindingContext="{Binding WorkOrderStockroomPartsListingPageViewModel}" />
@@ -11,14 +25,14 @@
     </TabbedPage.Children>-->
 
     <TabbedPage.Children>
-        <Pages:WorkOrderStockRoomPartsListing Title="StockroomParts">
+        <Pages:WorkOrderStockRoomPartsListing x:Name="StockroomParts" >
             <Pages:WorkOrderStockRoomPartsListing.BindingContext>
                 <viewModels:WorkOrderStockroomPartsListingPageViewModel/>
             </Pages:WorkOrderStockRoomPartsListing.BindingContext>
         </Pages:WorkOrderStockRoomPartsListing>
-        
-        
-        <Pages:WorkOrderNonStockRoomPartsListing Title="NonStockroomParts">
+
+
+        <Pages:WorkOrderNonStockRoomPartsListing x:Name="NonStockroomParts">
             <Pages:WorkOrderNonStockRoomPartsListing.BindingContext>
                 <viewModels:WorkOrderNonStockroomPartsListingPageViewModel/>
             </Pages:WorkOrderNonStockRoomPartsListing.BindingContext>

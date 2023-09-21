@@ -652,7 +652,7 @@ namespace ProteusMMX.ViewModel.Barcode
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -914,12 +914,15 @@ namespace ProteusMMX.ViewModel.Barcode
 
                     };
 
+                    options.PossibleFormats = new List<ZXing.BarcodeFormat>() { ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.CODE_93, ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.QR_CODE };
+                    options.TryHarder = false; options.BuildBarcodeReader().Options.AllowedLengths = new[] { 44 };
                     ZXingScannerPage _scanner = new ZXingScannerPage(options)
                     {
                         DefaultOverlayTopText = "Align the barcode within the frame",
                         DefaultOverlayBottomText = string.Empty,
                         DefaultOverlayShowFlashButton = true
                     };
+                    _scanner.AutoFocus();
 
                     _scanner.OnScanResult += _scanner_OnScanResult;
                     var navPage = App.Current.MainPage as NavigationPage;
@@ -989,7 +992,7 @@ namespace ProteusMMX.ViewModel.Barcode
                         {
                             Attachments.RemoveAt(count - i);
                         }
-
+                       
                     }
 
                     if (DocumentAttachments != null && DocumentAttachments.Count > 0)
@@ -999,7 +1002,7 @@ namespace ProteusMMX.ViewModel.Barcode
                         {
                             DocumentAttachments.RemoveAt(count - i);
                         }
-
+                       
                     }
                     #endregion
 
@@ -1029,7 +1032,7 @@ namespace ProteusMMX.ViewModel.Barcode
                         if (attachment.assetWrapper.attachments.Count > 0)
                         {
                             var FirstattachmentName = attachment.assetWrapper.attachments.First();
-                            PDFImageText = FirstattachmentName.AttachmentNameWithExtension;
+                           
                             ImageText = WebControlTitle.GetTargetNameByTitleName("Total") + " " + WebControlTitle.GetTargetNameByTitleName("Image") + " : " + attachment.assetWrapper.attachments.Count;
                             foreach (var file in attachment.assetWrapper.attachments)
                             {
@@ -1059,7 +1062,7 @@ namespace ProteusMMX.ViewModel.Barcode
                                 }
                                 else
                                 {
-                                    if (Device.RuntimePlatform == Device.UWP)
+                                    if (Device.RuntimePlatform == Device.UWP )
                                     {
                                         byte[] imgUser = StreamToBase64.StringToByte(file.Attachment);
                                         MemoryStream stream = new MemoryStream(imgUser);
@@ -1085,7 +1088,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
                                         }
                                     }
-                                    else if (Device.RuntimePlatform == Device.Android)
+                                    else
                                     {
                                         byte[] imgUser = StreamToBase64.StringToByte(file.Attachment);
                                         MemoryStream stream = new MemoryStream(imgUser);
@@ -1106,23 +1109,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
                                         }
                                     }
-                                    else
-                                    {
-
-
-                                        Attachments.Add(new WorkorderAttachment
-                                        {
-                                            IsSynced = true,
-                                            attachmentFileExtension = file.AttachmentNameWithExtension,
-                                            //ImageBytes = imgUser, //byteImage,
-                                            WorkOrderAttachmentID = file.AssetAttachmentID,
-                                            AttachmentImageSource = ImageSource.FromUri(new Uri(AppSettings.BaseURL + "/Inspection/Service/AttachmentItem.ashx?Id=" + file.AssetAttachmentID + "&&Module=workorder"))
-
-                                        }
-                                        );
-
-
-                                    }
+                                   
                                 }
                             }
                         }
@@ -1150,6 +1137,13 @@ namespace ProteusMMX.ViewModel.Barcode
             }
         }
         private async Task GetAssetAttachment()
+        {
+
+            await GetAttachmentByAsset();
+
+        }
+
+        public async Task RefillWorkorderCollection()
         {
 
             await GetAttachmentByAsset();

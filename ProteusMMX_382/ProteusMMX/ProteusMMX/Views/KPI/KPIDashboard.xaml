@@ -22,7 +22,7 @@
                         </Grid.RowDefinitions>
                     </Grid>
                     <border:SfBorder HeightRequest="50" BorderColor="#006de0" CornerRadius="0,0,8,8" BackgroundColor="#006de0"  >
-                        <Label VerticalOptions="Center" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,-5" HorizontalOptions="Center" Text="KPI Dashboard"></Label>
+                        <Label VerticalOptions="Center" FontFamily="Ebrima" FontAttributes="Bold" TextColor="White" Margin="0,0,0,-5" HorizontalOptions="Center" Text="{Binding PageTitle}"></Label>
                     </border:SfBorder>
                 </Grid>
             </StackLayout>
@@ -40,6 +40,14 @@
 
                     <border:SfBorder BorderColor="Black" CornerRadius="5" HeightRequest="40" BorderWidth="1" Grid.Row="1"  >
                         <buttons:SfButton BackgroundColor="White" TextColor="Black"  Text="{Binding PriorityName}" ImageSource="unnamed.png" ShowIcon="True" ImageAlignment="End" Command="{Binding PriorityCommand}"  >
+                            <!--<buttons:SfButton.ImageSource>
+                                <OnPlatform x:TypeArguments="FontImageSource">
+                                    <On Platform="Android,iOS" Value="unnamed.png" />
+                                    <On Platform="UWP" Value="Assets/unnamed.png" />
+                                    <On Platform="WinPhone" Value="Assets/unnamed.png" />
+                                </OnPlatform>
+                            </buttons:SfButton.ImageSource>-->
+
                         </buttons:SfButton>
                     </border:SfBorder>
                     
@@ -93,7 +101,7 @@
                     </StackLayout>
 
                     <StackLayout Spacing="20" Grid.Row="4">
-                        <Label  Text="Actual Hours" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                        <Label  Text="Actual Hours (hh.mm)" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -123,7 +131,7 @@
                     </StackLayout>
 
                     <StackLayout Spacing="30" Grid.Row="5">
-                        <Label  Text="Planned Hours" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
+                        <Label  Text="Planned Hours (hh.mm)" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>

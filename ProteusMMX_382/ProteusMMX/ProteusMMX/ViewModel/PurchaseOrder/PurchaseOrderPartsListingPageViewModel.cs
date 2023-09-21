@@ -156,6 +156,42 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
 
         #endregion
 
+        bool _disabledTextIsEnable = false;
+        public bool DisabledTextIsEnable
+        {
+            get
+            {
+                return _disabledTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _disabledTextIsEnable)
+                {
+                    _disabledTextIsEnable = value;
+                    OnPropertyChanged(nameof(DisabledTextIsEnable));
+                }
+            }
+        }
+
+
+        string _disabledText = "";
+        public string DisabledText
+        {
+            get
+            {
+                return _disabledText;
+            }
+
+            set
+            {
+                if (value != _disabledText)
+                {
+                    _disabledText = value;
+                    OnPropertyChanged("DisabledText");
+                }
+            }
+        }
 
 
 
@@ -640,7 +676,7 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -648,12 +684,6 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
                     await NavigationService.NavigateToAsync<LoginPageViewModel>();
                     await NavigationService.RemoveBackStackAsync();
                 }
-
-
-
-
-
-
             }
             catch (Exception ex)
             {
@@ -688,6 +718,12 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
                     await AddPOPartsInPurchaseOrderPartsCollection(purchaseorderParts);
 
                 }
+                else
+                {
+
+                    DisabledText = "No record Found";//WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                    DisabledTextIsEnable = true;
+                }
             }
             catch (Exception ex)
             {
@@ -700,8 +736,6 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
                 OperationInProgress = false;
             }
         }
-
-     
 
         private async Task AddPOPartsInPurchaseOrderPartsCollection(List<Model.PurchaseOrderModel.PurchaseOrderParts> poparts)
         {
@@ -726,7 +760,6 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
 
             }
         }
-
 
         private async Task RemoveAllPurchaseOrderFromCollection()
         {
@@ -759,12 +792,15 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
 
                     };
 
+                    options.PossibleFormats = new List<ZXing.BarcodeFormat>() { ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.CODE_93, ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.QR_CODE };
+                    options.TryHarder = false; options.BuildBarcodeReader().Options.AllowedLengths = new[] { 44 };
                     ZXingScannerPage _scanner = new ZXingScannerPage(options)
                     {
                         DefaultOverlayTopText = "Align the barcode within the frame",
                         DefaultOverlayBottomText = string.Empty,
                         DefaultOverlayShowFlashButton = true
                     };
+                    _scanner.AutoFocus();
 
                     _scanner.OnScanResult += _scanner_OnScanResult;
                     var navPage = App.Current.MainPage as NavigationPage;

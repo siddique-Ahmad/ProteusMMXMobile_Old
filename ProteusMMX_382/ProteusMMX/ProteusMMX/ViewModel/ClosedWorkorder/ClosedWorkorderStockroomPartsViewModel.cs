@@ -446,7 +446,42 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         #endregion
 
 
+        bool _disabledTextIsEnable = false;
+        public bool DisabledTextIsEnable
+        {
+            get
+            {
+                return _disabledTextIsEnable;
+            }
 
+            set
+            {
+                if (value != _disabledTextIsEnable)
+                {
+                    _disabledTextIsEnable = value;
+                    OnPropertyChanged(nameof(DisabledTextIsEnable));
+                }
+            }
+        }
+
+
+        string _disabledText = "";
+        public string DisabledText
+        {
+            get
+            {
+                return _disabledText;
+            }
+
+            set
+            {
+                if (value != _disabledText)
+                {
+                    _disabledText = value;
+                    OnPropertyChanged("DisabledText");
+                }
+            }
+        }
 
 
         #region ListView Properties
@@ -606,7 +641,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { GetNonStockroomParts, LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { GetNonStockroomParts, LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -670,6 +705,11 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     var workorderstkparts = workordersResponse.clWorkOrderWrapper.clworkOrderStockroomParts;
                     await AddWorkorderStockroomPartsInWorkorderCollection(workorderstkparts);
 
+                }
+                else
+                {
+                    DisabledText = "No record Found";//WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                    DisabledTextIsEnable = true;
                 }
             }
             catch (Exception ex)

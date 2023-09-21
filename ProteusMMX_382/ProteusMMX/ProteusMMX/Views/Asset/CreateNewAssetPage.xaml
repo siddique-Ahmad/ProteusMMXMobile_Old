@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:controls="clr-namespace:ProteusMMX.Controls;assembly=ProteusMMX"
              xmlns:dependencyinterface="clr-namespace:ProteusMMX.DependencyInterface"
-             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:richtexteditor="clr-namespace:Syncfusion.XForms.RichTextEditor;assembly=Syncfusion.SfRichTextEditor.XForms"
              x:Class="ProteusMMX.Views.Asset.CreateNewAssetPage"
                Title="{Binding PageTitle}" 
              BackgroundColor="{StaticResource BackgroundColor}" >
@@ -46,7 +46,9 @@
                 </Grid.RowDefinitions>
                 <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
 
-                <ScrollView Grid.Row="1">
+                <AbsoluteLayout>
+                    <ScrollView Grid.Row="1" AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
                     <Grid>
 
                         <Grid.RowDefinitions>
@@ -131,7 +133,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding FacilityIsEnable}">
                                     <buttons:SfButton Text="{Binding FacilityName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding FacilityCommand}" IsEnabled="{Binding FacilityIsEnable}" />
                                 </border:SfBorder>
                                 
@@ -146,7 +148,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding LocationIsEnable}">
                                     <buttons:SfButton Text="{Binding LocationName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding LocationCommand}" IsEnabled="{Binding LocationIsEnable}" IsVisible="{Binding LocationForLicensingIsVisible}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -160,7 +162,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding AssetSystemIsEnable}">
                                     <buttons:SfButton Text="{Binding AssetSystemName}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding AssetSystemCommand}" IsEnabled="{Binding AssetSystemIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -175,7 +177,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding CategoryIsEnable}" >
                                     <buttons:SfButton Text="{Binding CategoryText}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding CategoryCommand}" IsEnabled="{Binding CategoryIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -190,7 +192,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}"  IsEnabled="{Binding VendorIsEnable}" >
                                     <buttons:SfButton Text="{Binding VendorText}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding VendorCommand}"  IsEnabled="{Binding VendorIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -204,7 +206,7 @@
                                         </OnPlatform>
                                     </Label.FontAttributes>
                                 </Label>
-                                <border:SfBorder Style="{StaticResource SfBorderStyle1}">
+                                <border:SfBorder Style="{StaticResource SfBorderStyle1}" IsEnabled="{Binding RuntimeUnitCommandIsEnable}">
                                     <buttons:SfButton Text="{Binding RuntimeUnitText}" CornerRadius="5" Style="{StaticResource SfButtonStyles}" Command="{Binding RuntimeUnitCommand}"  IsEnabled="{Binding RuntimeUnitCommandIsEnable}" />
                                 </border:SfBorder>
                             </StackLayout>
@@ -238,7 +240,7 @@
                                 </Label>
                                 <!--<Editor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"/>-->
                                 <border:SfBorder CornerRadius="5">
-                                    <controls:UnderLineEditor HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></controls:UnderLineEditor>
+                                    <richtexteditor:SfRichTextEditor  PlaceHolderFontColor="Black" DefaultFontColor="Black" ShowToolbar="False" HeightRequest="100"  WidthRequest="{Binding Source={x:Reference Grid_column},Path=ColumnDefinitions[0].Width.Value}" Text="{Binding AdditionalDetailsText}" IsEnabled="{Binding AdditionalDetailsIsEnable, Mode=TwoWay}" HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand"></richtexteditor:SfRichTextEditor>
                                 </border:SfBorder>
                             </StackLayout>
 
@@ -252,14 +254,25 @@
 
                         </Grid>
 
-                        <Button Text="{Binding SaveTitle}" CornerRadius="5" Style="{StaticResource SaveButtonStyle}" Grid.Row="3" Margin="10,10,10,10" Command="{Binding SaveAssetCommand}" VerticalOptions="StartAndExpand" />
+                        <!--<Button Text="{Binding SaveTitle}" HorizontalOptions="CenterAndExpand" WidthRequest="150" CornerRadius="5" Style="{StaticResource SaveButtonStyle}" Grid.Row="3" Margin="10,10,10,10" Command="{Binding SaveAssetCommand}" VerticalOptions="StartAndExpand" />-->
                         <!--HeightRequest="40"-->
                         <!--<ActivityIndicator Grid.Row="0" Grid.RowSpan="3" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 
 
                     </Grid>
                 </ScrollView>
-
+                    <ImageButton AbsoluteLayout.LayoutBounds="0.95,0.95,40,40"
+            AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding SaveAssetCommand}"
+            BackgroundColor="Transparent" Source="Assets/save.png">
+                        <ImageButton.Source>
+                            <OnPlatform  x:TypeArguments="ImageSource">
+                                <OnPlatform.iOS>save.png</OnPlatform.iOS>
+                                <OnPlatform.Android>save.png</OnPlatform.Android>
+                                <OnPlatform.WinPhone>Assets/save.png</OnPlatform.WinPhone>
+                            </OnPlatform>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </AbsoluteLayout>
             </Grid>
 
             <ActivityIndicator IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>

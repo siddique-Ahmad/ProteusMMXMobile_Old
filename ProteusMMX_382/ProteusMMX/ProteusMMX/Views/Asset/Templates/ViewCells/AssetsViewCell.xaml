@@ -5,8 +5,8 @@
            BindingContextChanged="OnBindingContextChanged">
     <ViewCell.View>
         <Frame BorderColor="Gray">
-            <StackLayout >
-                <Grid RowSpacing="3" Padding="-15,-15,-15,-15">
+            <StackLayout Padding="4,1,4,1">
+                <Grid RowSpacing="3" Padding="-15,-15,0,-15">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />

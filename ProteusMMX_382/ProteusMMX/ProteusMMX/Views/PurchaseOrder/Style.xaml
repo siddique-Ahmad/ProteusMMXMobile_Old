@@ -163,7 +163,14 @@
         <Setter Property="TextColor" Value="Black"/>
         <Setter Property="ImageAlignment" Value="End"></Setter>
         <Setter Property="ShowIcon" Value="True"></Setter>
-        <Setter Property="ImageSource" Value="unnamed.png"></Setter>
+        <Setter Property="ImageSource">
+            <OnPlatform x:TypeArguments="FileImageSource">
+                <On Platform="Android" Value="unnamed.png"/>
+                <On Platform="iOS" Value="unnamed.png"/>
+                <On Platform="UWP" Value="Assets/unnamed.png" />
+                <On Platform="WinPhone" Value="Assets/unnamed.png"/>
+            </OnPlatform>
+        </Setter>
     </Style>
     <Style x:Key="SfBorderStyle1" TargetType="border:SfBorder">
         <!--<Setter Property="BackgroundColor" Value="{StaticResource BorderBackgroundColor}" />-->

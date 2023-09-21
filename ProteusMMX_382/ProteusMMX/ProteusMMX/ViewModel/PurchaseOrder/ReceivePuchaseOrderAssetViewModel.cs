@@ -844,7 +844,7 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -904,7 +904,7 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
                     ClientIANATimeZone = AppSettings.ClientIANATimeZone,
                     InvoiceNumber = String.IsNullOrEmpty(InvoiceNumberText) ? null : InvoiceNumberText.Trim(),
                     PurchaseOrderAssetID = this.PurchaseOrderAssetID,
-                    ReceivedDate = ReceivedDate.Date.Add(DateTime.Now.TimeOfDay),
+                    ReceivedDate = ReceivedDate,
                     PackingSlipNumber = String.IsNullOrEmpty(PackagingSlipNumberText) ? null : PackagingSlipNumberText.Trim(),
                     ReceiverID = this.ReceiverID,
                     ModifiedUserName = AppSettings.User.UserName,

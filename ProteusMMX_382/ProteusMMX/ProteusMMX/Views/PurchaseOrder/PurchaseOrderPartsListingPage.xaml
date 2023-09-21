@@ -46,9 +46,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
+            <Label TextColor="Red" HorizontalOptions="Center"  Grid.Row="1" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}" />
 
 
-            <Grid Grid.Row="1"  Padding="5,0,5,0">
+            <Grid Grid.Row="1"  Padding="10,10,10,10">
 
                 <!--<Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

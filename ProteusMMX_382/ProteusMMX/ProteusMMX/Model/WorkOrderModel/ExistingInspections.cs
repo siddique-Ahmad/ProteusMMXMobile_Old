@@ -38,7 +38,7 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string SignaturePath { get; set; }
         public string SignatureString { get; set; }
 
-        public Nullable<decimal> EstimatedHours { get; set; }
+        public string EstimatedHours { get; set; }
 
         public Nullable<bool> ResponseSubType { get; set; }
     }

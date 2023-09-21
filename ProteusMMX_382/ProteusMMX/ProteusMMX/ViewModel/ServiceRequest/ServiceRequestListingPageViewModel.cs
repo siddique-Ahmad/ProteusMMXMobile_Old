@@ -440,7 +440,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
 
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
-
+        public ICommand AddNewServiceCommand => new AsyncCommand(AddNewService);
 
         public ICommand ServiceRequestSelectedCommand => new Command<ServiceRequests>(OnSelectServiceRequestsync);
 
@@ -692,6 +692,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                                 {
                                     Application.Current.Properties["CreateSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
                                     Application.Current.Properties["RemoveSRAttachment"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
+                                    Application.Current.Properties["AttachmentFiles"] = ServiceRequestSubModule.listControls.FirstOrDefault(i => i.ControlName == "Attach").Expression;
                                     Application.Current.Properties["SRAttachmentTabKey"] = ServiceRequestModuleAttachment.Expression;
                                 }
                                 catch (Exception ex)
@@ -871,7 +872,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 if (Create == "E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateServiceRequest, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -880,19 +881,19 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                    if (response == CreateServiceRequest)
-                    {
-                        //TargetNavigationData tnobj = new TargetNavigationData();
+                    //if (response == CreateServiceRequest)
+                    //{
+                    //    //TargetNavigationData tnobj = new TargetNavigationData();
 
-                        //tnobj.WorkOrderId = this.WorkorderID;
-                        await NavigationService.NavigateToAsync<CreateServiceRequestViewModel>();
+                    //    //tnobj.WorkOrderId = this.WorkorderID;
+                    //    await NavigationService.NavigateToAsync<CreateServiceRequestViewModel>();
 
-                    }
+                    //}
                 }
 
                 else if (Create == "V")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateServiceRequest, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateServiceRequest, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -905,7 +906,7 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -929,7 +930,34 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             }
         }
 
+        public async Task AddNewService()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(1000);
+                if (Create == "E")
+                {
 
+                    await NavigationService.NavigateToAsync<CreateServiceRequestViewModel>();
+                }
+
+                else if (Create == "V")
+                {
+                    
+
+                }
+            }
+            catch (Exception )
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+        }
 
 
         public async Task GetServiceRequestAuto()
@@ -1089,13 +1117,15 @@ namespace ProteusMMX.ViewModel.ServiceRequest
                         TryHarder = true,
 
                     };
-
+                    options.PossibleFormats = new List<ZXing.BarcodeFormat>() { ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.CODE_93, ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.QR_CODE };
+                    options.TryHarder = false; options.BuildBarcodeReader().Options.AllowedLengths = new[] { 44 };
                     ZXingScannerPage _scanner = new ZXingScannerPage(options)
                     {
                         DefaultOverlayTopText = "Align the barcode within the frame",
                         DefaultOverlayBottomText = string.Empty,
                         DefaultOverlayShowFlashButton = true
                     };
+                    _scanner.AutoFocus();
 
                     _scanner.OnScanResult += _scanner_OnScanResult;
                     var navPage = App.Current.MainPage as NavigationPage;
@@ -1315,52 +1345,27 @@ namespace ProteusMMX.ViewModel.ServiceRequest
             {
                 var ServiceRequestID = serviceRequestItem.ServiceRequestID;
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-                //OperationInProgress = true;
 
 
+                ////Check if User is Admin////
+                //bool IFUserIsAdmin = Convert.ToBoolean(AppSettings.User.UserIsAdmin);
+                //if (IFUserIsAdmin == false)
+                //{
+                //    //Check if User is Service Request Admin////
+                //    bool IFUserIsSRAdmin = Convert.ToBoolean(AppSettings.User.UserIsSRAdmin);
+                //    if (IFUserIsSRAdmin == false)
+                //    {
+                //        UserDialogs.Instance.HideLoading();
 
-
-
-                //Check if User is Admin////
-                bool IFUserIsAdmin = Convert.ToBoolean(AppSettings.User.UserIsAdmin);
-                if (IFUserIsAdmin == false)
-                {
-                    //Check if User is Service Request Admin////
-                    bool IFUserIsSRAdmin = Convert.ToBoolean(AppSettings.User.UserIsSRAdmin);
-                    if (IFUserIsSRAdmin == false)
-                    {
-                        UserDialogs.Instance.HideLoading();
-
-                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("CurrentuserisnotauthorizedtodeclineselectedServiceRequest"), 2000);
-                        return;
-                    }
-                }
+                //        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("CurrentuserisnotauthorizedtodeclineselectedServiceRequest"), 2000);
+                //        return;
+                //    }
+                //}
 
 
                 var page = new SRDecline(UserID, ServiceRequestID, _serviceRequestService);
                 await PopupNavigation.PushAsync(page);
 
-                //var yourobject = new ServiceRequests
-                //{
-
-
-                //    UserId = Convert.ToInt32(this.UserID),
-                //    ServiceRequestID = ServiceRequestID,
-
-
-                //};
-
-
-
-                //var response = await _serviceRequestService.DeclineServiceRequest(yourobject);
-
-                //if (Boolean.Parse(response.servicestatus))
-                //{
-                //    await RemoveAllServiceRequestFromCollection();
-                //    await GetServiceRequest();
-                //}
-                //UserDialogs.Instance.HideLoading();
-                //OperationInProgress = false;
 
             }
             catch (Exception ex)
@@ -1389,6 +1394,12 @@ namespace ProteusMMX.ViewModel.ServiceRequest
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
             this.SearchText = "";
+        }
+
+        public async Task ReloadPageAfterSerchBoxCancle()
+        {
+            await RemoveAllServiceRequestFromCollection();
+            await GetServiceRequest();
         }
         #endregion
     }

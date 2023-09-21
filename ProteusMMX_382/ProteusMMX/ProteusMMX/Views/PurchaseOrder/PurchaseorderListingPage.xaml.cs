@@ -17,6 +17,7 @@ namespace ProteusMMX.Views.PurchaseOrder
         public PurchaseorderListingPage()
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
@@ -74,5 +75,26 @@ namespace ProteusMMX.Views.PurchaseOrder
                 await viewAware.OnViewDisappearingAsync(this);
             }
         }
+
+        private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                //count = count + 1;
+                //if (count == 1)
+                //{
+                    await ViewModel.OnViewDisappearingAsync(this);
+                    await ViewModel.ReloadPageAfterSerchBoxCancle();
+                //}
+                //else
+                //{
+                //    count = 0;
+                //}
+
+            }
+        }
+
     }
 }

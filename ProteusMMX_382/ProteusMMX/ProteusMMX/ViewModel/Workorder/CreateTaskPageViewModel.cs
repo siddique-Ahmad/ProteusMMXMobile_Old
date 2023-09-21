@@ -213,7 +213,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        string _selectOptionsTitle ;
+        string _selectOptionsTitle;
         public string SelectOptionsTitle
         {
             get
@@ -472,9 +472,43 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+        // Location
+        string _locationID;
+        public string LocationID
+        {
+            get
+            {
+                return _locationID;
+            }
 
+            set
+            {
+                if (value != _locationID)
+                {
+                    _locationID = value;
+                    OnPropertyChanged(nameof(LocationID));
+                }
+            }
+        }
 
+        // Asset
+        string _assetID;
+        public string AssetID
+        {
+            get
+            {
+                return _assetID;
+            }
 
+            set
+            {
+                if (value != _assetID)
+                {
+                    _assetID = value;
+                    OnPropertyChanged(nameof(AssetID));
+                }
+            }
+        }
 
         //Employee
         int? _employeeID;
@@ -673,7 +707,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
-        
+
 
 
 
@@ -714,7 +748,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        DateTime? _maximumTaskStartedDate= DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+        DateTime? _maximumTaskStartedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
         public DateTime? MaximumTaskStartedDate
         {
             get
@@ -823,6 +857,24 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+
+        DateTime? _taskArrivalDate;
+        public DateTime? TaskArrivalDate
+        {
+            get
+            {
+                return _taskArrivalDate;
+            }
+
+            set
+            {
+                if (value != _taskArrivalDate)
+                {
+                    _taskArrivalDate = value;
+                    OnPropertyChanged(nameof(TaskArrivalDate));
+                }
+            }
+        }
         // Task Completion Date
         DateTime? _taskCompletionDate;
         public DateTime? TaskCompletionDate
@@ -860,7 +912,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        DateTime? _maximumTaskCompletionDate= DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+        DateTime? _maximumTaskCompletionDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
         public DateTime? MaximumTaskCompletionDate
         {
             get
@@ -892,6 +944,24 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     _taskCompletionDateTitle = value;
                     OnPropertyChanged(nameof(TaskCompletionDateTitle));
+                }
+            }
+        }
+
+        string _taskArrivalDateTitle;
+        public string TaskArrivalDateTitle
+        {
+            get
+            {
+                return _taskArrivalDateTitle;
+            }
+
+            set
+            {
+                if (value != _taskArrivalDateTitle)
+                {
+                    _taskArrivalDateTitle = value;
+                    OnPropertyChanged(nameof(TaskArrivalDateTitle));
                 }
             }
         }
@@ -931,13 +1001,13 @@ namespace ProteusMMX.ViewModel.Workorder
                     OnPropertyChanged(nameof(TaskCompletionDateIsEnable));
                 }
             }
-        } 
+        }
         #endregion
 
         #endregion
 
 
-
+        ServiceOutput workorderWrapper = new ServiceOutput();
 
 
         #region Commands
@@ -956,7 +1026,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 OperationInProgress = true;
 
-              
+
 
                 if (navigationData != null)
                 {
@@ -969,126 +1039,147 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 }
                 await SetTitlesPropertiesForPage();
+                 workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
                 OperationInProgress = false;
 
-                    if (Application.Current.Properties.ContainsKey("TaskTabDetails"))
+                if (Application.Current.Properties.ContainsKey("TaskTabDetails"))
+                {
+                    var TaskTabDetails = Application.Current.Properties["TaskTabDetails"].ToString();
+                    if (TaskTabDetails != null && TaskTabDetails == "E")
                     {
-                        var TaskTabDetails = Application.Current.Properties["TaskTabDetails"].ToString();
-                        if (TaskTabDetails != null && TaskTabDetails == "E")
-                        {
-                            this.TaskIsVisible = true;
-                        }
-                        else if (TaskTabDetails == "V")
-                        {
-                            this.TaskIsEnable = false;
-                        }
-                        else
-                        {
-                            this.TaskIsVisible = true;
-                        }
-
-
+                        this.TaskIsVisible = true;
                     }
-                    if (Application.Current.Properties.ContainsKey("EmployeeTab"))
+                    else if (TaskTabDetails == "V")
                     {
-                        var EmployeeTab = Application.Current.Properties["EmployeeTab"].ToString();
-                        if (EmployeeTab != null && EmployeeTab == "E")
-                        {
-                            this.EmployeeIsVisible = true;
-                        }
-                        else if (EmployeeTab == "V")
-                        {
-                            this.EmployeeIsEnable = false;
-                        }
-                        else
-                        {
-                            this.EmployeeIsVisible = false;
-                        }
-
-
+                        this.TaskIsEnable = false;
                     }
-                    if (Application.Current.Properties.ContainsKey("ContractorTab"))
+                    else
                     {
-                        var ContractorTab = Application.Current.Properties["ContractorTab"].ToString();
-                        if (ContractorTab != null && ContractorTab == "E")
-                        {
-                            this.ContractorIsVisible = true;
-                        }
-                        else if (ContractorTab == "V")
-                        {
-                            this.ContractorIsEnable = false;
-                        }
-                        else
-                        {
-                            this.ContractorIsVisible = false;
-                        }
-
-
-                    }
-
-                    if (Application.Current.Properties.ContainsKey("StartdateTab"))
-                    {
-                        var StartdateTab = Application.Current.Properties["StartdateTab"].ToString();
-                        if (StartdateTab != null && StartdateTab == "E")
-                        {
-                            this.TaskStartedDateIsVisible = true;
-                        }
-                        else if (StartdateTab == "V")
-                        {
-                            this.TaskStartedDateIsEnable = false;
-                        }
-                        else
-                        {
-                            this.TaskStartedDateIsVisible = false;
-                        }
-
-
-                    }
-
-                    if (Application.Current.Properties.ContainsKey("CompletionDateTab"))
-                    {
-                        var CompletionDateTab = Application.Current.Properties["CompletionDateTab"].ToString();
-                        if (CompletionDateTab != null && CompletionDateTab == "E")
-                        {
-                            this.TaskCompletionDateIsVisible = true;
-                        }
-                        else if (CompletionDateTab == "V")
-                        {
-                            this.TaskCompletionDateIsEnable = false;
-                        }
-                        else
-                        {
-                            this.TaskCompletionDateIsVisible = false;
-                        }
-
-
+                        this.TaskIsVisible = true;
                     }
 
 
-                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                }
+                if (Application.Current.Properties.ContainsKey("EmployeeTab"))
+                {
+                    var EmployeeTab = Application.Current.Properties["EmployeeTab"].ToString();
+                    if (EmployeeTab != null && EmployeeTab == "E")
+                    {
+                        this.EmployeeIsVisible = true;
+                    }
+                    else if (EmployeeTab == "V")
+                    {
+                        this.EmployeeIsEnable = false;
+                    }
+                    else
+                    {
+                        this.EmployeeIsVisible = false;
+                    }
+
+
+                }
+                if (Application.Current.Properties.ContainsKey("ContractorTab"))
+                {
+                    var ContractorTab = Application.Current.Properties["ContractorTab"].ToString();
+                    if (ContractorTab != null && ContractorTab == "E")
+                    {
+                        this.ContractorIsVisible = true;
+                    }
+                    else if (ContractorTab == "V")
+                    {
+                        this.ContractorIsEnable = false;
+                    }
+                    else
                     {
                         this.ContractorIsVisible = false;
-
                     }
-                
 
-                                  
-                ServiceOutput taskResponse = null;
-
-                taskResponse = await _taskService.GetEmployee(UserID,"0","0", AppSettings.User.EmployeeName, "TaskAndLabor",this.WorkorderID);
-
-                if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
-                {
-                    var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
-                    if (assingedToEmployees != null)
-                    {
-                        this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
-                        this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName)+"("+ assingedToEmployees.First().LaborCraftCode+")";
-                    }
 
                 }
 
-              
+                if (Application.Current.Properties.ContainsKey("StartdateTab"))
+                {
+                    var StartdateTab = Application.Current.Properties["StartdateTab"].ToString();
+                    if (StartdateTab != null && StartdateTab == "E")
+                    {
+                        this.TaskStartedDateIsVisible = true;
+                    }
+                    else if (StartdateTab == "V")
+                    {
+                        this.TaskStartedDateIsEnable = false;
+                    }
+                    else
+                    {
+                        this.TaskStartedDateIsVisible = false;
+                    }
+
+
+                }
+
+                if (Application.Current.Properties.ContainsKey("CompletionDateTab"))
+                {
+                    var CompletionDateTab = Application.Current.Properties["CompletionDateTab"].ToString();
+                    if (CompletionDateTab != null && CompletionDateTab == "E")
+                    {
+                        this.TaskCompletionDateIsVisible = true;
+                    }
+                    else if (CompletionDateTab == "V")
+                    {
+                        this.TaskCompletionDateIsEnable = false;
+                    }
+                    else
+                    {
+                        this.TaskCompletionDateIsVisible = false;
+                    }
+
+
+                }
+
+
+                if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                {
+                    this.ContractorIsVisible = false;
+
+                }
+
+
+
+                ServiceOutput taskResponse = null;
+
+                if (Application.Current.Properties.ContainsKey("AssetDefaultEmployee"))
+                {
+                    var Asset = Application.Current.Properties["AssetDefaultEmployee"];
+                    AssetID = Convert.ToString(Asset);
+                }
+                if (Application.Current.Properties.ContainsKey("LocationDefaultEmployee"))
+                {
+                    var Location = Application.Current.Properties["LocationDefaultEmployee"];
+                    LocationID = Convert.ToString(Location);
+                }
+                taskResponse = await _taskService.GetDefaultEmployee(AssetID, LocationID);
+                if (taskResponse != null && taskResponse.employeeWrappers != null)
+                {
+                    this.EmployeeID = taskResponse.employeeWrappers.EmployeeLaborCraftID;
+                    this.EmployeeName = taskResponse.employeeWrappers.EmployeeName + "(" + taskResponse.employeeWrappers.LaborCraftCode + ")";
+                }
+                else
+                {
+
+                    taskResponse = await _taskService.GetEmployee(UserID, "0", "0", AppSettings.User.EmployeeName, "TaskAndLabor", this.WorkorderID);
+
+                    if (taskResponse != null && taskResponse.workOrderWrapper != null && taskResponse.workOrderWrapper.workOrderLabor != null && taskResponse.workOrderWrapper.workOrderLabor.Employees != null && taskResponse.workOrderWrapper.workOrderLabor.Employees.Count > 0)
+                    {
+                        var assingedToEmployees = taskResponse.workOrderWrapper.workOrderLabor.Employees;
+                        if (assingedToEmployees != null)
+                        {
+                            this.EmployeeID = assingedToEmployees.First().EmployeeLaborCraftID;
+                            this.EmployeeName = ShortString.shorten(assingedToEmployees.First().EmployeeName) + "(" + assingedToEmployees.First().LaborCraftCode + ")";
+                        }
+
+                    }
+                }
+
+
 
             }
             catch (Exception ex)
@@ -1103,7 +1194,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        public CreateTaskPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService , ITaskAndLabourService taskAndLabourService, ITaskService taskService )
+        public CreateTaskPageViewModel(IAuthenticationService authenticationService, IFormLoadInputService formLoadInputService, IWorkorderService workorderService, ITaskAndLabourService taskAndLabourService, ITaskService taskService)
         {
             _authenticationService = authenticationService;
             _formLoadInputService = formLoadInputService;
@@ -1138,7 +1229,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     ContractorTitle = WebControlTitle.GetTargetNameByTitleName("Contractor");
                     TaskStartedDateTitle = WebControlTitle.GetTargetNameByTitleName("StartDate");
                     TaskCompletionDateTitle = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
-
+                    TaskArrivalDateTitle = WebControlTitle.GetTargetNameByTitleName("ArrivalDate");
                     SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
 
                 }
@@ -1155,12 +1246,12 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-    
+
         public async Task ShowActions()
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -1169,7 +1260,7 @@ namespace ProteusMMX.ViewModel.Workorder
                     await NavigationService.RemoveBackStackAsync();
                 }
 
-               
+
 
 
 
@@ -1209,7 +1300,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
 
@@ -1217,7 +1308,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
         }
@@ -1239,7 +1330,7 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
             }
 
@@ -1287,14 +1378,14 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
 
-               // OperationInProgress = true;
+                // OperationInProgress = true;
 
-            
+
 
 
 
                 ///TODO: Get Workorder data 
-                var workorderWrapper = await _workorderService.GetWorkorderByWorkorderID(UserID, WorkorderID.ToString());
+               
 
 
                 if (this.TaskStartedDate == null)
@@ -1365,13 +1456,11 @@ namespace ProteusMMX.ViewModel.Workorder
                         return;
                     }
                 }
-
-
-                if (TaskCompletionDate != null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
+                if (TaskCompletionDate != null)
                 {
-                    var workorderComletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                    var completePickerDate = DateTime.Parse(TaskCompletionDate.Value.ToString("d"));
-                    var startPickerDate = DateTime.Parse(TaskStartedDate.Value.ToString("d"));
+
+                    var completePickerDate = DateTime.Parse(TaskCompletionDate.ToString());
+                    var startPickerDate = DateTime.Parse(TaskStartedDate.ToString());
 
                     if (completePickerDate < startPickerDate)
                     {
@@ -1381,7 +1470,16 @@ namespace ProteusMMX.ViewModel.Workorder
                         DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Completiondatecannotbelessthanstartdate"), 2000);
                         return;
                     }
-                  
+                }
+
+
+                if (TaskCompletionDate != null && workorderWrapper.workOrderWrapper.workOrder.CompletionDate != null)
+                {
+                    var workorderComletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorderWrapper.workOrderWrapper.workOrder.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    var completePickerDate = DateTime.Parse(TaskCompletionDate.Value.ToString("d"));
+                    var startPickerDate = DateTime.Parse(TaskStartedDate.Value.ToString("d"));
+
+
                     if (!Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedAutoFillCompleteOnTaskAndLabor))
                     {
                         if (completePickerDate > DateTime.Parse(workorderComletionDate.ToString("d")))
@@ -1421,13 +1519,14 @@ namespace ProteusMMX.ViewModel.Workorder
                     ClientIANATimeZone = AppSettings.ClientIANATimeZone,
                     workOrderLabor = new WorkOrderLabor
                     {
-                        ModifiedUserName=AppSettings.User.UserName,
+                        ModifiedUserName = AppSettings.User.UserName,
                         WorkOrderID = WorkorderID,
                         TaskID = TaskID,
                         EmployeeLaborCraftID = EmployeeID,
                         ContractorLaborCraftID = ContractorID,
-                        StartDate = TaskStartedDate.HasValue ? TaskStartedDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null, //TaskStartedDate.Date.Add(DateTime.Now.TimeOfDay),
-                        CompletionDate = TaskCompletionDate.HasValue ? TaskCompletionDate.Value.Date.Add(DateTime.Now.TimeOfDay) : (DateTime?)null, //(ShowCompletionDate.IsVisible == true) ? (DateTime?)null : CompletionDate1.Date.Add(DateTime.Now.TimeOfDay),
+                        StartDate = TaskStartedDate.HasValue ? TaskStartedDate : (DateTime?)null, //TaskStartedDate.Date.Add(DateTime.Now.TimeOfDay),
+                        ArrivalDate = TaskArrivalDate.HasValue ? TaskArrivalDate : (DateTime?)null,
+                        CompletionDate = TaskCompletionDate.HasValue ? TaskCompletionDate : (DateTime?)null, //(ShowCompletionDate.IsVisible == true) ? (DateTime?)null : CompletionDate1.Date.Add(DateTime.Now.TimeOfDay),
                     }
 
                 };
@@ -1441,13 +1540,14 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
 
 
 
             }
             catch (Exception ex)
-            {                    UserDialogs.Instance.HideLoading();
+            {
+                UserDialogs.Instance.HideLoading();
 
                 Console.WriteLine(ex.Message + "<<<<<<<<<<<<<<<<>>>>>>>>>>>>" + ex.InnerException + "<<<<<<<<>>>>>>>>>" + ex.StackTrace);
                 UserDialogs.Instance.HideLoading();
@@ -1497,11 +1597,18 @@ namespace ProteusMMX.ViewModel.Workorder
             {
 
                 var employee = obj as EmployeeLookUp;
+                if (String.IsNullOrWhiteSpace(employee.EmployeeName))
+                {
+                    this.EmployeeID = null;
+                    this.EmployeeName = "";
+                    ResetContractor();
+                    return;
+                }
                 this.EmployeeID = employee.EmployeeLaborCraftID;
-               // this.EmployeeName = ShortString.shorten(employee.EmployeeName);
+                // this.EmployeeName = ShortString.shorten(employee.EmployeeName);
                 this.EmployeeName = ShortString.shorten(employee.EmployeeName) + "(" + employee.LaborCraftCode + ")";
 
-                ResetContractor();
+
 
             }
 
@@ -1515,6 +1622,13 @@ namespace ProteusMMX.ViewModel.Workorder
             {
 
                 var contractor = obj as ContractorLookUp;
+                if (String.IsNullOrWhiteSpace(contractor.ContractorName))
+                {
+                    this.ContractorID = null;
+                    this.ContractorName = "";
+                    ResetEmployee();
+                    return;
+                }
                 this.ContractorID = contractor.ContractorLaborCraftID;
                 //this.ContractorName = ShortString.shorten(contractor.ContractorName);
                 this.ContractorName = ShortString.shorten(contractor.ContractorName) + "(" + contractor.LaborCraftCode + ")";
@@ -1571,14 +1685,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     else if (IsPickerDataRequested)
                     {
-                       
+
                         IsPickerDataRequested = false;
                         return;
                     }
 
 
                     /// here perform tasks
-                   
+
 
 
 

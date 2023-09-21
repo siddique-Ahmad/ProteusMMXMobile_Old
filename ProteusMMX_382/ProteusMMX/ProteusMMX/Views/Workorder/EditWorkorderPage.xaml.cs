@@ -1,44 +1,40 @@
-﻿using ProteusMMX.Model.CommonModels;
+﻿using ProteusMMX.Helpers;
+using ProteusMMX.Model.CommonModels;
 using ProteusMMX.ViewModel;
 using ProteusMMX.ViewModel.Miscellaneous;
 using ProteusMMX.ViewModel.Workorder;
 using Syncfusion.XForms.Buttons;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace ProteusMMX.Views.Workorder
 {
-	 [XamlCompilation(XamlCompilationOptions.Skip)]
-	public partial class EditWorkorderPage : ContentPage
-	{
-		public EditWorkorderPage ()
-		{
-			InitializeComponent ();
+    [XamlCompilation(XamlCompilationOptions.Skip)]
+    public partial class EditWorkorderPage : ContentPage
+    {
+        public EditWorkorderPage()
+        {
+            InitializeComponent();
 
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
+
             if (AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation)
             {
                 if (AppSettings.User.RequireSignaturesForValidation == "True")
                 {
-
+                    this.Grid_column2.SetValue(Grid.RowProperty, 4);
                 }
                 else
                 {
-                    this.SaveButton.SetValue(Grid.RowProperty, 4);
+                    this.Grid_column2.SetValue(Grid.RowProperty, 3);
                 }
             }
             else
             {
-                this.SaveButton.SetValue(Grid.RowProperty, 4);
+                this.Grid_column2.SetValue(Grid.RowProperty, 3);
             }
-           
 
         }
 
@@ -77,6 +73,10 @@ namespace ProteusMMX.Views.Workorder
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
             }
+            if (!string.IsNullOrWhiteSpace(e1.Text))
+            {
+                e1.Text = ShortString.ConverthhmmTime(e1.Text);
+            }
         }
 
         private void NumericEntry_TextChanged_1(object sender, TextChangedEventArgs e)
@@ -93,6 +93,10 @@ namespace ProteusMMX.Views.Workorder
             {
                 val = val.Remove(val.Length - 1);// Remove Last character 
                 e1.Text = val; //Set the Old value
+            }
+            if (!string.IsNullOrWhiteSpace(e1.Text))
+            {
+                e1.Text = ShortString.ConverthhmmTime(e1.Text);
             }
         }
 
@@ -140,29 +144,29 @@ namespace ProteusMMX.Views.Workorder
             tnobj.AssetSystemNumber = ViewModel.AssetSystemNumber;
             ViewModel._navigationService.NavigateToAsync<ShowAssetSystemViewModel>(tnobj);
         }
-        private void RadioButton_StateChanged(object sender, StateChangedEventArgs e)
-        {
-            if (RadioButton.IsChecked == false)
-            {
-                return;
-            }
-            else
-            {
-                Button1.IsChecked = false;
-            }
+        //private void RadioButton_StateChanged(object sender, StateChangedEventArgs e)
+        //{
+        //    if (RadioButton.IsChecked == false)
+        //    {
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        Button1.IsChecked = false;
+        //    }
 
-        }
-        private void Button1_StateChanged(object sender, StateChangedEventArgs e)
-        {
-            if (Button1.IsChecked == false)
-            {
-                return;
-            }
-            else
-            {
-                RadioButton.IsChecked = false;
-            }
+        //}
+        //private void Button1_StateChanged(object sender, StateChangedEventArgs e)
+        //{
+        //    if (Button1.IsChecked == false)
+        //    {
+        //        return;
+        //    }
+        //    else
+        //    {
+        //        RadioButton.IsChecked = false;
+        //    }
 
-        }
+        //}
     }
 }

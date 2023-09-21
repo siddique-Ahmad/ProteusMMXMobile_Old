@@ -6,7 +6,7 @@
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              xmlns:control1="clr-namespace:ProteusMMX.Controls"
              Title="{Binding PageTitle}" 
-             BackgroundColor="{StaticResource BackgroundColor}" NavigationPage.HasNavigationBar="False">
+             BackgroundColor="{StaticResource BackgroundColor}" >
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -25,7 +25,7 @@
 
             <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
 
-            <Grid Grid.Row="1"  Padding="10,10,10,10">
+            <Grid Grid.Row="1"  Padding="10,20,10,10">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -47,6 +47,12 @@
                     <Image.Source>
                         <OnPlatform x:TypeArguments="ImageSource" >
                             <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                            <OnPlatform.iOS>
+                                <FileImageSource File="ssbicon.png"/>
+                            </OnPlatform.iOS>
+                            <OnPlatform.WinPhone>
+                                <FileImageSource File="Assets/ssbicon.png"/>
+                            </OnPlatform.WinPhone>
                         </OnPlatform>
                     </Image.Source>
                     <Image.GestureRecognizers>

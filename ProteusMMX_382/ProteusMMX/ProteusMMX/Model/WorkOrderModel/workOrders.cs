@@ -17,6 +17,7 @@ namespace ProteusMMX.Model.WorkOrderModel
         public int? ScheduleID { get; set; }
         public int? AssetID { get; set; }
 
+        public string Originator { get; set; }
         public string JobNumber { get; set; }
         public int? CustomerLocationID { get; set; }
         public int? LocationID { get; set; }
@@ -136,6 +137,9 @@ namespace ProteusMMX.Model.WorkOrderModel
 
         public string RiskQuestion { get; set; }
 
+        public DateTime? AcknowledgedDate { get; set; }
+        public DateTime? ReportedDate { get; set; }
+
         public bool WorkOrderCompleted
         {
             get
@@ -181,6 +185,20 @@ namespace ProteusMMX.Model.WorkOrderModel
             get
             {
                 if (this.WorkOrderHasAttachment == "True")
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public string Acknowledged { get; set; }
+        public bool WorkorderIsAcknowledged
+        {
+            get
+            {
+                if (this.Acknowledged == "true")
                 {
                     return true;
                 }

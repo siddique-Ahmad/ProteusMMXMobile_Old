@@ -84,7 +84,7 @@
 
                     <StackLayout  Grid.Row="1" Grid.Column="1">
                         <Label  Text="{Binding QuantityAllocatedTitle}"  TextColor="Black" FontAttributes="Bold"/>
-                        <Label  Text="{Binding QuantityAllocatedText}"/>
+                        <Label  Text="{Binding QuantityAllocatedText ,StringFormat='{0:0}'}"/>
                     </StackLayout>
 
                     
@@ -134,8 +134,8 @@
                                 </OnPlatform>
                             </Label.FontAttributes>
                         </Label>
-                        <border:SfBorder CornerRadius="5">
-                            <control1:CustomEntry x:Name="AdjustmentQuantity" Text="{Binding AdjustmentQuantityText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" IsEnabled="{Binding AdjustmentQuantityIsEnabled}" TextChanged="AdjustmentQuantity_TextChanged"></control1:CustomEntry>
+                        <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <control1:CustomEntry HeightRequest="50" x:Name="AdjustmentQuantity" Text="{Binding AdjustmentQuantityText}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" IsEnabled="{Binding AdjustmentQuantityIsEnabled}" TextChanged="AdjustmentQuantity_TextChanged"></control1:CustomEntry>
                         </border:SfBorder>
                     </StackLayout>
 
@@ -280,8 +280,8 @@
                         </border:SfBorder>
                     </StackLayout>
                    
-                    <StackLayout Orientation="Vertical" Grid.Row="12" Grid.Column="1" IsVisible="{Binding Perform_TransactionIsVisible}">
-                        <Button Text="{Binding SaveTitle}" CornerRadius="5" Style="{StaticResource TargetButtonStyle}" Command="{Binding PerformInventoryCommand}" IsEnabled="{Binding Perform_TransactionIsEnabled}" />
+                    <StackLayout Orientation="Vertical" Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding Perform_TransactionIsVisible}">
+                        <Button Text="{Binding SaveTitle}" WidthRequest="150" HorizontalOptions="CenterAndExpand" CornerRadius="5" Style="{StaticResource SaveButtonStyle}" Command="{Binding PerformInventoryCommand}" IsEnabled="{Binding Perform_TransactionIsEnabled}" />
                     </StackLayout>
                 </Grid>
             </StackLayout>

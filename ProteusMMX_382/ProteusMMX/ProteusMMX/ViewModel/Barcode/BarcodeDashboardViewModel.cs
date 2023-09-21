@@ -510,20 +510,20 @@ namespace ProteusMMX.ViewModel.Barcode
             }
         }
 
-        bool _searchAssetForBillOfMaterialVisibility;
-        public bool SearchAssetForBillOfMaterialVisibility
+        bool _searchBillOfMaterialVisibility;
+        public bool SearchBillOfMaterialVisibility
         {
             get
             {
-                return _searchAssetForBillOfMaterialVisibility;
+                return _searchBillOfMaterialVisibility;
             }
 
             set
             {
-                if (value != _searchAssetForBillOfMaterialVisibility)
+                if (value != _searchBillOfMaterialVisibility)
                 {
-                    _searchAssetForBillOfMaterialVisibility = value;
-                    OnPropertyChanged("SearchAssetForBillOfMaterialVisibility");
+                    _searchBillOfMaterialVisibility = value;
+                    OnPropertyChanged("SearchBillOfMaterialVisibility");
                 }
             }
         }
@@ -612,12 +612,12 @@ namespace ProteusMMX.ViewModel.Barcode
                 //SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName(titles, "SelectOptionsTitles"); 
 
 
-                SearchAssetTitle = WebControlTitle.GetTargetNameByTitleName("SearchAsset");
-                SearchWorkorderByAssetTitle = WebControlTitle.GetTargetNameByTitleName("SearchWorkOrderbyAsset");
-                SearchWorkorderByLocationTitle = WebControlTitle.GetTargetNameByTitleName("SearchWorkOrderbyLocation");
-                SearchAssetForBillOfMaterialTitle = WebControlTitle.GetTargetNameByTitleName("SearchScanAssetForBillOfMaterial");
-                SearchAssetForAttachmentTitle = WebControlTitle.GetTargetNameByTitleName("SearchscanAssetforAttachments");
-                BarcodeTitle = WebControlTitle.GetTargetNameByTitleName("SearchScanBarcode");
+                SearchAssetTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchAsset"));
+                SearchWorkorderByAssetTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchWorkOrderbyAsset"));
+                SearchWorkorderByLocationTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchWorkOrderbyLocation"));
+                SearchAssetForBillOfMaterialTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchScanAssetForBillOfMaterial"));
+                SearchAssetForAttachmentTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchscanAssetforAttachments"));
+                BarcodeTitle = ShortString.short25(WebControlTitle.GetTargetNameByTitleName("SearchScanBarcode"));
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
         }
         public async Task SetBarcodeModulesVisibility()
@@ -673,11 +673,11 @@ namespace ProteusMMX.ViewModel.Barcode
              
                 if (SubModules.Expression == "E" || SubModules.Expression == "V")
                 {
-                    SearchAssetForBillOfMaterialVisibility = true;
+                    SearchBillOfMaterialVisibility = true;
                 }
                 else
                 {
-                    SearchAssetForBillOfMaterialVisibility = false;
+                    SearchBillOfMaterialVisibility = false;
                 }
             }
             if (FormControlsAndRights != null && FormControlsAndRights.lstModules != null && FormControlsAndRights.lstModules.Count > 0)
@@ -701,7 +701,7 @@ namespace ProteusMMX.ViewModel.Barcode
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                 if (response == LogoutTitle)
                 {

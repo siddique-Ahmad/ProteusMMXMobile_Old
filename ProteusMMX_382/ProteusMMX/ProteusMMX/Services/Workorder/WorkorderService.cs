@@ -57,61 +57,8 @@ namespace ProteusMMX.Services.Workorder
 
         
 
-       public Task<ServiceOutput> GetWorkordersfromKPI(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate,string KPIType)
-        {
-            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
-            builder.AppendToPath(AppSettings.GetWorkordersKPIType);
-            builder.AppendToPath(UserID);
-            builder.AppendToPath(PageNumber);
-            builder.AppendToPath(RowCount);
-
-            if (WorkorderNumber == null)
-                builder.AppendToPath("null");
-            else
-                builder.AppendToPath(WorkorderNumber);
-
-
-
-            if (WorkorderType == null)
-                builder.AppendToPath("null");
-            else
-                builder.AppendToPath(WorkorderType);
-
-            if (ActivationDateSortingType == null)
-                builder.AppendToPath("null");
-            else
-                builder.AppendToPath(ActivationDateSortingType);
-
-            if (LocationSearch == null)
-                builder.AppendToPath("null");
-            else
-                builder.AppendToPath(LocationSearch);
-
-            if (ShiftSearch == null)
-                builder.AppendToPath("null");
-            else
-                builder.AppendToPath(ShiftSearch);
-
-            if (PrioritySearch == null)
-                builder.AppendToPath("null");
-            else
-                builder.AppendToPath(PrioritySearch);
-
-            if (SortByDueDate == null)
-                builder.AppendToPath("null");
-            else
-                builder.AppendToPath(SortByDueDate);
-
-            if (KPIType == null)
-                builder.AppendToPath("null");
-            else
-                builder.AppendToPath(KPIType);
-
-
-            var uri = builder.Uri.AbsoluteUri;
-            return _requestService.GetAsync(uri);
-        }
-        public Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate)
+     
+        public Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate, string KPIType)
         {
             UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
             builder.AppendToPath(AppSettings.GetWorkorders);
@@ -155,6 +102,11 @@ namespace ProteusMMX.Services.Workorder
                 builder.AppendToPath("null");
             else
                 builder.AppendToPath(SortByDueDate);
+
+            if (KPIType == null)
+                builder.AppendToPath("null");
+            else
+                builder.AppendToPath(KPIType);
 
 
             var uri = builder.Uri.AbsoluteUri;
@@ -203,6 +155,16 @@ namespace ProteusMMX.Services.Workorder
             var uri = builder.Uri.AbsoluteUri;
             return _requestService.PostAsync(uri, workorder);//GetAsync(uri);
         }
+
+        public Task<ServiceOutput> SaveWorkOrderAcknowledgement(object workorder)
+        {
+            UriBuilder builder = new UriBuilder(AppSettings.BaseURL);
+            builder.AppendToPath(AppSettings.SaveWorkOrderAcknowledgement);
+
+            var uri = builder.Uri.AbsoluteUri;
+            return _requestService.PostAsync(uri, workorder);//GetAsync(uri);
+        }
+        
 
         public Task<ServiceOutput> IsSignatureRequiredOnInspection(string WorkorderID)
         {

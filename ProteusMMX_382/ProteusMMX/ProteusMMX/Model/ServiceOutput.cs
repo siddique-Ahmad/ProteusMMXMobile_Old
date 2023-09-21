@@ -14,9 +14,11 @@ namespace ProteusMMX.Model
 {
     public class ServiceOutput
     {
+        public string NotificationMode { get; set; }
         public string CompanyProfileLogo { get; set; }
         public workOrderWrapper workOrderWrapper { get; set; }
 
+        public Notifications notificationWrapper { get; set; }
         public WorkOrderTimeDetails KPIWorkorderWrapper { get; set; }
 
         public List<AssignTo> assignToEmployees { get; set; }
@@ -114,5 +116,21 @@ namespace ProteusMMX.Model
         public int? RecordCount { get; set; }
 
         public string TransactionNumber { get; set; }
+
+        public List<ComboDD> SRAEmployees { get; set; }
+
+        public Int64? WorkOrderInspectionDetailsID { get; set; }
+        
+        public DateTime? InspectionStartedDate { get; set; }
+       
+        public Double? TotalInspectionHours { get; set; }
+       
+        public DateTime? InspectionCompleteDate { get; set; }
+        
+        public string InspectionStatus { get; set; }
+
+        public DefaultEmployees employeeWrappers { get; set; }
+
+        public string FCMToken { get; set; }
     }
 }

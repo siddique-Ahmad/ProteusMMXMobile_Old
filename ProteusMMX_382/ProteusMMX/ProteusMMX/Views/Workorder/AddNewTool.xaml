@@ -123,10 +123,11 @@
 
                         <Button
                          CornerRadius="5"
+                            HorizontalOptions="CenterAndExpand" WidthRequest="150"
                         Grid.Row="2"                                            
                         VerticalOptions="StartAndExpand"
                         Command="{Binding SaveToolCommand}"
-                        Style="{StaticResource LoginButtonStyle}"
+                        Style="{StaticResource SaveButtonStyle}"
                         Grid.ColumnSpan="2"
                         Text="{Binding SaveTitle}" >
 

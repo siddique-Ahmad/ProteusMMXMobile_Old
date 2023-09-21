@@ -3,10 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              xmlns:control1="clr-namespace:ProteusMMX.Controls"
-             x:Class="ProteusMMX.Views.Workorder.TaskAndLabourPage"
-           
-             Icon="tasksandlabors.png"
-              >
+             x:Class="ProteusMMX.Views.Workorder.TaskAndLabourPage">
+    <ContentPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="tasksandlabors.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/tasksandlabors.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/tasksandlabors.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </ContentPage.IconImageSource>
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -58,12 +68,14 @@
                         <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <border:SfBorder  IsVisible="{Binding TaskLabourSearchBoxIsEnable ,  Mode=TwoWay}" Style="{StaticResource SfBorderStyle}">
-                        <SearchBar Placeholder="{Binding SearchPlaceholder}"   Text="{Binding SearchText}"/>
+                        <SearchBar Placeholder="{Binding SearchPlaceholder}"  TextChanged="filterText_TextChanged" Text="{Binding SearchText}"/>
                     </border:SfBorder>
                     <Image Grid.Column="1" Grid.Row="0" IsVisible="{Binding TaskLabourSearchButtonIsEnable , Mode=TwoWay}">
                         <Image.Source>
                             <OnPlatform x:TypeArguments="ImageSource" >
                                 <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                                <OnPlatform.iOS>ssbicon.png</OnPlatform.iOS>
+                                <OnPlatform.WinPhone>Assets/ssbicon.png</OnPlatform.WinPhone>
                             </OnPlatform>
                         </Image.Source>
                         <Image.GestureRecognizers>
@@ -79,7 +91,7 @@
                 <ScrollView Grid.Row="1" Padding="0,0,0,0">
 
                     <!--This is gonna be content grid-->
-                    <StackLayout >
+                    <StackLayout x:Name="test1">
 
 
                     </StackLayout>

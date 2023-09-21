@@ -301,8 +301,45 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
 
         #endregion
 
+        #region No record found 
+        bool _disabledTextIsEnable = false;
+        public bool DisabledTextIsEnable
+        {
+            get
+            {
+                return _disabledTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _disabledTextIsEnable)
+                {
+                    _disabledTextIsEnable = value;
+                    OnPropertyChanged(nameof(DisabledTextIsEnable));
+                }
+            }
+        }
 
 
+        string _disabledText = "";
+        public string DisabledText
+        {
+            get
+            {
+                return _disabledText;
+            }
+
+            set
+            {
+                if (value != _disabledText)
+                {
+                    _disabledText = value;
+                    OnPropertyChanged("DisabledText");
+                }
+            }
+        }
+
+        #endregion
 
 
         #region ListView Properties
@@ -400,9 +437,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     var navigationParams = navigationData as TargetNavigationData;
                     this.ClosedWorkorderID = navigationParams.ClosedWorkorderID;
 
-
-
-
                 }
 
                 OperationInProgress = true;
@@ -449,7 +483,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -457,12 +491,6 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     await NavigationService.NavigateToAsync<LoginPageViewModel>();
                     await NavigationService.RemoveBackStackAsync();
                 }
-
-            
-
-
-
-
             }
             catch (Exception ex)
             {
@@ -516,6 +544,11 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                     var workordernonstkparts = workordersResponse.clWorkOrderWrapper.clworkOrderNonStockroomParts;
                     await AddWorkorderNonStockroomPartsInWorkorderCollection(workordernonstkparts);
 
+                }
+                else
+                {
+                    DisabledText = "No record Found";//WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                    DisabledTextIsEnable = true;
                 }
             }
             catch (Exception ex)

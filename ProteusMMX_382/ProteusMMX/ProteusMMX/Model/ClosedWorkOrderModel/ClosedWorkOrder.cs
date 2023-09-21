@@ -35,6 +35,8 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public string AssignToEmployee { get; set; }
         public string RequestNumber { get; set; }
         public string Description { get; set; }
+
+        public string Originator { get; set; }
         public DateTime? ActivationDate { get; set; }
         public DateTime? WorkStartedDate { get; set; }
         public DateTime? RequiredDate { get; set; }
@@ -60,8 +62,8 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         public string ModifiedUserName { get; set; }
         public string AssetSystemNumber { get; set; }
         public string AssetSystemName { get; set; }
-        public decimal? EstimatedDowntime { get; set; }
-        public decimal? ActualDowntime { get; set; }
+        public string EstimatedDowntime { get; set; }
+        public string ActualDowntime { get; set; }
         public int? MiscellaneousLaborCostID { get; set; }
         public int? MiscellaneousMaterialsCostID { get; set; }
         public decimal? MiscellaneousLaborCost { get; set; }
@@ -115,5 +117,9 @@ namespace ProteusMMX.Model.ClosedWorkOrderModel
         
         public bool? ParentandChildCost { get; set; }
         public bool? ChildCost { get; set; }
+
+        public DateTime? AcknowledgedDate { get; set; }
+        public DateTime? ReportedDate { get; set; }
+        public DateTime? ArrivalDate { get; set; }
     }
 }

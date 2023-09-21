@@ -17,6 +17,6 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string EmployeeName { get; set; }
         public decimal? MinRange { get; set; }
         public decimal? MaxRange { get; set; }
-        public Nullable<decimal> EstimatedHours { get; set; }
+        public string EstimatedHours { get; set; }
     }
 }

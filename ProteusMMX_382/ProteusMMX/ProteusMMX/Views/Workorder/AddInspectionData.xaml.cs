@@ -13,6 +13,7 @@ using Syncfusion.XForms.Expander;
 using Syncfusion.XForms.TabView;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -28,7 +29,12 @@ namespace ProteusMMX.Views.Workorder
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddInspectionData : ContentPage
     {
+        ListView Groupview = new ListView();
+        public ObservableCollection<string> GroupList = new ObservableCollection<string>();
+       
+        Dictionary<string,int> GroupCompareList = new Dictionary<string, int>();
         ServiceOutput Inspectiondata;
+        List<WorkOrderInspectionData> Inspections;
         private readonly IRequestService _requestService;
 
         StackLayout MainLayout = new StackLayout();
@@ -36,7 +42,7 @@ namespace ProteusMMX.Views.Workorder
         public AddInspectionData(int? workorderid)
         {
             InitializeComponent();
-
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
             this.Title = WebControlTitle.GetTargetNameByTitleName("Inspection");
@@ -44,7 +50,7 @@ namespace ProteusMMX.Views.Workorder
             WorkorderID = workorderid;
 
         }
-
+        
         protected override async void OnAppearing()
         {
             base.OnAppearing();
@@ -62,11 +68,7 @@ namespace ProteusMMX.Views.Workorder
 
             try
             {
-
-
-
                 await RetriveAllWorkorderInspectionsAsync();
-
             }
             catch (Exception ex)
             {
@@ -75,11 +77,13 @@ namespace ProteusMMX.Views.Workorder
             }
 
         }
-
+       
         private async Task RetriveAllWorkorderInspectionsAsync()
         {
             try
             {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(10);
                 string uri = AppSettings.BaseURL + "/Inspection/service/GetWorkorderInspectionData/" + WorkorderID;
 
                 using (var client = new HttpClient())
@@ -96,36 +100,26 @@ namespace ProteusMMX.Views.Workorder
                         JsonSerializerSettings _serializerSettings = new JsonSerializerSettings { DateFormatHandling = DateFormatHandling.MicrosoftDateFormat };
                         string readTask = await result.Content.ReadAsStringAsync();
                         Inspectiondata = JsonConvert.DeserializeObject<ServiceOutput>(readTask, _serializerSettings);
-                        //readTask.Wait();
-
-
+                        
                     }
                 }
                 BindLayout(Inspectiondata.WorkOrderInspectionDataWrapper);
+                UserDialogs.Instance.HideLoading();
 
             }
             catch (Exception ex)
             {
-
+                UserDialogs.Instance.HideLoading();
                 throw;
             }
-
-            // Inspectiondata = await _requestService.GetAsync(uri);            
-            //if (CC.listInspection == null || CC.listInspection.Count == 0)
-            //{
-            //    //this.InspectionTimerLayout.IsVisible = false;
-            //    //DisabledText.Text = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
-            //    //DisabledText.IsVisible = true;
-            //    //return;
-            //}
-
-
 
 
         }
 
-        private void BindLayout(List<WorkOrderInspectionData> listInspection)
+        private async void BindLayout(List<WorkOrderInspectionData> listInspection)
         {
+
+
             StackLayout TabViewSL = new StackLayout();
             TabViewSL.Children.Clear();
             MainLayout.Children.Clear();
@@ -166,30 +160,13 @@ namespace ProteusMMX.Views.Workorder
             MiscelSV.Content = layout2Test;
             #endregion
 
-            #region **** GroupSection ***
 
-            Grid GroupSectionsGrid = new Grid { BackgroundColor = Color.White, HeightRequest = 500, Padding = 2 };
-            GroupSectionsGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
-            StackLayout GroupSecSl = new StackLayout();
-            GroupSectionsGrid.Children.Add(GroupSecSl);
-
-            ScrollView GroupSecSV = new ScrollView();
-            GroupSecSl.Children.Add(GroupSecSV);
-            StackLayout GroupSecSlCase1 = new StackLayout();
-            StackLayout GroupSecSlCaseTest1 = new StackLayout();
-            GroupSecSlCaseTest1.Children.Add(GroupSecSlCase1);
-            GroupSecSV.Content = GroupSecSlCaseTest1;
-
-            #endregion
-
-            SfExpander GroupSecExpCase1;
-           
             foreach (var item in listInspection)
             {
-                StackLayout layout2 = new StackLayout();
+                StackLayout layoutBoth = new StackLayout();
                 if (item.SectionName == "Miscellaneous Questions")
                 {
-                   
+
                     foreach (var Miscellaneous in item.sectiondata)
                     {
                         View Question;
@@ -239,7 +216,7 @@ namespace ProteusMMX.Views.Workorder
                                 PassFailgrid.Children.Add(btnTruePF, 1, 0);
                                 PassFailgrid.Children.Add(btnFalsePF, 2, 0);
 
-                                layout2.Children.Add(PassFailSl);
+                                layoutBoth.Children.Add(PassFailSl);
 
                                 switch (Miscellaneous.AnswerDescription)
                                 {
@@ -277,7 +254,7 @@ namespace ProteusMMX.Views.Workorder
                                 SRangegrid.Children.Add(Label, 0, 0);
                                 SRangegrid.Children.Add(RangeBor, 1, 0);
 
-                                layout2.Children.Add(SRangeSl);
+                                layoutBoth.Children.Add(SRangeSl);
 
                                 break;
                             #endregion
@@ -340,7 +317,7 @@ namespace ProteusMMX.Views.Workorder
                                 YesNogrid.Children.Add(btnFalse, 3, 0);
                                 YesNogrid.Children.Add(btnNA, 4, 0);
 
-                                layout2.Children.Add(YesNoSl);
+                                layoutBoth.Children.Add(YesNoSl);
                                 switch (Miscellaneous.AnswerDescription)
                                 {
                                     case "":
@@ -379,7 +356,7 @@ namespace ProteusMMX.Views.Workorder
                                 CountGrid.Children.Add(Label, 0, 0);
                                 CountGrid.Children.Add(Layout, 1, 0);
                                 CountSl.Children.Add(CountSlLavel);
-                                layout2.Children.Add(CountSl);
+                                layoutBoth.Children.Add(CountSl);
 
                                 break;
                             #endregion
@@ -413,7 +390,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 TextSl.Children.Add(TextSlLavel);
 
-                                layout2.Children.Add(TextSl);
+                                layoutBoth.Children.Add(TextSl);
                                 break;
                             #endregion
 
@@ -435,7 +412,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 MChoiceSlLavel.Children.Add(Label);
 
-                                Layout = new CustomPicker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image= "unnamed" };
+                                Layout = new CustomPicker() { WidthRequest = 65, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = "unnamed" };
                                 var index = (Layout as CustomPicker).Items.IndexOf(string.Empty);
                                 (Layout as CustomPicker).SelectedIndex = index;
 
@@ -446,7 +423,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 MChoiceSlLavel.Children.Add(MChoiceGrid);
                                 MChoiceSl.Children.Add(MChoiceSlLavel);
-                                layout2.Children.Add(MChoiceSl);
+                                layoutBoth.Children.Add(MChoiceSl);
 
 
                                 break;
@@ -467,7 +444,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 Nonegrid.Children.Add(Question, 0, 0);
                                 Nonegrid.Children.Add(Label, 0, 0);
-                                layout2.Children.Add(NoneSl);
+                                layoutBoth.Children.Add(NoneSl);
 
                                 break;
                                 #endregion
@@ -479,23 +456,23 @@ namespace ProteusMMX.Views.Workorder
                         {
                             ImageSource = "addinsp.png",
                             FontSize = 16,
-                            BorderColor =Color.Black,
+                            BorderColor = Color.Black,
                             BorderWidth = 1,
                             CornerRadius = 3,
                             Text = "Add",
                             FontAttributes = FontAttributes.Bold,
                             ShowIcon = true,
                             BackgroundColor = Color.FromHex("#87CEFA"),
-                            TextColor = Color.Black,                           
+                            TextColor = Color.Black,
                             ImageWidth = 30,
-                            HeightRequest=40,
+                            HeightRequest = 40,
                             StyleId = Miscellaneous.InspectionID.ToString(),
                         };
                         //var btnsave = new Button() { BackgroundColor = Color.White, ImageSource = "saveicon1.png" };
                         btnsave.Clicked += Btnsave_Clicked;
 
                         StackLayout Case1SL = new StackLayout();
-                        layout2.Children.Add(Case1SL);
+                        layoutBoth.Children.Add(Case1SL);
                         Grid Case1Grid = new Grid();
                         Case1Grid.Padding = new Thickness(3, 0, 3, 0);
                         Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
@@ -522,345 +499,21 @@ namespace ProteusMMX.Views.Workorder
                             HeightRequest = 1,
                             BackgroundColor = Color.Black,
                         };
-                        layout2.Children.Add(lineBox);
+                        layoutBoth.Children.Add(lineBox);
                         #endregion
                     }
-                    layout2Test.Children.Add(layout2);
+                    layout2Test.Children.Add(layoutBoth);
                 }
                 else
                 {
-                    List<WorkOrderInspectionData> commonSections = listInspection.Where(a => a.SectionName != "Miscellaneous Questions").ToList();
-
-                    if (commonSections.Count == 0)
-                    {
-                        continue;
-                    }
-                    GroupSecExpCase1 = new SfExpander();
-                    GroupSecExpCase1.Header = new Label
-                    {
-                        HorizontalOptions = LayoutOptions.Center,
-                        FontAttributes = FontAttributes.Bold,
-                        TextColor = Color.FromHex("#006de0"),
-                        BackgroundColor = Color.WhiteSmoke,
-                        HeightRequest = 40,
-                        Text = item.SectionName,
-                        VerticalTextAlignment = TextAlignment.Center
-                    };
-                    StackLayout ItemListCase1Sl = new StackLayout();
-                    GroupSecExpCase1.Content = ItemListCase1Sl;
-                    foreach (var item1 in item.sectiondata)
-                    {
-                        switch (item1.ResponseType)
-                        {
-                            case "Pass/Fail":
-                                StackLayout PassFailSl = new StackLayout();
-                                StackLayout PassFailSlButton = new StackLayout();
-                                PassFailSl.Children.Add(PassFailSlButton);
-
-                                Grid PassFailgrid = new Grid();
-                                PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                                PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                                PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
-                                PassFailgrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
-                                PassFailSlButton.Children.Add(PassFailgrid);
-                                var Questions1 = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
-
-                                var Label1 = new Label { Text = item1.InspectionDescription, HorizontalTextAlignment = TextAlignment.Start, Font = Font.SystemFontOfSize(14, FontAttributes.None), BindingContext = item1, TextColor = Color.Black, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, };
-
-                                var btnTruePF = new SfButton()
-                                {
-                                    Text = "Pass",
-                                    TextColor = Color.Black,
-                                    FontSize = 11,
-                                    BackgroundColor = Color.LightGray,
-                                    FontAttributes = FontAttributes.Bold,
-                                    CornerRadius = 70,
-                                    HeightRequest = 36
-                                };
-                                var btnFalsePF = new SfButton()
-                                {
-                                    Text = "Fail",
-                                    TextColor = Color.Black,
-                                    FontSize = 11,
-                                    BackgroundColor = Color.LightGray,
-                                    FontAttributes = FontAttributes.Bold,
-                                    CornerRadius = 70,
-                                    HeightRequest = 36
-                                };
-
-
-                                PassFailgrid.Children.Add(Questions1, 0, 0);
-                                PassFailgrid.Children.Add(Label1, 0, 0);
-                                Grid.SetColumnSpan(Label1, 2);
-                                PassFailgrid.Children.Add(btnTruePF, 2, 0);
-                                PassFailgrid.Children.Add(btnFalsePF, 3, 0);
-                                ItemListCase1Sl.Children.Add(PassFailSl);
-                                switch (item1.AnswerDescription)
-                                {
-                                    case "":
-                                        break;
-                                    case "Pass":
-                                        break;
-                                    case "Fail":
-                                        break;
-
-                                }
-                                break;
-
-                            case "Standard Range":
-                                StackLayout SRangeSl = new StackLayout();
-                                StackLayout SRangeSlButton = new StackLayout();
-                                SRangeSl.Children.Add(SRangeSlButton);
-                                Grid sta = new Grid();
-                                sta.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Auto) });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                                sta.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                                SRangeSlButton.Children.Add(sta);
-
-                                var Questions = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
-
-                                var Label1s = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, BindingContext = item1, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-
-                                SfBorder RangeBor = new SfBorder() { CornerRadius = 5 };
-
-                                Entry Layouts = new Entry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
-
-                                Layouts.BindingContext = new Range() { MaxRange = item1.MaxRange, MinRange = item1.MinRange };
-                                RangeBor.Content = Layouts;
-                                sta.Children.Add(Questions, 0, 0);
-                                sta.Children.Add(Label1s, 0, 0);
-                                sta.Children.Add(RangeBor, 1, 0);
-                                ItemListCase1Sl.Children.Add(SRangeSl);
-                                
-                                break;
-
-                            case "Yes/No/N/A":
-                                StackLayout YesNoSl = new StackLayout();
-                                // StackLayout YesNoSlLavel = new StackLayout();
-                                StackLayout YesNoSlButton = new StackLayout();
-                                Grid YesNogrid = new Grid();
-                                YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                                YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
-                                YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
-                                YesNogrid.ColumnDefinitions.Add(new ColumnDefinition { Width = 40 });
-                                YesNoSlButton.Children.Add(YesNogrid);
-
-                                // YesNoSl.Children.Add(YesNoSlLavel);
-                                YesNoSl.Children.Add(YesNoSlButton);
-                                var Questions1y = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
-
-                                var Label1y = new Label { Text = item1.InspectionDescription, HorizontalTextAlignment = TextAlignment.Start, Font = Font.SystemFontOfSize(14, FontAttributes.None), BindingContext = item1, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, TextColor = Color.Black };
-                                // YesNoSlLavel.Children.Add(Label1);
-
-                                var btnTrue = new SfButton()
-                                {
-                                    Text = "Yes",
-                                    TextColor = Color.Black,
-                                    FontSize = 11,
-                                    BackgroundColor = Color.LightGray,
-                                    FontAttributes = FontAttributes.Bold,
-                                    CornerRadius = 70,
-                                    HeightRequest = 36
-                                };
-                                var btnFalse = new SfButton()
-                                {
-                                    Text = "No",
-                                    TextColor = Color.Black,
-                                    FontSize = 11,
-                                    BackgroundColor = Color.LightGray,
-                                    FontAttributes = FontAttributes.Bold,
-                                    CornerRadius = 70,
-                                    HeightRequest = 36
-                                };
-                                var btnNA = new SfButton()
-                                {
-                                    Text = "NA",
-                                    TextColor = Color.Black,
-                                    FontSize = 11,
-                                    BackgroundColor = Color.LightGray,
-                                    FontAttributes = FontAttributes.Bold,
-                                    CornerRadius = 70,
-                                    HeightRequest = 36
-                                };
-
-
-
-                                YesNogrid.Children.Add(Questions1y, 0, 0);
-                                YesNogrid.Children.Add(Label1y, 0, 0);
-                                //Grid.SetColumnSpan(Label1y, 2);
-                                YesNogrid.Children.Add(btnTrue, 1, 0);
-                                YesNogrid.Children.Add(btnFalse, 2, 0);
-                                YesNogrid.Children.Add(btnNA, 3, 0);
-                                //TODO: Add the NA button in grid
-
-                                switch (item1.AnswerDescription)
-                                {
-                                    case "":
-                                        break;
-                                    case "NA":
-                                        break;
-                                    case "Yes":
-                                        break;
-                                    case "No":
-                                        //this.btnCreateWorkorder.IsVisible = true;
-                                        break;
-
-                                }
-
-                              
-                                ItemListCase1Sl.Children.Add(YesNoSl);
-
-                                break;
-
-                            case "Count":
-                                StackLayout CountSl = new StackLayout();
-                                StackLayout CountSlLavel = new StackLayout();
-                                CountSl.Children.Add(CountSlLavel);
-                                Grid CountGrid = new Grid() ;
-
-                                CountGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                                CountGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                                CountSlLavel.Children.Add(CountGrid);
-
-                                var Questionc = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
-                                var Label1c = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, BindingContext = item1, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap };
-
-
-                                var Layoutc = new MyEntry() { Keyboard = Keyboard.Numeric, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
-                                (Layoutc as MyEntry).Text = "";
-
-                                CountGrid.Children.Add(Questionc, 0, 0);
-                                CountGrid.Children.Add(Label1c, 0, 0);
-                                CountGrid.Children.Add(Layoutc, 1, 0);
-
-                                ItemListCase1Sl.Children.Add(CountSl);
-
-                                break;
-                            case "Text":
-                                StackLayout TextSl = new StackLayout();
-                                StackLayout TextSlLavel = new StackLayout();
-                                TextSl.Children.Add(TextSlLavel);
-
-                                var Textgrid = new Grid() { BindingContext = item };
-                                Textgrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                                Textgrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                                TextSlLavel.Children.Add(Textgrid);
-
-                                var Questiont = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
-
-                                var Label1t = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, BindingContext = item1, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap };
-
-                                var Layoutt = new CustomEditor() { HorizontalOptions = LayoutOptions.FillAndExpand, HeightRequest = 60 };
-                                (Layoutt as CustomEditor).Text = "";
-
-                                SfBorder TextSfBorder = new SfBorder
-                                {
-                                    BorderColor = Color.Black,
-                                    BorderWidth = 1,
-                                    CornerRadius = 5
-                                };
-                                TextSfBorder.Content = Layoutt;
-                                Textgrid.Children.Add(Questiont, 0, 0);
-                                Textgrid.Children.Add(Label1t, 0, 0);
-                                Textgrid.Children.Add(TextSfBorder, 0, 1);
-
-                                ItemListCase1Sl.Children.Add(TextSl);
-
-                                break;
-
-                            case "Multiple Choice":
-
-                                StackLayout MChoiceSl = new StackLayout();
-                                StackLayout MChoiceSlLavel = new StackLayout();
-                                MChoiceSl.Children.Add(MChoiceSlLavel);
-                                Grid MChoiceGrid = new Grid();
-                                MChoiceGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                                MChoiceGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                                MChoiceSlLavel.Children.Add(MChoiceGrid);
-
-                                var Questionm = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
-                                var Label1m = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, BindingContext = item1, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
-
-                                var Layoutm = new CustomPicker() { WidthRequest = 60, VerticalOptions = LayoutOptions.Start, HorizontalOptions = LayoutOptions.End, Image = "unnamed" };
-
-                                var index = (Layoutm as CustomPicker).Items.IndexOf(item1.AnswerDescription);
-                                (Layoutm as CustomPicker).SelectedIndex = index;
-
-
-                                MChoiceGrid.Children.Add(Questionm, 0, 0);
-                                MChoiceGrid.Children.Add(Label1m, 0, 0);
-                                MChoiceGrid.Children.Add(Layoutm, 1, 0);
-                                ItemListCase1Sl.Children.Add(MChoiceSl);
-
-                                break;
-
-                            case "None":
-                                StackLayout NoneSl = new StackLayout();
-                                StackLayout NoneSlLavel = new StackLayout();
-                                NoneSl.Children.Add(NoneSlLavel);
-                                var Nonegrid = new Grid();
-                                Nonegrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                                NoneSlLavel.Children.Add(Nonegrid);
-
-                                var Questionn = new Label { Text = "", Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
-
-                                var Label1n = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.Bold), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand, BindingContext = item1, };
-
-                                Nonegrid.Children.Add(Questionn, 0, 0);
-                                Nonegrid.Children.Add(Label1n, 0, 0);
-                                ItemListCase1Sl.Children.Add(NoneSl);
-
-                                break;
-                        }
-                        GroupSecSlCase1.Children.Add(GroupSecExpCase1);
-                    }
-                    SfButton btnsave = new SfButton
-                    {
-                        FontSize = 16,
-                        BorderColor = Color.Black,
-                        BorderWidth = 1, 
-                        CornerRadius=3,
-                        Text = "Add",
-                        FontAttributes = FontAttributes.Bold,
-                        ShowIcon = true,
-                        BackgroundColor = Color.FromHex("#87CEFA"),
-                        TextColor = Color.Black,
-                        ImageSource = "addinsp.png",
-                        ImageWidth=30,
-                        HeightRequest = 40,
-                    };
-                    //var btnsave = new Button() { BackgroundColor = Color.White, HeightRequest = 40, VerticalOptions = LayoutOptions.FillAndExpand, ImageSource = "addbtn.png" };
-                    btnsave.Clicked += BtnSaveSection_Clicked;
-
-                    StackLayout Case1SL = new StackLayout();
-                    layout2.Children.Add(Case1SL);
-                    Grid Case1Grid = new Grid();
-                    Case1Grid.Padding = new Thickness(3, 0, 3, 0);
-                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-                    Case1Grid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-                    Case1Grid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Auto });
-                    Case1SL.Children.Add(Case1Grid);
-                   
-                    var estimatedHourTitleLabel = WebControlTitle.GetTargetNameByTitleName("EstimatedHours");
-                    var estimatedHourLabel = item.EstimatedHours.ToString();
-
-                    Label Case1lbl = new Label
-                    {
-                        Text = estimatedHourTitleLabel + ": " + estimatedHourLabel,
-                        TextColor = Color.FromHex("#006de0"),
-                        Margin = new Thickness(0, 0, 0, 0),
-                        VerticalTextAlignment = TextAlignment.Center,
-                        VerticalOptions = LayoutOptions.Center,
-                    };
-
-                    Case1Grid.Children.Add(btnsave, 2, 0);
-                    Case1Grid.Children.Add(Case1lbl, 0, 0);
-                    Grid.SetColumnSpan(Case1lbl, 2);
-                    ItemListCase1Sl.Children.Add(Case1Grid);
+                    GroupList.Add(item.SectionName);
+                    GroupCompareList.Add(item.SectionName, item.SectionID);
                 }
+                Groupview.ItemsSource = GroupList;
+                
             }
 
+            Groupview.ItemSelected += Groupview_ItemSelected;
             SfTabView tabView = new SfTabView
             {
                 TabWidthMode = TabWidthMode.BasedOnText,
@@ -880,44 +533,26 @@ namespace ProteusMMX.Views.Workorder
                 new SfTabItem()
                 {
                     Title = "Group Sections ("+Groupcount+")",
-                    Content = GroupSectionsGrid
+                    Content = Groupview
                 }
             };
-
             tabView.Items = tabItems;
             MainLayout.Children.Add(TabViewSL);
 
             this.Content = MainLayout;
-
+            UserDialogs.Instance.HideLoading();
         }
-
-
-        private async void BtnSaveSection_Clicked(object sender, EventArgs e)
+   
+        private async void Groupview_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             try
             {
-
-                int FinalSectionID = 0;
-
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                 await Task.Delay(1000);
-                var data = (sender as SfButton).Parent;
-                var stacklayout = (sender as SfButton).Parent.Parent.Parent as SfExpander;
-
-
-                List<InspectionAnswer> listAnswer = new List<InspectionAnswer>();
-
-                var stacklayout1 = stacklayout.Header as Label;
-                string SectionNameFinal = stacklayout1.Text;
-                List<WorkOrderInspectionData> commonSections = Inspectiondata.WorkOrderInspectionDataWrapper.Where(a => a.SectionName != "Miscellaneous Questions").ToList();
-                List<WorkOrderInspectionData> FinalSection = commonSections.Where(a => a.SectionName == SectionNameFinal).ToList();
-                foreach (var bac in FinalSection)
-                {
-                    foreach (var item3 in bac.sectiondata)
-                    {
-                        FinalSectionID = item3.SectionID;
-                    }
-                }
+                int FinalSectionID = 0;
+                string selectedSection = (string)e.SelectedItem;
+                var SelectedSectionID = GroupCompareList.FirstOrDefault(x => x.Key == selectedSection).Value;
+                FinalSectionID = SelectedSectionID;
                 Uri posturi = new Uri(AppSettings.BaseURL + "/Inspection/service/AssociateInspectionsToWorkOrder");
 
                 var payload = new Dictionary<string, string>
@@ -930,21 +565,26 @@ namespace ProteusMMX.Views.Workorder
                 string strPayload = JsonConvert.SerializeObject(payload);
                 HttpContent c = new StringContent(strPayload, Encoding.UTF8, "application/json");
                 var t = Task.Run(() => SendURI(posturi, c));
-
+                
+               
                 UserDialogs.Instance.HideLoading();
-                MainLayout.Children.Clear();
                 await Navigation.PopAsync();
+
+
+
 
             }
             catch (Exception ex)
             {
 
-
+               
             }
-
-
+           
         }
 
+       
+
+        
         private async void Btnsave_Clicked(object sender, EventArgs e)
         {
 
@@ -996,7 +636,6 @@ namespace ProteusMMX.Views.Workorder
 
         }
 
-
         protected override async void OnDisappearing()
         {
             base.OnDisappearing();
@@ -1006,6 +645,7 @@ namespace ProteusMMX.Views.Workorder
                 await viewAware.OnViewDisappearingAsync(this);
             }
         }
+
         static async Task SendURI(Uri u, HttpContent c)
         {
             var response = string.Empty;
@@ -1028,21 +668,4 @@ namespace ProteusMMX.Views.Workorder
         }
     }
 }
-
-
-
-//public class Range
-//{
-//    public decimal? MaxRange { get; set; }
-//    public decimal? MinRange { get; set; }
-//}
-//public class InspectionTimer
-//{
-//    public int? WorkorderID { get; set; }
-//    public DateTime? InspectionStartTime { get; set; }
-//    public DateTime? InspectionStopTime { get; set; }
-//    public TimeSpan TotalRunningTime { get; set; }
-//    public bool IsTimerRunning { get; set; }
-
-//}
 

@@ -4,6 +4,7 @@
               xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
               xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              xmlns:DependencyInterface="clr-namespace:ProteusMMX.DependencyInterface;assembly=ProteusMMX"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:control1="clr-namespace:ProteusMMX.Controls" xmlns:local="clr-namespace:ProteusMMX.Behaviors"
              x:Class="ProteusMMX.Views.Common.LoginPage"
              NavigationPage.HasNavigationBar="False"
@@ -113,18 +114,18 @@
                                 </Label.Text>
                             </Label>
                             <border:SfBorder HeightRequest="43" Style="{StaticResource LoginFormBorderlessEntryBorderStyle}" CornerRadius="15">
-                                <control1:ImageEntry BackgroundColor="#3177b5" FontSize="Small" x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" TextColor="White" PlaceholderColor="White" Image="urlicon" Text="{Binding SiteUrl, Mode=TwoWay}" Placeholder="Url" Grid.Row="2" 
+                            <control1:ImageEntry ios:Entry.CursorColor="Black" BackgroundColor="#3177b5" FontSize="Small" x:Name="SiteURLEvent" IsVisible="{Binding SiteUrlEntryVisibility}" TextColor="White" PlaceholderColor="White" Image="urlicon" Text="{Binding SiteUrl, Mode=TwoWay}" Placeholder="Url" Grid.Row="2" 
                         HorizontalOptions="FillAndExpand"/>
 
                             </border:SfBorder>
 
                             <border:SfBorder  HeightRequest="43" Style="{StaticResource LoginFormBorderlessEntryBorderStyle}"   CornerRadius="15">
-                                <control1:ImageEntry Placeholder="User Name" FontSize="Small" BackgroundColor="#3177b5" Image="usericon" Grid.Row="3" Text="{Binding UserName, Mode=TwoWay}" TextColor="White" Grid.ColumnSpan="2" />
+                                <control1:ImageEntry ios:Entry.CursorColor="Black" Placeholder="User Name" FontSize="Small" BackgroundColor="#3177b5" Image="usericon" Grid.Row="3" Text="{Binding UserName, Mode=TwoWay}" TextColor="White" Grid.ColumnSpan="2" />
                             </border:SfBorder>
 
 
                             <border:SfBorder   HeightRequest="43" Style="{StaticResource LoginFormBorderlessEntryBorderStyle}"  CornerRadius="15">
-                                <control1:ImageEntry Placeholder="{Binding PasswordLabel}" FontSize="Small" BackgroundColor="#3177b5" Image="passicon" Grid.Row="4" Text="{Binding Password, Mode=TwoWay}" TextColor="White" IsPassword="True" Grid.ColumnSpan="2"/>
+                            <control1:ImageEntry ios:Entry.CursorColor="Black" Placeholder="{Binding PasswordLabel}" FontSize="Small" BackgroundColor="#3177b5" Image="passicon" Grid.Row="4" Text="{Binding Password, Mode=TwoWay}" TextColor="White" IsPassword="True" Grid.ColumnSpan="2"/>
 
                             </border:SfBorder>
                             
@@ -167,9 +168,9 @@
                             <Label Text="" Grid.Row="9"></Label>
                             <Label Text="" Grid.Row="12"></Label>
                             <Label IsVisible="{Binding SupportLabelVisibility}" Grid.Row="10" Text="{Binding SupportLabel}" HorizontalOptions="Center"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black"  Grid.ColumnSpan="2" />
+                        <Label  Grid.Row="11" Text="{Binding APIVersion}" HorizontalOptions="Center"  VerticalTextAlignment="Center" HorizontalTextAlignment="Center" TextColor="Black"  Grid.ColumnSpan="2"/>
 
-                          
-                        </StackLayout>
+                    </StackLayout>
                     
                     <ActivityIndicator Grid.Row="0" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
 

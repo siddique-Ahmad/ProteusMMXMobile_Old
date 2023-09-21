@@ -497,7 +497,7 @@ namespace ProteusMMX.ViewModel.Asset
 
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
-
+        public ICommand NewAssetCommand => new AsyncCommand(NewAsset);
         public ICommand ScanCommand => new AsyncCommand(SearchAsset);
 
         public ICommand AssetSelectedCommand => new Command<Assets>(OnSelectAssetsync);
@@ -624,7 +624,7 @@ namespace ProteusMMX.ViewModel.Asset
                     this.SearchText = navigationParams.SearchText;
 
                 }
-                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                UserDialogs.Instance.ShowLoading();
                 //OperationInProgress = true;
                 await SetTitlesPropertiesForPage();
                 await GetAssetControlRights();
@@ -821,7 +821,7 @@ namespace ProteusMMX.ViewModel.Asset
 
                 if (Create=="E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateNewAsset, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -830,19 +830,19 @@ namespace ProteusMMX.ViewModel.Asset
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                    if (response == CreateNewAsset)
-                    {
-                        //TargetNavigationData tnobj = new TargetNavigationData();
+                    //if (response == CreateNewAsset)
+                    //{
+                    //    //TargetNavigationData tnobj = new TargetNavigationData();
 
-                        //tnobj.WorkOrderId = this.WorkorderID;
-                       // UserDialogs.Instance.ShowLoading();
-                        await NavigationService.NavigateToAsync<CreateNewAssetPageViewModel>();
+                    //    //tnobj.WorkOrderId = this.WorkorderID;
+                    //   // UserDialogs.Instance.ShowLoading();
+                    //    await NavigationService.NavigateToAsync<CreateNewAssetPageViewModel>();
 
-                    }
+                    //}
                 }
                 else if (Create == "V")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateNewAsset, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateNewAsset, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -859,7 +859,7 @@ namespace ProteusMMX.ViewModel.Asset
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -890,7 +890,37 @@ namespace ProteusMMX.ViewModel.Asset
             }
         }
 
-       
+        public async Task NewAsset()
+        {
+            try
+            {
+                // UserDialogs.Instance.ShowLoading();
+
+                if (Create == "E")
+                {
+                        await NavigationService.NavigateToAsync<CreateNewAssetPageViewModel>();
+
+                }
+                else if (Create == "V")
+                {
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+                OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+                OperationInProgress = false;
+            }
+        }
+
 
 
         public async Task GetAssetsAuto()
@@ -948,6 +978,7 @@ namespace ProteusMMX.ViewModel.Asset
                     await RemoveAllAssetsFromCollection();
                     await AddAssetsInAssetCollection(assets);
                     TotalRecordCount = AssetResponse.assetWrapper.assets.Count;
+                    OperationInProgress = false;
                 }
                 else
                 {
@@ -985,6 +1016,12 @@ namespace ProteusMMX.ViewModel.Asset
             }
         }
 
+        public async Task ReloadPageAfterSerchBoxCancle()
+        {
+            PageNumber = 1;
+            await RemoveAllAssetsFromCollection();
+            await GetAssets();
+        }
 
         private async Task RemoveAllAssetsFromCollection()
         {
@@ -1003,8 +1040,9 @@ namespace ProteusMMX.ViewModel.Asset
 
             try
             {
-               // UserDialogs.Instance.ShowLoading();
-                OperationInProgress = true;
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(1000);
+                //  OperationInProgress = true;
 
 
                 #region Barcode Section and Search Section
@@ -1018,12 +1056,15 @@ namespace ProteusMMX.ViewModel.Asset
 
                     };
 
+                    options.PossibleFormats = new List<ZXing.BarcodeFormat>() { ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.CODE_93, ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.QR_CODE };
+                    options.TryHarder = false; options.BuildBarcodeReader().Options.AllowedLengths = new[] { 44 };
                     ZXingScannerPage _scanner = new ZXingScannerPage(options)
                     {
                         DefaultOverlayTopText = "Align the barcode within the frame",
                         DefaultOverlayBottomText = string.Empty,
                         DefaultOverlayShowFlashButton = true
                     };
+                    _scanner.AutoFocus();
 
                     _scanner.OnScanResult += _scanner_OnScanResult;
                     var navPage = App.Current.MainPage as NavigationPage;
@@ -1041,18 +1082,17 @@ namespace ProteusMMX.ViewModel.Asset
 
                 //await NavigationService.NavigateToAsync<WorkorderListingPageViewModel>();
             }
-            catch (Exception ex)
+            catch (Exception )
             {
                 UserDialogs.Instance.HideLoading();
-               OperationInProgress = false;
+               //OperationInProgress = false;
 
             }
 
             finally
             {
                 UserDialogs.Instance.HideLoading();
-               OperationInProgress = false;
-
+            
             }
         }
 
@@ -1076,7 +1116,7 @@ namespace ProteusMMX.ViewModel.Asset
             });
 
         }
-        private async Task RefillAssetCollection()
+        public async Task RefillAssetCollection()
         {
 
             PageNumber = 1;
@@ -1153,13 +1193,6 @@ namespace ProteusMMX.ViewModel.Asset
                 await GetAssets();
              
             }
-            //else
-            //{
-            //    await RemoveAllAssetsFromCollection();
-            //    await GetAssetsFromSearchBar();
-            //}
-           
-
         }
 
         public async Task OnViewDisappearingAsync(VisualElement view)

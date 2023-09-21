@@ -16,13 +16,15 @@ namespace ProteusMMX.Views.PurchaseOrder
 		public ReceivePuchaseOrderNonStockroomPart ()
 		{
 			InitializeComponent ();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
             if (BindingContext is IHandleViewAppearing viewAware)
             {
                 await viewAware.OnViewAppearingAsync(this);
@@ -32,7 +34,8 @@ namespace ProteusMMX.Views.PurchaseOrder
         protected override async void OnDisappearing()
         {
             base.OnDisappearing();
-
+            ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
+            ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
             if (BindingContext is IHandleViewDisappearing viewAware)
             {
                 await viewAware.OnViewDisappearingAsync(this);

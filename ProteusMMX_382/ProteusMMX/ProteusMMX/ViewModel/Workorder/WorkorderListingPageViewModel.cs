@@ -40,7 +40,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         #endregion
-
+       
         #region Properties
         string EditRights;
         #region Page Properties
@@ -98,7 +98,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-
+      
         #endregion
 
         #region Title Properties
@@ -1020,6 +1020,59 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        string _inspectionOnlyTitle;
+        public string InspectionOnlyTitle
+        {
+            get
+            {
+                return _inspectionOnlyTitle;
+            }
+
+            set
+            {
+                if (value != _inspectionOnlyTitle)
+                {
+                    _inspectionOnlyTitle = value;
+                    OnPropertyChanged("InspectionOnlyTitle");
+                }
+            }
+        }
+
+        string _taskOnlyTitle;
+        public string TaskOnlyTitle
+        {
+            get
+            {
+                return _taskOnlyTitle;
+            }
+
+            set
+            {
+                if (value != _taskOnlyTitle)
+                {
+                    _taskOnlyTitle = value;
+                    OnPropertyChanged("TaskOnlyTitle");
+                }
+            }
+        }
+
+        string _completionTitle;
+        public string CompletionTitle
+        {
+            get
+            {
+                return _completionTitle;
+            }
+
+            set
+            {
+                if (value != _completionTitle)
+                {
+                    _completionTitle = value;
+                    OnPropertyChanged("CompletionTitle");
+                }
+            }
+        }
 
         string _emergencyMaintenanceTitle;
         public string EmergencyMaintenanceTitle
@@ -1134,23 +1187,7 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
 
-        string _noneTitle;
-        public string NoneTitle
-        {
-            get
-            {
-                return _noneTitle;
-            }
 
-            set
-            {
-                if (value != _noneTitle)
-                {
-                    _noneTitle = value;
-                    OnPropertyChanged(nameof(NoneTitle));
-                }
-            }
-        }
 
 
         string _ascendingTitle;
@@ -1248,23 +1285,6 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        bool _TotalRecordForPhone = false;
-        public bool TotalRecordForPhone
-        {
-            get
-            {
-                return _TotalRecordForPhone;
-            }
-
-            set
-            {
-                if (value != _TotalRecordForPhone)
-                {
-                    _TotalRecordForPhone = value;
-                    OnPropertyChanged(nameof(TotalRecordForPhone));
-                }
-            }
-        }
 
         bool _TotalRecordForTab = false;
         public bool TotalRecordForTab
@@ -1295,6 +1315,63 @@ namespace ProteusMMX.ViewModel.Workorder
         }
 
         #endregion
+
+        #region **** Icon Image ****
+        string _sortBy = "";
+        public string SortBy
+        {
+            get
+            {
+                return _sortBy;
+            }
+
+            set
+            {
+                if (value != _sortBy)
+                {
+                    _sortBy = value;
+                    OnPropertyChanged("SortBy");
+                }
+            }
+        }
+
+        string _filterBy = "";
+        public string FilterBy
+        {
+            get
+            {
+                return _filterBy;
+            }
+
+            set
+            {
+                if (value != _filterBy)
+                {
+                    _filterBy = value;
+                    OnPropertyChanged("FilterBy");
+                }
+            }
+        }
+
+        string _groupBy = "";
+        public string GroupBy
+        {
+            get
+            {
+                return _groupBy;
+            }
+
+            set
+            {
+                if (value != _groupBy)
+                {
+                    _groupBy = value;
+                    OnPropertyChanged("GroupBy");
+                }
+            }
+        }
+
+        #endregion
         #endregion
 
         #region Commands
@@ -1307,6 +1384,7 @@ namespace ProteusMMX.ViewModel.Workorder
         public ICommand ShowDateCommand => new AsyncCommand(ShowdatePicker);
         public ICommand DateCommand => new AsyncCommand(Cleardate);
 
+        public ICommand NewWorkOrderCommand => new AsyncCommand(NewWorkOrder);
         public ICommand WorkorderSelectedCommand => new Command<workOrders>(OnSelectWorkorderAsync);
 
         #endregion
@@ -1316,7 +1394,21 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
+                if (Device.RuntimePlatform == Device.UWP)
+                {
+                    SortBy = "Assets/shortingN.png";
+                    FilterBy = "Assets/filterN.png";
+                    GroupBy = "Assets/searchN.png";
+                }
+                else
+                {
+                    SortBy = "shortingN.png";
+                    FilterBy = "filterN.png";
+                    GroupBy = "searchN.png";
+                }
 
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
                 if (navigationData != null)
                 {
 
@@ -1328,11 +1420,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     //this.KPIDashboardType = navigationParams.Type;
                 }
-                await GetWorkorderControlRights();
-                OperationInProgress = true;
+                await SetTitlesPropertiesForPage();
+
                 Application.Current.Properties["gridrowindex"] = 1;
                 //await GetWorkorderControlRights();
-                await SetTitlesPropertiesForPage();
+
                 if (Application.Current.Properties.ContainsKey("CloseWorkorderRightsKey"))
                 {
                     var CloseWorkorderRightsExpression = Application.Current.Properties["CloseWorkorderRightsKey"].ToString();
@@ -1360,14 +1452,6 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     }
                 }
-                if (Device.Idiom == TargetIdiom.Phone)
-                {
-                    this.TotalRecordForPhone = true;
-                }
-                else
-                {
-                    this.TotalRecordForTab = true;
-                }
 
                 OperationInProgress = false;
 
@@ -1376,13 +1460,13 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
 
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
         }
 
@@ -1407,11 +1491,14 @@ namespace ProteusMMX.ViewModel.Workorder
 
             PreventiveMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("PreventiveMaintenance");
             DemandMaintenenceTitle = WebControlTitle.GetTargetNameByTitleName("DemandMaintenance");
-
             EmergencyMaintenanceTitle = WebControlTitle.GetTargetNameByTitleName("EmergencyMaintenance");
 
+            TaskOnlyTitle = WebControlTitle.GetTargetNameByTitleName("Task") +""+ WebControlTitle.GetTargetNameByTitleName("Only");
+            InspectionOnlyTitle = WebControlTitle.GetTargetNameByTitleName("Inspection") + "" + WebControlTitle.GetTargetNameByTitleName("Only");
+            CompletionTitle = WebControlTitle.GetTargetNameByTitleName("CompletionDate");
+
             SortByActivationdateTitle = WebControlTitle.GetTargetNameByTitleName("SortByActivationdate");
-            NoneTitle = WebControlTitle.GetTargetNameByTitleName("None");
+
             AscendingTitle = WebControlTitle.GetTargetNameByTitleName("Ascending");
             DescendingTitle = WebControlTitle.GetTargetNameByTitleName("Descending");
             SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
@@ -1424,11 +1511,11 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle,CompletionTitle,TaskOnlyTitle,InspectionOnlyTitle };
                     }
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle, CompletionTitle, TaskOnlyTitle, InspectionOnlyTitle };
                     }
                 }
 
@@ -1440,11 +1527,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, CompletionTitle, TaskOnlyTitle, InspectionOnlyTitle };
                     }
                     else
                     {
-                        PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle };
+                        PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, EmergencyMaintenanceTitle, FailedInspectionTitle, CompletionTitle, TaskOnlyTitle, InspectionOnlyTitle };
                     }
 
                 }
@@ -1455,11 +1542,11 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 if (string.IsNullOrWhiteSpace(FailedInspectionTitle))
                 {
-                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle };
+                    PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, CompletionTitle, TaskOnlyTitle, InspectionOnlyTitle };
                 }
                 else
                 {
-                    PickerTitles = new ObservableCollection<string>() { SelectTitle, PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle };
+                    PickerTitles = new ObservableCollection<string>() { PreventiveMaintenenceTitle, DemandMaintenenceTitle, FailedInspectionTitle, CompletionTitle, TaskOnlyTitle, InspectionOnlyTitle };
                 }
 
             }
@@ -1504,10 +1591,16 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
+                if (Device.RuntimePlatform != Device.UWP)
+                {
+                    UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                    await Task.Delay(10);
+                }
 
                 if (CreateWorkorderRights == "E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
+                    //var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1516,15 +1609,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                    if (response == CreateWorkorderTitle)
-                    {
-                        await NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>();
-                        // NavigationPage.BackBarButtonItem.TintColor = UIColor.Red;
-                    }
+                    //if (response == CreateWorkorderTitle)
+                    //{
+                    //    await NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>();
+                    //    // NavigationPage.BackBarButtonItem.TintColor = UIColor.Red;
+                    //}
                 }
                 else if (CreateWorkorderRights == "V")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1540,7 +1633,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", "", CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -1557,35 +1650,65 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
         }
+        
         public async Task SortByFilterAction()
         {
+
             try
             {
+                //if (Device.RuntimePlatform != Device.UWP)
+                //{
+                //    UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                //    await Task.Delay(10);
+                //}
+                string response = string.Empty;
+                if (Application.Current.Properties.ContainsKey("WorkOFilterTypeKye"))
+                {
+                    response = Application.Current.Properties["WorkOFilterTypeKye"].ToString();
+                }
+              //  var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, PickerTitles);
 
-                var response = await DialogService.SelectActionAsync("FilterBy", SortByActivationdateTitle, CancelTitle, PickerTitles);
                 if (response == CancelTitle)
                 {
                     this.SelectedSortingText = null;
 
                 }
 
-
                 if (response == PreventiveMaintenenceTitle)
                 {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
+
                     WorkorderTypeFilterText = "PreventiveMaintenance";
                     await RefillWorkorderCollection();
                 }
 
                 else if (response == DemandMaintenenceTitle)
                 {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
                     WorkorderTypeFilterText = "DemandMaintenance";
                     await RefillWorkorderCollection();
 
@@ -1593,17 +1716,91 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else if (response == EmergencyMaintenanceTitle)
                 {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
                     WorkorderTypeFilterText = "EmergencyMaintenance";
                     await RefillWorkorderCollection();
 
                 }
+
                 else if (response == FailedInspectionTitle)
                 {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
                     WorkorderTypeFilterText = "FailedInspection";
                     await RefillWorkorderCollection();
                 }
+
+                else if (response == CompletionTitle)
+                {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
+                    WorkorderTypeFilterText = "completiondate";
+                    await RefillWorkorderCollection();
+                }
+
+                else if (response == TaskOnlyTitle)
+                {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
+                    WorkorderTypeFilterText = "taskandlaboronly";
+                    await RefillWorkorderCollection();
+                }
+
+                else if (response == InspectionOnlyTitle)
+                {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterNs.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterNs.png";
+                    }
+                    WorkorderTypeFilterText = "inspectiononly";
+                    await RefillWorkorderCollection();
+                }
+
                 else
                 {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        FilterBy = "Assets/filterN.png";
+
+                    }
+                    else
+                    {
+                        FilterBy = "filterN.png";
+                    }
                     WorkorderTypeFilterText = null;
                     await RefillWorkorderCollection();
                 }
@@ -1611,27 +1808,47 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-                OperationInProgress = false;
+               // UserDialogs.Instance.HideLoading();
             }
         }
         public async Task SortByAction()
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(WebControlTitle.GetTargetNameByTitleName("SortByActivationdate"), SortByActivationdateTitle, CancelTitle, new ObservableCollection<string>() { NoneTitle, AscendingTitle, DescendingTitle });
+                //if (Device.RuntimePlatform != Device.UWP)
+                //{
+                //    UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                //    await Task.Delay(10);
+                //}
+
+                string response = string.Empty;
+                if (Application.Current.Properties.ContainsKey("SortingTypeKye"))
+                {
+                    response = Application.Current.Properties["SortingTypeKye"].ToString();
+                }
+
                 if (response == CancelTitle)
                 {
                     this.SelectedSortingText = null;
-
                 }
 
                 else if (response == AscendingTitle)
                 {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        SortBy = "Assets/shortingNs.png";
+
+                    }
+                    else
+                    {
+                        SortBy = "shortingNs.png";
+                    }
+
                     this.SelectedSortingText = "ASC";
                     //reset pageno. and start search again.
                     await RefillWorkorderCollection();
@@ -1639,6 +1856,15 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 else if (response == DescendingTitle)
                 {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        SortBy = "Assets/shortingNs.png";
+
+                    }
+                    else
+                    {
+                        SortBy = "shortingNs.png";
+                    }
                     this.SelectedSortingText = "DESC";
                     //reset pageno. and start search again.
                     await RefillWorkorderCollection();
@@ -1649,18 +1875,29 @@ namespace ProteusMMX.ViewModel.Workorder
                     this.SelectedSortingText = null;
                     //reset pageno. and start search again.
                     await RefillWorkorderCollection();
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        SortBy = "Assets/shortingN.png";
+
+                    }
+                    else
+                    {
+                        SortBy = "shortingN.png";
+                    }
 
                 }
 
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
             }
 
             finally
             {
-                OperationInProgress = false;
+              //  UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
             }
         }
 
@@ -1689,18 +1926,33 @@ namespace ProteusMMX.ViewModel.Workorder
                 var Weekly = Application.Current.Properties["weekly"].ToString();
                 this.KPIDashboardType = Weekly;
             }
-            if (!String.IsNullOrWhiteSpace(this.KPIDashboardType))
-            {
-                await GetWorkordersFromKPIDashboard();
-            }
-            else
-            {
-                await GetWorkorders();
-            }
-
+            await GetWorkorders();
 
         }
 
+        public async Task searchBoxTextCler()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                //await Task.Delay(10);
+                await OnViewDisappearingAsync(null);
+                await RefillWorkorderCollection();
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+        }
         public async Task Cleardate()
         {
 
@@ -1709,15 +1961,35 @@ namespace ProteusMMX.ViewModel.Workorder
         }
         public async Task ShowdatePicker()
         {
+            try
+            {
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                //await Task.Delay(10);
 
-            UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result), IsCancellable = true });
+                UserDialogs.Instance.DatePrompt(new DatePromptConfig { OnAction = (result) => SetCompletionDateResult(result), IsCancellable = true });
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+
         }
         public async Task SearchWorkorder()
         {
 
             try
             {
-                OperationInProgress = true;
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+              //  await Task.Delay(10);
 
 
                 #region Barcode Section and Search Section
@@ -1734,12 +2006,15 @@ namespace ProteusMMX.ViewModel.Workorder
 
                         };
 
+                        options.PossibleFormats = new List<ZXing.BarcodeFormat>() { ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.CODE_93, ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.QR_CODE };
+                        options.TryHarder = false; options.BuildBarcodeReader().Options.AllowedLengths = new[] { 44 };
                         ZXingScannerPage _scanner = new ZXingScannerPage(options)
                         {
                             DefaultOverlayTopText = "Align the barcode within the frame",
                             DefaultOverlayBottomText = string.Empty,
                             DefaultOverlayShowFlashButton = true
                         };
+                        _scanner.AutoFocus();
 
                         _scanner.OnScanResult += _scanner_OnScanResult;
                         var navPage = App.Current.MainPage as NavigationPage;
@@ -1771,7 +2046,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 {
                     //reset pageno. and start search again.
                     await GetWorkordersFromSearchBar();
-
+                    // await GetWorkorders();
                 }
 
                 #endregion
@@ -1780,18 +2055,44 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
 
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
 
             }
         }
 
+        public async Task NewWorkOrder()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                //await Task.Delay(10);
+                if (CreateWorkorderRights == "E")
+                {
+                    await NavigationService.NavigateToAsync<CreateWorkorderPageViewModel>();
+                }
+                else if (CreateWorkorderRights == "V")
+                {
 
+                }
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+        }
         private async void _scanner_OnScanResult(ZXing.Result result)
         {
             //Set the text property
@@ -1806,12 +2107,11 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 //reset pageno. and start search again.
                 await GetWorkordersFromSearchBar();
-
+                //await GetWorkorders();
 
             });
 
         }
-
 
         private void SearchText_TextChanged()
         {
@@ -1835,13 +2135,11 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-
         public async Task AddTitlesToPicker()
         {
 
             try
             {
-                OperationInProgress = true;
 
                 SortByLocationpickerTitles.Add(SelectTitle);
                 SortByShiftpickerTitles.Add(SelectTitle);
@@ -1851,48 +2149,48 @@ namespace ProteusMMX.ViewModel.Workorder
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
 
             }
 
             finally
             {
-                OperationInProgress = false;
+                // UserDialogs.Instance.HideLoading();
 
             }
         }
-
 
         public async Task GetWorkordersAuto()
         {
             if (string.IsNullOrWhiteSpace(SearchText))
             {
                 PageNumber++;
-                if (!String.IsNullOrWhiteSpace(this.KPIDashboardType))
-                {
-
-                }
-                else
-                {
-                    await GetWorkorders();
-                }
+                await GetWorkorders();
             }
-
-
-
         }
 
-
-        async Task GetWorkordersFromKPIDashboard()
+        public async Task GetWorkorders()
         {
-
             try
             {
-                OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkordersfromKPI(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate, KPIDashboardType);
+                if (String.IsNullOrWhiteSpace(this.KPIDashboardType))
+                {
+                    this.KPIDashboardType = null;
+                }
+                //UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                //await Task.Delay(10);
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate, KPIDashboardType);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
+                    if (!string.IsNullOrWhiteSpace(workordersResponse.workOrderWrapper.IsCheckedCause))
+                    {
+                        Application.Current.Properties["IsCheckedCauseKey"] = workordersResponse.workOrderWrapper.IsCheckedCause;
+                    }
+                    else
+                    {
+                        Application.Current.Properties["IsCheckedCauseKey"] = false;
+                    }
 
                     var workorders = workordersResponse.workOrderWrapper.workOrders;
 
@@ -1905,42 +2203,12 @@ namespace ProteusMMX.ViewModel.Workorder
             catch (Exception ex)
             {
 
-                OperationInProgress = false;
+                //  UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-                OperationInProgress = false;
-            }
-        }
-        async Task GetWorkorders()
-        {
-
-            try
-            {
-                OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, PageNumber.ToString(), RowCount.ToString(), SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate);
-                if (workordersResponse != null && workordersResponse.workOrderWrapper != null
-                    && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
-                {
-
-                    var workorders = workordersResponse.workOrderWrapper.workOrders;
-
-                    await AddWorkordersInWorkorderCollection(workorders);
-
-                }
-                TotalRecordCount = workordersResponse.workOrderWrapper.WorkOrderCount;
-
-            }
-            catch (Exception ex)
-            {
-
-                OperationInProgress = false;
-            }
-
-            finally
-            {
-                OperationInProgress = false;
+                // UserDialogs.Instance.HideLoading();
             }
         }
 
@@ -1949,7 +2217,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", "null", "null", "null", "null", "null", "null", "null");
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", "null", "null", "null", "null", "null", "null", "null", "null");
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
@@ -1960,8 +2228,6 @@ namespace ProteusMMX.ViewModel.Workorder
                     IsGetWorkorderCallFromRequiredDate = true;
                 }
 
-
-
             }
             catch (Exception ex)
             {
@@ -1975,13 +2241,14 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-
-        async Task GetWorkordersFromSearchBar()
+        public async Task GetWorkordersFromSearchBar()
         {
             try
             {
-                OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, "null", "null", "null", "null", "null", "null");
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+               // await Task.Delay(10);
+                string WorkorderType = GetPickerType();
+                var workordersResponse = await _workorderService.GetWorkorders(UserID, "0", "0", SearchText, WorkorderTypeFilterText, SelectedSortingText, LocationNameFilterText, ShiftNameFilterText, PriorityNameFilterText, SortByDueDate, KPIDashboardType);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrders != null && workordersResponse.workOrderWrapper.workOrders.Count > 0)
                 {
@@ -1990,11 +2257,11 @@ namespace ProteusMMX.ViewModel.Workorder
                     await RemoveAllWorkorderFromCollection();
                     await AddWorkordersInWorkorderCollection(workorders);
                     TotalRecordCount = workordersResponse.workOrderWrapper.workOrders.Count;
-
+                   
 
 
                 }
-                else
+                else 
                 {
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("ThisWorkOrderdoesnotexist"));
                     return;
@@ -2003,13 +2270,26 @@ namespace ProteusMMX.ViewModel.Workorder
             catch (Exception ex)
             {
 
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
             }
 
             finally
             {
-                OperationInProgress = false;
+                
+                UserDialogs.Instance.HideLoading();
             }
+        }
+
+        public async Task ClearSearchBox()
+        {
+
+            await GetWorkorders();
+        }
+
+        public async Task ClearIconClick()
+        {
+            SearchText = null; WorkorderTypeFilterText = null; SelectedSortingText = null; LocationNameFilterText = null; ShiftNameFilterText = null; PriorityNameFilterText = null; SortByDueDate = null; KPIDashboardType = null;
+            await WorkorderCler();
         }
 
         private async Task AddWorkordersInWorkorderCollection(List<workOrders> workorders)
@@ -2030,19 +2310,16 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
             }
+
         }
 
-
-        private async Task RemoveAllWorkorderFromCollection()
+        public async Task RemoveAllWorkorderFromCollection()
         {
             Device.BeginInvokeOnMainThread(() =>
             {
                 _workordersCollection.Clear();
                 OnPropertyChanged(nameof(WorkordersCollection));
             });
-
-
-
         }
 
         private async Task RefillLocationFromPicker(string Locationfilter)
@@ -2083,6 +2360,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         }
+
         private async Task RefillDueDateFromPicker(string SortByDateText)
         {
 
@@ -2098,6 +2376,7 @@ namespace ProteusMMX.ViewModel.Workorder
             await RefillWorkorderCollection();
 
         }
+
         private async Task RefillPriorityFromPicker(string Priorityfilter)
         {
             if (string.IsNullOrWhiteSpace(Priorityfilter))
@@ -2117,6 +2396,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
 
         }
+
         private async Task RefillWororderFromPicker()
         {
             if (SelectedIndexPicker == -1)
@@ -2156,6 +2436,21 @@ namespace ProteusMMX.ViewModel.Workorder
                 WorkorderTypeFilterText = "FailedInspection";
                 await RefillWorkorderCollection();
             }
+            else if (SelectedPickerText == CompletionTitle)
+            {
+                WorkorderTypeFilterText = "completiondate";
+                await RefillWorkorderCollection();
+            }
+            else if (SelectedPickerText == TaskOnlyTitle)
+            {
+                WorkorderTypeFilterText = "taskandlaboronly";
+                await RefillWorkorderCollection();
+            }
+            else if (SelectedPickerText == InspectionOnlyTitle)
+            {
+                WorkorderTypeFilterText = "inspectiononly";
+                await RefillWorkorderCollection();
+            }
             else
             {
                 WorkorderTypeFilterText = null;
@@ -2167,26 +2462,67 @@ namespace ProteusMMX.ViewModel.Workorder
 
         }
 
+        private string GetPickerType()
+        {
+            if (SelectedIndexPicker == -1)
+            {
+                return null;
+            }
+
+            var SelectedPickerText = PickerTitles[SelectedIndexPicker];
+
+            if (SelectedPickerText == SelectTitle)
+            {
+                WorkorderTypeFilterText = null;
+            }
+
+            else if (SelectedPickerText == PreventiveMaintenenceTitle)
+            {
+                WorkorderTypeFilterText = "PreventiveMaintenance";
+            }
+
+            else if (SelectedPickerText == DemandMaintenenceTitle)
+            {
+                WorkorderTypeFilterText = "DemandMaintenance";
+
+            }
+
+            else if (SelectedPickerText == EmergencyMaintenanceTitle)
+            {
+                WorkorderTypeFilterText = "EmergencyMaintenance";
+
+            }
+            else if (SelectedPickerText == FailedInspectionTitle)
+            {
+                WorkorderTypeFilterText = "FailedInspection";
+            }
+            else
+            {
+                WorkorderTypeFilterText = null;
+            }
+
+            return WorkorderTypeFilterText;
+        }
+
         private async void OnSelectWorkorderAsync(workOrders item)
         {
             try
             {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                //await Task.Delay(10);
                 if (item.WorkOrderApproved == "true" && item.CompletionDate != null)
                 {
                     return;
                 }
                 if (EditRights == "E" || EditRights == "V")
                 {
-
                     if (AppSettings.User.blackhawkLicValidator.RiskAssasment.Equals(true))
                     {
-
-
                         if (item != null)
                         {
                             if (item.IsRiskQuestion == false)
                             {
-                                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                                /// UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                                 //OperationInProgress = true;
                                 TargetNavigationData tnobj = new TargetNavigationData();
                                 tnobj.WorkOrderId = item.WorkOrderID;
@@ -2199,23 +2535,21 @@ namespace ProteusMMX.ViewModel.Workorder
                             }
                             else
                             {
-
                                 if (item != null)
                                 {
-                                    UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                                    ///  UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                                     // OperationInProgress = true;
                                     Application.Current.Properties["WorkorderID"] = item.WorkOrderID;
                                     await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item);
                                     //OperationInProgress = false;
                                     UserDialogs.Instance.HideLoading();
                                 }
-
                             }
                         }
                     }
                     else
                     {
-                        UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                        /// UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
                         //OperationInProgress = true;
 
                         await NavigationService.NavigateToAsync<WorkorderTabbedPageViewModel>(item);
@@ -2239,6 +2573,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
 
         }
+
         public async Task CloseWorkorder(workOrders workorderItem)
         {
             try
@@ -2382,7 +2717,7 @@ namespace ProteusMMX.ViewModel.Workorder
                 #endregion
 
 
-                #region Check Task and Labour data
+                #region Check Task and Labour/Inspection data
                 if (Convert.ToBoolean(workorderWrapper.workOrderWrapper.IsCheckedLaborHours))
                 {
 
@@ -2391,14 +2726,23 @@ namespace ProteusMMX.ViewModel.Workorder
                     {
                         bool InspectionEmployeeHours = false;
                         bool InspectionContractorHours = false;
-                        if (!Inspection.workOrderEmployee.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+
+                        #region  Check all Employee Whose start date is not null
+                        List<WorkOrderEmployee> EmpStartdateNotNull = Inspection.workOrderEmployee.Where(x => x.StartDate != null).ToList();
+                        #endregion
+
+                        if (!EmpStartdateNotNull.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
                         {
-                            InspectionEmployeeHours = Inspection.workOrderEmployee.All(a => int.Parse((a.InspectionTime)) > 0);
+                            InspectionEmployeeHours = EmpStartdateNotNull.All(a => int.Parse((a.InspectionTime)) > 0);
                         }
 
-                        if (!Inspection.workorderContractor.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
+                        #region Check all Contractor Whose start date is not null
+                        List<WorkorderContractor> ContractStartdateNotNull = Inspection.workorderContractor.Where(x => x.StartDate != null).ToList();
+                        #endregion
+
+                        if (!ContractStartdateNotNull.Any(x => string.IsNullOrEmpty(x.InspectionTime)))
                         {
-                            InspectionContractorHours = Inspection.workorderContractor.All(a => int.Parse(a.InspectionTime) > 0);
+                            InspectionContractorHours = ContractStartdateNotNull.All(a => int.Parse(a.InspectionTime) > 0);
                         }
 
 
@@ -2416,6 +2760,7 @@ namespace ProteusMMX.ViewModel.Workorder
                             DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("PleasefillTechnicianHoursForInspection"), 2000);
                             return;
                         }
+
                     }
                     else
                     {
@@ -2433,8 +2778,19 @@ namespace ProteusMMX.ViewModel.Workorder
 
                             foreach (var item in workorderLabourWrapper.workOrderWrapper.workOrderLabors)
                             {
+                                bool AllTaskNumber = workorderLabourWrapper.workOrderWrapper.workOrderLabors.Any(a => string.IsNullOrWhiteSpace(a.TaskNumber));
+                                if (AllTaskNumber == true)
+                                {
 
-                                bool AllTaskHours = workorderLabourWrapper.workOrderWrapper.workOrderLabors.All(a => a.HoursAtRate1 > 0);
+                                    UserDialogs.Instance.HideLoading();
+                                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("TasksandLaborOrInspectionIsRequiredForCloseWO"), 2000);
+                                    return;
+
+                                }
+                                #region  Check all Employee Whose start date is not null
+                                List<WorkOrderLabor> EmpStartdateNotNull = workorderLabourWrapper.workOrderWrapper.workOrderLabors.Where(x => x.StartDate != null).ToList();
+                                #endregion
+                                bool AllTaskHours = EmpStartdateNotNull.All(a => !string.IsNullOrWhiteSpace(a.HoursAtRate1.Replace("00.00", "")));
 
                                 if (AllTaskHours == false)
                                 {
@@ -2611,145 +2967,274 @@ namespace ProteusMMX.ViewModel.Workorder
                 // OperationInProgress = false;
             }
         }
+
         public async Task OnViewAppearingAsync(VisualElement view)
         {
-            if (string.IsNullOrWhiteSpace(this.SearchText))
+            try
             {
-                await RefillWorkorderCollection();
 
-            }
+                bool filter = false;
 
-            if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
-            {
-                var Locationfilter = Application.Current.Properties["LocationFilterkey"];
-                if (Locationfilter != null)
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+               // await Task.Delay(3000);
+                if (string.IsNullOrWhiteSpace(this.SearchText))
                 {
-                    await RefillLocationFromPicker(Locationfilter.ToString());
+                    await RefillWorkorderCollection();
 
                 }
                 else
                 {
-                    await RefillLocationFromPicker(null);
+                   await GetWorkordersFromSearchBar();
                 }
-            }
-            if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
-            {
-                var Shiftfilter = Application.Current.Properties["ShiftFilterkey"];
-                if (Shiftfilter != null)
-                {
-                    await RefillShiftFromPicker(Shiftfilter.ToString());
 
-                }
-                else
+                if (Application.Current.Properties.ContainsKey("SortingTypeKye"))
                 {
-                    await RefillShiftFromPicker(null);
-                }
-            }
-            if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
-            {
-                var Priorityfilter = Application.Current.Properties["PriorityFilterkey"];
-                if (Priorityfilter != null)
-                {
-                    await RefillPriorityFromPicker(Priorityfilter.ToString());
+                    var SortingType = Application.Current.Properties["SortingTypeKye"];
+                    if (SortingType != null)
+                    {
+                        await SortByAction();
+
+                    }
 
                 }
-                else
+
+                if (Application.Current.Properties.ContainsKey("WorkOFilterTypeKye"))
                 {
-                    await RefillPriorityFromPicker(null);
-                }
-            }
-            if (Application.Current.Properties.ContainsKey("DateFilterkey"))
-            {
-                var datefilter = Application.Current.Properties["DateFilterkey"];
-                if (datefilter != null)
-                {
-                    await RefillDueDateFromPicker(datefilter.ToString());
+                    var SortingType = Application.Current.Properties["WorkOFilterTypeKye"];
+                    if (SortingType != null)
+                    {
+                        await SortByFilterAction();
 
-                }
-                else
-                {
-                    await RefillDueDateFromPicker(null);
-                }
-            }
+                    }
 
-
-
-
-        }
-
-        public async Task OnViewDisappearingAsync(VisualElement view)
-        {
-            if (view==null)
-            {
-                this.SearchText = null;
-            }
-            else
-            {
-                ////Clear priority///
-                sortByPrioritypickerTitlesitems.Clear();
-                SortByPriorityPickerTitles.Clear();
-                PriorityNameFilterText = null;
-                WorkorderTypeFilterText = null;
-                ////Clear Shift///
-                sortByShiftpickerTitlesitems.Clear();
-                SortByShiftpickerTitles.Clear();
-                ShiftNameFilterText = null;
-
-
-                ////Clear Location///
-                sortByLocationpickerTitlesitems.Clear();
-                SortByLocationpickerTitles.Clear();
-                LocationNameFilterText = null;
-
-                ///Clear RequiredDate////
-                SortByDateText = null;
-                SortByDueDate = null;
-
-                this.SearchText = null;
-
-                if (Application.Current.Properties.ContainsKey("overdue"))
-                {
-                    Application.Current.Properties.Remove("overdue");
-                }
-                if (Application.Current.Properties.ContainsKey("weekly"))
-                {
-                    Application.Current.Properties.Remove("weekly");
-                }
-                if (Application.Current.Properties.ContainsKey("today"))
-                {
-                    Application.Current.Properties.Remove("today");
-                }
-                if (Application.Current.Properties.ContainsKey("PriorityID"))
-                {
-                    Application.Current.Properties.Remove("PriorityID");
                 }
 
 
                 if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
                 {
-                    Application.Current.Properties.Remove("LocationFilterkey");
+                    var Locationfilter = Application.Current.Properties["LocationFilterkey"];
+                    if (Locationfilter != null)
+                    {
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            GroupBy = "Assets/searchNs.png";
+
+                        }
+                        else
+                        {
+                            GroupBy = "searchNs.png";
+                        }
+
+                        filter = true;
+                        await RefillLocationFromPicker(Locationfilter.ToString());
+
+                    }
+                    else
+                    {
+                        await RefillLocationFromPicker(null);
+                    }
                 }
                 if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
                 {
-                    Application.Current.Properties.Remove("ShiftFilterkey");
-                }
-                if (Application.Current.Properties.ContainsKey("ShiftFilterkeyText"))
-                {
-                    Application.Current.Properties.Remove("ShiftFilterkeyText");
+                    var Shiftfilter = Application.Current.Properties["ShiftFilterkey"];
+                    if (Shiftfilter != null)
+                    {
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            GroupBy = "Assets/searchNs.png";
+
+                        }
+                        else
+                        {
+                            GroupBy = "searchNs.png";
+                        }
+
+                        filter = true;
+                        await RefillShiftFromPicker(Shiftfilter.ToString());
+
+                    }
+                    else
+                    {
+
+                        await RefillShiftFromPicker(null);
+                    }
                 }
                 if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
                 {
-                    Application.Current.Properties.Remove("PriorityFilterkey");
-                }
-                if (Application.Current.Properties.ContainsKey("PriorityFilterkeyText"))
-                {
-                    Application.Current.Properties.Remove("PriorityFilterkeyText");
+                    var Priorityfilter = Application.Current.Properties["PriorityFilterkey"];
+                    if (Priorityfilter != null)
+                    {
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            GroupBy = "Assets/searchNs.png";
+
+                        }
+                        else
+                        {
+                            GroupBy = "searchNs.png";
+                        }
+
+                        filter = true;
+                        await RefillPriorityFromPicker(Priorityfilter.ToString());
+
+                    }
+                    else
+                    {
+
+                        await RefillPriorityFromPicker(null);
+                    }
                 }
                 if (Application.Current.Properties.ContainsKey("DateFilterkey"))
                 {
-                    Application.Current.Properties.Remove("DateFilterkey");
+                    var datefilter = Application.Current.Properties["DateFilterkey"];
+                    if (datefilter != null)
+                    {
+                        if (Device.RuntimePlatform == Device.UWP)
+                        {
+                            GroupBy = "Assets/searchNs.png";
+
+                        }
+                        else
+                        {
+                            GroupBy = "searchNs.png";
+                        }
+
+                        filter = true;
+                        await RefillDueDateFromPicker(datefilter.ToString());
+
+                    }
+                    else
+                    {
+
+                        await RefillDueDateFromPicker(null);
+                    }
                 }
+                if (filter == false)
+                {
+                    if (Device.RuntimePlatform == Device.UWP)
+                    {
+                        GroupBy = "Assets/searchN.png";
+
+                    }
+                    else
+                    {
+                        GroupBy = "searchN.png";
+                    }
+
+                }
+
             }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+
+            }
+
+        }
+
+        public async Task OnViewDisappearingAsync(VisualElement view)
+        {
+
+            if (view == null)
+            {
+                this.SearchText = null;
+            }
+            //else
+            //{
+            //    ////Clear priority///
+            //    sortByPrioritypickerTitlesitems.Clear();
+            //    SortByPriorityPickerTitles.Clear();
+            //    PriorityNameFilterText = null;
+            //    WorkorderTypeFilterText = null;
+            //    ////Clear Shift///
+            //    sortByShiftpickerTitlesitems.Clear();
+            //    SortByShiftpickerTitles.Clear();
+            //    ShiftNameFilterText = null;
+
+
+            //    ////Clear Location///
+            //    sortByLocationpickerTitlesitems.Clear();
+            //    SortByLocationpickerTitles.Clear();
+            //    LocationNameFilterText = null;
+
+            //    ///Clear RequiredDate////
+            //    SortByDateText = null;
+            //    SortByDueDate = null;
+
+            //    this.SearchText = null;
+
+            if (Application.Current.Properties.ContainsKey("overdue"))
+            {
+                Application.Current.Properties.Remove("overdue");
+            }
+            if (Application.Current.Properties.ContainsKey("weekly"))
+            {
+                Application.Current.Properties.Remove("weekly");
+            }
+            if (Application.Current.Properties.ContainsKey("today"))
+            {
+                Application.Current.Properties.Remove("today");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityID"))
+            {
+                Application.Current.Properties.Remove("PriorityID");
+            }
+
+
+            //    //if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("LocationFilterkey");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("ShiftFilterkey");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("ShiftFilterkeyText"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("ShiftFilterkeyText");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("PriorityFilterkey");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("PriorityFilterkeyText"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("PriorityFilterkeyText");
+            //    //}
+            //    //if (Application.Current.Properties.ContainsKey("DateFilterkey"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("DateFilterkey");
+            //    //}
+
+            //    //if (Application.Current.Properties.ContainsKey("SortingTypeKye"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("SortingTypeKye");
+            //    //}
+
+            //    //if (Application.Current.Properties.ContainsKey("WorkOFilterTypeKye"))
+            //    //{
+            //    //    Application.Current.Properties.Remove("WorkOFilterTypeKye");
+            //    //}
+
+            //    if (Device.RuntimePlatform == Device.UWP)
+            //    {
+            //        SortBy = "Assets/shortingN.png";
+            //        FilterBy = "Assets/filterN.png";
+            //        GroupBy = "Assets/searchN.png";
+            //    }
+            //    else
+            //    {
+            //        SortBy = "shortingN.png";
+            //        FilterBy = "filterN.png";
+            //        GroupBy = "searchN.png";
+            //    }
+
+            //}
 
         }
 
@@ -2770,223 +3255,94 @@ namespace ProteusMMX.ViewModel.Workorder
 
         }
 
-        public async Task GetWorkorderControlRights()
+        public async Task WorkorderCler()
         {
-            try
+
+            ////Clear priority///
+            sortByPrioritypickerTitlesitems.Clear();
+            SortByPriorityPickerTitles.Clear();
+            PriorityNameFilterText = null;
+            WorkorderTypeFilterText = null;
+            ////Clear Shift///
+            sortByShiftpickerTitlesitems.Clear();
+            SortByShiftpickerTitles.Clear();
+            ShiftNameFilterText = null;
+
+
+            ////Clear Location///
+            sortByLocationpickerTitlesitems.Clear();
+            SortByLocationpickerTitles.Clear();
+            LocationNameFilterText = null;
+
+            ///Clear RequiredDate////
+            SortByDateText = null;
+            SortByDueDate = null;
+
+            this.SearchText = null;
+
+            if (Application.Current.Properties.ContainsKey("overdue"))
             {
-                ServiceOutput FormControlsAndRightsForDetails = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Details");
-                ServiceOutput FormControlsAndRightsForTask = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tasks");
-                ServiceOutput FormControlsAndRightsForInspection = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Inspections");
-                ServiceOutput FormControlsAndRightsForTools = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Tools");
-                ServiceOutput FormControlsAndRightsForParts = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Parts");
-                ServiceOutput FormControlsAndRightsForAttachments = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "workorders", "Attachments");
-                if (FormControlsAndRightsForDetails != null && FormControlsAndRightsForDetails.lstModules != null && FormControlsAndRightsForDetails.lstModules.Count > 0)
-                {
-                    var WorkOrderModule = FormControlsAndRightsForDetails.lstModules[0];
-                    if (WorkOrderModule.ModuleName == "Details") //ModuleName can't be  changed in service 
-                    {
-                        if (WorkOrderModule.lstSubModules != null && WorkOrderModule.lstSubModules.Count > 0)
-                        {
-                            var WorkOrderSubModule = WorkOrderModule.lstSubModules[0];
-                            if (WorkOrderSubModule.listControls != null && WorkOrderSubModule.listControls.Count > 0)
-                            {
-                                try
-                                {
-                                    Application.Current.Properties["CreateWorkorderRights"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "New").Expression;
-                                    Application.Current.Properties["EditRights"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
-                                    Application.Current.Properties["CloseWorkorderRightsKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompleteAndClose").Expression;
-
-                                    ///Set workOrderListing Page Rights
-                                    Application.Current.Properties["WorkOrderStartedDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkStartedDate").Expression;
-                                    Application.Current.Properties["WorkOrderCompletionDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression;
-                                    Application.Current.Properties["WorkOrderRequestedDateKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "RequestedDate").Expression;
-                                    Application.Current.Properties["WorkOrderTypeKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkTypeID").Expression;
-                                    Application.Current.Properties["DescriptionKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Description").Expression;
-                                    Application.Current.Properties["PriorityKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "PriorityID").Expression;
-
-                                    ///Set workOrderEdit Page Rights
-
-
-                                    Application.Current.Properties["WorkorderAdditionalDetailsKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails").Expression;
-                                    Application.Current.Properties["WorkOrderInternalNoteKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "InternalNote").Expression;
-                                    Application.Current.Properties["WorkorderCauseKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes").Expression;
-                                    Application.Current.Properties["WorkorderTargetKey"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssetID").Expression;
-                                    Application.Current.Properties["WorkorderDetailsControls"] = WorkOrderSubModule;
-                                    Application.Current.Properties["DistributeCost"] = WorkOrderSubModule.listControls.FirstOrDefault(i => i.ControlName == "DistributeCost").Expression;
-
-                                }
-                                catch (Exception ex)
-                                {
-
-
-                                }
-
-
-
-                            }
-
-
-
-                        }
-                    }
-                }
-                if (FormControlsAndRightsForTask != null && FormControlsAndRightsForTask.lstModules != null && FormControlsAndRightsForTask.lstModules.Count > 0)
-                {
-                    var WorkOrderTaskModule = FormControlsAndRightsForTask.lstModules[0];
-                    if (WorkOrderTaskModule.ModuleName == "TasksandLabor") //ModuleName can't be  changed in service 
-                    {
-                        if (WorkOrderTaskModule.lstSubModules != null && WorkOrderTaskModule.lstSubModules.Count > 0)
-                        {
-                            var WorkOrderTaskSubModule = WorkOrderTaskModule.lstSubModules[0];
-                            if (WorkOrderTaskSubModule.listControls != null && WorkOrderTaskSubModule.listControls.Count > 0)
-                            {
-
-                                try
-                                {
-                                    Application.Current.Properties["TaskandLabourTabKey"] = WorkOrderTaskModule.Expression;
-                                    Application.Current.Properties["CreateTask"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
-                                    Application.Current.Properties["LabourEstimatedHours"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "EstimatedHours").Expression;
-                                    Application.Current.Properties["WOLabourTime"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "WorkOrderLaborTime").Expression;
-                                    Application.Current.Properties["TaskTabDetails"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "TaskID").Expression;
-                                    Application.Current.Properties["HourAtRate1"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "HoursAtRate1").Expression;
-                                    Application.Current.Properties["EmployeeTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "EmployeeLaborCraftID").Expression;
-                                    Application.Current.Properties["ContractorTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "ContractorLaborCraftID").Expression;
-                                    Application.Current.Properties["StartdateTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "StartDate").Expression;
-                                    Application.Current.Properties["CompletionDateTab"] = WorkOrderTaskSubModule.listControls.FirstOrDefault(i => i.ControlName == "CompletionDate").Expression;
-
-                                }
-                                catch (Exception ex)
-                                {
-
-
-                                }
-
-
-
-                            }
-
-
-
-                        }
-                    }
-                }
-                if (FormControlsAndRightsForInspection != null && FormControlsAndRightsForInspection.lstModules != null && FormControlsAndRightsForInspection.lstModules.Count > 0)
-                {
-                    var WorkOrderInspectionModule = FormControlsAndRightsForInspection.lstModules[0];
-                    if (WorkOrderInspectionModule.ModuleName == "WorkOrderInspections") //ModuleName can't be  changed in service 
-                    {
-
-                        Application.Current.Properties["InspectionTabKey"] = WorkOrderInspectionModule.Expression;
-
-                    }
-                    if (WorkOrderInspectionModule.lstSubModules != null && WorkOrderInspectionModule.lstSubModules.Count > 0)
-                    {
-                        var WorkOrderInspectionSubModule = WorkOrderInspectionModule.lstSubModules[0];
-                        if (WorkOrderInspectionSubModule.listControls != null && WorkOrderInspectionSubModule.listControls.Count > 0)
-                        {
-
-                            try
-                            {
-                                Application.Current.Properties["AssociateEmployeeContr"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateEmployeeContr").Expression;
-                                Application.Current.Properties["AssociateInspection"] = WorkOrderInspectionSubModule.listControls.FirstOrDefault(i => i.ControlName == "AssociateInspection").Expression;
-                            }
-                            catch (Exception ex)
-                            {
-
-
-                            }
-                        }
-                    }
-                }
-                if (FormControlsAndRightsForTools != null && FormControlsAndRightsForTools.lstModules != null && FormControlsAndRightsForTools.lstModules.Count > 0)
-                {
-                    var WorkOrderToolsModule = FormControlsAndRightsForTools.lstModules[0];
-                    if (WorkOrderToolsModule.ModuleName == "Tools") //ModuleName can't be  changed in service 
-                    {
-
-                        Application.Current.Properties["ToolsTabKey"] = WorkOrderToolsModule.Expression;
-                        var WorkOrderToolsSubModule = WorkOrderToolsModule.lstSubModules[0];
-                        if (WorkOrderToolsSubModule.listControls != null && WorkOrderToolsSubModule.listControls.Count > 0)
-                        {
-
-                            try
-                            {
-                                Application.Current.Properties["CreateTool"] = WorkOrderToolsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
-                                Application.Current.Properties["DeleteTool"] = WorkOrderToolsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
-
-                            }
-                            catch (Exception ex)
-                            {
-
-
-                            }
-
-                        }
-                    }
-                }
-                if (FormControlsAndRightsForParts != null && FormControlsAndRightsForParts.lstModules != null && FormControlsAndRightsForParts.lstModules.Count > 0)
-                {
-                    var WorkOrderPartsModule = FormControlsAndRightsForParts.lstModules[0];
-                    if (WorkOrderPartsModule.ModuleName == "Parts") //ModuleName can't be  changed in service 
-                    {
-
-                        Application.Current.Properties["PartsTabKey"] = WorkOrderPartsModule.Expression;
-                        var WorkOrderPartsSubModule = WorkOrderPartsModule.lstSubModules[0];
-                        if (WorkOrderPartsSubModule.listControls != null && WorkOrderPartsSubModule.listControls.Count > 0)
-                        {
-
-                            try
-                            {
-                                Application.Current.Properties["AddParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
-                                Application.Current.Properties["EditParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Edit").Expression;
-                                Application.Current.Properties["RemoveParts"] = WorkOrderPartsSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
-
-                            }
-                            catch (Exception ex)
-                            {
-
-
-                            }
-
-                        }
-                    }
-                }
-                if (FormControlsAndRightsForAttachments != null && FormControlsAndRightsForAttachments.lstModules != null && FormControlsAndRightsForAttachments.lstModules.Count > 0)
-                {
-                    var WorkOrderAttachmentModule = FormControlsAndRightsForAttachments.lstModules[0];
-                    if (WorkOrderAttachmentModule.ModuleName == "Attachments") //ModuleName can't be  changed in service 
-                    {
-
-                        Application.Current.Properties["AttachmentTabKey"] = WorkOrderAttachmentModule.Expression;
-                        var WorkOrderAttachmentSubModule = WorkOrderAttachmentModule.lstSubModules[0];
-                        if (WorkOrderAttachmentSubModule.listControls != null && WorkOrderAttachmentSubModule.listControls.Count > 0)
-                        {
-                            try
-                            {
-                                Application.Current.Properties["CreateAttachment"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Add").Expression;
-                                Application.Current.Properties["DeleteAttachments"] = WorkOrderAttachmentSubModule.listControls.FirstOrDefault(i => i.ControlName == "Remove").Expression;
-
-                            }
-                            catch (Exception ex)
-                            {
-
-
-                            }
-
-
-                        }
-                    }
-                }
+                Application.Current.Properties.Remove("overdue");
             }
-            catch (Exception)
+            if (Application.Current.Properties.ContainsKey("weekly"))
             {
-
-
+                Application.Current.Properties.Remove("weekly");
+            }
+            if (Application.Current.Properties.ContainsKey("today"))
+            {
+                Application.Current.Properties.Remove("today");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityID"))
+            {
+                Application.Current.Properties.Remove("PriorityID");
+            }
+            if (Application.Current.Properties.ContainsKey("LocationFilterkey"))
+            {
+                Application.Current.Properties.Remove("LocationFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("ShiftFilterkey"))
+            {
+                Application.Current.Properties.Remove("ShiftFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("ShiftFilterkeyText"))
+            {
+                Application.Current.Properties.Remove("ShiftFilterkeyText");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityFilterkey"))
+            {
+                Application.Current.Properties.Remove("PriorityFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("PriorityFilterkeyText"))
+            {
+                Application.Current.Properties.Remove("PriorityFilterkeyText");
+            }
+            if (Application.Current.Properties.ContainsKey("DateFilterkey"))
+            {
+                Application.Current.Properties.Remove("DateFilterkey");
+            }
+            if (Application.Current.Properties.ContainsKey("SortingTypeKye"))
+            {
+                Application.Current.Properties.Remove("SortingTypeKye");
             }
 
+            if (Application.Current.Properties.ContainsKey("WorkOFilterTypeKye"))
+            {
+                Application.Current.Properties.Remove("WorkOFilterTypeKye");
+            }
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                SortBy = "Assets/shortingN.png";
+                FilterBy = "Assets/filterN.png";
+                GroupBy = "Assets/searchN.png";
+            }
+            else
+            {
+                SortBy = "shortingN.png";
+                FilterBy = "filterN.png";
+                GroupBy = "searchN.png";
+            }
         }
         #endregion
-
 
     }
 }

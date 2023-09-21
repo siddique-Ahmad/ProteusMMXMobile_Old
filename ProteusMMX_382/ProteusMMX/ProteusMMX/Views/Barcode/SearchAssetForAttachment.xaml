@@ -61,13 +61,15 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <border:SfBorder CornerRadius="5">
-                    <SearchBar x:Name="filterText" HeightRequest="40"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0" Grid.Column="0"/>
+                    <SearchBar x:Name="filterText" HeightRequest="40" TextChanged="filterText_TextChanged"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0" Grid.Column="0"/>
 
                 </border:SfBorder>
                 <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" >
                     <Image.Source>
                         <OnPlatform x:TypeArguments="ImageSource" >
                             <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                            <OnPlatform.iOS>ssbicon.png</OnPlatform.iOS>
+                            <OnPlatform.WinPhone>Assets/ssbicon.png</OnPlatform.WinPhone>
                         </OnPlatform>
                     </Image.Source>
                     <Image.GestureRecognizers>
@@ -86,7 +88,7 @@
 
                         <Frame BackgroundColor="White"  BorderColor="Black"  CornerRadius="5">
                             <StackLayout HeightRequest="350" WidthRequest="350">
-                                <cards:CarouselView  VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}">
+                                <cards:CarouselView IsNextItemPanInteractionEnabled="False"  IsPanInteractionEnabled="False" IsPanSwipeEnabled="False" IsPrevItemPanInteractionEnabled="False" VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}">
                                     <cards:CarouselView.ItemTemplate>
                                         <DataTemplate >
                                             <StackLayout  HeightRequest="450" WidthRequest="450">

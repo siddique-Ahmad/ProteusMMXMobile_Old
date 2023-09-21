@@ -31,22 +31,30 @@ using ProteusMMX.DependencyInterface;
 
 namespace ProteusMMX.Views.Workorder
 {
-     [XamlCompilation(XamlCompilationOptions.Skip)]
+    [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class AttachmentsPage : ContentPage
     {
 
         AttachmentsPageViewModel ViewModel => this.BindingContext as AttachmentsPageViewModel;
         public int? WorkorderID { get; set; }
         public string UserID { get; set; }
-      //  AttachmentsPageViewModel ViewModel => this.BindingContext as AttachmentsPageViewModel;
+        //  AttachmentsPageViewModel ViewModel => this.BindingContext as AttachmentsPageViewModel;
         public AttachmentsPage()
         {
             InitializeComponent();
-
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
-            this.IconImageSource = "Attachements.png";
-          
+            if (Device.RuntimePlatform == Device.UWP)
+            {
+                this.IconImageSource = "Assets/Attachements.png";
+            }
+            else
+            {
+                this.IconImageSource = "Attachements.png";
+            }
+            
+
 
 
         }
@@ -63,10 +71,10 @@ namespace ProteusMMX.Views.Workorder
 
 
 
-         
+
 
         }
-      
+
 
         protected override async void OnDisappearing()
         {
@@ -78,7 +86,7 @@ namespace ProteusMMX.Views.Workorder
             }
         }
 
-        
+
         public async Task<ServiceOutput> ServiceCallWebClient(string url, string mtype, IDictionary<string, string> urlSegment, object jsonString)
         {
             ServiceOutput responseContent = new ServiceOutput();

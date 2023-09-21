@@ -73,17 +73,18 @@ namespace ProteusMMX.Views.Common
             PopupNavigation.PopAsync();
         }
 
-        
-      
 
-        protected override Task OnAppearingAnimationEnd()
+
+
+        protected override void OnAppearing()
         {
-            return Content.FadeTo(1);
+            base.OnAppearing();
         }
 
-        protected override Task OnDisappearingAnimationBegin()
+        protected override void OnDisappearing()
         {
-            return Content.FadeTo(1);
+            base.OnDisappearing();
+            //OnDispose?.Invoke();
         }
 
         private async void OK_Clicked(object sender, EventArgs e)
@@ -102,7 +103,7 @@ namespace ProteusMMX.Views.Common
                     await DialogService.ShowAlertAsync(WebControlTitle.GetTargetNameByTitleName("InvalidCredentials"), WebControlTitle.GetTargetNameByTitleName("Alert"), WebControlTitle.GetTargetNameByTitleName("OK"));
                     return;
                 }
-                if (Application.Current.Properties.ContainsKey("CauseID"))
+                if (Application.Current.Properties.ContainsKey("CauseID") && Application.Current.Properties["CauseID"] != null)
                 {
                     try
                     {

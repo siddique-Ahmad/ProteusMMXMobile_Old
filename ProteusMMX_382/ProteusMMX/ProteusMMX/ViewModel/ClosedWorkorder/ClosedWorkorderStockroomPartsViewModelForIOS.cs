@@ -600,7 +600,7 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { GetNonStockroomParts, LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { GetNonStockroomParts, LogoutTitle });
 
                 if (response == LogoutTitle)
                 {

@@ -28,7 +28,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         protected readonly IFormLoadInputService _formLoadInputService;
 
-        protected  IWorkorderService _workorderService;
+        protected IWorkorderService _workorderService;
 
 
         #endregion
@@ -298,6 +298,23 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
             }
         }
+        string _searchPlaceholder;
+        public string SearchPlaceholder
+        {
+            get
+            {
+                return _searchPlaceholder;
+            }
+
+            set
+            {
+                if (value != _searchPlaceholder)
+                {
+                    _searchPlaceholder = value;
+                    OnPropertyChanged("SearchPlaceholder");
+                }
+            }
+        }
         string _createNonStockroomParts = "";
         public string CreateNonStockroomParts
         {
@@ -351,7 +368,7 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
-        string _selectOptionsTitle ;
+        string _selectOptionsTitle;
         public string SelectOptionsTitle
         {
             get
@@ -429,7 +446,7 @@ namespace ProteusMMX.ViewModel.Workorder
 
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
-
+        public ICommand ToolAddNewNSPartCommand => new AsyncCommand(AddNewNSPart);
         public ICommand ScanCommand => new AsyncCommand(ScanNonStockParts);
         public ICommand WorkorderNonStockroomPartSelectedCommand => new Command<WorkOrderNonStockroomParts>(OnSelectWorkorderNonStockroomPartAsync);
 
@@ -457,10 +474,10 @@ namespace ProteusMMX.ViewModel.Workorder
 
                 OperationInProgress = true;
                 await SetTitlesPropertiesForPage();
-                
+
                 if (Device.RuntimePlatform == Device.UWP)
                 {
-                  
+
                 }
                 else
                 {
@@ -495,27 +512,27 @@ namespace ProteusMMX.ViewModel.Workorder
         public async Task SetTitlesPropertiesForPage()
         {
 
-            
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("NonStockParts");
-                WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
-                LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
-                CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
-                SelectTitle = WebControlTitle.GetTargetNameByTitleName( "Select");
-                PartName = WebControlTitle.GetTargetNameByTitleName("PartName");
-                PartNumber = WebControlTitle.GetTargetNameByTitleName( "PartNumber");
-                QuantityRequired = WebControlTitle.GetTargetNameByTitleName("QuantityRequired");
-                CreateNonStockroomParts= WebControlTitle.GetTargetNameByTitleName("CreateNonStockroomParts");
-                SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+
+            PageTitle = WebControlTitle.GetTargetNameByTitleName("NonStockRoomParts");
+            WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
+            LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
+            CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
+            SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
+            PartName = WebControlTitle.GetTargetNameByTitleName("PartName");
+            PartNumber = WebControlTitle.GetTargetNameByTitleName("PartNumber");
+            QuantityRequired = WebControlTitle.GetTargetNameByTitleName("QuantityRequired");
+            CreateNonStockroomParts = WebControlTitle.GetTargetNameByTitleName("CreateNonStockroomParts");
+            SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
             ScanTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
             SearchButtonTitle = WebControlTitle.GetTargetNameByTitleName("Scan");
-
+            SearchPlaceholder = WebControlTitle.GetTargetNameByTitleName("NonStockParts");
 
         }
         public async Task ShowActions()
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateNonStockroomParts, LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -540,6 +557,24 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        public async Task AddNewNSPart()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+               // await Task.Delay(1000);
+                await NavigationService.NavigateToAsync<CreateNonStockroomPartsPageViewModel>(this.WorkorderID);
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+        }
 
         public async Task ScanNonStockParts()
         {
@@ -559,13 +594,15 @@ namespace ProteusMMX.ViewModel.Workorder
                         TryHarder = true,
 
                     };
-
+                    options.PossibleFormats = new List<ZXing.BarcodeFormat>() { ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.CODE_93, ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.QR_CODE };
+                    options.TryHarder = false; options.BuildBarcodeReader().Options.AllowedLengths = new[] { 44 };
                     ZXingScannerPage _scanner = new ZXingScannerPage(options)
                     {
                         DefaultOverlayTopText = "Align the barcode within the frame",
                         DefaultOverlayBottomText = string.Empty,
                         DefaultOverlayShowFlashButton = true
                     };
+                    _scanner.AutoFocus();
 
                     _scanner.OnScanResult += _scanner_OnScanResult;
                     var navPage = App.Current.MainPage as NavigationPage;
@@ -616,6 +653,11 @@ namespace ProteusMMX.ViewModel.Workorder
                     var workordernonstkparts = workordersResponse.workOrderWrapper.workOrderNonStockroomParts;
                     await AddWorkorderNonStockroomPartsInWorkorderCollection(workordernonstkparts);
 
+                }
+                else
+                {
+                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Thispartdoesnotexist"), 2000);
+                    return;
                 }
             }
             catch (Exception ex)
@@ -671,7 +713,7 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
                 OperationInProgress = true;
-                var workordersResponse = await _workorderService.GetWorkorderNonStockroomParts(this.WorkorderID,this.SearchText);
+                var workordersResponse = await _workorderService.GetWorkorderNonStockroomParts(this.WorkorderID, this.SearchText);
                 if (workordersResponse != null && workordersResponse.workOrderWrapper != null
                     && workordersResponse.workOrderWrapper.workOrderNonStockroomParts != null && workordersResponse.workOrderWrapper.workOrderNonStockroomParts.Count > 0)
                 {
@@ -693,6 +735,12 @@ namespace ProteusMMX.ViewModel.Workorder
             }
         }
 
+        public async Task ReloadPageAfterSerchBoxCancle()
+        {
+            PageNumber = 1;
+            await RemoveAllNonStockPartsFromCollection();
+            await GetWorkorderNonStockRoomParts();
+        }
         private async Task RemoveAllNonStockPartsFromCollection()
         {
             Device.BeginInvokeOnMainThread(() =>
@@ -749,29 +797,33 @@ namespace ProteusMMX.ViewModel.Workorder
             {
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
 
-               // OperationInProgress = true;
+                // OperationInProgress = true;
                 TargetNavigationData tnobj = new TargetNavigationData();
                 tnobj.WorkOrderNonStockroomPartID = item.WorkOrderNonStockroomPartID;
                 tnobj.WorkOrderId = this.WorkorderID;
                 await NavigationService.NavigateToAsync<EditNonStockroomPartsPageViewModel>(tnobj);
                 UserDialogs.Instance.HideLoading();
 
-               // OperationInProgress = false;
+                // OperationInProgress = false;
             }
         }
 
         public async Task OnViewAppearingAsync(VisualElement view)
         {
-            await SetTitlesPropertiesForPage();
-           
+            if (string.IsNullOrWhiteSpace(SearchText))
+            {
+                await SetTitlesPropertiesForPage();
                 NonStockroomPartsCollection.Clear();
-
                 await GetWorkorderNonStockRoomParts();
+
+
+            }
+
         }
 
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
-
+            this.SearchText = "";
         }
 
 

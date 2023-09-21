@@ -18,6 +18,7 @@ namespace ProteusMMX.Views
 		public ShowAssetSystem ()
 		{
 			InitializeComponent ();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
@@ -32,7 +33,7 @@ namespace ProteusMMX.Views
 
 
 
-        private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
+        private async void  ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
             var item = e.Item as AssetForAS;
             if (ViewModel.AssetForASCollection.Count == 0)
@@ -45,7 +46,7 @@ namespace ProteusMMX.Views
             {
                 //Add More items to collection
 
-                ViewModel.GetAssetsAuto();
+               await ViewModel.GetAssetsAuto();
 
             }
         }
@@ -69,7 +70,26 @@ namespace ProteusMMX.Views
                 await viewAware.OnViewDisappearingAsync(this);
             }
         }
+        int count = 0;
+        private async void filterText_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
+            SearchBar searchBar = (SearchBar)sender;
+            if (string.IsNullOrEmpty(searchBar.Text))
+            {
+                count = count + 1;
+                if (count == 1)
+                {
+                    await ViewModel.searchBoxTextCler();
+
+                }
+                else
+                {
+                    count = 0;
+                }
+
+            }
+        }
     }
 }
 

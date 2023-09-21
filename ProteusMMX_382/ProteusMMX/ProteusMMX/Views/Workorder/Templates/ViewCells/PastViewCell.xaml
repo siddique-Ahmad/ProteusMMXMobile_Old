@@ -54,7 +54,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="{Binding AssetName}"/>
-                                        <Span Text=":"/>
+                                        <Span Text=" : "/>
                                         <Span Text="{Binding AssetNumber}"/>
                                         <Span Text=" (Asset)" />
                                     </FormattedString>
@@ -64,7 +64,7 @@
                                 <Label.FormattedText>
                                     <FormattedString>
                                         <Span Text="{Binding AssetSystemName}"/>
-                                        <Span Text=":"/>
+                                        <Span Text=" : "/>
                                         <Span Text="{Binding AssetSystemNumber}"/>
                                         <Span Text=" (Asset System)" />
                                     </FormattedString>
@@ -91,19 +91,19 @@
 
                     <Grid x:Name="WorkorderTypeColon" IsVisible="False" Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="100" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Label  x:Name="WorkorderTypeLabel" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333" />
+                        <Label  x:Name="WorkorderTypeLabel" Grid.Column="0" WidthRequest="100" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333" />
                         <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                         <Label LineBreakMode="TailTruncation"  Text="{Binding WorkOrderType}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" />
                         <StackLayout x:Name="PriorityColon" Orientation="Horizontal" Grid.Column="3" IsVisible="False">
                             <Label Text="(" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}"/>
                             <Label  LineBreakMode="TailTruncation"  Text="{Binding PriorityName}" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}" />
-                            <Label Text=")" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}"/>
+                            <Label Text=")" Padding="0,0,3,0" Style="{StaticResource ItemDescriptionStyle}" IsVisible="{Binding PriorityNameIsVisible}"/>
                         </StackLayout>
                     </Grid>
 
@@ -132,7 +132,7 @@
 
                         <Label x:Name="RequiredDateLabel" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333" />
                         <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
-                        <Label Text="{Binding RequiredDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" TextColor="Red"   LineBreakMode="TailTruncation" />
+                        <Label Text="{Binding RequiredDate , Converter={StaticResource DateTimeConverterXaml},StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}" TextColor="Red"   LineBreakMode="TailTruncation" />
                         <Label Text="" Grid.Column="3" TextColor="LightGreen" />
 
                     </Grid>
@@ -194,6 +194,16 @@
                                 </Image.Source>
 
                             </Image>
+                            <Image  Grid.Column="4"  IsVisible="{Binding WorkorderIsAcknowledged}">
+                                <Image.Source>
+                                    <OnPlatform  x:TypeArguments="ImageSource">
+                                        <OnPlatform.iOS>Acknowledgedsmall.png</OnPlatform.iOS>
+                                        <OnPlatform.Android>Acknowledgedsmall.png</OnPlatform.Android>
+                                        <OnPlatform.WinPhone>Acknowledgedsmall.png</OnPlatform.WinPhone>
+                                    </OnPlatform>
+                                </Image.Source>
+
+                            </Image>
 
                         </Grid>
 
@@ -211,7 +221,7 @@
 
                             <Label x:Name="ActivationDateLabel" FontSize="13" FontAttributes="Bold" TextColor="#333333" />
                             <Label Text=":" Grid.Column="1" FontSize="13" FontAttributes="Bold" TextColor="#333333" />
-                            <Label Text="{Binding ActivationDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding ActivationDate , Converter={StaticResource DateTimeConverterXaml},StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
                             <Label Text="" Grid.Column="3"  TextColor="LightGreen" />
 
                         </Grid>
@@ -225,7 +235,7 @@
 
                             <Label x:Name="WorkStartedDateLabel" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                             <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
-                            <Label Text="{Binding WorkStartedDate , Converter={StaticResource DateTimeConverterXaml}}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}"  LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding WorkStartedDate , Converter={StaticResource DateTimeConverterXaml},StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Grid.Column="2" Style="{StaticResource ItemDescriptionStyle}"  LineBreakMode="TailTruncation"/>
                             <Label Text="" Grid.Column="3" />
 
                         </Grid>
@@ -239,7 +249,7 @@
 
                             <Label x:Name="WorkCompletionDateLabel" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                             <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
-                            <Label Text="{Binding CompletionDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding CompletionDate , Converter={StaticResource DateTimeConverterXaml},StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"   LineBreakMode="TailTruncation"/>
                             <Label Text="" Grid.Column="3" />
 
                         </Grid>
@@ -252,7 +262,7 @@
 
                             <Label x:Name="WorkRequestedDateLabel"  Style="{StaticResource ItemDescriptionStyle}"  FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
                             <Label Text=":" Grid.Column="1" Style="{StaticResource ItemDescriptionStyle}" FontSize="13" FontAttributes="Bold" TextColor="#333333"/>
-                            <Label Text="{Binding RequestedDate , Converter={StaticResource DateTimeConverterXaml}}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  LineBreakMode="TailTruncation"/>
+                            <Label Text="{Binding RequestedDate , Converter={StaticResource DateTimeConverterXaml},StringFormat='{0:MMM d, yyyy hh:mm tt}'}" Style="{StaticResource ItemDescriptionStyle}" Grid.Column="2"  LineBreakMode="TailTruncation"/>
                             <Label Text="" Grid.Column="3" />
 
                         </Grid>

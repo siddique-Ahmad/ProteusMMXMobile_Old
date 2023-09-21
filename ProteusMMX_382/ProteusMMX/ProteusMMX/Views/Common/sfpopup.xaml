@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<sfPopup:SfPopupLayout xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sfPopup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms" xmlns:sfListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+                       x:Class="ProteusMMX.Views.sfpopup"
+               x:Name="popup">
+    
+    <sfPopup:SfPopupLayout x:Name="popupLayout">
+        <sfPopup:SfPopupLayout.PopupView>
+            <sfPopup:PopupView>
+                <sfPopup:PopupView.ContentTemplate>
+                    <DataTemplate x:Name="test">
+                        <Grid >
+                            <Label Text=" hello"/>
+                            <!--<ListView x:Name="ListTest" ItemsSource="{Binding Strings}" />-->
+                            <sfListView:SfListView   x:Name="lst"  ItemsSource="{Binding Strings}" />
+
+                        </Grid>
+                    </DataTemplate>
+                </sfPopup:PopupView.ContentTemplate>
+            </sfPopup:PopupView>
+        </sfPopup:SfPopupLayout.PopupView>
+        <sfPopup:SfPopupLayout.Content>
+            <StackLayout x:Name="layout">
+                <!--<Button x:Name="clickToShowPopup" Text="ClickToShowPopup" VerticalOptions="Start" 
+               HorizontalOptions="FillAndExpand"  Clicked="ClickToShowPopup_Clicked" />-->
+            </StackLayout>
+        </sfPopup:SfPopupLayout.Content>
+    </sfPopup:SfPopupLayout>
+    
+    <!--<sfPopup:SfPopupLayout.PopupView>
+        <sfPopup:PopupView>
+            <sfPopup:PopupView.HeaderTemplate>
+                <DataTemplate x:Name="header">
+                    <StackLayout>
+                        <Label Text="Login failed" HorizontalTextAlignment="Center"/>
+                    </StackLayout>
+                </DataTemplate>
+            </sfPopup:PopupView.HeaderTemplate>
+            
+            <sfPopup:PopupView.ContentTemplate>
+                <DataTemplate x:Name="content">
+                    <StackLayout>
+                        <Label Text="Incorrect credentials" VerticalOptions="Center"/>
+                    </StackLayout>
+                </DataTemplate>
+            </sfPopup:PopupView.ContentTemplate>
+        </sfPopup:PopupView>
+    </sfPopup:SfPopupLayout.PopupView>-->
+</sfPopup:SfPopupLayout>

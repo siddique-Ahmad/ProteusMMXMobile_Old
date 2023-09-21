@@ -10,6 +10,7 @@ namespace ProteusMMX.Model.ServiceRequestModel
     {
         public int? ServiceRequestID { get; set; }
 
+        public DateTime? ReportedDate { get; set; }
         public int? FacilityID { get; set; }
         public int? AssetID { get; set; }
         public int? LocationID { get; set; }
@@ -24,6 +25,7 @@ namespace ProteusMMX.Model.ServiceRequestModel
         public int? WorkOrderRequesterID { get; set; }
         public int? AssignedToEmployeeID { get; set; }
         public int? AdministratorID { get; set; }
+        public string AdministratorName { get; set; }
         public DateTime? RequestedDate { get; set; }
         public string Description { get; set; }
         public string RequestNumber { get; set; }
@@ -33,7 +35,7 @@ namespace ProteusMMX.Model.ServiceRequestModel
         public string EmailCC { get; set; }
         public string EmailSubject { get; set; }
         public string EmailBody { get; set; }
-        public decimal? EstimatedDowntime { get; set; }
+        public string EstimatedDowntime { get; set; }
         public bool? AutoPrint { get; set; }
         public bool? AutoEmail { get; set; }
         public bool? AutoSendToMobile { get; set; }

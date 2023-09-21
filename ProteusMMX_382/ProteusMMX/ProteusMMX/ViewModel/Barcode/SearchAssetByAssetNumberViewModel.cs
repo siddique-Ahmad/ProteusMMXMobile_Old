@@ -1,4 +1,5 @@
-﻿using ProteusMMX.Helpers;
+﻿using Acr.UserDialogs;
+using ProteusMMX.Helpers;
 using ProteusMMX.Model.AssetModel;
 using ProteusMMX.Model.CommonModels;
 using ProteusMMX.Model.WorkOrderModel;
@@ -517,7 +518,7 @@ namespace ProteusMMX.ViewModel.Barcode
 
         public async Task SetTitlesPropertiesForPage()
         {
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("Assets");
+                PageTitle = WebControlTitle.GetTargetNameByTitleName("SearchAsset");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
@@ -536,7 +537,7 @@ namespace ProteusMMX.ViewModel.Barcode
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -562,12 +563,6 @@ namespace ProteusMMX.ViewModel.Barcode
             }
         }
 
-
-
-
-    
-
-
         private async Task RemoveAllAssetsFromCollection()
         {
             Device.BeginInvokeOnMainThread(() =>
@@ -590,27 +585,67 @@ namespace ProteusMMX.ViewModel.Barcode
 
                 #region Barcode Section and Search Section
 
+                //if (SearchButtonTitle == ScanTitle)
+                //{
+                //    var options = new MobileBarcodeScanningOptions()
+                //    {
+                //        AutoRotate = true,
+                //        TryHarder = true,
+
+                //        UseNativeScanning=true,
+
+
+                //    };
+
+                //    ZXingScannerPage _scanner = new ZXingScannerPage(options)
+                //    {
+                //        DefaultOverlayTopText = "Align the barcode within the frame",
+                //        DefaultOverlayBottomText = string.Empty,
+                //        IsTorchOn=true,
+
+                //        DefaultOverlayShowFlashButton = true
+                //    };
+
+                //    _scanner.OnScanResult += _scanner_OnScanResult;
+                //    var navPage = App.Current.MainPage as NavigationPage;
+                //    await navPage.PushAsync(_scanner);
+                //}
                 if (SearchButtonTitle == ScanTitle)
                 {
-                    var options = new MobileBarcodeScanningOptions()
+                    try
                     {
-                        AutoRotate = false,
-                        TryHarder = true,
 
-                    };
+                        var options = new MobileBarcodeScanningOptions()
+                        {
+                            AutoRotate = false,
+                            TryHarder = true,
 
-                    ZXingScannerPage _scanner = new ZXingScannerPage(options)
+                        };
+
+                        options.PossibleFormats = new List<ZXing.BarcodeFormat>() { ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.CODE_93, ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.QR_CODE };
+                        options.TryHarder = false; options.BuildBarcodeReader().Options.AllowedLengths = new[] { 44 };
+                        ZXingScannerPage _scanner = new ZXingScannerPage(options)
+                        {
+                            DefaultOverlayTopText = "Align the barcode within the frame",
+                            DefaultOverlayBottomText = string.Empty,
+                            DefaultOverlayShowFlashButton = true,
+
+
+                        };
+                        _scanner.AutoFocus();
+                        //ToolbarItem toolbarItem = new ToolbarItem();
+                        //toolbarItem.Text = "Flash ON";
+                        _scanner.OnScanResult += _scanner_OnScanResult;
+                        var navPage = App.Current.MainPage as NavigationPage;
+                        await navPage.PushAsync(_scanner);
+                    }
+                    catch (Exception ex)
                     {
-                        DefaultOverlayTopText = "Align the barcode within the frame",
-                        DefaultOverlayBottomText = string.Empty,
-                        DefaultOverlayShowFlashButton = true
-                    };
 
-                    _scanner.OnScanResult += _scanner_OnScanResult;
-                    var navPage = App.Current.MainPage as NavigationPage;
-                    await navPage.PushAsync(_scanner);
+                       
+                    }
+
                 }
-
                 else
                 {
                     //reset pageno. and start search again.
@@ -624,13 +659,15 @@ namespace ProteusMMX.ViewModel.Barcode
             }
             catch (Exception ex)
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
 
             }
 
             finally
             {
-                OperationInProgress = false;
+                UserDialogs.Instance.HideLoading();
+               // OperationInProgress = false;
 
             }
         }

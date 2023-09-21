@@ -115,7 +115,8 @@
 
             <StackLayout Orientation="Vertical" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,10">
 
-                <Button CornerRadius="5" Style="{StaticResource LoginButtonStyle}"
+                <Button CornerRadius="5" Style="{StaticResource SaveButtonStyle}"
+                        HorizontalOptions="CenterAndExpand" WidthRequest="150"
                     Grid.Row="2" Text="{Binding SaveTitle}"  Command="{Binding EditNonStockroomPartsCommand}"  />
 
             </StackLayout>

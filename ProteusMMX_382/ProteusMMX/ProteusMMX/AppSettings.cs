@@ -27,7 +27,7 @@ namespace ProteusMMX
 
         public static string APPVersion
         {
-            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.15");
+            get => Settings.GetValueOrDefault(nameof(APPVersion), "3.15.4.20");
         }
         public static string UserName
         {
@@ -82,13 +82,14 @@ namespace ProteusMMX
             {
                 RememberMeSwitchValue = Application.Current.Properties["RememberMeSwitchKey"].ToString();
             }
+            Application.Current.Properties.Clear();
             //Application.Current.Properties["RememberMeSwitchKey"] = false;
 
             if (RememberMeSwitchValue == "false")
             {
                 Settings.Remove(nameof(UserName));
                 Settings.Remove(nameof(Password));
-                //Settings.Remove(nameof(BaseURL));
+                //Settings.Remove(nameof(BaseU RL));
                 //Settings.Remove(nameof(RememberMeSwitch));
             }
         
@@ -521,6 +522,24 @@ namespace ProteusMMX
 
         }
 
+        private static string _saveWorkOrderAcknowledgement = "Inspection/service/SaveWorkOrderAcknowledgement";
+        public static string SaveWorkOrderAcknowledgement
+        {
+            get
+            {
+                return _saveWorkOrderAcknowledgement;
+            }
+
+            set
+            {
+                if (value != _saveWorkOrderAcknowledgement)
+                {
+                    _saveWorkOrderAcknowledgement = value;
+                }
+            }
+
+        }
+
         private static string _getIsWorkOrderSignatureRequired = "Inspection/service/IsWorkOrderSignatureRequiredAndEmpty";
         public static string GetIsWorkOrderSignatureRequired
         {
@@ -634,6 +653,25 @@ namespace ProteusMMX
 
         }
 
+        //CreateWorkOrderLaborHours
+        private static string _createWorkOrderLaborHours = "Inspection/service/CreateWorkOrderLaborHours";
+        public static string CreateWorkOrderLaborHours
+        {
+            get
+            {
+                return _createWorkOrderLaborHours;
+            }
+
+            set
+            {
+                if (value != _createWorkOrderLaborHours)
+                {
+                    _createWorkOrderLaborHours = value;
+                }
+            }
+
+        }
+        
         //CreateWorkOrderLabor
         private static string _createWorkOrderLabor = "Inspection/service/CreateWorkOrderLabor";
         public static string CreateWorkOrderLabor
@@ -704,6 +742,24 @@ namespace ProteusMMX
                 if (value != _saveWorkorderInspectionTime)
                 {
                     _saveWorkorderInspectionTime = value;
+                }
+            }
+
+        }
+
+        private static string _createInspectionTimeDetails = "Inspection/service/CreateInspectionTimeDetails";
+        public static string CreateInspectionTimeDetails
+        {
+            get
+            {
+                return _createInspectionTimeDetails;
+            }
+
+            set
+            {
+                if (value != _createInspectionTimeDetails)
+                {
+                    _createInspectionTimeDetails = value;
                 }
             }
 
@@ -1712,8 +1768,25 @@ namespace ProteusMMX
         #region ServiceRequest
 
 
+        
 
+        private static string _getAdministrator = "Inspection/service/GetSRAEmloyees";
+        public static string GetAdministrator
+        {
+            get
+            {
+                return _getAdministrator;
+            }
 
+            set
+            {
+                if (value != _getAdministrator)
+                {
+                    _getAdministrator = value;
+                }
+            }
+
+        }
         private static string _getServiceRequest = "Inspection/service/ServiceRequests";
         public static string GetServiceRequest
         {
@@ -2295,7 +2368,23 @@ namespace ProteusMMX
             }
 
         }
+        private static string _getDefaultEmployee = "Inspection/service/GetDefaultEmployee";
+        public static string GetDefaultEmployee
+        {
+            get
+            {
+                return _getDefaultEmployee;
+            }
 
+            set
+            {
+                if (value != _getDefaultEmployee)
+                {
+                    _getDefaultEmployee = value;
+                }
+            }
+
+        }
 
         private static string _getMaintenanceCodes = "Inspection/service/ComboListMaintenanceCodes";
         public static string GetMaintenanceCodes

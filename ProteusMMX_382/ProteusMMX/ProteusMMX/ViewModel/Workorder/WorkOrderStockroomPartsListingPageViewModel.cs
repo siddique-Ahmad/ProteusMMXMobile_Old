@@ -507,6 +507,7 @@ namespace ProteusMMX.ViewModel.Workorder
         #region Commands
         public ICommand ToolbarCommand => new AsyncCommand(ShowActions);
 
+        public ICommand ToolAddNewSPartCommand => new AsyncCommand(AddNewSPart);
         public ICommand ScanCommand => new AsyncCommand(ScanParts);
 
         public ICommand AddPartCommand => new AsyncCommand(AddPart);
@@ -653,7 +654,7 @@ namespace ProteusMMX.ViewModel.Workorder
         {
 
 
-            PageTitle = WebControlTitle.GetTargetNameByTitleName("Parts");
+            PageTitle = WebControlTitle.GetTargetNameByTitleName("StockroomParts");
             WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
             LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
             CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
@@ -676,19 +677,51 @@ namespace ProteusMMX.ViewModel.Workorder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { AddStockroompartTitle, LogoutTitle });
-
-                if (response == AddStockroompartTitle)
+                if (AddParts == "E")
                 {
-                    await NavigationService.NavigateToAsync<CreateWorkOrderStockroomPartsViewModel>(this.WorkorderID);
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+
+                    if (response == AddStockroompartTitle)
+                    {
+                        await NavigationService.NavigateToAsync<CreateWorkOrderStockroomPartsViewModel>(this.WorkorderID);
+                    }
+
+                    if (response == LogoutTitle)
+                    {
+                        await _authenticationService.LogoutAsync();
+                        await NavigationService.NavigateToAsync<LoginPageViewModel>();
+                        await NavigationService.RemoveBackStackAsync();
+                    }
+                }
+               else if (AddParts == "V")
+                {
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { AddStockroompartTitle, LogoutTitle });
+
+                    if (response == AddStockroompartTitle)
+                    {
+                        
+                    }
+
+                    if (response == LogoutTitle)
+                    {
+                        await _authenticationService.LogoutAsync();
+                        await NavigationService.NavigateToAsync<LoginPageViewModel>();
+                        await NavigationService.RemoveBackStackAsync();
+                    }
+                }
+                else
+                {
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() {  LogoutTitle });
+
+                   
+                    if (response == LogoutTitle)
+                    {
+                        await _authenticationService.LogoutAsync();
+                        await NavigationService.NavigateToAsync<LoginPageViewModel>();
+                        await NavigationService.RemoveBackStackAsync();
+                    }
                 }
 
-                if (response == LogoutTitle)
-                {
-                    await _authenticationService.LogoutAsync();
-                    await NavigationService.NavigateToAsync<LoginPageViewModel>();
-                    await NavigationService.RemoveBackStackAsync();
-                }
             }
             catch (Exception ex)
             {
@@ -698,6 +731,34 @@ namespace ProteusMMX.ViewModel.Workorder
             finally
             {
                 OperationInProgress = false;
+            }
+        }
+
+        public async Task AddNewSPart()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(1000);
+                if (AddParts == "E")
+                {
+                    
+                        await NavigationService.NavigateToAsync<CreateWorkOrderStockroomPartsViewModel>(this.WorkorderID);
+                   
+                }
+                else if (AddParts == "V")
+                {
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
             }
         }
 
@@ -819,8 +880,13 @@ namespace ProteusMMX.ViewModel.Workorder
                 }
                 else
                 {
-                    DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Thispartdoesnotexist"), 2000);
-                    return;
+                    if (!String.IsNullOrWhiteSpace(this.SearchText))
+                    {
+
+
+                        DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Thispartdoesnotexist"), 2000);
+                        return;
+                    }
                 }
             }
             catch (Exception ex)
@@ -904,12 +970,15 @@ namespace ProteusMMX.ViewModel.Workorder
 
                     };
 
+                    options.PossibleFormats = new List<ZXing.BarcodeFormat>() { ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.CODE_93, ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.QR_CODE };
+                    options.TryHarder = false; options.BuildBarcodeReader().Options.AllowedLengths = new[] { 44 };
                     ZXingScannerPage _scanner = new ZXingScannerPage(options)
                     {
                         DefaultOverlayTopText = "Align the barcode within the frame",
                         DefaultOverlayBottomText = string.Empty,
                         DefaultOverlayShowFlashButton = true
                     };
+                    _scanner.AutoFocus();
 
                     _scanner.OnScanResult += _scanner_OnScanResult;
                     var navPage = App.Current.MainPage as NavigationPage;

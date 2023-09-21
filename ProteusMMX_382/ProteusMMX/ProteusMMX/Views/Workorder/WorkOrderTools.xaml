@@ -3,8 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.Workorder.WorkOrderTools"
              xmlns:templates="clr-namespace:ProteusMMX.Views.Workorder.Templates;assembly=ProteusMMX" xmlns:controls="clr-namespace:ProteusMMX.Controls" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             Icon="tools.png">
-
+             >
+    <ContentPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="tools.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/tools.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/tools.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </ContentPage.IconImageSource>
     <ContentPage.Resources>
         <ResourceDictionary>
             <!--<converter:BooleanToColorConverter x:Key="ColorConverter" />-->
@@ -93,7 +105,7 @@
 
             <!--<Label Text="{Binding WelcomeTextTitle}" HorizontalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" FontSize="Small" BackgroundColor="{StaticResource NavigationBarColor}"/>-->
 
-            <Grid Grid.Row="1"  Padding="5,5,5,5">
+            <Grid x:Name="ToolPadding" Grid.Row="1">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -114,6 +126,8 @@
                     <Image.Source>
                         <OnPlatform x:TypeArguments="ImageSource" >
                             <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                            <OnPlatform.iOS>ssbicon.png</OnPlatform.iOS>
+                            <OnPlatform.WinPhone>Assets/ssbicon.png</OnPlatform.WinPhone>
                         </OnPlatform>
                     </Image.Source>
                     <Image.GestureRecognizers>
@@ -129,8 +143,10 @@
                 </StackLayout>
 
 
-                <StackLayout Spacing="0" Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="2" HeightRequest="40">
-                    <ListView  Grid.Row="1" Grid.ColumnSpan="2"
+                <StackLayout Spacing="0"  Grid.Row="2" Grid.ColumnSpan="2" HeightRequest="40">
+                    <AbsoluteLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
+                        <ListView   AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
                          ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                                BackgroundColor="White"
@@ -141,6 +157,19 @@
 
 
                     </ListView>
+                        <ImageButton 
+            AbsoluteLayout.LayoutBounds="0.95,0.95,50,50"
+            AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding NewToolbarCommand}"
+            BackgroundColor="Transparent" Source="Assets/addbtn.png">
+                            <ImageButton.Source>
+                                <OnPlatform  x:TypeArguments="ImageSource">
+                                    <OnPlatform.iOS>addbtn.png</OnPlatform.iOS>
+                                    <OnPlatform.Android>addbtn.png</OnPlatform.Android>
+                                    <OnPlatform.WinPhone>Assets/addbtn.png</OnPlatform.WinPhone>
+                                </OnPlatform>
+                            </ImageButton.Source>
+                        </ImageButton>
+                    </AbsoluteLayout>
                 </StackLayout>
             </Grid>
 

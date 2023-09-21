@@ -38,7 +38,7 @@
 
 
     <ContentPage.Content>
-        <Grid  Padding="10,10,10,10">
+        <Grid>
             <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -46,7 +46,7 @@
 
                 <ScrollView Grid.Row="0">
                     <Grid
-                        Padding="0,0,0,0"
+                        Padding="10,10,10,10"
                         RowSpacing="5"
                         VerticalOptions="Fill">
 
@@ -82,8 +82,8 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                <buttons:SfButton Text="{Binding TaskName}" Style="{StaticResource SfButtonStyles}" Command="{Binding TaskCommand}" IsEnabled="{Binding TaskIsEnable}" />
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}" IsEnabled="{Binding TaskIsEnable}">
+                                <buttons:SfButton Text="{Binding TaskName}" Style="{StaticResource SfButtonStyles}" Command="{Binding TaskCommand}"  />
                             </border:SfBorder>
                         </StackLayout>
 
@@ -111,7 +111,7 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}" IsEnabled="{Binding EmployeeIsEnable}">
                                 <buttons:SfButton Text="{Binding EmployeeName}" Style="{StaticResource SfButtonStyles}" Command="{Binding EmployeeCommand}" IsEnabled="{Binding EmployeeIsEnable}" />
                             </border:SfBorder>
                         </StackLayout>
@@ -125,12 +125,12 @@
                                     </OnPlatform>
                                 </Label.FontAttributes>
                             </Label>
-                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}"  IsEnabled="{Binding ContractorIsEnable}">
                                 <buttons:SfButton Text="{Binding ContractorName}" Style="{StaticResource SfButtonStyles}" Command="{Binding ContractorCommand}" IsEnabled="{Binding ContractorIsEnable}" />
                             </border:SfBorder>
                         </StackLayout>
 
-                        <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="0" IsVisible="{Binding TaskStartedDateIsVisible}">
+                        <StackLayout Orientation="Vertical" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" IsVisible="{Binding TaskStartedDateIsVisible}">
                             <Label Text="{Binding TaskStartedDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
@@ -145,7 +145,7 @@
                         </StackLayout>
 
 
-                        <StackLayout Orientation="Vertical" Grid.Row="3" Grid.Column="1" IsVisible="{Binding TaskCompletionDateIsVisible}">
+                        <StackLayout Orientation="Vertical" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" IsVisible="{Binding TaskCompletionDateIsVisible}">
                             <Label Text="{Binding TaskCompletionDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
                                 <Label.FontAttributes>
                                     <OnPlatform x:TypeArguments="FontAttributes">
@@ -155,21 +155,28 @@
                                 </Label.FontAttributes>
                             </Label>
                             <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                                <controls:CustomDatePicker SelectedDate="{Binding TaskCompletionDate}" Margin="0,8,0,0" MinimumDate="{Binding MinimumTaskCompletionDate}" MaximumDate="{Binding MaximumTaskCompletionDate}" IsEnabled="{Binding TaskCompletionDateIsEnable}" />
+                                <controls:AddTaskCustomDatePicker SelectedDate="{Binding TaskCompletionDate}" Margin="0,8,0,0" MinimumDate="{Binding MinimumTaskCompletionDate}" MaximumDate="{Binding MaximumTaskCompletionDate}" IsEnabled="{Binding TaskCompletionDateIsEnable}" />
+                            </border:SfBorder>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Vertical" Grid.ColumnSpan="2" Grid.Row="5">
+                            <Label Text="{Binding TaskArrivalDateTitle}" TextColor="Black" Style="{StaticResource LabelStyle}">
+                                <Label.FontAttributes>
+                                    <OnPlatform x:TypeArguments="FontAttributes">
+                                        <OnPlatform.iOS>Bold</OnPlatform.iOS>
+                                        <OnPlatform.Android>Bold</OnPlatform.Android>
+                                    </OnPlatform>
+                                </Label.FontAttributes>
+                            </Label>
+                            <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                                <controls:CustomDatePicker SelectedDate="{Binding TaskArrivalDate}" Margin="0,8,0,0"/>
                             </border:SfBorder>
                         </StackLayout>
 
 
                         <!--<Button Text="{Binding SaveTitle}" Style="{StaticResource SaveButtonStyle}" Grid.Row="4" Grid.ColumnSpan="2"  Command="{Binding SaveCommand}" />-->
-                        <Button
-                        Grid.Row="4"
-                        Grid.ColumnSpan="2"
-                        CornerRadius="5"
-                        Command="{Binding SaveCommand}"
-                        Style="{StaticResource SaveButtonStyle}"
-                        HeightRequest="40"
-                            BackgroundColor="#006de0"
-                        Text="{Binding SaveTitle}" >
+                        <Button Grid.Row="6" Grid.ColumnSpan="2" CornerRadius="5" HorizontalOptions="CenterAndExpand" WidthRequest="150"
+                        Command="{Binding SaveCommand}" Style="{StaticResource SaveButtonStyle}" Text="{Binding SaveTitle}" >
                         </Button>
                     </Grid>
 

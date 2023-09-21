@@ -6,7 +6,7 @@
              xmlns:behaviour="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX"
              xmlns:viewCells="clr-namespace:ProteusMMX.Views.Workorder.Templates.ViewCells;assembly=ProteusMMX"
              xmlns:behaviors="clr-namespace:ProteusMMX.Behaviors;assembly=ProteusMMX" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-             Title="{Binding PageTitle}" 
+           
              BackgroundColor="{StaticResource BackgroundColor}">
 
     <ContentPage.ToolbarItems>
@@ -63,8 +63,10 @@
                 </border:SfBorder>
                 <Image Grid.Column="1" Grid.Row="0" HeightRequest="40">
                     <Image.Source>
-                        <OnPlatform x:TypeArguments="ImageSource" >
-                            <OnPlatform.Android>ssbicon.png</OnPlatform.Android>
+                        <OnPlatform x:TypeArguments="ImageSource">
+                            <On Platform="Android,iOS" Value="ssbicon.png" />
+                            <On Platform="UWP" Value="Assets/ssbicon.png" />
+                            <On Platform="WinPhone" Value="Assets/ssbicon.png" />
                         </OnPlatform>
                     </Image.Source>
                     <Image.GestureRecognizers>
@@ -74,8 +76,9 @@
                     </Image.GestureRecognizers>
                 </Image>
                 <!--<Button Grid.Column="1" Text="{Binding SearchButtonTitle}" Style="{StaticResource LoginButtonStyle}" Command="{Binding ScanCommand}" />-->
-
-                <ListView Grid.Row="1" Grid.ColumnSpan="2"
+                <AbsoluteLayout Grid.Row="1"  Grid.ColumnSpan="2" AbsoluteLayout.LayoutBounds="0,0,1,1"
+            AbsoluteLayout.LayoutFlags="SizeProportional">
+                    <ListView Grid.Row="1" Grid.ColumnSpan="2" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All"
                          ItemTemplate="{StaticResource DateTemplateSelector}"
                           HasUnevenRows="True"
                           SeparatorVisibility="Default"
@@ -85,7 +88,19 @@
                           behaviors:ItemTappedCommandListView.ItemTappedCommand="{Binding WorkorderNonStockroomPartSelectedCommand}">
 
                 </ListView>
-
+                    <ImageButton 
+            AbsoluteLayout.LayoutBounds="0.95,0.95,50,50"
+            AbsoluteLayout.LayoutFlags="PositionProportional" Command="{Binding ToolAddNewNSPartCommand}"
+            BackgroundColor="Transparent" Source="Assets/addbtn.png">
+                        <ImageButton.Source>
+                            <OnPlatform  x:TypeArguments="ImageSource">
+                                <OnPlatform.iOS>addbtn.png</OnPlatform.iOS>
+                                <OnPlatform.Android>addbtn.png</OnPlatform.Android>
+                                <OnPlatform.WinPhone>Assets/addbtn.png</OnPlatform.WinPhone>
+                            </OnPlatform>
+                        </ImageButton.Source>
+                    </ImageButton>
+                </AbsoluteLayout>
             </Grid>
             <ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
 

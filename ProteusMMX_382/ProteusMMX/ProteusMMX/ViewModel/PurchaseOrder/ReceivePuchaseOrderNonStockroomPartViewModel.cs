@@ -930,7 +930,7 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -1034,7 +1034,7 @@ namespace ProteusMMX.ViewModel.PurchaseOrder
                     InvoiceNumber = String.IsNullOrEmpty(InvoiceNumberText) ? null : InvoiceNumberText.Trim(),
                     PurchaseOrderNonStockroomPartID = this.PurchaseOrderNonStockroomPartID,
                     QuantityReceived = int.Parse(QuantityReceivedText),
-                    ReceivedDate = ReceivedDate.Date.Add(DateTime.Now.TimeOfDay),
+                    ReceivedDate = ReceivedDate,
                     PackingSlipNumber = String.IsNullOrEmpty(PackagingSlipNumberText) ? null : PackagingSlipNumberText.Trim(),
                     ReceiverID = this.ReceiverID,
                     ModifiedUserName = AppSettings.User.UserName,

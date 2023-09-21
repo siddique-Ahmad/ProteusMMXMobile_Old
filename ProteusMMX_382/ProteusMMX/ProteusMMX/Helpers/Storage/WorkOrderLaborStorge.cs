@@ -21,4 +21,15 @@ namespace ProteusMMX.Helpers.Storage
         public static ISimpleStorage Storage { get { return DependencyService.Get<ISimpleStorage>(); } }
 
     }
+    public static class RightsStorage
+    {
+        public static ISimpleStorage Storage { get { return DependencyService.Get<ISimpleStorage>(); } }
+
+    }
+
+    public static class NotifactionStorage
+    {
+        public static ISimpleStorage Storage { get { return DependencyService.Get<ISimpleStorage>(); } }
+
+    }
 }

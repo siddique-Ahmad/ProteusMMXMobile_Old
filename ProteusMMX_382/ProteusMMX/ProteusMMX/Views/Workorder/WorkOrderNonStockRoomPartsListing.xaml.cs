@@ -17,6 +17,7 @@ namespace ProteusMMX.Views.Workorder
         public WorkOrderNonStockRoomPartsListing()
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
@@ -54,7 +55,7 @@ namespace ProteusMMX.Views.Workorder
             if (string.IsNullOrEmpty(searchBar.Text))
             {
                 ViewModel.OnViewDisappearingAsync(null);
-                ViewModel.RefillNonStockPartsCollection();
+                ViewModel.ReloadPageAfterSerchBoxCancle();
             }
         }
     }

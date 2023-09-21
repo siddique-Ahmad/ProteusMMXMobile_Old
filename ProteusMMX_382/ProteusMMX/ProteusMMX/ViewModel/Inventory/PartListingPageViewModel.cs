@@ -770,7 +770,7 @@ namespace ProteusMMX.ViewModel.Inventory
         {
 
 
-            PageTitle = WebControlTitle.GetTargetNameByTitleName("StockroomParts") + " - " + StockroomName;// + (WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName).PadLeft(104); 
+            PageTitle = StockroomName;// + (WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName).PadLeft(104); 
             //WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
             LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
             CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
@@ -793,7 +793,7 @@ namespace ProteusMMX.ViewModel.Inventory
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                var response = await DialogService.SelectActionAsync("",SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -897,6 +897,7 @@ namespace ProteusMMX.ViewModel.Inventory
             {
                 foreach (var item in stkroomparts)
                 {
+                   
                     bool checkDuplicate = StockroomPartsCollection.Any(sp => sp.StockroomPartID == item.StockroomPartID);
                     if (checkDuplicate == true)
                     {
@@ -983,13 +984,15 @@ namespace ProteusMMX.ViewModel.Inventory
 
                     };
 
+                    options.PossibleFormats = new List<ZXing.BarcodeFormat>() { ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.CODE_93, ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.QR_CODE };
+                    options.TryHarder = false; options.BuildBarcodeReader().Options.AllowedLengths = new[] { 44 };
                     ZXingScannerPage _scanner = new ZXingScannerPage(options)
                     {
                         DefaultOverlayTopText = "Align the barcode within the frame",
                         DefaultOverlayBottomText = string.Empty,
                         DefaultOverlayShowFlashButton = true
                     };
-
+                    _scanner.AutoFocus();
                     _scanner.OnScanResult += _scanner_OnScanResult;
                     var navPage = App.Current.MainPage as NavigationPage;
                     await navPage.PushAsync(_scanner);
@@ -1091,7 +1094,12 @@ namespace ProteusMMX.ViewModel.Inventory
             }
 
         }
-
+        public async Task ReloadPageAfterSerchBoxCancle()
+        {
+            PageNumber = 1;
+            await RemoveAllStockroomsPartsFromCollection();
+            await GetStockroomParts();
+        }
         public async Task OnViewDisappearingAsync(VisualElement view)
         {
             this.SearchText = null;

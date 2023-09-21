@@ -11,7 +11,9 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string InspectionTime { get; set; }
         public string SectionName { get; set; }
         public string InspectionType { get; set; }
-        public Nullable<decimal> EstimatedHours { get; set; }
+        public string EstimatedHours { get; set; }
+
+        public int SectionID { get; set; }
         public List<WorkOrderSectionData> sectiondata { get; set; }
     }
 }

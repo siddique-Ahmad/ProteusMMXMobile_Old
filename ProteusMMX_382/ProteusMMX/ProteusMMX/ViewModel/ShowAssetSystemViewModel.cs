@@ -494,6 +494,32 @@ namespace ProteusMMX.ViewModel
            
 
         }
+
+        public async Task searchBoxTextCler()
+        {
+            try
+            {
+                UserDialogs.Instance.ShowLoading("Please wait..", MaskType.Gradient);
+                await Task.Delay(10);
+                PageNumber = 1;
+                await RemoveAllAssetsFromCollection();
+                await GetAssetsFromSearchBar();
+            }
+            catch (Exception ex)
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
+                //OperationInProgress = false;
+
+            }
+        }
+
         async Task GetAssetsFromSearchBar()
         {
             try
@@ -631,12 +657,15 @@ namespace ProteusMMX.ViewModel
 
                     };
 
+                    options.PossibleFormats = new List<ZXing.BarcodeFormat>() { ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.CODE_93, ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.EAN_13, ZXing.BarcodeFormat.QR_CODE };
+                    options.TryHarder = false; options.BuildBarcodeReader().Options.AllowedLengths = new[] { 44 };
                     ZXingScannerPage _scanner = new ZXingScannerPage(options)
                     {
                         DefaultOverlayTopText = "Align the barcode within the frame",
                         DefaultOverlayBottomText = string.Empty,
                         DefaultOverlayShowFlashButton = true
                     };
+                    _scanner.AutoFocus();
 
                     _scanner.OnScanResult += _scanner_OnScanResult;
                     var navPage = App.Current.MainPage as NavigationPage;

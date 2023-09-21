@@ -43,6 +43,9 @@ namespace ProteusMMX.Model
         public string RequireSignaturesForValidation { get; set; }
 
         public bool EnableHoursAtRate { get; set; }
+        public string FCMToken { get; set; }
+        public string NotificationMode { get; set; }
+
     }
 
 }

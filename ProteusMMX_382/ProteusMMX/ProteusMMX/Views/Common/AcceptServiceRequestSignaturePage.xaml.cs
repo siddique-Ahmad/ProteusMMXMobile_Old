@@ -26,9 +26,12 @@ using Xamarin.Forms.Xaml;
 
 namespace ProteusMMX.Views.Common
 {
-     [XamlCompilation(XamlCompilationOptions.Skip)]
+    public delegate void NoArgs();
+    [XamlCompilation(XamlCompilationOptions.Skip)]
+   
     public partial class AcceptServiceRequestSignaturePage : PopupPage
     {
+       
         string password = string.Empty;
         IServiceRequestModuleService ServiceRequestService = Locator.Instance.Resolve<IServiceRequestModuleService>();
         IDialogService DialogService = Locator.Instance.Resolve<IDialogService>();
@@ -43,7 +46,7 @@ namespace ProteusMMX.Views.Common
         CustomImage imageview;
         string SRNavigation = string.Empty;
         ServiceOutput user;
-
+        public event NoArgs OnDispose;
         public AcceptServiceRequestSignaturePage()
         {
             InitializeComponent();
@@ -75,14 +78,15 @@ namespace ProteusMMX.Views.Common
             PopupNavigation.PopAsync();
         }
 
-        protected override Task OnAppearingAnimationEnd()
+        protected override void OnAppearing()
         {
-            return Content.FadeTo(1);
+            base.OnAppearing();
         }
 
-        protected override Task OnDisappearingAnimationBegin()
+        protected override void OnDisappearing()
         {
-            return Content.FadeTo(1);
+            base.OnDisappearing();
+            OnDispose?.Invoke();
         }
 
         private async void OK_Clicked(object sender, EventArgs e)

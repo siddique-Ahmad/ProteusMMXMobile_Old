@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
@@ -10,12 +11,13 @@ using Xamarin.Forms.Xaml;
 
 namespace ProteusMMX.Views.Workorder
 {
-	 [XamlCompilation(XamlCompilationOptions.Skip)]
+    [XamlCompilation(XamlCompilationOptions.Skip)]
     public partial class CreateWorkOrderStockroomParts : ContentPage
     {
         public CreateWorkOrderStockroomParts()
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }
@@ -59,6 +61,8 @@ namespace ProteusMMX.Views.Workorder
                     val = val.Remove(val.Length - 1);// Remove Last character 
                     e1.Text = val; //Set the Old value
                 }
+
+
             }
             catch (Exception ex)
             {
@@ -79,7 +83,7 @@ namespace ProteusMMX.Views.Workorder
                     val = val.Remove(val.Length - 1);// Remove Last character 
                     e1.Text = val; //Set the Old value
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(val, "^[0-9.]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(val, "^[0-9]*$"))
                 {
                     val = val.Remove(val.Length - 1);// Remove Last character 
                     e1.Text = val; //Set the Old value
@@ -104,7 +108,7 @@ namespace ProteusMMX.Views.Workorder
                     val = val.Remove(val.Length - 1);// Remove Last character 
                     e1.Text = val; //Set the Old value
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(val, "^[0-9.]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(val, "^[0-9]*$"))
                 {
                     val = val.Remove(val.Length - 1);// Remove Last character 
                     e1.Text = val; //Set the Old value

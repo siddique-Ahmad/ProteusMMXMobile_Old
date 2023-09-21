@@ -14,6 +14,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
 		public ClosedWorkorderDetailsPage ()
 		{
 			InitializeComponent ();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
 
@@ -21,7 +22,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
             {
                 if (AppSettings.User.RequireSignaturesForValidation == "True")
                 {
-                    this.SignatureLayout.SetValue(Grid.RowProperty, 34);
+                    this.SignatureLayout.SetValue(Grid.RowProperty, 37);
                 }
                 else
                 {
@@ -30,7 +31,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
             }
             else
             {
-                this.SignatureLayout.SetValue(Grid.RowProperty, 34);
+                this.SignatureLayout.SetValue(Grid.RowProperty, 37);
             }
 
 

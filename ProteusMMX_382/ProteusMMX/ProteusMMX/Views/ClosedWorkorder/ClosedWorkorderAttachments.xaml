@@ -3,9 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ProteusMMX.Views.ClosedWorkorder.ClosedWorkorderAttachments"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
-             
-               Icon="Attachements.png"
              BackgroundColor="{StaticResource BackgroundColor}" >
+
+    <ContentPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="Attachements.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/Attachements.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/Attachements.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </ContentPage.IconImageSource>
+
     <ContentPage.ToolbarItems>
         <ToolbarItem Name="MenuItem2" Order="Primary" Icon="dots.png" Text=":" Priority="0" Command="{Binding ToolbarCommand}" >
             <ToolbarItem.Icon>
@@ -46,7 +59,7 @@
                             </Label>
                             <Frame BackgroundColor="White"  BorderColor="Black"  CornerRadius="5">
                                 <StackLayout HeightRequest="350" WidthRequest="350">
-                                    <cards:CarouselView  VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}">
+                                    <cards:CarouselView IsNextItemPanInteractionEnabled="False" IsPanInteractionEnabled="False" IsPanSwipeEnabled="False" IsPrevItemPanInteractionEnabled="False" VerticalOptions="FillAndExpand" Grid.Column="1" ItemsSource="{Binding Attachments}" x:Name="CarouselView" BackgroundColor="White" SelectedIndex="{Binding SelectedIndexItem , Mode=TwoWay}">
                                         <cards:CarouselView.ItemTemplate>
                                             <DataTemplate >
                                                 <StackLayout  HeightRequest="450" WidthRequest="450">

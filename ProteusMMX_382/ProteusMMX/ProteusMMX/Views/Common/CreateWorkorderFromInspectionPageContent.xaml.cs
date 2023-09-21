@@ -76,7 +76,9 @@ namespace ProteusMMX.Views.Workorder
 
                         var workOrder = new workOrders();
 
-                        workOrder.RequiredDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date;
+                        workOrder.RequiredDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+
+                      
                         workOrder.Description = String.IsNullOrWhiteSpace(Description.Text) ? null : Description.Text.Trim();
                         workOrder.AdditionalDetails = AdditionalDetails.Text;
                         workOrder.LocationID = abc.workOrderWrapper.workOrder.LocationID;
@@ -107,7 +109,8 @@ namespace ProteusMMX.Views.Workorder
                             ClientIANATimeZone = DateTimeZoneProviders.Serialization.GetSystemDefault().ToString(),
                             workOrder = new workOrders
                             {
-                                RequiredDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
+                                RequiredDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                               
                                 Description = String.IsNullOrWhiteSpace(Description.Text) ? null : Description.Text.Trim(),
                                 AdditionalDetails = AdditionalDetails.Text,
                                 LocationID = abc.workOrderWrapper.workOrder.LocationID,
@@ -150,7 +153,7 @@ namespace ProteusMMX.Views.Workorder
 
                                     TaskID = null,
 
-                                    StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
+                                    //StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
 
                                     EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
 
@@ -196,7 +199,8 @@ namespace ProteusMMX.Views.Workorder
                         ClientIANATimeZone = DateTimeZoneProviders.Serialization.GetSystemDefault().ToString(),
                         workOrder = new workOrders
                         {
-                            RequiredDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
+                            RequiredDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                           
                             Description = String.IsNullOrWhiteSpace(Description.Text) ? null : Description.Text.Trim(),
                             AdditionalDetails = AdditionalDetails.Text,
                             LocationID = abc.workOrderWrapper.workOrder.LocationID,
@@ -238,7 +242,7 @@ namespace ProteusMMX.Views.Workorder
 
                                 TaskID = null,
 
-                                StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
+                                //StartDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).Date,
 
                                 EmployeeLaborCraftID = assignto.EmployeeLaborCraftID
 
@@ -273,7 +277,7 @@ namespace ProteusMMX.Views.Workorder
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;

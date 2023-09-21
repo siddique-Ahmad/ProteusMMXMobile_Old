@@ -40,7 +40,7 @@ namespace ProteusMMX.Views.Common
         {
             try
             {
-                if (Application.Current.Properties.ContainsKey("CauseID"))
+                if (Application.Current.Properties.ContainsKey("CauseID") && Application.Current.Properties["CauseID"] != null)
                 {
                     CauseID = Application.Current.Properties["CauseID"].ToString();
 
@@ -117,14 +117,15 @@ namespace ProteusMMX.Views.Common
             PopupNavigation.PopAsync();
         }
 
-        protected override Task OnAppearingAnimationEnd()
+        protected override void OnAppearing()
         {
-            return Content.FadeTo(1);
+            base.OnAppearing();
         }
 
-        protected override Task OnDisappearingAnimationBegin()
+        protected override void OnDisappearing()
         {
-            return Content.FadeTo(1);
+            base.OnDisappearing();
+            //OnDispose?.Invoke();
         }
 
     }

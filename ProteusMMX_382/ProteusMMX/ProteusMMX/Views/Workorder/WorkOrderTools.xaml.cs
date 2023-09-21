@@ -18,6 +18,18 @@ namespace ProteusMMX.Views.Workorder
         public WorkOrderTools()
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "");
+            if(Device.RuntimePlatform==Device.iOS)
+            {
+                if(Device.Idiom==TargetIdiom.Phone)
+                {
+                    ToolPadding.Padding = new Thickness(5, 28, 5, 5);
+                }
+            }
+            else
+            {
+                ToolPadding.Padding = new Thickness(5, 5, 5, 5);
+            }
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
         }

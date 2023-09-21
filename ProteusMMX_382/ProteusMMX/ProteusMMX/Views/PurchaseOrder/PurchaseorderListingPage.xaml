@@ -65,13 +65,17 @@
                             </Grid.RowDefinitions>
                             <border:SfBorder BackgroundColor="White" Grid.Row="0" Grid.Column="0" Margin="0,0,0,0" CornerRadius="10" >
 
-                                <SearchBar x:Name="filterText" HeightRequest="40" TextChanged="filterText_TextChanged" Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0"/>
+                                <SearchBar x:Name="filterText" HeightRequest="40" TextChanged="filterText_TextChanged"  Placeholder="{Binding SearchPlaceholder}" Text="{Binding SearchText}" Grid.Row="0"/>
 
                             </border:SfBorder>
                             <Image Grid.Column="1" Grid.Row="0" HeightRequest="40" Margin="0,5,0,0">
                                 <Image.Source>
                                     <OnPlatform x:TypeArguments="ImageSource" >
                                         <OnPlatform.Android>searchicon.png</OnPlatform.Android>
+                                        <OnPlatform.iOS>
+                                            <FileImageSource File="searchicon.png"/>
+                                        </OnPlatform.iOS>
+                                        <OnPlatform.WinPhone>Assets/searchicon.png</OnPlatform.WinPhone>
                                     </OnPlatform>
                                 </Image.Source>
                                 <Image.GestureRecognizers>
@@ -138,7 +142,7 @@
                 </ListView>
             </Grid>
 
-            <ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>
+            <!--<ActivityIndicator Grid.Row="1" IsVisible="{Binding OperationInProgress}" IsRunning="{Binding OperationInProgress}" HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand"/>-->
 
         </Grid>
 

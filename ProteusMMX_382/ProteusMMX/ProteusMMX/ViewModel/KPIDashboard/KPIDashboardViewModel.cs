@@ -219,9 +219,23 @@ namespace ProteusMMX.ViewModel.KPIDashboard
             }
         }
 
-        
+        string _pageTitle;
+        public string PageTitle
+        {
+            get
+            {
+                return _pageTitle;
+            }
 
-
+            set
+            {
+                if (value != _pageTitle)
+                {
+                    _pageTitle = value;
+                    OnPropertyChanged("PageTitle");
+                }
+            }
+        }
 
         public ICommand PriorityCommand => new AsyncCommand(ShowPriority);
         
@@ -233,7 +247,7 @@ namespace ProteusMMX.ViewModel.KPIDashboard
         {
             try
             {
-                await GetKPIDashboardDetailsByPriority(AppSettings.User.UserID, this.PriorityID);
+                PageTitle = WebControlTitle.GetTargetNameByTitleName("KPIDashboard");
             }
             catch (Exception)
             {
@@ -252,7 +266,7 @@ namespace ProteusMMX.ViewModel.KPIDashboard
             try
             {
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
-             
+                await Task.Delay(10);
                 await NavigationService.NavigateToAsync<PriorityListSelectionPageViewModel>(new TargetNavigationData() { }); //Pass the control here
             }
             catch (Exception ex)
@@ -428,13 +442,24 @@ namespace ProteusMMX.ViewModel.KPIDashboard
         {
             try
             {
+                UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
+                await Task.Delay(10);
                 //Retrive Priority
                 MessagingCenter.Subscribe<object>(this, MessengerKeys.PriorityRequested, OnPriorityRequested);
+                PageTitle = WebControlTitle.GetTargetNameByTitleName("KPIDashboard");
+                await GetKPIDashboardDetailsByPriority(AppSettings.User.UserID, this.PriorityID);
             }
             catch (Exception)
             {
+                UserDialogs.Instance.HideLoading();
+                
+            }
+            finally
+            {
+                UserDialogs.Instance.HideLoading();
 
-                throw;
+                //OperationInProgress = false;
+
             }
         }
         public async Task OnViewDisappearingAsync(VisualElement view)

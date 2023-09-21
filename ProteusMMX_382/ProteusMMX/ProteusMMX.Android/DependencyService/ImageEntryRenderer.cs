@@ -45,6 +45,20 @@ namespace ProteusMMX.Droid.DependencyService
                 this.Control.SetBackgroundDrawable(gd);
                 this.Control.SetRawInputType(InputTypes.TextFlagNoSuggestions);
                 Control.SetHintTextColor(ColorStateList.ValueOf(global::Android.Graphics.Color.White));
+                if (Build.VERSION.SdkInt >= BuildVersionCodes.Q) //api > 28
+                {
+                    try
+                    {
+                        Control.SetTextCursorDrawable(Resource.Drawable.xml_file_name);
+                    }
+                    catch (Exception ex)
+                    {
+
+                       
+                    }
+                  
+                }
+                
             }
 
             var editText = this.Control;
@@ -62,6 +76,8 @@ namespace ProteusMMX.Droid.DependencyService
             }
             editText.CompoundDrawablePadding = 15;
             Control.Background.SetColorFilter(element.LineColor.ToAndroid(), PorterDuff.Mode.SrcAtop);
+            //EditText nativeEditText = (global::Android.Widget.EditText)Control;
+            //    nativeEditText.SetTextCursorDrawable(Resource.Drawable.xml_file_name);
         }
         private BitmapDrawable GetDrawable(string imageEntryImage)
         {

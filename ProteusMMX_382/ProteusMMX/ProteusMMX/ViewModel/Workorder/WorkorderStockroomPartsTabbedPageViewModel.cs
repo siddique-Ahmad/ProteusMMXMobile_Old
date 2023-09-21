@@ -24,7 +24,41 @@ namespace ProteusMMX.ViewModel.Workorder
         public readonly IWorkorderService _workorderService;
         #endregion
 
+        string _stockroomPartsTitle;
+        public string StockroomPartsTitle
+        {
+            get
+            {
+                return _stockroomPartsTitle;
+            }
 
+            set
+            {
+                if (value != _stockroomPartsTitle)
+                {
+                    _stockroomPartsTitle = value;
+                    OnPropertyChanged("StockroomPartsTitle");
+                }
+            }
+        }
+
+        string _nonStockroomPartsTitle;
+        public string NonStockroomPartsTitle
+        {
+            get
+            {
+                return _nonStockroomPartsTitle;
+            }
+
+            set
+            {
+                if (value != _nonStockroomPartsTitle)
+                {
+                    _nonStockroomPartsTitle = value;
+                    OnPropertyChanged("NonStockroomPartsTitle");
+                }
+            }
+        }
 
         ServiceOutput _formControlsAndRights;
         public ServiceOutput FormControlsAndRights
@@ -54,6 +88,8 @@ namespace ProteusMMX.ViewModel.Workorder
             try
             {
 
+                StockroomPartsTitle = WebControlTitle.GetTargetNameByTitleName("StockroomParts");
+                NonStockroomPartsTitle = WebControlTitle.GetTargetNameByTitleName("NonStockRoomParts");
 
 
             }

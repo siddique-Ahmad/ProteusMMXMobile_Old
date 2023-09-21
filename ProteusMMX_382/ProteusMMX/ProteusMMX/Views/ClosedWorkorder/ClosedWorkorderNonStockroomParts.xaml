@@ -55,7 +55,7 @@
                     <ColumnDefinition Width="3.5*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>-->
-
+            <Label TextColor="Red" IsVisible="{Binding DisabledTextIsEnable , Mode=TwoWay}" Text="{Binding DisabledText}" />
 
             <ListView Grid.Row="0" Margin="5,2,5,0"
                          ItemTemplate="{StaticResource DateTemplateSelector}"

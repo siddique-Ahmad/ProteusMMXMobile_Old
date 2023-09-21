@@ -8,9 +8,9 @@ namespace ProteusMMX.Services.Workorder
 {
     public interface IWorkorderService
     {
-        Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber , string RowCount , string WorkorderNumber , string WorkorderType , string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate);
+        Task<ServiceOutput> GetWorkorders(string UserID, string PageNumber , string RowCount , string WorkorderNumber , string WorkorderType , string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate, string KPIType);
 
-        Task<ServiceOutput> GetWorkordersfromKPI(string UserID, string PageNumber, string RowCount, string WorkorderNumber, string WorkorderType, string ActivationDateSortingType, string LocationSearch, string ShiftSearch, string PrioritySearch, string SortByDueDate,string KPIType);
+       
 
         
 
@@ -27,6 +27,8 @@ namespace ProteusMMX.Services.Workorder
         Task<ServiceOutput> GetWorkorderInspectionTime(string UserID, string WorkorderID);
         Task<ServiceOutput> CreateWorkorder(object workorder);
         Task<ServiceOutput> UpdateWorkorder(object workorder);
+
+        Task<ServiceOutput> SaveWorkOrderAcknowledgement(object workorder);
         Task<ServiceOutput> IsSignatureRequiredOnInspection(string WorkorderID);
         Task<ServiceOutput> CloseWorkorder(object workorder);
 

@@ -58,6 +58,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
         public ClosedWorkorderInspection()
         {
             InitializeComponent();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
             // this.Title = WebControlTitle.GetTargetNameByTitleName("Inspection");
@@ -82,6 +83,16 @@ namespace ProteusMMX.Views.ClosedWorkorder
         {
             try
             {
+                if (Application.Current.Properties.ContainsKey("TaskOrInspection"))
+                {
+                    string TaskorInspection = (string)Application.Current.Properties["TaskOrInspection"];
+                    if (TaskorInspection == "Task")
+                    {
+                        ViewModel.DisabledText = WebControlTitle.GetTargetNameByTitleName("ThisTabisDisabled");
+                        ViewModel.DisabledTextIsEnable = true;
+                        return;
+                    }
+                }
                 this.ClosedWorkorderID = ViewModel.ClosedWorkorderID;
                 AnswerText.Clear();
                 ParentLayout.Children.Clear();
@@ -99,9 +110,10 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
         private async Task RetriveAllWorkorderInspectionsAsync()
         {
+
             ClosedWorkorderInspectionList = await ViewModel._inspectionService.GetClosedWorkOrdersInspection(this.ClosedWorkorderID.ToString(), this.UserId);
 
-           
+
 
             Grid masterGrid = new Grid();
             masterGrid.BackgroundColor = Color.White;
@@ -132,7 +144,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
             //TotalInspectionTime = new Label();
             if (ClosedWorkorderInspectionList.clWorkOrderWrapper == null || ClosedWorkorderInspectionList.clWorkOrderWrapper.ClosedWorkOrderInspection.Count == 0)
             {
-                
+
                 // this.InspectionTimerLayout.IsVisible = false;
                 return;
             }
@@ -222,7 +234,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     BackgroundColor = Color.Transparent,
                     TextColor = Color.Black,
                     CommandParameter = item,
-                    ImageSource = "Cstart.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/Cstart.png" : "Cstart.jpg",
                 };
                 StartBtnGrid.Children.Add(startButton, 0, 0);
 
@@ -249,7 +261,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     ShowIcon = true,
                     BackgroundColor = Color.White,
                     TextColor = Color.Black,
-                    ImageSource = "Cstop.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/Cstop.png" : "Cstop.jpg" ,
                     CommandParameter = item,
                 };
                 StopBtnGrid.Children.Add(stopButton);
@@ -346,40 +358,42 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     HeightRequest = 35,
                     BorderColor = Color.Black,
                     BackgroundColor = Color.LightGray,
-                    CornerRadius = 10
+                    CornerRadius = 10,
+                   
                 };
                 FromDateSL.Children.Add(dateFromBo);
-                CustomDatePicker startDate;
-                
-                    if (item.StartDate != null)
-                    {
-                        startDate = new CustomDatePicker
-                        {
-                            Margin = new Thickness(0, 5, 0, 0),
-                            SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
-                            MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                            HeightRequest = 2,
-                            BackgroundColor = Color.LightGray,
-                            IsEnabled = false,
-                        };
-                        dateFromBo.Content = startDate;
-                    }
-                    else
-                    {
-                        startDate = new CustomDatePicker
-                        {
-                            Margin = new Thickness(0, 5, 0, 0),
-                            SelectedDate=null,
-                            //MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                            HeightRequest = 2,
-                            HorizontalOptions = LayoutOptions.Start,
-                            BackgroundColor = Color.LightGray,
-                            IsEnabled = false,
-                        };
-                        dateFromBo.Content = startDate;
-                    }
+                Label startDate;
 
-                
+                if (item.StartDate != null)
+                {
+                    string sdate = Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt"));
+                    startDate = new Label
+                    {
+                        Margin = new Thickness(0, 5, 0, 0),
+                        Text = sdate,
+                       // MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        HeightRequest = 2,
+                        BackgroundColor = Color.LightGray,
+                        TextColor=Color.Black,
+                    };
+                    dateFromBo.Content = startDate;
+                }
+                else
+                {
+                    startDate = new Label
+                    {
+                        Margin = new Thickness(0, 5, 0, 0),
+                        Text = "",
+                        //MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        HeightRequest = 2,
+                        HorizontalOptions = LayoutOptions.Start,
+                        BackgroundColor = Color.LightGray,
+                        TextColor = Color.Black,
+                    };
+                    dateFromBo.Content = startDate;
+                }
+
+
                 StackLayout CompDateSL = new StackLayout();
                 dateFromCompGrid.Children.Add(CompDateSL, 1, 0);
                 Label CompDateLbl = new Label
@@ -396,35 +410,37 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     BorderColor = Color.Black,
                     CornerRadius = 10,
                     BackgroundColor = Color.LightGray,
+                    
                 };
                 CompDateSL.Children.Add(dateCompBo);
-                CustomDatePicker CompletionDate;
+                Label CompletionDate;
                 if (item.CompletionDate != null)
                 {
-                    CompletionDate = new CustomDatePicker
+                    CompletionDate = new Label
                     {
-                        SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
-                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        Text =Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt")),                        
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
                         Margin = new Thickness(0, 5, 0, 0),
                         BackgroundColor = Color.LightGray,
-                        IsEnabled = false,
+                        TextColor = Color.Black,
+                        
                     };
                     dateCompBo.Content = CompletionDate;
                 }
 
                 else
                 {
-                    CompletionDate = new CustomDatePicker
+                    CompletionDate = new Label
                     {
                         //MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
-                        SelectedDate = null,
+                        Text = "",
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
                         Margin = new Thickness(0, 5, 0, 0),
                         BackgroundColor = Color.LightGray,
-                        IsEnabled = false,
+                        TextColor = Color.Black,
+                        
                     };
                     dateCompBo.Content = CompletionDate;
                 }
@@ -433,24 +449,31 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                 if (!string.IsNullOrWhiteSpace(item.InspectionTime))
                 {
-                    var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(item.InspectionTime));
-                    var timeString = (int)timeInspection.TotalHours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
+                    try
+                    {
 
+                        var timeInspection = TimeSpan.FromSeconds(Convert.ToDouble(item.InspectionTime));
+                        var timeString = (int)timeInspection.TotalHours + ":" + timeInspection.Minutes + ":" + timeInspection.Seconds;
 
-                    string FinalHours1 = Convert.ToDecimal(string.Format("{0:F2}", timeInspection.TotalHours)).ToString();
-                    var FinalHrs2 = FinalHours1.Split('.');
-                    hoursEntry.Text = FinalHrs2[0];
-                    //hoursEntry.Text = timeInspection.Hours.ToString();
-                    minuteEntry.Text = timeInspection.Minutes.ToString();
+                        string FinalHours1 = Convert.ToDecimal(string.Format("{0:F2}", timeInspection.TotalHours)).ToString();
+                        var FinalHrs2 = FinalHours1.Split('.');
+                        hoursEntry.Text = FinalHrs2[0];
+                        //hoursEntry.Text = timeInspection.Hours.ToString();
+                        minuteEntry.Text = timeInspection.Minutes.ToString();
 
+                        total = total.Add(new TimeSpan(int.Parse(hoursEntry.Text), int.Parse(minuteEntry.Text), 0));
+                        string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", total.TotalHours)).ToString();
+                        var FinalHrs1 = FinalHours.Split('.');
+                        string DisplayHours = FinalHrs1[0];
 
-                    total = total.Add(new TimeSpan(int.Parse(hoursEntry.Text), int.Parse(minuteEntry.Text), 0));
-                    string FinalHours = Convert.ToDecimal(string.Format("{0:F2}", total.TotalHours)).ToString();
-                    var FinalHrs1 = FinalHours.Split('.');
-                    string DisplayHours = FinalHrs1[0];
+                        TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
 
-                    TotalInspectionTime.Text = DisplayHours + ":" + total.Minutes;
+                    }
+                    catch (Exception)
+                    {
 
+                        throw;
+                    }
                 }
 
             }
@@ -533,7 +556,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     BackgroundColor = Color.Transparent,
                     TextColor = Color.Black,
                     CommandParameter = item,
-                    ImageSource = "Cstart.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/Cstart.png" : "Cstart.jpg",
                 };
                 StartBtnGrid.Children.Add(startButton, 0, 0);
 
@@ -560,7 +583,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     ShowIcon = true,
                     BackgroundColor = Color.White,
                     TextColor = Color.Black,
-                    ImageSource = "Cstop.png",
+                    ImageSource = (Device.RuntimePlatform == Device.UWP) ? "Assets/Cstop.png" : "Cstop.jpg" ,
                     CommandParameter = item,
                 };
                 StopBtnGrid.Children.Add(stopButton);
@@ -658,32 +681,35 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     BorderColor = Color.Black,
                     CornerRadius = 10,
                     BackgroundColor = Color.LightGray,
+                   
                 };
                 FromDateSL.Children.Add(dateFromBo);
-                CustomDatePicker startDate;
+
+
+                Label startDate;
                 if (item.StartDate != null)
                 {
-                    startDate = new CustomDatePicker
+                    startDate = new Label
                     {
                         Margin = new Thickness(0, 5, 0, 0),
-                        SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
-                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        Text = Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.StartDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt")),
+                        //MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
                         HeightRequest = 2,
-                        BackgroundColor=Color.LightGray,
-                        IsEnabled = false,
+                        BackgroundColor = Color.LightGray,
+                        TextColor=Color.Black,
                     };
                     dateFromBo.Content = startDate;
                 }
                 else
                 {
-                    startDate = new CustomDatePicker
+                    startDate = new Label
                     {
                         Margin = new Thickness(0, 5, 0, 0),
                         // MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),                       
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
                         BackgroundColor = Color.LightGray,
-                        IsEnabled = false,
+                        TextColor = Color.Black,
                     };
                     dateFromBo.Content = startDate;
                 }
@@ -704,34 +730,34 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     BorderColor = Color.Black,
                     CornerRadius = 10,
                     BackgroundColor = Color.LightGray,
+                   
                 };
                 CompDateSL.Children.Add(dateCompBo);
-                CustomDatePicker CompletionDate;
+                Label CompletionDate;
                 if (item.CompletionDate != null)
                 {
-                    CompletionDate = new CustomDatePicker
+                    CompletionDate = new Label
                     {
-                        SelectedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone),
-                        MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),
+                        Text = Convert.ToString(DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(item.CompletionDate).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString("MMM d, yyyy hh:mm tt")),
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
                         Margin = new Thickness(0, 5, 0, 0),
                         BackgroundColor = Color.LightGray,
-                        IsEnabled = false,
+                        TextColor = Color.Black,
                     };
                     dateCompBo.Content = CompletionDate;
                 }
 
                 else
                 {
-                    CompletionDate = new CustomDatePicker
+                    CompletionDate = new Label
                     {
                         // MaximumDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone),                        
                         HeightRequest = 2,
                         HorizontalOptions = LayoutOptions.Start,
                         Margin = new Thickness(0, 5, 0, 0),
                         BackgroundColor = Color.LightGray,
-                        IsEnabled = false,
+                        TextColor = Color.Black,
                     };
                     dateCompBo.Content = CompletionDate;
                 }
@@ -928,7 +954,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
             #region **** MiscellaneousGrid ****
 
             Grid MiscellaneousGrid = new Grid { BackgroundColor = Color.White, MinimumWidthRequest = 300, Padding = 2 };
-          //  Grid MiscellaneousGrid = new Grid { BackgroundColor = Color.White,  Padding = 2 };
+            //  Grid MiscellaneousGrid = new Grid { BackgroundColor = Color.White,  Padding = 2 };
             MiscellaneousGrid.RowDefinitions.Add(new RowDefinition { Height = GridLength.Star });
             StackLayout MiscelMasterSL = new StackLayout();
             MiscellaneousGrid.Children.Add(MiscelMasterSL, 0, 0);
@@ -974,7 +1000,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                     View Label;
                     //View LabelHours;
                     View Layout;
-                    
+
                     Grid sta;
                     switch (item.ResponseType)
                     {
@@ -1052,14 +1078,14 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                             Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
 
-                            Layout = new Entry() { Keyboard = Keyboard.Numeric, BackgroundColor=Color.LightGray };
+                            Layout = new Entry() { Keyboard = Keyboard.Numeric, BackgroundColor = Color.LightGray };
                             SRangeSl.Children.Add(SRangeSlLavel);
                             GenerateAnswerText(item);
                             SfBorder RangeBor = new SfBorder() { CornerRadius = 5 };
                             RangeBor.IsEnabled = false;
                             (Layout as Entry).BindingContext = new Range() { MaxRange = item.MaxRange, MinRange = item.MinRange };
                             (Layout as Entry).BackgroundColor = Color.LightGray;
-                            RangeBor.Content = Layout;                           
+                            RangeBor.Content = Layout;
                             SRangegrid.Children.Add(Question, 0, 0);
                             SRangegrid.Children.Add(Label, 0, 0);
                             SRangegrid.Children.Add(RangeBor, 1, 0);
@@ -1245,7 +1271,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                             Label = new Label { Text = item.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap };
                             GenerateAnswerText(item);
 
-                            Layout = new CustomEditor() { HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor=Color.LightGray, HeightRequest = 60 };
+                            Layout = new CustomEditor() { HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.LightGray, HeightRequest = 60 };
                             (Layout as CustomEditor).Text = item.AnswerDescription;
                             SfBorder TextSfBorder = new SfBorder
                             {
@@ -1281,7 +1307,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                             GenerateAnswerText(item);
 
                             MChoiceSlLavel.Children.Add(Label);
-                            Layout = new CustomPicker() { VerticalOptions = LayoutOptions.Start, BackgroundColor=Color.LightGray, HorizontalOptions = LayoutOptions.End, Image = "unnamed" };
+                            Layout = new CustomPicker() { VerticalOptions = LayoutOptions.Start, BackgroundColor = Color.LightGray, HorizontalOptions = LayoutOptions.End, Image = "unnamed" };
 
                             //LabelHours = new Label { Text = item.EstimatedHours.ToString(), Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
 
@@ -1368,7 +1394,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
 
                     var estimatedHourTitleLabel = WebControlTitle.GetTargetNameByTitleName("EstimatedHours");
-                    var estimatedHourLabel = item.EstimatedHours.ToString();
+                    var estimatedHourLabel = item.EstimatedHours;
 
                     Label Case1lbl = new Label
                     {
@@ -1538,9 +1564,9 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                                 GenerateAnswerText(item1);
 
-                                SfBorder RangeBor = new SfBorder() { CornerRadius = 5,IsEnabled=false };
+                                SfBorder RangeBor = new SfBorder() { CornerRadius = 5, IsEnabled = false };
 
-                                Entry Layouts = new Entry() { Keyboard = Keyboard.Numeric, BackgroundColor=Color.LightGray, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
+                                Entry Layouts = new Entry() { Keyboard = Keyboard.Numeric, BackgroundColor = Color.LightGray, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
 
                                 Layouts.BindingContext = new Range() { MaxRange = item1.MaxRange, MinRange = item1.MinRange };
                                 RangeBor.Content = Layouts;
@@ -1712,7 +1738,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
                                 GenerateAnswerText(item1);
 
-                                Entry Layoutc = new Entry() { Keyboard = Keyboard.Numeric, BackgroundColor=Color.LightGray, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
+                                Entry Layoutc = new Entry() { Keyboard = Keyboard.Numeric, BackgroundColor = Color.LightGray, WidthRequest = 65, HorizontalOptions = LayoutOptions.End };
                                 SfBorder CountBor = new SfBorder { CornerRadius = 5 };
 
                                 Layoutc.Text = item1.AnswerDescription;
@@ -1742,7 +1768,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                                 var Label1t = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, BindingContext = item1, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap };
                                 GenerateAnswerText(item1);
 
-                                var Layoutt = new CustomEditor() { HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor=Color.LightGray, HeightRequest = 60 };
+                                var Layoutt = new CustomEditor() { HorizontalOptions = LayoutOptions.FillAndExpand, BackgroundColor = Color.LightGray, HeightRequest = 60 };
                                 (Layoutt as CustomEditor).Text = item1.AnswerDescription;
 
                                 SfBorder TextSfBorder = new SfBorder
@@ -1750,7 +1776,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                                     BorderColor = Color.Black,
                                     BorderWidth = 1,
                                     CornerRadius = 5,
-                                    IsEnabled=false
+                                    IsEnabled = false
                                 };
                                 TextSfBorder.Content = Layoutt;
                                 Textgrid.Children.Add(Questiont, 0, 0);
@@ -1771,7 +1797,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
                                 MChoiceSlLavel.Children.Add(MChoiceGrid);
 
                                 var Questionm = new Label { Text = "", Font = Font.SystemFontOfSize(18, FontAttributes.None), TextColor = Color.Black, HorizontalOptions = LayoutOptions.Start };
-                                var Label1m = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, BindingContext = item1, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap,  VerticalOptions = LayoutOptions.FillAndExpand };
+                                var Label1m = new Label { Text = item1.InspectionDescription, Font = Font.SystemFontOfSize(14, FontAttributes.None), TextColor = Color.Black, BindingContext = item1, HorizontalOptions = LayoutOptions.Start, LineBreakMode = Xamarin.Forms.LineBreakMode.WordWrap, VerticalOptions = LayoutOptions.FillAndExpand };
 
                                 GenerateAnswerText(item1);
 
@@ -1871,7 +1897,7 @@ namespace ProteusMMX.Views.ClosedWorkorder
 
 
                     var estimatedHourTitleLabel = WebControlTitle.GetTargetNameByTitleName("EstimatedHours");
-                    var estimatedHourLabel = item.EstimatedHours.ToString();
+                    var estimatedHourLabel = item.EstimatedHours;
 
                     Label Case1lbl = new Label
                     {
@@ -1939,21 +1965,22 @@ namespace ProteusMMX.Views.ClosedWorkorder
             {
                 new SfTabItem()
                 {
-                    Title = "Miscellaneous Question ("+ Misce+")",
-                    Content = MiscellaneousGrid
-                },
-                new SfTabItem()
-                {
+
                     Title = "Group Sections ("+GroupSec+")",
                     Content = GroupSectionsGrid
+                },
+                new SfTabItem()
+                { 
+                    Title = "Miscellaneous Question ("+ Misce+")",
+                    Content = MiscellaneousGrid
                 }
             };
 
             var MiscellGrid = MiscellaneousGrid.Height;
-            //layout2Test.HeightRequest = MinimumHeightRequest = 500;
+            //layout2Test.HeightRequest = MinimumHeightRequest = 1000;
 
             var GroupSGrid = MiscellaneousGrid.Height;
-            //GroupSecSlCaseTest1.HeightRequest = 500;
+            //GroupSecSlCaseTest1.HeightRequest = 2000;
 
             tabView.Items = tabItems;
             MainLayout.Children.Add(tabView);

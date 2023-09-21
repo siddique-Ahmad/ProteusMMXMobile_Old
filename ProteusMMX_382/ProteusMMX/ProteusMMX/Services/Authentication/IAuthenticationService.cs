@@ -19,5 +19,7 @@ namespace ProteusMMX.Services.Authentication
         
         Task<ServiceOutput> GetAPIVersion(string url);
 
+        Task<ServiceOutput> PostTokenAsync(string url, int userid, string TockenNumber);
+
     }
 }

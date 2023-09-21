@@ -93,16 +93,25 @@ namespace ProteusMMX.Controls
             try
             {
 
-                var dateConfig = new DatePromptConfig();
+                var dateConfig = new Acr.UserDialogs.DatePromptConfig();
+                var timeConfig = new Acr.UserDialogs.TimePromptConfig();
                 dateConfig.MinimumDate = this.MinimumDate;
                 dateConfig.MaximumDate = this.MaximumDate;
-                dateConfig.SelectedDate = this.SelectedDate;
+                dateConfig.SelectedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                var times = Helpers.DateTime.DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                timeConfig.SelectedTime = times.TimeOfDay;
                 dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
 
+                if (Device.RuntimePlatform == Device.iOS)
+                {
+                    dateConfig.iOSPickerStyle = iOSPickerStyle.Wheels;
+                    timeConfig.iOSPickerStyle = iOSPickerStyle.Wheels;
+                }
 
                 var dateResult = await UserDialogs.Instance.DatePromptAsync(dateConfig);
 
-               
+                var TimeResult = await UserDialogs.Instance.TimePromptAsync(timeConfig);
+
 
                 if (dateResult.SelectedDate != null && dateResult.SelectedDate.Year == 0001)
                 {
@@ -156,7 +165,12 @@ namespace ProteusMMX.Controls
 
                 }
 
-
+                if (TimeResult.Ok == true)
+                {
+                    DateTime datetime4 = SelectedDate.Value.Date;
+                    DateTime datetime3 = datetime4.Add(TimeResult.SelectedTime);
+                    SelectedDate = datetime3;
+                }
                 //   SelectedDate = dateResult.SelectedDate;
 
 

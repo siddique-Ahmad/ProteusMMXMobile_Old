@@ -108,7 +108,25 @@ namespace ProteusMMX.Services.Navigation
             #endregion
         }
 
+        public async Task DasebordAsync()
+        {
 
+            await NavigateToAsync<DashboardPageViewModel>();
+            
+            //For Test purpose only
+            //await NavigateToAsync<ContractorListSelectionPageViewModel>();
+
+            #region Old Code
+            //if (await _authenticationService.UserIsAuthenticatedAndValidAsync())
+            //{
+            //    await NavigateToAsync<MainViewModel>();
+            //}
+            //else
+            //{
+            //    await NavigateToAsync<LoginViewModel>();
+            //} 
+            #endregion
+        }
 
         public Task NavigateToAsync<TViewModel>() where TViewModel : ViewModelBase
         {
@@ -246,18 +264,11 @@ namespace ProteusMMX.Services.Navigation
                   
                 var StockroomPartstabbedPage = page as TabbedPage;
                     WorkOrderStockroomParts stockroomPart = parameter as WorkOrderStockroomParts;
-                    if (Device.RuntimePlatform == Device.iOS)
-                    {
-                        workOrderStockroomParts = CreateAndBindPage(typeof(WorkOrderStockroomPartsListingPageViewModelForIOS), parameter);
-                        var workOrderStockroomPartsPageParameter = new PageParameters { Page = workOrderStockroomParts, Parameter = parameter };
-                        (workOrderStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderStockroomPartsPageParameter);
-                    }
-                    else
-                    {
+                 
                         workOrderStockroomParts = CreateAndBindPage(typeof(WorkorderStockroomPartsTabbedPageViewModel), parameter);
                         var workOrderStockroomPartsPageParameter = new PageParameters { Page = workOrderStockroomParts, Parameter = parameter };
                         (workOrderStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderStockroomPartsPageParameter);
-                    }
+                
                     if (Application.Current.Properties.ContainsKey("PartsTabKey"))
                     {
                         var PartsTab = Application.Current.Properties["PartsTabKey"].ToString();
@@ -276,10 +287,7 @@ namespace ProteusMMX.Services.Navigation
 
                         }
 
-                    //workOrderNonStockroomParts = CreateAndBindPage(typeof(WorkOrderNonStockroomPartsListingPageViewModel), parameter);
-                    //var workOrderNonStockroomPartsPageParameter = new PageParameters { Page = workOrderNonStockroomParts, Parameter = parameter };
-                    //(workOrderNonStockroomParts.BindingContext as ViewModelBase).InitializeAsync(workOrderNonStockroomPartsPageParameter);
-                    //StockroomPartstabbedPage.Children.Add(workOrderNonStockroomParts);
+                   
                 }
                 
                 #endregion
@@ -324,7 +332,8 @@ namespace ProteusMMX.Services.Navigation
                         tabbedPage.Children.Add(attachmentsPage);
                     }
                 }
-
+              
+               
                 #endregion
 
 
@@ -395,78 +404,150 @@ namespace ProteusMMX.Services.Navigation
                 (AttachmentPage.BindingContext as ViewModelBase).InitializeAsync(AttachmentPageParameter);
                 #endregion
 
-                ServiceOutput FormControlsAndRightsForClosedworkorder = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "Closedworkorder", "Dialog");
-                if (FormControlsAndRightsForClosedworkorder != null && FormControlsAndRightsForClosedworkorder.lstModules != null && FormControlsAndRightsForClosedworkorder.lstModules.Count > 0)
+                #region **** old code ***
+                //ServiceOutput FormControlsAndRightsForClosedworkorder = await _workorderService.GetWorkorderControlRights(AppSettings.User.UserID.ToString(), "Closedworkorder", "Dialog");
+                //if (FormControlsAndRightsForClosedworkorder != null && FormControlsAndRightsForClosedworkorder.lstModules != null && FormControlsAndRightsForClosedworkorder.lstModules.Count > 0)
+                //{
+                //    var ClosedWorkorderModule = FormControlsAndRightsForClosedworkorder.lstModules[0];
+                //    if (ClosedWorkorderModule.ModuleName == "Details") //ModuleName can't be  changed in service 
+                //    {
+                //        if (ClosedWorkorderModule.lstSubModules != null && ClosedWorkorderModule.lstSubModules.Count > 0)
+                //        {
+                //            var ClosedWorkorderSubModule = ClosedWorkorderModule.lstSubModules[0];
+                //            if (ClosedWorkorderSubModule.listControls != null && ClosedWorkorderSubModule.listControls.Count > 0)
+                //            {
+                //                tabbedPage.Children.Add(ClosedWorkOrderDetails);
+                //                var CauseTab = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes");
+                //                var additionalDetailsTab = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails");
+                //                var TaskandLabour = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "TaskandLabor");
+                //                var Inspection = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Inspection");
+                //                var Parts = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Parts");
+                //                var Tools = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Tools");
+                //                var Attachments = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Attachments");
+
+
+
+                //                if (TaskandLabour.Expression == "E" || TaskandLabour.Expression == "V")
+                //                {
+                //                    tabbedPage.Children.Add(TaskandLaborPage);
+                //                }
+                //                if (AppSettings.User.IsInspectionUser == true && (Inspection.Expression == "E" || Inspection.Expression == "V"))
+                //                {
+                //                    tabbedPage.Children.Add(InspectionPage);
+                //                }
+                //                if (Parts.Expression == "E" || Parts.Expression == "V")
+                //                {
+                //                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                //                    {
+
+
+                //                    }
+                //                    else
+                //                    {
+                //                        tabbedPage.Children.Add(ClosedWorkorderTabbed);
+                //                    }
+
+                //                }
+                //                if (Tools.Expression == "E" || Tools.Expression == "V")
+                //                {
+                //                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                //                    {
+
+
+                //                    }
+                //                    else
+                //                    {
+                //                        tabbedPage.Children.Add(ToolsPage);
+                //                    }
+
+                //                }
+                //                if (Attachments.Expression == "E" || Attachments.Expression == "V")
+                //                {
+                //                    tabbedPage.Children.Add(AttachmentPage);
+                //                }
+
+
+
+                //            }
+
+
+
+                //        }
+                //    }
+                //}
+
+                #endregion
+
+                #region ** new code ***
+                tabbedPage.Children.Add(ClosedWorkOrderDetails);
+                if (Application.Current.Properties.ContainsKey("TaskandLabourTabKey"))
                 {
-                    var ClosedWorkorderModule = FormControlsAndRightsForClosedworkorder.lstModules[0];
-                    if (ClosedWorkorderModule.ModuleName == "ClosedWorkOrderDialog") //ModuleName can't be  changed in service 
+                    var TaskLabourTab = Application.Current.Properties["TaskandLabourTabKey"].ToString();
+                    if (TaskLabourTab == "E" || TaskLabourTab == "V")
                     {
-                        if (ClosedWorkorderModule.lstSubModules != null && ClosedWorkorderModule.lstSubModules.Count > 0)
-                        {
-                            var ClosedWorkorderSubModule = ClosedWorkorderModule.lstSubModules[0];
-                            if (ClosedWorkorderSubModule.listControls != null && ClosedWorkorderSubModule.listControls.Count > 0)
-                            {
-                                tabbedPage.Children.Add(ClosedWorkOrderDetails);
-                                var CauseTab = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Causes");
-                                var additionalDetailsTab = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "AdditionalDetails");
-                                var TaskandLabour = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "TaskandLabor");
-                                var Inspection = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Inspection");
-                                var Parts = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Parts");
-                                var Tools = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Tools");
-                                var Attachments = ClosedWorkorderSubModule.listControls.FirstOrDefault(i => i.ControlName == "Attachments");
-
-
-
-                                if (TaskandLabour.Expression == "E" || TaskandLabour.Expression == "V")
-                                {
-                                    tabbedPage.Children.Add(TaskandLaborPage);
-                                }
-                                if (AppSettings.User.IsInspectionUser == true && (Inspection.Expression == "E" || Inspection.Expression == "V"))
-                                {
-                                    tabbedPage.Children.Add(InspectionPage);
-                                }
-                                if (Parts.Expression == "E" || Parts.Expression == "V")
-                                {
-                                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
-                                    {
-
-
-                                    }
-                                    else
-                                    {
-                                        tabbedPage.Children.Add(ClosedWorkorderTabbed);
-                                    }
-
-                                }
-                                if (Tools.Expression == "E" || Tools.Expression == "V")
-                                {
-                                    if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
-                                    {
-
-
-                                    }
-                                    else
-                                    {
-                                        tabbedPage.Children.Add(ToolsPage);
-                                    }
-
-                                }
-                                if (Attachments.Expression == "E" || Attachments.Expression == "V")
-                                {
-                                    tabbedPage.Children.Add(AttachmentPage);
-                                }
-
-
-
-                            }
-
-
-
-                        }
+                        tabbedPage.Children.Add(TaskandLaborPage);
                     }
                 }
 
+                if (Application.Current.Properties.ContainsKey("InspectionTabKey"))
+                {
+                    var InspectionTab = Application.Current.Properties["InspectionTabKey"].ToString();
+                    if (AppSettings.User.IsInspectionUser == true && InspectionTab != null && (InspectionTab == "E" || InspectionTab == "V"))
+                    {
+                        tabbedPage.Children.Add(InspectionPage);
+                    }
+                }
+                if (Application.Current.Properties.ContainsKey("PartsTabKey"))
+                {
+                    var PartsTab = Application.Current.Properties["PartsTabKey"].ToString();
 
+                    if (PartsTab == "E" || PartsTab == "V")
+                    {
+                        if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                        {
+
+
+                        }
+                        else
+                        {
+                            tabbedPage.Children.Add(ClosedWorkorderTabbed);
+                        }
+
+                    }
+
+
+                }
+
+                if (Application.Current.Properties.ContainsKey("ToolsTabKey"))
+                {
+                    var ToolsTab = Application.Current.Properties["ToolsTabKey"].ToString();
+                    if (ToolsTab == "E" || ToolsTab == "V")
+                    {
+                        if (AppSettings.User.blackhawkLicValidator.ProductLevel.Equals("Basic"))
+                        {
+
+
+                        }
+                        else
+                        {
+                            tabbedPage.Children.Add(ToolsPage);
+                        }
+
+
+                    }
+                }
+
+                if (Application.Current.Properties.ContainsKey("AttachmentTabKey"))
+                {
+                    var AttachmentTab = Application.Current.Properties["AttachmentTabKey"].ToString();
+
+                    if (AttachmentTab == "E" || AttachmentTab == "V")
+                    {
+                        tabbedPage.Children.Add(AttachmentPage);
+                    }
+                }
+
+                #endregion
 
 
             }
@@ -781,7 +862,7 @@ namespace ProteusMMX.Services.Navigation
             _mappings.Add(typeof(RiskQuestionPageViewModel), typeof(RiskQuestionsPage));
             _mappings.Add(typeof(DescriptionViewModel), typeof(Description));
             _mappings.Add(typeof(ClosedWorkorderStockroomPartsViewModelForIOS), typeof(ClosedWorkorderStockroomPartsForIOS));
-            _mappings.Add(typeof(WorkOrderStockroomPartsListingPageViewModelForIOS), typeof(WorkOrderStockRoomPartsListingForIOS));
+            //_mappings.Add(typeof(WorkOrderStockroomPartsListingPageViewModelForIOS), typeof(WorkOrderStockRoomPartsListingForIOS));
             _mappings.Add(typeof(SearchWorkorderByLocationFromBarcodeViewModel), typeof(SearchWorkorderByLocationFromBarcode));
             _mappings.Add(typeof(SearchWorkorderByAssetNumberFromBarcodeViewModel), typeof(SearchWorkorderByAssetNumberFromBarcode));
             _mappings.Add(typeof(SearchAssetFromBarcodeViewModel), typeof(SearchAssetFromBarcode));
@@ -805,6 +886,9 @@ namespace ProteusMMX.Services.Navigation
             _mappings.Add(typeof(WorkorderTypeListSelectionPageViewModel), typeof(WorkorderTypeListSelectionPage));
             _mappings.Add(typeof(CauseListSelectionPageViewModel), typeof(CauseListSelectionPage));
             _mappings.Add(typeof(MaintenanceCodeListSelectionPageViewModel), typeof(MaintenanceCodeListSelectionPage));
+
+            _mappings.Add(typeof(AdministratorListSelectionPageViewModel), typeof(AdministratorListSelectionPage));
+            
 
             #region Workorder 
 

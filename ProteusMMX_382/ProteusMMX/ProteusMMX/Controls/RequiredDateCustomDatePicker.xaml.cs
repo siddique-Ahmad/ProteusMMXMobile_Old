@@ -88,14 +88,24 @@ namespace ProteusMMX.Controls
             {
 
                 var dateConfig = new DatePromptConfig();
+                var timeConfig = new TimePromptConfig();
                 dateConfig.MinimumDate = this.MinimumDate;
                 dateConfig.MaximumDate = this.MaximumDate;
                 dateConfig.SelectedDate = this.SelectedDate;
+                var times = Helpers.DateTime.DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+                timeConfig.SelectedTime = times.TimeOfDay;
+
                 dateConfig.UnspecifiedDateTimeKindReplacement = DateTimeKind.Utc;
 
 
-
+                if (Device.RuntimePlatform == Device.iOS)
+                {
+                    dateConfig.iOSPickerStyle = iOSPickerStyle.Wheels;
+                    timeConfig.iOSPickerStyle = iOSPickerStyle.Wheels;
+                }
                 var dateResult = await UserDialogs.Instance.DatePromptAsync(dateConfig);
+                var TimeResult = await UserDialogs.Instance.TimePromptAsync(timeConfig);
+
                 if (dateResult.SelectedDate != null && dateResult.SelectedDate.Year == 0001)
                 {
                     SelectedDate = null;
@@ -171,7 +181,13 @@ namespace ProteusMMX.Controls
                     }
                 }
 
-              //  SelectedDate = dateResult.SelectedDate;
+                if (TimeResult.Ok == true)
+                {
+                    DateTime datetime4 = SelectedDate.Value.Date;
+                    DateTime datetime3 = datetime4.Add(TimeResult.SelectedTime);
+                    SelectedDate = datetime3;
+                }
+                //  SelectedDate = dateResult.SelectedDate;
 
 
             }

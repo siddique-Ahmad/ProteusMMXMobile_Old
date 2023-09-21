@@ -3430,9 +3430,9 @@ namespace ProteusMMX.ViewModel.Asset
         {
             try
             {
-               // UserDialogs.Instance.ShowLoading();
+                // UserDialogs.Instance.ShowLoading();
 
-                 OperationInProgress = true;
+                OperationInProgress = true;
 
                 //if (ConnectivityService.IsConnected == false)
                 //{
@@ -3454,7 +3454,7 @@ namespace ProteusMMX.ViewModel.Asset
 
                 await SetTitlesPropertiesForPage();
                 //FormControlsAndRights = await _formLoadInputService.GetFormControlsAndRights(UserID, AppSettings.AssetModuleName);
-              
+
 
 
                 if (Application.Current.Properties.ContainsKey("IssueWorkorderKey"))
@@ -3544,26 +3544,26 @@ namespace ProteusMMX.ViewModel.Asset
                 }
 
 
-           if (Edit == "E")
-            {
-                this.EditAssetIsVisible = true;
-            }
-            else if (Edit == "V")
-            {
-                this.EditAssetIsEnabled = false;
-            }
-            else
-            {
-                this.EditAssetIsVisible = false;
-            }
+                if (Edit == "E")
+                {
+                    this.EditAssetIsVisible = true;
+                }
+                else if (Edit == "V")
+                {
+                    this.EditAssetIsEnabled = false;
+                }
+                else
+                {
+                    this.EditAssetIsVisible = false;
+                }
                 await SetControlsPropertiesForPage();
                 await CreateControlsForPage();
-               
+
             }
-                           
 
 
-            
+
+
             catch (Exception ex)
             {
                 //UserDialogs.Instance.HideLoading();
@@ -3594,21 +3594,21 @@ namespace ProteusMMX.ViewModel.Asset
             {
 
 
-                PageTitle = WebControlTitle.GetTargetNameByTitleName("Asset")+ WebControlTitle.GetTargetNameByTitleName("Details");
+                PageTitle = WebControlTitle.GetTargetNameByTitleName("Asset") + WebControlTitle.GetTargetNameByTitleName("Details");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
                 LogoutTitle = WebControlTitle.GetTargetNameByTitleName("Logout");
                 CancelTitle = WebControlTitle.GetTargetNameByTitleName("Cancel");
                 SelectTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 //AssetNameTitle = WebControlTitle.GetTargetNameByTitleName("AssetName");
-              
+
                 FacilityTitle = WebControlTitle.GetTargetNameByTitleName("Facility");
                 LocationTitle = WebControlTitle.GetTargetNameByTitleName("Location");
-               // AssetSystemTitle = WebControlTitle.GetTargetNameByTitleName("AssetSystem");
+                // AssetSystemTitle = WebControlTitle.GetTargetNameByTitleName("AssetSystem");
                 //CategoryTitle = WebControlTitle.GetTargetNameByTitleName("Category");
                 //RuntimeUnitTitle = WebControlTitle.GetTargetNameByTitleName("RuntimeUnits");
                 //VendorTitle = WebControlTitle.GetTargetNameByTitleName("Vendor");
                 CreateWorkorderTitle = WebControlTitle.GetTargetNameByTitleName("CreateWorkOrder");
-                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
+                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("Notes");
                 SaveTitle = WebControlTitle.GetTargetNameByTitleName("Save");
                 SelectOptionsTitle = WebControlTitle.GetTargetNameByTitleName("Select");
                 MoreText = WebControlTitle.GetTargetNameByTitleName("More");
@@ -3727,10 +3727,6 @@ namespace ProteusMMX.ViewModel.Asset
                     ///Vendor
                     ///RuntimeUnit
 
-
-
-
-
                     var assetName = AssetControlsNew.FirstOrDefault(x => x.ControlName == "AssetName");
                     if (assetName != null)
                     {
@@ -3822,17 +3818,13 @@ namespace ProteusMMX.ViewModel.Asset
                     ///RuntimeUnit
 
                     //var formRoles = titles.lstRoles;
-
+                    //List<FormControl> OverriddenControlsNew
                     foreach (var item in OverriddenControlsNew)
                     {
                         //var finalizedRole = await ParseControlRoleExpressionWithFormsRoles(item.Expression, formRoles);
 
                         switch (item.ControlName)
                         {
-
-
-
-
                             case "AssetName":
                                 {
                                     AssetIsEnable = ApplyIsEnable(item.Expression);
@@ -3973,42 +3965,83 @@ namespace ProteusMMX.ViewModel.Asset
                             break;
 
                         case "DateTime":
-                            if (!isItemAddedInFirstColumn)
+                            if (Device.Idiom == TargetIdiom.Phone)
                             {
-                                if (!isItemAddedInSecondColumn)
+                                if (!isItemAddedInFirstColumn)
+                                {
+                                    if (!isItemAddedInSecondColumn)
+                                    {
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        //increment column
+                                        rowCount++;
+                                        //isItemAddedInFirstColumn = true;
+                                        //isItemAddedInSecondColumn = false;
+                                        columnCount = 0;
+                                    }
+                                    else
+                                    {
+                                        //generate new row
+                                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                                        rowCount++;
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        columnCount = 0;
+                                        //isItemAddedInFirstColumn = true;
+                                        //isItemAddedInSecondColumn = false;
+
+                                    }
+                                }
+
+                                else
                                 {
                                     GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
                                     //increment column
-                                    isItemAddedInFirstColumn = true;
-                                    isItemAddedInSecondColumn = false;
-                                    columnCount = 1;
+                                    //isItemAddedInFirstColumn = false;
+                                    //isItemAddedInSecondColumn = true;
+                                    columnCount = 0;
                                 }
-                                else
-                                {
-                                    //generate new row
-                                    contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                                    rowCount++;
-                                    GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
-                                    columnCount = 1;
-                                    isItemAddedInFirstColumn = true;
-                                    isItemAddedInSecondColumn = false;
-
-                                }
                             }
-
                             else
                             {
-                                GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+                                if (!isItemAddedInFirstColumn)
+                                {
+                                    if (!isItemAddedInSecondColumn)
+                                    {
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
 
-                                //increment column
-                                isItemAddedInFirstColumn = false;
-                                isItemAddedInSecondColumn = true;
-                                columnCount = 0;
+                                        //increment column
+                                        isItemAddedInFirstColumn = true;
+                                        isItemAddedInSecondColumn = false;
+                                        columnCount = 1;
+                                    }
+                                    else
+                                    {
+                                        //generate new row
+                                        contentGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+                                        rowCount++;
+                                        GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                        columnCount = 1;
+                                        isItemAddedInFirstColumn = true;
+                                        isItemAddedInSecondColumn = false;
+
+                                    }
+                                }
+
+                                else
+                                {
+                                    GenerateDateTimeLayout(item, contentGrid, rowCount, columnCount);
+
+                                    //increment column
+                                    isItemAddedInFirstColumn = false;
+                                    isItemAddedInSecondColumn = true;
+                                    columnCount = 0;
+                                }
+
                             }
-
-
 
 
                             break;
@@ -4211,7 +4244,7 @@ namespace ProteusMMX.ViewModel.Asset
             //    control = new CustomDatePicker();
             //}
             var Boder = new SfBorder { CornerRadius = 5, BorderColor = Color.Black };
-            Boder.Content= new CustomDatePicker { Padding=new Thickness(0,3,0,0) };
+            Boder.Content = new CustomDatePicker1 { Padding = new Thickness(0, 3, 0, 0) };
             control = Boder;
             SetControlBindingAccordingToControlType(control, formControl);
             //new CustomDatePicker(); //new DatePicker();
@@ -4233,6 +4266,10 @@ namespace ProteusMMX.ViewModel.Asset
             wrapperLayout.Children.Add(control);
 
             contentGrid.Children.Add(wrapperLayout, column, row);
+            if (Device.Idiom == TargetIdiom.Phone)
+            {
+                Grid.SetColumnSpan(wrapperLayout, 2);
+            }
         }
 
 
@@ -4247,6 +4284,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "AssetTag":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4281,9 +4324,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.AssetTagText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.AssetTagText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.AssetTagText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4291,6 +4334,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Capacity":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4328,9 +4377,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.CapacityText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.CapacityText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.CapacityText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4338,6 +4387,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Category":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4372,9 +4427,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.CategoryText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.CategoryText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.CategoryText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4382,6 +4437,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "CurrentRuntime":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4421,9 +4482,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.CurrentRuntimeText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.CurrentRuntimeText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.CurrentRuntimeText), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4431,6 +4492,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "DailyRuntime":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4467,9 +4534,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.DailyRuntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.DailyRuntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.DailyRuntime), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4477,6 +4544,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Description":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4512,9 +4585,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.Description), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Description), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.Description), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4522,6 +4595,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "DetailedLocation":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4558,9 +4637,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.DetailedLocation), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.DetailedLocation), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.DetailedLocation), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4572,7 +4651,7 @@ namespace ProteusMMX.ViewModel.Asset
                         if (control is SfBorder)
                         {
                             var data = control as SfBorder;
-                            control = data.Content as CustomDatePicker;
+                            control = data.Content as CustomDatePicker1;
                         }
 
                         if (control is Picker)
@@ -4614,13 +4693,14 @@ namespace ProteusMMX.ViewModel.Asset
                             {
                                 InstallationDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
                             }
-                           
+
                             control.SetBinding(DatePicker.DateProperty, nameof(this.InstallationDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.InstallationDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.InstallationDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4628,6 +4708,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "CriticalAsset":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4664,9 +4750,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.CriticalAsset), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.CriticalAsset), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.CriticalAsset), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4674,6 +4760,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "MachineClassification%":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4710,9 +4802,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.MachineClassification), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.MachineClassification), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.MachineClassification), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4720,6 +4812,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Manufacturer":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4755,9 +4853,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.Manufacturer), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Manufacturer), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.Manufacturer), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4765,6 +4863,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Model":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4801,9 +4905,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.Model), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Model), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.Model), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4811,6 +4915,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "OriginalCostID":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4848,9 +4958,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.OriginalCost), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.OriginalCost), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.OriginalCost), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4858,6 +4968,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "ProfileImage":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4892,9 +5008,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.ProfileImage), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.ProfileImage), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.ProfileImage), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4902,6 +5018,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Rating":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4937,9 +5059,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.Rating), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Rating), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.Rating), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4947,6 +5069,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "RuntimeUnits":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -4983,9 +5111,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.RuntimeUnits), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.RuntimeUnits), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.RuntimeUnits), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -4993,6 +5121,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "SerialNumber":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -5028,9 +5162,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.SerialNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.SerialNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.SerialNumber), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5038,6 +5172,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Vendor":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -5073,9 +5213,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.Vendor), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Vendor), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.Vendor), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5086,7 +5226,7 @@ namespace ProteusMMX.ViewModel.Asset
                         if (control is SfBorder)
                         {
                             var data = control as SfBorder;
-                            control = data.Content as CustomDatePicker;
+                            control = data.Content as CustomDatePicker1;
                         }
 
                         if (control is Picker)
@@ -5130,13 +5270,13 @@ namespace ProteusMMX.ViewModel.Asset
                             {
                                 WarrantyDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone).ToString();
                             }
-                           
+
                             control.SetBinding(DatePicker.DateProperty, nameof(this.WarrantyDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.WarrantyDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.WarrantyDate), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5144,6 +5284,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "Weight":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -5180,9 +5326,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.Weight), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.Weight), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.Weight), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5190,6 +5336,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "LOTOUrl":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             //var x = control as Picker;
@@ -5216,7 +5368,7 @@ namespace ProteusMMX.ViewModel.Asset
 
                         else if (control is Entry)
                         {
-                            control.SetBinding(Entry.TextProperty, nameof(this.LotoUrl));   
+                            control.SetBinding(Entry.TextProperty, nameof(this.LotoUrl));
                         }
 
                         else if (control is DatePicker)
@@ -5226,9 +5378,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.LotoUrl), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.LotoUrl), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.LotoUrl), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5239,6 +5391,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField1":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5271,9 +5429,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField1), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5281,6 +5439,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField2":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5313,9 +5477,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField2), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField2), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField2), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5323,6 +5487,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField3":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5356,9 +5526,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField3), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField3), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField3), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5366,6 +5536,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField4":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5399,9 +5575,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField4), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField4), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField4), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5409,6 +5585,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField5":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5442,9 +5624,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField5), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField5), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField5), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5452,6 +5634,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField6":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5485,9 +5673,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField6), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField6), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField6), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5495,6 +5683,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField7":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5528,9 +5722,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField7), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField7), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField7), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5538,6 +5732,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField8":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5571,9 +5771,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField8), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField8), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField8), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5581,6 +5781,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField9":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5614,9 +5820,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField9), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField9), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField9), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5624,6 +5830,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField10":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5657,9 +5869,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField10), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField10), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField10), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5667,6 +5879,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField11":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5700,9 +5918,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField11), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField11), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField11), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5710,6 +5928,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField12":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5743,9 +5967,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField12), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField12), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField12), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5753,6 +5977,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField13":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5786,9 +6016,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField13), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField13), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField13), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5796,6 +6026,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField14":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5829,9 +6065,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField14), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField14), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField14), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5839,6 +6075,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField15":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5872,9 +6114,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField15), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField15), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField15), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5882,6 +6124,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField16":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5915,9 +6163,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField16), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField16), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField16), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5925,6 +6173,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField17":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -5958,9 +6212,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField17), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField17), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField17), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -5968,6 +6222,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField18":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -6001,9 +6261,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField18), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField18), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField18), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6011,6 +6271,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField19":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -6044,9 +6310,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField19), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField19), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField19), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6054,6 +6320,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField20":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -6087,9 +6359,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField20), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField20), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField20), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6097,6 +6369,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField21":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -6130,9 +6408,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField21), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6141,6 +6419,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField22":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -6176,9 +6460,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField22), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField22), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField22), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6186,6 +6470,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField23":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -6221,9 +6511,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField23), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField23), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField23), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6232,6 +6522,12 @@ namespace ProteusMMX.ViewModel.Asset
 
                 case "UserField24":
                     {
+                        if (control is SfBorder)
+                        {
+                            var data = control as SfBorder;
+                            control = data.Content as CustomDatePicker1;
+                        }
+
                         if (control is Picker)
                         {
                             var x = control as Picker;
@@ -6268,9 +6564,9 @@ namespace ProteusMMX.ViewModel.Asset
                             control.SetBinding(DatePicker.DateProperty, nameof(this.UserField24), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
 
-                        else if (control is CustomDatePicker)
+                        else if (control is CustomDatePicker1)
                         {
-                            control.SetBinding(CustomDatePicker.SelectedDateProperty, nameof(this.UserField24), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
+                            control.SetBinding(CustomDatePicker1.SelectedDateProperty, nameof(this.UserField24), mode: BindingMode.TwoWay, converter: new StringToDateTimeConverter());
                         }
                         break;
 
@@ -6302,7 +6598,7 @@ namespace ProteusMMX.ViewModel.Asset
                 e1.Text = val; //Set the Old value
             }
         }
-         private void Entry_TextChangedCurrentRuntime (object sender, EventArgs e)
+        private void Entry_TextChangedCurrentRuntime(object sender, EventArgs e)
         {
             Entry e1 = sender as Entry;
             String val = e1.Text; //Get Current Text
@@ -6342,7 +6638,7 @@ namespace ProteusMMX.ViewModel.Asset
 
             switch (picker.ClassId)
             {
-                
+
                 #region User Field Section
 
 
@@ -6549,7 +6845,7 @@ namespace ProteusMMX.ViewModel.Asset
 
 
 
-               
+
 
 
                 default:
@@ -6569,9 +6865,8 @@ namespace ProteusMMX.ViewModel.Asset
 
                 var parentGrid = page.Content as Grid;
                 var grid = parentGrid.Children[0] as Grid;
-
-                //var grid = page.Content as Grid;
-                var scrollView = grid.Children[0] as ScrollView;
+                var Abslut = grid.Children[0] as AbsoluteLayout;
+                var scrollView = Abslut.Children[0] as ScrollView;
                 var scrollViewGrid = scrollView.Content as Grid;
                 var contentGrid = scrollViewGrid.Children[1] as Grid;
                 return contentGrid;
@@ -6584,12 +6879,12 @@ namespace ProteusMMX.ViewModel.Asset
         {
             try
             {
-               // UserDialogs.Instance.ShowLoading();
+                // UserDialogs.Instance.ShowLoading();
 
 
-                if (Issue=="E")
+                if (Issue == "E")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -6615,7 +6910,7 @@ namespace ProteusMMX.ViewModel.Asset
                 }
                 else if (Issue == "V")
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { CreateWorkorderTitle, LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -6624,11 +6919,11 @@ namespace ProteusMMX.ViewModel.Asset
                         await NavigationService.RemoveBackStackAsync();
                     }
 
-                   
+
                 }
                 else
                 {
-                    var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() {LogoutTitle });
+                    var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                     if (response == LogoutTitle)
                     {
@@ -6703,7 +6998,7 @@ namespace ProteusMMX.ViewModel.Asset
                     IsPickerDataRequested = false;
                     return;
                 }
-             //   await SetControlsPropertiesForPage();
+                //   await SetControlsPropertiesForPage();
 
 
             }
@@ -6722,8 +7017,8 @@ namespace ProteusMMX.ViewModel.Asset
 
         public async Task SetControlsPropertiesForPage()
         {
-            var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString());
-       
+            var AssetWrapper = await _assetService.GetAssetsBYAssetID(this.AssetID.ToString(), AppSettings.User.UserID);
+
 
             if (AssetWrapper != null && AssetWrapper.assetWrapper != null && AssetWrapper.assetWrapper.asset != null)
             {
@@ -6739,7 +7034,7 @@ namespace ProteusMMX.ViewModel.Asset
                 {
                     AdditionalDetailsText = asset.AdditionalDetails;
                 }
-               
+
                 Description = asset.Description;
                 if (!string.IsNullOrEmpty(asset.AssetName))
                 {
@@ -6798,25 +7093,27 @@ namespace ProteusMMX.ViewModel.Asset
                 if (!string.IsNullOrEmpty(asset.RuntimeUnitName))
                 {
                     RuntimeUnitText = ShortString.shorten(asset.RuntimeUnitName);
+                    RuntimeUnitID = asset.RuntimeUnits;
                 }
                 else
                 {
                     RuntimeUnitText = asset.RuntimeUnitName;
+                    RuntimeUnitID = null;
                 }
-                RuntimeUnitID = asset.RuntimeUnits;
+
                 AssetTagText = asset.AssetTag;
                 CapacityText = asset.Capacity;
                 DetailedLocation = asset.DetailedLocation;
-                if(asset.InstallationDate.HasValue)
+                if (asset.InstallationDate.HasValue)
                 {
-                    InstallationDate = asset.InstallationDate.ToString();
-                    //InstallationDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.InstallationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                    // InstallationDate = asset.InstallationDate.ToString();
+                    InstallationDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.InstallationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
                 }
                 else
                 {
                     InstallationDate = null;
                 }
-               
+
                 Manufacturer = asset.Manufacturer;
                 Model = asset.Model;
                 // OriginalCost = asset.OriginalCost.ToString();
@@ -6826,8 +7123,8 @@ namespace ProteusMMX.ViewModel.Asset
                 Weight = asset.Weight;
                 if (asset.WarrantyDate.HasValue)
                 {
-                    WarrantyDate = asset.WarrantyDate.ToString();
-                   // WarrantyDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.WarrantyDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
+                    //WarrantyDate = asset.WarrantyDate.ToString();
+                    WarrantyDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(asset.WarrantyDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone).ToString();
                 }
                 else
                 {
@@ -6837,7 +7134,7 @@ namespace ProteusMMX.ViewModel.Asset
 
 
 
-                CurrentRuntimeText=string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(asset.CurrentRuntime.ToString()) ? 0 : decimal.Parse(asset.CurrentRuntime.ToString()));
+                CurrentRuntimeText = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(asset.CurrentRuntime.ToString()) ? 0 : decimal.Parse(asset.CurrentRuntime.ToString()));
                 DailyRuntime = string.Format(StringFormat.NumericZero(), string.IsNullOrWhiteSpace(asset.DailyRuntime.ToString()) ? 0 : decimal.Parse(asset.DailyRuntime.ToString()));
 
                 ///Set Dyanmic Field Properties
@@ -6956,7 +7253,7 @@ namespace ProteusMMX.ViewModel.Asset
             {
                 UserDialogs.Instance.ShowLoading(WebControlTitle.GetTargetNameByTitleName("Loading"));
 
-               // OperationInProgress = true;
+                // OperationInProgress = true;
                 IsPickerDataRequested = true;
                 if (FacilityID == null)
                 {
@@ -6992,7 +7289,7 @@ namespace ProteusMMX.ViewModel.Asset
 
                 // OperationInProgress = true;
                 IsPickerDataRequested = true;
-                await NavigationService.NavigateToAsync<AssetSystemListSelectionPageViewModel>(new TargetNavigationData() {FacilityID=0,LocationID=0}); //Pass the control here
+                await NavigationService.NavigateToAsync<AssetSystemListSelectionPageViewModel>(new TargetNavigationData() { FacilityID = 0, LocationID = 0 }); //Pass the control here
             }
             catch (Exception ex)
             {
@@ -7109,8 +7406,8 @@ namespace ProteusMMX.ViewModel.Asset
 
                 // if Facility is selected reset the location, Asset and Asset System
                 ResetLocation();
-               
-               // ResetAssetSystem();
+
+                // ResetAssetSystem();
 
             }
 
@@ -7128,8 +7425,8 @@ namespace ProteusMMX.ViewModel.Asset
 
 
                 // if Location is selected reset the  Asset and Asset System
-                
-              //  ResetAssetSystem();
+
+                //  ResetAssetSystem();
 
             }
 
@@ -7149,7 +7446,7 @@ namespace ProteusMMX.ViewModel.Asset
                 this.AssetSystemName = assetSystem.AssetSystemName;
 
                 // if AssetSystem is selected reset the   Asset
-               
+
             }
 
 
@@ -7212,7 +7509,7 @@ namespace ProteusMMX.ViewModel.Asset
             this.LocationName = nullLocation.LocationName;
         }
 
-     
+
 
         private void ResetAssetSystem()
         {
@@ -7251,9 +7548,9 @@ namespace ProteusMMX.ViewModel.Asset
 
                 if (!String.IsNullOrWhiteSpace(LotoUrl))
                 {
-                  bool IsValidEmail = Regex.IsMatch(LotoUrl,
-              @"^(http|https|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$",
-              RegexOptions.IgnoreCase);
+                    bool IsValidEmail = Regex.IsMatch(LotoUrl,
+                @"^(http|https|)\://|[a-zA-Z0-9\-\.]+\.[a-zA-Z](:[a-zA-Z0-9]*)?/?([a-zA-Z0-9\-\._\?\,\'/\\\+&amp;%\$#\=~])*[^\.\,\)\(\s]$",
+                RegexOptions.IgnoreCase);
 
                     if (!IsValidEmail || LotoUrl.Contains(" "))
                     {
@@ -7306,6 +7603,17 @@ namespace ProteusMMX.ViewModel.Asset
                 //    return;
                 //}
 
+                if (Application.Current.Properties.ContainsKey("AssetLocationDetailsTabKey"))
+                {
+                    var Locationdetails = Application.Current.Properties["AssetLocationDetailsTabKey"].ToString();
+
+                    if (Locationdetails != null && Locationdetails == "N")
+                    {
+                        FacilityID = null;
+
+                    }
+                }
+
                 if (FacilityID == null)
                 {
                     UserDialogs.Instance.HideLoading();
@@ -7313,17 +7621,19 @@ namespace ProteusMMX.ViewModel.Asset
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Selectthefacilityfield"), 2000);
                     return;
                 }
+                //else if (LocationID == null)
+                //{
+                //    UserDialogs.Instance.HideLoading();
 
+                //    string LocationTitle = WebControlTitle.GetTargetNameByTitleName("Select") + " " + WebControlTitle.GetTargetNameByTitleName("Location");
+                //    DialogService.ShowToast(LocationTitle, 2000);
+                //    return;
+                //}
 
-
-                if(RuntimeUnitID==0)
-                {
-                    RuntimeUnitID = null;
-                }
 
                 #endregion
 
-               
+
                 /// Create Asset wrapper
 
 
@@ -7340,7 +7650,7 @@ namespace ProteusMMX.ViewModel.Asset
                 asset.AssetSystemID = AssetSystemID;
                 asset.CategoryID = CategoryID;
                 asset.VendorID = VendorID;
-               
+
                 asset.RuntimeUnits = RuntimeUnitID;
                 asset.AssetTag = String.IsNullOrEmpty(AssetTagText) ? null : AssetTagText.Trim();
                 asset.Capacity = String.IsNullOrEmpty(CapacityText) ? null : CapacityText.Trim();
@@ -7355,10 +7665,10 @@ namespace ProteusMMX.ViewModel.Asset
                     asset.InstallationDate = Convert.ToDateTime(InstallationDate);
 
                 }
-              
+
                 asset.Manufacturer = String.IsNullOrEmpty(Manufacturer) ? null : Manufacturer.Trim();
                 asset.Model = String.IsNullOrEmpty(Model) ? null : Model.Trim();
-             
+
                 asset.Rating = String.IsNullOrEmpty(Rating) ? null : Rating.Trim();
                 asset.SerialNumber = String.IsNullOrEmpty(SerialNumber) ? null : SerialNumber.Trim();
                 asset.Weight = String.IsNullOrEmpty(Weight) ? null : Weight.Trim();
@@ -7434,6 +7744,8 @@ namespace ProteusMMX.ViewModel.Asset
                 var assetwrapper = new CreateNewAssetLong
                 {
                     IsAttachmentModified = false,
+                    UserID = Convert.ToInt32(AppSettings.User.UserID),
+                    ClientIANATimeZone = AppSettings.ClientIANATimeZone,
                     asset = asset,
 
                 };
@@ -7443,7 +7755,7 @@ namespace ProteusMMX.ViewModel.Asset
                 if (response != null && bool.Parse(response.servicestatus))
                 {
                     DialogService.ShowToast(WebControlTitle.GetTargetNameByTitleName("Assetupdatedsuccessfully"), 2000);
-                   
+
 
                 }
                 else
@@ -8125,7 +8437,7 @@ namespace ProteusMMX.ViewModel.Asset
                                 break;
                             }
 
-                           case "AssetSystemID":
+                        case "AssetSystemID":
                             {
                                 validationResult = ValidateValidationsForOverriddennControls(formLoadItem, AssetSystemID.ToString());
                                 if (validationResult.FailedItem != null)
@@ -8313,9 +8625,9 @@ namespace ProteusMMX.ViewModel.Asset
                             if (response.IsSuccessStatusCode)
                             {
                                 var content = await response.Content.ReadAsStringAsync();
-                               
 
-                               var mybytearray = Convert.FromBase64String(content);
+
+                                var mybytearray = Convert.FromBase64String(content);
 
                                 //responseContent = JsonConvert.DeserializeObject<ServiceOutput>(content.ToString());
 

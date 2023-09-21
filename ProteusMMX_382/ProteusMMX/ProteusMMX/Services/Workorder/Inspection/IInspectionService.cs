@@ -21,5 +21,7 @@ namespace ProteusMMX.Services.Workorder.Inspection
         Task<ServiceOutput> RiskAnswers(object workorder);
 
         Task<ServiceOutput> SaveWorkorderInspectionTime(object inspectionAnswer);
+
+        Task<ServiceOutput> CreateInspectionTimeDetails(object inspectionAnswer);
     }
 }

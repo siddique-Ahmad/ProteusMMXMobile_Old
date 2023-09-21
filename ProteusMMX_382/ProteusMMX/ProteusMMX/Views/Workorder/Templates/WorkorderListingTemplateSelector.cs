@@ -14,9 +14,6 @@ namespace ProteusMMX.Views.Workorder.Templates
         public DataTemplate TomorrowDayTemplate { get; set; }
         public DataTemplate DayAfterTomorrowTemplate { get; set; }
 
-      
-
-
         public object ParentBindingContext;
         public WorkorderListingTemplateSelector()
         {
@@ -61,7 +58,9 @@ namespace ProteusMMX.Views.Workorder.Templates
                 var workorder = item as workOrders;
                 DateTime date = DateTimeConverter.ConvertDateTimeToDifferentTimeZone((workorder.RequiredDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone); //ServerTimeZone);
 
-                if (date.Date < DateTime.Now.Date || date == DateTime.Now.Date)
+                DateTime CurrentDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+
+                if (date.Date < CurrentDate || date == CurrentDate)
                 {
                     //PastCurrentDayTemplate = new DataTemplate(() =>
                     //{
@@ -72,7 +71,7 @@ namespace ProteusMMX.Views.Workorder.Templates
 
                 }
 
-                if (date.Date > DateTime.Now.Date.AddDays(1))
+                if (date.Date > CurrentDate.AddDays(1))
                 {
                     //DayAfterTomorrowTemplate = new DataTemplate(() =>
                     //{
@@ -82,7 +81,7 @@ namespace ProteusMMX.Views.Workorder.Templates
                     return DayAfterTomorrowTemplate;
                 }
 
-                if (date.Date > DateTime.Now.Date)
+                if (date.Date > CurrentDate)
                 {
                     //TomorrowDayTemplate = new DataTemplate(() =>
                     //{

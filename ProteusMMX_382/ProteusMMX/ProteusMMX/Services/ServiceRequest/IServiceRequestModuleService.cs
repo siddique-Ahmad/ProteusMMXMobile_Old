@@ -10,6 +10,8 @@ namespace ProteusMMX.Services.ServiceRequest
     {
         Task<ServiceOutput> GetServiceRequests(string UserID, string PageNumber, string RowCount);
 
+        Task<ServiceOutput> GetAdministrators();
+
         Task<ServiceOutput> GetServiceRequestDetailByServiceRequestID(string ServiceRequestID,string UserID);
 
         Task<ServiceOutput> ServiceRequestByServiceRequestNumber(string UserID, string ServiceRequestNumber);

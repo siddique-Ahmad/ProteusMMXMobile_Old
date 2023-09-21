@@ -1,8 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:Pages="clr-namespace:ProteusMMX.Views.ClosedWorkorder" xmlns:viewModels="clr-namespace:ProteusMMX.ViewModel.ClosedWorkorder"
-            x:Class="ProteusMMX.Views.ClosedWorkorder.CloseWorkorderStockroomPartsTabbedPage" Icon="parts.png">
-  <!--Pages can be added as references or inline-->
+            x:Class="ProteusMMX.Views.ClosedWorkorder.CloseWorkorderStockroomPartsTabbedPage" 
+             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+        android:TabbedPage.IsSwipePagingEnabled="False"
+            >
+
+    <TabbedPage.IconImageSource>
+        <OnPlatform x:TypeArguments="FileImageSource">
+            <OnPlatform.iOS>
+                <FileImageSource File="parts.png"/>
+            </OnPlatform.iOS>
+            <OnPlatform.Android>
+                <FileImageSource File="Assets/parts.png"/>
+            </OnPlatform.Android>
+            <OnPlatform.WinPhone>
+                <FileImageSource File="Assets/parts.png"/>
+            </OnPlatform.WinPhone>
+        </OnPlatform>
+    </TabbedPage.IconImageSource>
+
+    <!--Pages can be added as references or inline-->
     <TabbedPage.Children>
         <Pages:ClosedWorkorderStockroomParts Title="StockroomParts">
             <Pages:ClosedWorkorderStockroomParts.BindingContext>

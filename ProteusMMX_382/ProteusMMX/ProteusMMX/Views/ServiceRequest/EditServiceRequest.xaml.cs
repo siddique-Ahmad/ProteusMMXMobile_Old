@@ -16,22 +16,23 @@ namespace ProteusMMX.Views.ServiceRequest
 		public EditServiceRequest ()
 		{
 			InitializeComponent ();
+            NavigationPage.SetBackButtonTitle(this, "");
             ((NavigationPage)Application.Current.MainPage).BarBackgroundColor = Color.FromHex("#006de0");
             ((NavigationPage)Application.Current.MainPage).BarTextColor = Color.White;
             if (AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation)
             {
                 if (AppSettings.User.RequireSignaturesForValidation == "True")
                 {
-
+                    this.Grid_column2.SetValue(Grid.RowProperty, 3);
                 }
                 else
                 {
-                    this.SaveButton.SetValue(Grid.RowProperty, 3);
+                    this.Grid_column2.SetValue(Grid.RowProperty, 2);
                 }
             }
             else
             {
-                this.SaveButton.SetValue(Grid.RowProperty, 3);
+                this.Grid_column2.SetValue(Grid.RowProperty, 2);
             }
 
         }

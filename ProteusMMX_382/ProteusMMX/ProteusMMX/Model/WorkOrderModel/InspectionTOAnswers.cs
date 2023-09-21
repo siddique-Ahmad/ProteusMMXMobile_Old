@@ -19,6 +19,13 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string ModifiedUserName { get; set; }
         public DateTime? ModifiedTimestamp { get; set; }
 
-       
+        public int? WorkOrderInspectionTimeID { get; set; }
+        public int? WorkOrderInspectionDetailsID { get; set; }
+        public string TimerStatus { get; set; }
+
+        public bool IsManual { get; set; }
+        public DateTime? InspectionStartDate { get; set; }
+        public DateTime? InspectionEndDate { get; set; }
+        public DateTime? InspectionCompletionDate { get; set; }
     }
 }

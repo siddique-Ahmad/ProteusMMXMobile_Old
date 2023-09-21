@@ -74,7 +74,81 @@ namespace ProteusMMX.ViewModel.ClosedWorkorder
                 }
             }
         }
+        //ReportedDate
+        DateTime? _reportedDate;
+        public DateTime? ReportedDate
+        {
+            get
+            {
+                return _reportedDate;
+            }
 
+            set
+            {
+                if (value != _reportedDate)
+                {
+                    _reportedDate = value;
+                    OnPropertyChanged(nameof(ReportedDate));
+                }
+            }
+        }
+
+        string _reportedDateTitel;
+        public string ReportedDateTitel
+        {
+            get
+            {
+                return _reportedDateTitel;
+            }
+
+            set
+            {
+                if (value != _reportedDateTitel)
+                {
+                    _reportedDateTitel = value;
+                    OnPropertyChanged(nameof(ReportedDateTitel));
+                }
+            }
+        }
+
+        //AcknowledgedDate
+        DateTime? _acknowledgedDate;
+        public DateTime? AcknowledgedDate
+        {
+            get
+            {
+                return _acknowledgedDate;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDate)
+                {
+                    _acknowledgedDate = value;
+                    OnPropertyChanged(nameof(AcknowledgedDate));
+                }
+            }
+        }
+
+
+
+        string _acknowledgedDateTitel;
+        public string AcknowledgedDateTitel
+        {
+            get
+            {
+                return _acknowledgedDateTitel;
+            }
+
+            set
+            {
+                if (value != _acknowledgedDateTitel)
+                {
+                    _acknowledgedDateTitel = value;
+                    OnPropertyChanged(nameof(AcknowledgedDateTitel));
+                }
+            }
+        }
         string _WorkRequestedDateTitle;
         public string WorkRequestedDateTitle
         {
@@ -1433,6 +1507,45 @@ string _currentRuntime;
             }
         }
 
+
+        #region **** 
+        string _originatorName;
+        public string OriginatorName
+        {
+            get
+            {
+                return _originatorName;
+            }
+
+            set
+            {
+                if (value != _originatorName)
+                {
+                    _originatorName = value;
+                    OnPropertyChanged(nameof(OriginatorName));
+                }
+            }
+        }
+
+        string _originatorTitle;
+        public string OriginatorTitle
+        {
+            get
+            {
+                return _originatorTitle;
+            }
+
+            set
+            {
+                if (value != _originatorTitle)
+                {
+                    _originatorTitle = value;
+                    OnPropertyChanged(nameof(OriginatorTitle));
+                }
+            }
+        }
+        #endregion
+
         bool _assignToEmployeeIsEnable = true;
         public bool AssignToEmployeeIsEnable
         {
@@ -2244,8 +2357,8 @@ string _currentRuntime;
 
         // EstimstedDowntime
 
-        decimal? _estimstedDowntimeText;
-        public decimal? EstimstedDowntimeText
+        string _estimstedDowntimeText;
+        public string EstimstedDowntimeText
         {
             get
             {
@@ -2300,8 +2413,8 @@ string _currentRuntime;
 
         // ActualDowntime
 
-        decimal? _actualDowntimeText;
-        public decimal? ActualDowntimeText
+        string _actualDowntimeText;
+        public string ActualDowntimeText
         {
             get
             {
@@ -4499,6 +4612,119 @@ string _currentRuntime;
             }
         }
 
+        #region Show More Text
+
+        string _descriptionMoreText;
+        public string DescriptionMoreText
+        {
+            get
+            {
+                return _descriptionMoreText;
+            }
+
+            set
+            {
+                if (value != _descriptionMoreText)
+                {
+                    _descriptionMoreText = value;
+                    OnPropertyChanged(nameof(DescriptionMoreText));
+                }
+            }
+        }
+
+        bool _moreDescriptionTextIsEnable = false;
+        public bool MoreDescriptionTextIsEnable
+        {
+            get
+            {
+                return _moreDescriptionTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreDescriptionTextIsEnable)
+                {
+                    _moreDescriptionTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreDescriptionTextIsEnable));
+                }
+            }
+        }
+
+
+        string _internalNoteMoreText;
+        public string InternalNoteMoreText
+        {
+            get
+            {
+                return _internalNoteMoreText;
+            }
+
+            set
+            {
+                if (value != _internalNoteMoreText)
+                {
+                    _internalNoteMoreText = value;
+                    OnPropertyChanged(nameof(InternalNoteMoreText));
+                }
+            }
+        }
+
+        bool _moreInternalNoteTextIsEnable = false;
+        public bool MoreInternalNoteTextIsEnable
+        {
+            get
+            {
+                return _moreInternalNoteTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreInternalNoteTextIsEnable)
+                {
+                    _moreInternalNoteTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreInternalNoteTextIsEnable));
+                }
+            }
+        }
+
+
+
+        string _additionalDetailsMoreText;
+        public string AdditionalDetailsMoreText
+        {
+            get
+            {
+                return _additionalDetailsMoreText;
+            }
+
+            set
+            {
+                if (value != _additionalDetailsMoreText)
+                {
+                    _additionalDetailsMoreText = value;
+                    OnPropertyChanged(nameof(AdditionalDetailsMoreText));
+                }
+            }
+        }
+
+        bool _moreAdditionalDetailsTextIsEnable = false;
+        public bool MoreAdditionalDetailsTextIsEnable
+        {
+            get
+            {
+                return _moreAdditionalDetailsTextIsEnable;
+            }
+
+            set
+            {
+                if (value != _moreAdditionalDetailsTextIsEnable)
+                {
+                    _moreAdditionalDetailsTextIsEnable = value;
+                    OnPropertyChanged(nameof(MoreAdditionalDetailsTextIsEnable));
+                }
+            }
+        }
+        #endregion
 
         #region Methods
         public override async Task InitializeAsync(object navigationData)
@@ -4527,6 +4753,11 @@ string _currentRuntime;
 
                 if (response != null && response.clWorkOrderWrapper != null && response.clWorkOrderWrapper.clworkOrder != null)
                 {
+                    //Check for task or Inspection//////////
+                    Application.Current.Properties["TaskOrInspection"] = response.clWorkOrderWrapper._IsWorkOrderHasTaskORInspection;
+
+
+
                     bool fdasignatureKey = AppSettings.User.blackhawkLicValidator.IsFDASignatureValidation;
 
                     if (fdasignatureKey == true)
@@ -4590,6 +4821,7 @@ string _currentRuntime;
         {
             try
             {
+                OriginatorTitle = "Originator";
                 CurrentRuntimeTitle = WebControlTitle.GetTargetNameByTitleName("CurrentRuntime");
                 PageTitle = WebControlTitle.GetTargetNameByTitleName("Details");
                 WelcomeTextTitle = WebControlTitle.GetTargetNameByTitleName("Welcome") + " " + AppSettings.UserName;
@@ -4601,7 +4833,7 @@ string _currentRuntime;
                 SectionNameTitle = WebControlTitle.GetTargetNameByTitleName("RiskQuestion");
                 TotalTimeTilte = WebControlTitle.GetTargetNameByTitleName("TotalTime");
                 DescriptionTitle = WebControlTitle.GetTargetNameByTitleName("Description");
-                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("AdditionalDetails");
+                AdditionalDetailsTitle = WebControlTitle.GetTargetNameByTitleName("Notes");
                 InternalNoteTitle = WebControlTitle.GetTargetNameByTitleName("InternalNote");
                 RequiredDateTitle = WebControlTitle.GetTargetNameByTitleName("RequiredDate");
                 WorkStartedDateTitle = WebControlTitle.GetTargetNameByTitleName("WorkStartedDate");
@@ -4643,6 +4875,10 @@ string _currentRuntime;
                 RequestNumberTitle = WebControlTitle.GetTargetNameByTitleName("RequestNumber");
                 RequiredDateTitle = WebControlTitle.GetTargetNameByTitleName("RequiredDate");
                 WorkRequestedDateTitle = WebControlTitle.GetTargetNameByTitleName("RequestedDate");
+
+                ReportedDateTitel = WebControlTitle.GetTargetNameByTitleName("ReportedDate");
+
+                AcknowledgedDateTitel = WebControlTitle.GetTargetNameByTitleName("AcknowledgedDate");
 
                 UserField1Title = WebControlTitle.GetTargetNameByTitleName("UserField1");
                 UserField2Title = WebControlTitle.GetTargetNameByTitleName("UserField2");
@@ -4760,7 +4996,6 @@ string _currentRuntime;
                 }
             }
 
-
             if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(false))
             {
 
@@ -4785,20 +5020,13 @@ string _currentRuntime;
                 this.RequestedNumberIsVisible = false;
             }
 
-
-
-
-
-
-
-
             #endregion
         }
         public async Task ShowActions()
         {
             try
             {
-                var response = await DialogService.SelectActionAsync(SelectOptionsTitle, SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
+                var response = await DialogService.SelectActionAsync("", SelectTitle, CancelTitle, new ObservableCollection<string>() { LogoutTitle });
 
                 if (response == LogoutTitle)
                 {
@@ -4868,303 +5096,347 @@ string _currentRuntime;
 
         public async Task SetControlsPropertiesForPage(ClosedWorkOrder closeWorkorder)
         {
-
-            var workorder = closeWorkorder;
-            if (workorder.AssetID == null || workorder.AssetID == 0)
+            try
             {
-                CurrentRuntimeIsVisible = false;
+                var workorder = closeWorkorder;
+                if (workorder.AssetID == null || workorder.AssetID == 0)
+                {
+                    CurrentRuntimeIsVisible = false;
 
-            }
-            this.CurrentRuntimeText = workorder.CurrentRuntime;
-            this.WorkorderNumberText = workorder.WorkOrderNumber;
-            this.JobNumberText = workorder.JobNumber;
-            this.DescriptionText = workorder.Description;
-            this.TotalTimeText = workorder.TotalTime;
-            this.AdditionalDetailsText = workorder.AdditionalDetails;
-            this.RequiredDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.RequiredDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-            this.InternalNoteText = workorder.InternalNote;
+                }
+                this.CurrentRuntimeText = workorder.CurrentRuntime;
+                this.WorkorderNumberText = workorder.WorkOrderNumber;
+                this.JobNumberText = workorder.JobNumber;
+                this.DescriptionText = workorder.Description;
 
-            /// Workorder Start Date Property Set
-            /// 
+                if (workorder.ReportedDate != null)
+                {
+                    this.ReportedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ReportedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                }
+                if (workorder.AcknowledgedDate != null)
+                {
+                    this.AcknowledgedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.AcknowledgedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                }
+              
 
-            if (workorder.DistributeCost == true)
-            {
-                IsCostDistributed = true;
-            }
-
-            if (workorder.ParentandChildCost == true)
-            {
-                ParentCostDistributed = true;
-            }
-
-            if (workorder.ChildCost == true)
-            {
-                ChildCostDistributed = true;
-            }
-
-            if (workorder.WorkStartedDate == null)
-            {
-                this.WorkStartedDate = null;
-                this.MaximumWorkStartedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
-
-            }
-            else
-            {
-                this.WorkStartedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.WorkStartedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                this.MaximumWorkStartedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
-
-            }
-
-            /// Workorder Completion Date Property Set
-            if (workorder.CompletionDate == null)
-            {
-                this.WorkorderCompletionDate = null;
-                this.MaximumWorkorderCompletionDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
-
-            }
-            else
-            {
-                this.WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.CompletionDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-                this.MaximumWorkorderCompletionDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
-
-            }
+                if (!string.IsNullOrWhiteSpace(workorder.Description) && workorder.Description.Length >= 150)
+                {
+                    MoreDescriptionTextIsEnable = true;
+                }
+                this.DescriptionMoreText = workorder.Description;
+                this.DescriptionText = workorder.Description;
 
 
-            /// Set Targets and Other
-            /// 
-            string targetname = string.Empty;
-            if (!string.IsNullOrWhiteSpace(workorder.AssetName))
-            {
-                targetname = "Assets";
-            }
-            else if (!string.IsNullOrWhiteSpace(workorder.AssetSystemName))
-            {
-                targetname = "Asset System";
-            }
-            else
-            {
-                targetname = "Location";
-            }
-
-            //Set Target String/////////
-            TargetName = "(" + targetname + ")" + " " + AppSettings.User.CompanyName + " " + ">>" + " " + workorder.FacilityName + ">>" + workorder.LocationName;
-
-
-            if (!string.IsNullOrEmpty(workorder.FacilityName))
-            {
-                FacilityName = ShortString.shorten(workorder.FacilityName);
-            }
-            else
-            {
-                FacilityName = workorder.FacilityName;
-            }
-            if (!string.IsNullOrEmpty(workorder.LocationName))
-            {
-                LocationName = ShortString.shorten(workorder.LocationName);
-            }
-            else
-            {
-                LocationName = workorder.LocationName;
-            }
-            if (!string.IsNullOrEmpty(workorder.AssetName))
-            {
-                AssetName = ShortString.shorten(workorder.AssetName);
-            }
-            else
-            {
-                AssetName = workorder.AssetName;
-            }
-            AssetID = workorder.AssetID;
-
-            if (!string.IsNullOrEmpty(workorder.AssetSystemName))
-            {
-                AssetSystemName = ShortString.shorten(workorder.AssetSystemName);
-                ShowAssociatedAssets = true;
-            }
-            else
-            {
-                AssetSystemName = workorder.AssetSystemName;
-
-            }
-
-            if (!string.IsNullOrEmpty(workorder.AssetSystemName))
-            {
-                AssetSystemName = ShortString.shorten(workorder.AssetSystemName);
-            }
-            else
-            {
-                AssetSystemName = workorder.AssetSystemName;
-            }
-            if (!string.IsNullOrEmpty(workorder.CostCenterName))
-            {
-                CostCenterName = ShortString.shorten(workorder.CostCenterName);
-            }
-            else
-            {
-                CostCenterName = workorder.CostCenterName;
-            }
+                this.TotalTimeText = workorder.TotalTime;
+                // this.AdditionalDetailsText = workorder.AdditionalDetails;
+                if (!string.IsNullOrWhiteSpace(workorder.AdditionalDetails) && workorder.AdditionalDetails.Length >= 150)
+                {
+                    MoreAdditionalDetailsTextIsEnable = true;
+                }
+                this.AdditionalDetailsMoreText = workorder.AdditionalDetails;
+                this.AdditionalDetailsText = workorder.AdditionalDetails;
 
 
 
-            if (!string.IsNullOrEmpty(workorder.WorkOrderRequesterName))
-            {
-                WorkorderRequesterName = ShortString.shorten(workorder.WorkOrderRequesterName);
-            }
-            else
-            {
-                WorkorderRequesterName = workorder.WorkOrderRequesterName;
-            }
+                this.RequiredDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.RequiredDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
 
-            if (!string.IsNullOrEmpty(workorder.ShiftName))
-            {
-                ShiftName = ShortString.shorten(workorder.ShiftName);
-            }
-            else
-            {
-                ShiftName = workorder.ShiftName;
-            }
+                this.InternalNoteText = workorder.InternalNote;
+                if (!string.IsNullOrWhiteSpace(workorder.InternalNote) && workorder.InternalNote.Length >= 150)
+                {
+                    MoreInternalNoteTextIsEnable = true;
+                }
+                this.InternalNoteMoreText = workorder.InternalNote;
+                this.InternalNoteText = workorder.InternalNote;
 
-            if (!string.IsNullOrEmpty(workorder.WorkOrderStatusName))
-            {
-                WorkorderStatusName = ShortString.shorten(workorder.WorkOrderStatusName);
-            }
-            else
-            {
-                WorkorderStatusName = workorder.WorkOrderStatusName;
-            }
+                /// Workorder Start Date Property Set
+                /// 
 
-            if (!string.IsNullOrEmpty(workorder.WorkTypeName))
-            {
-                WorkorderTypeName = ShortString.shorten(workorder.WorkTypeName);
-            }
-            else
-            {
-                WorkorderTypeName = workorder.WorkTypeName;
-            }
+                if (workorder.DistributeCost == true)
+                {
+                    IsCostDistributed = true;
+                }
 
-            if (!string.IsNullOrEmpty(workorder.MaintenanceCodeName))
-            {
-                MaintenanceCodeName = ShortString.shorten(workorder.MaintenanceCodeName);
-            }
-            else
-            {
-                MaintenanceCodeName = workorder.MaintenanceCodeName;
-            }
+                if (workorder.ParentandChildCost == true)
+                {
+                    ParentCostDistributed = true;
+                }
 
-            if (!string.IsNullOrEmpty(workorder.PriorityName))
-            {
-                PriorityName = ShortString.shorten(workorder.PriorityName);
-            }
-            else
-            {
-                PriorityName = workorder.PriorityName;
-            }
+                if (workorder.ChildCost == true)
+                {
+                    ChildCostDistributed = true;
+                }
 
-            if (!string.IsNullOrWhiteSpace(workorder.SectionName))
-            {
-                this.SectionNameText = workorder.SectionName;
-            }
-            AssignToEmployeeName = workorder.AssignToEmployee;
+                if (workorder.WorkStartedDate == null)
+                {
+                    this.WorkStartedDate = null;
+                    this.MaximumWorkStartedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+
+                }
+                else
+                {
+                    this.WorkStartedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.WorkStartedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    this.MaximumWorkStartedDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+
+                }
+
+                /// Workorder Completion Date Property Set
+                if (workorder.CompletionDate == null)
+                {
+                    this.WorkorderCompletionDate = null;
+                    this.MaximumWorkorderCompletionDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+
+                }
+                else
+                {
+                    this.WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.CompletionDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                    this.MaximumWorkorderCompletionDate = DateTimeConverter.ClientCurrentDateTimeByZone(AppSettings.User.TimeZone);
+
+                }
 
 
-            EstimstedDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.EstimatedDowntime == null ? 0 : workorder.EstimatedDowntime));
+                /// Set Targets and Other
+                /// 
+                string targetname = string.Empty;
+                if (!string.IsNullOrWhiteSpace(workorder.AssetName))
+                {
+                    targetname = "Assets";
+                }
+                else if (!string.IsNullOrWhiteSpace(workorder.AssetSystemName))
+                {
+                    targetname = "Asset System";
+                }
+                else
+                {
+                    targetname = "Location";
+                }
+
+                //Set Target String/////////
+                TargetName = "(" + targetname + ")" + " " + AppSettings.User.CompanyName + " " + ">>" + " " + workorder.FacilityName + ">>" + workorder.LocationName;
 
 
-            ActualDowntimeText = decimal.Parse(string.Format(StringFormat.NumericZero(), workorder.ActualDowntime == null ? 0 : workorder.ActualDowntime));
+                if (!string.IsNullOrEmpty(workorder.FacilityName))
+                {
+                    FacilityName = ShortString.shorten(workorder.FacilityName);
+                }
+                else
+                {
+                    FacilityName = workorder.FacilityName;
+                }
+                if (!string.IsNullOrEmpty(workorder.LocationName))
+                {
+                    LocationName = ShortString.shorten(workorder.LocationName);
+                }
+                else
+                {
+                    LocationName = workorder.LocationName;
+                }
+                if (!string.IsNullOrEmpty(workorder.AssetName))
+                {
+                    AssetName = ShortString.shorten(workorder.AssetName);
+                }
+                else
+                {
+                    AssetName = workorder.AssetName;
+                }
+                AssetID = workorder.AssetID;
 
-            MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
-            MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);
+                if (!string.IsNullOrEmpty(workorder.AssetSystemName))
+                {
+                    AssetSystemName = ShortString.shorten(workorder.AssetSystemName);
+                    ShowAssociatedAssets = true;
+                }
+                else
+                {
+                    AssetSystemName = workorder.AssetSystemName;
 
-            #region Set Dyanmic Field Properties
+                }
 
-
-
-            #region User Fields
-
-            UserField1 = workorder.UserField1;
-            UserField2 = workorder.UserField2;
-            UserField3 = workorder.UserField3;
-            UserField4 = workorder.UserField4;
-            UserField5 = workorder.UserField5;
-            UserField6 = workorder.UserField6;
-            UserField7 = workorder.UserField7;
-            UserField8 = workorder.UserField8;
-            UserField9 = workorder.UserField9;
-            UserField10 = workorder.UserField10;
-            UserField11 = workorder.UserField11;
-            UserField12 = workorder.UserField12;
-            UserField13 = workorder.UserField13;
-            UserField14 = workorder.UserField14;
-            UserField15 = workorder.UserField15;
-            UserField16 = workorder.UserField16;
-            UserField17 = workorder.UserField17;
-            UserField18 = workorder.UserField18;
-            UserField19 = workorder.UserField19;
-            UserField20 = workorder.UserField20;
-            UserField21 = workorder.UserField21;
-            UserField22 = workorder.UserField22;
-            UserField23 = workorder.UserField23;
-            UserField24 = workorder.UserField24;
-
-            workorder.DistributeCost = IsCostDistributed;
-            workorder.ParentandChildCost = ParentCostDistributed;
-            workorder.ChildCost = ChildCostDistributed;
-            ApprovalLevel = workorder.ApprovalLevel;
-            ApprovalNumber = workorder.ApprovalNumber;
-
-            #endregion
+                if (!string.IsNullOrEmpty(workorder.AssetSystemName))
+                {
+                    AssetSystemName = ShortString.shorten(workorder.AssetSystemName);
+                }
+                else
+                {
+                    AssetSystemName = workorder.AssetSystemName;
+                }
+                if (!string.IsNullOrEmpty(workorder.CostCenterName))
+                {
+                    CostCenterName = ShortString.shorten(workorder.CostCenterName);
+                }
+                else
+                {
+                    CostCenterName = workorder.CostCenterName;
+                }
 
 
-            #region Dynamic properties
-            // this.WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.CompletionDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-            ActivationDateText = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ActivationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
-            //ActivationDateText = workorder.ActivationDate.ToString();
-            ClosedDateText = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ClosedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
 
-            //  ClosedDateText = workorder.ClosedDate.ToString();
-            ConfirmEmail = workorder.ConfirmEmail;
+                if (!string.IsNullOrEmpty(workorder.WorkOrderRequesterName))
+                {
+                    WorkorderRequesterName = ShortString.shorten(workorder.WorkOrderRequesterName);
+                }
+                else
+                {
+                    WorkorderRequesterName = workorder.WorkOrderRequesterName;
+                }
 
-            DigitalSignatures = workorder.DigitalSignatures;
-            JobNumber = workorder.JobNumber;
-            Project = workorder.project;
+                if (!string.IsNullOrEmpty(workorder.ShiftName))
+                {
+                    ShiftName = ShortString.shorten(workorder.ShiftName);
+                }
+                else
+                {
+                    ShiftName = workorder.ShiftName;
+                }
 
-            RequesterFullName = workorder.RequesterFullName;
-            RequesterEmail = workorder.RequesterEmail;
-            RequesterPhone = workorder.RequesterPhone;
-            RequestNumber = workorder.RequestNumber;
-            // RequestedDate = workorder.RequestedDate.ToString();
-            RequestedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.RequestedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                if (!string.IsNullOrEmpty(workorder.WorkOrderStatusName))
+                {
+                    WorkorderStatusName = ShortString.shorten(workorder.WorkOrderStatusName);
+                }
+                else
+                {
+                    WorkorderStatusName = workorder.WorkOrderStatusName;
+                }
 
-            if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(false))
-            {
-                this.RequestedDateIsVisible = false;
-                this.RequestedNumberIsVisible = false;
-                this.RequesterEmailLayout = false;
-            }
-            else
-            {
-                if (workorder.RequestNumber == null && workorder.RequestedDate == null)
+                if (!string.IsNullOrEmpty(workorder.WorkTypeName))
+                {
+                    WorkorderTypeName = ShortString.shorten(workorder.WorkTypeName);
+                }
+                else
+                {
+                    WorkorderTypeName = workorder.WorkTypeName;
+                }
+
+                if (!string.IsNullOrEmpty(workorder.MaintenanceCodeName))
+                {
+                    MaintenanceCodeName = ShortString.shorten(workorder.MaintenanceCodeName);
+                }
+                else
+                {
+                    MaintenanceCodeName = workorder.MaintenanceCodeName;
+                }
+
+                if (!string.IsNullOrEmpty(workorder.PriorityName))
+                {
+                    PriorityName = ShortString.shorten(workorder.PriorityName);
+                }
+                else
+                {
+                    PriorityName = workorder.PriorityName;
+                }
+
+                if (!string.IsNullOrWhiteSpace(workorder.SectionName))
+                {
+                    this.SectionNameText = workorder.SectionName;
+                }
+                AssignToEmployeeName = workorder.AssignToEmployee;
+
+                OriginatorName = workorder.Originator;
+                EstimstedDowntimeText = workorder.EstimatedDowntime == null ? "0" : workorder.EstimatedDowntime;
+
+
+                ActualDowntimeText = workorder.ActualDowntime == null ? "0" : workorder.ActualDowntime;
+
+
+                MiscellaneousLabourCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousLaborCost == null ? 0 : workorder.MiscellaneousLaborCost);
+                MiscellaneousMaterialCostText = string.Format(StringFormat.CurrencyZero(), workorder.MiscellaneousMaterialsCost == null ? 0 : workorder.MiscellaneousMaterialsCost);
+
+                #region Set Dyanmic Field Properties
+
+
+
+                #region User Fields
+
+                UserField1 = workorder.UserField1;
+                UserField2 = workorder.UserField2;
+                UserField3 = workorder.UserField3;
+                UserField4 = workorder.UserField4;
+                UserField5 = workorder.UserField5;
+                UserField6 = workorder.UserField6;
+                UserField7 = workorder.UserField7;
+                UserField8 = workorder.UserField8;
+                UserField9 = workorder.UserField9;
+                UserField10 = workorder.UserField10;
+                UserField11 = workorder.UserField11;
+                UserField12 = workorder.UserField12;
+                UserField13 = workorder.UserField13;
+                UserField14 = workorder.UserField14;
+                UserField15 = workorder.UserField15;
+                UserField16 = workorder.UserField16;
+                UserField17 = workorder.UserField17;
+                UserField18 = workorder.UserField18;
+                UserField19 = workorder.UserField19;
+                UserField20 = workorder.UserField20;
+                UserField21 = workorder.UserField21;
+                UserField22 = workorder.UserField22;
+                UserField23 = workorder.UserField23;
+                UserField24 = workorder.UserField24;
+
+                workorder.DistributeCost = IsCostDistributed;
+                workorder.ParentandChildCost = ParentCostDistributed;
+                workorder.ChildCost = ChildCostDistributed;
+                ApprovalLevel = workorder.ApprovalLevel;
+                ApprovalNumber = workorder.ApprovalNumber;
+
+                #endregion
+
+
+                #region Dynamic properties
+                // this.WorkorderCompletionDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.CompletionDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                ActivationDateText = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ActivationDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+                //ActivationDateText = workorder.ActivationDate.ToString();
+                ClosedDateText = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.ClosedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+
+                //  ClosedDateText = workorder.ClosedDate.ToString();
+                ConfirmEmail = workorder.ConfirmEmail;
+
+                DigitalSignatures = workorder.DigitalSignatures;
+                JobNumber = workorder.JobNumber;
+                Project = workorder.project;
+
+                RequesterFullName = workorder.RequesterFullName;
+                RequesterEmail = workorder.RequesterEmail;
+                RequesterPhone = workorder.RequesterPhone;
+                RequestNumber = workorder.RequestNumber;
+                // RequestedDate = workorder.RequestedDate.ToString();
+                RequestedDate = DateTimeConverter.ConvertDateTimeToDifferentTimeZone(Convert.ToDateTime(workorder.RequestedDate ?? DateTime.Now).ToUniversalTime(), AppSettings.User.ServerIANATimeZone);
+
+                if (AppSettings.User.blackhawkLicValidator.ServiceRequestIsEnabled.Equals(false))
                 {
                     this.RequestedDateIsVisible = false;
                     this.RequestedNumberIsVisible = false;
                     this.RequesterEmailLayout = false;
                 }
+                else
+                {
+                    if (workorder.RequestNumber == null && workorder.RequestedDate == null)
+                    {
+                        this.RequestedDateIsVisible = false;
+                        this.RequestedNumberIsVisible = false;
+                        this.RequesterEmailLayout = false;
+                    }
+                }
+                if (AppSettings.User.blackhawkLicValidator.RiskAssasment.Equals(false))
+                {
+                    this.SectionNameIsVisible = false;
+                }
+
+
+                #endregion
+
+
+
+
+
+
+
+                #endregion
             }
-            if (AppSettings.User.blackhawkLicValidator.RiskAssasment.Equals(false))
+            catch (Exception ex)
             {
-                this.SectionNameIsVisible = false;
+
+               
             }
-
-
-            #endregion
-
-
-
-
-
-
-
-            #endregion
+           
 
         }
 
@@ -5181,7 +5453,7 @@ string _currentRuntime;
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                tnobj.Description = AdditionalDetailsText;
+                tnobj.Description = AdditionalDetailsMoreText;
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
             }
@@ -5241,7 +5513,7 @@ string _currentRuntime;
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                tnobj.Description = DescriptionText;
+                tnobj.Description = DescriptionMoreText;
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
             }
@@ -5270,7 +5542,7 @@ string _currentRuntime;
                 UserDialogs.Instance.HideLoading();
 
                 TargetNavigationData tnobj = new TargetNavigationData();
-                tnobj.Description = InternalNoteText;
+                tnobj.Description = InternalNoteMoreText;
                 await NavigationService.NavigateToAsync<DescriptionViewModel>(tnobj);
                 // await Page.DisplayActionSheet(" ", WebControlTitle.GetTargetNameByTitleName("Cancel"), null, AdditionalDetailsText); 
             }

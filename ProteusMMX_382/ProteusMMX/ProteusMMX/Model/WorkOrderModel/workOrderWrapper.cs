@@ -8,6 +8,15 @@ namespace ProteusMMX.Model.WorkOrderModel
 {
     public class workOrderWrapper
     {
+        public string _IsWorkOrderHasTaskORInspection { get; set; }
+
+        public bool WorkorderCreatedfromSchedule { get; set; }
+
+        public bool EmployeeWorkHourFlag { get; set; }
+
+        public String EmployeeWorkHourValue { get; set; }
+
+        public bool WorkOrderIdentifiedThroughBreakdownFlag { get; set; }
         public int UserId { get; set; }
         public workOrders workOrder { get; set; }
 
@@ -45,6 +54,16 @@ namespace ProteusMMX.Model.WorkOrderModel
         public string IsCheckedCostCentre { get; set; }
         public string IsCheckedCause { get; set; }
         public string IsCheckedAutoFillCompleteOnTaskAndLabor { get; set; }
+
+        public string IsHoursRequiredForCompletionDate { get; set; }
+        public string IsInspectionAnswerRequiredforCompletionDate { get; set; }
+
+        public string IsAllAnswersFilled { get; set; }
+        public string IsAllTaskHousFilled { get; set; }
+        public string IsAllInspectionHousFilled { get; set; }
+
+        public string IsAnyTaskHoursFilled { get; set; }
+        public string IsAnyInspectionHoursFilled { get; set; }
 
         public List<Sections> sections { get; set; }
 
